@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLinkLocalServiceBaseImpl;
@@ -31,9 +30,8 @@ public class DDMStructureLinkLocalServiceImpl
 
 	@Override
 	public DDMStructureLink addStructureLink(
-			long classNameId, long classPK, long structureId,
-			ServiceContext serviceContext)
-		throws SystemException {
+		long classNameId, long classPK, long structureId,
+		ServiceContext serviceContext) {
 
 		long structureLinkId = counterLocalService.increment();
 
@@ -50,9 +48,7 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteClassStructureLink(long classPK)
-		throws PortalException, SystemException {
-
+	public void deleteClassStructureLink(long classPK) throws PortalException {
 		DDMStructureLink structureLink =
 			ddmStructureLinkPersistence.findByClassPK(classPK);
 
@@ -60,15 +56,14 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStructureLink(DDMStructureLink structureLink)
-		throws SystemException {
+	public void deleteStructureLink(DDMStructureLink structureLink) {
 
 		ddmStructureLinkPersistence.remove(structureLink);
 	}
 
 	@Override
 	public void deleteStructureLink(long structureLinkId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructureLink structureLink =
 			ddmStructureLinkPersistence.findByPrimaryKey(structureLinkId);
@@ -77,8 +72,7 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStructureStructureLinks(long structureId)
-		throws SystemException {
+	public void deleteStructureStructureLinks(long structureId) {
 
 		List<DDMStructureLink> structureLinks =
 			ddmStructureLinkPersistence.findByStructureId(structureId);
@@ -90,29 +84,27 @@ public class DDMStructureLinkLocalServiceImpl
 
 	@Override
 	public DDMStructureLink getClassStructureLink(long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddmStructureLinkPersistence.findByClassPK(classPK);
 	}
 
 	@Override
-	public List<DDMStructureLink> getClassStructureLinks(long classNameId)
-		throws SystemException {
+	public List<DDMStructureLink> getClassStructureLinks(long classNameId) {
 
 		return ddmStructureLinkPersistence.findByStructureId(classNameId);
 	}
 
 	@Override
 	public DDMStructureLink getStructureLink(long structureLinkId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddmStructureLinkPersistence.findByPrimaryKey(structureLinkId);
 	}
 
 	@Override
 	public List<DDMStructureLink> getStructureLinks(
-			long structureId, int start, int end)
-		throws SystemException {
+		long structureId, int start, int end) {
 
 		return ddmStructureLinkPersistence.findByStructureId(
 			structureId, start, end);
@@ -122,7 +114,7 @@ public class DDMStructureLinkLocalServiceImpl
 	public DDMStructureLink updateStructureLink(
 			long structureLinkId, long classNameId, long classPK,
 			long structureId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructureLink structureLink =
 			ddmStructureLinkPersistence.findByPrimaryKey(structureLinkId);

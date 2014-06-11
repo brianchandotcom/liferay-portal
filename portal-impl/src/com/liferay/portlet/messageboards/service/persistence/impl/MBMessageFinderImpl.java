@@ -69,8 +69,7 @@ public class MBMessageFinderImpl
 		MBMessageFinder.class.getName() + ".findByG_U_C_A_S";
 
 	@Override
-	public int countByC_T(Date createDate, long threadId)
-		throws SystemException {
+	public int countByC_T(Date createDate, long threadId) {
 
 		Timestamp createDate_TS = CalendarUtil.getTimestamp(createDate);
 
@@ -112,17 +111,15 @@ public class MBMessageFinderImpl
 
 	@Override
 	public int countByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status) {
 
 		return doCountByG_U_C_S(groupId, userId, categoryIds, status, false);
 	}
 
 	@Override
 	public int countByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status) {
 
 		return doCountByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, false);
@@ -130,17 +127,15 @@ public class MBMessageFinderImpl
 
 	@Override
 	public int filterCountByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status) {
 
 		return doCountByG_U_C_S(groupId, userId, categoryIds, status, true);
 	}
 
 	@Override
 	public int filterCountByG_U_MD_C_S(
-			long groupId, long userId, Date modifiedDate, long[] categoryIds,
-			int status)
-		throws SystemException {
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status) {
 
 		return doCountByG_U_MD_C_S(
 			groupId, userId, modifiedDate, categoryIds, status, true);
@@ -148,9 +143,8 @@ public class MBMessageFinderImpl
 
 	@Override
 	public int filterCountByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status) {
 
 		return doCountByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, true);
@@ -158,9 +152,8 @@ public class MBMessageFinderImpl
 
 	@Override
 	public List<Long> filterFindByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status,
-			int start, int end)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status, int start,
+		int end) {
 
 		return doFindByG_U_C_S(
 			groupId, userId, categoryIds, status, start, end, true);
@@ -168,9 +161,8 @@ public class MBMessageFinderImpl
 
 	@Override
 	public List<Long> filterFindByG_U_MD_C_S(
-			long groupId, long userId, Date modifiedDate, long[] categoryIds,
-			int status, int start, int end)
-		throws SystemException {
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, int start, int end) {
 
 		return doFindByG_U_MD_C_S(
 			groupId, userId, modifiedDate, categoryIds, status, start, end,
@@ -179,16 +171,15 @@ public class MBMessageFinderImpl
 
 	@Override
 	public List<Long> filterFindByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status, int start, int end)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, int start, int end) {
 
 		return doFindByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, start, end, true);
 	}
 
 	@Override
-	public List<MBMessage> findByNoAssets() throws SystemException {
+	public List<MBMessage> findByNoAssets() {
 		Session session = null;
 
 		try {
@@ -212,9 +203,8 @@ public class MBMessageFinderImpl
 
 	@Override
 	public List<Long> findByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status,
-			int start, int end)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status, int start,
+		int end) {
 
 		return doFindByG_U_C_S(
 			groupId, userId, categoryIds, status, start, end, false);
@@ -222,18 +212,16 @@ public class MBMessageFinderImpl
 
 	@Override
 	public List<Long> findByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status, int start, int end)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, int start, int end) {
 
 		return doFindByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, start, end, false);
 	}
 
 	protected int doCountByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -307,9 +295,8 @@ public class MBMessageFinderImpl
 	}
 
 	protected int doCountByG_U_MD_C_S(
-			long groupId, long userId, Date modifiedDate, long[] categoryIds,
-			int status, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -385,9 +372,8 @@ public class MBMessageFinderImpl
 	}
 
 	protected int doCountByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -455,9 +441,8 @@ public class MBMessageFinderImpl
 	}
 
 	protected List<Long> doFindByG_U_C_S(
-			long groupId, long userId, long[] categoryIds, int status,
-			int start, int end, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, int status, int start,
+		int end, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -521,9 +506,8 @@ public class MBMessageFinderImpl
 	}
 
 	protected List<Long> doFindByG_U_MD_C_S(
-			long groupId, long userId, Date modifiedDate, long[] categoryIds,
-			int status, int start, int end, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, int start, int end, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -589,9 +573,8 @@ public class MBMessageFinderImpl
 	}
 
 	protected List<Long> doFindByG_U_C_A_S(
-			long groupId, long userId, long[] categoryIds, boolean anonymous,
-			int status, int start, int end, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, int start, int end, boolean inlineSQLHelper) {
 
 		Session session = null;
 

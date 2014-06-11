@@ -15,7 +15,6 @@
 package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -143,7 +142,7 @@ public class InputPermissionsParamsTagUtil {
 
 	public static String getDefaultViewRole(
 			String modelName, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
 

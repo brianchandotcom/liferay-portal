@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.service.base.DLSyncEventLocalServiceBaseImpl;
 
@@ -33,8 +32,7 @@ public class DLSyncEventLocalServiceImpl
 	extends DLSyncEventLocalServiceBaseImpl {
 
 	@Override
-	public DLSyncEvent addDLSyncEvent(String event, String type, long typePK)
-		throws SystemException {
+	public DLSyncEvent addDLSyncEvent(String event, String type, long typePK) {
 
 		DLSyncEvent dlSyncEvent = dlSyncEventPersistence.fetchByTypePK(typePK);
 
@@ -54,19 +52,18 @@ public class DLSyncEventLocalServiceImpl
 	}
 
 	@Override
-	public void deleteDLSyncEvents() throws SystemException {
+	public void deleteDLSyncEvents() {
 		dlSyncEventPersistence.removeAll();
 	}
 
 	@Override
-	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime)
-		throws SystemException {
+	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime) {
 
 		return dlSyncEventPersistence.findByModifiedTime(modifiedTime);
 	}
 
 	@Override
-	public List<DLSyncEvent> getLatestDLSyncEvents() throws SystemException {
+	public List<DLSyncEvent> getLatestDLSyncEvents() {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			DLSyncEvent.class);
 

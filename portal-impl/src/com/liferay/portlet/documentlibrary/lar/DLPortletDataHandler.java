@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
@@ -468,7 +467,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
@@ -487,9 +486,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new ActionableDynamicQuery.PerformCountMethod() {
 
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
-
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary =
 						portletDataContext.getManifestSummary();
 
@@ -555,7 +552,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					DLFolder dlFolder = (DLFolder)object;
 

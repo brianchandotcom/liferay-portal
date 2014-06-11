@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.FileFilter;
@@ -227,7 +226,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	protected void addFileToStore(
 			long companyId, String dirName, String filePath, File srcFile)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			DLStoreUtil.addDirectory(companyId, REPOSITORY_ID, dirName);
@@ -240,7 +239,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	protected void addFileToStore(
 			long companyId, String dirName, String filePath, InputStream is)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			DLStoreUtil.addDirectory(companyId, REPOSITORY_ID, dirName);
@@ -420,7 +419,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	protected InputStream doGetPreviewAsStream(
 			FileVersion fileVersion, int index, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLStoreUtil.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
@@ -429,7 +428,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	protected InputStream doGetPreviewAsStream(
 			FileVersion fileVersion, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return doGetPreviewAsStream(fileVersion, 0, type);
 	}
@@ -451,14 +450,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected long doGetPreviewFileSize(FileVersion fileVersion, int index)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return doGetPreviewFileSize(fileVersion, index, getPreviewType());
 	}
 
 	protected long doGetPreviewFileSize(
 			FileVersion fileVersion, int index, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLStoreUtil.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
@@ -466,14 +465,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected long doGetPreviewFileSize(FileVersion fileVersion, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return doGetPreviewFileSize(fileVersion, 0, type);
 	}
 
 	protected InputStream doGetThumbnailAsStream(
 			FileVersion fileVersion, int index)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String type = getThumbnailType(fileVersion);
 
@@ -483,7 +482,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected long doGetThumbnailFileSize(FileVersion fileVersion, int index)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String type = getThumbnailType(fileVersion);
 
@@ -500,8 +499,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void exportBinary(
 			PortletDataContext portletDataContext, Element fileEntryElement,
 			FileVersion fileVersion, InputStream is, String binPath,
-			String binPathName)
-		throws SystemException {
+			String binPathName) {
 
 		fileEntryElement.addAttribute(binPathName, binPath);
 
@@ -598,7 +596,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void exportThumbnail(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement, String binPathName, int index)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -627,7 +625,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void exportThumbnails(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement, String binPathSuffix)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

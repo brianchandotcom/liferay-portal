@@ -269,7 +269,7 @@ public class DocumentConversionUtil {
 		return conversions;
 	}
 
-	private DocumentConverter _getDocumentConverter() throws SystemException {
+	private DocumentConverter _getDocumentConverter() {
 		if ((_openOfficeConnection != null) && (_documentConverter != null)) {
 			return _documentConverter;
 		}
@@ -371,8 +371,7 @@ public class DocumentConversionUtil {
 		}
 	}
 
-	private void _validate(String targetExtension, String id)
-		throws SystemException {
+	private void _validate(String targetExtension, String id) {
 
 		if (!Validator.isFileExtension(targetExtension)) {
 			throw new SystemException("Invalid extension: " + targetExtension);

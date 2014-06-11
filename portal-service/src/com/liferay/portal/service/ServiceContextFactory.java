@@ -16,7 +16,6 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -52,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ServiceContextFactory {
 
 	public static ServiceContext getInstance(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -279,7 +278,7 @@ public class ServiceContextFactory {
 	}
 
 	public static ServiceContext getInstance(PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Theme display
 
@@ -482,7 +481,7 @@ public class ServiceContextFactory {
 
 	public static ServiceContext getInstance(
 			String className, PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = getInstance(portletRequest);
 
@@ -516,7 +515,7 @@ public class ServiceContextFactory {
 
 	public static ServiceContext getInstance(
 			String className, UploadPortletRequest uploadPortletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = getInstance(uploadPortletRequest);
 

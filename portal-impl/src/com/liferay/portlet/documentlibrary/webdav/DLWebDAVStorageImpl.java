@@ -18,7 +18,6 @@ import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -1004,8 +1003,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected void populateServiceContext(
-			ServiceContext serviceContext, FileEntry fileEntry)
-		throws SystemException {
+		ServiceContext serviceContext, FileEntry fileEntry) {
 
 		String className = DLFileEntryConstants.getClassName();
 

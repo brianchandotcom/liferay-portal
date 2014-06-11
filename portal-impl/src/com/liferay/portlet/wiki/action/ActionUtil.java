@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static WikiNode getFirstVisibleNode(PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -92,7 +91,7 @@ public class ActionUtil {
 
 	public static WikiPage getFirstVisiblePage(
 			long nodeId, PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

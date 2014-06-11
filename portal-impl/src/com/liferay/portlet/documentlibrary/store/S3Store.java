@@ -81,8 +81,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
-		throws SystemException {
+		long companyId, long repositoryId, String fileName, InputStream is) {
 
 		try {
 			S3Object s3Object = new S3Object(
@@ -109,8 +108,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws SystemException {
+		long companyId, long repositoryId, String dirName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -127,8 +125,7 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws SystemException {
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -146,9 +143,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws SystemException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		try {
 			_s3Service.deleteObject(
@@ -164,7 +160,7 @@ public class S3Store extends BaseStore {
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			if (Validator.isNull(versionLabel)) {
@@ -194,7 +190,7 @@ public class S3Store extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			if (Validator.isNull(versionLabel)) {
@@ -214,8 +210,7 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId)
-		throws SystemException {
+	public String[] getFileNames(long companyId, long repositoryId) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -230,8 +225,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws SystemException {
+			long companyId, long repositoryId, String dirName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -247,7 +241,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			String versionLabel = getHeadVersionLabel(
@@ -273,9 +267,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws SystemException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -300,9 +293,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws SystemException {
+		long companyId, long repositoryId, long newRepositoryId,
+		String fileName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -352,9 +344,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws SystemException {
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -409,9 +400,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws SystemException {
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream is) {
 
 		try {
 			S3Object s3Object = new S3Object(

@@ -59,7 +59,7 @@ public class CyrusVirtualPersistenceImpl
 	}
 
 	@Override
-	public List<CyrusVirtual> findByUserId(long userId) throws SystemException {
+	public List<CyrusVirtual> findByUserId(long userId) {
 		Session session = null;
 
 		try {
@@ -108,7 +108,7 @@ public class CyrusVirtualPersistenceImpl
 	}
 
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
+	public void removeByUserId(long userId) {
 		Session session = null;
 
 		try {
@@ -137,7 +137,7 @@ public class CyrusVirtualPersistenceImpl
 	}
 
 	@Override
-	public void update(CyrusVirtual virtual) throws SystemException {
+	public void update(CyrusVirtual virtual) {
 		Session session = null;
 
 		try {

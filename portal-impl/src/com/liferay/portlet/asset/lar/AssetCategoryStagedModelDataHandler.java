@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -52,8 +51,7 @@ public class AssetCategoryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws SystemException {
+		String uuid, long groupId, String className, String extraData) {
 
 		AssetCategory category =
 			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
@@ -290,7 +288,7 @@ public class AssetCategoryStagedModelDataHandler
 
 	protected Map<Locale, String> getCategoryTitleMap(
 			long groupId, AssetCategory category, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<Locale, String> titleMap = category.getTitleMap();
 

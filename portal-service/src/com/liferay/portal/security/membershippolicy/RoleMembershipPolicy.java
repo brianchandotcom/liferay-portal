@@ -15,7 +15,6 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Role;
 
 import java.io.Serializable;
@@ -93,11 +92,10 @@ public interface RoleMembershipPolicy {
 	 *         (optionally <code>null</code>)
 	 * @throws PortalException if any one role violated the policy or if a
 	 *         portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkRoles(
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the role can be added to the user. Liferay's
@@ -108,10 +106,9 @@ public interface RoleMembershipPolicy {
 	 * @return <code>true</code> if the role can be added to the user;
 	 *         <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isRoleAllowed(long userId, long roleId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the role is mandatory for the user.
@@ -123,10 +120,9 @@ public interface RoleMembershipPolicy {
 	 * @return <code>true</code> if the role is mandatory for the user;
 	 *         <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isRoleRequired(long userId, long roleId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Performs membership policy related actions after the respective roles are
@@ -151,11 +147,10 @@ public interface RoleMembershipPolicy {
 	 * @param  addRoleIds the primary keys of the added roles
 	 * @param  removeRoleIds the primary keys of the removed roles
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void propagateRoles(
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
@@ -166,9 +161,8 @@ public interface RoleMembershipPolicy {
 	 * every time a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
-	public void verifyPolicy() throws PortalException, SystemException;
+	public void verifyPolicy() throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of the role and performs
@@ -176,9 +170,8 @@ public interface RoleMembershipPolicy {
 	 *
 	 * @param  role the role to verify
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
-	public void verifyPolicy(Role role) throws PortalException, SystemException;
+	public void verifyPolicy(Role role) throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of the role, with respect
@@ -190,11 +183,10 @@ public interface RoleMembershipPolicy {
 	 * @param  oldRole the old role
 	 * @param  oldExpandoAttributes the old expando attributes
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy(
 			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

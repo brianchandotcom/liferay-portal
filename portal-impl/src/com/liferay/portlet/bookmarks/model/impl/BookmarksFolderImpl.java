@@ -15,7 +15,6 @@
 package com.liferay.portlet.bookmarks.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -33,9 +32,7 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 	}
 
 	@Override
-	public List<Long> getAncestorFolderIds()
-		throws PortalException, SystemException {
-
+	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<Long>();
 
 		BookmarksFolder folder = this;
@@ -59,9 +56,7 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 	}
 
 	@Override
-	public List<BookmarksFolder> getAncestors()
-		throws PortalException, SystemException {
-
+	public List<BookmarksFolder> getAncestors() throws PortalException {
 		List<BookmarksFolder> ancestors = new ArrayList<BookmarksFolder>();
 
 		BookmarksFolder folder = this;
@@ -85,9 +80,7 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 	}
 
 	@Override
-	public BookmarksFolder getParentFolder()
-		throws PortalException, SystemException {
-
+	public BookmarksFolder getParentFolder() throws PortalException {
 		if (getParentFolderId() ==
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 

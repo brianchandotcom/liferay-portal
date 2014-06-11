@@ -106,7 +106,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Team deleteTeam(long teamId) throws PortalException, SystemException {
+	public Team deleteTeam(long teamId) throws PortalException {
 		return teamPersistence.remove(teamId);
 	}
 
@@ -120,7 +120,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Team deleteTeam(Team team) throws PortalException, SystemException {
+	public Team deleteTeam(Team team) throws PortalException {
 		return teamPersistence.remove(team);
 	}
 

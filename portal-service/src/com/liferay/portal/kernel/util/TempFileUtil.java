@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Repository;
@@ -39,7 +38,7 @@ public class TempFileUtil {
 	public static FileEntry addTempFile(
 			long groupId, long userId, String fileName, String tempFolderName,
 			File file, String mimeType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
@@ -51,7 +50,7 @@ public class TempFileUtil {
 	public static FileEntry addTempFile(
 			long groupId, long userId, String fileName, String tempFolderName,
 			InputStream inputStream, String mimeType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
@@ -60,15 +59,13 @@ public class TempFileUtil {
 			folder.getFolderId(), inputStream, fileName, mimeType, false);
 	}
 
-	public static void deleteTempFile(long fileEntryId)
-		throws PortalException, SystemException {
-
+	public static void deleteTempFile(long fileEntryId) throws PortalException {
 		PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
 	}
 
 	public static void deleteTempFile(
 			long groupId, long userId, String fileName, String tempFolderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = getTempFolder(groupId, userId, tempFolderName);
 
@@ -78,7 +75,7 @@ public class TempFileUtil {
 
 	public static FileEntry getTempFile(
 			long groupId, long userId, String fileName, String tempFolderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = getTempFolder(groupId, userId, tempFolderName);
 
@@ -88,7 +85,7 @@ public class TempFileUtil {
 
 	public static String[] getTempFileEntryNames(
 			long groupId, long userId, String tempFolderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
@@ -109,7 +106,7 @@ public class TempFileUtil {
 
 	protected static Folder addTempFolder(
 			long groupId, long userId, String tempFolderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -133,7 +130,7 @@ public class TempFileUtil {
 
 	protected static Folder getTempFolder(
 			long groupId, long userId, String tempFolderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
 			groupId, PortletKeys.DOCUMENT_LIBRARY);

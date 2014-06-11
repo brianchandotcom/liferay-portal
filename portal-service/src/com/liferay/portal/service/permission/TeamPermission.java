@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -26,18 +25,18 @@ public interface TeamPermission {
 
 	public void check(
 			PermissionChecker permissionChecker, long teamId, String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void check(
 			PermissionChecker permissionChecker, Team team, String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean contains(
 			PermissionChecker permissionChecker, long teamId, String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

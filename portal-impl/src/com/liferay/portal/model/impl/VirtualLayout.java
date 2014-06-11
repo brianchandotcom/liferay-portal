@@ -15,7 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -105,7 +104,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 	@Override
 	public String getRegularURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String layoutURL = _sourceLayout.getRegularURL(request);
 
@@ -117,7 +116,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 	@Override
 	public String getResetLayoutURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String layoutURL = _sourceLayout.getResetLayoutURL(request);
 
@@ -129,7 +128,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 	@Override
 	public String getResetMaxStateURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String layoutURL = _sourceLayout.getResetMaxStateURL(request);
 

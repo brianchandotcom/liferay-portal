@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -29,7 +28,7 @@ public interface TrashedModel {
 
 	public int getStatus();
 
-	public TrashEntry getTrashEntry() throws PortalException, SystemException;
+	public TrashEntry getTrashEntry() throws PortalException;
 
 	public long getTrashEntryClassPK();
 
@@ -39,8 +38,8 @@ public interface TrashedModel {
 
 	public boolean isInTrashContainer();
 
-	public boolean isInTrashExplicitly() throws SystemException;
+	public boolean isInTrashExplicitly();
 
-	public boolean isInTrashImplicitly() throws SystemException;
+	public boolean isInTrashImplicitly();
 
 }

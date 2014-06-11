@@ -15,7 +15,6 @@
 package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -102,9 +101,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	@Override
-	public void updateActivitySet(long activityId)
-		throws PortalException, SystemException {
-
+	public void updateActivitySet(long activityId) throws PortalException {
 		SocialActivity activity = SocialActivityUtil.fetchByPrimaryKey(
 			activityId);
 

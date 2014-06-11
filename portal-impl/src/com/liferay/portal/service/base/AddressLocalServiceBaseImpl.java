@@ -113,7 +113,7 @@ public abstract class AddressLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Address deleteAddress(long addressId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return addressPersistence.remove(addressId);
 	}
 
@@ -126,7 +126,7 @@ public abstract class AddressLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Address deleteAddress(Address address) throws SystemException {
+	public Address deleteAddress(Address address) {
 		return addressPersistence.remove(address);
 	}
 

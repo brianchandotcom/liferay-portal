@@ -62,7 +62,7 @@ public class CounterFinderImpl
 	}
 
 	@Override
-	public List<String> getNames() throws SystemException {
+	public List<String> getNames() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -96,17 +96,17 @@ public class CounterFinderImpl
 	}
 
 	@Override
-	public long increment() throws SystemException {
+	public long increment() {
 		return increment(_NAME);
 	}
 
 	@Override
-	public long increment(String name) throws SystemException {
+	public long increment(String name) {
 		return increment(name, _MINIMUM_INCREMENT_SIZE);
 	}
 
 	@Override
-	public long increment(String name, int size) throws SystemException {
+	public long increment(String name, int size) {
 		if (size < _MINIMUM_INCREMENT_SIZE) {
 			size = _MINIMUM_INCREMENT_SIZE;
 		}
@@ -122,7 +122,7 @@ public class CounterFinderImpl
 	}
 
 	@Override
-	public void rename(String oldName, String newName) throws SystemException {
+	public void rename(String oldName, String newName) {
 		CounterRegister counterRegister = getCounterRegister(oldName);
 
 		synchronized (counterRegister) {
@@ -162,7 +162,7 @@ public class CounterFinderImpl
 	}
 
 	@Override
-	public void reset(String name) throws SystemException {
+	public void reset(String name) {
 		CounterRegister counterRegister = getCounterRegister(name);
 
 		synchronized (counterRegister) {
@@ -191,20 +191,18 @@ public class CounterFinderImpl
 	}
 
 	@Override
-	public void reset(String name, long size) throws SystemException {
+	public void reset(String name, long size) {
 		CounterRegister counterRegister = createCounterRegister(name, size);
 
 		_counterRegisterMap.put(name, counterRegister);
 	}
 
-	protected CounterRegister createCounterRegister(String name)
-		throws SystemException {
+	protected CounterRegister createCounterRegister(String name) {
 
 		return createCounterRegister(name, -1);
 	}
 
-	protected CounterRegister createCounterRegister(String name, long size)
-		throws SystemException {
+	protected CounterRegister createCounterRegister(String name, long size) {
 
 		long rangeMin = -1;
 		int rangeSize = getRangeSize(name);
@@ -259,8 +257,7 @@ public class CounterFinderImpl
 		return connection;
 	}
 
-	protected CounterRegister getCounterRegister(String name)
-		throws SystemException {
+	protected CounterRegister getCounterRegister(String name) {
 
 		CounterRegister counterRegister = _counterRegisterMap.get(name);
 
@@ -314,8 +311,7 @@ public class CounterFinderImpl
 		return rangeSize.intValue();
 	}
 
-	private long _competeIncrement(CounterRegister counterRegister, int size)
-		throws SystemException {
+	private long _competeIncrement(CounterRegister counterRegister, int size) {
 
 		CounterHolder counterHolder = counterRegister.getCounterHolder();
 
@@ -380,8 +376,7 @@ public class CounterFinderImpl
 	}
 
 	private CounterHolder _obtainIncrement(
-			String counterName, long range, long size)
-		throws SystemException {
+		String counterName, long range, long size) {
 
 		Session session = null;
 

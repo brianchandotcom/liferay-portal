@@ -15,7 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 
@@ -28,7 +27,7 @@ public class TeamImpl extends TeamBaseImpl {
 	}
 
 	@Override
-	public Role getRole() throws PortalException, SystemException {
+	public Role getRole() throws PortalException {
 		return RoleLocalServiceUtil.getTeamRole(getCompanyId(), getTeamId());
 	}
 

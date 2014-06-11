@@ -103,7 +103,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@After
-	public void tearDown() throws PortalException, SystemException {
+	public void tearDown() throws PortalException {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
 
 		GroupLocalServiceUtil.deleteGroup(_group);
@@ -112,7 +112,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testCountAncestors() throws SystemException {
+	public void testCountAncestors() {
 		testInsert();
 
 		assertCountAncestors(1, _assetCategories[0]);
@@ -127,7 +127,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testCountChildren() throws SystemException {
+	public void testCountChildren() {
 		testInsert();
 
 		assertCountChildren(5, _assetCategories[0]);
@@ -142,7 +142,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testDelete() throws SystemException {
+	public void testDelete() {
 		testInsert();
 
 		_nestedSetsTreeManager.delete(_assetCategories[7]);
@@ -336,7 +336,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testGetAncestors() throws SystemException {
+	public void testGetAncestors() {
 		testInsert();
 
 		assertGetAncestors(_assetCategories[0]);
@@ -354,7 +354,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testGetDescendants() throws SystemException {
+	public void testGetDescendants() {
 		testInsert();
 
 		assertGetDescendants(
@@ -372,7 +372,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testInsert() throws SystemException {
+	public void testInsert() {
 
 		// (0)
 
@@ -484,7 +484,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testMove() throws SystemException {
+	public void testMove() {
 		testInsert();
 
 		_nestedSetsTreeManager.move(_assetCategories[4], null, null);
@@ -608,8 +608,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertCountAncestors(
-			long ancestorsCount, AssetCategory assetCategory)
-		throws SystemException {
+		long ancestorsCount, AssetCategory assetCategory) {
 
 		Assert.assertEquals(
 			ancestorsCount,
@@ -617,8 +616,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertCountChildren(
-			long childrenCount, AssetCategory assetCategory)
-		throws SystemException {
+		long childrenCount, AssetCategory assetCategory) {
 
 		Assert.assertEquals(
 			childrenCount,
@@ -627,8 +625,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 	protected void assertGetAncestors(
 			AssetCategory assetCategory,
-			AssetCategory... ancestorAssetCategories)
-		throws SystemException {
+			AssetCategory... ancestorAssetCategories) {
 
 		List<AssetCategory> expectedAssetCategories =
 			new ArrayList<AssetCategory>(
@@ -648,8 +645,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertGetDescendants(
-			AssetCategory assetCategory, AssetCategory... childAssetCategories)
-		throws SystemException {
+		AssetCategory assetCategory, AssetCategory... childAssetCategories) {
 
 		List<AssetCategory> expectedAssetCategories =
 			new ArrayList<AssetCategory>(Arrays.asList(childAssetCategories));
@@ -668,9 +664,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertLeftAndRight(
-			AssetCategory assetCategory, long leftCategoryId,
-			long rightCategoryId)
-		throws SystemException {
+		AssetCategory assetCategory, long leftCategoryId,
+		long rightCategoryId) {
 
 		Assert.assertEquals(leftCategoryId, assetCategory.getLeftCategoryId());
 		Assert.assertEquals(
@@ -679,15 +674,13 @@ public class PersistenceNestedSetsTreeManagerTest {
 		_assetCategoryPersistence.update(assetCategory);
 	}
 
-	protected void synchronizeAssetCategories(AssetCategory assetCategory)
-		throws SystemException {
+	protected void synchronizeAssetCategories(AssetCategory assetCategory) {
 
 		synchronizeAssetCategories(assetCategory, false);
 	}
 
 	protected void synchronizeAssetCategories(
-			AssetCategory assetCategory, boolean delete)
-		throws SystemException {
+		AssetCategory assetCategory, boolean delete) {
 
 		if (assetCategory != null) {
 			if (delete) {

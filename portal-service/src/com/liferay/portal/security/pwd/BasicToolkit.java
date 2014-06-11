@@ -15,7 +15,6 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordPolicy;
 
 /**
@@ -30,12 +29,12 @@ public abstract class BasicToolkit implements Toolkit {
 	public abstract void validate(
 			long userId, String password1, String password2,
 			PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Override
 	public void validate(
 			String password1, String password2, PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(0, password1, password2, passwordPolicy);
 	}

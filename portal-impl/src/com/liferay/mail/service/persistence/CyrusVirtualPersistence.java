@@ -30,13 +30,13 @@ public interface CyrusVirtualPersistence extends BasePersistence<Dummy> {
 	public CyrusVirtual findByPrimaryKey(String emailAddress)
 		throws NoSuchCyrusVirtualException, SystemException;
 
-	public List<CyrusVirtual> findByUserId(long userId) throws SystemException;
+	public List<CyrusVirtual> findByUserId(long userId);
 
 	public void remove(String emailAddress)
 		throws NoSuchCyrusVirtualException, SystemException;
 
-	public void removeByUserId(long userId) throws SystemException;
+	public void removeByUserId(long userId);
 
-	public void update(CyrusVirtual virtual) throws SystemException;
+	public void update(CyrusVirtual virtual);
 
 }

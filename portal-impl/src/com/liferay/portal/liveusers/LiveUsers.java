@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
@@ -48,9 +47,7 @@ import javax.servlet.http.HttpSession;
 public class LiveUsers {
 
 	public static void addClusterNode(
-			String clusterNodeId,
-			Map<Long, Map<Long, Set<String>>> clusterUsers)
-		throws SystemException {
+		String clusterNodeId, Map<Long, Map<Long, Set<String>>> clusterUsers) {
 
 		_instance._addClusterNode(clusterNodeId, clusterUsers);
 	}
@@ -68,8 +65,7 @@ public class LiveUsers {
 		return getGroupUsers(companyId, groupId).size();
 	}
 
-	public static Map<Long, Map<Long, Set<String>>> getLocalClusterUsers()
-		throws SystemException {
+	public static Map<Long, Map<Long, Set<String>>> getLocalClusterUsers() {
 
 		return _instance._getLocalClusterUsers();
 	}
@@ -108,16 +104,14 @@ public class LiveUsers {
 		_instance._leaveGroup(companyId, groupId, userIds);
 	}
 
-	public static void removeClusterNode(String clusterNodeId)
-		throws SystemException {
+	public static void removeClusterNode(String clusterNodeId) {
 
 		_instance._removeClusterNode(clusterNodeId);
 	}
 
 	public static void signIn(
-			String clusterNodeId, long companyId, long userId, String sessionId,
-			String remoteAddr, String remoteHost, String userAgent)
-		throws SystemException {
+		String clusterNodeId, long companyId, long userId, String sessionId,
+		String remoteAddr, String remoteHost, String userAgent) {
 
 		_instance._signIn(
 			clusterNodeId, companyId, userId, sessionId, remoteAddr, remoteHost,
@@ -125,8 +119,7 @@ public class LiveUsers {
 	}
 
 	public static void signOut(
-			String clusterNodeId, long companyId, long userId, String sessionId)
-		throws SystemException {
+		String clusterNodeId, long companyId, long userId, String sessionId) {
 
 		_instance._signOut(clusterNodeId, companyId, userId, sessionId);
 	}
@@ -136,8 +129,7 @@ public class LiveUsers {
 
 	private void _addClusterNode(
 			String clusterNodeId,
-			Map<Long, Map<Long, Set<String>>> clusterUsers)
-		throws SystemException {
+			Map<Long, Map<Long, Set<String>>> clusterUsers) {
 
 		if (Validator.isNull(clusterNodeId)) {
 			return;
@@ -251,8 +243,7 @@ public class LiveUsers {
 		return liveUsers;
 	}
 
-	private Map<Long, Map<Long, Set<String>>> _getLocalClusterUsers()
-		throws SystemException {
+	private Map<Long, Map<Long, Set<String>>> _getLocalClusterUsers() {
 
 		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
 
@@ -341,8 +332,7 @@ public class LiveUsers {
 		}
 	}
 
-	private void _removeClusterNode(String clusterNodeId)
-		throws SystemException {
+	private void _removeClusterNode(String clusterNodeId) {
 
 		if (Validator.isNull(clusterNodeId)) {
 			return;
@@ -432,9 +422,8 @@ public class LiveUsers {
 	}
 
 	private void _signIn(
-			String clusterNodeId, long companyId, long userId, String sessionId,
-			String remoteAddr, String remoteHost, String userAgent)
-		throws SystemException {
+		String clusterNodeId, long companyId, long userId, String sessionId,
+		String remoteAddr, String remoteHost, String userAgent) {
 
 		_addClusterUser(clusterNodeId, companyId, userId, sessionId);
 
@@ -474,8 +463,7 @@ public class LiveUsers {
 	}
 
 	private void _signOut(
-			String clusterNodeId, long companyId, long userId, String sessionId)
-		throws SystemException {
+		String clusterNodeId, long companyId, long userId, String sessionId) {
 
 		_removeClusterUser(clusterNodeId, companyId, userId, sessionId);
 
@@ -534,8 +522,7 @@ public class LiveUsers {
 	}
 
 	private Map<Long, Set<Long>> _updateGroupStatus(
-			long companyId, long userId, boolean signedIn)
-		throws SystemException {
+			long companyId, long userId, boolean signedIn) {
 
 		Map<Long, Set<Long>> liveUsers = _getLiveUsers(companyId);
 

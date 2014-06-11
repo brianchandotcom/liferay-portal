@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -556,7 +555,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected Collection<Document> getArticleVersions(JournalArticle article)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Collection<Document> documents = new ArrayList<Document>();
 
@@ -635,9 +634,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexArticles(long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexArticles(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
@@ -675,7 +672,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected void reindexArticleVersions(JournalArticle article)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), article.getCompanyId(),

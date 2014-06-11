@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -34,7 +33,7 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, Group group, Role role)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, group, role)) {
 			throw new PrincipalException();
@@ -44,7 +43,7 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, roleId)) {
 			throw new PrincipalException();
@@ -54,7 +53,7 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Group group, Role role)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			return false;
@@ -100,7 +99,7 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Role role = RoleLocalServiceUtil.getRole(roleId);

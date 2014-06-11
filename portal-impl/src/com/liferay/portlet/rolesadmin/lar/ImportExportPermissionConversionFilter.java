@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.rolesadmin.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -31,8 +30,7 @@ public class ImportExportPermissionConversionFilter
 	implements PermissionConversionFilter {
 
 	@Override
-	public boolean accept(Role role, ResourcePermission resourcePermission)
-		throws SystemException {
+	public boolean accept(Role role, ResourcePermission resourcePermission) {
 
 		int scope = resourcePermission.getScope();
 
@@ -57,8 +55,7 @@ public class ImportExportPermissionConversionFilter
 
 	@Override
 	public boolean accept(
-			Role role, ResourceTypePermission resourceTypePermission)
-		throws SystemException {
+		Role role, ResourceTypePermission resourceTypePermission) {
 
 		if (role.getType() != RoleConstants.TYPE_REGULAR) {
 			return true;

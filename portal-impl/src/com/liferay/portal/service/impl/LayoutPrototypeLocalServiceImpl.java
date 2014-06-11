@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,7 +52,7 @@ public class LayoutPrototypeLocalServiceImpl
 			long userId, long companyId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Layout prototype
 
@@ -126,7 +125,7 @@ public class LayoutPrototypeLocalServiceImpl
 	public LayoutPrototype addLayoutPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
 			String description, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addLayoutPrototype(
 			userId, companyId, nameMap, description, active,
@@ -142,7 +141,7 @@ public class LayoutPrototypeLocalServiceImpl
 	public LayoutPrototype addLayoutPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
 			String description, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
@@ -158,7 +157,7 @@ public class LayoutPrototypeLocalServiceImpl
 		type = SystemEventConstants.TYPE_DELETE)
 	public LayoutPrototype deleteLayoutPrototype(
 			LayoutPrototype layoutPrototype)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Group
 
@@ -192,7 +191,7 @@ public class LayoutPrototypeLocalServiceImpl
 
 	@Override
 	public LayoutPrototype deleteLayoutPrototype(long layoutPrototypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
@@ -203,7 +202,7 @@ public class LayoutPrototypeLocalServiceImpl
 
 	@Override
 	public void deleteNondefaultLayoutPrototypes(long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long defaultUserId = userLocalService.getDefaultUserId(companyId);
 
@@ -225,7 +224,7 @@ public class LayoutPrototypeLocalServiceImpl
 	@Deprecated
 	@Override
 	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return layoutPrototypePersistence.findByUuid_First(uuid, null);
 	}
@@ -233,7 +232,7 @@ public class LayoutPrototypeLocalServiceImpl
 	@Override
 	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
 			String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return layoutPrototypePersistence.findByUuid_C_First(
 			uuid, companyId, null);
@@ -241,9 +240,8 @@ public class LayoutPrototypeLocalServiceImpl
 
 	@Override
 	public List<LayoutPrototype> search(
-			long companyId, Boolean active, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long companyId, Boolean active, int start, int end,
+		OrderByComparator obc) {
 
 		if (active != null) {
 			return layoutPrototypePersistence.findByC_A(
@@ -256,8 +254,7 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	@Override
-	public int searchCount(long companyId, Boolean active)
-		throws SystemException {
+	public int searchCount(long companyId, Boolean active) {
 
 		if (active != null) {
 			return layoutPrototypePersistence.countByC_A(companyId, active);
@@ -272,7 +269,7 @@ public class LayoutPrototypeLocalServiceImpl
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Layout prototype
 
@@ -308,7 +305,7 @@ public class LayoutPrototypeLocalServiceImpl
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateLayoutPrototype(
 			layoutPrototypeId, nameMap, description, active, null);
@@ -323,7 +320,7 @@ public class LayoutPrototypeLocalServiceImpl
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 

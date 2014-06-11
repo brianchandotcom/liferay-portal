@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.image;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Image;
 
 import java.io.InputStream;
@@ -26,15 +25,15 @@ import java.io.InputStream;
 public interface Hook {
 
 	public void deleteImage(Image image)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public byte[] getImageAsBytes(Image image)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public InputStream getImageAsStream(Image image)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateImage(Image image, String type, byte[] bytes)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

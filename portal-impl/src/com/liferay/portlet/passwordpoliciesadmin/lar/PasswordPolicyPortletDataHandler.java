@@ -16,7 +16,6 @@ package com.liferay.portlet.passwordpoliciesadmin.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -123,8 +122,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
-			final PortletDataContext portletDataContext, final boolean export)
-		throws SystemException {
+		final PortletDataContext portletDataContext, final boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			PasswordPolicyLocalServiceUtil.getExportActionableDynamicQuery(

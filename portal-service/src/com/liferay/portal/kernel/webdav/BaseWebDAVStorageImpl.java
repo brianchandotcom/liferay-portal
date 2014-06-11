@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.webdav;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil;
 import com.liferay.portal.model.Group;
@@ -160,7 +159,7 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 		return false;
 	}
 
-	protected long getPlid(long groupId) throws SystemException {
+	protected long getPlid(long groupId) {
 		return LayoutLocalServiceUtil.getDefaultPlid(groupId);
 	}
 

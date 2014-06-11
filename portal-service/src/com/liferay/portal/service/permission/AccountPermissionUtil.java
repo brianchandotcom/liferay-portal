@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -28,7 +27,7 @@ public class AccountPermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getAccountPermission().check(permissionChecker, account, actionId);
 	}
@@ -36,7 +35,7 @@ public class AccountPermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getAccountPermission().check(permissionChecker, accountId, actionId);
 	}
@@ -44,7 +43,7 @@ public class AccountPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAccountPermission().contains(
 			permissionChecker, account, actionId);
@@ -53,7 +52,7 @@ public class AccountPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAccountPermission().contains(
 			permissionChecker, accountId, actionId);

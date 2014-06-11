@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.NoSuchPortletItemException;
 import com.liferay.portal.PortletItemNameException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
@@ -37,7 +36,7 @@ public class PortletItemLocalServiceImpl
 	public PortletItem addPortletItem(
 			long userId, long groupId, String name, String portletId,
 			String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -67,7 +66,7 @@ public class PortletItemLocalServiceImpl
 	@Override
 	public PortletItem getPortletItem(
 			long groupId, String name, String portletId, String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -76,8 +75,7 @@ public class PortletItemLocalServiceImpl
 	}
 
 	@Override
-	public List<PortletItem> getPortletItems(long groupId, String className)
-		throws SystemException {
+	public List<PortletItem> getPortletItems(long groupId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -86,8 +84,7 @@ public class PortletItemLocalServiceImpl
 
 	@Override
 	public List<PortletItem> getPortletItems(
-			long groupId, String portletId, String className)
-		throws SystemException {
+		long groupId, String portletId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -99,7 +96,7 @@ public class PortletItemLocalServiceImpl
 	public PortletItem updatePortletItem(
 			long userId, long groupId, String name, String portletId,
 			String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletItem portletItem = null;
 

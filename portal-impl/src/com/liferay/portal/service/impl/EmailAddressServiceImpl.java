@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -40,7 +39,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	public EmailAddress addEmailAddress(
 			String className, long classPK, String address, int typeId,
 			boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -53,7 +52,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	public EmailAddress addEmailAddress(
 			String className, long classPK, String address, int typeId,
 			boolean primary, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -64,9 +63,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteEmailAddress(long emailAddressId)
-		throws PortalException, SystemException {
-
+	public void deleteEmailAddress(long emailAddressId) throws PortalException {
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
 			emailAddressId);
 
@@ -79,7 +76,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress getEmailAddress(long emailAddressId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
 			emailAddressId);
@@ -93,7 +90,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public List<EmailAddress> getEmailAddresses(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
@@ -107,7 +104,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	@Override
 	public EmailAddress updateEmailAddress(
 			long emailAddressId, String address, int typeId, boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
 			emailAddressId);

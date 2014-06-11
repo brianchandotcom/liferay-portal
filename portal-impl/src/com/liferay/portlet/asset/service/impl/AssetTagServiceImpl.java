@@ -16,7 +16,6 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,7 +56,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public AssetTag addTag(
 			String name, String[] tagProperties, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -68,7 +67,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteTag(long tagId) throws PortalException, SystemException {
+	public void deleteTag(long tagId) throws PortalException {
 		AssetTagPermission.check(
 			getPermissionChecker(), tagId, ActionKeys.DELETE);
 
@@ -76,9 +75,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteTags(long[] tagIds)
-		throws PortalException, SystemException {
-
+	public void deleteTags(long[] tagIds) throws PortalException {
 		for (long tagId : tagIds) {
 			AssetTagPermission.check(
 				getPermissionChecker(), tagId, ActionKeys.DELETE);
@@ -88,8 +85,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public List<AssetTag> getGroupsTags(long[] groupIds)
-		throws SystemException {
+	public List<AssetTag> getGroupsTags(long[] groupIds) {
 
 		Set<AssetTag> groupsTags = new TreeSet<AssetTag>(
 			new AssetTagNameComparator());
@@ -104,28 +100,26 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public List<AssetTag> getGroupTags(long groupId) throws SystemException {
+	public List<AssetTag> getGroupTags(long groupId) {
 		return assetTagPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<AssetTag> getGroupTags(
-			long groupId, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long groupId, int start, int end, OrderByComparator obc) {
 
 		return assetTagPersistence.filterFindByGroupId(
 			groupId, start, end, obc);
 	}
 
 	@Override
-	public int getGroupTagsCount(long groupId) throws SystemException {
+	public int getGroupTagsCount(long groupId) {
 		return assetTagPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
 	public AssetTagDisplay getGroupTagsDisplay(
-			long groupId, String name, int start, int end)
-		throws SystemException {
+		long groupId, String name, int start, int end) {
 
 		List<AssetTag> tags = null;
 		int total = 0;
@@ -152,7 +146,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public JSONObject getJSONGroupTags(
 			long groupId, String name, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -186,7 +180,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public AssetTag getTag(long tagId) throws PortalException, SystemException {
+	public AssetTag getTag(long tagId) throws PortalException {
 		AssetTagPermission.check(
 			getPermissionChecker(), tagId, ActionKeys.VIEW);
 
@@ -194,8 +188,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public List<AssetTag> getTags(long groupId, long classNameId, String name)
-		throws SystemException {
+	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
 
 		return assetTagFinder.filterFindByG_C_N(
 			groupId, classNameId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -204,9 +197,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(
-			long groupId, long classNameId, String name, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long groupId, long classNameId, String name, int start, int end,
+		OrderByComparator obc) {
 
 		return assetTagFinder.filterFindByG_C_N(
 			groupId, classNameId, name, start, end, obc);
@@ -214,18 +206,15 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(
-			long groupId, String name, String[] tagProperties, int start,
-			int end)
-		throws SystemException {
+		long groupId, String name, String[] tagProperties, int start, int end) {
 
 		return getTags(new long[] {groupId}, name, tagProperties, start, end);
 	}
 
 	@Override
 	public List<AssetTag> getTags(
-			long[] groupIds, String name, String[] tagProperties, int start,
-			int end)
-		throws SystemException {
+		long[] groupIds, String name, String[] tagProperties, int start,
+		int end) {
 
 		return assetTagFinder.filterFindByG_N_P(
 			groupIds, name, tagProperties, start, end, null);
@@ -233,26 +222,24 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return filterTags(assetTagLocalService.getTags(className, classPK));
 	}
 
 	@Override
-	public int getTagsCount(long groupId, long classNameId, String name)
-		throws SystemException {
+	public int getTagsCount(long groupId, long classNameId, String name) {
 
 		return assetTagFinder.filterCountByG_C_N(groupId, classNameId, name);
 	}
 
 	@Override
-	public int getTagsCount(long groupId, String name) throws SystemException {
+	public int getTagsCount(long groupId, String name) {
 		return assetTagFinder.filterCountByG_N(groupId, name);
 	}
 
 	@Override
-	public int getTagsCount(long groupId, String name, String[] tagProperties)
-		throws SystemException {
+	public int getTagsCount(long groupId, String name, String[] tagProperties) {
 
 		return assetTagFinder.filterCountByG_N_P(groupId, name, tagProperties);
 	}
@@ -260,7 +247,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public void mergeTags(
 			long fromTagId, long toTagId, boolean overrideProperties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetTagPermission.check(
 			getPermissionChecker(), fromTagId, ActionKeys.VIEW);
@@ -274,7 +261,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public void mergeTags(
 			long[] fromTagIds, long toTagId, boolean overrideProperties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (long fromTagId : fromTagIds) {
 			mergeTags(fromTagId, toTagId, overrideProperties);
@@ -283,18 +270,15 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public JSONArray search(
-			long groupId, String name, String[] tagProperties, int start,
-			int end)
-		throws SystemException {
+		long groupId, String name, String[] tagProperties, int start, int end) {
 
 		return search(new long[] {groupId}, name, tagProperties, start, end);
 	}
 
 	@Override
 	public JSONArray search(
-			long[] groupIds, String name, String[] tagProperties, int start,
-			int end)
-		throws SystemException {
+		long[] groupIds, String name, String[] tagProperties, int start,
+		int end) {
 
 		List<AssetTag> tags = getTags(
 			groupIds, name, tagProperties, start, end);
@@ -306,7 +290,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public AssetTag updateTag(
 			long tagId, String name, String[] tagProperties,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetTagPermission.check(
 			getPermissionChecker(), tagId, ActionKeys.UPDATE);

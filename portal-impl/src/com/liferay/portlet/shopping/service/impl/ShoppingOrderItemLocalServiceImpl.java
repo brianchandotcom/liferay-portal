@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.service.base.ShoppingOrderItemLocalServiceBaseImpl;
 
@@ -27,8 +26,7 @@ public class ShoppingOrderItemLocalServiceImpl
 	extends ShoppingOrderItemLocalServiceBaseImpl {
 
 	@Override
-	public List<ShoppingOrderItem> getOrderItems(long orderId)
-		throws SystemException {
+	public List<ShoppingOrderItem> getOrderItems(long orderId) {
 
 		return shoppingOrderItemPersistence.findByOrderId(orderId);
 	}

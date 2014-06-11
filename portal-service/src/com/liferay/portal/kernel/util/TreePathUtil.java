@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TreeModel;
 
@@ -32,8 +31,7 @@ public class TreePathUtil {
 
 	public static void rebuildTree(
 			long companyId, long defaultParentPrimaryKey,
-			TreeModelFinder<?> treeModelFinder)
-		throws SystemException {
+			TreeModelFinder<?> treeModelFinder) {
 
 		int size = GetterUtil.getInteger(
 			PropsUtil.get(

@@ -17,7 +17,6 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -55,7 +54,7 @@ public class LayoutExportBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();

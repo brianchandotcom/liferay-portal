@@ -43,7 +43,7 @@ public abstract class BasePublisherMessageListener
 
 	protected void initThreadLocals(
 			long userId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 

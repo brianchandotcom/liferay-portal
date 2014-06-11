@@ -24,7 +24,7 @@ import org.hibernate.Session;
  */
 public class LastSessionRecorderUtil {
 
-	public static void syncLastSessionState() throws SystemException {
+	public static void syncLastSessionState() {
 		Session session = _lastSessionThreadLocal.get();
 
 		if ((session != null) && session.isOpen()) {

@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -360,7 +359,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return JournalArticlePermission.contains(
 			permissionChecker, _article, ActionKeys.UPDATE);
@@ -368,7 +367,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return JournalArticlePermission.contains(
 			permissionChecker, _article, ActionKeys.VIEW);

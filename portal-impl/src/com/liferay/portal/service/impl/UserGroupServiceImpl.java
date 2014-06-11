@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
@@ -51,11 +50,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws PortalException if a group or user group with the primary key
 	 *         could not be found, or if the user did not have permission to
 	 *         assign group members
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
@@ -71,11 +69,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws PortalException if a team or user group with the primary key
 	 *         could not be found, or if the user did not have permission to
 	 *         assign team members
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TeamPermissionUtil.check(
 			getPermissionChecker(), teamId, ActionKeys.ASSIGN_MEMBERS);
@@ -96,14 +93,13 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @return     the user group
 	 * @throws     PortalException if the user group's information was invalid
 	 *             or if the user did not have permission to add the user group
-	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
 	public UserGroup addUserGroup(String name, String description)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addUserGroup(name, description, null);
 	}
@@ -124,12 +120,11 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid or if
 	 *         the user did not have permission to add the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup addUserGroup(
 			String name, String description, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.ADD_USER_GROUP);
@@ -152,12 +147,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws PortalException if a user group with the primary key could not be
 	 *         found, if the user did not have permission to delete the user
 	 *         group, or if the user group had a workflow in approved status
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroup(long userGroupId)
-		throws PortalException, SystemException {
-
+	public void deleteUserGroup(long userGroupId) throws PortalException {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.DELETE);
 
@@ -172,12 +164,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws PortalException if a user group with the primary key could not be
 	 *         found or if the user did not have permission to view the user
 	 *         group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup getUserGroup(long userGroupId)
-		throws PortalException, SystemException {
-
+	public UserGroup getUserGroup(long userGroupId) throws PortalException {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.VIEW);
 
@@ -191,12 +180,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @return Returns the user group with the name
 	 * @throws PortalException if a user group with the name could not be found
 	 *         or if the user did not have permission to view the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup getUserGroup(String name)
-		throws PortalException, SystemException {
-
+	public UserGroup getUserGroup(String name) throws PortalException {
 		User user = getUser();
 
 		UserGroup userGroup = userGroupLocalService.getUserGroup(
@@ -217,11 +203,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @return the user groups to which the user belongs
 	 * @throws PortalException if the current user did not have permission to
 	 *         view the user or any one of the user group members
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> getUserUserGroups(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.VIEW);
@@ -239,11 +224,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @throws PortalException if the user did not have permission to assign
 	 *         group members
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
@@ -258,11 +242,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @throws PortalException if the user did not have permission to assign
 	 *         team members
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TeamPermissionUtil.check(
 			getPermissionChecker(), teamId, ActionKeys.ASSIGN_MEMBERS);
@@ -280,7 +263,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws     PortalException if a user group with the primary key was not
 	 *             found, if the new information was invalid, or if the user did
 	 *             not have permission to update the user group information
-	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	 *             String, String, ServiceContext)}
 	 */
@@ -288,7 +270,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	@Override
 	public UserGroup updateUserGroup(
 			long userGroupId, String name, String description)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserGroup oldUserGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
@@ -320,13 +302,12 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws PortalException if a user group with the primary key was not
 	 *         found, if the new information was invalid, or if the user did not
 	 *         have permission to update the user group information
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup updateUserGroup(
 			long userGroupId, String name, String description,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.UPDATE);

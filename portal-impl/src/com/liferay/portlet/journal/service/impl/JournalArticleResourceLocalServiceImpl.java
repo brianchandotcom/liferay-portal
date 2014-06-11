@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.base.JournalArticleResourceLocalServiceBaseImpl;
@@ -30,23 +29,21 @@ public class JournalArticleResourceLocalServiceImpl
 
 	@Override
 	public void deleteArticleResource(long groupId, String articleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		journalArticleResourcePersistence.removeByG_A(groupId, articleId);
 	}
 
 	@Override
 	public JournalArticleResource fetchArticleResource(
-			long groupId, String articleId)
-		throws SystemException {
+		long groupId, String articleId) {
 
 		return journalArticleResourcePersistence.fetchByG_A(groupId, articleId);
 	}
 
 	@Override
 	public JournalArticleResource fetchArticleResource(
-			String uuid, long groupId)
-		throws SystemException {
+		String uuid, long groupId) {
 
 		return journalArticleResourcePersistence.fetchByUUID_G(uuid, groupId);
 	}
@@ -54,23 +51,21 @@ public class JournalArticleResourceLocalServiceImpl
 	@Override
 	public JournalArticleResource getArticleResource(
 			long articleResourcePrimKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return journalArticleResourcePersistence.findByPrimaryKey(
 			articleResourcePrimKey);
 	}
 
 	@Override
-	public long getArticleResourcePrimKey(long groupId, String articleId)
-		throws SystemException {
+	public long getArticleResourcePrimKey(long groupId, String articleId) {
 
 		return getArticleResourcePrimKey(null, groupId, articleId);
 	}
 
 	@Override
 	public long getArticleResourcePrimKey(
-			String uuid, long groupId, String articleId)
-		throws SystemException {
+		String uuid, long groupId, String articleId) {
 
 		JournalArticleResource articleResource = null;
 
@@ -104,8 +99,7 @@ public class JournalArticleResourceLocalServiceImpl
 	}
 
 	@Override
-	public List<JournalArticleResource> getArticleResources(long groupId)
-		throws SystemException {
+	public List<JournalArticleResource> getArticleResources(long groupId) {
 
 		return journalArticleResourcePersistence.findByGroupId(groupId);
 	}

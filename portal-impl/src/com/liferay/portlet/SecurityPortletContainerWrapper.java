@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
@@ -321,7 +320,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected boolean hasAccessPermission(
 			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -348,7 +347,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected void isAccessAllowedToControlPanelPortlet(
 			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -375,7 +374,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected boolean isAccessAllowedToLayoutPortlet(
 			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (isAccessGrantedByRuntimePortlet(request, portlet)) {
 			return true;
@@ -444,7 +443,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected boolean isAccessGrantedByPortletOnPage(
 			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -490,7 +489,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected boolean isLayoutConfigurationAllowed(
 			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

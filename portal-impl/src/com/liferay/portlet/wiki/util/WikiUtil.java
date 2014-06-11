@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -190,9 +189,8 @@ public class WikiUtil {
 	}
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
-			long nodeId, String title, double sourceVersion,
-			double targetVersion, PageContext pageContext)
-		throws SystemException {
+		long nodeId, String title, double sourceVersion, double targetVersion,
+		PageContext pageContext) {
 
 		double previousVersion = 0;
 		double nextVersion = 0;
@@ -430,7 +428,7 @@ public class WikiUtil {
 	}
 
 	public static WikiNode getFirstNode(PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

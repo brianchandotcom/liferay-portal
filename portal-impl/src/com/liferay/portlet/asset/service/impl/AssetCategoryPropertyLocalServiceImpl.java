@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.CategoryPropertyKeyException;
 import com.liferay.portlet.asset.CategoryPropertyValueException;
@@ -36,7 +35,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	@Override
 	public AssetCategoryProperty addCategoryProperty(
 			long userId, long categoryId, String key, String value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -63,7 +62,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCategoryProperties(long entryId) throws SystemException {
+	public void deleteCategoryProperties(long entryId) {
 		List<AssetCategoryProperty> categoryProperties =
 			assetCategoryPropertyPersistence.findByCategoryId(entryId);
 
@@ -73,15 +72,14 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty)
-		throws SystemException {
+	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty) {
 
 		assetCategoryPropertyPersistence.remove(categoryProperty);
 	}
 
 	@Override
 	public void deleteCategoryProperty(long categoryPropertyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetCategoryProperty categoryProperty =
 			assetCategoryPropertyPersistence.findByPrimaryKey(
@@ -91,22 +89,20 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	@Override
-	public List<AssetCategoryProperty> getCategoryProperties()
-		throws SystemException {
+	public List<AssetCategoryProperty> getCategoryProperties() {
 
 		return assetCategoryPropertyPersistence.findAll();
 	}
 
 	@Override
-	public List<AssetCategoryProperty> getCategoryProperties(long entryId)
-		throws SystemException {
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
 
 		return assetCategoryPropertyPersistence.findByCategoryId(entryId);
 	}
 
 	@Override
 	public AssetCategoryProperty getCategoryProperty(long categoryPropertyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetCategoryPropertyPersistence.findByPrimaryKey(
 			categoryPropertyId);
@@ -115,15 +111,14 @@ public class AssetCategoryPropertyLocalServiceImpl
 	@Override
 	public AssetCategoryProperty getCategoryProperty(
 			long categoryId, String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetCategoryPropertyPersistence.findByCA_K(categoryId, key);
 	}
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
-			long groupId, String key)
-		throws SystemException {
+		long groupId, String key) {
 
 		return assetCategoryPropertyFinder.findByG_K(groupId, key);
 	}
@@ -131,7 +126,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long userId, long categoryPropertyId, String key, String value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(key, value);
 
@@ -158,7 +153,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long categoryPropertyId, String key, String value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateCategoryProperty(0, categoryPropertyId, key, value);
 	}

@@ -45,7 +45,7 @@ public class AssetCategoryPropertyFinderImpl
 		AssetCategoryPropertyFinder.class.getName() + ".findByG_K";
 
 	@Override
-	public int countByG_K(long groupId, String key) throws SystemException {
+	public int countByG_K(long groupId, String key) {
 		Session session = null;
 
 		try {
@@ -83,16 +83,14 @@ public class AssetCategoryPropertyFinderImpl
 	}
 
 	@Override
-	public List<AssetCategoryProperty> findByG_K(long groupId, String key)
-		throws SystemException {
+	public List<AssetCategoryProperty> findByG_K(long groupId, String key) {
 
 		return findByG_K(groupId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<AssetCategoryProperty> findByG_K(
-			long groupId, String key, int start, int end)
-		throws SystemException {
+		long groupId, String key, int start, int end) {
 
 		Session session = null;
 

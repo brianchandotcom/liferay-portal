@@ -47,12 +47,11 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @throws PortalException if the directory's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void addDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Adds a file based on a byte array.
@@ -63,12 +62,11 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  bytes the files's data
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File file = null;
 
@@ -94,12 +92,11 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  file Name the file name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		InputStream is = null;
 
@@ -132,22 +129,20 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file name
 	 * @param  is the files's data
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Ensures company's root directory exists. Only implemented by {@link
 	 * JCRStore#checkRoot(long)}.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public abstract void checkRoot(long companyId) throws SystemException;
+	public abstract void checkRoot(long companyId);
 
 	/**
 	 * Creates a new copy of the file version.
@@ -165,13 +160,12 @@ public abstract class BaseStore implements Store {
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
@@ -191,12 +185,11 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @throws PortalException if the directory's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void deleteDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Deletes a file. If a file has multiple versions, all versions will be
@@ -207,12 +200,11 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void deleteFile(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Deletes a file at a particular version.
@@ -223,13 +215,12 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns the file as a {@link File} object.
@@ -248,11 +239,10 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return Returns the {@link File} object with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getFile(companyId, repositoryId, fileName, StringPool.BLANK);
 	}
@@ -280,13 +270,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link File} object with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
@@ -300,12 +289,11 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return Returns the byte array with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		byte[] bytes = null;
 
@@ -331,13 +319,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's version label
 	 * @return Returns the byte array with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		byte[] bytes = null;
 
@@ -363,12 +350,11 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return Returns the {@link InputStream} object with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getFileAsStream(
 			companyId, repositoryId, fileName, StringPool.BLANK);
@@ -384,13 +370,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link InputStream} object with the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns all files of the directory.
@@ -401,12 +386,11 @@ public abstract class BaseStore implements Store {
 	 * @param  dirName the directory's name
 	 * @return Returns all files of the directory
 	 * @throws PortalException if the directory's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract String[] getFileNames(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns the size of the file.
@@ -417,12 +401,11 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return Returns the size of the file
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract long getFileSize(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the directory exists.
@@ -434,12 +417,11 @@ public abstract class BaseStore implements Store {
 	 * @return <code>true</code> if the directory exists; <code>false</code>
 	 *         otherwise
 	 * @throws PortalException if the directory's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract boolean hasDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the file exists.
@@ -451,11 +433,10 @@ public abstract class BaseStore implements Store {
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return hasFile(companyId, repositoryId, fileName, VERSION_DEFAULT);
 	}
@@ -471,13 +452,12 @@ public abstract class BaseStore implements Store {
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Moves an existing directory. Only implemented by {@link
@@ -485,11 +465,9 @@ public abstract class BaseStore implements Store {
 	 *
 	 * @param  srcDir the original directory's name
 	 * @param  destDir the new directory's name
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public abstract void move(String srcDir, String destDir)
-		throws SystemException;
+	public abstract void move(String srcDir, String destDir);
 
 	/**
 	 * Moves a file to a new data repository.
@@ -499,13 +477,12 @@ public abstract class BaseStore implements Store {
 	 * @param  newRepositoryId the primary key of the new data repository
 	 * @param  fileName the file's name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Updates a file based on a byte array.
@@ -517,13 +494,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's new version label
 	 * @param  bytes the new file's data
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File file = null;
 
@@ -550,13 +526,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's new version label
 	 * @param  file Name the file name
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		InputStream is = null;
 
@@ -590,13 +565,12 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's new version label
 	 * @param  is the new file's data
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public abstract void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Update's a file version label. Similar to {@link #copyFileVersion(long,
@@ -610,13 +584,12 @@ public abstract class BaseStore implements Store {
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label
 	 * @throws PortalException if the file's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);

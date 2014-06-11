@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.translator.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -67,8 +66,7 @@ public class TranslatorUtil {
 		return null;
 	}
 
-	public static Map<String, String> getLanguageIdsMap(Locale locale)
-		throws SystemException {
+	public static Map<String, String> getLanguageIdsMap(Locale locale) {
 
 		Map<String, String> languageIdsMap = new HashMap<String, String>();
 

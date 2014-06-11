@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,7 +45,7 @@ import java.util.List;
 public class AnnouncementsUtil {
 
 	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<Long, long[]>();
 

@@ -325,7 +325,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					_checkAssetEntries(
 						(com.liferay.portal.model.PortletPreferences)object);
@@ -373,7 +373,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
 
@@ -623,7 +623,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetEntryQuery(
 			portletPreferences, scopeGroupIds, null, null);
@@ -634,7 +634,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PortletPreferences portletPreferences, long[] scopeGroupIds,
 			long[] overrideAllAssetCategoryIds,
 			String[] overrideAllAssetTagNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -973,8 +973,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public String getEmailFromAddress(
-			PortletPreferences portletPreferences, long companyId)
-		throws SystemException {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromAddress(
 			portletPreferences, companyId,
@@ -983,8 +982,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public String getEmailFromName(
-			PortletPreferences portletPreferences, long companyId)
-		throws SystemException {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromName(
 			portletPreferences, companyId,
@@ -994,7 +992,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public long getGroupIdFromScopeId(
 			String scopeId, long siteGroupId, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
 			String scopeIdSuffix = scopeId.substring(
@@ -1136,7 +1134,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public String getScopeId(Group group, long scopeGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String key = null;
 
@@ -1172,7 +1170,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public long getSubscriptionClassPK(long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
@@ -1186,7 +1184,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long groupId = getGroupIdFromScopeId(
 			scopeId, layout.getGroupId(), layout.isPrivateLayout());
@@ -1233,7 +1231,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId,
@@ -1245,7 +1243,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public void notifySubscribers(
 			PortletPreferences portletPreferences, long plid, String portletId,
 			List<AssetEntry> assetEntries)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!getEmailAssetEntryAddedEnabled(portletPreferences) ||
 			assetEntries.isEmpty()) {
@@ -1365,7 +1363,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletPermissionUtil.check(
 			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
@@ -1386,7 +1384,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletPermissionUtil.check(
 			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
@@ -1397,9 +1395,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	protected long[] getSiteGroupIds(long[] groupIds)
-		throws PortalException, SystemException {
-
+	protected long[] getSiteGroupIds(long[] groupIds) throws PortalException {
 		Set<Long> siteGroupIds = new HashSet<Long>();
 
 		for (long groupId : groupIds) {
@@ -1412,7 +1408,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	private void _checkAssetEntries(
 			com.liferay.portal.model.PortletPreferences
 			portletPreferencesModel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			portletPreferencesModel.getPlid());

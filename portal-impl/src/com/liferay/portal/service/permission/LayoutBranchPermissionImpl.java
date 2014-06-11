@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -41,7 +40,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 	public void check(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, layoutBranchId, actionId)) {
 			throw new PrincipalException();
@@ -62,7 +61,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutBranch layoutBranch =
 			LayoutBranchLocalServiceUtil.getLayoutBranch(layoutBranchId);

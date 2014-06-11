@@ -124,40 +124,40 @@ public interface UsersAdmin {
 		throws Exception;
 
 	public long[] addRequiredRoles(long userId, long[] roleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long[] addRequiredRoles(User user, long[] roleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Role> filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Group> filterGroups(
 			PermissionChecker permissionChecker, List<Group> groups)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Organization> filterOrganizations(
 			PermissionChecker permissionChecker,
 			List<Organization> organizations)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Role> filterRoles(
 		PermissionChecker permissionChecker, List<Role> roles);
 
 	public long[] filterUnsetGroupUserIds(
 			PermissionChecker permissionChecker, long groupId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long[] filterUnsetOrganizationUserIds(
 			PermissionChecker permissionChecker, long organizationId,
 			long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<UserGroupRole> filterUserGroupRoles(
 			PermissionChecker permissionChecker,
 			List<UserGroupRole> userGroupRoles)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<UserGroup> filterUserGroups(
 		PermissionChecker permissionChecker, List<UserGroup> userGroups);
@@ -181,7 +181,7 @@ public interface UsersAdmin {
 		String orderByCol, String orderByType);
 
 	public List<Organization> getOrganizations(Hits hits)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<OrgLabor> getOrgLabors(ActionRequest actionRequest);
 
@@ -197,16 +197,16 @@ public interface UsersAdmin {
 		String orderByCol, String orderByType);
 
 	public List<UserGroupRole> getUserGroupRoles(PortletRequest portletRequest)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<UserGroup> getUserGroups(Hits hits)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public OrderByComparator getUserOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public List<User> getUsers(Hits hits)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Website> getWebsites(ActionRequest actionRequest);
 
@@ -221,12 +221,12 @@ public interface UsersAdmin {
 	@Deprecated
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasUpdateFieldPermission(
 			PermissionChecker permissionChecker, User updatingUser,
 			User updatedUser, String field)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -235,7 +235,7 @@ public interface UsersAdmin {
 	 */
 	@Deprecated
 	public boolean hasUpdateFieldPermission(User user, String field)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -245,30 +245,30 @@ public interface UsersAdmin {
 	@Deprecated
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long[] removeRequiredRoles(long userId, long[] roleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long[] removeRequiredRoles(User user, long[] roleIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateAddresses(
 			String className, long classPK, List<Address> addresses)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateEmailAddresses(
 			String className, long classPK, List<EmailAddress> emailAddresses)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateOrgLabors(long classPK, List<OrgLabor> orgLabors)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updatePhones(String className, long classPK, List<Phone> phones)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateWebsites(
 			String className, long classPK, List<Website> websites)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

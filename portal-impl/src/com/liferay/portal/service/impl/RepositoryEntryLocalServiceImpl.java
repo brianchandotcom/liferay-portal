@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -36,7 +35,7 @@ public class RepositoryEntryLocalServiceImpl
 	public RepositoryEntry addRepositoryEntry(
 			long userId, long groupId, long repositoryId, String mappedId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -62,8 +61,7 @@ public class RepositoryEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<RepositoryEntry> getRepositoryEntries(long repositoryId)
-		throws SystemException {
+	public List<RepositoryEntry> getRepositoryEntries(long repositoryId) {
 
 		return repositoryEntryPersistence.findByRepositoryId(repositoryId);
 	}
@@ -71,7 +69,7 @@ public class RepositoryEntryLocalServiceImpl
 	@Override
 	public RepositoryEntry updateRepositoryEntry(
 			long repositoryEntryId, String mappedId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RepositoryEntry repositoryEntry =
 			repositoryEntryPersistence.findByPrimaryKey(repositoryEntryId);

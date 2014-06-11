@@ -31,6 +31,6 @@ public interface CyrusUserPersistence extends BasePersistence<Dummy> {
 	public void remove(long userId)
 		throws NoSuchCyrusUserException, SystemException;
 
-	public void update(CyrusUser user) throws SystemException;
+	public void update(CyrusUser user);
 
 }

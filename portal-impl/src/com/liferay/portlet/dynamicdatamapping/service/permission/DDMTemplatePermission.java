@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -54,7 +53,7 @@ public class DDMTemplatePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long templateId,
 			String portletId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, groupId, templateId, portletId, actionId)) {
@@ -66,7 +65,7 @@ public class DDMTemplatePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long templateId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, templateId, actionId)) {
 			throw new PrincipalException();
@@ -121,7 +120,7 @@ public class DDMTemplatePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, long templateId,
 			String portletId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 			templateId);
@@ -133,7 +132,7 @@ public class DDMTemplatePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long templateId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 			templateId);
@@ -149,7 +148,7 @@ public class DDMTemplatePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long templateId,
 			String portletId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return contains(permissionChecker, templateId, actionId);
 	}

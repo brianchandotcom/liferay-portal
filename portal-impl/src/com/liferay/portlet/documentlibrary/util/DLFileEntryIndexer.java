@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -292,7 +291,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 	protected void addFileEntryTypeAttributes(
 			Document document, DLFileVersion dlFileVersion)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DLFileEntryMetadata> dlFileEntryMetadatas =
 			DLFileEntryMetadataLocalServiceUtil.
@@ -597,7 +596,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 	protected void reindexFileEntries(
 			long companyId, final long groupId, final long dataRepositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
@@ -640,9 +639,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void reindexFolders(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexFolders(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFolderLocalServiceUtil.getActionableDynamicQuery();
 
@@ -673,9 +670,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void reindexRoot(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			GroupLocalServiceUtil.getActionableDynamicQuery();
 

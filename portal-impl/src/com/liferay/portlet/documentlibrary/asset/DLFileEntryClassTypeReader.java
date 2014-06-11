@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.asset.model.ClassType;
@@ -36,8 +35,7 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 
 	@Override
 	public List<ClassType> getAvailableClassTypes(
-			long[] groupIds, Locale locale)
-		throws SystemException {
+		long[] groupIds, Locale locale) {
 
 		List<ClassType> classTypes = new ArrayList<ClassType>();
 
@@ -60,7 +58,7 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 
 	@Override
 	public ClassType getClassType(long classTypeId, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (classTypeId ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
@@ -76,8 +74,7 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 			dlFileEntryType.getName(locale), LocaleUtil.toLanguageId(locale));
 	}
 
-	protected ClassType getBasicDocumentClassType(Locale locale)
-		throws SystemException {
+	protected ClassType getBasicDocumentClassType(Locale locale) {
 
 		DLFileEntryType basicDocumentDLFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(

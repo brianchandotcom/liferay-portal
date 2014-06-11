@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -31,7 +30,7 @@ public class MembershipRequestServiceImpl
 	@Override
 	public MembershipRequest addMembershipRequest(
 			long groupId, String comments, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return membershipRequestLocalService.addMembershipRequest(
 			getUserId(), groupId, comments, serviceContext);
@@ -39,7 +38,7 @@ public class MembershipRequestServiceImpl
 
 	@Override
 	public void deleteMembershipRequests(long groupId, int statusId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
@@ -50,7 +49,7 @@ public class MembershipRequestServiceImpl
 
 	@Override
 	public MembershipRequest getMembershipRequest(long membershipRequestId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return membershipRequestLocalService.getMembershipRequest(
 			membershipRequestId);
@@ -60,7 +59,7 @@ public class MembershipRequestServiceImpl
 	public void updateStatus(
 			long membershipRequestId, String reviewComments, int statusId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MembershipRequest membershipRequest =
 			membershipRequestPersistence.findByPrimaryKey(membershipRequestId);

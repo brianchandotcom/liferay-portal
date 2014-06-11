@@ -16,7 +16,6 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -36,7 +35,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public BookmarksFolder addFolder(
 			long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolderPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -47,9 +46,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public void deleteFolder(long folderId) throws PortalException {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
@@ -61,7 +58,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
@@ -74,9 +71,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public BookmarksFolder getFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public BookmarksFolder getFolder(long folderId) throws PortalException {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
@@ -88,7 +83,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
@@ -101,15 +96,13 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public List<BookmarksFolder> getFolders(long groupId)
-		throws SystemException {
+	public List<BookmarksFolder> getFolders(long groupId) {
 
 		return bookmarksFolderPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
-	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId)
-		throws SystemException {
+	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId) {
 
 		return bookmarksFolderPersistence.filterFindByG_P_S(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
@@ -117,8 +110,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<BookmarksFolder> getFolders(
-			long groupId, long parentFolderId, int start, int end)
-		throws SystemException {
+		long groupId, long parentFolderId, int start, int end) {
 
 		return getFolders(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, start,
@@ -127,8 +119,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<BookmarksFolder> getFolders(
-			long groupId, long parentFolderId, int status, int start, int end)
-		throws SystemException {
+		long groupId, long parentFolderId, int status, int start, int end) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return bookmarksFolderPersistence.filterFindByG_P(
@@ -141,8 +132,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public List<Object> getFoldersAndEntries(long groupId, long folderId)
-		throws SystemException {
+	public List<Object> getFoldersAndEntries(long groupId, long folderId) {
 
 		return getFoldersAndEntries(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
@@ -150,8 +140,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<Object> getFoldersAndEntries(
-			long groupId, long folderId, int status)
-		throws SystemException {
+		long groupId, long folderId, int status) {
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -161,8 +150,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<Object> getFoldersAndEntries(
-			long groupId, long folderId, int status, int start, int end)
-		throws SystemException {
+		long groupId, long folderId, int status, int start, int end) {
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, null);
@@ -172,8 +160,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public int getFoldersAndEntriesCount(long groupId, long folderId)
-		throws SystemException {
+	public int getFoldersAndEntriesCount(long groupId, long folderId) {
 
 		return getFoldersAndEntriesCount(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
@@ -181,8 +168,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersAndEntriesCount(
-			long groupId, long folderId, int status)
-		throws SystemException {
+		long groupId, long folderId, int status) {
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -191,16 +177,14 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public int getFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
+	public int getFoldersCount(long groupId, long parentFolderId) {
 
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
-	public int getFoldersCount(long groupId, long parentFolderId, int status)
-		throws SystemException {
+	public int getFoldersCount(long groupId, long parentFolderId, int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return bookmarksFolderPersistence.filterCountByG_P_NotS(
@@ -219,16 +203,14 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	@Deprecated
 	@Override
 	public void getSubfolderIds(
-			List<Long> folderIds, long groupId, long folderId)
-		throws SystemException {
+		List<Long> folderIds, long groupId, long folderId) {
 
 		getSubfolderIds(folderIds, groupId, folderId, true);
 	}
 
 	@Override
 	public void getSubfolderIds(
-			List<Long> folderIds, long groupId, long folderId, boolean recurse)
-		throws SystemException {
+		List<Long> folderIds, long groupId, long folderId, boolean recurse) {
 
 		List<BookmarksFolder> folders =
 			bookmarksFolderPersistence.filterFindByG_P_S(
@@ -247,8 +229,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<Long> getSubfolderIds(
-			long groupId, long folderId, boolean recurse)
-		throws SystemException {
+		long groupId, long folderId, boolean recurse) {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
@@ -259,7 +240,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
@@ -273,7 +254,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	@Override
 	public BookmarksFolder moveFolderFromTrash(
 			long folderId, long parentFolderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
@@ -287,7 +268,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public BookmarksFolder moveFolderToTrash(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
@@ -300,9 +281,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
-	public void restoreFolderFromTrash(long folderId)
-		throws PortalException, SystemException {
-
+	public void restoreFolderFromTrash(long folderId) throws PortalException {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
@@ -315,7 +294,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public void subscribeFolder(long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
@@ -326,7 +305,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public void unsubscribeFolder(long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
@@ -339,7 +318,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public BookmarksFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);

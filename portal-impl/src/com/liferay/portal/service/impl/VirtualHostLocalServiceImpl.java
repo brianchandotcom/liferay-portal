@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.VirtualHost;
@@ -28,37 +27,32 @@ public class VirtualHostLocalServiceImpl
 	extends VirtualHostLocalServiceBaseImpl {
 
 	@Override
-	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId)
-		throws SystemException {
+	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId) {
 
 		return virtualHostPersistence.fetchByC_L(companyId, layoutSetId);
 	}
 
 	@Override
-	public VirtualHost fetchVirtualHost(String hostname)
-		throws SystemException {
+	public VirtualHost fetchVirtualHost(String hostname) {
 
 		return virtualHostPersistence.fetchByHostname(hostname);
 	}
 
 	@Override
 	public VirtualHost getVirtualHost(long companyId, long layoutSetId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return virtualHostPersistence.findByC_L(companyId, layoutSetId);
 	}
 
 	@Override
-	public VirtualHost getVirtualHost(String hostname)
-		throws PortalException, SystemException {
-
+	public VirtualHost getVirtualHost(String hostname) throws PortalException {
 		return virtualHostPersistence.findByHostname(hostname);
 	}
 
 	@Override
 	public VirtualHost updateVirtualHost(
-			long companyId, long layoutSetId, String hostname)
-		throws SystemException {
+		long companyId, long layoutSetId, String hostname) {
 
 		VirtualHost virtualHost = virtualHostPersistence.fetchByC_L(
 			companyId, layoutSetId);

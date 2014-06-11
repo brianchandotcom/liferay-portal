@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
@@ -43,7 +42,7 @@ public class LayoutSetPrototypeServiceImpl
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			boolean active, boolean layoutsUpdateable,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
@@ -64,7 +63,7 @@ public class LayoutSetPrototypeServiceImpl
 	public LayoutSetPrototype addLayoutSetPrototype(
 			Map<Locale, String> nameMap, String description, boolean active,
 			boolean layoutsUpdateable, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
@@ -78,7 +77,7 @@ public class LayoutSetPrototypeServiceImpl
 
 	@Override
 	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutSetPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.DELETE);
@@ -89,7 +88,7 @@ public class LayoutSetPrototypeServiceImpl
 
 	@Override
 	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutSetPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.VIEW);
@@ -101,7 +100,7 @@ public class LayoutSetPrototypeServiceImpl
 	@Override
 	public List<LayoutSetPrototype> search(
 			long companyId, Boolean active, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<LayoutSetPrototype> filteredLayoutSetPrototypes =
 			new ArrayList<LayoutSetPrototype>();
@@ -128,7 +127,7 @@ public class LayoutSetPrototypeServiceImpl
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active,
 			boolean layoutsUpdateable, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutSetPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.UPDATE);
@@ -149,7 +148,7 @@ public class LayoutSetPrototypeServiceImpl
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active, boolean layoutsUpdateable,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutSetPrototypePermissionUtil.check(
 			getPermissionChecker(), layoutSetPrototypeId, ActionKeys.UPDATE);
@@ -162,7 +161,7 @@ public class LayoutSetPrototypeServiceImpl
 	@Override
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, String settings)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 			layoutSetPrototypeId, settings);

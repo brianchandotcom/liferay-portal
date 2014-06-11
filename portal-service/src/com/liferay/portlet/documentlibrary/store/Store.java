@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -33,117 +32,116 @@ public interface Store {
 	public static final String VERSION_DEFAULT = "1.0";
 
 	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void checkRoot(long companyId) throws SystemException;
+	public void checkRoot(long companyId);
 
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void deleteDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public String[] getFileNames(long companyId, long repositoryId)
-		throws SystemException;
+	public String[] getFileNames(long companyId, long repositoryId);
 
 	public String[] getFileNames(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void move(String srcDir, String destDir) throws SystemException;
+	public void move(String srcDir, String destDir);
 
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, byte[] bytes)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

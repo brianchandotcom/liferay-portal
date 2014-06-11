@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
@@ -34,7 +33,7 @@ public interface BaseRepository extends Repository {
 
 	public String[][] getSupportedParameters();
 
-	public void initRepository() throws PortalException, SystemException;
+	public void initRepository() throws PortalException;
 
 	public void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService);

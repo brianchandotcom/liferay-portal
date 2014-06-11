@@ -107,7 +107,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public WorkflowInstanceLink deleteWorkflowInstanceLink(
-		long workflowInstanceLinkId) throws PortalException, SystemException {
+		long workflowInstanceLinkId) throws PortalException {
 		return workflowInstanceLinkPersistence.remove(workflowInstanceLinkId);
 	}
 
@@ -123,7 +123,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	@Override
 	public WorkflowInstanceLink deleteWorkflowInstanceLink(
 		WorkflowInstanceLink workflowInstanceLink)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return workflowInstanceLinkPersistence.remove(workflowInstanceLink);
 	}
 

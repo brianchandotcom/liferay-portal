@@ -135,7 +135,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Organization deleteOrganization(long organizationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return organizationPersistence.remove(organizationId);
 	}
 
@@ -150,7 +150,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Organization deleteOrganization(Organization organization)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return organizationPersistence.remove(organization);
 	}
 
@@ -432,7 +432,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 		groupPersistence.addOrganizations(groupId, organizationIds);
 	}
 
@@ -443,7 +443,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Override
 	public void addGroupOrganizations(long groupId,
 		List<Organization> Organizations)
-		throws PortalException, SystemException {
+		throws PortalException {
 		groupPersistence.addOrganizations(groupId, Organizations);
 	}
 
@@ -545,7 +545,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void setGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 		groupPersistence.setOrganizations(groupId, organizationIds);
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Locale;
 
@@ -33,7 +32,7 @@ public interface TrashRenderer {
 
 	public long getClassPK();
 
-	public String getIconCssClass() throws PortalException, SystemException;
+	public String getIconCssClass() throws PortalException;
 
 	public String getIconPath(PortletRequest portletRequest);
 

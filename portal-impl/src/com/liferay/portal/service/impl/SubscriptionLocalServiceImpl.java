@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -65,12 +64,11 @@ public class SubscriptionLocalServiceImpl
 	 * @param  classPK the primary key of the entity's instance
 	 * @return the subscription
 	 * @throws PortalException if a matching user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addSubscription(
 			userId, groupId, className, classPK,
@@ -98,13 +96,12 @@ public class SubscriptionLocalServiceImpl
 	 * @param  frequency the frequency for notifications
 	 * @return the subscription
 	 * @throws PortalException if a matching user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK,
 			String frequency)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Subscription
 
@@ -188,11 +185,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  subscriptionId the primary key of the subscription
 	 * @return the subscription that was removed
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Subscription deleteSubscription(long subscriptionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Subscription subscription = subscriptionPersistence.findByPrimaryKey(
 			subscriptionId);
@@ -209,11 +205,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  classPK the primary key of the entity's instance
 	 * @throws PortalException if a matching user or subscription could not be
 	 *         found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteSubscription(long userId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -233,11 +228,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  subscription the subscription
 	 * @return the subscription that was removed
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Subscription deleteSubscription(Subscription subscription)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Subscription
 
@@ -273,12 +267,9 @@ public class SubscriptionLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the user
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteSubscriptions(long userId)
-		throws PortalException, SystemException {
-
+	public void deleteSubscriptions(long userId) throws PortalException {
 		List<Subscription> subscriptions = subscriptionPersistence.findByUserId(
 			userId);
 
@@ -294,12 +285,11 @@ public class SubscriptionLocalServiceImpl
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteSubscriptions(
 			long companyId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -320,12 +310,11 @@ public class SubscriptionLocalServiceImpl
 	 * @param  classPK the primary key of the entity's instance
 	 * @return the subscription of the user to the entity
 	 * @throws PortalException if a matching subscription could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Subscription getSubscription(
 			long companyId, long userId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -341,12 +330,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  className the entity's class name
 	 * @param  classPKs the primary key of the entities
 	 * @return the subscriptions of the user to the entities
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Subscription> getSubscriptions(
-			long companyId, long userId, String className, long[] classPKs)
-		throws SystemException {
+		long companyId, long userId, String className, long[] classPKs) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -361,12 +348,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @return the subscriptions to the entity
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Subscription> getSubscriptions(
-			long companyId, String className, long classPK)
-		throws SystemException {
+		long companyId, String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -382,13 +367,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @param  orderByComparator the comparator to order the subscriptions
 	 * @return the range of subscriptions of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Subscription> getUserSubscriptions(
-			long userId, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long userId, int start, int end, OrderByComparator orderByComparator) {
 
 		return subscriptionPersistence.findByUserId(
 			userId, start, end, orderByComparator);
@@ -401,12 +383,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  className the entity's class name
 	 * @return the subscriptions of the user to the entities with the class name
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Subscription> getUserSubscriptions(
-			long userId, String className)
-		throws SystemException {
+		long userId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -418,10 +398,9 @@ public class SubscriptionLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of subscriptions of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserSubscriptionsCount(long userId) throws SystemException {
+	public int getUserSubscriptionsCount(long userId) {
 		return subscriptionPersistence.countByUserId(userId);
 	}
 
@@ -434,12 +413,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  classPK the primary key of the entity's instance
 	 * @return <code>true</code> if the user is subscribed to the entity;
 	 *         <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean isSubscribed(
-			long companyId, long userId, String className, long classPK)
-		throws SystemException {
+		long companyId, long userId, String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -464,12 +441,10 @@ public class SubscriptionLocalServiceImpl
 	 * @param  classPKs the primary key of the entities
 	 * @return <code>true</code> if the user is subscribed to any of the
 	 *         entities; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean isSubscribed(
-			long companyId, long userId, String className, long[] classPKs)
-		throws SystemException {
+		long companyId, long userId, String className, long[] classPKs) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 

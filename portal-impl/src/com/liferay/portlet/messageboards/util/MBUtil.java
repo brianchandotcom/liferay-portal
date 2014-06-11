@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -278,7 +277,7 @@ public class MBUtil {
 
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long mbCategoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -347,8 +346,7 @@ public class MBUtil {
 		return categoryId;
 	}
 
-	public static Set<Long> getCategorySubscriptionClassPKs(long userId)
-		throws SystemException {
+	public static Set<Long> getCategorySubscriptionClassPKs(long userId) {
 
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
@@ -738,8 +736,7 @@ public class MBUtil {
 		return priorityPair;
 	}
 
-	public static Set<Long> getThreadSubscriptionClassPKs(long userId)
-		throws SystemException {
+	public static Set<Long> getThreadSubscriptionClassPKs(long userId) {
 
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
@@ -920,7 +917,7 @@ public class MBUtil {
 	public static void propagatePermissions(
 			long companyId, long groupId, long parentMessageId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
 			parentMessageId);
@@ -1134,8 +1131,7 @@ public class MBUtil {
 		return null;
 	}
 
-	private static int _getMessageCount(MBCategory category)
-		throws SystemException {
+	private static int _getMessageCount(MBCategory category) {
 
 		return MBMessageLocalServiceUtil.getCategoryMessagesCount(
 			category.getGroupId(), category.getCategoryId(),

@@ -126,9 +126,8 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected long getUserId(
-			long userId, WikiNode node, String author,
-			Map<String, String> usersMap)
-		throws SystemException {
+		long userId, WikiNode node, String author,
+		Map<String, String> usersMap) {
 
 		User user = null;
 
@@ -557,7 +556,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 	protected String[] readAssetTagNames(
 			long userId, WikiNode node, String content)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Matcher matcher = _categoriesPattern.matcher(content);
 

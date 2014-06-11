@@ -44,9 +44,8 @@ public class ShoppingCouponFinderImpl
 
 	@Override
 	public int countByG_C_C_A_DT(
-			long groupId, long companyId, String code, boolean active,
-			String discountType, boolean andOperator)
-		throws SystemException {
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator) {
 
 		code = CustomSQLUtil.keywords(code)[0];
 
@@ -95,9 +94,8 @@ public class ShoppingCouponFinderImpl
 
 	@Override
 	public List<ShoppingCoupon> findByG_C_C_A_DT(
-			long groupId, long companyId, String code, boolean active,
-			String discountType, boolean andOperator, int start, int end)
-		throws SystemException {
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator, int start, int end) {
 
 		code = CustomSQLUtil.keywords(code)[0];
 

@@ -108,7 +108,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
 		long exportImportConfigurationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return exportImportConfigurationPersistence.remove(exportImportConfigurationId);
 	}
 
@@ -124,7 +124,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return exportImportConfigurationPersistence.remove(exportImportConfiguration);
 	}
 

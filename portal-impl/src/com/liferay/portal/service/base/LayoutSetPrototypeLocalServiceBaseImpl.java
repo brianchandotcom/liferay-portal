@@ -116,7 +116,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutSetPrototype deleteLayoutSetPrototype(
-		long layoutSetPrototypeId) throws PortalException, SystemException {
+		long layoutSetPrototypeId) throws PortalException {
 		return layoutSetPrototypePersistence.remove(layoutSetPrototypeId);
 	}
 
@@ -132,7 +132,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	@Override
 	public LayoutSetPrototype deleteLayoutSetPrototype(
 		LayoutSetPrototype layoutSetPrototype)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutSetPrototypePersistence.remove(layoutSetPrototype);
 	}
 

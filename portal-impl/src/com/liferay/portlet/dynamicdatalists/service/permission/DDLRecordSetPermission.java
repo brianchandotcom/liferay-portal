@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatalists.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -41,7 +40,7 @@ public class DDLRecordSetPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long recordSetId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, recordSetId, actionId)) {
 			throw new PrincipalException();
@@ -51,7 +50,7 @@ public class DDLRecordSetPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long groupId,
 			String recordSetKey, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, recordSetKey, actionId)) {
 			throw new PrincipalException();
@@ -86,7 +85,7 @@ public class DDLRecordSetPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long recordSetId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
 			recordSetId);
@@ -97,7 +96,7 @@ public class DDLRecordSetPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			String recordSetKey, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
 			groupId, recordSetKey);

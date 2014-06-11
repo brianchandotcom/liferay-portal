@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -139,7 +138,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * update this logic updating the logic in the JSP.
 	 */
 	public void deriveDefaultPermissions(long repositoryId, String modelName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long siteGroupId = PortalUtil.getSiteGroupId(repositoryId);
 
@@ -388,9 +387,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *         context
 	 * @throws PortalException if a default user for the company could not be
 	 *         found
-	 * @throws SystemException if a system exception occurred
 	 */
-	public long getGuestOrUserId() throws PortalException, SystemException {
+	public long getGuestOrUserId() throws PortalException {
 		long userId = getUserId();
 
 		if (userId > 0) {
@@ -649,7 +647,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		return PortletConstants.getRootPortletId(portletId);
 	}
 
-	public Group getScopeGroup() throws PortalException, SystemException {
+	public Group getScopeGroup() throws PortalException {
 		return GroupLocalServiceUtil.getGroup(_scopeGroupId);
 	}
 

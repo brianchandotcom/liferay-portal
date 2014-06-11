@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.service.base.AccountLocalServiceBaseImpl;
 
@@ -26,7 +25,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
 	@Override
 	public Account getAccount(long companyId, long accountId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return accountPersistence.findByPrimaryKey(accountId);
 	}

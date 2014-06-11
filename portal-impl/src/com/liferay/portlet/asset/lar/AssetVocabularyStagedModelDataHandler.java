@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -46,8 +45,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws SystemException {
+		String uuid, long groupId, String className, String extraData) {
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.
@@ -203,7 +201,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 	protected Map<Locale, String> getVocabularyTitleMap(
 			long groupId, AssetVocabulary vocabulary, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<Locale, String> titleMap = vocabulary.getTitleMap();
 

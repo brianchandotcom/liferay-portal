@@ -93,7 +93,7 @@ public class LayoutStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
 			extraData);
@@ -845,9 +845,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected String getUniqueFriendlyURL(
-			PortletDataContext portletDataContext, Layout existingLayout,
-			String friendlyURL)
-		throws SystemException {
+		PortletDataContext portletDataContext, Layout existingLayout,
+		String friendlyURL) {
 
 		for (int i = 1;; i++) {
 			Layout duplicateFriendlyURLLayout =
@@ -1224,7 +1223,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void updateTypeSettings(Layout importedLayout, Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long groupId = layout.getGroupId();
 

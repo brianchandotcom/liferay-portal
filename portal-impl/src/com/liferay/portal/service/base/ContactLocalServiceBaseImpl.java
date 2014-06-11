@@ -108,7 +108,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Contact deleteContact(long contactId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return contactPersistence.remove(contactId);
 	}
 
@@ -121,7 +121,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Contact deleteContact(Contact contact) throws SystemException {
+	public Contact deleteContact(Contact contact) {
 		return contactPersistence.remove(contact);
 	}
 

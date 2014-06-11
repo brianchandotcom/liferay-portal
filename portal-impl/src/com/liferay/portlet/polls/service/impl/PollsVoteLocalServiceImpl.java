@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -40,7 +39,7 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	public PollsVote addVote(
 			long userId, long questionId, long choiceId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Choice
 
@@ -114,32 +113,31 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end)
-		throws SystemException {
+	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end) {
 
 		return pollsVotePersistence.findByChoiceId(choiceId, start, end);
 	}
 
 	@Override
-	public int getChoiceVotesCount(long choiceId) throws SystemException {
+	public int getChoiceVotesCount(long choiceId) {
 		return pollsVotePersistence.countByChoiceId(choiceId);
 	}
 
 	@Override
-	public List<PollsVote> getQuestionVotes(long questionId, int start, int end)
-		throws SystemException {
+	public List<PollsVote> getQuestionVotes(
+		long questionId, int start, int end) {
 
 		return pollsVotePersistence.findByQuestionId(questionId, start, end);
 	}
 
 	@Override
-	public int getQuestionVotesCount(long questionId) throws SystemException {
+	public int getQuestionVotesCount(long questionId) {
 		return pollsVotePersistence.countByQuestionId(questionId);
 	}
 
 	@Override
 	public PollsVote getVote(long questionId, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return pollsVotePersistence.findByQ_U(questionId, userId);
 	}

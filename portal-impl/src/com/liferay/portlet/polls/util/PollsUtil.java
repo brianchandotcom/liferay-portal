@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,8 +44,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class PollsUtil {
 
-	public static CategoryDataset getVotesDataset(long questionId)
-		throws SystemException {
+	public static CategoryDataset getVotesDataset(long questionId) {
 
 		DefaultCategoryDataset defaultCategoryDataset =
 			new DefaultCategoryDataset();
@@ -66,7 +64,7 @@ public class PollsUtil {
 	}
 
 	public static boolean hasVoted(HttpServletRequest request, long questionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

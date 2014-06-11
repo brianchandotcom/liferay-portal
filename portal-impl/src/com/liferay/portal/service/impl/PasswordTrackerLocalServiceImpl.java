@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.model.User;
@@ -33,13 +32,13 @@ public class PasswordTrackerLocalServiceImpl
 	extends PasswordTrackerLocalServiceBaseImpl {
 
 	@Override
-	public void deletePasswordTrackers(long userId) throws SystemException {
+	public void deletePasswordTrackers(long userId) {
 		passwordTrackerPersistence.removeByUserId(userId);
 	}
 
 	@Override
 	public boolean isSameAsCurrentPassword(long userId, String newClearTextPwd)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -68,7 +67,7 @@ public class PasswordTrackerLocalServiceImpl
 
 	@Override
 	public boolean isValidPassword(long userId, String newClearTextPwd)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PasswordPolicy passwordPolicy =
 			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
@@ -105,7 +104,7 @@ public class PasswordTrackerLocalServiceImpl
 
 	@Override
 	public void trackPassword(long userId, String encPassword)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PasswordPolicy passwordPolicy =
 			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);

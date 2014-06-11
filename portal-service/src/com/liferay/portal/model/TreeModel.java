@@ -15,7 +15,6 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.Serializable;
 
@@ -24,12 +23,12 @@ import java.io.Serializable;
  */
 public interface TreeModel {
 
-	public String buildTreePath() throws PortalException, SystemException;
+	public String buildTreePath() throws PortalException;
 
 	public Serializable getPrimaryKeyObj();
 
 	public String getTreePath();
 
-	public void updateTreePath(String treePath) throws SystemException;
+	public void updateTreePath(String treePath);
 
 }

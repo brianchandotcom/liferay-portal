@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.repository.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.Lock;
@@ -58,7 +57,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Override
 	public long getCompanyId();
@@ -71,15 +70,14 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 *
 	 * @return the content stream of the current file version
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 * @see    #getFileVersion()
 	 */
 	@JSON(include = false)
 	public InputStream getContentStream()
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public InputStream getContentStream(String version)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Override
 	public Date getCreateDate();
@@ -100,15 +98,13 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 *
 	 * @return the current file version
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
-	public FileVersion getFileVersion() throws PortalException, SystemException;
+	public FileVersion getFileVersion() throws PortalException;
 
 	public FileVersion getFileVersion(String version)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public List<FileVersion> getFileVersions(int status)
-		throws SystemException;
+	public List<FileVersion> getFileVersions(int status);
 
 	public Folder getFolder();
 
@@ -129,10 +125,9 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 *
 	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public FileVersion getLatestFileVersion()
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns the latest file version, optionally bypassing security checks. In
@@ -144,10 +139,9 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 *         repositories, this parameter may be ignored.
 	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public FileVersion getLatestFileVersion(boolean trusted)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public Lock getLock();
 
@@ -173,7 +167,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public String getUserName();
 
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	@Override
 	public String getUuid();
@@ -184,7 +178,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public String getVersionUserName();
 
-	public String getVersionUserUuid() throws SystemException;
+	public String getVersionUserUuid();
 
 	public boolean hasLock();
 

@@ -16,7 +16,6 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -116,7 +115,7 @@ public class SoftwareCatalogServlet extends HttpServlet {
 	}
 
 	protected long getGroupId(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 

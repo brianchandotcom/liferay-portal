@@ -44,7 +44,7 @@ public class PortletPreferencesServiceImpl
 
 	@Override
 	public void deleteArchivedPreferences(long portletItemId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletItem portletItem = portletItemLocalService.getPortletItem(
 			portletItemId);
@@ -68,7 +68,7 @@ public class PortletPreferencesServiceImpl
 	public void restoreArchivedPreferences(
 			long groupId, Layout layout, String portletId, long portletItemId,
 			javax.portlet.PortletPreferences preferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletItem portletItem = portletItemLocalService.getPortletItem(
 			portletItemId);
@@ -82,7 +82,7 @@ public class PortletPreferencesServiceImpl
 			long groupId, Layout layout, String portletId,
 			PortletItem portletItem,
 			javax.portlet.PortletPreferences preferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletPermissionUtil.check(
 			getPermissionChecker(), groupId, layout, portletId,
@@ -104,7 +104,7 @@ public class PortletPreferencesServiceImpl
 	public void restoreArchivedPreferences(
 			long groupId, String name, Layout layout, String portletId,
 			javax.portlet.PortletPreferences preferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletItem portletItem = portletItemLocalService.getPortletItem(
 			groupId, name, portletId, PortletPreferences.class.getName());
@@ -117,7 +117,7 @@ public class PortletPreferencesServiceImpl
 	public void updateArchivePreferences(
 			long userId, long groupId, String name, String portletId,
 			javax.portlet.PortletPreferences preferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletPermissionUtil.check(
 			getPermissionChecker(), groupId, 0, portletId,
@@ -141,8 +141,7 @@ public class PortletPreferencesServiceImpl
 
 	protected void copyPreferences(
 			javax.portlet.PortletPreferences sourcePreferences,
-			javax.portlet.PortletPreferences targetPreferences)
-		throws SystemException {
+			javax.portlet.PortletPreferences targetPreferences) {
 
 		try {
 			Map<String, String[]> targetPreferencesMap =

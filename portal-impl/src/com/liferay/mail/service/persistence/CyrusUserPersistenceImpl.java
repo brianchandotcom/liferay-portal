@@ -79,7 +79,7 @@ public class CyrusUserPersistenceImpl
 	}
 
 	@Override
-	public void update(CyrusUser user) throws SystemException {
+	public void update(CyrusUser user) {
 		Session session = null;
 
 		try {

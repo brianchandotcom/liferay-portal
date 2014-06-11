@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -160,7 +159,7 @@ public class SearchResultUtil {
 			Document document, String className, long classPK, Locale locale,
 			PortletURL portletURL, PortletRequest portletRequest,
 			PortletResponse portletResponse)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
@@ -177,7 +176,7 @@ public class SearchResultUtil {
 	protected static Summary getSummary(
 			String className, long classPK, Locale locale,
 			PortletURL portletURL)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(

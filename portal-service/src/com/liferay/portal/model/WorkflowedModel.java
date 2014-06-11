@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import java.util.Date;
 
 /**
@@ -35,7 +33,7 @@ public interface WorkflowedModel {
 
 	public String getStatusByUserName();
 
-	public String getStatusByUserUuid() throws SystemException;
+	public String getStatusByUserUuid();
 
 	public Date getStatusDate();
 

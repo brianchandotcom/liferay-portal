@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatalists.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -52,7 +51,7 @@ public class DDLRecordSetLocalServiceImpl
 			long userId, long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			int minDisplayRows, int scope, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Record set
 
@@ -116,7 +115,7 @@ public class DDLRecordSetLocalServiceImpl
 	public void addRecordSetResources(
 			DDLRecordSet recordSet, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addResources(
 			recordSet.getCompanyId(), recordSet.getGroupId(),
@@ -129,7 +128,7 @@ public class DDLRecordSetLocalServiceImpl
 	public void addRecordSetResources(
 			DDLRecordSet recordSet, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			recordSet.getCompanyId(), recordSet.getGroupId(),
@@ -141,8 +140,7 @@ public class DDLRecordSetLocalServiceImpl
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public void deleteRecordSet(DDLRecordSet recordSet)
-		throws PortalException, SystemException {
+	public void deleteRecordSet(DDLRecordSet recordSet) throws PortalException {
 
 		// Record set
 
@@ -171,9 +169,7 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRecordSet(long recordSetId)
-		throws PortalException, SystemException {
-
+	public void deleteRecordSet(long recordSetId) throws PortalException {
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
@@ -182,7 +178,7 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public void deleteRecordSet(long groupId, String recordSetKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
 			groupId, recordSetKey);
@@ -191,9 +187,7 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRecordSets(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteRecordSets(long groupId) throws PortalException {
 		List<DDLRecordSet> recordSets = ddlRecordSetPersistence.findByGroupId(
 			groupId);
 
@@ -203,50 +197,44 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Override
-	public DDLRecordSet fetchRecordSet(long recordSetId)
-		throws SystemException {
+	public DDLRecordSet fetchRecordSet(long recordSetId) {
 
 		return ddlRecordSetPersistence.fetchByPrimaryKey(recordSetId);
 	}
 
 	@Override
-	public DDLRecordSet fetchRecordSet(long groupId, String recordSetKey)
-		throws SystemException {
+	public DDLRecordSet fetchRecordSet(long groupId, String recordSetKey) {
 
 		return ddlRecordSetPersistence.fetchByG_R(groupId, recordSetKey);
 	}
 
 	@Override
-	public DDLRecordSet getRecordSet(long recordSetId)
-		throws PortalException, SystemException {
-
+	public DDLRecordSet getRecordSet(long recordSetId) throws PortalException {
 		return ddlRecordSetPersistence.findByPrimaryKey(recordSetId);
 	}
 
 	@Override
 	public DDLRecordSet getRecordSet(long groupId, String recordSetKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddlRecordSetPersistence.findByG_R(groupId, recordSetKey);
 	}
 
 	@Override
-	public List<DDLRecordSet> getRecordSets(long groupId)
-		throws SystemException {
+	public List<DDLRecordSet> getRecordSets(long groupId) {
 
 		return ddlRecordSetPersistence.findByGroupId(groupId);
 	}
 
 	@Override
-	public int getRecordSetsCount(long groupId) throws SystemException {
+	public int getRecordSetsCount(long groupId) {
 		return ddlRecordSetPersistence.countByGroupId(groupId);
 	}
 
 	@Override
 	public List<DDLRecordSet> search(
-			long companyId, long groupId, String keywords, int scope, int start,
-			int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end, OrderByComparator orderByComparator) {
 
 		return ddlRecordSetFinder.findByKeywords(
 			companyId, groupId, keywords, scope, start, end, orderByComparator);
@@ -254,10 +242,9 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public List<DDLRecordSet> search(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return ddlRecordSetFinder.findByC_G_N_D_S(
 			companyId, groupId, name, description, scope, andOperator, start,
@@ -266,8 +253,7 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public int searchCount(
-			long companyId, long groupId, String keywords, int scope)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope) {
 
 		return ddlRecordSetFinder.countByKeywords(
 			companyId, groupId, keywords, scope);
@@ -275,9 +261,8 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public int searchCount(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator) {
 
 		return ddlRecordSetFinder.countByC_G_N_D_S(
 			companyId, groupId, name, description, scope, andOperator);
@@ -286,7 +271,7 @@ public class DDLRecordSetLocalServiceImpl
 	@Override
 	public DDLRecordSet updateMinDisplayRows(
 			long recordSetId, int minDisplayRows, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
@@ -304,7 +289,7 @@ public class DDLRecordSetLocalServiceImpl
 			long recordSetId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
@@ -319,7 +304,7 @@ public class DDLRecordSetLocalServiceImpl
 			long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			int minDisplayRows, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
 			groupId, recordSetKey);
@@ -333,7 +318,7 @@ public class DDLRecordSetLocalServiceImpl
 			long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
 			ServiceContext serviceContext, DDLRecordSet recordSet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Record set
 
@@ -376,7 +361,7 @@ public class DDLRecordSetLocalServiceImpl
 	protected void validate(
 			long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validateDDMStructureId(ddmStructureId);
 
@@ -398,7 +383,7 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	protected void validateDDMStructureId(long ddmStructureId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructurePersistence.fetchByPrimaryKey(
 			ddmStructureId);

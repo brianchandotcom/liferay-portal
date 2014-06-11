@@ -15,7 +15,6 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordPolicy;
 
 /**
@@ -46,7 +45,7 @@ public class ToolkitWrapper implements Toolkit {
 	public void validate(
 			long userId, String password1, String password2,
 			PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_toolkit.validate(userId, password1, password2, passwordPolicy);
 	}
@@ -54,7 +53,7 @@ public class ToolkitWrapper implements Toolkit {
 	@Override
 	public void validate(
 			String password1, String password2, PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_toolkit.validate(password1, password2, passwordPolicy);
 	}

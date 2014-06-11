@@ -17,7 +17,6 @@ package com.liferay.portal.servlet.filters.virtualhost;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -85,7 +84,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 	protected boolean isDocumentFriendlyURL(
 			HttpServletRequest request, long groupId, String friendlyURL)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (friendlyURL.startsWith(_PATH_DOCUMENTS) &&
 			WebServerServlet.hasFiles(request)) {

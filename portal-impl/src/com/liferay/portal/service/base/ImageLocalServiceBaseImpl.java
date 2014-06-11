@@ -103,7 +103,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Image deleteImage(long imageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return imagePersistence.remove(imageId);
 	}
 

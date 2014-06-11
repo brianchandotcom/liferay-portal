@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.model.WorkflowDefinitionLink;
@@ -43,7 +42,7 @@ import javax.portlet.RenderResponse;
 public interface WorkflowHandler<T> {
 
 	public AssetRenderer getAssetRenderer(long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AssetRendererFactory getAssetRendererFactory();
 
@@ -74,7 +73,7 @@ public interface WorkflowHandler<T> {
 
 	public String getURLEditWorkflowTask(
 			long workflowTaskId, ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public PortletURL getURLViewDiffs(
 		long classPK, LiferayPortletRequest liferayPortletRequest,
@@ -87,7 +86,7 @@ public interface WorkflowHandler<T> {
 
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isAssetTypeSearchable();
 
@@ -102,9 +101,9 @@ public interface WorkflowHandler<T> {
 	public void startWorkflowInstance(
 			long companyId, long groupId, long userId, long classPK, T model,
 			Map<String, Serializable> workflowContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public T updateStatus(int status, Map<String, Serializable> workflowContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

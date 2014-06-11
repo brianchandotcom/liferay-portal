@@ -17,7 +17,6 @@ package com.liferay.portal.service.permission;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -31,18 +30,18 @@ public interface UserGroupRolePermission {
 
 	public void check(
 			PermissionChecker permissionChecker, Group group, Role role)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long roleId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean contains(
 			PermissionChecker permissionChecker, Group group, Role role)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long roleId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

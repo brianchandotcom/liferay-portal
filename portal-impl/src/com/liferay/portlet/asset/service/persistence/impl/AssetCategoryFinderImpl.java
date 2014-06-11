@@ -58,8 +58,7 @@ public class AssetCategoryFinderImpl
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
 
 	@Override
-	public int countByG_C_N(long groupId, long classNameId, String name)
-		throws SystemException {
+	public int countByG_C_N(long groupId, long classNameId, String name) {
 
 		Session session = null;
 
@@ -101,8 +100,7 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public int countByG_N_P(
-			long groupId, String name, String[] categoryProperties)
-		throws SystemException {
+		long groupId, String name, String[] categoryProperties) {
 
 		Session session = null;
 
@@ -192,8 +190,7 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public List<AssetCategory> findByG_N_P(
-			long groupId, String name, String[] categoryProperties)
-		throws SystemException {
+		long groupId, String name, String[] categoryProperties) {
 
 		return findByG_N_P(
 			groupId, name, categoryProperties, QueryUtil.ALL_POS,
@@ -202,9 +199,8 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public List<AssetCategory> findByG_N_P(
-			long groupId, String name, String[] categoryProperties, int start,
-			int end)
-		throws SystemException {
+		long groupId, String name, String[] categoryProperties, int start,
+		int end) {
 
 		Session session = null;
 

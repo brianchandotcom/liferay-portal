@@ -16,7 +16,6 @@ package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -191,9 +190,7 @@ public class ContactIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexContacts(long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexContacts(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
 			ContactLocalServiceUtil.getActionableDynamicQuery();
 

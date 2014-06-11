@@ -36,7 +36,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public void deleteFileEntryMetadata(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DLFileEntryMetadata> fileEntryMetadatas =
 			dlFileEntryMetadataPersistence.findByFileEntryId(fileEntryId);
@@ -48,7 +48,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public void deleteFileVersionFileEntryMetadata(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DLFileEntryMetadata> fileEntryMetadatas =
 			dlFileEntryMetadataPersistence.findByFileVersionId(fileVersionId);
@@ -59,8 +59,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 	}
 
 	@Override
-	public DLFileEntryMetadata fetchFileEntryMetadata(long fileEntryMetadataId)
-		throws SystemException {
+	public DLFileEntryMetadata fetchFileEntryMetadata(
+		long fileEntryMetadataId) {
 
 		return dlFileEntryMetadataPersistence.fetchByPrimaryKey(
 			fileEntryMetadataId);
@@ -68,8 +68,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public DLFileEntryMetadata fetchFileEntryMetadata(
-			long ddmStructureId, long fileVersionId)
-		throws SystemException {
+		long ddmStructureId, long fileVersionId) {
 
 		return dlFileEntryMetadataPersistence.fetchByD_F(
 			ddmStructureId, fileVersionId);
@@ -77,7 +76,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public DLFileEntryMetadata getFileEntryMetadata(long fileEntryMetadataId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return dlFileEntryMetadataPersistence.findByPrimaryKey(
 			fileEntryMetadataId);
@@ -86,7 +85,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 	@Override
 	public DLFileEntryMetadata getFileEntryMetadata(
 			long ddmStructureId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return dlFileEntryMetadataPersistence.findByD_F(
 			ddmStructureId, fileVersionId);
@@ -98,24 +97,22 @@ public class DLFileEntryMetadataLocalServiceImpl
 	 */
 	@Deprecated
 	@Override
-	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
-		throws SystemException {
+	public long getFileEntryMetadataCount(
+		long fileEntryId, long fileVersionId) {
 
 		return getFileVersionFileEntryMetadatasCount(fileVersionId);
 	}
 
 	@Override
 	public List<DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
-			long fileVersionId)
-		throws SystemException {
+		long fileVersionId) {
 
 		return dlFileEntryMetadataPersistence.findByFileVersionId(
 			fileVersionId);
 	}
 
 	@Override
-	public long getFileVersionFileEntryMetadatasCount(long fileVersionId)
-		throws SystemException {
+	public long getFileVersionFileEntryMetadatasCount(long fileVersionId) {
 
 		return dlFileEntryMetadataPersistence.countByFileVersionId(
 			fileVersionId);
@@ -126,7 +123,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 			long companyId, List<DDMStructure> ddmStructures,
 			long fileEntryTypeId, long fileEntryId, long fileVersionId,
 			Map<String, Fields> fieldsMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Fields fields = fieldsMap.get(ddmStructure.getStructureKey());
@@ -143,7 +140,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 	public void updateFileEntryMetadata(
 			long fileEntryTypeId, long fileEntryId, long fileVersionId,
 			Map<String, Fields> fieldsMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileEntryType fileEntryType =
 			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
@@ -157,7 +154,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	protected void deleteFileEntryMetadata(
 			DLFileEntryMetadata fileEntryMetadata)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// FileEntry metadata
 

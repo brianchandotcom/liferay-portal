@@ -79,7 +79,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (int i = 0; i < inputStreamOVPs.size(); i++) {
 			ObjectValuePair<String, InputStream> inputStreamOVP =
@@ -99,7 +99,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
 			String mimeType, boolean indexingEnabled)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(fileName)) {
 			return null;
@@ -143,7 +143,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType, boolean indexingEnabled)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (inputStream == null) {
 			return null;
@@ -170,7 +170,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public Folder addPortletFolder(
 			long userId, long repositoryId, long parentFolderId,
 			String folderName, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
@@ -193,7 +193,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public Repository addPortletRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			groupId, portletId);
@@ -232,15 +232,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	 */
 	@Deprecated
 	@Override
-	public void deleteFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public void deleteFolder(long folderId) throws PortalException {
 		deletePortletFolder(folderId);
 	}
 
 	@Override
 	public void deletePortletFileEntries(long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
@@ -253,7 +251,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public void deletePortletFileEntries(
 			long groupId, long folderId, int status)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getFileEntries(
@@ -267,7 +265,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public void deletePortletFileEntry(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
@@ -293,7 +291,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public void deletePortletFileEntry(
 			long groupId, long folderId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
@@ -302,9 +300,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public void deletePortletFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public void deletePortletFolder(long folderId) throws PortalException {
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
@@ -328,7 +324,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public void deletePortletRepository(long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			groupId, portletId);
@@ -340,15 +336,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public Repository fetchPortletRepository(long groupId, String portletId)
-		throws SystemException {
+	public Repository fetchPortletRepository(long groupId, String portletId) {
 
 		return RepositoryLocalServiceUtil.fetchRepository(groupId, portletId);
 	}
 
 	@Override
-	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
-		throws SystemException {
+	public List<FileEntry> getPortletFileEntries(long groupId, long folderId) {
 
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId));
@@ -356,8 +350,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-			long groupId, long folderId, int status)
-		throws SystemException {
+		long groupId, long folderId, int status) {
 
 		return getPortletFileEntries(
 			groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -366,9 +359,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-			long groupId, long folderId, int status, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long groupId, long folderId, int status, int start, int end,
+		OrderByComparator obc) {
 
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
@@ -376,8 +368,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public int getPortletFileEntriesCount(long groupId, long folderId)
-		throws SystemException {
+	public int getPortletFileEntriesCount(long groupId, long folderId) {
 
 		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
 			groupId, folderId);
@@ -385,8 +376,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public int getPortletFileEntriesCount(
-			long groupId, long folderId, int status)
-		throws SystemException {
+		long groupId, long folderId, int status) {
 
 		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
 			groupId, folderId, status);
@@ -394,7 +384,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public FileEntry getPortletFileEntry(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 	}
@@ -402,14 +392,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public FileEntry getPortletFileEntry(
 			long groupId, long folderId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLAppLocalServiceUtil.getFileEntry(groupId, folderId, fileName);
 	}
 
 	@Override
 	public FileEntry getPortletFileEntry(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -489,16 +479,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public Folder getPortletFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public Folder getPortletFolder(long folderId) throws PortalException {
 		return DLAppLocalServiceUtil.getFolder(folderId);
 	}
 
 	@Override
 	public Folder getPortletFolder(
 			long repositoryId, long parentFolderId, String folderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLAppLocalServiceUtil.getFolder(
 			repositoryId, parentFolderId, folderName);
@@ -506,14 +494,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public Repository getPortletRepository(long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return RepositoryLocalServiceUtil.getRepository(groupId, portletId);
 	}
 
 	@Override
 	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
@@ -531,7 +519,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
@@ -541,7 +529,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
@@ -559,7 +547,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public void restorePortletFileEntryFromTrash(
 			long groupId, long userId, long folderId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);

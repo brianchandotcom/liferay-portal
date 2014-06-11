@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -41,7 +40,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	@Override
 	public MBBan addBan(
 			long userId, long banUserId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
@@ -72,24 +71,21 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void checkBan(long groupId, long banUserId)
-		throws PortalException, SystemException {
-
+	public void checkBan(long groupId, long banUserId) throws PortalException {
 		if (hasBan(groupId, banUserId)) {
 			throw new BannedUserException();
 		}
 	}
 
 	@Override
-	public void deleteBan(long banId) throws PortalException, SystemException {
+	public void deleteBan(long banId) throws PortalException {
 		MBBan ban = mbBanPersistence.findByPrimaryKey(banId);
 
 		mbBanLocalService.deleteBan(ban);
 	}
 
 	@Override
-	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws SystemException {
+	public void deleteBan(long banUserId, ServiceContext serviceContext) {
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -102,12 +98,12 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteBan(MBBan ban) throws SystemException {
+	public void deleteBan(MBBan ban) {
 		mbBanPersistence.remove(ban);
 	}
 
 	@Override
-	public void deleteBansByBanUserId(long banUserId) throws SystemException {
+	public void deleteBansByBanUserId(long banUserId) {
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
@@ -116,7 +112,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBansByGroupId(long groupId) throws SystemException {
+	public void deleteBansByGroupId(long groupId) {
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
 		for (MBBan ban : bans) {
@@ -125,7 +121,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void expireBans() throws SystemException {
+	public void expireBans() {
 		if (PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL <= 0) {
 			return;
 		}
@@ -153,19 +149,18 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<MBBan> getBans(long groupId, int start, int end)
-		throws SystemException {
+	public List<MBBan> getBans(long groupId, int start, int end) {
 
 		return mbBanPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override
-	public int getBansCount(long groupId) throws SystemException {
+	public int getBansCount(long groupId) {
 		return mbBanPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public boolean hasBan(long groupId, long banUserId) throws SystemException {
+	public boolean hasBan(long groupId, long banUserId) {
 		if (mbBanPersistence.fetchByG_B(groupId, banUserId) == null) {
 			return false;
 		}

@@ -15,7 +15,6 @@
 package com.liferay.portlet.softwarecatalog.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
@@ -37,7 +36,7 @@ public class SCProductVersionServiceImpl
 			String downloadPageURL, String directDownloadURL,
 			boolean testDirectDownloadURL, boolean repoStoreArtifact,
 			long[] frameworkVersionIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductEntryPermission.check(
 			getPermissionChecker(), productEntryId, ActionKeys.UPDATE);
@@ -50,7 +49,7 @@ public class SCProductVersionServiceImpl
 
 	@Override
 	public void deleteProductVersion(long productVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductVersion productVersion =
 			scProductVersionLocalService.getProductVersion(productVersionId);
@@ -64,7 +63,7 @@ public class SCProductVersionServiceImpl
 
 	@Override
 	public SCProductVersion getProductVersion(long productVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductVersion productVersion =
 			scProductVersionLocalService.getProductVersion(productVersionId);
@@ -79,7 +78,7 @@ public class SCProductVersionServiceImpl
 	@Override
 	public List<SCProductVersion> getProductVersions(
 			long productEntryId, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductEntryPermission.check(
 			getPermissionChecker(), productEntryId, ActionKeys.VIEW);
@@ -90,7 +89,7 @@ public class SCProductVersionServiceImpl
 
 	@Override
 	public int getProductVersionsCount(long productEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductEntryPermission.check(
 			getPermissionChecker(), productEntryId, ActionKeys.VIEW);
@@ -105,7 +104,7 @@ public class SCProductVersionServiceImpl
 			String downloadPageURL, String directDownloadURL,
 			boolean testDirectDownloadURL, boolean repoStoreArtifact,
 			long[] frameworkVersionIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductVersion productVersion =
 			scProductVersionLocalService.getProductVersion(productVersionId);

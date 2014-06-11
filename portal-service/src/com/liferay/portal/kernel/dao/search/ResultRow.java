@@ -260,8 +260,8 @@ public class ResultRow {
 	}
 
 	public void addStatus(
-			int index, int status, String href, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response) {
+		int index, int status, String href, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response) {
 
 		StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
 

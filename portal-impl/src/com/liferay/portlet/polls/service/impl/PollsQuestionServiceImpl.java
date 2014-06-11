@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.model.PollsChoice;
@@ -41,7 +40,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
 			List<PollsChoice> choices, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PollsPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -54,9 +53,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteQuestion(long questionId)
-		throws PortalException, SystemException {
-
+	public void deleteQuestion(long questionId) throws PortalException {
 		PollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.DELETE);
 
@@ -64,9 +61,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 	}
 
 	@Override
-	public PollsQuestion getQuestion(long questionId)
-		throws PortalException, SystemException {
-
+	public PollsQuestion getQuestion(long questionId) throws PortalException {
 		PollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.VIEW);
 
@@ -81,7 +76,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, List<PollsChoice> choices,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PollsQuestionPermission.check(
 			getPermissionChecker(), questionId, ActionKeys.UPDATE);

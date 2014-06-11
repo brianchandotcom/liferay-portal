@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.XPath;
@@ -31,11 +30,11 @@ import java.util.Locale;
  */
 public class DDMXMLUtil {
 
-	public static String formatXML(Document document) throws SystemException {
+	public static String formatXML(Document document) {
 		return getDDMXML().formatXML(document);
 	}
 
-	public static String formatXML(String xml) throws SystemException {
+	public static String formatXML(String xml) {
 		return getDDMXML().formatXML(xml);
 	}
 
@@ -46,7 +45,7 @@ public class DDMXMLUtil {
 	}
 
 	public static Fields getFields(DDMStructure structure, String xml)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getDDMXML().getFields(structure, xml);
 	}
@@ -54,25 +53,23 @@ public class DDMXMLUtil {
 	public static Fields getFields(
 			DDMStructure structure, XPath xPath, String xml,
 			List<String> fieldNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getDDMXML().getFields(structure, xPath, xml, fieldNames);
 	}
 
-	public static String getXML(Document document, Fields fields)
-		throws SystemException {
+	public static String getXML(Document document, Fields fields) {
 
 		return getDDMXML().getXML(document, fields);
 	}
 
-	public static String getXML(Fields fields) throws SystemException {
+	public static String getXML(Fields fields) {
 		return getDDMXML().getXML(fields);
 	}
 
 	public static String updateXMLDefaultLocale(
-			String xml, Locale contentDefaultLocale,
-			Locale contentNewDefaultLocale)
-		throws SystemException {
+		String xml, Locale contentDefaultLocale,
+		Locale contentNewDefaultLocale) {
 
 		return getDDMXML().updateXMLDefaultLocale(
 			xml, contentDefaultLocale, contentNewDefaultLocale);

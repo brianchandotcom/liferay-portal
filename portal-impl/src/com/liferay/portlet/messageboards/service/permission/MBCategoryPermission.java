@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -38,7 +37,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long categoryId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
 			throw new PrincipalException();
@@ -48,7 +47,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long categoryId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, categoryId, actionId)) {
 			throw new PrincipalException();
@@ -58,7 +57,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, MBCategory category,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, category, actionId)) {
 			throw new PrincipalException();
@@ -68,7 +67,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, long categoryId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
@@ -85,7 +84,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long categoryId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 			categoryId);
@@ -96,7 +95,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, MBCategory category,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (MBBanLocalServiceUtil.hasBan(
 				category.getGroupId(), permissionChecker.getUserId())) {
@@ -155,7 +154,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		check(permissionChecker, groupId, primaryKey, actionId);
 	}

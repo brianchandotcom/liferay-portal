@@ -15,7 +15,6 @@
 package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -43,7 +42,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoColumn column = expandoColumnLocalService.getColumn(
 			companyId, className, tableName, columnName);
@@ -59,7 +58,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, String data)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoColumn column = expandoColumnLocalService.getColumn(
 			companyId, className, tableName, columnName);
@@ -75,7 +74,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public void addValues(
 			long companyId, String className, String tableName, long classPK,
 			Map<String, Serializable> attributeValues)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry :
 				attributeValues.entrySet()) {
@@ -90,7 +89,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public Map<String, Serializable> getData(
 			long companyId, String className, String tableName,
 			Collection<String> columnNames, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Serializable> attributeValues =
 			expandoValueLocalService.getData(
@@ -114,7 +113,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public Serializable getData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoColumn column = expandoColumnLocalService.getColumn(
 			companyId, className, tableName, columnName);
@@ -134,7 +133,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 	public JSONObject getJSONData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoColumn column = expandoColumnLocalService.getColumn(
 			companyId, className, tableName, columnName);

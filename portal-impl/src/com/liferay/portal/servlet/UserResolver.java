@@ -15,7 +15,6 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
@@ -30,9 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserResolver {
 
-	public UserResolver(HttpServletRequest request)
-		throws PortalException, SystemException {
-
+	public UserResolver(HttpServletRequest request) throws PortalException {
 		_companyId = ParamUtil.getLong(request, "companyId");
 
 		String remoteUser = request.getRemoteUser();

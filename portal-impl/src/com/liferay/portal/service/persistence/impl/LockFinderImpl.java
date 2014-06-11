@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.persistence.LockFinder;
 import com.liferay.portal.service.persistence.LockUtil;
@@ -36,8 +35,7 @@ public class LockFinderImpl
 		LockFinder.class.getName() + ".findByC_K";
 
 	@Override
-	public Lock fetchByC_K(String className, String key, LockMode lockMode)
-		throws SystemException {
+	public Lock fetchByC_K(String className, String key, LockMode lockMode) {
 
 		if (lockMode == null) {
 			return LockUtil.fetchByC_K(className, key);

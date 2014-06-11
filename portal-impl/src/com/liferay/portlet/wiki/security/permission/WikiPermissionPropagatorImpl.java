@@ -16,7 +16,6 @@ package com.liferay.portlet.wiki.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -37,7 +36,7 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 	public void propagateRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!className.equals(WikiNode.class.getName())) {
 			return;

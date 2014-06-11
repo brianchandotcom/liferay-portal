@@ -68,7 +68,7 @@ public class ShoppingItemLocalServiceImpl
 	@Override
 	public void addBookItems(
 			long userId, long groupId, long categoryId, String[] isbns)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			doAddBookItems(userId, groupId, categoryId, isbns);
@@ -88,7 +88,7 @@ public class ShoppingItemLocalServiceImpl
 			File mediumImageFile, boolean largeImage, String largeImageURL,
 			File largeImageFile, List<ShoppingItemField> itemFields,
 			List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Item
 
@@ -228,7 +228,7 @@ public class ShoppingItemLocalServiceImpl
 	public void addItemResources(
 			long itemId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
@@ -238,7 +238,7 @@ public class ShoppingItemLocalServiceImpl
 	@Override
 	public void addItemResources(
 			long itemId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
@@ -249,7 +249,7 @@ public class ShoppingItemLocalServiceImpl
 	public void addItemResources(
 			ShoppingItem item, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addResources(
 			item.getCompanyId(), item.getGroupId(), item.getUserId(),
@@ -261,7 +261,7 @@ public class ShoppingItemLocalServiceImpl
 	public void addItemResources(
 			ShoppingItem item, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			item.getCompanyId(), item.getGroupId(), item.getUserId(),
@@ -270,17 +270,14 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	@Override
-	public void deleteItem(long itemId)
-		throws PortalException, SystemException {
-
+	public void deleteItem(long itemId) throws PortalException {
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
 		deleteItem(item);
 	}
 
 	@Override
-	public void deleteItem(ShoppingItem item)
-		throws PortalException, SystemException {
+	public void deleteItem(ShoppingItem item) throws PortalException {
 
 		// Item
 
@@ -309,7 +306,7 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public void deleteItems(long groupId, long categoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<ShoppingItem> items = shoppingItemPersistence.findByG_C(
 			groupId, categoryId);
@@ -320,16 +317,14 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	@Override
-	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds)
-		throws SystemException {
+	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds) {
 
 		return shoppingItemFinder.countByG_C(groupId, categoryIds);
 	}
 
 	@Override
 	public List<ShoppingItem> getFeaturedItems(
-			long groupId, long categoryId, int numOfItems)
-		throws SystemException {
+		long groupId, long categoryId, int numOfItems) {
 
 		List<ShoppingItem> featuredItems = shoppingItemFinder.findByFeatured(
 			groupId, new long[] {categoryId}, numOfItems);
@@ -356,60 +351,55 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	@Override
-	public ShoppingItem getItem(long itemId)
-		throws PortalException, SystemException {
-
+	public ShoppingItem getItem(long itemId) throws PortalException {
 		return shoppingItemPersistence.findByPrimaryKey(itemId);
 	}
 
 	@Override
 	public ShoppingItem getItem(long companyId, String sku)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingItemPersistence.findByC_S(companyId, sku);
 	}
 
 	@Override
 	public ShoppingItem getItemByLargeImageId(long largeImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingItemPersistence.findByLargeImageId(largeImageId);
 	}
 
 	@Override
 	public ShoppingItem getItemByMediumImageId(long mediumImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingItemPersistence.findByMediumImageId(mediumImageId);
 	}
 
 	@Override
 	public ShoppingItem getItemBySmallImageId(long smallImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingItemPersistence.findBySmallImageId(smallImageId);
 	}
 
 	@Override
-	public List<ShoppingItem> getItems(long groupId, long categoryId)
-		throws SystemException {
+	public List<ShoppingItem> getItems(long groupId, long categoryId) {
 
 		return shoppingItemPersistence.findByG_C(groupId, categoryId);
 	}
 
 	@Override
 	public List<ShoppingItem> getItems(
-			long groupId, long categoryId, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long groupId, long categoryId, int start, int end,
+		OrderByComparator obc) {
 
 		return shoppingItemPersistence.findByG_C(
 			groupId, categoryId, start, end, obc);
 	}
 
 	@Override
-	public int getItemsCount(long groupId, long categoryId)
-		throws SystemException {
+	public int getItemsCount(long groupId, long categoryId) {
 
 		return shoppingItemPersistence.countByG_C(groupId, categoryId);
 	}
@@ -417,7 +407,7 @@ public class ShoppingItemLocalServiceImpl
 	@Override
 	public ShoppingItem[] getItemsPrevAndNext(
 			long itemId, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
@@ -427,8 +417,7 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public List<ShoppingItem> getSaleItems(
-			long groupId, long categoryId, int numOfItems)
-		throws SystemException {
+		long groupId, long categoryId, int numOfItems) {
 
 		List<ShoppingItem> saleItems = shoppingItemFinder.findBySale(
 			groupId, new long[] {categoryId}, numOfItems);
@@ -456,17 +445,14 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public List<ShoppingItem> search(
-			long groupId, long[] categoryIds, String keywords, int start,
-			int end)
-		throws SystemException {
+		long groupId, long[] categoryIds, String keywords, int start, int end) {
 
 		return shoppingItemFinder.findByKeywords(
 			groupId, categoryIds, keywords, start, end);
 	}
 
 	@Override
-	public int searchCount(long groupId, long[] categoryIds, String keywords)
-		throws SystemException {
+	public int searchCount(long groupId, long[] categoryIds, String keywords) {
 
 		return shoppingItemFinder.countByKeywords(
 			groupId, categoryIds, keywords);
@@ -483,7 +469,7 @@ public class ShoppingItemLocalServiceImpl
 			boolean largeImage, String largeImageURL, File largeImageFile,
 			List<ShoppingItemField> itemFields,
 			List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Item
 
@@ -768,8 +754,7 @@ public class ShoppingItemLocalServiceImpl
 		return properties;
 	}
 
-	protected long getCategory(ShoppingItem item, long categoryId)
-		throws SystemException {
+	protected long getCategory(ShoppingItem item, long categoryId) {
 
 		if ((item.getCategoryId() != categoryId) &&
 			(categoryId !=
@@ -793,7 +778,7 @@ public class ShoppingItemLocalServiceImpl
 			byte[] smallImageBytes, boolean mediumImage, long mediumImageId,
 			File mediumImageFile, byte[] mediumImageBytes, boolean largeImage,
 			long largeImageId, File largeImageFile, byte[] largeImageBytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Small image
 
@@ -835,7 +820,7 @@ public class ShoppingItemLocalServiceImpl
 			byte[] smallImageBytes, boolean mediumImage, String mediumImageURL,
 			File mediumImageFile, byte[] mediumImageBytes, boolean largeImage,
 			String largeImageURL, File largeImageFile, byte[] largeImageBytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(sku)) {
 			throw new ItemSKUException();

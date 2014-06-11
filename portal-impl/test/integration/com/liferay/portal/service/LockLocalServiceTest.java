@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
 public class LockLocalServiceTest {
 
 	@Before
-	public void setUp() throws SystemException {
+	public void setUp() {
 		LockLocalServiceUtil.unlock("className", "key");
 	}
 

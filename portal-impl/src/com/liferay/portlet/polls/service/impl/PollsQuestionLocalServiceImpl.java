@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +51,7 @@ public class PollsQuestionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, List<PollsChoice> choices,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Question
 
@@ -121,7 +120,7 @@ public class PollsQuestionLocalServiceImpl
 	public void addQuestionResources(
 			long questionId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
@@ -134,7 +133,7 @@ public class PollsQuestionLocalServiceImpl
 	public void addQuestionResources(
 			long questionId, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
@@ -146,7 +145,7 @@ public class PollsQuestionLocalServiceImpl
 	public void addQuestionResources(
 			PollsQuestion question, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addResources(
 			question.getCompanyId(), question.getGroupId(),
@@ -159,7 +158,7 @@ public class PollsQuestionLocalServiceImpl
 	public void addQuestionResources(
 			PollsQuestion question, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			question.getCompanyId(), question.getGroupId(),
@@ -168,9 +167,7 @@ public class PollsQuestionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteQuestion(long questionId)
-		throws PortalException, SystemException {
-
+	public void deleteQuestion(long questionId) throws PortalException {
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
 
@@ -181,8 +178,7 @@ public class PollsQuestionLocalServiceImpl
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public void deleteQuestion(PollsQuestion question)
-		throws PortalException, SystemException {
+	public void deleteQuestion(PollsQuestion question) throws PortalException {
 
 		// Question
 
@@ -204,9 +200,7 @@ public class PollsQuestionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteQuestions(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteQuestions(long groupId) throws PortalException {
 		for (PollsQuestion question :
 				pollsQuestionPersistence.findByGroupId(groupId)) {
 
@@ -215,28 +209,24 @@ public class PollsQuestionLocalServiceImpl
 	}
 
 	@Override
-	public PollsQuestion getQuestion(long questionId)
-		throws PortalException, SystemException {
-
+	public PollsQuestion getQuestion(long questionId) throws PortalException {
 		return pollsQuestionPersistence.findByPrimaryKey(questionId);
 	}
 
 	@Override
-	public List<PollsQuestion> getQuestions(long groupId)
-		throws SystemException {
+	public List<PollsQuestion> getQuestions(long groupId) {
 
 		return pollsQuestionPersistence.findByGroupId(groupId);
 	}
 
 	@Override
-	public List<PollsQuestion> getQuestions(long groupId, int start, int end)
-		throws SystemException {
+	public List<PollsQuestion> getQuestions(long groupId, int start, int end) {
 
 		return pollsQuestionPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override
-	public int getQuestionsCount(long groupId) throws SystemException {
+	public int getQuestionsCount(long groupId) {
 		return pollsQuestionPersistence.countByGroupId(groupId);
 	}
 
@@ -248,7 +238,7 @@ public class PollsQuestionLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, List<PollsChoice> choices,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Question
 

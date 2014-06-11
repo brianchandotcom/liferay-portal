@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -169,7 +168,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 	protected void reindexEntries(
 			long companyId, final long groupId, final long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
 			BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
@@ -218,9 +217,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void reindexFolders(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexFolders(final long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
 			BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
 
@@ -230,7 +227,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					BookmarksFolder folder = (BookmarksFolder)object;
 
@@ -245,9 +242,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void reindexRoot(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			GroupLocalServiceUtil.getActionableDynamicQuery();
 
@@ -257,7 +252,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Group group = (Group)object;
 

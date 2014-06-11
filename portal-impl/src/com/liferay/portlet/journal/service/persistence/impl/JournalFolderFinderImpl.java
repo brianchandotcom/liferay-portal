@@ -63,30 +63,27 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public int countF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	@Override
 	public int filterCountF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
 	public List<Object> filterFindF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
-	public List<JournalFolder> findF_ByNoAssets() throws SystemException {
+	public List<JournalFolder> findF_ByNoAssets() {
 		Session session = null;
 
 		try {
@@ -110,16 +107,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public List<Object> findF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -183,9 +178,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected List<Object> doFindF_A_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 

@@ -488,7 +488,7 @@ public class PortletExporter {
 	protected void exportAssetTag(
 			PortletDataContext portletDataContext, AssetTag assetTag,
 			Element assetTagsElement)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String path = getAssetTagPath(portletDataContext, assetTag.getTagId());
 
@@ -1182,7 +1182,7 @@ public class PortletExporter {
 
 	protected PortletPreferences getPortletPreferences(
 			long ownerId, int ownerType, long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletPreferences portletPreferences = null;
 

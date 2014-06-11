@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.service.base.ListTypeServiceBaseImpl;
@@ -29,20 +28,18 @@ import java.util.List;
 public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
 	@Override
-	public ListType getListType(int listTypeId)
-		throws PortalException, SystemException {
-
+	public ListType getListType(int listTypeId) throws PortalException {
 		return listTypePersistence.findByPrimaryKey(listTypeId);
 	}
 
 	@Override
-	public List<ListType> getListTypes(String type) throws SystemException {
+	public List<ListType> getListTypes(String type) {
 		return listTypePersistence.findByType(type);
 	}
 
 	@Override
 	public void validate(int listTypeId, long classNameId, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ClassName className = classNameLocalService.getClassName(classNameId);
 
@@ -50,9 +47,7 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 	}
 
 	@Override
-	public void validate(int listTypeId, String type)
-		throws PortalException, SystemException {
-
+	public void validate(int listTypeId, String type) throws PortalException {
 		ListType listType = listTypePersistence.fetchByPrimaryKey(listTypeId);
 
 		if ((listType == null) || !listType.getType().equals(type)) {

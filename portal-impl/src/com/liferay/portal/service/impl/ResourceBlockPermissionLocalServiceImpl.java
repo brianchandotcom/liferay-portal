@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermission;
@@ -43,9 +42,8 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public void addResourceBlockPermissions(
-			long resourceBlockId,
-			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
-		throws SystemException {
+		long resourceBlockId,
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
 
 		Map<Long, Long> permissions =
 			resourceBlockPermissionsContainer.getPermissions();
@@ -66,8 +64,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteResourceBlockPermissions(long resourceBlockId)
-		throws SystemException {
+	public void deleteResourceBlockPermissions(long resourceBlockId) {
 
 		resourceBlockPermissionPersistence.removeByResourceBlockId(
 			resourceBlockId);
@@ -76,7 +73,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 	@Override
 	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
 			long[] roleIds, String name, long primKey, List<String> actionIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ResourceBlock resourceBlock =
 			resourceBlockLocalService.getResourceBlock(name, primKey);
@@ -114,8 +111,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(long resourceBlockId)
-		throws SystemException {
+			getResourceBlockPermissionsContainer(long resourceBlockId) {
 
 		List<ResourceBlockPermission> resourceBlockPermissions =
 			resourceBlockPermissionPersistence.findByResourceBlockId(
@@ -137,8 +133,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public int getResourceBlockPermissionsCount(
-			long resourceBlockId, long roleId)
-		throws SystemException {
+		long resourceBlockId, long roleId) {
 
 		return resourceBlockPermissionPersistence.countByR_R(
 			resourceBlockId, roleId);
@@ -146,8 +141,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public void updateResourceBlockPermission(
-			long resourceBlockId, long roleId, long actionIdsLong, int operator)
-		throws SystemException {
+		long resourceBlockId, long roleId, long actionIdsLong, int operator) {
 
 		ResourceBlockPermission resourceBlockPermission =
 			resourceBlockPermissionPersistence.fetchByR_R(

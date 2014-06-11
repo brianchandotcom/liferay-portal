@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -60,7 +59,7 @@ public class RoleStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -83,8 +82,7 @@ public class RoleStagedModelDataHandler
 	}
 
 	protected void deleteRolePermissions(
-			PortletDataContext portletDataContext, Role importedRole)
-		throws SystemException {
+		PortletDataContext portletDataContext, Role importedRole) {
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
@@ -213,8 +211,7 @@ public class RoleStagedModelDataHandler
 	}
 
 	protected List<ResourceTypePermission> getResourceTypePermissions(
-			PortletDataContext portletDataContext, Role importedRole)
-		throws SystemException {
+		PortletDataContext portletDataContext, Role importedRole) {
 
 		DynamicQuery dynamicQuery =
 			ResourceTypePermissionLocalServiceUtil.dynamicQuery();
@@ -252,7 +249,7 @@ public class RoleStagedModelDataHandler
 	protected void importResourceBlock(
 			PortletDataContext portletDataContext, Role importedRole,
 			Permission permission)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		int scope = permission.getScope();
 
@@ -293,7 +290,7 @@ public class RoleStagedModelDataHandler
 	protected void importResourcePermissions(
 			PortletDataContext portletDataContext, Role importedRole,
 			Permission permission)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		int scope = permission.getScope();
 

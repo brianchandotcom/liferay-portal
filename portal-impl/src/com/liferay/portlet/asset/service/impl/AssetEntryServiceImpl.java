@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -51,8 +50,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getCompanyEntries(
-			long companyId, int start, int end)
-		throws SystemException {
+		long companyId, int start, int end) {
 
 		List<AssetEntry> entries = new ArrayList<AssetEntry>();
 
@@ -78,13 +76,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getCompanyEntriesCount(long companyId) throws SystemException {
+	public int getCompanyEntriesCount(long companyId) {
 		return assetEntryLocalService.getCompanyEntriesCount(companyId);
 	}
 
 	@Override
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryQuery filteredEntryQuery = buildFilteredEntryQuery(
 			entryQuery);
@@ -100,7 +98,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	@Override
 	public int getEntriesCount(AssetEntryQuery entryQuery)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryQuery filteredEntryQuery = buildFilteredEntryQuery(
 			entryQuery);
@@ -115,9 +113,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	@Override
-	public AssetEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getEntry(long entryId) throws PortalException {
 		AssetEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
@@ -126,7 +122,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	@Override
 	public AssetEntry incrementViewCounter(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryPermission.check(
 			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
@@ -144,7 +140,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			String title, String description, String summary, String url,
 			String layoutUuid, int height, int width, Integer priority,
 			boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryPermission.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -171,7 +167,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			Date expirationDate, String mimeType, String title,
 			String description, String summary, String url, String layoutUuid,
 			int height, int width, Integer priority, boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryPermission.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -198,7 +194,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			String mimeType, String title, String description, String summary,
 			String url, String layoutUuid, int height, int width,
 			Integer priority, boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetEntryLocalService.updateEntry(
 			getUserId(), groupId, null, null, className, classPK, classUuid,
@@ -209,7 +205,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	protected AssetEntryQuery buildFilteredEntryQuery(
 			AssetEntryQuery entryQuery)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Return an entry query with only the category ids and tag ids that the
 		// user has access to
@@ -234,7 +230,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	protected Object[] filterEntryQuery(
 			AssetEntryQuery entryQuery, boolean returnEntriesCountOnly)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThreadLocalCache<Object[]> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(

@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -40,7 +39,7 @@ public class AssetVocabularyPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long vocabularyId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, vocabularyId, actionId)) {
 			throw new PrincipalException();
@@ -67,7 +66,7 @@ public class AssetVocabularyPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long vocabularyId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);

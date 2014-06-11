@@ -39,7 +39,7 @@ public class MBThreadFlagLocalServiceImpl
 	@Override
 	public void addThreadFlag(
 			long userId, MBThread thread, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -96,9 +96,7 @@ public class MBThreadFlagLocalServiceImpl
 	}
 
 	@Override
-	public void deleteThreadFlag(long threadFlagId)
-		throws PortalException, SystemException {
-
+	public void deleteThreadFlag(long threadFlagId) throws PortalException {
 		MBThreadFlag threadFlag = mbThreadFlagPersistence.findByPrimaryKey(
 			threadFlagId);
 
@@ -107,27 +105,25 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteThreadFlag(MBThreadFlag threadFlag)
-		throws SystemException {
+	public void deleteThreadFlag(MBThreadFlag threadFlag) {
 
 		mbThreadFlagPersistence.remove(threadFlag);
 	}
 
 	@Override
-	public void deleteThreadFlagsByThreadId(long threadId)
-		throws SystemException {
+	public void deleteThreadFlagsByThreadId(long threadId) {
 
 		mbThreadFlagPersistence.removeByThreadId(threadId);
 	}
 
 	@Override
-	public void deleteThreadFlagsByUserId(long userId) throws SystemException {
+	public void deleteThreadFlagsByUserId(long userId) {
 		mbThreadFlagPersistence.removeByUserId(userId);
 	}
 
 	@Override
 	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -140,7 +136,7 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	public boolean hasThreadFlag(long userId, MBThread thread)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 

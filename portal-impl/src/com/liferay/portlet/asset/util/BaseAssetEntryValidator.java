@@ -16,7 +16,6 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
@@ -39,7 +38,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 	public void validate(
 			long groupId, String className, long[] categoryIds,
 			String[] entryNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyLocalServiceUtil.getGroupVocabularies(
@@ -88,7 +87,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 	protected void validate(
 			long classNameId, final long[] categoryIds,
 			AssetVocabulary vocabulary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!vocabulary.isAssociatedToClassNameId(classNameId)) {
 			return;

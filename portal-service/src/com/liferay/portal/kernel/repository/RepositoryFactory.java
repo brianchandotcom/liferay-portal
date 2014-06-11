@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Adolfo Pérez
@@ -23,10 +22,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 public interface RepositoryFactory {
 
 	public Repository create(long repositoryId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public Repository create(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

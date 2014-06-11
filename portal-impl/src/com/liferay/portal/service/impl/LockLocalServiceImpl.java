@@ -20,7 +20,6 @@ import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -41,21 +40,17 @@ import java.util.List;
 public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
-	public void clear() throws SystemException {
+	public void clear() {
 		lockPersistence.removeByLtExpirationDate(new Date());
 	}
 
 	@Override
-	public Lock getLock(String className, long key)
-		throws PortalException, SystemException {
-
+	public Lock getLock(String className, long key) throws PortalException {
 		return getLock(className, String.valueOf(key));
 	}
 
 	@Override
-	public Lock getLock(String className, String key)
-		throws PortalException, SystemException {
-
+	public Lock getLock(String className, String key) throws PortalException {
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {
@@ -69,7 +64,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Lock> locks = lockPersistence.findByUuid_C(uuid, companyId);
 
@@ -89,15 +84,13 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean hasLock(long userId, String className, long key)
-		throws SystemException {
+	public boolean hasLock(long userId, String className, long key) {
 
 		return hasLock(userId, className, String.valueOf(key));
 	}
 
 	@Override
-	public boolean hasLock(long userId, String className, String key)
-		throws SystemException {
+	public boolean hasLock(long userId, String className, String key) {
 
 		Lock lock = fetchLock(className, key);
 
@@ -110,13 +103,12 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean isLocked(String className, long key) throws SystemException {
+	public boolean isLocked(String className, long key) {
 		return isLocked(className, String.valueOf(key));
 	}
 
 	@Override
-	public boolean isLocked(String className, String key)
-		throws SystemException {
+	public boolean isLocked(String className, String key) {
 
 		Lock lock = fetchLock(className, key);
 
@@ -132,7 +124,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	public Lock lock(
 			long userId, String className, long key, String owner,
 			boolean inheritable, long expirationTime)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return lock(
 			userId, className, String.valueOf(key), owner, inheritable,
@@ -143,7 +135,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	public Lock lock(
 			long userId, String className, String key, String owner,
 			boolean inheritable, long expirationTime)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -193,8 +185,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Lock lock(String className, String key, String owner)
-		throws SystemException {
+	public Lock lock(String className, String key, String owner) {
 
 		return lock(className, key, null, owner);
 	}
@@ -208,9 +199,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
-			String className, String key, String owner,
-			boolean retrieveFromCache)
-		throws SystemException {
+		String className, String key, String owner, boolean retrieveFromCache) {
 
 		return lock(className, key, null, owner);
 	}
@@ -219,9 +208,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
-			String className, String key, String expectedOwner,
-			String updatedOwner)
-		throws SystemException {
+		String className, String key, String expectedOwner,
+		String updatedOwner) {
 
 		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
 
@@ -266,16 +254,15 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
-			String className, String key, String expectedOwner,
-			String updatedOwner, boolean retrieveFromCache)
-		throws SystemException {
+		String className, String key, String expectedOwner, String updatedOwner,
+		boolean retrieveFromCache) {
 
 		return lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	@Override
 	public Lock refresh(String uuid, long companyId, long expirationTime)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -327,12 +314,12 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void unlock(String className, long key) throws SystemException {
+	public void unlock(String className, long key) {
 		unlock(className, String.valueOf(key));
 	}
 
 	@Override
-	public void unlock(String className, String key) throws SystemException {
+	public void unlock(String className, String key) {
 		try {
 			lockPersistence.removeByC_K(className, key);
 		}
@@ -343,8 +330,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void unlock(String className, String key, String owner)
-		throws SystemException {
+	public void unlock(String className, String key, String owner) {
 
 		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
 
@@ -367,14 +353,12 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(
-			String className, String key, String owner,
-			boolean retrieveFromCache)
-		throws SystemException {
+		String className, String key, String owner, boolean retrieveFromCache) {
 
 		unlock(className, key, owner);
 	}
 
-	protected void expireLock(Lock lock) throws SystemException {
+	protected void expireLock(Lock lock) {
 		LockListener lockListener = LockListenerRegistryUtil.getLockListener(
 			lock.getClassName());
 
@@ -394,8 +378,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
-	protected Lock fetchLock(String className, String key)
-		throws SystemException {
+	protected Lock fetchLock(String className, String key) {
 
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 

@@ -123,7 +123,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutFriendlyURL deleteLayoutFriendlyURL(
-		LayoutFriendlyURL layoutFriendlyURL) throws SystemException {
+		LayoutFriendlyURL layoutFriendlyURL) {
 		return layoutFriendlyURLPersistence.remove(layoutFriendlyURL);
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.portlet.expando.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -35,7 +34,7 @@ public class ExpandoColumnPermissionUtil {
 
 	public static void check(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getExpandoColumnPermission().check(
 			permissionChecker, columnId, actionId);
@@ -45,7 +44,7 @@ public class ExpandoColumnPermissionUtil {
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getExpandoColumnPermission().check(
 			permissionChecker, companyId, className, tableName, columnName,
@@ -62,17 +61,15 @@ public class ExpandoColumnPermissionUtil {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExpandoColumnPermission().contains(
 			permissionChecker, columnId, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long companyId,
-			String className, String tableName, String columnName,
-			String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long companyId, String className,
+		String tableName, String columnName, String actionId) {
 
 		return getExpandoColumnPermission().contains(
 			permissionChecker, companyId, className, tableName, columnName,

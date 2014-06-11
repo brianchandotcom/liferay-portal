@@ -120,7 +120,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Company deleteCompany(long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return companyPersistence.remove(companyId);
 	}
 

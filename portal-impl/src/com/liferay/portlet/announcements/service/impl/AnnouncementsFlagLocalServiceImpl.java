@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 import com.liferay.portlet.announcements.service.base.AnnouncementsFlagLocalServiceBaseImpl;
 
@@ -30,8 +29,7 @@ public class AnnouncementsFlagLocalServiceImpl
 	extends AnnouncementsFlagLocalServiceBaseImpl {
 
 	@Override
-	public AnnouncementsFlag addFlag(long userId, long entryId, int value)
-		throws SystemException {
+	public AnnouncementsFlag addFlag(long userId, long entryId, int value) {
 
 		long flagId = counterLocalService.increment();
 
@@ -48,14 +46,12 @@ public class AnnouncementsFlagLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFlag(AnnouncementsFlag flag) throws SystemException {
+	public void deleteFlag(AnnouncementsFlag flag) {
 		announcementsFlagPersistence.remove(flag);
 	}
 
 	@Override
-	public void deleteFlag(long flagId)
-		throws PortalException, SystemException {
-
+	public void deleteFlag(long flagId) throws PortalException {
 		AnnouncementsFlag flag = announcementsFlagPersistence.findByPrimaryKey(
 			flagId);
 
@@ -63,7 +59,7 @@ public class AnnouncementsFlagLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFlags(long entryId) throws SystemException {
+	public void deleteFlags(long entryId) {
 		List<AnnouncementsFlag> flags =
 			announcementsFlagPersistence.findByEntryId(entryId);
 
@@ -74,7 +70,7 @@ public class AnnouncementsFlagLocalServiceImpl
 
 	@Override
 	public AnnouncementsFlag getFlag(long userId, long entryId, int value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return announcementsFlagPersistence.findByU_E_V(userId, entryId, value);
 	}

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.ExportImportConfigurationServiceBaseImpl;
@@ -31,7 +30,7 @@ public class ExportImportConfigurationServiceImpl
 	@Override
 	public void deleteExportImportConfiguration(
 			long exportImportConfigurationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.getExportImportConfiguration(
@@ -48,7 +47,7 @@ public class ExportImportConfigurationServiceImpl
 	@Override
 	public ExportImportConfiguration moveExportImportConfigurationToTrash(
 			long exportImportConfigurationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.getExportImportConfiguration(
@@ -66,7 +65,7 @@ public class ExportImportConfigurationServiceImpl
 	@Override
 	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 			long exportImportConfigurationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.getExportImportConfiguration(

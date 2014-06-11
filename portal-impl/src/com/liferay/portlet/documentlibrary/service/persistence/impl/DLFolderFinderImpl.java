@@ -81,9 +81,8 @@ public class DLFolderFinderImpl
 
 	@Override
 	public int countF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition) {
 
 		return doCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
@@ -92,16 +91,14 @@ public class DLFolderFinderImpl
 
 	@Override
 	public int countFE_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountFE_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	@Override
 	public int countFE_FS_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountFE_FS_ByG_F_M(
 			groupId, folderId, null, queryDefinition, false);
@@ -109,9 +106,8 @@ public class DLFolderFinderImpl
 
 	@Override
 	public int filterCountF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition) {
 
 		return doCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
@@ -120,16 +116,14 @@ public class DLFolderFinderImpl
 
 	@Override
 	public int filterCountFE_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountFE_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
 	public int filterCountFE_FS_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doCountFE_FS_ByG_F_M(
 			groupId, folderId, null, queryDefinition, true);
@@ -137,9 +131,8 @@ public class DLFolderFinderImpl
 
 	@Override
 	public int filterCountFE_FS_ByG_F_M(
-			long groupId, long folderId, String[] mimeTypes,
-			QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		QueryDefinition queryDefinition) {
 
 		return doCountFE_FS_ByG_F_M(
 			groupId, folderId, mimeTypes, queryDefinition, true);
@@ -147,9 +140,8 @@ public class DLFolderFinderImpl
 
 	@Override
 	public List<Object> filterFindF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition) {
 
 		return doFindF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
@@ -158,14 +150,13 @@ public class DLFolderFinderImpl
 
 	@Override
 	public List<Object> filterFindFE_FS_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doFindFE_FS_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
-	public List<DLFolder> findF_ByNoAssets() throws SystemException {
+	public List<DLFolder> findF_ByNoAssets() {
 		Session session = null;
 
 		try {
@@ -189,9 +180,8 @@ public class DLFolderFinderImpl
 
 	@Override
 	public List<Object> findF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition) {
 
 		return doFindF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
@@ -200,17 +190,15 @@ public class DLFolderFinderImpl
 
 	@Override
 	public List<Object> findFE_FS_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition) {
 
 		return doFindFE_FS_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -301,9 +289,8 @@ public class DLFolderFinderImpl
 	}
 
 	protected int doCountFE_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -347,9 +334,8 @@ public class DLFolderFinderImpl
 	}
 
 	protected int doCountFE_FS_ByG_F_M(
-			long groupId, long folderId, String[] mimeTypes,
-			QueryDefinition queryDefinition, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -422,10 +408,9 @@ public class DLFolderFinderImpl
 	}
 
 	protected List<Object> doFindF_FE_FS_ByG_F_M_M(
-			long groupId, long folderId, String[] mimeTypes,
-			boolean includeMountFolders, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -545,9 +530,8 @@ public class DLFolderFinderImpl
 	}
 
 	protected List<Object> doFindFE_FS_ByG_F(
-			long groupId, long folderId, QueryDefinition queryDefinition,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long folderId, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 

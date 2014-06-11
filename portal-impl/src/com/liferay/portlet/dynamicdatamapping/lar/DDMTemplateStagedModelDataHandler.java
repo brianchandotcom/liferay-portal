@@ -56,7 +56,7 @@ public class DDMTemplateStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMTemplate ddmTemplate =
 			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
@@ -392,9 +392,8 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	protected DDMTemplate fetchExistingTemplate(
-			String uuid, long groupId, long classNameId, String templateKey,
-			boolean preloaded)
-		throws SystemException {
+		String uuid, long groupId, long classNameId, String templateKey,
+		boolean preloaded) {
 
 		DDMTemplate existingTemplate = null;
 

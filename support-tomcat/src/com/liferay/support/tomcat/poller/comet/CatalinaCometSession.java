@@ -53,7 +53,7 @@ public class CatalinaCometSession extends BaseCometSession {
 	}
 
 	@Override
-	protected void doClose() throws SystemException {
+	protected void doClose() {
 		try {
 			_cometEvent.close();
 		}

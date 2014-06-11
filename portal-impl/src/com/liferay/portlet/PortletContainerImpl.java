@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -158,7 +157,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 	protected long getScopeGroupId(
 			HttpServletRequest request, Layout layout, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long scopeGroupId = 0;
 

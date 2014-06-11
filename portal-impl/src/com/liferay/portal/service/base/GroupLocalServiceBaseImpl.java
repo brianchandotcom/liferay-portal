@@ -161,7 +161,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Group deleteGroup(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return groupPersistence.remove(groupId);
 	}
 
@@ -176,7 +176,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Group deleteGroup(Group group)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return groupPersistence.remove(group);
 	}
 
@@ -289,7 +289,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public Group getGroup(long groupId) throws PortalException, SystemException {
+	public Group getGroup(long groupId) throws PortalException {
 		return groupPersistence.findByPrimaryKey(groupId);
 	}
 
@@ -341,7 +341,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public Group getGroupByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return groupPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -527,8 +527,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public void addRoleGroups(long roleId, long[] groupIds)
-		throws SystemException {
+	public void addRoleGroups(long roleId, long[] groupIds) {
 		rolePersistence.addGroups(roleId, groupIds);
 	}
 
@@ -536,8 +535,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public void addRoleGroups(long roleId, List<Group> Groups)
-		throws SystemException {
+	public void addRoleGroups(long roleId, List<Group> Groups) {
 		rolePersistence.addGroups(roleId, Groups);
 	}
 
@@ -634,8 +632,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public void setRoleGroups(long roleId, long[] groupIds)
-		throws SystemException {
+	public void setRoleGroups(long roleId, long[] groupIds) {
 		rolePersistence.setGroups(roleId, groupIds);
 	}
 
@@ -782,8 +779,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public void addUserGroups(long userId, long[] groupIds)
-		throws SystemException {
+	public void addUserGroups(long userId, long[] groupIds) {
 		userPersistence.addGroups(userId, groupIds);
 	}
 
@@ -791,8 +787,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public void addUserGroups(long userId, List<Group> Groups)
-		throws SystemException {
+	public void addUserGroups(long userId, List<Group> Groups) {
 		userPersistence.addGroups(userId, Groups);
 	}
 
@@ -863,7 +858,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public List<Group> getUserGroups(long userId, int start, int end,
 		OrderByComparator orderByComparator)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userPersistence.getGroups(userId, start, end, orderByComparator);
 	}
 
@@ -878,8 +873,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException
 	 */
 	@Override
-	public boolean hasUserGroup(long userId, long groupId)
-		throws SystemException {
+	public boolean hasUserGroup(long userId, long groupId) {
 		return userPersistence.containsGroup(userId, groupId);
 	}
 

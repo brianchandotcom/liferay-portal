@@ -16,7 +16,6 @@ package com.liferay.portlet.mobiledevicerules.action;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -113,7 +112,7 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 	}
 
 	protected void deleteRuleGroupInstance(ActionRequest actionRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long ruleGroupInstanceId = ParamUtil.getLong(
 			actionRequest, "ruleGroupInstanceId");
@@ -124,7 +123,7 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 
 	protected void updateRuleGroupInstancesPriorities(
 			ActionRequest actionRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String ruleGroupsInstancesJSON = ParamUtil.getString(
 			actionRequest, "ruleGroupsInstancesJSON");

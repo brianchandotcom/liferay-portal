@@ -112,7 +112,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutRevision deleteLayoutRevision(long layoutRevisionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutRevisionPersistence.remove(layoutRevisionId);
 	}
 
@@ -127,7 +127,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutRevision deleteLayoutRevision(LayoutRevision layoutRevision)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutRevisionPersistence.remove(layoutRevision);
 	}
 

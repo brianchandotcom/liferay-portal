@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.mobile.device.rulegroup;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
@@ -33,7 +32,7 @@ public interface ActionHandlerManager {
 	public void applyActions(
 			List<MDRAction> mdrActions, HttpServletRequest request,
 			HttpServletResponse response)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public ActionHandler getActionHandler(String actionType);
 

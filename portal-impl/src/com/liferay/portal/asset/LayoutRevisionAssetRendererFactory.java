@@ -15,7 +15,6 @@
 package com.liferay.portal.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.LayoutRevision;
@@ -45,15 +44,13 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(long assetEntryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
 		return getAssetEntry(getClassName(), assetEntryId);
 	}
 
 	@Override
 	public AssetEntry getAssetEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutRevision layoutRevision =
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(classPK);
@@ -91,7 +88,7 @@ public class LayoutRevisionAssetRendererFactory
 
 	@Override
 	public AssetRenderer getAssetRenderer(long layoutRevisionId, int type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutRevision layoutRevision =
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);

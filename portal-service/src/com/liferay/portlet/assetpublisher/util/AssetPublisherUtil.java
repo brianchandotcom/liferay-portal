@@ -17,7 +17,6 @@ package com.liferay.portlet.assetpublisher.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -101,7 +100,7 @@ public class AssetPublisherUtil {
 	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getAssetEntries(
 			portletPreferences, layout, scopeGroupId, max, checkPermission);
@@ -183,7 +182,7 @@ public class AssetPublisherUtil {
 	@Deprecated
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] siteGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getAssetEntryQuery(
 			portletPreferences, siteGroupIds);
@@ -193,7 +192,7 @@ public class AssetPublisherUtil {
 			PortletPreferences portletPreferences, long[] scopeGroupIds,
 			long[] overrideAllAssetCategoryIds,
 			String[] overrideAllAssetTagNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getAssetEntryQuery(
 			portletPreferences, scopeGroupIds, overrideAllAssetCategoryIds,
@@ -285,16 +284,14 @@ public class AssetPublisherUtil {
 	}
 
 	public static String getEmailFromAddress(
-			PortletPreferences portletPreferences, long companyId)
-		throws SystemException {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return getAssetPublisher().getEmailFromAddress(
 			portletPreferences, companyId);
 	}
 
 	public static String getEmailFromName(
-			PortletPreferences portletPreferences, long companyId)
-		throws SystemException {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return getAssetPublisher().getEmailFromName(
 			portletPreferences, companyId);
@@ -302,7 +299,7 @@ public class AssetPublisherUtil {
 
 	public static long getGroupIdFromScopeId(
 			String scopeId, long siteGroupId, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getGroupIdFromScopeId(
 			scopeId, siteGroupId, privateLayout);
@@ -323,13 +320,13 @@ public class AssetPublisherUtil {
 	}
 
 	public static String getScopeId(Group group, long scopeGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getScopeId(group, scopeGroupId);
 	}
 
 	public static long getSubscriptionClassPK(long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().getSubscriptionClassPK(plid, portletId);
 	}
@@ -337,7 +334,7 @@ public class AssetPublisherUtil {
 	public static boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().isScopeIdSelectable(
 			permissionChecker, scopeId, companyGroupId, layout);
@@ -345,7 +342,7 @@ public class AssetPublisherUtil {
 
 	public static boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAssetPublisher().isSubscribed(
 			companyId, userId, plid, portletId);
@@ -354,7 +351,7 @@ public class AssetPublisherUtil {
 	public static void notifySubscribers(
 			PortletPreferences portletPreferences, long plid, String portletId,
 			List<AssetEntry> assetEntries)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getAssetPublisher().notifySubscribers(
 			portletPreferences, plid, portletId, assetEntries);
@@ -394,7 +391,7 @@ public class AssetPublisherUtil {
 	public static void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getAssetPublisher().subscribe(
 			permissionChecker, groupId, plid, portletId);
@@ -409,7 +406,7 @@ public class AssetPublisherUtil {
 
 	public static void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getAssetPublisher().unsubscribe(permissionChecker, plid, portletId);
 	}

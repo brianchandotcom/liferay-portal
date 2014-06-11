@@ -45,8 +45,7 @@ import javax.servlet.http.HttpSession;
 public class FacebookConnectImpl implements FacebookConnect {
 
 	@Override
-	public String getAccessToken(long companyId, String redirect, String code)
-		throws SystemException {
+	public String getAccessToken(long companyId, String redirect, String code) {
 
 		String url = HttpUtil.addParameter(
 			getAccessTokenURL(companyId), "client_id", getAppId(companyId));
@@ -96,28 +95,28 @@ public class FacebookConnectImpl implements FacebookConnect {
 	}
 
 	@Override
-	public String getAccessTokenURL(long companyId) throws SystemException {
+	public String getAccessTokenURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_TOKEN_URL,
 			PropsValues.FACEBOOK_CONNECT_OAUTH_TOKEN_URL);
 	}
 
 	@Override
-	public String getAppId(long companyId) throws SystemException {
+	public String getAppId(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_APP_ID,
 			PropsValues.FACEBOOK_CONNECT_APP_ID);
 	}
 
 	@Override
-	public String getAppSecret(long companyId) throws SystemException {
+	public String getAppSecret(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_APP_SECRET,
 			PropsValues.FACEBOOK_CONNECT_APP_SECRET);
 	}
 
 	@Override
-	public String getAuthURL(long companyId) throws SystemException {
+	public String getAuthURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_AUTH_URL,
 			PropsValues.FACEBOOK_CONNECT_OAUTH_AUTH_URL);
@@ -154,7 +153,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 	}
 
 	@Override
-	public String getGraphURL(long companyId) throws SystemException {
+	public String getGraphURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_GRAPH_URL,
 			PropsValues.FACEBOOK_CONNECT_GRAPH_URL);
@@ -188,22 +187,21 @@ public class FacebookConnectImpl implements FacebookConnect {
 	}
 
 	@Override
-	public String getRedirectURL(long companyId) throws SystemException {
+	public String getRedirectURL(long companyId) {
 		return PrefsPropsUtil.getString(
 			companyId, PropsKeys.FACEBOOK_CONNECT_OAUTH_REDIRECT_URL,
 			PropsValues.FACEBOOK_CONNECT_OAUTH_REDIRECT_URL);
 	}
 
 	@Override
-	public boolean isEnabled(long companyId) throws SystemException {
+	public boolean isEnabled(long companyId) {
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.FACEBOOK_CONNECT_AUTH_ENABLED,
 			PropsValues.FACEBOOK_CONNECT_AUTH_ENABLED);
 	}
 
 	@Override
-	public boolean isVerifiedAccountRequired(long companyId)
-		throws SystemException {
+	public boolean isVerifiedAccountRequired(long companyId) {
 
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED,

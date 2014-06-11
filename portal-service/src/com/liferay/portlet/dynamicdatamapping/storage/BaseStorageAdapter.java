@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
@@ -288,7 +287,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		throws Exception;
 
 	protected void validateClassFields(long classPK, Fields fields)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStorageLink ddmStorageLink =
 			DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
@@ -298,7 +297,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 
 	protected void validateDDMStructureFields(
 			long ddmStructureId, Fields fields)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);

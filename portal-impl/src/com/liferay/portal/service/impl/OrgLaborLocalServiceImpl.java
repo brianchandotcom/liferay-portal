@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.service.base.OrgLaborLocalServiceBaseImpl;
@@ -33,7 +32,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(typeId);
 
@@ -64,8 +63,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<OrgLabor> getOrgLabors(long organizationId)
-		throws SystemException {
+	public List<OrgLabor> getOrgLabors(long organizationId) {
 
 		return orgLaborPersistence.findByOrganizationId(organizationId);
 	}
@@ -76,7 +74,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 			int monClose, int tueOpen, int tueClose, int wedOpen, int wedClose,
 			int thuOpen, int thuClose, int friOpen, int friClose, int satOpen,
 			int satClose)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(typeId);
 
@@ -103,9 +101,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		return orgLabor;
 	}
 
-	protected void validate(int typeId)
-		throws PortalException, SystemException {
-
+	protected void validate(int typeId) throws PortalException {
 		listTypeService.validate(
 			typeId, ListTypeConstants.ORGANIZATION_SERVICE);
 	}

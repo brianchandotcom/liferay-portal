@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -41,7 +40,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long id, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, id, actionId)) {
 			throw new PrincipalException();
@@ -51,7 +50,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String feedId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, feedId, actionId)) {
 			throw new PrincipalException();
@@ -84,7 +83,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long feedId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalFeed feed = JournalFeedLocalServiceUtil.getFeed(feedId);
 
@@ -94,7 +93,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, String feedId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalFeed feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
 
@@ -105,7 +104,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
 	}

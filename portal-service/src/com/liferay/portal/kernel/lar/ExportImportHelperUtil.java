@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.DateRange;
@@ -74,7 +73,7 @@ public class ExportImportHelperUtil {
 	}
 
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getExportableLayout(themeDisplay);
 	}
@@ -195,27 +194,27 @@ public class ExportImportHelperUtil {
 	}
 
 	public static long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getLayoutIds(layoutIdMap);
 	}
 
 	public static long[] getLayoutIds(
 			Map<Long, Boolean> layoutIdMap, long targetGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getLayoutIds(layoutIdMap, targetGroupId);
 	}
 
 	public static long[] getLayoutIds(PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getLayoutIds(portletRequest);
 	}
 
 	public static long[] getLayoutIds(
 			PortletRequest portletRequest, long targetGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getLayoutIds(
 			portletRequest, targetGroupId);
@@ -253,7 +252,7 @@ public class ExportImportHelperUtil {
 
 	public static List<Layout> getMissingParentLayouts(
 			Layout layout, long liveGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getMissingParentLayouts(
 			layout, liveGroupId);
@@ -262,7 +261,7 @@ public class ExportImportHelperUtil {
 	public static long getModelDeletionCount(
 			final PortletDataContext portletDataContext,
 			final StagedModelType stagedModelType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getModelDeletionCount(
 			portletDataContext, stagedModelType);
@@ -270,7 +269,7 @@ public class ExportImportHelperUtil {
 
 	public static FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getTempFileEntry(
 			groupId, userId, folderName);
@@ -278,7 +277,7 @@ public class ExportImportHelperUtil {
 
 	public static UserIdStrategy getUserIdStrategy(
 			long userId, String userIdStrategy)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getExportImportHelper().getUserIdStrategy(
 			userId, userIdStrategy);

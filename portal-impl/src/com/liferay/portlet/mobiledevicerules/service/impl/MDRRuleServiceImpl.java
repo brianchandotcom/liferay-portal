@@ -15,7 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -38,7 +37,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MDRRuleGroupPermissionUtil.check(
 			getPermissionChecker(), ruleGroupId, ActionKeys.UPDATE);
@@ -54,7 +53,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MDRRuleGroupPermissionUtil.check(
 			getPermissionChecker(), ruleGroupId, ActionKeys.UPDATE);
@@ -65,9 +64,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteRule(long ruleId)
-		throws PortalException, SystemException {
-
+	public void deleteRule(long ruleId) throws PortalException {
 		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
 
 		MDRRuleGroupPermissionUtil.check(
@@ -77,9 +74,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 	}
 
 	@Override
-	public MDRRule fetchRule(long ruleId)
-		throws PortalException, SystemException {
-
+	public MDRRule fetchRule(long ruleId) throws PortalException {
 		MDRRule rule = mdrRuleLocalService.fetchRule(ruleId);
 
 		if (rule != null) {
@@ -91,9 +86,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 	}
 
 	@Override
-	public MDRRule getRule(long ruleId)
-		throws PortalException, SystemException {
-
+	public MDRRule getRule(long ruleId) throws PortalException {
 		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
 
 		MDRRuleGroupPermissionUtil.check(
@@ -107,7 +100,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			long ruleId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
 
@@ -125,7 +118,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MDRRule rule = mdrRulePersistence.findByPrimaryKey(ruleId);
 

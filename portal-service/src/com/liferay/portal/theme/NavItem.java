@@ -15,7 +15,6 @@
 package com.liferay.portal.theme;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -150,7 +149,7 @@ public class NavItem implements Serializable {
 		method.invoke(velocityTaglib, _layout);
 	}
 
-	public boolean isChildSelected() throws PortalException, SystemException {
+	public boolean isChildSelected() throws PortalException {
 		return _layout.isChildSelected(
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout());
 	}

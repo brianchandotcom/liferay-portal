@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -47,13 +46,13 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(new long[] {userId}, new long[] {groupId}, null);
@@ -68,7 +67,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	@Override
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (permissionChecker.isGroupOwner(groupId)) {
 			return false;
@@ -98,7 +97,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(new long[] {userId}, null, new long[] {groupId});
@@ -113,7 +112,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
@@ -139,7 +138,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId, long groupId,
 			long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (permissionChecker.isGroupOwner(groupId)) {
 			return false;
@@ -191,11 +190,11 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	@Override
-	public void verifyPolicy() throws PortalException, SystemException {
+	public void verifyPolicy() throws PortalException {
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			GroupLocalServiceUtil.getActionableDynamicQuery();
 
@@ -215,7 +214,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Group group = (Group)object;
 
@@ -232,7 +231,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 							@Override
 							public void performAction(Object object)
-								throws PortalException, SystemException {
+								throws PortalException {
 
 								UserGroupRole userGroupRole =
 									(UserGroupRole)object;
@@ -251,9 +250,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	}
 
 	@Override
-	public void verifyPolicy(Group group)
-		throws PortalException, SystemException {
-
+	public void verifyPolicy(Group group) throws PortalException {
 		verifyPolicy(group, null, null, null, null, null);
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.SystemEventConstants;
@@ -40,7 +39,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
@@ -83,7 +82,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addAction(
 			ruleGroupInstanceId, nameMap, descriptionMap, type,
@@ -91,7 +90,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteAction(long actionId) throws SystemException {
+	public void deleteAction(long actionId) {
 		MDRAction action = mdrActionPersistence.fetchByPrimaryKey(actionId);
 
 		if (action != null) {
@@ -101,7 +100,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteAction(MDRAction action) throws SystemException {
+	public void deleteAction(MDRAction action) {
 		mdrActionPersistence.remove(action);
 
 		MDRRuleGroupInstance ruleGroupInstance =
@@ -116,7 +115,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteActions(long ruleGroupInstanceId) throws SystemException {
+	public void deleteActions(long ruleGroupInstanceId) {
 		List<MDRAction> actions =
 			mdrActionPersistence.findByRuleGroupInstanceId(ruleGroupInstanceId);
 
@@ -126,20 +125,17 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public MDRAction fetchAction(long actionId) throws SystemException {
+	public MDRAction fetchAction(long actionId) {
 		return mdrActionPersistence.fetchByPrimaryKey(actionId);
 	}
 
 	@Override
-	public MDRAction getAction(long actionId)
-		throws PortalException, SystemException {
-
+	public MDRAction getAction(long actionId) throws PortalException {
 		return mdrActionPersistence.findByPrimaryKey(actionId);
 	}
 
 	@Override
-	public List<MDRAction> getActions(long ruleGroupInstanceId)
-		throws SystemException {
+	public List<MDRAction> getActions(long ruleGroupInstanceId) {
 
 		return mdrActionPersistence.findByRuleGroupInstanceId(
 			ruleGroupInstanceId);
@@ -147,16 +143,14 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	@Override
 	public List<MDRAction> getActions(
-			long ruleGroupInstanceId, int start, int end)
-		throws SystemException {
+		long ruleGroupInstanceId, int start, int end) {
 
 		return mdrActionPersistence.findByRuleGroupInstanceId(
 			ruleGroupInstanceId, start, end);
 	}
 
 	@Override
-	public int getActionsCount(long ruleGroupInstanceId)
-		throws SystemException {
+	public int getActionsCount(long ruleGroupInstanceId) {
 
 		return mdrActionPersistence.countByRuleGroupInstanceId(
 			ruleGroupInstanceId);
@@ -167,7 +161,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 			long actionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MDRAction action = mdrActionPersistence.findByPrimaryKey(actionId);
 
@@ -196,7 +190,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateAction(
 			actionId, nameMap, descriptionMap, type,

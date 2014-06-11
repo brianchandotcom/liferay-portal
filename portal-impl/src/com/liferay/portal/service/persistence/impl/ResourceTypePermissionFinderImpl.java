@@ -50,12 +50,10 @@ public class ResourceTypePermissionFinderImpl
 	 * @param  name the fully qualified class name of the resource type
 	 * @return all the resource type permissions that apply to resources of the
 	 *         type within the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceTypePermission> findByEitherScopeC_G_N(
-			long companyId, long groupId, String name)
-		throws SystemException {
+		long companyId, long groupId, String name) {
 
 		Session session = null;
 
@@ -97,12 +95,10 @@ public class ResourceTypePermissionFinderImpl
 	 * @param  roleId the primary key of the role
 	 * @return all of the role's group scope resource type permissions that
 	 *         apply to resources of the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceTypePermission> findByGroupScopeC_N_R(
-			long companyId, String name, long roleId)
-		throws SystemException {
+		long companyId, String name, long roleId) {
 
 		Session session = null;
 

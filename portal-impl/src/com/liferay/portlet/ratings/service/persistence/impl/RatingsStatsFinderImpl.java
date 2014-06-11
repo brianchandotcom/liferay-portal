@@ -48,8 +48,7 @@ public class RatingsStatsFinderImpl
 		new String[] {Long.class.getName(), List.class.getName()});
 
 	@Override
-	public List<RatingsStats> findByC_C(long classNameId, List<Long> classPKs)
-		throws SystemException {
+	public List<RatingsStats> findByC_C(long classNameId, List<Long> classPKs) {
 
 		Object[] finderArgs = new Object[] {
 			classNameId,

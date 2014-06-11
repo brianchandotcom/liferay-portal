@@ -41,7 +41,7 @@ public class NestedSetsTreeManagerTest {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testCountAncestors() throws SystemException {
+	public void testCountAncestors() {
 		testInsert();
 
 		assertCountAncestors(1, _simpleNestedSetsTreeNodes[0]);
@@ -56,7 +56,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testCountDescendants() throws SystemException {
+	public void testCountDescendants() {
 		testInsert();
 
 		assertCountDescendants(5, _simpleNestedSetsTreeNodes[0]);
@@ -71,7 +71,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testDelete() throws SystemException {
+	public void testDelete() {
 		testInsert();
 
 		_nestedSetsTreeManager.delete(_simpleNestedSetsTreeNodes[7]);
@@ -125,7 +125,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testGetAncestors() throws SystemException {
+	public void testGetAncestors() {
 		testInsert();
 
 		assertGetAncestors(_simpleNestedSetsTreeNodes[0]);
@@ -149,7 +149,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testGetDescendants() throws SystemException {
+	public void testGetDescendants() {
 		testInsert();
 
 		assertGetDescendants(
@@ -172,7 +172,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testInsert() throws SystemException {
+	public void testInsert() {
 
 		// (0)
 
@@ -252,7 +252,7 @@ public class NestedSetsTreeManagerTest {
 	}
 
 	@Test
-	public void testMove() throws SystemException {
+	public void testMove() {
 		testInsert();
 
 		_nestedSetsTreeManager.move(_simpleNestedSetsTreeNodes[4], null, null);
@@ -324,8 +324,7 @@ public class NestedSetsTreeManagerTest {
 
 	protected void assertCountAncestors(
 			long ancestorsCount,
-			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode)
-		throws SystemException {
+			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode) {
 
 		Assert.assertEquals(
 			ancestorsCount,
@@ -334,8 +333,7 @@ public class NestedSetsTreeManagerTest {
 
 	protected void assertCountDescendants(
 			long childrenCount,
-			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode)
-		throws SystemException {
+			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode) {
 
 		Assert.assertEquals(
 			childrenCount,
@@ -344,8 +342,7 @@ public class NestedSetsTreeManagerTest {
 
 	protected void assertGetAncestors(
 			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode,
-			SimpleNestedSetsTreeNode... ancestorSimpleNestedSetsTreeNodes)
-		throws SystemException {
+			SimpleNestedSetsTreeNode... ancestorSimpleNestedSetsTreeNodes) {
 
 		List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
 			new ArrayList<SimpleNestedSetsTreeNode>(
@@ -362,8 +359,7 @@ public class NestedSetsTreeManagerTest {
 
 	protected void assertGetDescendants(
 			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode,
-			SimpleNestedSetsTreeNode... childSimpleNestedSetsTreeNodes)
-		throws SystemException {
+			SimpleNestedSetsTreeNode... childSimpleNestedSetsTreeNodes) {
 
 		List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
 			new ArrayList<SimpleNestedSetsTreeNode>(

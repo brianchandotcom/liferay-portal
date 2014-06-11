@@ -124,7 +124,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testAddTableMapping() throws SystemException {
+	public void testAddTableMapping() {
 
 		// Success, no model listener
 
@@ -286,7 +286,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testContainsTableMapping() throws SystemException {
+	public void testContainsTableMapping() {
 
 		// Does not contain table mapping
 
@@ -312,7 +312,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testDeleteLeftPrimaryKeyTableMappings() throws SystemException {
+	public void testDeleteLeftPrimaryKeyTableMappings() {
 
 		// Delete 0 entry
 
@@ -474,8 +474,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testDeleteRightPrimaryKeyTableMappings()
-		throws SystemException {
+	public void testDeleteRightPrimaryKeyTableMappings() {
 
 		// Delete 0 entry
 
@@ -645,7 +644,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testDeleteTableMapping() throws SystemException {
+	public void testDeleteTableMapping() {
 
 		// No such table mapping
 
@@ -798,7 +797,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testGetLeftBaseModels() throws SystemException {
+	public void testGetLeftBaseModels() {
 
 		// Get 0 result
 
@@ -923,7 +922,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testGetLeftPrimaryKeys() throws SystemException {
+	public void testGetLeftPrimaryKeys() {
 
 		// Get 0 result
 
@@ -987,7 +986,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testGetRightBaseModels() throws SystemException {
+	public void testGetRightBaseModels() {
 
 		// Get 0 result
 
@@ -1114,7 +1113,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testGetRightPrimaryKeys() throws SystemException {
+	public void testGetRightPrimaryKeys() {
 
 		// Get 0 result
 
@@ -1199,7 +1198,7 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testReverseTableMapper() throws SystemException {
+	public void testReverseTableMapper() {
 		Class<?> clazz = TableMapper.class;
 
 		ClassLoader classLoader = clazz.getClassLoader();

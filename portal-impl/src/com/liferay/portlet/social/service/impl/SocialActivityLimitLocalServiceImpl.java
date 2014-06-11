@@ -15,7 +15,6 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.User;
@@ -33,7 +32,7 @@ public class SocialActivityLimitLocalServiceImpl
 	public SocialActivityLimit addActivityLimit(
 			long userId, long groupId, long classNameId, long classPK,
 			int activityType, String activityCounterName, int limitPeriod)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SocialActivityLimit activityLimit =
 			socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
@@ -66,9 +65,8 @@ public class SocialActivityLimitLocalServiceImpl
 
 	@Override
 	public SocialActivityLimit fetchActivityLimit(
-			long groupId, long userId, long classNameId, long classPK,
-			int activityType, String activityCounterName)
-		throws SystemException {
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, String activityCounterName) {
 
 		return socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
 			groupId, userId, classNameId, classPK, activityType,

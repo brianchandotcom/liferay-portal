@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeFactory;
@@ -28,15 +27,14 @@ import com.liferay.portal.model.impl.ThemeImpl;
 public class ThemeFactoryImpl implements ThemeFactory {
 
 	@Override
-	public Theme getDefaultRegularTheme(long companyId) throws SystemException {
+	public Theme getDefaultRegularTheme(long companyId) {
 		return new ThemeImpl(
 			ThemeFactoryUtil.getDefaultRegularThemeId(companyId),
 			StringPool.BLANK);
 	}
 
 	@Override
-	public String getDefaultRegularThemeId(long companyId)
-		throws SystemException {
+	public String getDefaultRegularThemeId(long companyId) {
 
 		String defaultRegularThemeId = PrefsPropsUtil.getString(
 			companyId, PropsKeys.DEFAULT_REGULAR_THEME_ID);
@@ -45,13 +43,13 @@ public class ThemeFactoryImpl implements ThemeFactory {
 	}
 
 	@Override
-	public Theme getDefaultWapTheme(long companyId) throws SystemException {
+	public Theme getDefaultWapTheme(long companyId) {
 		return new ThemeImpl(
 			ThemeFactoryUtil.getDefaultWapThemeId(companyId), StringPool.BLANK);
 	}
 
 	@Override
-	public String getDefaultWapThemeId(long companyId) throws SystemException {
+	public String getDefaultWapThemeId(long companyId) {
 		String defaultWapThemeId = PrefsPropsUtil.getString(
 			companyId, PropsKeys.DEFAULT_WAP_THEME_ID);
 

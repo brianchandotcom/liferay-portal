@@ -16,7 +16,6 @@ package com.liferay.mail.service;
 
 import com.liferay.mail.model.Filter;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
@@ -78,7 +77,7 @@ public class MailServiceUtil {
 		return _service;
 	}
 
-	public static Session getSession() throws SystemException {
+	public static Session getSession() {
 		return getService().getSession();
 	}
 

@@ -111,7 +111,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Subscription deleteSubscription(long subscriptionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return subscriptionPersistence.remove(subscriptionId);
 	}
 
@@ -126,7 +126,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Subscription deleteSubscription(Subscription subscription)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return subscriptionPersistence.remove(subscription);
 	}
 

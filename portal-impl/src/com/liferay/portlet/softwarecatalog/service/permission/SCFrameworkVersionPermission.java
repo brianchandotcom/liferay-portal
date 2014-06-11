@@ -15,7 +15,6 @@
 package com.liferay.portlet.softwarecatalog.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -32,7 +31,7 @@ public class SCFrameworkVersionPermission
 	public static void check(
 			PermissionChecker permissionChecker, long frameworkVersionId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, frameworkVersionId, actionId)) {
 			throw new PrincipalException();
@@ -52,7 +51,7 @@ public class SCFrameworkVersionPermission
 	public static boolean contains(
 			PermissionChecker permissionChecker, long frameworkVersionId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCFrameworkVersion frameworkVersion =
 			SCFrameworkVersionLocalServiceUtil.getFrameworkVersion(
@@ -83,7 +82,7 @@ public class SCFrameworkVersionPermission
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
 	}

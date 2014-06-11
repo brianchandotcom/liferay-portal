@@ -519,7 +519,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		return notificationEvents;
 	}
 
-	protected void doInit() throws SystemException {
+	protected void doInit() {
 		if (!PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
 			return;
 		}

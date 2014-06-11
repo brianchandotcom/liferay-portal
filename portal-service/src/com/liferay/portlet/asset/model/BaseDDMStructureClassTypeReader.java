@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -36,8 +35,7 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 
 	@Override
 	public List<ClassType> getAvailableClassTypes(
-			long[] groupIds, Locale locale)
-		throws SystemException {
+		long[] groupIds, Locale locale) {
 
 		List<ClassType> classTypes = new ArrayList<ClassType>();
 
@@ -57,7 +55,7 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 
 	@Override
 	public ClassType getClassType(long classTypeId, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
 			classTypeId);

@@ -33,7 +33,7 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 	@Override
 	public MBBan addBan(long banUserId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -62,7 +62,7 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),

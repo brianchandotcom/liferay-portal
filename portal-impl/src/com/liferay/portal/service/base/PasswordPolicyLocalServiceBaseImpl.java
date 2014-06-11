@@ -112,7 +112,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return passwordPolicyPersistence.remove(passwordPolicyId);
 	}
 
@@ -127,7 +127,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public PasswordPolicy deletePasswordPolicy(PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return passwordPolicyPersistence.remove(passwordPolicy);
 	}
 

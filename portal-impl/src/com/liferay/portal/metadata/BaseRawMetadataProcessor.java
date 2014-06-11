@@ -15,7 +15,6 @@
 package com.liferay.portal.metadata;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -59,7 +58,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	@Override
 	public Map<String, Fields> getRawMetadataMap(
 			String extension, String mimeType, File file)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Metadata metadata = extractMetadata(extension, mimeType, file);
 
@@ -69,7 +68,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	@Override
 	public Map<String, Fields> getRawMetadataMap(
 			String extension, String mimeType, InputStream inputStream)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Metadata metadata = extractMetadata(extension, mimeType, inputStream);
 
@@ -131,11 +130,11 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 
 	protected abstract Metadata extractMetadata(
 			String extension, String mimeType, File file)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected abstract Metadata extractMetadata(
 			String extension, String mimeType, InputStream inputStream)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected Object getFieldValue(Metadata metadata, Field field) {
 		Object fieldValue = null;

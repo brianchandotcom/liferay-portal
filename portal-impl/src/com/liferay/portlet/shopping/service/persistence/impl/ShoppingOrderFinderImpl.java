@@ -48,12 +48,11 @@ public class ShoppingOrderFinderImpl
 
 	@Override
 	public int countByG_C_U_N_PPPS(
-			long groupId, long companyId, long userId, String number,
-			String billingFirstName, String billingLastName,
-			String billingEmailAddress, String shippingFirstName,
-			String shippingLastName, String shippingEmailAddress,
-			String ppPaymentStatus, boolean andOperator)
-		throws SystemException {
+		long groupId, long companyId, long userId, String number,
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator) {
 
 		number = StringUtil.upperCase(number);
 
@@ -128,13 +127,12 @@ public class ShoppingOrderFinderImpl
 
 	@Override
 	public List<ShoppingOrder> findByG_C_U_N_PPPS(
-			long groupId, long companyId, long userId, String number,
-			String billingFirstName, String billingLastName,
-			String billingEmailAddress, String shippingFirstName,
-			String shippingLastName, String shippingEmailAddress,
-			String ppPaymentStatus, boolean andOperator, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long groupId, long companyId, long userId, String number,
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator, int start, int end,
+		OrderByComparator obc) {
 
 		number = StringUtil.upperCase(number);
 

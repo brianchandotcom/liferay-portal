@@ -226,9 +226,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDDMStructureActionableDynamicQuery(
-			final PortletDataContext portletDataContext,
-			final List<DDMTemplate> ddmTemplates)
-		throws SystemException {
+		final PortletDataContext portletDataContext,
+		final List<DDMTemplate> ddmTemplates) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			DDMStructureLocalServiceUtil.getExportActionableDynamicQuery(
@@ -282,8 +281,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
+		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			DDLRecordLocalServiceUtil.getExportActionableDynamicQuery(

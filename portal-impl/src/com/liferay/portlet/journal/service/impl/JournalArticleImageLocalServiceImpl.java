@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.journal.DuplicateArticleImageIdException;
 import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.service.base.JournalArticleImageLocalServiceBaseImpl;
@@ -32,7 +31,7 @@ public class JournalArticleImageLocalServiceImpl
 	public void addArticleImageId(
 			long articleImageId, long groupId, String articleId, double version,
 			String elInstanceId, String elName, String languageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (articleImageId <= 0) {
 			return;
@@ -63,8 +62,7 @@ public class JournalArticleImageLocalServiceImpl
 	}
 
 	@Override
-	public void deleteArticleImage(JournalArticleImage articleImage)
-		throws SystemException {
+	public void deleteArticleImage(JournalArticleImage articleImage) {
 
 		try {
 			imageLocalService.deleteImage(articleImage.getArticleImageId());
@@ -76,7 +74,7 @@ public class JournalArticleImageLocalServiceImpl
 	}
 
 	@Override
-	public void deleteArticleImage(long articleImageId) throws SystemException {
+	public void deleteArticleImage(long articleImageId) {
 		JournalArticleImage articleImage =
 			journalArticleImagePersistence.fetchByPrimaryKey(articleImageId);
 
@@ -87,9 +85,8 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public void deleteArticleImage(
-			long groupId, String articleId, double version, String elInstanceId,
-			String elName, String languageId)
-		throws SystemException {
+		long groupId, String articleId, double version, String elInstanceId,
+		String elName, String languageId) {
 
 		JournalArticleImage articleImage =
 			journalArticleImagePersistence.fetchByG_A_V_E_E_L(
@@ -101,8 +98,7 @@ public class JournalArticleImageLocalServiceImpl
 	}
 
 	@Override
-	public void deleteImages(long groupId, String articleId, double version)
-		throws SystemException {
+	public void deleteImages(long groupId, String articleId, double version) {
 
 		for (JournalArticleImage articleImage :
 				journalArticleImagePersistence.findByG_A_V(
@@ -114,16 +110,15 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public JournalArticleImage getArticleImage(long articleImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return journalArticleImagePersistence.findByPrimaryKey(articleImageId);
 	}
 
 	@Override
 	public long getArticleImageId(
-			long groupId, String articleId, double version, String elInstanceId,
-			String elName, String languageId)
-		throws SystemException {
+		long groupId, String articleId, double version, String elInstanceId,
+		String elName, String languageId) {
 
 		return getArticleImageId(
 			groupId, articleId, version, elInstanceId, elName, languageId,
@@ -132,9 +127,8 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public long getArticleImageId(
-			long groupId, String articleId, double version, String elInstanceId,
-			String elName, String languageId, boolean tempImage)
-		throws SystemException {
+		long groupId, String articleId, double version, String elInstanceId,
+		String elName, String languageId, boolean tempImage) {
 
 		JournalArticleImage articleImage =
 			journalArticleImagePersistence.fetchByG_A_V_E_E_L(
@@ -161,23 +155,21 @@ public class JournalArticleImageLocalServiceImpl
 	}
 
 	@Override
-	public List<JournalArticleImage> getArticleImages(long groupId)
-		throws SystemException {
+	public List<JournalArticleImage> getArticleImages(long groupId) {
 
 		return journalArticleImagePersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<JournalArticleImage> getArticleImages(
-			long groupId, String articleId, double version)
-		throws SystemException {
+		long groupId, String articleId, double version) {
 
 		return journalArticleImagePersistence.findByG_A_V(
 			groupId, articleId, version);
 	}
 
 	@Override
-	public int getArticleImagesCount(long groupId) throws SystemException {
+	public int getArticleImagesCount(long groupId) {
 		return journalArticleImagePersistence.countByGroupId(groupId);
 	}
 

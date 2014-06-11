@@ -75,7 +75,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,
 			Fields fields, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Record
 
@@ -138,7 +138,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,
 			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
@@ -156,8 +156,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public DDLRecord deleteRecord(DDLRecord record)
-		throws PortalException, SystemException {
+	public DDLRecord deleteRecord(DDLRecord record) throws PortalException {
 
 		// Record
 
@@ -191,9 +190,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteRecord(long recordId)
-		throws PortalException, SystemException {
-
+	public void deleteRecord(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
 		ddlRecordLocalService.deleteRecord(record);
@@ -202,7 +199,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public DDLRecord deleteRecordLocale(
 			long recordId, Locale locale, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
@@ -221,9 +218,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteRecords(long recordSetId)
-		throws PortalException, SystemException {
-
+	public void deleteRecords(long recordSetId) throws PortalException {
 		List<DDLRecord> records = ddlRecordPersistence.findByRecordSetId(
 			recordSetId);
 
@@ -233,15 +228,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	@Override
-	public DDLRecord fetchRecord(long recordId) throws SystemException {
+	public DDLRecord fetchRecord(long recordId) {
 		return ddlRecordPersistence.fetchByPrimaryKey(recordId);
 	}
 
 	@Override
 	public List<DDLRecord> getCompanyRecords(
-			long companyId, int status, int scope, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, int status, int scope, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return ddlRecordFinder.findByC_S_S(
 			companyId, status, scope, start, end, orderByComparator);
@@ -254,9 +248,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public List<DDLRecord> getCompanyRecords(
-			long companyId, int scope, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, int scope, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return getCompanyRecords(
 			companyId, WorkflowConstants.STATUS_ANY, scope, start, end,
@@ -269,23 +262,21 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
-	public int getCompanyRecordsCount(long companyId, int scope)
-		throws SystemException {
+	public int getCompanyRecordsCount(long companyId, int scope) {
 
 		return getCompanyRecordsCount(
 			companyId, WorkflowConstants.STATUS_ANY, scope);
 	}
 
 	@Override
-	public int getCompanyRecordsCount(long companyId, int status, int scope)
-		throws SystemException {
+	public int getCompanyRecordsCount(long companyId, int status, int scope) {
 
 		return ddlRecordFinder.countByC_S_S(companyId, status, scope);
 	}
 
 	@Override
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DDLRecordVersion> recordVersions =
 			ddlRecordVersionPersistence.findByRecordId(recordId);
@@ -305,84 +296,76 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Override
 	public Long[] getMinAndMaxCompanyRecordIds(
-			long companyId, int status, int scope)
-		throws SystemException {
+			long companyId, int status, int scope) {
 
 		return ddlRecordFinder.findByC_S_S_MinAndMax(companyId, status, scope);
 	}
 
 	@Override
 	public List<DDLRecord> getMinAndMaxCompanyRecords(
-			long companyId, int status, int scope, long minRecordId,
-			long maxRecordId)
-		throws SystemException {
+		long companyId, int status, int scope, long minRecordId,
+		long maxRecordId) {
 
 		return ddlRecordFinder.findByC_S_S_MinAndMax(
 			companyId, status, scope, minRecordId, maxRecordId);
 	}
 
 	@Override
-	public DDLRecord getRecord(long recordId)
-		throws PortalException, SystemException {
-
+	public DDLRecord getRecord(long recordId) throws PortalException {
 		return ddlRecordPersistence.findByPrimaryKey(recordId);
 	}
 
 	@Override
-	public List<DDLRecord> getRecords(long recordSetId) throws SystemException {
+	public List<DDLRecord> getRecords(long recordSetId) {
 		return ddlRecordPersistence.findByRecordSetId(recordSetId);
 	}
 
 	@Override
 	public List<DDLRecord> getRecords(
-			long recordSetId, int status, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long recordSetId, int status, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return ddlRecordFinder.findByR_S(
 			recordSetId, status, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<DDLRecord> getRecords(long recordSetId, long userId)
-		throws SystemException {
+	public List<DDLRecord> getRecords(long recordSetId, long userId) {
 
 		return ddlRecordPersistence.findByR_U(recordSetId, userId);
 	}
 
 	@Override
-	public int getRecordsCount(long recordSetId, int status)
-		throws SystemException {
+	public int getRecordsCount(long recordSetId, int status) {
 
 		return ddlRecordFinder.countByR_S(recordSetId, status);
 	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddlRecordVersionPersistence.findByPrimaryKey(recordVersionId);
 	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddlRecordVersionPersistence.findByR_V(recordId, version);
 	}
 
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(
-			long recordId, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long recordId, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return ddlRecordVersionPersistence.findByRecordId(
 			recordId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getRecordVersionsCount(long recordId) throws SystemException {
+	public int getRecordVersionsCount(long recordId) {
 		return ddlRecordVersionPersistence.countByRecordId(recordId);
 	}
 
@@ -390,7 +373,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public void revertRecordVersion(
 			long userId, long recordId, String version,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordVersion recordVersion = getRecordVersion(recordId, version);
 
@@ -407,7 +390,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Hits search(SearchContext searchContext) throws SystemException {
+	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				DDLRecord.class);
@@ -421,8 +404,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<DDLRecord> searchDDLRecords(
-			SearchContext searchContext)
-		throws SystemException {
+		SearchContext searchContext) {
 
 		try {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -444,7 +426,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public void updateAsset(
 			long userId, DDLRecord record, DDLRecordVersion recordVersion,
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean addDraftAssetEntry = false;
 
@@ -506,7 +488,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public DDLRecord updateRecord(
 			long userId, long recordId, boolean majorVersion, int displayIndex,
 			Fields fields, boolean mergeFields, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Record
 
@@ -584,7 +566,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			long userId, long recordId, int displayIndex,
 			Map<String, Serializable> fieldsMap, boolean mergeFields,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
@@ -604,7 +586,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public DDLRecord updateStatus(
 			long userId, long recordVersionId, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Record version
 
@@ -666,9 +648,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected DDLRecordVersion addRecordVersion(
-			User user, DDLRecord record, long ddmStorageId, String version,
-			int displayIndex, int status)
-		throws SystemException {
+		User user, DDLRecord record, long ddmStorageId, String version,
+		int displayIndex, int status) {
 
 		long recordVersionId = counterLocalService.increment();
 
@@ -777,9 +758,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected void updateRecordVersion(
-			User user, DDLRecordVersion recordVersion, String version,
-			int displayIndex, int status, ServiceContext serviceContext)
-		throws SystemException {
+		User user, DDLRecordVersion recordVersion, String version,
+		int displayIndex, int status, ServiceContext serviceContext) {
 
 		recordVersion.setUserId(user.getUserId());
 		recordVersion.setUserName(user.getFullName());

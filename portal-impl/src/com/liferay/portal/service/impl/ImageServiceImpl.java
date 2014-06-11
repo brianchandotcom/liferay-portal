@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.base.ImageServiceBaseImpl;
 
@@ -27,9 +26,7 @@ import com.liferay.portal.service.base.ImageServiceBaseImpl;
 public class ImageServiceImpl extends ImageServiceBaseImpl {
 
 	@Override
-	public Image getImage(long imageId)
-		throws PortalException, SystemException {
-
+	public Image getImage(long imageId) throws PortalException {
 		return imageLocalService.getImage(imageId);
 	}
 

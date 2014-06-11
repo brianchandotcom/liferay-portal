@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -36,9 +35,7 @@ public class CMISRepositoryLocalServiceImpl
 	extends CMISRepositoryLocalServiceBaseImpl {
 
 	@Override
-	public Object getSession(long repositoryId)
-		throws PortalException, SystemException {
-
+	public Object getSession(long repositoryId) throws PortalException {
 		CMISRepository cmisRepository = getCmisRepository(repositoryId);
 
 		return cmisRepository.getSession();
@@ -46,7 +43,7 @@ public class CMISRepositoryLocalServiceImpl
 
 	@Override
 	public FileEntry toFileEntry(long repositoryId, Object object)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CMISRepository cmisRepository = getCmisRepository(repositoryId);
 
@@ -57,7 +54,7 @@ public class CMISRepositoryLocalServiceImpl
 
 	@Override
 	public FileVersion toFileVersion(long repositoryId, Object object)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CMISRepository cmisRepository = getCmisRepository(repositoryId);
 
@@ -68,7 +65,7 @@ public class CMISRepositoryLocalServiceImpl
 
 	@Override
 	public Folder toFolder(long repositoryId, Object object)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CMISRepository cmisRepository = getCmisRepository(repositoryId);
 
@@ -79,7 +76,7 @@ public class CMISRepositoryLocalServiceImpl
 	}
 
 	protected CMISRepository getCmisRepository(long repositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Repository repositoryImpl = repositoryLocalService.getRepositoryImpl(
 			repositoryId);

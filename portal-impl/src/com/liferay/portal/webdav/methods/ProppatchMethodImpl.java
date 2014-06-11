@@ -15,7 +15,6 @@
 package com.liferay.portal.webdav.methods;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -73,7 +72,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 	}
 
 	protected WebDAVProps getStoredProperties(WebDAVRequest webDAVRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 

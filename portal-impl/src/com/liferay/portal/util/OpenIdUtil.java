@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -56,7 +55,7 @@ public class OpenIdUtil {
 		return result;
 	}
 
-	public static boolean isEnabled(long companyId) throws SystemException {
+	public static boolean isEnabled(long companyId) {
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.OPEN_ID_AUTH_ENABLED,
 			PropsValues.OPEN_ID_AUTH_ENABLED);

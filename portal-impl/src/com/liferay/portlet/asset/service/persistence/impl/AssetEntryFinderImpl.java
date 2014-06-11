@@ -61,7 +61,7 @@ public class AssetEntryFinderImpl
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
 	@Override
-	public int countEntries(AssetEntryQuery entryQuery) throws SystemException {
+	public int countEntries(AssetEntryQuery entryQuery) {
 		Session session = null;
 
 		try {
@@ -90,8 +90,7 @@ public class AssetEntryFinderImpl
 	}
 
 	@Override
-	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery)
-		throws SystemException {
+	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
 
 		Session session = null;
 
@@ -111,8 +110,7 @@ public class AssetEntryFinderImpl
 		}
 	}
 
-	protected void buildAllCategoriesSQL(long[] categoryIds, StringBundler sb)
-		throws SystemException {
+	protected void buildAllCategoriesSQL(long[] categoryIds, StringBundler sb) {
 
 		String findByAndCategoryIdsSQL = CustomSQLUtil.get(
 			FIND_BY_AND_CATEGORY_IDS);
@@ -172,8 +170,7 @@ public class AssetEntryFinderImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 
-	protected void buildAnyCategoriesSQL(long[] categoryIds, StringBundler sb)
-		throws SystemException {
+	protected void buildAnyCategoriesSQL(long[] categoryIds, StringBundler sb) {
 
 		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
 
@@ -220,8 +217,7 @@ public class AssetEntryFinderImpl
 	}
 
 	protected SQLQuery buildAssetQuerySQL(
-			AssetEntryQuery entryQuery, boolean count, Session session)
-		throws SystemException {
+		AssetEntryQuery entryQuery, boolean count, Session session) {
 
 		StringBundler sb = new StringBundler(64);
 
@@ -469,8 +465,7 @@ public class AssetEntryFinderImpl
 	}
 
 	protected void buildNotAllCategoriesSQL(
-			long[] categoryIds, StringBundler sb)
-		throws SystemException {
+		long[] categoryIds, StringBundler sb) {
 
 		String findByAndCategoryIdsSQL = CustomSQLUtil.get(
 			FIND_BY_AND_CATEGORY_IDS);
@@ -530,8 +525,7 @@ public class AssetEntryFinderImpl
 	}
 
 	protected void buildNotAnyCategoriesSQL(
-			long[] notCategoryIds, StringBundler sb)
-		throws SystemException {
+		long[] notCategoryIds, StringBundler sb) {
 
 		sb.append(" AND (NOT ");
 
@@ -632,8 +626,7 @@ public class AssetEntryFinderImpl
 		return sb.toString();
 	}
 
-	protected List<Long> getSubcategoryIds(long parentCategoryId)
-		throws SystemException {
+	protected List<Long> getSubcategoryIds(long parentCategoryId) {
 
 		AssetCategory parentAssetCategory = AssetCategoryUtil.fetchByPrimaryKey(
 			parentCategoryId);

@@ -15,7 +15,6 @@
 package com.liferay.portlet.bookmarks.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -77,7 +76,7 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
-	public String getIconCssClass() throws PortalException, SystemException {
+	public String getIconCssClass() throws PortalException {
 		if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
 				_folder.getGroupId(), _folder.getFolderId()) > 0) {
 
@@ -213,7 +212,7 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return BookmarksFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.UPDATE);
@@ -221,7 +220,7 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return BookmarksFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);

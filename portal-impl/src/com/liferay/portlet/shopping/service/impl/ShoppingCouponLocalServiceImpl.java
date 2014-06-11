@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,7 +58,7 @@ public class ShoppingCouponLocalServiceImpl
 			int endDateMinute, boolean neverExpire, boolean active,
 			String limitCategories, String limitSkus, double minOrder,
 			double discount, String discountType, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
@@ -122,9 +121,7 @@ public class ShoppingCouponLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCoupon(long couponId)
-		throws PortalException, SystemException {
-
+	public void deleteCoupon(long couponId) throws PortalException {
 		ShoppingCoupon coupon = shoppingCouponPersistence.findByPrimaryKey(
 			couponId);
 
@@ -132,12 +129,12 @@ public class ShoppingCouponLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCoupon(ShoppingCoupon coupon) throws SystemException {
+	public void deleteCoupon(ShoppingCoupon coupon) {
 		shoppingCouponPersistence.remove(coupon);
 	}
 
 	@Override
-	public void deleteCoupons(long groupId) throws SystemException {
+	public void deleteCoupons(long groupId) {
 		List<ShoppingCoupon> coupons = shoppingCouponPersistence.findByGroupId(
 			groupId);
 
@@ -147,16 +144,12 @@ public class ShoppingCouponLocalServiceImpl
 	}
 
 	@Override
-	public ShoppingCoupon getCoupon(long couponId)
-		throws PortalException, SystemException {
-
+	public ShoppingCoupon getCoupon(long couponId) throws PortalException {
 		return shoppingCouponPersistence.findByPrimaryKey(couponId);
 	}
 
 	@Override
-	public ShoppingCoupon getCoupon(String code)
-		throws PortalException, SystemException {
-
+	public ShoppingCoupon getCoupon(String code) throws PortalException {
 		code = StringUtil.toUpperCase(code.trim());
 
 		return shoppingCouponPersistence.findByCode(code);
@@ -164,9 +157,8 @@ public class ShoppingCouponLocalServiceImpl
 
 	@Override
 	public List<ShoppingCoupon> search(
-			long groupId, long companyId, String code, boolean active,
-			String discountType, boolean andOperator, int start, int end)
-		throws SystemException {
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator, int start, int end) {
 
 		return shoppingCouponFinder.findByG_C_C_A_DT(
 			groupId, companyId, code, active, discountType, andOperator, start,
@@ -175,9 +167,8 @@ public class ShoppingCouponLocalServiceImpl
 
 	@Override
 	public int searchCount(
-			long groupId, long companyId, String code, boolean active,
-			String discountType, boolean andOperator)
-		throws SystemException {
+		long groupId, long companyId, String code, boolean active,
+		String discountType, boolean andOperator) {
 
 		return shoppingCouponFinder.countByG_C_C_A_DT(
 			groupId, companyId, code, active, discountType, andOperator);
@@ -192,7 +183,7 @@ public class ShoppingCouponLocalServiceImpl
 			boolean neverExpire, boolean active, String limitCategories,
 			String limitSkus, double minOrder, double discount,
 			String discountType, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -238,7 +229,7 @@ public class ShoppingCouponLocalServiceImpl
 		return coupon;
 	}
 
-	protected String getCode() throws SystemException {
+	protected String getCode() {
 		String code = PwdGenerator.getPassword(
 			8, PwdGenerator.KEY1, PwdGenerator.KEY2);
 
@@ -255,7 +246,7 @@ public class ShoppingCouponLocalServiceImpl
 			long companyId, long groupId, String code, boolean autoCode,
 			String name, String description, String limitCategories,
 			String limitSkus, double minOrder, double discount)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!autoCode) {
 			if (Validator.isNull(code) || Validator.isNumber(code) ||
@@ -279,7 +270,7 @@ public class ShoppingCouponLocalServiceImpl
 			long companyId, long groupId, String name, String description,
 			String limitCategories, String limitSkus, double minOrder,
 			double discount)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new CouponNameException();

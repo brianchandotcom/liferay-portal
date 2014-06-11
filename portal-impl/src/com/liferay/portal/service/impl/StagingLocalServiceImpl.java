@@ -91,7 +91,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, boolean remote,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long targetGroupId = 0;
 
@@ -143,7 +143,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			PortletFileRepositoryUtil.deletePortletFolder(stagingRequestId);
@@ -159,7 +159,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override
 	public long createStagingRequest(long userId, long groupId, String checksum)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -176,7 +176,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override
 	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		disableStaging((PortletRequest)null, liveGroup, serviceContext);
 	}
@@ -185,7 +185,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	public void disableStaging(
 			PortletRequest portletRequest, Group liveGroup,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
@@ -248,7 +248,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	public void enableLocalStaging(
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (liveGroup.isStagedRemotely()) {
 			disableStaging(liveGroup, serviceContext);
@@ -306,7 +306,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			boolean branchingPrivate, String remoteAddress, int remotePort,
 			String remotePathContext, boolean secureConnection,
 			long remoteGroupId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		StagingUtil.validateRemote(
 			liveGroup.getGroupId(), remoteAddress, remotePort,
@@ -380,7 +380,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	public void publishStagingRequest(
 			long userId, long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
@@ -403,7 +403,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	@Override
 	public void updateStagingRequest(
 			long userId, long stagingRequestId, String fileName, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 			stagingRequestId);
@@ -422,7 +422,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	public MissingReferences validateStagingRequest(
 			long userId, long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
@@ -445,7 +445,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	protected void addDefaultLayoutSetBranch(
 			long userId, long groupId, String groupName, boolean privateLayout,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String masterBranchDescription =
 			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
@@ -491,7 +491,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	protected Group addStagingGroup(
 			long userId, Group liveGroup, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 
@@ -542,7 +542,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	}
 
 	protected void clearLastPublishDate(long groupId, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
@@ -557,7 +557,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	}
 
 	protected void deleteLayoutSetBranches(long groupId, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Find the latest layout revision for all the published layouts
 
@@ -706,7 +706,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	protected FileEntry fetchStagingRequestFileEntry(
 			long stagingRequestId, Folder folder)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
@@ -725,7 +725,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	protected FileEntry getStagingRequestFileEntry(
 			long userId, long stagingRequestId, Folder folder)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry stagingRequestFileEntry = fetchStagingRequestFileEntry(
 			stagingRequestId, folder);
@@ -819,8 +819,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	}
 
 	protected Layout updateLayoutWithLayoutRevision(
-			LayoutRevision layoutRevision)
-		throws SystemException {
+		LayoutRevision layoutRevision) {
 
 		Layout layout = layoutLocalService.fetchLayout(
 			layoutRevision.getPlid());

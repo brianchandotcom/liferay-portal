@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,9 +46,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
-	public Folder addAttachmentsFolder()
-		throws PortalException, SystemException {
-
+	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -79,7 +76,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
-	public long getAttachmentsFolderId() throws SystemException {
+	public long getAttachmentsFolderId() {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -114,7 +111,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
-	public MBCategory getCategory() throws PortalException, SystemException {
+	public MBCategory getCategory() throws PortalException {
 		long parentCategoryId = getCategoryId();
 
 		if ((parentCategoryId ==
@@ -140,7 +137,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
-	public long[] getParticipantUserIds() throws SystemException {
+	public long[] getParticipantUserIds() {
 		Set<Long> participantUserIds = new HashSet<Long>();
 
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(

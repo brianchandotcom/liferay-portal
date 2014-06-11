@@ -15,7 +15,6 @@
 package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portlet.expando.DuplicateTableNameException;
@@ -35,7 +34,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable addDefaultTable(long companyId, long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addTable(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -43,7 +42,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable addDefaultTable(long companyId, String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addTable(
 			companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -51,7 +50,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable addTable(long companyId, long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(companyId, 0, classNameId, name);
 
@@ -75,7 +74,7 @@ public class ExpandoTableLocalServiceImpl
 	@Deprecated
 	@Override
 	public ExpandoTable addTable(long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -84,7 +83,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable addTable(long companyId, String className, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -98,7 +97,7 @@ public class ExpandoTableLocalServiceImpl
 	@Deprecated
 	@Override
 	public ExpandoTable addTable(String className, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -106,7 +105,7 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTable(ExpandoTable table) throws SystemException {
+	public void deleteTable(ExpandoTable table) {
 
 		// Table
 
@@ -134,9 +133,7 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTable(long tableId)
-		throws PortalException, SystemException {
-
+	public void deleteTable(long tableId) throws PortalException {
 		ExpandoTable table = expandoTablePersistence.findByPrimaryKey(tableId);
 
 		deleteTable(table);
@@ -144,7 +141,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public void deleteTable(long companyId, long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoTable table = expandoTablePersistence.findByC_C_N(
 			companyId, classNameId, name);
@@ -154,7 +151,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public void deleteTable(long companyId, String className, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -162,8 +159,7 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTables(long companyId, long classNameId)
-		throws SystemException {
+	public void deleteTables(long companyId, long classNameId) {
 
 		List<ExpandoTable> tables = expandoTablePersistence.findByC_C(
 			companyId, classNameId);
@@ -174,8 +170,7 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public void deleteTables(long companyId, String className)
-		throws SystemException {
+	public void deleteTables(long companyId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -183,16 +178,14 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public ExpandoTable fetchDefaultTable(long companyId, long classNameId)
-		throws SystemException {
+	public ExpandoTable fetchDefaultTable(long companyId, long classNameId) {
 
 		return fetchTable(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 	@Override
-	public ExpandoTable fetchDefaultTable(long companyId, String className)
-		throws SystemException {
+	public ExpandoTable fetchDefaultTable(long companyId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -202,8 +195,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable fetchTable(
-			long companyId, long classNameId, String name)
-		throws SystemException {
+		long companyId, long classNameId, String name) {
 
 		return expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, name);
@@ -211,7 +203,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable getDefaultTable(long companyId, long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getTable(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -219,7 +211,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable getDefaultTable(long companyId, String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -228,15 +220,13 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public ExpandoTable getTable(long tableId)
-		throws PortalException, SystemException {
-
+	public ExpandoTable getTable(long tableId) throws PortalException {
 		return expandoTablePersistence.findByPrimaryKey(tableId);
 	}
 
 	@Override
 	public ExpandoTable getTable(long companyId, long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return expandoTablePersistence.findByC_C_N(
 			companyId, classNameId, name);
@@ -249,7 +239,7 @@ public class ExpandoTableLocalServiceImpl
 	@Deprecated
 	@Override
 	public ExpandoTable getTable(long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -258,7 +248,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable getTable(long companyId, String className, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -272,7 +262,7 @@ public class ExpandoTableLocalServiceImpl
 	@Deprecated
 	@Override
 	public ExpandoTable getTable(String className, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -280,15 +270,13 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
-	public List<ExpandoTable> getTables(long companyId, long classNameId)
-		throws SystemException {
+	public List<ExpandoTable> getTables(long companyId, long classNameId) {
 
 		return expandoTablePersistence.findByC_C(companyId, classNameId);
 	}
 
 	@Override
-	public List<ExpandoTable> getTables(long companyId, String className)
-		throws SystemException {
+	public List<ExpandoTable> getTables(long companyId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -297,7 +285,7 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable updateTable(long tableId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoTable table = expandoTablePersistence.findByPrimaryKey(tableId);
 
@@ -315,7 +303,7 @@ public class ExpandoTableLocalServiceImpl
 
 	protected void validate(
 			long companyId, long tableId, long classNameId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new TableNameException();

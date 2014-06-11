@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatalists.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
@@ -48,7 +47,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 
 	@Override
 	public Serializable getFieldDataType(String fieldName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDLRecordSet recordSet = getRecordSet();
 
@@ -109,34 +108,30 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	}
 
 	@Override
-	public DDLRecordVersion getLatestRecordVersion()
-		throws PortalException, SystemException {
-
+	public DDLRecordVersion getLatestRecordVersion() throws PortalException {
 		return DDLRecordLocalServiceUtil.getLatestRecordVersion(getRecordId());
 	}
 
 	@Override
-	public DDLRecordSet getRecordSet() throws PortalException, SystemException {
+	public DDLRecordSet getRecordSet() throws PortalException {
 		return DDLRecordSetLocalServiceUtil.getRecordSet(getRecordSetId());
 	}
 
 	@Override
-	public DDLRecordVersion getRecordVersion()
-		throws PortalException, SystemException {
-
+	public DDLRecordVersion getRecordVersion() throws PortalException {
 		return getRecordVersion(getVersion());
 	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion(String version)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DDLRecordLocalServiceUtil.getRecordVersion(
 			getRecordId(), version);
 	}
 
 	@Override
-	public int getStatus() throws PortalException, SystemException {
+	public int getStatus() throws PortalException {
 		DDLRecordVersion recordVersion = getRecordVersion();
 
 		return recordVersion.getStatus();

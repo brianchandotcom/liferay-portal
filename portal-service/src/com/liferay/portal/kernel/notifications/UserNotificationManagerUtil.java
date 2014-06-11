@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -99,7 +98,7 @@ public class UserNotificationManagerUtil {
 	public static boolean isDeliver(
 			long userId, String portletId, long classNameId,
 			int notificationType, int deliveryType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _instance._isDeliver(
 			userId, StringPool.BLANK, portletId, classNameId, notificationType,
@@ -110,7 +109,7 @@ public class UserNotificationManagerUtil {
 			long userId, String selector, String portletId, long classNameId,
 			int notificationType, int deliveryType,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _instance._isDeliver(
 			userId, selector, portletId, classNameId, notificationType,
@@ -241,7 +240,7 @@ public class UserNotificationManagerUtil {
 			long userId, String selector, String portletId, long classNameId,
 			int notificationType, int deliveryType,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, UserNotificationHandler> userNotificationHandlers =
 			_userNotificationHandlers.get(selector);

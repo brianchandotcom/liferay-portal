@@ -16,7 +16,6 @@ package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 
@@ -36,7 +35,7 @@ public class PwdToolkitUtil {
 	public static void validate(
 			long companyId, long userId, String password1, String password2,
 			PasswordPolicy passwordPolicy)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!password1.equals(password2)) {
 			throw new UserPasswordException(

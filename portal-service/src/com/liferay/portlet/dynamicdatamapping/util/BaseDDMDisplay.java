@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -312,7 +311,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	protected long getControlPanelPlid(
 			LiferayPortletRequest liferayPortletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(liferayPortletRequest);
 	}

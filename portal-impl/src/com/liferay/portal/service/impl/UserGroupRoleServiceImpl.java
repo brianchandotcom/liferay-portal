@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -36,7 +35,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 	@Override
 	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<UserGroupRole> organizationUserGroupRoles =
 			new ArrayList<UserGroupRole>();
@@ -87,7 +86,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 	@Override
 	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
@@ -130,7 +129,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 	@Override
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<UserGroupRole> filteredOrganizationUserGroupRoles =
 			new ArrayList<UserGroupRole>();
@@ -199,7 +198,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 	@Override
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);

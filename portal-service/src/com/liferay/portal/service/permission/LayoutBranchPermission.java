@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -33,7 +32,7 @@ public interface LayoutBranchPermission {
 	public void check(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean contains(
 		PermissionChecker permissionChecker, LayoutBranch layoutBranch,
@@ -42,6 +41,6 @@ public interface LayoutBranchPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

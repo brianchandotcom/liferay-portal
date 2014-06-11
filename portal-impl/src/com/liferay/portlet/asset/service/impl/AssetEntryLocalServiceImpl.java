@@ -71,8 +71,7 @@ import java.util.List;
 public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
-	public void deleteEntry(AssetEntry entry)
-		throws PortalException, SystemException {
+	public void deleteEntry(AssetEntry entry) throws PortalException {
 
 		// Entry
 
@@ -100,9 +99,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public void deleteEntry(long entryId) throws PortalException {
 		AssetEntry entry = assetEntryPersistence.findByPrimaryKey(entryId);
 
 		deleteEntry(entry);
@@ -110,7 +107,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public void deleteEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -123,20 +120,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public AssetEntry fetchEntry(long entryId) throws SystemException {
+	public AssetEntry fetchEntry(long entryId) {
 		return assetEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
 	@Override
-	public AssetEntry fetchEntry(long groupId, String classUuid)
-		throws SystemException {
+	public AssetEntry fetchEntry(long groupId, String classUuid) {
 
 		return assetEntryPersistence.fetchByG_CU(groupId, classUuid);
 	}
 
 	@Override
-	public AssetEntry fetchEntry(String className, long classPK)
-		throws SystemException {
+	public AssetEntry fetchEntry(String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -145,7 +140,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getAncestorEntries(long entryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetEntry> entries = new ArrayList<AssetEntry>();
 
@@ -162,7 +157,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getChildEntries(long entryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetEntry> entries = new ArrayList<AssetEntry>();
 
@@ -180,48 +175,43 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getCompanyEntries(
-			long companyId, int start, int end)
-		throws SystemException {
+		long companyId, int start, int end) {
 
 		return assetEntryPersistence.findByCompanyId(companyId, start, end);
 	}
 
 	@Override
-	public int getCompanyEntriesCount(long companyId) throws SystemException {
+	public int getCompanyEntriesCount(long companyId) {
 		return assetEntryPersistence.countByCompanyId(companyId);
 	}
 
 	@Override
-	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
-		throws SystemException {
+	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery) {
 
 		return assetEntryFinder.findEntries(entryQuery);
 	}
 
 	@Override
-	public int getEntriesCount(AssetEntryQuery entryQuery)
-		throws SystemException {
+	public int getEntriesCount(AssetEntryQuery entryQuery) {
 
 		return assetEntryFinder.countEntries(entryQuery);
 	}
 
 	@Override
-	public AssetEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getEntry(long entryId) throws PortalException {
 		return assetEntryPersistence.findByPrimaryKey(entryId);
 	}
 
 	@Override
 	public AssetEntry getEntry(long groupId, String classUuid)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetEntryPersistence.findByG_CU(groupId, classUuid);
 	}
 
 	@Override
 	public AssetEntry getEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -229,9 +219,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public AssetEntry getNextEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getNextEntry(long entryId) throws PortalException {
 		try {
 			getParentEntry(entryId);
 		}
@@ -267,9 +255,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public AssetEntry getParentEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getParentEntry(long entryId) throws PortalException {
 		List<AssetLink> links = assetLinkLocalService.getReverseLinks(
 			entryId, AssetLinkConstants.TYPE_CHILD);
 
@@ -283,9 +269,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public AssetEntry getPreviousEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AssetEntry getPreviousEntry(long entryId) throws PortalException {
 		getParentEntry(entryId);
 
 		List<AssetLink> links = assetLinkLocalService.getDirectLinks(
@@ -311,16 +295,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getTopViewedEntries(
-			String className, boolean asc, int start, int end)
-		throws SystemException {
+		String className, boolean asc, int start, int end) {
 
 		return getTopViewedEntries(new String[] {className}, asc, start, end);
 	}
 
 	@Override
 	public List<AssetEntry> getTopViewedEntries(
-			String[] className, boolean asc, int start, int end)
-		throws SystemException {
+		String[] className, boolean asc, int start, int end) {
 
 		long[] classNameIds = new long[className.length];
 
@@ -344,7 +326,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public AssetEntry incrementViewCounter(
 			long userId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -366,8 +348,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		configuration = "AssetEntry", incrementClass = NumberIncrement.class)
 	@Override
 	public void incrementViewCounter(
-			long userId, String className, long classPK, int increment)
-		throws SystemException {
+		long userId, String className, long classPK, int increment) {
 
 		if (ExportImportThreadLocal.isImportInProcess() || (classPK <= 0)) {
 			return;
@@ -400,9 +381,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			long classTypeId, String keywords, int status, int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String keywords, int status, int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, classTypeId, null, null,
@@ -411,11 +391,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			long classTypeId, String userName, String title, String description,
-			String assetCategoryIds, String assetTagNames, int status,
-			boolean andSearch, int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, int status,
+		boolean andSearch, int start, int end) {
 
 		try {
 			Indexer indexer = AssetSearcher.getInstance();
@@ -470,9 +449,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			String keywords, int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		String keywords, int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, keywords,
@@ -481,9 +459,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			String keywords, int status, int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		String keywords, int status, int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, 0, keywords, status, start,
@@ -498,11 +475,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			String userName, String title, String description,
-			String assetCategoryIds, String assetTagNames, boolean andSearch,
-			int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, boolean andSearch,
+		int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, userName, title,
@@ -512,11 +488,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			String userName, String title, String description,
-			String assetCategoryIds, String assetTagNames, int status,
-			boolean andSearch, int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, long userId, String className,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, int status,
+		boolean andSearch, int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, 0, userName, title,
@@ -531,9 +506,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Hits search(
-			long companyId, long[] groupIds, String className, String keywords,
-			int start, int end)
-		throws SystemException {
+		long companyId, long[] groupIds, String className, String keywords,
+		int start, int end) {
 
 		return search(
 			companyId, groupIds, 0, className, keywords,
@@ -549,7 +523,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String title, String description, String summary, String url,
 			String layoutUuid, int height, int width, Integer priority,
 			boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Entry
 
@@ -747,7 +721,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
 			long[] categoryIds, String[] tagNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -789,7 +763,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String title, String description, String summary, String url,
 			String layoutUuid, int height, int width, Integer priority,
 			boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateEntry(
 			userId, groupId, className, classPK, classUuid, classTypeId,
@@ -813,7 +787,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			Date expirationDate, String mimeType, String title,
 			String description, String summary, String url, String layoutUuid,
 			int height, int width, Integer priority, boolean sync)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateEntry(
 			userId, groupId, null, null, className, classPK, classUuid,
@@ -825,7 +799,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public AssetEntry updateEntry(
 			String className, long classPK, Date publishDate, boolean visible)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -841,7 +815,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry updateEntry(
 			String className, long classPK, Date publishDate,
 			Date expirationDate, boolean visible)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -857,7 +831,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public AssetEntry updateVisible(
 			String className, long classPK, boolean visible)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -871,7 +845,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public void validate(
 			long groupId, String className, long[] categoryIds,
 			String[] tagNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -904,9 +878,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return classNameIds;
 	}
 
-	protected AssetEntry getEntry(Document document)
-		throws PortalException, SystemException {
-
+	protected AssetEntry getEntry(Document document) throws PortalException {
 		String portletId = GetterUtil.getString(document.get(Field.PORTLET_ID));
 
 		if (portletId.equals(PortletKeys.BLOGS)) {
@@ -984,7 +956,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	protected AssetEntry updateVisible(AssetEntry entry, boolean visible)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (visible == entry.isVisible()) {
 			return assetEntryPersistence.update(entry);

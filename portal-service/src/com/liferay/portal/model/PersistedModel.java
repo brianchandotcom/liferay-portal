@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 /**
  * @author Connor McKay
  */
@@ -25,8 +23,7 @@ public interface PersistedModel {
 	 * Updates this model instance in the database or adds it if it does not yet
 	 * exist. Also notifies the appropriate model listeners.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
-	public void persist() throws SystemException;
+	public void persist();
 
 }

@@ -16,7 +16,6 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
@@ -148,7 +147,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 	private LayoutRevision _getLayoutRevision(
 			Layout layout, LayoutRevision layoutRevision)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (layoutRevision != null) {
 			return layoutRevision;

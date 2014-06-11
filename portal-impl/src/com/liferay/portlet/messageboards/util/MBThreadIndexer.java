@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -195,7 +194,7 @@ public class MBThreadIndexer extends BaseIndexer {
 	}
 
 	protected void reindexCategories(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			MBCategoryLocalServiceUtil.getActionableDynamicQuery();
@@ -206,7 +205,7 @@ public class MBThreadIndexer extends BaseIndexer {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					MBCategory category = (MBCategory)object;
 
@@ -221,7 +220,7 @@ public class MBThreadIndexer extends BaseIndexer {
 	}
 
 	protected void reindexDiscussions(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			GroupLocalServiceUtil.getActionableDynamicQuery();
@@ -232,7 +231,7 @@ public class MBThreadIndexer extends BaseIndexer {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Group group = (Group)object;
 
@@ -246,9 +245,7 @@ public class MBThreadIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void reindexRoot(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			GroupLocalServiceUtil.getActionableDynamicQuery();
 
@@ -258,7 +255,7 @@ public class MBThreadIndexer extends BaseIndexer {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Group group = (Group)object;
 
@@ -274,7 +271,7 @@ public class MBThreadIndexer extends BaseIndexer {
 
 	protected void reindexThreads(
 			long companyId, long groupId, final long categoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
 			MBThreadLocalServiceUtil.getActionableDynamicQuery();

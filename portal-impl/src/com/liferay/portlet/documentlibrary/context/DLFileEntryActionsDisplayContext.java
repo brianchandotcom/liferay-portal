@@ -42,7 +42,7 @@ public class DLFileEntryActionsDisplayContext {
 			HttpServletRequest request,
 			DLPortletInstanceSettings dlPortletInstanceSettings,
 			FileEntry fileEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		this(
 			request, dlPortletInstanceSettings, fileEntry,
@@ -85,7 +85,7 @@ public class DLFileEntryActionsDisplayContext {
 		return _dlActionsDisplayContext;
 	}
 
-	public String getPublishButtonLabel() throws SystemException {
+	public String getPublishButtonLabel() {
 		String publishButtonLabel = "publish";
 
 		if (_hasWorkflowDefinitionLink()) {
@@ -137,7 +137,7 @@ public class DLFileEntryActionsDisplayContext {
 	}
 
 	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (isCheckinButtonVisible() ||
 			(_dlFileEntryActionsDisplayContextHelper.isCheckedOut() &&
@@ -154,9 +154,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isCheckinButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isCheckinButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isLockedByMe() &&
 			_dlFileEntryActionsDisplayContextHelper.isSupportsLocking()) {
@@ -167,9 +165,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isCheckoutDocumentButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_dlFileEntryActionsDisplayContextHelper.isCheckedOut() &&
 			_dlFileEntryActionsDisplayContextHelper.isSupportsLocking()) {
@@ -184,9 +180,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isDeleteButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isDeleteButtonVisible() throws PortalException {
 		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
 			return true;
 		}
@@ -194,15 +188,11 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isDownloadButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isDownloadButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
-	public boolean isEditButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isEditButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
@@ -212,9 +202,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isMoveButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isMoveButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
@@ -224,9 +212,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isMoveToTheRecycleBinButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
 		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
 			return true;
 		}
@@ -234,9 +220,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isOpenInMsOfficeButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasViewPermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
 			_isWebDAVEnabled() && _isIEOnWin32()) {
@@ -247,9 +231,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isPermissionsButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isPermissionsButtonVisible() throws PortalException {
 		return
 			_dlFileEntryActionsDisplayContextHelper.hasPermissionsPermission();
 	}
@@ -284,19 +266,15 @@ public class DLFileEntryActionsDisplayContext {
 		return _isDLFileEntryDraftsEnabled();
 	}
 
-	public boolean isViewButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isViewButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
-	public boolean isViewOriginalFileButtonVisible()
-		throws PortalException, SystemException {
-
+	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
-	private boolean _hasWorkflowDefinitionLink() throws SystemException {
+	private boolean _hasWorkflowDefinitionLink() {
 		try {
 			return DLUtil.hasWorkflowDefinitionLink(
 				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
@@ -322,9 +300,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	private boolean _isFileEntryDeletable()
-		throws PortalException, SystemException {
-
+	private boolean _isFileEntryDeletable() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
@@ -345,9 +321,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
-	private boolean _isFileEntryTrashable()
-		throws PortalException, SystemException {
-
+	private boolean _isFileEntryTrashable() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.isDLFileEntry() &&
 			_isTrashEnabled()) {
 
@@ -365,7 +339,7 @@ public class DLFileEntryActionsDisplayContext {
 		return _ieOnWin32;
 	}
 
-	private boolean _isTrashEnabled() throws PortalException, SystemException {
+	private boolean _isTrashEnabled() throws PortalException {
 		if (_trashEnabled == null) {
 			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
 		}

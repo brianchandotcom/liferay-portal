@@ -497,7 +497,7 @@ public class JournalUtil {
 
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -568,7 +568,7 @@ public class JournalUtil {
 	}
 
 	public static List<JournalArticle> getArticles(Hits hits)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<com.liferay.portal.kernel.search.Document> documents =
 			hits.toList();
@@ -604,9 +604,8 @@ public class JournalUtil {
 	}
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
-			long groupId, String articleId, double sourceVersion,
-			double targetVersion)
-		throws SystemException {
+		long groupId, String articleId, double sourceVersion,
+		double targetVersion) {
 
 		double previousVersion = 0;
 		double nextVersion = 0;
@@ -906,16 +905,14 @@ public class JournalUtil {
 	}
 
 	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
+		PortletPreferences preferences, long companyId) {
 
 		return PortalUtil.getEmailFromAddress(
 			preferences, companyId, PropsValues.JOURNAL_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
+		PortletPreferences preferences, long companyId) {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.JOURNAL_EMAIL_FROM_NAME);
@@ -923,7 +920,7 @@ public class JournalUtil {
 
 	public static String getJournalControlPanelLink(
 			PortletRequest portletRequest, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1030,7 +1027,7 @@ public class JournalUtil {
 		return recentDDMTemplates;
 	}
 
-	public static int getRestrictionType(long folderId) throws SystemException {
+	public static int getRestrictionType(long folderId) {
 		int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
@@ -1082,7 +1079,7 @@ public class JournalUtil {
 	public static String getTemplateScript(
 			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getTemplateScript(
 			groupId, ddmTemplateKey, tokens, languageId, true);
@@ -1091,7 +1088,7 @@ public class JournalUtil {
 	public static String getTemplateScript(
 			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId, boolean transform)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			groupId, PortalUtil.getClassNameId(DDMStructure.class),
@@ -1103,7 +1100,7 @@ public class JournalUtil {
 	public static Map<String, String> getTokens(
 			long articleGroupId, PortletRequestModel portletRequestModel,
 			ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, String> tokens = new HashMap<String, String>();
 
@@ -1131,7 +1128,7 @@ public class JournalUtil {
 
 	public static Map<String, String> getTokens(
 			long articleGroupId, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getTokens(
 			articleGroupId, (PortletRequestModel)null, themeDisplay);
@@ -1160,7 +1157,7 @@ public class JournalUtil {
 
 	public static boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
 	}
@@ -1168,7 +1165,7 @@ public class JournalUtil {
 	public static boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId,
 			boolean recursive)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Long> ancestorFolderIds = new ArrayList<Long>();
 
@@ -1194,8 +1191,7 @@ public class JournalUtil {
 	}
 
 	public static boolean isSubscribedToStructure(
-			long companyId, long groupId, long userId, long ddmStructureId)
-		throws SystemException {
+		long companyId, long groupId, long userId, long ddmStructureId) {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, DDMStructure.class.getName(), ddmStructureId);
@@ -1323,7 +1319,7 @@ public class JournalUtil {
 	}
 
 	public static void removeArticleLocale(Element element, String languageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (Element dynamicElementElement :
 				element.elements("dynamic-element")) {
@@ -1694,7 +1690,7 @@ public class JournalUtil {
 	private static void _populateTokens(
 			Map<String, String> tokens, long articleGroupId,
 			ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -1844,8 +1840,7 @@ public class JournalUtil {
 	}
 
 	private static void _removeOldContent(
-			Stack<String> path, Element contentElement, Document xsdDocument)
-		throws SystemException {
+			Stack<String> path, Element contentElement, Document xsdDocument) {
 
 		String elementPath = "";
 
@@ -1865,8 +1860,7 @@ public class JournalUtil {
 
 	private static void _removeOldContent(
 			Stack<String> path, Element contentElement, Document xsdDocument,
-			String elementPath)
-		throws SystemException {
+			String elementPath) {
 
 		String name = contentElement.attributeValue("name");
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -1331,7 +1330,7 @@ public class ServicePreAction extends Action {
 
 	protected void addDefaultLayoutsByLAR(
 			long userId, long groupId, boolean privateLayout, File larFile)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
@@ -1372,7 +1371,7 @@ public class ServicePreAction extends Action {
 
 	protected void addDefaultUserPrivateLayoutByProperties(
 			long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String friendlyURL = getFriendlyURL(
 			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL);
@@ -1454,7 +1453,7 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void addDefaultUserPrivateLayouts(User user)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group userGroup = user.getGroup();
 
@@ -1470,7 +1469,7 @@ public class ServicePreAction extends Action {
 
 	protected void addDefaultUserPublicLayoutByProperties(
 			long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String friendlyURL = getFriendlyURL(
 			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL);
@@ -1551,7 +1550,7 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void addDefaultUserPublicLayouts(User user)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group userGroup = user.getGroup();
 
@@ -1566,7 +1565,7 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void deleteDefaultUserPrivateLayouts(User user)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group userGroup = user.getGroup();
 
@@ -1577,7 +1576,7 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group userGroup = user.getGroup();
 
@@ -1589,7 +1588,7 @@ public class ServicePreAction extends Action {
 
 	protected Object[] getDefaultLayout(
 			HttpServletRequest request, User user, boolean signedIn)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Layout layout = null;
 		List<Layout> layouts = null;
@@ -1725,7 +1724,7 @@ public class ServicePreAction extends Action {
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((layouts == null) || layouts.isEmpty()) {
 			return new Object[] {layout, layouts};
@@ -1792,7 +1791,7 @@ public class ServicePreAction extends Action {
 			PermissionChecker permissionChecker, Layout layout,
 			long doAsGroupId, String controlPanelCategory,
 			boolean checkViewableGroup)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (layout.isTypeControlPanel()) {
 			if (!permissionChecker.isSignedIn()) {
@@ -1906,7 +1905,7 @@ public class ServicePreAction extends Action {
 	protected boolean isViewableCommunity(
 			User user, long groupId, boolean privateLayout,
 			PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return LayoutPermissionUtil.contains(
 			permissionChecker, groupId, privateLayout, 0, ActionKeys.VIEW);
@@ -1919,7 +1918,7 @@ public class ServicePreAction extends Action {
 	protected boolean isViewableGroup(
 			User user, long groupId, boolean privateLayout, long layoutId,
 			String controlPanelCategory, PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return LayoutPermissionUtil.contains(
 			permissionChecker, groupId, privateLayout, layoutId,
@@ -1930,7 +1929,7 @@ public class ServicePreAction extends Action {
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((layout == null) || layout.isPrivateLayout()) {
 			return layouts;

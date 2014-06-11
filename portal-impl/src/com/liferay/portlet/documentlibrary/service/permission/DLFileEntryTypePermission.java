@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -41,7 +40,7 @@ public class DLFileEntryTypePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long fileEntryTypeId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, fileEntryTypeId, actionId)) {
 			throw new PrincipalException();
@@ -77,7 +76,7 @@ public class DLFileEntryTypePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long fileEntryTypeId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileEntryType fileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);

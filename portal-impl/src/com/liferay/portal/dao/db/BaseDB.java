@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -203,12 +202,12 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public long increment() throws SystemException {
+	public long increment() {
 		return CounterLocalServiceUtil.increment();
 	}
 
 	@Override
-	public long increment(String name) throws SystemException {
+	public long increment(String name) {
 		return CounterLocalServiceUtil.increment(name);
 	}
 

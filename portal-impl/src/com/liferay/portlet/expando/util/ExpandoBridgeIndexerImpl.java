@@ -75,7 +75,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 	protected void addAttribute(
 			Document document, ExpandoColumn expandoColumn,
 			List<ExpandoValue> expandoValues)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String fieldName = encodeFieldName(expandoColumn.getName());
 
@@ -207,8 +207,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 	}
 
 	protected void doAddAttributes(
-			Document document, ExpandoBridge expandoBridge)
-		throws SystemException {
+		Document document, ExpandoBridge expandoBridge) {
 
 		List<ExpandoColumn> expandoColumns =
 			ExpandoColumnLocalServiceUtil.getDefaultTableColumns(

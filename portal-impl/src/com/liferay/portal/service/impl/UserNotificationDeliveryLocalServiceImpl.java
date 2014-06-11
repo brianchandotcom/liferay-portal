@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.service.base.UserNotificationDeliveryLocalServiceBaseImpl;
@@ -31,7 +30,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 	public UserNotificationDelivery addUserNotificationDelivery(
 			long userId, String portletId, long classNameId,
 			int notificationType, int deliveryType, boolean deliver)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -54,17 +53,15 @@ public class UserNotificationDeliveryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserNotificationDeliveries(long userId)
-		throws SystemException {
+	public void deleteUserNotificationDeliveries(long userId) {
 
 		userNotificationDeliveryPersistence.removeByUserId(userId);
 	}
 
 	@Override
 	public void deleteUserNotificationDelivery(
-			long userId, String portletId, long classNameId,
-			int notificationType, int deliveryType)
-		throws SystemException {
+		long userId, String portletId, long classNameId, int notificationType,
+		int deliveryType) {
 
 		try {
 			userNotificationDeliveryPersistence.removeByU_P_C_N_D(
@@ -76,9 +73,8 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 	@Override
 	public UserNotificationDelivery fetchUserNotificationDelivery(
-			long userId, String portletId, long classNameId,
-			int notificationType, int deliveryType)
-		throws SystemException {
+		long userId, String portletId, long classNameId, int notificationType,
+		int deliveryType) {
 
 		return userNotificationDeliveryPersistence.fetchByU_P_C_N_D(
 			userId, portletId, classNameId, notificationType, deliveryType);
@@ -88,7 +84,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 	public UserNotificationDelivery getUserNotificationDelivery(
 			long userId, String portletId, long classNameId,
 			int notificationType, int deliveryType, boolean deliver)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserNotificationDelivery userNotificationDelivery =
 			userNotificationDeliveryPersistence.fetchByU_P_C_N_D(
@@ -105,8 +101,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 	@Override
 	public UserNotificationDelivery updateUserNotificationDelivery(
-			long userNotificationDeliveryId, boolean deliver)
-		throws SystemException {
+		long userNotificationDeliveryId, boolean deliver) {
 
 		UserNotificationDelivery userNotificationDelivery =
 			fetchUserNotificationDelivery(userNotificationDeliveryId);

@@ -15,7 +15,6 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -236,7 +235,7 @@ public class PermissionCheckerBagImpl
 
 	protected boolean isContentReviewerImpl(
 			PermissionChecker permissionChecker, Group group)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (permissionChecker.isCompanyAdmin() ||
 			permissionChecker.isGroupAdmin(group.getGroupId())) {
@@ -265,7 +264,7 @@ public class PermissionCheckerBagImpl
 
 	protected boolean isGroupAdminImpl(
 			PermissionChecker permissionChecker, Group group)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (group.isLayout()) {
 			long parentGroupId = group.getParentGroupId();
@@ -348,7 +347,7 @@ public class PermissionCheckerBagImpl
 
 	protected boolean isGroupOwnerImpl(
 			PermissionChecker permissionChecker, Group group)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (group.isSite()) {
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
@@ -414,7 +413,7 @@ public class PermissionCheckerBagImpl
 
 	protected boolean isOrganizationAdminImpl(
 			PermissionChecker permissionChecker, Organization organization)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		while (organization != null) {
 			long organizationGroupId = organization.getGroupId();
@@ -439,7 +438,7 @@ public class PermissionCheckerBagImpl
 
 	protected boolean isOrganizationOwnerImpl(
 			PermissionChecker permissionChecker, Organization organization)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		while (organization != null) {
 			long organizationGroupId = organization.getGroupId();

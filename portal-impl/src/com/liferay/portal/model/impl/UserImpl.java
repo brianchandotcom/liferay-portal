@@ -110,10 +110,9 @@ public class UserImpl extends UserBaseImpl {
 	 * Returns the user's addresses.
 	 *
 	 * @return the user's addresses
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Address> getAddresses() throws SystemException {
+	public List<Address> getAddresses() {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
@@ -123,10 +122,9 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @return the user's birth date
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Date getBirthday() throws PortalException, SystemException {
+	public Date getBirthday() throws PortalException {
 		return getContact().getBirthday();
 	}
 
@@ -135,10 +133,9 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @return the user's company's mail domain
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getCompanyMx() throws PortalException, SystemException {
+	public String getCompanyMx() throws PortalException {
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			getCompanyId());
 
@@ -150,11 +147,10 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @return the user's associated contact
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 * @see    Contact
 	 */
 	@Override
-	public Contact getContact() throws PortalException, SystemException {
+	public Contact getContact() throws PortalException {
 		try {
 			ShardUtil.pushCompanyService(getCompanyId());
 
@@ -265,13 +261,12 @@ public class UserImpl extends UserBaseImpl {
 	 * @param      mainPath the main path
 	 * @return     the user's display URL
 	 * @throws     PortalException if a portal exception occurred
-	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	 */
 	@Deprecated
 	@Override
 	public String getDisplayURL(String portalURL, String mainPath)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getDisplayURL(portalURL, mainPath, false);
 	}
@@ -307,14 +302,13 @@ public class UserImpl extends UserBaseImpl {
 	 *             is available for the user's profile
 	 * @return     the user's display URL
 	 * @throws     PortalException if a portal exception occurred
-	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	 */
 	@Deprecated
 	@Override
 	public String getDisplayURL(
 			String portalURL, String mainPath, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (isDefaultUser()) {
 			return StringPool.BLANK;
@@ -376,11 +370,10 @@ public class UserImpl extends UserBaseImpl {
 	 * @param  themeDisplay the theme display
 	 * @return the user's display URL
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public String getDisplayURL(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getDisplayURL(themeDisplay, false);
 	}
@@ -415,12 +408,11 @@ public class UserImpl extends UserBaseImpl {
 	 *         available for the user's profile
 	 * @return the user's display URL
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public String getDisplayURL(
 			ThemeDisplay themeDisplay, boolean privateLayout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (isDefaultUser()) {
 			return StringPool.BLANK;
@@ -467,10 +459,9 @@ public class UserImpl extends UserBaseImpl {
 	 * Returns the user's email addresses.
 	 *
 	 * @return the user's email addresses
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<EmailAddress> getEmailAddresses() throws SystemException {
+	public List<EmailAddress> getEmailAddresses() {
 		return EmailAddressLocalServiceUtil.getEmailAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
@@ -481,10 +472,9 @@ public class UserImpl extends UserBaseImpl {
 	 * @return <code>true</code> if the user is female; <code>false</code>
 	 *         otherwise
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean getFemale() throws PortalException, SystemException {
+	public boolean getFemale() throws PortalException {
 		return !getMale();
 	}
 
@@ -504,24 +494,24 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public Group getGroup() throws PortalException, SystemException {
+	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getUserGroup(getCompanyId(), getUserId());
 	}
 
 	@Override
-	public long getGroupId() throws PortalException, SystemException {
+	public long getGroupId() throws PortalException {
 		Group group = getGroup();
 
 		return group.getGroupId();
 	}
 
 	@Override
-	public long[] getGroupIds() throws SystemException {
+	public long[] getGroupIds() {
 		return UserLocalServiceUtil.getGroupPrimaryKeys(getUserId());
 	}
 
 	@Override
-	public List<Group> getGroups() throws SystemException {
+	public List<Group> getGroups() {
 		return GroupLocalServiceUtil.getUserGroups(getUserId());
 	}
 
@@ -531,7 +521,7 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public String getLogin() throws PortalException, SystemException {
+	public String getLogin() throws PortalException {
 		String login = null;
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
@@ -556,38 +546,33 @@ public class UserImpl extends UserBaseImpl {
 	 * @return <code>true</code> if the user is male; <code>false</code>
 	 *         otherwise
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean getMale() throws PortalException, SystemException {
+	public boolean getMale() throws PortalException {
 		return getContact().getMale();
 	}
 
 	@Override
-	public List<Group> getMySiteGroups()
-		throws PortalException, SystemException {
-
+	public List<Group> getMySiteGroups() throws PortalException {
 		return getMySiteGroups(null, false, QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<Group> getMySiteGroups(boolean includeControlPanel, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMySiteGroups(null, includeControlPanel, max);
 	}
 
 	@Override
-	public List<Group> getMySiteGroups(int max)
-		throws PortalException, SystemException {
-
+	public List<Group> getMySiteGroups(int max) throws PortalException {
 		return getMySiteGroups(null, false, max);
 	}
 
 	@Override
 	public List<Group> getMySiteGroups(
 			String[] classNames, boolean includeControlPanel, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return GroupServiceUtil.getUserSitesGroups(
 			getUserId(), classNames, includeControlPanel, max);
@@ -595,7 +580,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public List<Group> getMySiteGroups(String[] classNames, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMySiteGroups(classNames, false, max);
 	}
@@ -605,7 +590,7 @@ public class UserImpl extends UserBaseImpl {
 	 */
 	@Deprecated
 	@Override
-	public List<Group> getMySites() throws PortalException, SystemException {
+	public List<Group> getMySites() throws PortalException {
 		return getMySiteGroups();
 	}
 
@@ -616,7 +601,7 @@ public class UserImpl extends UserBaseImpl {
 	@Deprecated
 	@Override
 	public List<Group> getMySites(boolean includeControlPanel, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMySiteGroups(includeControlPanel, max);
 	}
@@ -626,9 +611,7 @@ public class UserImpl extends UserBaseImpl {
 	 */
 	@Deprecated
 	@Override
-	public List<Group> getMySites(int max)
-		throws PortalException, SystemException {
-
+	public List<Group> getMySites(int max) throws PortalException {
 		return getMySiteGroups(max);
 	}
 
@@ -640,7 +623,7 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public List<Group> getMySites(
 			String[] classNames, boolean includeControlPanel, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMySiteGroups(classNames, includeControlPanel, max);
 	}
@@ -652,34 +635,32 @@ public class UserImpl extends UserBaseImpl {
 	@Deprecated
 	@Override
 	public List<Group> getMySites(String[] classNames, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMySiteGroups(classNames, max);
 	}
 
 	@Override
-	public long[] getOrganizationIds() throws PortalException, SystemException {
+	public long[] getOrganizationIds() throws PortalException {
 		return getOrganizationIds(false);
 	}
 
 	@Override
 	public long[] getOrganizationIds(boolean includeAdministrative)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return OrganizationLocalServiceUtil.getUserOrganizationIds(
 			getUserId(), includeAdministrative);
 	}
 
 	@Override
-	public List<Organization> getOrganizations()
-		throws PortalException, SystemException {
-
+	public List<Organization> getOrganizations() throws PortalException {
 		return getOrganizations(false);
 	}
 
 	@Override
 	public List<Organization> getOrganizations(boolean includeAdministrative)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return OrganizationLocalServiceUtil.getUserOrganizations(
 			getUserId(), includeAdministrative);
@@ -691,9 +672,7 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public PasswordPolicy getPasswordPolicy()
-		throws PortalException, SystemException {
-
+	public PasswordPolicy getPasswordPolicy() throws PortalException {
 		if (_passwordPolicy == null) {
 			_passwordPolicy =
 				PasswordPolicyLocalServiceUtil.getPasswordPolicyByUserId(
@@ -709,14 +688,14 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public List<Phone> getPhones() throws SystemException {
+	public List<Phone> getPhones() {
 		return PhoneLocalServiceUtil.getPhones(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
 	@Override
 	public String getPortraitURL(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return UserConstants.getPortraitURL(
 			themeDisplay.getPathImage(), isMale(), getPortraitId(),
@@ -724,23 +703,17 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public int getPrivateLayoutsPageCount()
-		throws PortalException, SystemException {
-
+	public int getPrivateLayoutsPageCount() throws PortalException {
 		return LayoutLocalServiceUtil.getLayoutsCount(this, true);
 	}
 
 	@Override
-	public int getPublicLayoutsPageCount()
-		throws PortalException, SystemException {
-
+	public int getPublicLayoutsPageCount() throws PortalException {
 		return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 	}
 
 	@Override
-	public Set<String> getReminderQueryQuestions()
-		throws PortalException, SystemException {
-
+	public Set<String> getReminderQueryQuestions() throws PortalException {
 		Set<String> questions = new TreeSet<String>();
 
 		List<Organization> organizations =
@@ -792,35 +765,35 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public long[] getRoleIds() throws SystemException {
+	public long[] getRoleIds() {
 		return UserLocalServiceUtil.getRolePrimaryKeys(getUserId());
 	}
 
 	@Override
-	public List<Role> getRoles() throws SystemException {
+	public List<Role> getRoles() {
 		return RoleLocalServiceUtil.getUserRoles(getUserId());
 	}
 
 	@Override
-	public List<Group> getSiteGroups() throws PortalException, SystemException {
+	public List<Group> getSiteGroups() throws PortalException {
 		return getSiteGroups(false);
 	}
 
 	@Override
 	public List<Group> getSiteGroups(boolean includeAdministrative)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return GroupLocalServiceUtil.getUserSitesGroups(
 			getUserId(), includeAdministrative);
 	}
 
 	@Override
-	public long[] getTeamIds() throws SystemException {
+	public long[] getTeamIds() {
 		return UserLocalServiceUtil.getTeamPrimaryKeys(getUserId());
 	}
 
 	@Override
-	public List<Team> getTeams() throws SystemException {
+	public List<Team> getTeams() {
 		return TeamLocalServiceUtil.getUserTeams(getUserId());
 	}
 
@@ -830,30 +803,28 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public long[] getUserGroupIds() throws SystemException {
+	public long[] getUserGroupIds() {
 		return UserLocalServiceUtil.getUserGroupPrimaryKeys(getUserId());
 	}
 
 	@Override
-	public List<UserGroup> getUserGroups() throws SystemException {
+	public List<UserGroup> getUserGroups() {
 		return UserGroupLocalServiceUtil.getUserUserGroups(getUserId());
 	}
 
 	@Override
-	public List<Website> getWebsites() throws SystemException {
+	public List<Website> getWebsites() {
 		return WebsiteLocalServiceUtil.getWebsites(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
 	@Override
-	public boolean hasCompanyMx() throws PortalException, SystemException {
+	public boolean hasCompanyMx() throws PortalException {
 		return hasCompanyMx(getEmailAddress());
 	}
 
 	@Override
-	public boolean hasCompanyMx(String emailAddress)
-		throws PortalException, SystemException {
-
+	public boolean hasCompanyMx(String emailAddress) throws PortalException {
 		if (Validator.isNull(emailAddress)) {
 			return false;
 		}
@@ -865,7 +836,7 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public boolean hasMySites() throws PortalException, SystemException {
+	public boolean hasMySites() throws PortalException {
 		if (isDefaultUser()) {
 			return false;
 		}
@@ -886,17 +857,17 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public boolean hasOrganization() throws SystemException {
+	public boolean hasOrganization() {
 		return OrganizationLocalServiceUtil.hasUserOrganizations(getUserId());
 	}
 
 	@Override
-	public boolean hasPrivateLayouts() throws PortalException, SystemException {
+	public boolean hasPrivateLayouts() throws PortalException {
 		return LayoutLocalServiceUtil.hasLayouts(this, true);
 	}
 
 	@Override
-	public boolean hasPublicLayouts() throws PortalException, SystemException {
+	public boolean hasPublicLayouts() throws PortalException {
 		return LayoutLocalServiceUtil.hasLayouts(this, false);
 	}
 
@@ -956,12 +927,12 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public boolean isFemale() throws PortalException, SystemException {
+	public boolean isFemale() throws PortalException {
 		return getFemale();
 	}
 
 	@Override
-	public boolean isMale() throws PortalException, SystemException {
+	public boolean isMale() throws PortalException {
 		return getMale();
 	}
 

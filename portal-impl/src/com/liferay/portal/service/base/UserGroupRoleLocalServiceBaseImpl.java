@@ -121,8 +121,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole)
-		throws SystemException {
+	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole) {
 		return userGroupRolePersistence.remove(userGroupRole);
 	}
 

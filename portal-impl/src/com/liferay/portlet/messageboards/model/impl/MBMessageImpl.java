@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -48,9 +47,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public Folder addAttachmentsFolder()
-		throws PortalException, SystemException {
-
+	public Folder addAttachmentsFolder() throws PortalException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -81,21 +78,19 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public String[] getAssetTagNames() throws SystemException {
+	public String[] getAssetTagNames() {
 		return AssetTagLocalServiceUtil.getTagNames(
 			MBMessage.class.getName(), getMessageId());
 	}
 
 	@Override
-	public List<FileEntry> getAttachmentsFileEntries()
-		throws PortalException, SystemException {
-
+	public List<FileEntry> getAttachmentsFileEntries() throws PortalException {
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
@@ -111,9 +106,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount()
-		throws PortalException, SystemException {
-
+	public int getAttachmentsFileEntriesCount() throws PortalException {
 		int attachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -129,9 +122,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public long getAttachmentsFolderId()
-		throws PortalException, SystemException {
-
+	public long getAttachmentsFolderId() throws PortalException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -185,13 +176,13 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public MBCategory getCategory() throws PortalException, SystemException {
+	public MBCategory getCategory() throws PortalException {
 		return MBCategoryLocalServiceUtil.getCategory(getCategoryId());
 	}
 
 	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries()
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getDeletedAttachmentsFileEntries(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -199,7 +190,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 
 	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
@@ -215,9 +206,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public int getDeletedAttachmentsFileEntriesCount()
-		throws PortalException, SystemException {
-
+	public int getDeletedAttachmentsFileEntriesCount() throws PortalException {
 		int deletedAttachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -233,14 +222,12 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public MBThread getThread() throws PortalException, SystemException {
+	public MBThread getThread() throws PortalException {
 		return MBThreadLocalServiceUtil.getThread(getThreadId());
 	}
 
 	@Override
-	public long getThreadAttachmentsFolderId()
-		throws PortalException, SystemException {
-
+	public long getThreadAttachmentsFolderId() throws PortalException {
 		return getThread().getAttachmentsFolderId();
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,8 +81,7 @@ public class RawMetadataProcessorImpl
 	}
 
 	@Override
-	public void generateMetadata(FileVersion fileVersion)
-		throws SystemException {
+	public void generateMetadata(FileVersion fileVersion) {
 
 		long fileEntryMetadataCount =
 			DLFileEntryMetadataLocalServiceUtil.
@@ -115,9 +113,7 @@ public class RawMetadataProcessorImpl
 	}
 
 	@Override
-	public void saveMetadata(FileVersion fileVersion)
-		throws PortalException, SystemException {
-
+	public void saveMetadata(FileVersion fileVersion) throws PortalException {
 		Map<String, Fields> rawMetadataMap = null;
 
 		if (fileVersion instanceof LiferayFileVersion) {

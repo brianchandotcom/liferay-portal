@@ -15,7 +15,6 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
@@ -550,8 +549,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	protected void assertLinksToLayouts(
-			String content, Layout layout, long groupId)
-		throws SystemException {
+		String content, Layout layout, long groupId) {
 
 		StringBundler sb = new StringBundler();
 

@@ -18,7 +18,6 @@ import com.liferay.portal.DuplicateTeamException;
 import com.liferay.portal.TeamNameException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,7 +40,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	@Override
 	public Team addTeam(
 			long userId, long groupId, String name, String description)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Team
 
@@ -81,16 +80,14 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Team deleteTeam(long teamId)
-		throws PortalException, SystemException {
-
+	public Team deleteTeam(long teamId) throws PortalException {
 		Team team = teamPersistence.findByPrimaryKey(teamId);
 
 		return deleteTeam(team);
 	}
 
 	@Override
-	public Team deleteTeam(Team team) throws PortalException, SystemException {
+	public Team deleteTeam(Team team) throws PortalException {
 
 		// Team
 
@@ -112,9 +109,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteTeams(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteTeams(long groupId) throws PortalException {
 		List<Team> teams = teamPersistence.findByGroupId(groupId);
 
 		for (Team team : teams) {
@@ -123,20 +118,17 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Team> getGroupTeams(long groupId) throws SystemException {
+	public List<Team> getGroupTeams(long groupId) {
 		return teamPersistence.findByGroupId(groupId);
 	}
 
 	@Override
-	public Team getTeam(long groupId, String name)
-		throws PortalException, SystemException {
-
+	public Team getTeam(long groupId, String name) throws PortalException {
 		return teamPersistence.findByG_N(groupId, name);
 	}
 
 	@Override
-	public List<Team> getUserTeams(long userId, long groupId)
-		throws SystemException {
+	public List<Team> getUserTeams(long userId, long groupId) {
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
@@ -150,10 +142,9 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 	@Override
 	public List<Team> search(
-			long groupId, String name, String description,
-			LinkedHashMap<String, Object> params, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		long groupId, String name, String description,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator obc) {
 
 		return teamFinder.findByG_N_D(
 			groupId, name, description, params, start, end, obc);
@@ -161,16 +152,15 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 	@Override
 	public int searchCount(
-			long groupId, String name, String description,
-			LinkedHashMap<String, Object> params)
-		throws SystemException {
+		long groupId, String name, String description,
+		LinkedHashMap<String, Object> params) {
 
 		return teamFinder.countByG_N_D(groupId, name, description, params);
 	}
 
 	@Override
 	public Team updateTeam(long teamId, String name, String description)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -188,7 +178,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	protected void validate(long teamId, long groupId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.COMMA) != -1) ||

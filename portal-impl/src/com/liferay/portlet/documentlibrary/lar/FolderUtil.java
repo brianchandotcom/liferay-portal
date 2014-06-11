@@ -30,8 +30,7 @@ import java.util.List;
 public class FolderUtil {
 
 	public static Folder fetchByR_P_N(
-			long groupId, long parentFolderId, String name)
-		throws SystemException {
+		long groupId, long parentFolderId, String name) {
 
 		DLFolder dlFolder = DLFolderUtil.fetchByG_P_N(
 			groupId, parentFolderId, name);
@@ -43,8 +42,7 @@ public class FolderUtil {
 		return new LiferayFolder(dlFolder);
 	}
 
-	public static Folder fetchByUUID_R(String uuid, long repositoryId)
-		throws SystemException {
+	public static Folder fetchByUUID_R(String uuid, long repositoryId) {
 
 		DLFolder dlFolder = DLFolderUtil.fetchByUUID_G(uuid, repositoryId);
 
@@ -67,8 +65,8 @@ public class FolderUtil {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	public static List<Folder> findByR_P(long repositoryId, long parentFolderId)
-		throws SystemException {
+	public static List<Folder> findByR_P(
+		long repositoryId, long parentFolderId) {
 
 		List<DLFolder> dlFolders = DLFolderUtil.findByG_P(
 			repositoryId, parentFolderId);
@@ -80,8 +78,7 @@ public class FolderUtil {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	public static List<Folder> findByRepositoryId(long repositoryId)
-		throws SystemException {
+	public static List<Folder> findByRepositoryId(long repositoryId) {
 
 		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
 

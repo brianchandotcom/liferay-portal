@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -50,7 +49,7 @@ public class AnnouncementsEntryServiceImpl
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, int priority, boolean alert)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -147,7 +146,7 @@ public class AnnouncementsEntryServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute, int priority,
 			boolean alert)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addEntry(
 			plid, classNameId, classPK, title, content, url, type,
@@ -158,9 +157,7 @@ public class AnnouncementsEntryServiceImpl
 	}
 
 	@Override
-	public void deleteEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public void deleteEntry(long entryId) throws PortalException {
 		AnnouncementsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
@@ -168,9 +165,7 @@ public class AnnouncementsEntryServiceImpl
 	}
 
 	@Override
-	public AnnouncementsEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public AnnouncementsEntry getEntry(long entryId) throws PortalException {
 		AnnouncementsEntry entry = announcementsEntryLocalService.getEntry(
 			entryId);
 
@@ -188,7 +183,7 @@ public class AnnouncementsEntryServiceImpl
 			boolean displayImmediately, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute, int priority)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AnnouncementsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);

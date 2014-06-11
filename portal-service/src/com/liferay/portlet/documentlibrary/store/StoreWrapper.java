@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,7 +31,7 @@ public class StoreWrapper implements Store {
 
 	@Override
 	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.addDirectory(companyId, repositoryId, dirName);
 	}
@@ -40,7 +39,7 @@ public class StoreWrapper implements Store {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.addFile(companyId, repositoryId, fileName, bytes);
 	}
@@ -48,7 +47,7 @@ public class StoreWrapper implements Store {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.addFile(companyId, repositoryId, fileName, file);
 	}
@@ -56,13 +55,13 @@ public class StoreWrapper implements Store {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.addFile(companyId, repositoryId, fileName, is);
 	}
 
 	@Override
-	public void checkRoot(long companyId) throws SystemException {
+	public void checkRoot(long companyId) {
 		_store.checkRoot(companyId);
 	}
 
@@ -70,7 +69,7 @@ public class StoreWrapper implements Store {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
@@ -80,14 +79,14 @@ public class StoreWrapper implements Store {
 	@Override
 	public void deleteDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.deleteDirectory(companyId, repositoryId, dirName);
 	}
 
 	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.deleteFile(companyId, repositoryId, fileName);
 	}
@@ -96,14 +95,14 @@ public class StoreWrapper implements Store {
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
 	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFile(companyId, repositoryId, fileName);
 	}
@@ -112,7 +111,7 @@ public class StoreWrapper implements Store {
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -120,7 +119,7 @@ public class StoreWrapper implements Store {
 	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileAsBytes(companyId, repositoryId, fileName);
 	}
@@ -129,7 +128,7 @@ public class StoreWrapper implements Store {
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileAsBytes(
 			companyId, repositoryId, fileName, versionLabel);
@@ -138,7 +137,7 @@ public class StoreWrapper implements Store {
 	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileAsStream(companyId, repositoryId, fileName);
 	}
@@ -147,15 +146,14 @@ public class StoreWrapper implements Store {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId)
-		throws SystemException {
+	public String[] getFileNames(long companyId, long repositoryId) {
 
 		return _store.getFileNames(companyId, repositoryId);
 	}
@@ -163,14 +161,14 @@ public class StoreWrapper implements Store {
 	@Override
 	public String[] getFileNames(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileNames(companyId, repositoryId, dirName);
 	}
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.getFileSize(companyId, repositoryId, fileName);
 	}
@@ -178,14 +176,14 @@ public class StoreWrapper implements Store {
 	@Override
 	public boolean hasDirectory(
 			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.hasFile(companyId, repositoryId, fileName);
 	}
@@ -194,13 +192,13 @@ public class StoreWrapper implements Store {
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) throws SystemException {
+	public void move(String srcDir, String destDir) {
 		_store.move(srcDir, destDir);
 	}
 
@@ -208,7 +206,7 @@ public class StoreWrapper implements Store {
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 	}
@@ -217,7 +215,7 @@ public class StoreWrapper implements Store {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFile(companyId, repositoryId, fileName, newFileName);
 	}
@@ -226,7 +224,7 @@ public class StoreWrapper implements Store {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFile(
 			companyId, repositoryId, fileName, versionLabel, bytes);
@@ -236,7 +234,7 @@ public class StoreWrapper implements Store {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFile(
 			companyId, repositoryId, fileName, versionLabel, file);
@@ -246,7 +244,7 @@ public class StoreWrapper implements Store {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFile(companyId, repositoryId, fileName, versionLabel, is);
 	}
@@ -255,7 +253,7 @@ public class StoreWrapper implements Store {
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_store.updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,

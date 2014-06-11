@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.shopping.model.ShoppingItemField;
 import com.liferay.portlet.shopping.service.base.ShoppingItemFieldLocalServiceBaseImpl;
 
@@ -27,8 +26,7 @@ public class ShoppingItemFieldLocalServiceImpl
 	extends ShoppingItemFieldLocalServiceBaseImpl {
 
 	@Override
-	public List<ShoppingItemField> getItemFields(long itemId)
-		throws SystemException {
+	public List<ShoppingItemField> getItemFields(long itemId) {
 
 		return shoppingItemFieldPersistence.findByItemId(itemId);
 	}

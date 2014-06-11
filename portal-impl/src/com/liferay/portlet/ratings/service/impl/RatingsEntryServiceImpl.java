@@ -15,7 +15,6 @@
 package com.liferay.portlet.ratings.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.base.RatingsEntryServiceBaseImpl;
@@ -27,7 +26,7 @@ public class RatingsEntryServiceImpl extends RatingsEntryServiceBaseImpl {
 
 	@Override
 	public void deleteEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ratingsEntryLocalService.deleteEntry(getUserId(), className, classPK);
 	}
@@ -35,7 +34,7 @@ public class RatingsEntryServiceImpl extends RatingsEntryServiceBaseImpl {
 	@Override
 	public RatingsEntry updateEntry(
 			String className, long classPK, double score)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ratingsEntryLocalService.updateEntry(
 			getUserId(), className, classPK, score, new ServiceContext());

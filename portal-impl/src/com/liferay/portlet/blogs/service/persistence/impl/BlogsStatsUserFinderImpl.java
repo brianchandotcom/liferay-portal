@@ -53,8 +53,7 @@ public class BlogsStatsUserFinderImpl
 		BlogsStatsUserFinder.class.getName() + ".findByOrganizationIds";
 
 	@Override
-	public int countByOrganizationId(long organizationId)
-		throws SystemException {
+	public int countByOrganizationId(long organizationId) {
 
 		List<Long> organizationIds = new ArrayList<Long>();
 
@@ -64,8 +63,7 @@ public class BlogsStatsUserFinderImpl
 	}
 
 	@Override
-	public int countByOrganizationIds(List<Long> organizationIds)
-		throws SystemException {
+	public int countByOrganizationIds(List<Long> organizationIds) {
 
 		Session session = null;
 
@@ -112,8 +110,7 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public List<BlogsStatsUser> findByGroupIds(
-			long companyId, long groupId, int start, int end)
-		throws SystemException {
+		long companyId, long groupId, int start, int end) {
 
 		Session session = null;
 
@@ -167,8 +164,7 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public List<BlogsStatsUser> findByOrganizationId(
-			long organizationId, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long organizationId, int start, int end, OrderByComparator obc) {
 
 		List<Long> organizationIds = new ArrayList<Long>();
 
@@ -179,9 +175,7 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public List<BlogsStatsUser> findByOrganizationIds(
-			List<Long> organizationIds, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
+		List<Long> organizationIds, int start, int end, OrderByComparator obc) {
 
 		Session session = null;
 

@@ -185,8 +185,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	@Override
 	public Attributes getLDAPUserAttributes(
-			long ldapServerId, User user, Properties userMappings)
-		throws SystemException {
+		long ldapServerId, User user, Properties userMappings) {
 
 		Attributes attributes = new BasicAttributes(true);
 
@@ -410,8 +409,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected String getEncryptedPasswordForLDAP(User user)
-		throws SystemException {
+	protected String getEncryptedPasswordForLDAP(User user) {
 
 		String password = user.getPasswordUnencrypted();
 

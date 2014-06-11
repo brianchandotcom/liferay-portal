@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,9 +27,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
  */
 public class WikiPageAttachmentsUtil {
 
-	public static WikiPage getPage(long fileEntryId)
-		throws PortalException, SystemException {
-
+	public static WikiPage getPage(long fileEntryId) throws PortalException {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			fileEntryId);
 

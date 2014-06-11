@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -246,7 +245,7 @@ public class VerifyJournal extends VerifyProcess {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					JournalArticle article = (JournalArticle)object;
 
@@ -263,7 +262,7 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void verifyPermissionsAndAssets(JournalArticle article)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long groupId = article.getGroupId();
 		String articleId = article.getArticleId();

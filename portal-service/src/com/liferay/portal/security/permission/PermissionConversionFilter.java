@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
@@ -24,10 +23,8 @@ import com.liferay.portal.model.Role;
  */
 public interface PermissionConversionFilter {
 
-	public boolean accept(Role role, ResourcePermission resourcePermission)
-		throws SystemException;
+	public boolean accept(Role role, ResourcePermission resourcePermission);
 
-	public boolean accept(Role role, ResourceTypePermission resourcePermission)
-		throws SystemException;
+	public boolean accept(Role role, ResourceTypePermission resourcePermission);
 
 }

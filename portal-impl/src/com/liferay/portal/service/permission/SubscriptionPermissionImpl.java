@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -77,7 +76,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		check(permissionChecker, className, classPK, null, 0);
 	}
@@ -87,7 +86,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, subscriptionClassName, subscriptionClassPK,
@@ -105,7 +104,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return contains(permissionChecker, className, classPK, null, 0);
 	}
@@ -115,7 +114,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (subscriptionClassName == null) {
 			return false;
@@ -145,7 +144,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 	protected Boolean hasPermission(
 			PermissionChecker permissionChecker, String className, long classPK,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBDiscussion mbDiscussion =
 			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);

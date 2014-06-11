@@ -15,7 +15,6 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
@@ -40,7 +39,7 @@ public class LocalRepositoryFactoryImpl
 	@Override
 	protected LocalRepository createExternalRepository(
 			long repositoryId, long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BaseRepository baseRepository = createExternalRepositoryImpl(
 			repositoryId, classNameId);
@@ -51,7 +50,7 @@ public class LocalRepositoryFactoryImpl
 	@Override
 	protected LocalRepository createExternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
@@ -77,7 +76,7 @@ public class LocalRepositoryFactoryImpl
 
 	@Override
 	protected long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileEntryLocalService dlFileEntryLocalService =
 			getDlFileEntryLocalService();
@@ -90,7 +89,7 @@ public class LocalRepositoryFactoryImpl
 
 	@Override
 	protected long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileVersionLocalService dlFileVersionLocalService =
 			getDlFileVersionLocalService();
@@ -102,9 +101,7 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected long getFolderRepositoryId(long folderId)
-		throws PortalException, SystemException {
-
+	protected long getFolderRepositoryId(long folderId) throws PortalException {
 		DLFolderLocalService dlFolderLocalService = getDlFolderLocalService();
 
 		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
@@ -113,8 +110,7 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected Repository getRepository(long repositoryId)
-		throws SystemException {
+	protected Repository getRepository(long repositoryId) {
 
 		RepositoryLocalService repositoryLocalService =
 			getRepositoryLocalService();

@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -39,9 +38,7 @@ import javax.portlet.PortletURL;
 public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
-	public void deleteTrashEntry(long classPK)
-		throws PortalException, SystemException {
-
+	public void deleteTrashEntry(long classPK) throws PortalException {
 		BlogsEntryLocalServiceUtil.deleteEntry(classPK);
 	}
 
@@ -53,7 +50,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getRestoreContainedModelLink(
 			PortletRequest portletRequest, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
@@ -68,7 +65,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getRestoreContainerModelLink(
 			PortletRequest portletRequest, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
 
@@ -86,9 +83,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isInTrash(long classPK)
-		throws PortalException, SystemException {
-
+	public boolean isInTrash(long classPK) throws PortalException {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
 		return entry.isInTrash();
@@ -96,7 +91,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void restoreTrashEntry(long userId, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BlogsEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
 	}
@@ -104,7 +99,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	protected PortletURL getRestoreURL(
 			PortletRequest portletRequest, long classPK,
 			boolean isContainerModel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String portletId = PortletKeys.BLOGS;
 
@@ -138,7 +133,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	@Override
 	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return BlogsEntryPermission.contains(
 			permissionChecker, classPK, actionId);

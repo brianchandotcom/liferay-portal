@@ -117,8 +117,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		PropsValues.DL_STORE_IMPL = targetStoreClassName;
 	}
 
-	protected List<DLFileVersion> getDLFileVersions(DLFileEntry dlFileEntry)
-		throws SystemException {
+	protected List<DLFileVersion> getDLFileVersions(DLFileEntry dlFileEntry) {
 
 		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
@@ -127,7 +126,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			dlFileVersions, new FileVersionVersionComparator(true));
 	}
 
-	protected void migrateDL() throws PortalException, SystemException {
+	protected void migrateDL() throws PortalException {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 
 		MaintenanceUtil.appendStatus(
@@ -168,8 +167,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	protected void migrateDLFileEntry(
-			long companyId, long repositoryId, DLFileEntry dlFileEntry)
-		throws SystemException {
+		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
 
 		String fileName = dlFileEntry.getName();
 
@@ -211,7 +209,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		}
 	}
 
-	protected void migrateImages() throws PortalException, SystemException {
+	protected void migrateImages() throws PortalException {
 		int count = ImageLocalServiceUtil.getImagesCount();
 
 		MaintenanceUtil.appendStatus("Migrating " + count + " images");
@@ -238,7 +236,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void migrateMB() throws PortalException, SystemException {
+	protected void migrateMB() throws PortalException {
 		int count = MBMessageLocalServiceUtil.getMBMessagesCount();
 
 		MaintenanceUtil.appendStatus(
@@ -252,7 +250,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					MBMessage mbMessage = (MBMessage)object;
 
@@ -283,7 +281,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		migrateWiki();
 	}
 
-	protected void migrateWiki() throws PortalException, SystemException {
+	protected void migrateWiki() throws PortalException {
 		int count = WikiPageLocalServiceUtil.getWikiPagesCount();
 
 		MaintenanceUtil.appendStatus(

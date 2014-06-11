@@ -150,7 +150,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getAllChildren() throws SystemException {
+	public List<Layout> getAllChildren() {
 		List<Layout> layouts = new ArrayList<Layout>();
 
 		for (Layout layout : getChildren()) {
@@ -162,7 +162,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public long getAncestorLayoutId() throws PortalException, SystemException {
+	public long getAncestorLayoutId() throws PortalException {
 		long layoutId = 0;
 
 		Layout layout = this;
@@ -184,7 +184,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public long getAncestorPlid() throws PortalException, SystemException {
+	public long getAncestorPlid() throws PortalException {
 		long plid = 0;
 
 		Layout layout = this;
@@ -206,7 +206,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getAncestors() throws PortalException, SystemException {
+	public List<Layout> getAncestors() throws PortalException {
 		List<Layout> layouts = new ArrayList<Layout>();
 
 		Layout layout = this;
@@ -223,14 +223,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getChildren() throws SystemException {
+	public List<Layout> getChildren() {
 		return LayoutLocalServiceUtil.getLayouts(
 			getGroupId(), isPrivateLayout(), getLayoutId());
 	}
 
 	@Override
 	public List<Layout> getChildren(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Layout> layouts = ListUtil.copy(getChildren());
 
@@ -251,9 +251,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public ColorScheme getColorScheme()
-		throws PortalException, SystemException {
-
+	public ColorScheme getColorScheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getColorScheme();
 		}
@@ -265,7 +263,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public String getCssText() throws PortalException, SystemException {
+	public String getCssText() throws PortalException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getCss();
 		}
@@ -319,7 +317,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public Map<Locale, String> getFriendlyURLMap() throws SystemException {
+	public Map<Locale, String> getFriendlyURLMap() {
 		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
@@ -335,7 +333,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public String getFriendlyURLsXML() throws SystemException {
+	public String getFriendlyURLsXML() {
 		Map<Locale, String> friendlyURLMap = getFriendlyURLMap();
 
 		return LocalizationUtil.updateLocalization(
@@ -344,7 +342,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public Group getGroup() throws PortalException, SystemException {
+	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
@@ -376,7 +374,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public LayoutSet getLayoutSet() throws PortalException, SystemException {
+	public LayoutSet getLayoutSet() throws PortalException {
 		if (_layoutSet == null) {
 			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				getGroupId(), isPrivateLayout());
@@ -395,7 +393,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public Layout getLinkedToLayout() throws SystemException {
+	public Layout getLinkedToLayout() {
 		long linkToLayoutId = GetterUtil.getLong(
 			getTypeSettingsProperty("linkToLayoutId"));
 
@@ -408,7 +406,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public long getParentPlid() throws PortalException, SystemException {
+	public long getParentPlid() throws PortalException {
 		if (getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 			return 0;
 		}
@@ -421,27 +419,27 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getRegularURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _getURL(request, false, false);
 	}
 
 	@Override
 	public String getResetLayoutURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _getURL(request, true, true);
 	}
 
 	@Override
 	public String getResetMaxStateURL(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _getURL(request, true, false);
 	}
 
 	@Override
-	public Group getScopeGroup() throws PortalException, SystemException {
+	public Group getScopeGroup() throws PortalException {
 		Group group = null;
 
 		try {
@@ -460,7 +458,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public Theme getTheme() throws PortalException, SystemException {
+	public Theme getTheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getTheme();
 		}
@@ -527,9 +525,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public ColorScheme getWapColorScheme()
-		throws PortalException, SystemException {
-
+	public ColorScheme getWapColorScheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getWapColorScheme();
 		}
@@ -541,7 +537,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public Theme getWapTheme() throws PortalException, SystemException {
+	public Theme getWapTheme() throws PortalException {
 		if (isInheritWapLookAndFeel()) {
 			return getLayoutSet().getWapTheme();
 		}
@@ -552,9 +548,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public boolean hasAncestor(long layoutId)
-		throws PortalException, SystemException {
-
+	public boolean hasAncestor(long layoutId) throws PortalException {
 		long parentLayoutId = getParentLayoutId();
 
 		while (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
@@ -572,13 +566,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public boolean hasChildren() throws SystemException {
+	public boolean hasChildren() {
 		return LayoutLocalServiceUtil.hasLayouts(
 			getGroupId(), isPrivateLayout(), getLayoutId());
 	}
 
 	@Override
-	public boolean hasScopeGroup() throws PortalException, SystemException {
+	public boolean hasScopeGroup() throws PortalException {
 		Group group = getScopeGroup();
 
 		if (group != null) {
@@ -591,7 +585,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isChildSelected(boolean selectable, Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (selectable) {
 			long plid = getPlid();
@@ -817,9 +811,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		super.setTypeSettings(_typeSettingsProperties.toString());
 	}
 
-	protected Theme getTheme(String device)
-		throws PortalException, SystemException {
-
+	protected Theme getTheme(String device) throws PortalException {
 		if (device.equals("regular")) {
 			return getTheme();
 		}
@@ -909,7 +901,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	private String _getURL(
 			HttpServletRequest request, boolean resetMaxState,
 			boolean resetRenderParameters)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

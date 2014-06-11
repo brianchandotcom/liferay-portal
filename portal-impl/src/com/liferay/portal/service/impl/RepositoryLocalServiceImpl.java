@@ -19,7 +19,6 @@ import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -57,7 +56,7 @@ public class RepositoryLocalServiceImpl
 			String name, String description, String portletId,
 			UnicodeProperties typeSettingsProperties, boolean hidden,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -111,7 +110,7 @@ public class RepositoryLocalServiceImpl
 			String name, String description, String portletId,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addRepository(
 			userId, groupId, classNameId, parentFolderId, name, description,
@@ -126,7 +125,7 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
-	public void checkRepository(long repositoryId) throws SystemException {
+	public void checkRepository(long repositoryId) {
 		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);
 
 		if (group != null) {
@@ -142,9 +141,7 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRepositories(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteRepositories(long groupId) throws PortalException {
 		List<Repository> repositories = repositoryPersistence.findByGroupId(
 			groupId);
 
@@ -156,8 +153,7 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
-	public Repository deleteRepository(long repositoryId)
-		throws SystemException {
+	public Repository deleteRepository(long repositoryId) {
 
 		Repository repository = repositoryPersistence.fetchByPrimaryKey(
 			repositoryId);
@@ -173,8 +169,7 @@ public class RepositoryLocalServiceImpl
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public Repository deleteRepository(Repository repository)
-		throws SystemException {
+	public Repository deleteRepository(Repository repository) {
 
 		expandoValueLocalService.deleteValues(
 			Repository.class.getName(), repository.getRepositoryId());
@@ -195,23 +190,21 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
-	public Repository fetchRepository(long groupId, String portletId)
-		throws SystemException {
+	public Repository fetchRepository(long groupId, String portletId) {
 
 		return fetchRepository(groupId, portletId, portletId);
 	}
 
 	@Override
 	public Repository fetchRepository(
-			long groupId, String name, String portletId)
-		throws SystemException {
+		long groupId, String name, String portletId) {
 
 		return repositoryPersistence.fetchByG_N_P(groupId, name, portletId);
 	}
 
 	@Override
 	public List<LocalRepository> getGroupLocalRepositoryImpl(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Repository> repositories = repositoryPersistence.findByGroupId(
 			groupId);
@@ -231,7 +224,7 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public LocalRepository getLocalRepositoryImpl(long repositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepositoryImpl =
 			_localRepositoriesByRepositoryId.get(repositoryId);
@@ -252,7 +245,7 @@ public class RepositoryLocalServiceImpl
 	@Override
 	public LocalRepository getLocalRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
@@ -282,14 +275,14 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public Repository getRepository(long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getRepository(groupId, portletId, portletId);
 	}
 
 	@Override
 	public Repository getRepository(long groupId, String name, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return repositoryPersistence.findByG_N_P(groupId, name, portletId);
 	}
@@ -297,7 +290,7 @@ public class RepositoryLocalServiceImpl
 	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long repositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		com.liferay.portal.kernel.repository.Repository repositoryImpl =
 			_repositoriesByRepositoryId.get(repositoryId);
@@ -318,7 +311,7 @@ public class RepositoryLocalServiceImpl
 	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
@@ -342,7 +335,7 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
@@ -361,7 +354,7 @@ public class RepositoryLocalServiceImpl
 	@Override
 	public void updateRepository(
 			long repositoryId, String name, String description)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -388,7 +381,7 @@ public class RepositoryLocalServiceImpl
 			User user, long groupId, long repositoryId, long parentFolderId,
 			String name, String description, boolean hidden,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new RepositoryNameException();

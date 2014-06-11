@@ -21,7 +21,6 @@ import com.liferay.mail.service.CyrusService;
 import com.liferay.mail.service.persistence.CyrusUserUtil;
 import com.liferay.mail.service.persistence.CyrusVirtualUtil;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
@@ -31,8 +30,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	@Override
-	public void addUser(long userId, String emailAddress, String password)
-		throws SystemException {
+	public void addUser(long userId, String emailAddress, String password) {
 
 		CyrusUser cyrusUser = new CyrusUser(userId, password);
 
@@ -44,14 +42,13 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 	}
 
 	@Override
-	public void deleteEmailAddress(long companyId, long userId)
-		throws SystemException {
+	public void deleteEmailAddress(long companyId, long userId) {
 
 		CyrusVirtualUtil.removeByUserId(userId);
 	}
 
 	@Override
-	public void deleteUser(long userId) throws SystemException {
+	public void deleteUser(long userId) {
 		try {
 			CyrusUserUtil.remove(userId);
 		}
@@ -73,8 +70,7 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	@Override
 	public void updateEmailAddress(
-			long companyId, long userId, String emailAddress)
-		throws SystemException {
+		long companyId, long userId, String emailAddress) {
 
 		CyrusVirtualUtil.removeByUserId(userId);
 
@@ -84,8 +80,7 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 	}
 
 	@Override
-	public void updatePassword(long companyId, long userId, String password)
-		throws SystemException {
+	public void updatePassword(long companyId, long userId, String password) {
 
 		CyrusUser cyrusUser = null;
 

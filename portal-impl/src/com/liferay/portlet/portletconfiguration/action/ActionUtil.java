@@ -15,7 +15,6 @@
 package com.liferay.portlet.portletconfiguration.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,8 +69,7 @@ public class ActionUtil {
 	public static final String PRESELECTED = "_PRESELECTED_";
 
 	public static PortletPreferences getLayoutPortletSetup(
-			PortletRequest portletRequest, Portlet portlet)
-		throws SystemException {
+		PortletRequest portletRequest, Portlet portlet) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -172,7 +170,7 @@ public class ActionUtil {
 
 	public static ActionRequest getWrappedActionRequest(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
@@ -186,7 +184,7 @@ public class ActionUtil {
 
 	public static RenderRequest getWrappedRenderRequest(
 			RenderRequest renderRequest, PortletPreferences portletPreferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
@@ -206,7 +204,7 @@ public class ActionUtil {
 	public static ResourceRequest getWrappedResourceRequest(
 			ResourceRequest resourceRequest,
 			PortletPreferences portletPreferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			resourceRequest);
@@ -247,7 +245,7 @@ public class ActionUtil {
 			HttpServletRequest request,
 			PortletPreferences portletConfigPortletPreferences,
 			PortletPreferences portletPreferences)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
@@ -268,7 +266,7 @@ public class ActionUtil {
 			HttpServletRequest request,
 			PortletPreferences portletConfigPortletSetup,
 			PortletPreferences portletSetup)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");

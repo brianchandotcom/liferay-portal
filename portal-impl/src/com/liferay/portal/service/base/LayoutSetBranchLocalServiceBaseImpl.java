@@ -107,7 +107,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutSetBranch deleteLayoutSetBranch(long layoutSetBranchId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutSetBranchPersistence.remove(layoutSetBranchId);
 	}
 
@@ -123,7 +123,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public LayoutSetBranch deleteLayoutSetBranch(
 		LayoutSetBranch layoutSetBranch)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutSetBranchPersistence.remove(layoutSetBranch);
 	}
 

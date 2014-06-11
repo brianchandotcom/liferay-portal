@@ -15,7 +15,6 @@
 package com.liferay.portlet.mobiledevicerules.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
@@ -28,7 +27,7 @@ public class MDRRuleGroupInstancePermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, long ruleGroupInstanceId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getMDRRuleGroupInstancePermission().check(
 			permissionChecker, ruleGroupInstanceId, actionId);
@@ -46,7 +45,7 @@ public class MDRRuleGroupInstancePermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long ruleGroupInstanceId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getMDRRuleGroupInstancePermission().contains(
 			permissionChecker, ruleGroupInstanceId, actionId);

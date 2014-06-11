@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,7 +47,7 @@ public class ShoppingCartLocalServiceImpl
 	extends ShoppingCartLocalServiceBaseImpl {
 
 	@Override
-	public void deleteGroupCarts(long groupId) throws SystemException {
+	public void deleteGroupCarts(long groupId) {
 		List<ShoppingCart> carts = shoppingCartPersistence.findByGroupId(
 			groupId);
 
@@ -58,7 +57,7 @@ public class ShoppingCartLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserCarts(long userId) throws SystemException {
+	public void deleteUserCarts(long userId) {
 		List<ShoppingCart> shoppingCarts = shoppingCartPersistence.findByUserId(
 			userId);
 
@@ -69,14 +68,14 @@ public class ShoppingCartLocalServiceImpl
 
 	@Override
 	public ShoppingCart getCart(long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingCartPersistence.findByG_U(groupId, userId);
 	}
 
 	@Override
-	public Map<ShoppingCartItem, Integer> getItems(long groupId, String itemIds)
-		throws SystemException {
+	public Map<ShoppingCartItem, Integer> getItems(
+		long groupId, String itemIds) {
 
 		Map<ShoppingCartItem, Integer> items =
 			new TreeMap<ShoppingCartItem, Integer>();
@@ -118,7 +117,7 @@ public class ShoppingCartLocalServiceImpl
 	public ShoppingCart updateCart(
 			long userId, long groupId, String itemIds, String couponCodes,
 			int altShipping, boolean insure)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Long> badItemIds = new ArrayList<Long>();
 

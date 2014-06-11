@@ -15,7 +15,6 @@
 package com.liferay.portlet.softwarecatalog.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -52,7 +51,7 @@ public class SCProductVersionLocalServiceImpl
 			String downloadPageURL, String directDownloadURL,
 			boolean testDirectDownloadURL, boolean repoStoreArtifact,
 			long[] frameworkVersionIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Product version
 
@@ -108,7 +107,7 @@ public class SCProductVersionLocalServiceImpl
 
 	@Override
 	public void deleteProductVersion(long productVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SCProductVersion productVersion =
 			scProductVersionPersistence.findByPrimaryKey(productVersionId);
@@ -117,15 +116,13 @@ public class SCProductVersionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteProductVersion(SCProductVersion productVersion)
-		throws SystemException {
+	public void deleteProductVersion(SCProductVersion productVersion) {
 
 		scProductVersionPersistence.remove(productVersion);
 	}
 
 	@Override
-	public void deleteProductVersions(long productEntryId)
-		throws SystemException {
+	public void deleteProductVersions(long productEntryId) {
 
 		List<SCProductVersion> productVersions =
 			scProductVersionPersistence.findByProductEntryId(productEntryId);
@@ -137,7 +134,7 @@ public class SCProductVersionLocalServiceImpl
 
 	@Override
 	public SCProductVersion getProductVersion(long productVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return scProductVersionPersistence.findByPrimaryKey(productVersionId);
 	}
@@ -145,7 +142,7 @@ public class SCProductVersionLocalServiceImpl
 	@Override
 	public SCProductVersion getProductVersionByDirectDownloadURL(
 			String directDownloadURL)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return scProductVersionPersistence.findByDirectDownloadURL(
 			directDownloadURL);
@@ -153,16 +150,14 @@ public class SCProductVersionLocalServiceImpl
 
 	@Override
 	public List<SCProductVersion> getProductVersions(
-			long productEntryId, int start, int end)
-		throws SystemException {
+		long productEntryId, int start, int end) {
 
 		return scProductVersionPersistence.findByProductEntryId(
 			productEntryId, start, end);
 	}
 
 	@Override
-	public int getProductVersionsCount(long productEntryId)
-		throws SystemException {
+	public int getProductVersionsCount(long productEntryId) {
 
 		return scProductVersionPersistence.countByProductEntryId(
 			productEntryId);
@@ -174,7 +169,7 @@ public class SCProductVersionLocalServiceImpl
 			String downloadPageURL, String directDownloadURL,
 			boolean testDirectDownloadURL, boolean repoStoreArtifact,
 			long[] frameworkVersionIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Product version
 
@@ -248,7 +243,7 @@ public class SCProductVersionLocalServiceImpl
 			long productVersionId, String version, String changeLog,
 			String downloadPageURL, String directDownloadURL,
 			boolean testDirectDownloadURL, long[] frameworkVersionIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(version)) {
 			throw new ProductVersionNameException();

@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -110,7 +109,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	@SuppressWarnings("unused")
-	public String getIconCssClass() throws PortalException, SystemException {
+	public String getIconCssClass() throws PortalException {
 		return getAssetRendererFactory().getIconCssClass();
 	}
 
@@ -297,7 +296,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	@Override
 	@SuppressWarnings("unused")
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return false;
 	}
@@ -305,7 +304,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	@Override
 	@SuppressWarnings("unused")
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return true;
 	}
@@ -368,13 +367,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	protected long getControlPanelPlid(
 			LiferayPortletRequest liferayPortletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(liferayPortletRequest);
 	}
 
 	protected long getControlPanelPlid(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
 	}

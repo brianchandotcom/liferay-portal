@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -36,7 +35,7 @@ public class WikiSettings {
 	public static final String[] MULTI_VALUED_KEYS = {};
 
 	public static WikiSettings getInstance(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, WikiConstants.SERVICE_NAME);
@@ -46,7 +45,7 @@ public class WikiSettings {
 
 	public static WikiSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, WikiConstants.SERVICE_NAME);

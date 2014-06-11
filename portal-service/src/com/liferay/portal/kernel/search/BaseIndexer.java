@@ -19,7 +19,6 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -577,8 +576,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addAssetFields(
-			Document document, String className, long classPK)
-		throws SystemException {
+			Document document, String className, long classPK) {
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -1223,8 +1221,8 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected void addTrashFields(Document document, TrashedModel trashedModel)
-		throws SystemException {
+	protected void addTrashFields(
+		Document document, TrashedModel trashedModel) {
 
 		TrashEntry trashEntry = null;
 
@@ -1462,16 +1460,14 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected Document getBaseModelDocument(
-			String portletId, BaseModel<?> baseModel)
-		throws SystemException {
+			String portletId, BaseModel<?> baseModel) {
 
 		return getBaseModelDocument(portletId, baseModel, baseModel);
 	}
 
 	protected Document getBaseModelDocument(
 			String portletId, BaseModel<?> baseModel,
-			BaseModel<?> workflowedBaseModel)
-		throws SystemException {
+			BaseModel<?> workflowedBaseModel) {
 
 		Document document = newDocument();
 
@@ -1693,7 +1689,7 @@ public abstract class BaseIndexer implements Indexer {
 	protected void populateAddresses(
 			Document document, List<Address> addresses, long regionId,
 			long countryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<String> cities = new ArrayList<String>();
 

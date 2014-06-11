@@ -44,15 +44,13 @@ public class ShoppingItemFinderImpl
 		ShoppingItemFinder.class.getName() + ".countByG_C";
 
 	@Override
-	public int countByG_C(long groupId, List<Long> categoryIds)
-		throws SystemException {
+	public int countByG_C(long groupId, List<Long> categoryIds) {
 
 		return doCountByG_C(groupId, categoryIds, false);
 	}
 
 	@Override
-	public int countByFeatured(long groupId, long[] categoryIds)
-		throws SystemException {
+	public int countByFeatured(long groupId, long[] categoryIds) {
 
 		Session session = null;
 
@@ -119,8 +117,7 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public int countByKeywords(
-			long groupId, long[] categoryIds, String keywords)
-		throws SystemException {
+		long groupId, long[] categoryIds, String keywords) {
 
 		Session session = null;
 
@@ -190,8 +187,7 @@ public class ShoppingItemFinderImpl
 	}
 
 	@Override
-	public int countBySale(long groupId, long[] categoryIds)
-		throws SystemException {
+	public int countBySale(long groupId, long[] categoryIds) {
 
 		Session session = null;
 
@@ -257,16 +253,14 @@ public class ShoppingItemFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_C(long groupId, List<Long> categoryIds)
-		throws SystemException {
+	public int filterCountByG_C(long groupId, List<Long> categoryIds) {
 
 		return doCountByG_C(groupId, categoryIds, true);
 	}
 
 	@Override
 	public List<ShoppingItem> findByFeatured(
-			long groupId, long[] categoryIds, int numOfItems)
-		throws SystemException {
+		long groupId, long[] categoryIds, int numOfItems) {
 
 		int countByFeatured = countByFeatured(groupId, categoryIds);
 
@@ -326,9 +320,7 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public List<ShoppingItem> findByKeywords(
-			long groupId, long[] categoryIds, String keywords, int start,
-			int end)
-		throws SystemException {
+		long groupId, long[] categoryIds, String keywords, int start, int end) {
 
 		Session session = null;
 
@@ -390,8 +382,7 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public List<ShoppingItem> findBySale(
-			long groupId, long[] categoryIds, int numOfItems)
-		throws SystemException {
+		long groupId, long[] categoryIds, int numOfItems) {
 
 		int countBySale = countBySale(groupId, categoryIds);
 
@@ -450,8 +441,7 @@ public class ShoppingItemFinderImpl
 	}
 
 	protected int doCountByG_C(
-			long groupId, List<Long> categoryIds, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, List<Long> categoryIds, boolean inlineSQLHelper) {
 
 		Session session = null;
 

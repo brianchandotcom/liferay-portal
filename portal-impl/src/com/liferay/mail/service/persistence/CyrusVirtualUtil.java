@@ -32,8 +32,7 @@ public class CyrusVirtualUtil {
 		return getPersistence().findByPrimaryKey(emailAddress);
 	}
 
-	public static List<CyrusVirtual> findByUserId(long userId)
-		throws SystemException {
+	public static List<CyrusVirtual> findByUserId(long userId) {
 
 		return getPersistence().findByUserId(userId);
 	}
@@ -54,11 +53,11 @@ public class CyrusVirtualUtil {
 		getPersistence().remove(emailAddress);
 	}
 
-	public static void removeByUserId(long userId) throws SystemException {
+	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
-	public static void update(CyrusVirtual user) throws SystemException {
+	public static void update(CyrusVirtual user) {
 		getPersistence().update(user);
 	}
 

@@ -39,8 +39,7 @@ public class ResourceBlockFinderImpl
 
 	@Override
 	public ResourceBlockIdsBag findByC_G_N_R(
-			long companyId, long groupId, String name, long[] roleIds)
-		throws SystemException {
+		long companyId, long groupId, String name, long[] roleIds) {
 
 		Session session = null;
 

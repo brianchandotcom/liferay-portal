@@ -82,7 +82,7 @@ public class FileVersionProxyBean
 
 	@Override
 	public InputStream getContentStream(boolean incrementCounter)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return _fileVersion.getContentStream(incrementCounter);
 	}
@@ -116,7 +116,7 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public FileEntry getFileEntry() throws PortalException, SystemException {
+	public FileEntry getFileEntry() throws PortalException {
 		FileEntry fileEntry = _fileVersion.getFileEntry();
 
 		return newFileEntryProxyBean(fileEntry);
@@ -208,7 +208,7 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public String getStatusByUserUuid() throws SystemException {
+	public String getStatusByUserUuid() {
 		return _fileVersion.getStatusByUserUuid();
 	}
 
@@ -233,7 +233,7 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		return _fileVersion.getUserUuid();
 	}
 

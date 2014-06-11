@@ -113,8 +113,8 @@ public class EhcachePortalCacheTest {
 
 		@Override
 		public void notifyEntryEvicted(
-				PortalCache<Serializable, Serializable> portalCache,
-				Serializable key, Serializable value) {
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
 		}
 
 		@Override

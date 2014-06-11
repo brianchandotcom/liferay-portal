@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
@@ -59,10 +58,9 @@ public class RawMetadataProcessorUtil {
 	 * @param  fileVersion the file version from which the raw metatada is to be
 	 *         generated
 	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
 	 */
 	public static void generateMetadata(FileVersion fileVersion)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
 
@@ -107,10 +105,9 @@ public class RawMetadataProcessorUtil {
 	 * @param  fileVersion the file version from which the raw metatada is to be
 	 *         extracted and persisted
 	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
 	 */
 	public static void saveMetadata(FileVersion fileVersion)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
 

@@ -72,7 +72,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
 			String smallImageURL, String smallImageFileName,
 			InputStream smallImageInputStream, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BlogsPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -87,9 +87,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public void deleteEntry(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
@@ -99,7 +97,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	@Override
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
 
@@ -144,7 +142,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long companyId, Date displayDate, int status, int max, String type,
 			double version, String displayStyle, String feedURL,
 			String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
@@ -158,9 +156,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public BlogsEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public BlogsEntry getEntry(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
@@ -169,7 +165,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BlogsEntry entry = blogsEntryLocalService.getEntry(groupId, urlTitle);
 
@@ -181,16 +177,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
-			long groupId, Date displayDate, int status, int max)
-		throws SystemException {
+		long groupId, Date displayDate, int status, int max) {
 
 		return getGroupEntries(groupId, displayDate, status, 0, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
-			long groupId, Date displayDate, int status, int start, int end)
-		throws SystemException {
+		long groupId, Date displayDate, int status, int start, int end) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterFindByG_LtD_NotS(
@@ -204,16 +198,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
-		throws SystemException {
+	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max) {
 
 		return getGroupEntries(groupId, status, 0, max);
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
-			long groupId, int status, int start, int end)
-		throws SystemException {
+		long groupId, int status, int start, int end) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterFindByG_NotS(
@@ -226,8 +218,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getGroupEntriesCount(long groupId, Date displayDate, int status)
-		throws SystemException {
+	public int getGroupEntriesCount(
+		long groupId, Date displayDate, int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_LtD_NotS(
@@ -240,8 +232,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getGroupEntriesCount(long groupId, int status)
-		throws SystemException {
+	public int getGroupEntriesCount(long groupId, int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_NotS(
@@ -257,7 +248,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long groupId, Date displayDate, int status, int max, String type,
 			double version, String displayStyle, String feedURL,
 			String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
@@ -273,7 +264,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	@Override
 	public List<BlogsEntry> getGroupsEntries(
 			long companyId, long groupId, Date displayDate, int status, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
 
@@ -316,7 +307,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
 
@@ -360,7 +351,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long organizationId, Date displayDate, int status, int max,
 			String type, double version, String displayStyle, String feedURL,
 			String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
@@ -375,9 +366,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public BlogsEntry moveEntryToTrash(long entryId)
-		throws PortalException, SystemException {
-
+	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
@@ -385,9 +374,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void restoreEntryFromTrash(long entryId)
-		throws PortalException, SystemException {
-
+	public void restoreEntryFromTrash(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
@@ -395,9 +382,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void subscribe(long groupId)
-		throws PortalException, SystemException {
-
+	public void subscribe(long groupId) throws PortalException {
 		BlogsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 
@@ -405,9 +390,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void unsubscribe(long groupId)
-		throws PortalException, SystemException {
-
+	public void unsubscribe(long groupId) throws PortalException {
 		BlogsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 
@@ -422,7 +405,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
 			String smallImageURL, String smallImageFileName,
 			InputStream smallImageInputStream, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
@@ -436,10 +419,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	protected String exportToRSS(
-			String name, String description, String type, double version,
-			String displayStyle, String feedURL, String entryURL,
-			List<BlogsEntry> blogsEntries, ThemeDisplay themeDisplay)
-		throws SystemException {
+		String name, String description, String type, double version,
+		String displayStyle, String feedURL, String entryURL,
+		List<BlogsEntry> blogsEntries, ThemeDisplay themeDisplay) {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 

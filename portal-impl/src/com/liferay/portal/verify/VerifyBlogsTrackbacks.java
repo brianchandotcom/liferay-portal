@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,7 +69,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	}
 
 	private void _verifyPost(BlogsEntry entry, MBMessage mbMessage)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String entryURL =
 			Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();

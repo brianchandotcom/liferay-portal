@@ -36,7 +36,7 @@ public class BookmarksEntryFinderImpl
 		BookmarksEntryFinder.class.getName() + ".findByNoAssets";
 
 	@Override
-	public List<BookmarksEntry> findByNoAssets() throws SystemException {
+	public List<BookmarksEntry> findByNoAssets() {
 		Session session = null;
 
 		try {

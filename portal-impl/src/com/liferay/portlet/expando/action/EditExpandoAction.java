@@ -15,7 +15,6 @@
 package com.liferay.portlet.expando.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -245,7 +244,7 @@ public class EditExpandoAction extends PortletAction {
 
 	protected Serializable getValue(
 			PortletRequest portletRequest, String name, int type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String delimiter = StringPool.COMMA;
 

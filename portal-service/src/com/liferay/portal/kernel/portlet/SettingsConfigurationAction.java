@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -247,8 +246,7 @@ public class SettingsConfigurationAction
 		Collections.addAll(_multiValuedKeys, multiValuedKeys);
 	}
 
-	protected PortletConfig getSelPortletConfig(PortletRequest portletRequest)
-		throws SystemException {
+	protected PortletConfig getSelPortletConfig(PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -269,7 +267,7 @@ public class SettingsConfigurationAction
 	}
 
 	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -302,7 +300,7 @@ public class SettingsConfigurationAction
 	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest, Settings settings)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	protected void setParameterNamePrefix(String parameterNamePrefix) {

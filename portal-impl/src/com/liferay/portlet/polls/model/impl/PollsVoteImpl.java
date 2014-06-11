@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 
@@ -28,7 +27,7 @@ public class PollsVoteImpl extends PollsVoteBaseImpl {
 	}
 
 	@Override
-	public PollsChoice getChoice() throws PortalException, SystemException {
+	public PollsChoice getChoice() throws PortalException {
 		return PollsChoiceLocalServiceUtil.getChoice(getChoiceId());
 	}
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
@@ -60,13 +59,13 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		return false;
 	}
 
-	public long increment() throws SystemException {
+	public long increment() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.increment();
 	}
 
-	public long increment(String name) throws SystemException {
+	public long increment(String name) {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.increment(name);

@@ -16,7 +16,6 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -238,7 +237,7 @@ public abstract class BasePortletExportImportTestCase
 	protected AssetLink addAssetLink(
 			long groupId, String sourceStagedModelUuid,
 			String targetStagedModelUuid, int weight)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntry originAssetEntry = AssetEntryLocalServiceUtil.getEntry(
 			groupId, sourceStagedModelUuid);
@@ -421,9 +420,7 @@ public abstract class BasePortletExportImportTestCase
 			expectedDisplayStyleGroupId, importedDisplayStyleGroupId);
 	}
 
-	protected void validateImportedLinks(String uuid)
-		throws PortalException, SystemException {
-
+	protected void validateImportedLinks(String uuid) throws PortalException {
 		AssetEntry originalAssetEntry = AssetEntryLocalServiceUtil.getEntry(
 			group.getGroupId(), uuid);
 

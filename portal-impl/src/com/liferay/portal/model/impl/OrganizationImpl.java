@@ -16,7 +16,6 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,15 +114,13 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public List<Address> getAddresses() throws SystemException {
+	public List<Address> getAddresses() {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Organization.class.getName(), getOrganizationId());
 	}
 
 	@Override
-	public List<Organization> getAncestors()
-		throws PortalException, SystemException {
-
+	public List<Organization> getAncestors() throws PortalException {
 		List<Organization> ancestors = new ArrayList<Organization>();
 
 		Organization organization = this;
@@ -143,7 +140,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public List<Organization> getDescendants() throws SystemException {
+	public List<Organization> getDescendants() {
 		List<Organization> descendants = new UniqueList<Organization>();
 
 		for (Organization suborganization : getSuborganizations()) {
@@ -177,9 +174,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public Organization getParentOrganization()
-		throws PortalException, SystemException {
-
+	public Organization getParentOrganization() throws PortalException {
 		if (getParentOrganizationId() ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
@@ -191,7 +186,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public String getParentOrganizationName() throws SystemException {
+	public String getParentOrganizationName() {
 		if (getParentOrganizationId() ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
@@ -210,7 +205,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public PortletPreferences getPreferences() throws SystemException {
+	public PortletPreferences getPreferences() {
 		long ownerId = getOrganizationId();
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION;
 
@@ -257,15 +252,13 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public Set<String> getReminderQueryQuestions(Locale locale)
-		throws SystemException {
+	public Set<String> getReminderQueryQuestions(Locale locale) {
 
 		return getReminderQueryQuestions(LanguageUtil.getLanguageId(locale));
 	}
 
 	@Override
-	public Set<String> getReminderQueryQuestions(String languageId)
-		throws SystemException {
+	public Set<String> getReminderQueryQuestions(String languageId) {
 
 		PortletPreferences preferences = getPreferences();
 
@@ -277,13 +270,13 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public List<Organization> getSuborganizations() throws SystemException {
+	public List<Organization> getSuborganizations() {
 		return OrganizationLocalServiceUtil.getSuborganizations(
 			getCompanyId(), getOrganizationId());
 	}
 
 	@Override
-	public int getSuborganizationsSize() throws SystemException {
+	public int getSuborganizationsSize() {
 		return OrganizationLocalServiceUtil.getSuborganizationsCount(
 			getCompanyId(), getOrganizationId());
 	}
@@ -324,7 +317,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public boolean hasSuborganizations() throws SystemException {
+	public boolean hasSuborganizations() {
 		if (getSuborganizationsSize() > 0) {
 			return true;
 		}

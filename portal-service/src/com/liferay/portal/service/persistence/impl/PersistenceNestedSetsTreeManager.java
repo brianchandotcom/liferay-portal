@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.NestedSetsTreeNodeModel;
 
@@ -51,8 +50,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	@Override
 	protected long doCountAncestors(
 			long nestedSetsTreeNodeScopeId, long nestedSetsTreeNodeLeft,
-				long nestedSetsTreeNodeRight)
-		throws SystemException {
+				long nestedSetsTreeNodeRight) {
 
 		Session session = null;
 
@@ -95,8 +93,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	@Override
 	protected long doCountDescendants(
 			long nestedSetsTreeNodeScopeId, long nestedSetsTreeNodeLeft,
-			long nestedSetsTreeNodeRight)
-		throws SystemException {
+			long nestedSetsTreeNodeRight) {
 
 		Session session = null;
 
@@ -139,8 +136,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	@Override
 	protected List<T> doGetAncestors(
 			long nestedSetsTreeNodeScopeId, long nestedSetsTreeNodeLeft,
-			long nestedSetsTreeNodeRight)
-		throws SystemException {
+			long nestedSetsTreeNodeRight) {
 
 		Session session = null;
 
@@ -187,8 +183,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	@Override
 	protected List<T> doGetDescendants(
 			long nestedSetsTreeNodeScopeId, long nestedSetsTreeNodeLeft,
-			long nestedSetsTreeNodeRight)
-		throws SystemException {
+			long nestedSetsTreeNodeRight) {
 
 		Session session = null;
 
@@ -235,8 +230,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	protected void doUpdate(
 			boolean leftOrRight, long nestedSetsTreeNodeScopeId, long delta,
 			long start, boolean startInclusive, long end, boolean endInclusive,
-			List<T> includeList)
-		throws SystemException {
+			List<T> includeList) {
 
 		StringBundler sb = null;
 
@@ -339,8 +333,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	@Override
 	protected void doUpdate(
 			long nestedSetsTreeNodeScopeId, boolean leftOrRight, long delta,
-			long limit, boolean inclusive)
-		throws SystemException {
+			long limit, boolean inclusive) {
 
 		StringBundler sb = new StringBundler(12);
 
@@ -407,8 +400,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	protected void doUpdate(
 			long nestedSetsTreeNodeScopeId, long delta, long start,
 			boolean startInclusive, long end, boolean endInclusive,
-			List<T> includeList)
-		throws SystemException {
+			List<T> includeList) {
 
 		doUpdate(
 			false, nestedSetsTreeNodeScopeId, delta, start, startInclusive, end,
@@ -419,8 +411,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	}
 
 	@Override
-	protected long getMaxNestedSetsTreeNodeRight(long nestedSetsTreeNodeScopeId)
-		throws SystemException {
+	protected long getMaxNestedSetsTreeNodeRight(
+		long nestedSetsTreeNodeScopeId) {
 
 		Session session = null;
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -50,9 +49,8 @@ import javax.servlet.http.HttpServletResponse;
 public class TemplateProcessor implements ColumnProcessor {
 
 	public TemplateProcessor(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId)
-		throws SystemException {
+		HttpServletRequest request, HttpServletResponse response,
+		String portletId) {
 
 		_request = request;
 		_response = response;

@@ -16,7 +16,6 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -228,7 +227,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private void _checkExpandoColumns(ExpandoTable expandoTable, Fields fields)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (String name : fields.getNames()) {
 			ExpandoColumn expandoColumn =
@@ -347,8 +346,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return fieldsList;
 	}
 
-	private long[] _getExpandoRowIds(long ddmStructureId)
-		throws SystemException {
+	private long[] _getExpandoRowIds(long ddmStructureId) {
 
 		List<Long> expandoRowIds = new ArrayList<Long>();
 
@@ -366,7 +364,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 	private ExpandoTable _getExpandoTable(
 			long companyId, long ddmStructureId, Fields fields)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoTable expandoTable = null;
 
@@ -552,7 +550,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 	private void _updateFields(
 			ExpandoTable expandoTable, long classPK, Fields fields)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Iterator<Field> itr = fields.iterator(true);
 

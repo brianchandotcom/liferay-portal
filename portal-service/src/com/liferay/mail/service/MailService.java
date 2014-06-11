@@ -48,7 +48,7 @@ public interface MailService {
 
 	public void deleteUser(long companyId, long userId);
 
-	public Session getSession() throws SystemException;
+	public Session getSession();
 
 	public void sendEmail(MailMessage mailMessage);
 

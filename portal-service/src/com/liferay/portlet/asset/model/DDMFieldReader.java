@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 /**
@@ -23,9 +22,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
  */
 public interface DDMFieldReader {
 
-	public Fields getFields() throws PortalException, SystemException;
+	public Fields getFields() throws PortalException;
 
 	public Fields getFields(String ddmType)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

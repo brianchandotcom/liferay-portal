@@ -15,7 +15,6 @@
 package com.liferay.portlet.bookmarks;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -35,7 +34,7 @@ import java.util.Map;
 public class BookmarksSettings {
 
 	public static BookmarksSettings getInstance(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, BookmarksConstants.SERVICE_NAME);
@@ -45,7 +44,7 @@ public class BookmarksSettings {
 
 	public static BookmarksSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, BookmarksConstants.SERVICE_NAME);

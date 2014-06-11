@@ -50,17 +50,15 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public int countByKeywords(
-			long companyId, long groupId, String keywords, int scope)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope) {
 
 		return doCountByKeywords(companyId, groupId, keywords, scope, false);
 	}
 
 	@Override
 	public int countByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -71,17 +69,15 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public int filterCountByKeywords(
-			long companyId, long groupId, String keywords, int scope)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope) {
 
 		return doCountByKeywords(companyId, groupId, keywords, scope, true);
 	}
 
 	@Override
 	public int filterCountByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -92,9 +88,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> filterFindByKeywords(
-			long companyId, long groupId, String keywords, int scope, int start,
-			int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end, OrderByComparator orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -115,10 +110,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> filterFindByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -130,10 +124,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> filterFindByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return doFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -142,9 +135,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> findByKeywords(
-			long companyId, long groupId, String keywords, int scope, int start,
-			int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope, int start,
+		int end, OrderByComparator orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -165,10 +157,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> findByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String name, String description,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -180,10 +171,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	@Override
 	public List<DDLRecordSet> findByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return doFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -191,9 +181,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	}
 
 	protected int doCountByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, boolean inlineSQLHelper)
-		throws SystemException {
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions, false);
@@ -268,9 +257,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	}
 
 	protected int doCountByKeywords(
-			long companyId, long groupId, String keywords, int scope,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long companyId, long groupId, String keywords, int scope,
+		boolean inlineSQLHelper) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -290,10 +278,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	}
 
 	protected List<DDLRecordSet> doFindByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator, boolean inlineSQLHelper)
-		throws SystemException {
+		long companyId, long groupId, String[] names, String[] descriptions,
+		int scope, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator, boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions, false);

@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -250,7 +249,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalArticleResource importedArticleResource =
 			JournalArticleResourceUtil.fetchByUUID_G(uuid, groupId);
@@ -261,7 +260,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected String getStagedModelUuid(StagedModel stagedModel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalArticle article = (JournalArticle)stagedModel;
 

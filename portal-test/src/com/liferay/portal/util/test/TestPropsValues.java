@@ -15,7 +15,6 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,7 +58,7 @@ public class TestPropsValues {
 	public static final String USER_PASSWORD = TestPropsUtil.get(
 		"user.password");
 
-	public static long getCompanyId() throws PortalException, SystemException {
+	public static long getCompanyId() throws PortalException {
 		if (_companyId > 0) {
 			return _companyId;
 		}
@@ -72,7 +71,7 @@ public class TestPropsValues {
 		return _companyId;
 	}
 
-	public static long getGroupId() throws PortalException, SystemException {
+	public static long getGroupId() throws PortalException {
 		if (_groupId > 0) {
 			return _groupId;
 		}
@@ -99,7 +98,7 @@ public class TestPropsValues {
 		return _plid;
 	}
 
-	public static User getUser() throws PortalException, SystemException {
+	public static User getUser() throws PortalException {
 		if (_user == null) {
 			Role role = RoleLocalServiceUtil.getRole(
 				getCompanyId(), RoleConstants.ADMINISTRATOR);
@@ -117,7 +116,7 @@ public class TestPropsValues {
 		return _user;
 	}
 
-	public static long getUserId() throws PortalException, SystemException {
+	public static long getUserId() throws PortalException {
 		if (_userId == 0) {
 			User user = getUser();
 

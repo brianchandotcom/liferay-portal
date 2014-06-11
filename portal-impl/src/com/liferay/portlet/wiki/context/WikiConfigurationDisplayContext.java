@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
@@ -45,9 +44,7 @@ public class WikiConfigurationDisplayContext {
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
-	public List<String> getAllNodeNames()
-		throws PortalException, SystemException {
-
+	public List<String> getAllNodeNames() throws PortalException {
 		if (_allNodeNames == null) {
 			_populateNodes();
 		}
@@ -55,9 +52,7 @@ public class WikiConfigurationDisplayContext {
 		return _allNodeNames;
 	}
 
-	public List<WikiNode> getAllNodes()
-		throws PortalException, SystemException {
-
+	public List<WikiNode> getAllNodes() throws PortalException {
 		if (_allNodes == null) {
 			_populateNodes();
 		}
@@ -65,9 +60,7 @@ public class WikiConfigurationDisplayContext {
 		return _allNodes;
 	}
 
-	public String[] getVisibleNodeNames()
-		throws PortalException, SystemException {
-
+	public String[] getVisibleNodeNames() throws PortalException {
 		if (_visibleNodeNames == null) {
 			_populateNodes();
 		}
@@ -75,7 +68,7 @@ public class WikiConfigurationDisplayContext {
 		return _visibleNodeNames;
 	}
 
-	private void _populateNodes() throws PortalException, SystemException {
+	private void _populateNodes() throws PortalException {
 		_allNodes = WikiNodeServiceUtil.getNodes(_scopeGroupId);
 
 		_allNodeNames = WikiUtil.getNodeNames(_allNodes);

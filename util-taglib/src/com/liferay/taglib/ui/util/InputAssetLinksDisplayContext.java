@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -78,7 +77,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public AssetEntry getAssetLinkEntry(AssetLink assetLink)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((_assetEntryId > 0) || (assetLink.getEntryId1() == _assetEntryId)) {
 			return AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
@@ -87,9 +86,7 @@ public class InputAssetLinksDisplayContext {
 		return AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId1());
 	}
 
-	public List<AssetLink> getAssetLinks()
-		throws PortalException, SystemException {
-
+	public List<AssetLink> getAssetLinks() throws PortalException {
 		if (_assetLinks == null) {
 			_assetLinks = _createAssetLinks();
 		}
@@ -97,7 +94,7 @@ public class InputAssetLinksDisplayContext {
 		return _assetLinks;
 	}
 
-	public int getAssetLinksCount() throws PortalException, SystemException {
+	public int getAssetLinksCount() throws PortalException {
 		List<AssetLink> assetLinks = getAssetLinks();
 
 		return assetLinks.size();
@@ -151,7 +148,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public String getGroupDescriptiveName(AssetEntry assetEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
@@ -204,9 +201,7 @@ public class InputAssetLinksDisplayContext {
 		return selectorEntries;
 	}
 
-	private List<AssetLink> _createAssetLinks()
-		throws PortalException, SystemException {
-
+	private List<AssetLink> _createAssetLinks() throws PortalException {
 		List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 
 		String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(

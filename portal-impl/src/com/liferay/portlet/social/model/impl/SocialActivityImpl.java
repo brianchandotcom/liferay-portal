@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +32,7 @@ import java.util.Locale;
 public class SocialActivityImpl extends SocialActivityBaseImpl {
 
 	@Override
-	public AssetEntry getAssetEntry() throws SystemException {
+	public AssetEntry getAssetEntry() {
 		if ((_assetEntry == null) && Validator.isNotNull(getClassName()) &&
 			(getClassPK() > 0)) {
 

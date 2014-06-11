@@ -131,8 +131,8 @@ public class TestOrganizationMembershipPolicy
 
 	@Override
 	public void propagateMembership(
-			long[] userIds, long[] addOrganizationIds,
-			long[] removeOrganizationIds) {
+		long[] userIds, long[] addOrganizationIds,
+		long[] removeOrganizationIds) {
 
 		BaseOrganizationMembershipPolicyTestCase.setPropagateMembership(true);
 	}
@@ -157,9 +157,9 @@ public class TestOrganizationMembershipPolicy
 
 	@Override
 	public void verifyPolicy(
-			Organization organization, Organization oldOrganization,
-			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
-			Map<String, Serializable> oldExpandoAttributes) {
+		Organization organization, Organization oldOrganization,
+		List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
+		Map<String, Serializable> oldExpandoAttributes) {
 
 			Assert.assertNotNull(organization);
 			Assert.assertNotNull(oldOrganization);

@@ -15,7 +15,6 @@
 package com.liferay.portal.lar.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
@@ -43,7 +42,7 @@ public class LayoutsLocalPublisherMessageListener
 
 	@Override
 	protected void doReceive(Message message, MessageStatus messageStatus)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long exportImportConfigurationId = GetterUtil.getLong(
 			message.getPayload());

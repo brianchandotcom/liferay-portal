@@ -15,7 +15,6 @@
 package com.liferay.portlet.layoutsadmin.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.theme.ThemeDisplay;
 
 /**
@@ -27,6 +26,6 @@ public interface Sitemap {
 
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

@@ -57,7 +57,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	@Override
 	public abstract void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Override
 	public void exportStagedModel(

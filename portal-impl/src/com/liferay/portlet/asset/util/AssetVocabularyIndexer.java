@@ -16,7 +16,6 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -181,7 +180,7 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	}
 
 	protected void reindexVocabularies(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		final ActionableDynamicQuery actionableDynamicQuery =
 			AssetVocabularyLocalServiceUtil.getActionableDynamicQuery();

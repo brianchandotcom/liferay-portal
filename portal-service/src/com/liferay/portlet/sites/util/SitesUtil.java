@@ -15,7 +15,6 @@
 package com.liferay.portlet.sites.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -50,7 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SitesUtil {
 
 	public static void addMergeFailFriendlyURLLayout(Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getSites().addMergeFailFriendlyURLLayout(layout);
 	}
@@ -140,7 +139,7 @@ public class SitesUtil {
 	public static File exportLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().exportLayoutSetPrototype(
 			layoutSetPrototype, serviceContext);
@@ -161,20 +160,20 @@ public class SitesUtil {
 	}
 
 	public static int getMergeFailCount(LayoutPrototype layoutPrototype)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().getMergeFailCount(layoutPrototype);
 	}
 
 	public static int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().getMergeFailCount(layoutSetPrototype);
 	}
 
 	public static List<Layout> getMergeFailFriendlyURLLayouts(
 			LayoutSet layoutSet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().getMergeFailFriendlyURLLayouts(layoutSet);
 	}
@@ -200,21 +199,19 @@ public class SitesUtil {
 	public static void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getSites().importLayoutSetPrototype(
 			layoutSetPrototype, inputStream, serviceContext);
 	}
 
-	public static boolean isContentSharingWithChildrenEnabled(Group group)
-		throws SystemException {
+	public static boolean isContentSharingWithChildrenEnabled(Group group) {
 
 		return getSites().isContentSharingWithChildrenEnabled(group);
 	}
 
 	public static boolean isFirstLayout(
-			long groupId, boolean privateLayout, long layoutId)
-		throws SystemException {
+		long groupId, boolean privateLayout, long layoutId) {
 
 		return getSites().isFirstLayout(groupId, privateLayout, layoutId);
 	}
@@ -224,13 +221,13 @@ public class SitesUtil {
 	}
 
 	public static boolean isLayoutModifiedSinceLastMerge(Layout layout)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().isLayoutModifiedSinceLastMerge(layout);
 	}
 
 	public static boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().isLayoutSetMergeable(group, layoutSet);
 	}
@@ -249,7 +246,7 @@ public class SitesUtil {
 
 	public static boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getSites().isUserGroupLayoutSetViewable(
 			permissionChecker, userGroupGroup);
@@ -291,34 +288,31 @@ public class SitesUtil {
 		getSites().mergeLayoutSetProtypeLayouts(group, layoutSet);
 	}
 
-	public static void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws SystemException {
+	public static void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet) {
 
 		getSites().removeMergeFailFriendlyURLLayouts(layoutSet);
 	}
 
-	public static void resetPrototype(Layout layout)
-		throws PortalException, SystemException {
-
+	public static void resetPrototype(Layout layout) throws PortalException {
 		getSites().resetPrototype(layout);
 	}
 
 	public static void resetPrototype(LayoutSet layoutSet)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getSites().resetPrototype(layoutSet);
 	}
 
 	public static void setMergeFailCount(
 			LayoutPrototype layoutPrototype, int newMergeFailCount)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getSites().setMergeFailCount(layoutPrototype, newMergeFailCount);
 	}
 
 	public static void setMergeFailCount(
 			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getSites().setMergeFailCount(layoutSetPrototype, newMergeFailCount);
 	}

@@ -87,8 +87,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 
 		return countWithDynamicQuery(
 			dynamicQuery, ProjectionFactoryUtil.rowCount());
@@ -96,8 +95,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public long countWithDynamicQuery(
-			DynamicQuery dynamicQuery, Projection projection)
-		throws SystemException {
+		DynamicQuery dynamicQuery, Projection projection) {
 
 		if (projection == null) {
 			projection = ProjectionFactoryUtil.rowCount();
@@ -116,7 +114,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T fetchByPrimaryKey(Serializable primaryKey) throws SystemException {
+	public T fetchByPrimaryKey(Serializable primaryKey) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -138,8 +136,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List findWithDynamicQuery(DynamicQuery dynamicQuery) {
 
 		Session session = null;
 
@@ -161,8 +158,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(
-			DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		Session session = null;
 
@@ -186,9 +182,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(
-			DynamicQuery dynamicQuery, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
 
@@ -196,7 +191,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public void flush() throws SystemException {
+	public void flush() {
 		try {
 			Session session = _sessionFactory.getCurrentSession();
 
@@ -280,7 +275,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T remove(T model) throws SystemException {
+	public T remove(T model) {
 		if (model instanceof ModelWrapper) {
 			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
 
@@ -322,7 +317,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T update(T model) throws SystemException {
+	public T update(T model) {
 		if (model instanceof ModelWrapper) {
 			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
 
@@ -359,7 +354,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	@Deprecated
 	@Override
-	public T update(T model, boolean merge) throws SystemException {
+	public T update(T model, boolean merge) {
 		if (model instanceof ModelWrapper) {
 			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
 
@@ -397,15 +392,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	@Deprecated
 	@Override
-	public T update(T model, boolean merge, ServiceContext serviceContext)
-		throws SystemException {
+	public T update(T model, boolean merge, ServiceContext serviceContext) {
 
 		return update(model, serviceContext);
 	}
 
 	@Override
-	public T update(T model, ServiceContext serviceContext)
-		throws SystemException {
+	public T update(T model, ServiceContext serviceContext) {
 
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
@@ -492,9 +485,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 *
 	 * @param  model the model instance to remove
 	 * @return the model instance that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
-	protected T removeImpl(T model) throws SystemException {
+	protected T removeImpl(T model) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -509,9 +501,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 *
 	 * @param  model the model instance to update
 	 * @return the model instance that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
-	protected T updateImpl(T model) throws SystemException {
+	protected T updateImpl(T model) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -519,7 +510,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @deprecated As of 6.2.0, replaced by {@link #updateImpl(BaseModel)}
 	 */
 	@Deprecated
-	protected T updateImpl(T model, boolean merge) throws SystemException {
+	protected T updateImpl(T model, boolean merge) {
 		return updateImpl(model);
 	}
 

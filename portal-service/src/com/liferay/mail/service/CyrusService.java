@@ -24,19 +24,15 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface CyrusService {
 
-	public void addUser(long userId, String emailAddress, String password)
-		throws SystemException;
+	public void addUser(long userId, String emailAddress, String password);
 
-	public void deleteEmailAddress(long companyId, long userId)
-		throws SystemException;
+	public void deleteEmailAddress(long companyId, long userId);
 
-	public void deleteUser(long userId) throws SystemException;
+	public void deleteUser(long userId);
 
 	public void updateEmailAddress(
-			long companyId, long userId, String emailAddress)
-		throws SystemException;
+		long companyId, long userId, String emailAddress);
 
-	public void updatePassword(long companyId, long userId, String password)
-		throws SystemException;
+	public void updatePassword(long companyId, long userId, String password);
 
 }

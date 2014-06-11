@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -349,7 +348,7 @@ public class ImageProcessorImpl
 	}
 
 	private boolean _hasPreview(FileVersion fileVersion)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
 			_previewGenerationRequired(fileVersion)) {

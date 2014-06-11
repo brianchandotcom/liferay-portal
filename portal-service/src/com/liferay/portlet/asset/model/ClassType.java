@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
@@ -25,16 +24,16 @@ import java.util.List;
 public interface ClassType {
 
 	public ClassTypeField getClassTypeField(String fieldName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<ClassTypeField> getClassTypeFields()
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<ClassTypeField> getClassTypeFields(int start, int end)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public int getClassTypeFieldsCount()
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public long getClassTypeId();
 

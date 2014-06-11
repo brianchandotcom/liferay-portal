@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Layout;
 
 import java.util.List;
@@ -29,34 +28,30 @@ public interface SettingsFactory {
 	public void clearCache();
 
 	public Settings getCompanyServiceSettings(
-			long companyId, String serviceName)
-		throws SystemException;
+		long companyId, String serviceName);
 
 	public Settings getGroupServiceCompanyDefaultSettings(
-			long companyId, String serviceName)
-		throws SystemException;
+		long companyId, String serviceName);
 
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
-			long groupId, String portletId)
-		throws SystemException;
+		long groupId, String portletId);
 
 	public Settings getPortletInstanceCompanyDefaultSettings(
-			long companyId, String portletId)
-		throws SystemException;
+		long companyId, String portletId);
 
 	public Settings getPortletInstanceGroupDefaultSettings(
 			long groupId, String portletId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void registerFallbackKeys(
 		String settingsId, FallbackKeys fallbackKeys);

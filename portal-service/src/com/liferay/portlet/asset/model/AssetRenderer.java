@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -66,7 +65,7 @@ public interface AssetRenderer {
 
 	public long getGroupId();
 
-	public String getIconCssClass() throws PortalException, SystemException;
+	public String getIconCssClass() throws PortalException;
 
 	public String getIconPath(PortletRequest portletRequest);
 
@@ -145,10 +144,10 @@ public interface AssetRenderer {
 	public String getViewInContextMessage();
 
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isConvertible();
 

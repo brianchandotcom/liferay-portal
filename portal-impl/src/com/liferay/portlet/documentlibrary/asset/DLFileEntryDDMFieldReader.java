@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
@@ -43,7 +42,7 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 	}
 
 	@Override
-	public Fields getFields() throws PortalException, SystemException {
+	public Fields getFields() throws PortalException {
 		Fields fields = new Fields();
 
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(

@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -61,7 +60,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 	}
 
 	@Override
-	public String getSmallImageType() throws PortalException, SystemException {
+	public String getSmallImageType() throws PortalException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
 				getSmallImageId());

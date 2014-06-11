@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -108,7 +107,7 @@ public class EditMessageAttachmentsAction extends PortletAction {
 	}
 
 	protected void deleteAttachment(ActionRequest actionRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 

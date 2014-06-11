@@ -69,7 +69,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @param  typeSettingsProperties the type settings properties
 	 * @return the trashEntry
 	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrashEntry addTrashEntry(
@@ -77,7 +76,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			String classUuid, String referrerClassName, int status,
 			List<ObjectValuePair<Long, Integer>> statusOVPs,
 			UnicodeProperties typeSettingsProperties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -129,7 +128,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkEntries() throws PortalException, SystemException {
+	public void checkEntries() throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			groupLocalService.getActionableDynamicQuery();
@@ -139,7 +138,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Group group = (Group)object;
 
@@ -176,12 +175,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @return the trash entry with the primary key
 	 * @throws PortalException if a trash entry with the primary key could not
 	 *         be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public TrashEntry deleteEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public TrashEntry deleteEntry(long entryId) throws PortalException {
 		TrashEntry entry = trashEntryPersistence.fetchByPrimaryKey(entryId);
 
 		return deleteEntry(entry);
@@ -195,11 +191,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @return the trash entry with the entity class name and primary key
 	 * @throws PortalException if a trash entry with the primary key could not
 	 *         be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrashEntry deleteEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -211,8 +206,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public TrashEntry deleteEntry(TrashEntry trashEntry)
-		throws SystemException {
+	public TrashEntry deleteEntry(TrashEntry trashEntry) {
 
 		if (trashEntry != null) {
 			trashVersionPersistence.removeByEntryId(trashEntry.getEntryId());
@@ -231,10 +225,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 *
 	 * @param  entryId the primary key of the entry
 	 * @return the trash entry with the primary key
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public TrashEntry fetchEntry(long entryId) throws SystemException {
+	public TrashEntry fetchEntry(long entryId) {
 		return trashEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
@@ -244,11 +237,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @return the trash entry with the entity class name and primary key
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public TrashEntry fetchEntry(String className, long classPK)
-		throws SystemException {
+	public TrashEntry fetchEntry(String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -260,10 +251,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the trash entries with the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<TrashEntry> getEntries(long groupId) throws SystemException {
+	public List<TrashEntry> getEntries(long groupId) {
 		return trashEntryPersistence.findByGroupId(groupId);
 	}
 
@@ -275,11 +265,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @param  end the upper bound of the range of trash entries to return (not
 	 *         inclusive)
 	 * @return the range of matching trash entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<TrashEntry> getEntries(long groupId, int start, int end)
-		throws SystemException {
+	public List<TrashEntry> getEntries(long groupId, int start, int end) {
 
 		return trashEntryPersistence.findByGroupId(groupId, start, end);
 	}
@@ -295,19 +283,16 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @return the range of matching trash entries ordered by comparator
 	 *         <code>obc</code>
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<TrashEntry> getEntries(
-			long groupId, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long groupId, int start, int end, OrderByComparator obc) {
 
 		return trashEntryPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
 	@Override
-	public List<TrashEntry> getEntries(long groupId, String className)
-		throws SystemException {
+	public List<TrashEntry> getEntries(long groupId, String className) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -319,10 +304,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the number of matching trash entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getEntriesCount(long groupId) throws SystemException {
+	public int getEntriesCount(long groupId) {
 		return trashEntryPersistence.countByGroupId(groupId);
 	}
 
@@ -333,12 +317,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @return the trash entry with the primary key
 	 * @throws PortalException if a trash entry with the primary key could not
 	 *         be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public TrashEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
+	public TrashEntry getEntry(long entryId) throws PortalException {
 		return trashEntryPersistence.findByPrimaryKey(entryId);
 	}
 
@@ -350,11 +331,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @return the trash entry with the entity class name and primary key
 	 * @throws PortalException if a trash entry with the primary key could not
 	 *         be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrashEntry getEntry(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -363,9 +343,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
-			long companyId, long groupId, long userId, String keywords,
-			int start, int end, Sort sort)
-		throws SystemException {
+		long companyId, long groupId, long userId, String keywords, int start,
+		int end, Sort sort) {
 
 		try {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -383,9 +362,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<TrashEntry> searchTrashEntries(
-			long companyId, long groupId, long userId, String keywords,
-			int start, int end, Sort sort)
-		throws SystemException {
+		long companyId, long groupId, long userId, String keywords, int start,
+		int end, Sort sort) {
 
 		try {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -432,9 +410,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected Date getMaxAge(Group group)
-		throws PortalException, SystemException {
-
+	protected Date getMaxAge(Group group) throws PortalException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());

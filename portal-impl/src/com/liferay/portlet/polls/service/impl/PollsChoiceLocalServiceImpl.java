@@ -15,7 +15,6 @@
 package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -36,7 +35,7 @@ public class PollsChoiceLocalServiceImpl
 	public PollsChoice addChoice(
 			long userId, long questionId, String name, String description,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(name, description);
 
@@ -64,21 +63,18 @@ public class PollsChoiceLocalServiceImpl
 	}
 
 	@Override
-	public PollsChoice getChoice(long choiceId)
-		throws PortalException, SystemException {
-
+	public PollsChoice getChoice(long choiceId) throws PortalException {
 		return pollsChoicePersistence.findByPrimaryKey(choiceId);
 	}
 
 	@Override
-	public List<PollsChoice> getChoices(long questionId)
-		throws SystemException {
+	public List<PollsChoice> getChoices(long questionId) {
 
 		return pollsChoicePersistence.findByQuestionId(questionId);
 	}
 
 	@Override
-	public int getChoicesCount(long questionId) throws SystemException {
+	public int getChoicesCount(long questionId) {
 		return pollsChoicePersistence.countByQuestionId(questionId);
 	}
 
@@ -86,7 +82,7 @@ public class PollsChoiceLocalServiceImpl
 	public PollsChoice updateChoice(
 			long choiceId, long questionId, String name, String description,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(name, description);
 

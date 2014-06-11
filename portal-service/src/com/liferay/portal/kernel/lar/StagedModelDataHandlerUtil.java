@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,7 +40,7 @@ public class StagedModelDataHandlerUtil {
 
 	public static void deleteStagedModel(
 			PortletDataContext portletDataContext, Element deletionElement)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String className = deletionElement.attributeValue("class-name");
 		String extraData = deletionElement.attributeValue("extra-data");

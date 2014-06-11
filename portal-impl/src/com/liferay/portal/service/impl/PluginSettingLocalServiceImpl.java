@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,8 +53,7 @@ public class PluginSettingLocalServiceImpl
 
 	@Override
 	public PluginSetting getPluginSetting(
-			long companyId, String pluginId, String pluginType)
-		throws SystemException {
+		long companyId, String pluginId, String pluginType) {
 
 		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_I_T(
 			companyId, pluginId, pluginType);
@@ -116,9 +114,8 @@ public class PluginSettingLocalServiceImpl
 
 	@Override
 	public PluginSetting updatePluginSetting(
-			long companyId, String pluginId, String pluginType, String roles,
-			boolean active)
-		throws SystemException {
+		long companyId, String pluginId, String pluginType, String roles,
+		boolean active) {
 
 		pluginId = PortalUtil.getJsSafePortletId(pluginId);
 

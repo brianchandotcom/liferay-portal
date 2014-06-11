@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -618,7 +617,7 @@ public class JournalTestUtil {
 	}
 
 	public static void expireArticle(long groupId, JournalArticle article)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalArticleLocalServiceUtil.expireArticle(
 			article.getUserId(), article.getGroupId(), article.getArticleId(),
@@ -627,7 +626,7 @@ public class JournalTestUtil {
 
 	public static JournalArticle expireArticle(
 			long groupId, JournalArticle article, double version)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return JournalArticleLocalServiceUtil.expireArticle(
 			article.getUserId(), article.getGroupId(), article.getArticleId(),

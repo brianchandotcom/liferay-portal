@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.asset;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -252,24 +251,21 @@ public class WikiPageAssetRenderer
 		return _page.getUuid();
 	}
 
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws SystemException {
+	public boolean hasDeletePermission(PermissionChecker permissionChecker) {
 
 		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.DELETE);
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws SystemException {
+	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 
 		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws SystemException {
+	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 
 		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.VIEW);

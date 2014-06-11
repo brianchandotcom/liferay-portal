@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Account;
@@ -37,7 +36,7 @@ public class CommonPermissionImpl implements CommonPermission {
 	public void check(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String className = PortalUtil.getClassName(classNameId);
 
@@ -48,7 +47,7 @@ public class CommonPermissionImpl implements CommonPermission {
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (className.equals(Account.class.getName())) {
 		}

@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -38,7 +37,7 @@ public class MBDiscussionPermission {
 			PermissionChecker permissionChecker, long companyId, long groupId,
 			String className, long classPK, long messageId, long ownerId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, companyId, groupId, className, classPK,
@@ -51,7 +50,7 @@ public class MBDiscussionPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long companyId, long groupId,
 			String className, long classPK, long ownerId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, companyId, groupId, className, classPK,
@@ -65,7 +64,7 @@ public class MBDiscussionPermission {
 			PermissionChecker permissionChecker, long companyId, long groupId,
 			String className, long classPK, long messageId, long ownerId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
 
@@ -92,9 +91,8 @@ public class MBDiscussionPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long companyId, long groupId,
-			String className, long classPK, long ownerId, String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long companyId, long groupId,
+		String className, long classPK, long ownerId, String actionId) {
 
 		if (MBBanLocalServiceUtil.hasBan(
 				groupId, permissionChecker.getUserId())) {

@@ -16,7 +16,6 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
@@ -30,7 +29,7 @@ public abstract class BaseUserGroupMembershipPolicy
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long userGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(
@@ -46,7 +45,7 @@ public abstract class BaseUserGroupMembershipPolicy
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long userGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(
@@ -60,7 +59,7 @@ public abstract class BaseUserGroupMembershipPolicy
 	}
 
 	@Override
-	public void verifyPolicy() throws PortalException, SystemException {
+	public void verifyPolicy() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			UserGroupLocalServiceUtil.getActionableDynamicQuery();
 
@@ -69,7 +68,7 @@ public abstract class BaseUserGroupMembershipPolicy
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					UserGroup userGroup = (UserGroup)object;
 
@@ -82,9 +81,7 @@ public abstract class BaseUserGroupMembershipPolicy
 	}
 
 	@Override
-	public void verifyPolicy(UserGroup userGroup)
-		throws PortalException, SystemException {
-
+	public void verifyPolicy(UserGroup userGroup) throws PortalException {
 		verifyPolicy(userGroup, null, null);
 	}
 

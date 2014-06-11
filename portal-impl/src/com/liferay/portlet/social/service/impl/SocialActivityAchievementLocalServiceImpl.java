@@ -15,7 +15,6 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.social.model.SocialAchievement;
 import com.liferay.portlet.social.model.SocialActivityAchievement;
@@ -33,7 +32,7 @@ public class SocialActivityAchievementLocalServiceImpl
 	@Override
 	public void addActivityAchievement(
 			long userId, long groupId, SocialAchievement achievement)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SocialActivityAchievement activityAchievement =
 			socialActivityAchievementPersistence.fetchByG_U_N(
@@ -72,66 +71,58 @@ public class SocialActivityAchievementLocalServiceImpl
 
 	@Override
 	public SocialActivityAchievement fetchUserAchievement(
-			long userId, long groupId, String name)
-		throws SystemException {
+		long userId, long groupId, String name) {
 
 		return socialActivityAchievementPersistence.fetchByG_U_N(
 			groupId, userId, name);
 	}
 
 	@Override
-	public List<SocialActivityAchievement> getGroupAchievements(long groupId)
-		throws SystemException {
+	public List<SocialActivityAchievement> getGroupAchievements(long groupId) {
 
 		return socialActivityAchievementPersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<SocialActivityAchievement> getGroupAchievements(
-			long groupId, String name)
-		throws SystemException {
+		long groupId, String name) {
 
 		return socialActivityAchievementPersistence.findByG_N(groupId, name);
 	}
 
 	@Override
-	public int getGroupAchievementsCount(long groupId) throws SystemException {
+	public int getGroupAchievementsCount(long groupId) {
 		return socialActivityAchievementPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public int getGroupAchievementsCount(long groupId, String name)
-		throws SystemException {
+	public int getGroupAchievementsCount(long groupId, String name) {
 
 		return socialActivityAchievementPersistence.countByG_N(groupId, name);
 	}
 
 	@Override
 	public List<SocialActivityAchievement> getGroupFirstAchievements(
-			long groupId)
-		throws SystemException {
+		long groupId) {
 
 		return socialActivityAchievementPersistence.findByG_F(groupId, true);
 	}
 
 	@Override
-	public int getGroupFirstAchievementsCount(long groupId)
-		throws SystemException {
+	public int getGroupFirstAchievementsCount(long groupId) {
 
 		return socialActivityAchievementPersistence.countByG_F(groupId, true);
 	}
 
 	@Override
 	public List<SocialActivityAchievement> getUserAchievements(
-			long userId, long groupId)
-		throws SystemException {
+		long userId, long groupId) {
 
 		return socialActivityAchievementPersistence.findByG_U(groupId, userId);
 	}
 
 	@Override
-	public int getUserAchievementsCount(long userId, long groupId)
-		throws SystemException {
+	public int getUserAchievementsCount(long userId, long groupId) {
 
 		return socialActivityAchievementPersistence.countByG_U(groupId, userId);
 	}

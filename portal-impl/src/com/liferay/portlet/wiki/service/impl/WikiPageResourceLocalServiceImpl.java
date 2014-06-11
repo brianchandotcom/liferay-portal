@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.base.WikiPageResourceLocalServiceBaseImpl;
 
@@ -27,8 +26,7 @@ public class WikiPageResourceLocalServiceImpl
 	extends WikiPageResourceLocalServiceBaseImpl {
 
 	@Override
-	public WikiPageResource addPageResource(long nodeId, String title)
-		throws SystemException {
+	public WikiPageResource addPageResource(long nodeId, String title) {
 
 		long pageResourcePrimKey = counterLocalService.increment();
 
@@ -45,28 +43,26 @@ public class WikiPageResourceLocalServiceImpl
 
 	@Override
 	public void deletePageResource(long nodeId, String title)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		wikiPageResourcePersistence.removeByN_T(nodeId, title);
 	}
 
 	@Override
-	public WikiPageResource fetchPageResource(long nodeId, String title)
-		throws SystemException {
+	public WikiPageResource fetchPageResource(long nodeId, String title) {
 
 		return wikiPageResourcePersistence.fetchByN_T(nodeId, title);
 	}
 
 	@Override
-	public WikiPageResource fetchPageResource(String uuid)
-		throws SystemException {
+	public WikiPageResource fetchPageResource(String uuid) {
 
 		return wikiPageResourcePersistence.fetchByUuid_First(uuid, null);
 	}
 
 	@Override
 	public WikiPageResource getPageResource(long pageResourcePrimKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return wikiPageResourcePersistence.findByPrimaryKey(
 			pageResourcePrimKey);
@@ -74,14 +70,13 @@ public class WikiPageResourceLocalServiceImpl
 
 	@Override
 	public WikiPageResource getPageResource(long nodeId, String title)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return wikiPageResourcePersistence.findByN_T(nodeId, title);
 	}
 
 	@Override
-	public long getPageResourcePrimKey(long nodeId, String title)
-		throws SystemException {
+	public long getPageResourcePrimKey(long nodeId, String title) {
 
 		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
 			nodeId, title);

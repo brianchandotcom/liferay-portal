@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.workflow;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
@@ -80,7 +79,7 @@ public class WorkflowHandlerRegistryUtil {
 			String className, final long classPK, final T model,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (serviceContext.getWorkflowAction() !=
 				WorkflowConstants.ACTION_PUBLISH) {
@@ -178,7 +177,7 @@ public class WorkflowHandlerRegistryUtil {
 	public static <T> void startWorkflowInstance(
 			long companyId, long groupId, long userId, String className,
 			long classPK, T model, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Serializable> workflowContext =
 			(Map<String, Serializable>)serviceContext.removeAttribute(
@@ -196,7 +195,7 @@ public class WorkflowHandlerRegistryUtil {
 	public static <T> void startWorkflowInstance(
 			long companyId, long userId, String className, long classPK,
 			T model, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Serializable> workflowContext =
 			(Map<String, Serializable>)serviceContext.removeAttribute(
@@ -215,7 +214,7 @@ public class WorkflowHandlerRegistryUtil {
 			long companyId, long userId, String className, long classPK,
 			T model, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		startWorkflowInstance(
 			companyId, WorkflowConstants.DEFAULT_GROUP_ID, userId, className,
@@ -234,7 +233,7 @@ public class WorkflowHandlerRegistryUtil {
 
 	public static <T> T updateStatus(
 			int status, Map<String, Serializable> workflowContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String className = (String)workflowContext.get(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
@@ -272,7 +271,7 @@ public class WorkflowHandlerRegistryUtil {
 
 	private boolean _hasWorkflowInstanceInProgress(
 			long companyId, long groupId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		WorkflowInstanceLink workflowInstanceLink =
 			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(

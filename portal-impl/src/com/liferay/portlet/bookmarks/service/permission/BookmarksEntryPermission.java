@@ -15,7 +15,6 @@
 package com.liferay.portlet.bookmarks.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -38,7 +37,7 @@ public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, BookmarksEntry entry,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, entry, actionId)) {
 			throw new PrincipalException();
@@ -47,7 +46,7 @@ public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long entryId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, entryId, actionId)) {
 			throw new PrincipalException();
@@ -57,7 +56,7 @@ public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, BookmarksEntry entry,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, entry.getGroupId(),
@@ -115,7 +114,7 @@ public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long entryId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(entryId);
 
@@ -126,7 +125,7 @@ public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
 	}

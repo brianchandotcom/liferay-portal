@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -73,9 +72,7 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 	}
 
 	@Override
-	public List<ShoppingItemPrice> getItemPrices()
-		throws PortalException, SystemException {
-
+	public List<ShoppingItemPrice> getItemPrices() throws PortalException {
 		return ShoppingItemPriceLocalServiceUtil.getItemPrices(getItemId());
 	}
 

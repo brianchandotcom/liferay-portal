@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.service.base.ClusterGroupLocalServiceBaseImpl;
@@ -30,8 +29,7 @@ public class ClusterGroupLocalServiceImpl
 
 	@Override
 	public ClusterGroup addClusterGroup(
-			String name, List<String> clusterNodeIds)
-		throws SystemException {
+		String name, List<String> clusterNodeIds) {
 
 		long clusterGroupId = counterLocalService.increment();
 
@@ -45,8 +43,7 @@ public class ClusterGroupLocalServiceImpl
 	}
 
 	@Override
-	public ClusterGroup addWholeClusterGroup(String name)
-		throws SystemException {
+	public ClusterGroup addWholeClusterGroup(String name) {
 
 		long clusterGroupId = counterLocalService.increment();
 

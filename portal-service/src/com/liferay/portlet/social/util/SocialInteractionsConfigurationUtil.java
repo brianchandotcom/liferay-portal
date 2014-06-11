@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,8 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SocialInteractionsConfigurationUtil {
 
 	public static SocialInteractionsConfiguration
-			getSocialInteractionsConfiguration(long companyId)
-		throws SystemException {
+			getSocialInteractionsConfiguration(long companyId) {
 
 		boolean socialInteractionsAnyUserEnabled = PrefsPropsUtil.getBoolean(
 			companyId, "socialInteractionsAnyUserEnabled", true);
@@ -53,9 +51,8 @@ public class SocialInteractionsConfigurationUtil {
 	}
 
 	public static SocialInteractionsConfiguration
-			getSocialInteractionsConfiguration(
-				long companyId, HttpServletRequest request)
-		throws SystemException {
+		getSocialInteractionsConfiguration(
+			long companyId, HttpServletRequest request) {
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId, true);

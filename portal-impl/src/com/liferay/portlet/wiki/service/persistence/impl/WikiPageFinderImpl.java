@@ -58,8 +58,7 @@ public class WikiPageFinderImpl
 
 	@Override
 	public int countByCreateDate(
-			long groupId, long nodeId, Date createDate, boolean before)
-		throws SystemException {
+		long groupId, long nodeId, Date createDate, boolean before) {
 
 		return countByCreateDate(
 			groupId, nodeId, new Timestamp(createDate.getTime()), before);
@@ -67,16 +66,14 @@ public class WikiPageFinderImpl
 
 	@Override
 	public int countByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before) {
 
 		return doCountByCreateDate(groupId, nodeId, createDate, before, false);
 	}
 
 	@Override
 	public int filterCountByCreateDate(
-			long groupId, long nodeId, Date createDate, boolean before)
-		throws SystemException {
+		long groupId, long nodeId, Date createDate, boolean before) {
 
 		return doCountByCreateDate(
 			groupId, nodeId, new Timestamp(createDate.getTime()), before, true);
@@ -84,17 +81,15 @@ public class WikiPageFinderImpl
 
 	@Override
 	public int filterCountByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before) {
 
 		return doCountByCreateDate(groupId, nodeId, createDate, before, true);
 	}
 
 	@Override
 	public List<WikiPage> filterFindByCreateDate(
-			long groupId, long nodeId, Date createDate, boolean before,
-			int start, int end)
-		throws SystemException {
+		long groupId, long nodeId, Date createDate, boolean before, int start,
+		int end) {
 
 		return doFindByCreateDate(
 			groupId, nodeId, new Timestamp(createDate.getTime()), before, start,
@@ -103,9 +98,8 @@ public class WikiPageFinderImpl
 
 	@Override
 	public List<WikiPage> filterFindByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before,
-			int start, int end)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before,
+		int start, int end) {
 
 		return doFindByCreateDate(
 			groupId, nodeId, createDate, before, start, end, true);
@@ -154,9 +148,8 @@ public class WikiPageFinderImpl
 
 	@Override
 	public List<WikiPage> findByCreateDate(
-			long groupId, long nodeId, Date createDate, boolean before,
-			int start, int end)
-		throws SystemException {
+		long groupId, long nodeId, Date createDate, boolean before, int start,
+		int end) {
 
 		return doFindByCreateDate(
 			groupId, nodeId, new Timestamp(createDate.getTime()), before, start,
@@ -165,16 +158,15 @@ public class WikiPageFinderImpl
 
 	@Override
 	public List<WikiPage> findByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before,
-			int start, int end)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before,
+		int start, int end) {
 
 		return doFindByCreateDate(
 			groupId, nodeId, createDate, before, start, end, false);
 	}
 
 	@Override
-	public List<WikiPage> findByNoAssets() throws SystemException {
+	public List<WikiPage> findByNoAssets() {
 		Session session = null;
 
 		try {
@@ -197,9 +189,8 @@ public class WikiPageFinderImpl
 	}
 
 	protected int doCountByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -256,9 +247,8 @@ public class WikiPageFinderImpl
 	}
 
 	protected List<WikiPage> doFindByCreateDate(
-			long groupId, long nodeId, Timestamp createDate, boolean before,
-			int start, int end, boolean inlineSQLHelper)
-		throws SystemException {
+		long groupId, long nodeId, Timestamp createDate, boolean before,
+		int start, int end, boolean inlineSQLHelper) {
 
 		Session session = null;
 

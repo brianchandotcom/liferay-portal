@@ -15,7 +15,6 @@
 package com.liferay.portlet.expando.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -40,7 +39,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, columnId, actionId)) {
 			throw new PrincipalException();
@@ -52,7 +51,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, companyId, className, tableName, columnName,
@@ -74,7 +73,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
 			columnId);
@@ -84,10 +83,8 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long companyId,
-			String className, String tableName, String columnName,
-			String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long companyId, String className,
+		String tableName, String columnName, String actionId) {
 
 		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
 			companyId, className, tableName, columnName);

@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.dao.db;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -99,9 +97,9 @@ public interface DB {
 
 	public String getType();
 
-	public long increment() throws SystemException;
+	public long increment();
 
-	public long increment(String name) throws SystemException;
+	public long increment(String name);
 
 	public boolean isSupportsAlterColumnName();
 

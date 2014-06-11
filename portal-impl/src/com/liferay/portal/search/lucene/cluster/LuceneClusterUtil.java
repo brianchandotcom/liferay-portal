@@ -29,15 +29,13 @@ import java.io.InputStream;
  */
 public class LuceneClusterUtil {
 
-	public static void loadIndexesFromCluster(long companyId)
-		throws SystemException {
+	public static void loadIndexesFromCluster(long companyId) {
 
 		LuceneHelperUtil.loadIndexesFromCluster(companyId);
 	}
 
 	public static void loadIndexesFromCluster(
-			long[] companyIds, Address bootupAddress)
-		throws SystemException {
+		long[] companyIds, Address bootupAddress) {
 
 		if (bootupAddress == null) {
 			return;

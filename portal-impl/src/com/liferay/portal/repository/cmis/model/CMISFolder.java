@@ -82,8 +82,7 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public boolean containsPermission(
-			PermissionChecker permissionChecker, String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, String actionId) {
 
 		if (_cmisFolder.isRootFolder() &&
 			(actionId.equals(ActionKeys.DELETE) ||
@@ -109,9 +108,7 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	@Override
-	public List<Long> getAncestorFolderIds()
-		throws PortalException, SystemException {
-
+	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> folderIds = new ArrayList<Long>();
 
 		Folder folder = this;
@@ -126,7 +123,7 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	@Override
-	public List<Folder> getAncestors() throws PortalException, SystemException {
+	public List<Folder> getAncestors() throws PortalException {
 		List<Folder> folders = new ArrayList<Folder>();
 
 		Folder folder = this;
@@ -222,7 +219,7 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	@Override
-	public Folder getParentFolder() throws PortalException, SystemException {
+	public Folder getParentFolder() throws PortalException {
 		Folder parentFolder = null;
 
 		try {

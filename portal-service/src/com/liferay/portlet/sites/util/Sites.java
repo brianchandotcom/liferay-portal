@@ -15,7 +15,6 @@
 package com.liferay.portlet.sites.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -72,7 +71,7 @@ public interface Sites {
 		"merge-fail-friendly-url-layouts";
 
 	public void addMergeFailFriendlyURLLayout(Layout layout)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
@@ -121,7 +120,7 @@ public interface Sites {
 	public File exportLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public Long[] filterGroups(List<Group> groups, String[] names);
 
@@ -131,13 +130,13 @@ public interface Sites {
 		ServiceContext serviceContext);
 
 	public int getMergeFailCount(LayoutPrototype layoutPrototype)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<String> getOrganizationNames(Group group, User user)
 		throws Exception;
@@ -148,22 +147,20 @@ public interface Sites {
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public boolean isContentSharingWithChildrenEnabled(Group group)
-		throws SystemException;
+	public boolean isContentSharingWithChildrenEnabled(Group group);
 
 	public boolean isFirstLayout(
-			long groupId, boolean privateLayout, long layoutId)
-		throws SystemException;
+		long groupId, boolean privateLayout, long layoutId);
 
 	public boolean isLayoutDeleteable(Layout layout);
 
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet);
 
@@ -173,7 +170,7 @@ public interface Sites {
 
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception;
@@ -197,22 +194,21 @@ public interface Sites {
 	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception;
 
-	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws SystemException;
+	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet);
 
 	public void resetPrototype(Layout layout)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void resetPrototype(LayoutSet layoutSet)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void setMergeFailCount(
 			LayoutPrototype layoutPrototype, int newMergeFailCount)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void setMergeFailCount(
 			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateLayoutScopes(
 			long userId, Layout sourceLayout, Layout targetLayout,

@@ -16,7 +16,6 @@ package com.liferay.portal.settings;
 
 import com.liferay.portal.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
@@ -59,8 +58,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getCompanyServiceSettings(
-			long companyId, String serviceName)
-		throws SystemException {
+		long companyId, String serviceName) {
 
 		return applyFallbackKeys(
 			serviceName, getCompanySettings(companyId, serviceName));
@@ -68,8 +66,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getGroupServiceCompanyDefaultSettings(
-			long companyId, String serviceName)
-		throws SystemException {
+		long companyId, String serviceName) {
 
 		return applyFallbackKeys(
 			serviceName,
@@ -79,7 +76,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return applyFallbackKeys(
 			serviceName, getGroupSettings(groupId, serviceName));
@@ -88,7 +85,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletItem portletItem = null;
 
@@ -109,8 +106,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
-			long groupId, String portletId)
-		throws SystemException {
+		long groupId, String portletId) {
 
 		List<ArchivedSettings> archivedSettingsList =
 			new ArrayList<ArchivedSettings>();
@@ -129,8 +125,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getPortletInstanceCompanyDefaultSettings(
-			long companyId, String portletId)
-		throws SystemException {
+		long companyId, String portletId) {
 
 		return applyFallbackKeys(
 			PortletConstants.getRootPortletId(portletId),
@@ -141,7 +136,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public Settings getPortletInstanceGroupDefaultSettings(
 			long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -154,7 +149,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return applyFallbackKeys(
 			PortletConstants.getRootPortletId(portletId),
@@ -185,16 +180,14 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	protected PortletPreferences getCompanyPortletPreferences(
-			long companyId, String settingsId)
-		throws SystemException {
+		long companyId, String settingsId) {
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
 			settingsId);
 	}
 
-	protected Settings getCompanySettings(long companyId, String settingsId)
-		throws SystemException {
+	protected Settings getCompanySettings(long companyId, String settingsId) {
 
 		return new PortletPreferencesSettings(
 			getCompanyPortletPreferences(companyId, settingsId),
@@ -202,8 +195,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	protected PortletPreferences getGroupPortletPreferences(
-			long companyId, long groupId, String settingsId)
-		throws SystemException {
+		long companyId, long groupId, String settingsId) {
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
@@ -211,7 +203,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	protected Settings getGroupSettings(long groupId, String settingsId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -222,16 +214,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			getCompanySettings(companyId, settingsId));
 	}
 
-	protected PortletPreferences getPortalPreferences(long companyId)
-		throws SystemException {
-
+	protected PortletPreferences getPortalPreferences(long companyId) {
 		return PortalPreferencesLocalServiceUtil.getPreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
 
 	protected PortletPreferencesSettings getPortalPreferencesSettings(
-			long companyId, String settingsId)
-		throws SystemException {
+		long companyId, String settingsId) {
 
 		return new PortletPreferencesSettings(
 			getPortalPreferences(companyId),
@@ -259,8 +248,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	protected PortletPreferences getPortletInstancePortletPreferences(
-			Layout layout, String portletId)
-		throws SystemException {
+		Layout layout, String portletId) {
 
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;

@@ -25,8 +25,7 @@ public class IncrementFactory {
 
 	@SuppressWarnings("rawtypes")
 	public static Increment createIncrement(
-			Class<? extends Increment<?>> counterClass, Object value)
-		throws SystemException {
+			Class<? extends Increment<?>> counterClass, Object value) {
 
 		if ((counterClass == NumberIncrement.class) &&
 			(value instanceof Number)) {

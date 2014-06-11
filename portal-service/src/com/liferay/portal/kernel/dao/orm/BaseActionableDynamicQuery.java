@@ -84,7 +84,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
-	public void performActions() throws PortalException, SystemException {
+	public void performActions() throws PortalException {
 		long previousPrimaryKey = -1;
 
 		while (true) {
@@ -101,7 +101,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
-	public long performCount() throws PortalException, SystemException {
+	public long performCount() throws PortalException {
 		if (_performCountMethod != null) {
 			return _performCountMethod.performCount();
 		}
@@ -123,8 +123,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
-	public void setBaseLocalService(BaseLocalService baseLocalService)
-		throws SystemException {
+	public void setBaseLocalService(BaseLocalService baseLocalService) {
 
 		_baseLocalService = baseLocalService;
 
@@ -236,7 +235,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	protected long doPerformActions(long previousPrimaryKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
@@ -310,7 +309,7 @@ public abstract class BaseActionableDynamicQuery
 
 	protected Object executeDynamicQuery(
 			Method dynamicQueryMethod, Object... arguments)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return dynamicQueryMethod.invoke(_baseLocalService, arguments);
@@ -361,12 +360,10 @@ public abstract class BaseActionableDynamicQuery
 
 	@SuppressWarnings("unused")
 	protected void intervalCompleted(long startPrimaryKey, long endPrimaryKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
-	protected void performAction(Object object)
-		throws PortalException, SystemException {
-
+	protected void performAction(Object object) throws PortalException {
 		if (_performActionMethod != null) {
 			_performActionMethod.performAction(object);
 		}

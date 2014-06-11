@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -85,7 +84,7 @@ public abstract class LiferayRepositoryBase {
 
 	protected void addFileEntryResources(
 			DLFileEntry dlFileEntry, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
@@ -115,7 +114,7 @@ public abstract class LiferayRepositoryBase {
 
 	protected long getDefaultFileEntryTypeId(
 			ServiceContext serviceContext, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		folderId = dlFolderLocalService.getFolderId(
 			serviceContext.getCompanyId(), folderId);
@@ -125,7 +124,7 @@ public abstract class LiferayRepositoryBase {
 
 	protected HashMap<String, Fields> getFieldsMap(
 			ServiceContext serviceContext, long fileEntryTypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
 

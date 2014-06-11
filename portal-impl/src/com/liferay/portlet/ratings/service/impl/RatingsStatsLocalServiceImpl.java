@@ -31,8 +31,7 @@ public class RatingsStatsLocalServiceImpl
 	extends RatingsStatsLocalServiceBaseImpl {
 
 	@Override
-	public RatingsStats addStats(long classNameId, long classPK)
-		throws SystemException {
+	public RatingsStats addStats(long classNameId, long classPK) {
 
 		long statsId = counterLocalService.increment();
 
@@ -66,8 +65,7 @@ public class RatingsStatsLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStats(String className, long classPK)
-		throws SystemException {
+	public void deleteStats(String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -84,15 +82,12 @@ public class RatingsStatsLocalServiceImpl
 	}
 
 	@Override
-	public RatingsStats getStats(long statsId)
-		throws PortalException, SystemException {
-
+	public RatingsStats getStats(long statsId) throws PortalException {
 		return ratingsStatsPersistence.findByPrimaryKey(statsId);
 	}
 
 	@Override
-	public List<RatingsStats> getStats(String className, List<Long> classPKs)
-		throws SystemException {
+	public List<RatingsStats> getStats(String className, List<Long> classPKs) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -100,8 +95,7 @@ public class RatingsStatsLocalServiceImpl
 	}
 
 	@Override
-	public RatingsStats getStats(String className, long classPK)
-		throws SystemException {
+	public RatingsStats getStats(String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 

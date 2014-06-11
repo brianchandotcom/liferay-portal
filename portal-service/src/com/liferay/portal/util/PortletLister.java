@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.TreeView;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.User;
@@ -30,7 +29,7 @@ import javax.servlet.ServletContext;
  */
 public interface PortletLister {
 
-	public TreeView getTreeView() throws PortalException, SystemException;
+	public TreeView getTreeView() throws PortalException;
 
 	public void setHierarchicalTree(boolean hierarchicalTree);
 

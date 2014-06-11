@@ -17,7 +17,6 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
@@ -57,7 +56,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
  */
 public abstract class BaseRepositoryFactory<T> {
 
-	public T create(long repositoryId) throws PortalException, SystemException {
+	public T create(long repositoryId) throws PortalException {
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
@@ -69,7 +68,7 @@ public abstract class BaseRepositoryFactory<T> {
 	}
 
 	public T create(long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		T liferayRepository = createLiferayRepository(
 			folderId, fileEntryId, fileVersionId);
@@ -83,15 +82,15 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected abstract T createExternalRepository(
 			long repositoryId, long classNameId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected abstract T createExternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected BaseRepository createExternalRepositoryImpl(
 			long repositoryId, long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		BaseRepository baseRepository = null;
 
@@ -153,8 +152,7 @@ public abstract class BaseRepositoryFactory<T> {
 		return baseRepository;
 	}
 
-	protected T createLiferayRepository(long repositoryId)
-		throws SystemException {
+	protected T createLiferayRepository(long repositoryId) {
 
 		long dlFolderId = 0;
 		long groupId = 0;
@@ -175,7 +173,7 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected T createLiferayRepository(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			long repositoryId = 0;
@@ -265,19 +263,17 @@ public abstract class BaseRepositoryFactory<T> {
 	}
 
 	protected abstract long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected abstract long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	protected abstract long getFolderRepositoryId(long folderId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	protected abstract Repository getRepository(long repositoryId)
-		throws SystemException;
+	protected abstract Repository getRepository(long repositoryId);
 
-	protected long getRepositoryClassNameId(long repositoryId)
-		throws SystemException {
+	protected long getRepositoryClassNameId(long repositoryId) {
 
 		Repository repository = _repositoryLocalService.fetchRepository(
 			repositoryId);
@@ -296,7 +292,7 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected long getRepositoryId(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);

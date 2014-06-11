@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.base.UserGroupGroupRoleServiceBaseImpl;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 
@@ -29,7 +28,7 @@ public class UserGroupGroupRoleServiceImpl
 	@Override
 	public void addUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(groupId, roleIds);
 
@@ -40,7 +39,7 @@ public class UserGroupGroupRoleServiceImpl
 	@Override
 	public void addUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(groupId, new long[] {roleId});
 
@@ -51,7 +50,7 @@ public class UserGroupGroupRoleServiceImpl
 	@Override
 	public void deleteUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(groupId, roleIds);
 
@@ -62,7 +61,7 @@ public class UserGroupGroupRoleServiceImpl
 	@Override
 	public void deleteUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(groupId, new long[] {roleId});
 
@@ -71,7 +70,7 @@ public class UserGroupGroupRoleServiceImpl
 	}
 
 	protected void checkPermission(long groupId, long[] roleIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (long roleId : roleIds) {
 			UserGroupRolePermissionUtil.check(

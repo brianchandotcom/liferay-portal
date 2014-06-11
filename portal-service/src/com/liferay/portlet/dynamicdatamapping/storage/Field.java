@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -117,13 +116,13 @@ public class Field implements Serializable {
 		return _valuesMap.keySet();
 	}
 
-	public String getDataType() throws PortalException, SystemException {
+	public String getDataType() throws PortalException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.getFieldDataType(_name);
 	}
 
-	public DDMStructure getDDMStructure() throws SystemException {
+	public DDMStructure getDDMStructure() {
 		return DDMStructureLocalServiceUtil.fetchStructure(_ddmStructureId);
 	}
 
@@ -139,23 +138,21 @@ public class Field implements Serializable {
 		return _name;
 	}
 
-	public String getRenderedValue(Locale locale)
-		throws PortalException, SystemException {
-
+	public String getRenderedValue(Locale locale) throws PortalException {
 		FieldRenderer fieldRenderer = getFieldRenderer();
 
 		return fieldRenderer.render(this, locale);
 	}
 
 	public String getRenderedValue(Locale locale, int valueIndex)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FieldRenderer fieldRenderer = getFieldRenderer();
 
 		return fieldRenderer.render(this, locale, valueIndex);
 	}
 
-	public String getType() throws PortalException, SystemException {
+	public String getType() throws PortalException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.getFieldType(_name);
@@ -225,7 +222,7 @@ public class Field implements Serializable {
 		}
 	}
 
-	public boolean isRepeatable() throws PortalException, SystemException {
+	public boolean isRepeatable() throws PortalException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.isFieldRepeatable(_name);
@@ -275,9 +272,7 @@ public class Field implements Serializable {
 		_valuesMap = valuesMap;
 	}
 
-	protected FieldRenderer getFieldRenderer()
-		throws PortalException, SystemException {
-
+	protected FieldRenderer getFieldRenderer() throws PortalException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		String dataType = null;

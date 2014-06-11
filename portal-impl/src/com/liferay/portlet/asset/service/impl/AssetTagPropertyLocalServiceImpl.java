@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.TagPropertyKeyException;
 import com.liferay.portlet.asset.TagPropertyValueException;
@@ -45,12 +44,11 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @return the created asset tag property
 	 * @throws PortalException if a user with the primary key could not be
 	 *         found, or if the key or value were invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty addTagProperty(
 			long userId, long tagId, String key, String value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -80,10 +78,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 * Deletes the asset tag property with the specified tag ID.
 	 *
 	 * @param  tagId the primary key of the tag
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTagProperties(long tagId) throws SystemException {
+	public void deleteTagProperties(long tagId) {
 		List<AssetTagProperty> tagProperties =
 			assetTagPropertyPersistence.findByTagId(tagId);
 
@@ -96,11 +93,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 * Deletes the asset tag property instance.
 	 *
 	 * @param  tagProperty the asset tag property instance
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTagProperty(AssetTagProperty tagProperty)
-		throws SystemException {
+	public void deleteTagProperty(AssetTagProperty tagProperty) {
 
 		assetTagPropertyPersistence.remove(tagProperty);
 	}
@@ -111,12 +106,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @param  tagPropertyId the primary key of the asset tag property instance
 	 * @throws PortalException if an asset tag property with the primary key
 	 *         could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTagProperty(long tagPropertyId)
-		throws PortalException, SystemException {
-
+	public void deleteTagProperty(long tagPropertyId) throws PortalException {
 		AssetTagProperty tagProperty =
 			assetTagPropertyPersistence.findByPrimaryKey(tagPropertyId);
 
@@ -127,10 +119,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 * Returns all the asset tag property instances.
 	 *
 	 * @return the asset tag property instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> getTagProperties() throws SystemException {
+	public List<AssetTagProperty> getTagProperties() {
 		return assetTagPropertyPersistence.findAll();
 	}
 
@@ -139,11 +130,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 *
 	 * @param  tagId the primary key of the tag
 	 * @return the matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> getTagProperties(long tagId)
-		throws SystemException {
+	public List<AssetTagProperty> getTagProperties(long tagId) {
 
 		return assetTagPropertyPersistence.findByTagId(tagId);
 	}
@@ -155,11 +144,10 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @return the matching asset tag property
 	 * @throws PortalException if an asset tag property with the primary key
 	 *         could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty getTagProperty(long tagPropertyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetTagPropertyPersistence.findByPrimaryKey(tagPropertyId);
 	}
@@ -172,11 +160,10 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @return the matching asset tag property
 	 * @throws PortalException if an asset tag property with the tag ID and key
 	 *         could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty getTagProperty(long tagId, String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return assetTagPropertyPersistence.findByT_K(tagId, key);
 	}
@@ -186,10 +173,9 @@ public class AssetTagPropertyLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the matching asset tag property keys
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String[] getTagPropertyKeys(long groupId) throws SystemException {
+	public String[] getTagPropertyKeys(long groupId) {
 		return assetTagPropertyKeyFinder.findByGroupId(groupId);
 	}
 
@@ -199,11 +185,10 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  key the key that refers to some value
 	 * @return the matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> getTagPropertyValues(long groupId, String key)
-		throws SystemException {
+	public List<AssetTagProperty> getTagPropertyValues(
+		long groupId, String key) {
 
 		return assetTagPropertyFinder.findByG_K(groupId, key);
 	}
@@ -217,12 +202,11 @@ public class AssetTagPropertyLocalServiceImpl
 	 * @return the updated asset tag property
 	 * @throws PortalException if an asset tag property with the primary key
 	 *         could not be found, or if the key or value were invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty updateTagProperty(
 			long tagPropertyId, String key, String value)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(key, value);
 

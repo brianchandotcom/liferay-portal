@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.language;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 import java.util.Locale;
@@ -159,7 +158,7 @@ public interface Language {
 	public boolean isDuplicateLanguageCode(String languageCode);
 
 	public boolean isInheritLocales(long groupId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content);

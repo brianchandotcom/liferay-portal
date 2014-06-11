@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -43,7 +42,7 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void checkResourceActions() throws SystemException {
+	public void checkResourceActions() {
 		List<ResourceAction> resourceActions =
 			resourceActionPersistence.findAll();
 
@@ -56,16 +55,14 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	@Override
-	public void checkResourceActions(String name, List<String> actionIds)
-		throws SystemException {
+	public void checkResourceActions(String name, List<String> actionIds) {
 
 		checkResourceActions(name, actionIds, false);
 	}
 
 	@Override
 	public void checkResourceActions(
-			String name, List<String> actionIds, boolean addDefaultActions)
-		throws SystemException {
+		String name, List<String> actionIds, boolean addDefaultActions) {
 
 		long lastBitwiseValue = -1;
 		List<ResourceAction> newResourceActions = null;
@@ -200,14 +197,13 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	@Override
-	public List<ResourceAction> getResourceActions(String name)
-		throws SystemException {
+	public List<ResourceAction> getResourceActions(String name) {
 
 		return resourceActionPersistence.findByName(name);
 	}
 
 	@Override
-	public int getResourceActionsCount(String name) throws SystemException {
+	public int getResourceActionsCount(String name) {
 		return resourceActionPersistence.countByName(name);
 	}
 

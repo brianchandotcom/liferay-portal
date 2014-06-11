@@ -57,7 +57,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -173,7 +173,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			long remoteGroupId, Date startDate, Date endDate,
 			HttpPrincipal httpPrincipal)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((layoutIdMap == null) || layoutIdMap.isEmpty()) {
 			return LayoutLocalServiceUtil.exportLayoutsAsFile(
@@ -230,7 +230,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	 */
 	protected List<Layout> getMissingRemoteParentLayouts(
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
 

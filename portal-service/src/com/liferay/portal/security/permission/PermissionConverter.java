@@ -15,7 +15,6 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Role;
 
@@ -27,17 +26,17 @@ import java.util.List;
 public interface PermissionConverter {
 
 	public List<Permission> convertPermissions(long roleId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Permission> convertPermissions(
 			long roleId, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Permission> convertPermissions(Role role)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<Permission> convertPermissions(
 			Role role, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -37,9 +36,7 @@ import java.util.Map;
  */
 public class MBSettings {
 
-	public static MBSettings getInstance(long groupId)
-		throws PortalException, SystemException {
-
+	public static MBSettings getInstance(long groupId) throws PortalException {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, MBConstants.SERVICE_NAME);
 
@@ -48,7 +45,7 @@ public class MBSettings {
 
 	public static MBSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, MBConstants.SERVICE_NAME);

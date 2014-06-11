@@ -109,8 +109,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 	@Override
 	protected Metadata extractMetadata(
-			String extension, String mimeType, File file)
-		throws SystemException {
+		String extension, String mimeType, File file) {
 
 		Metadata metadata = super.extractMetadata(extension, mimeType, file);
 
@@ -158,8 +157,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 	@Override
 	protected Metadata extractMetadata(
-			String extension, String mimeType, InputStream inputStream)
-		throws SystemException {
+		String extension, String mimeType, InputStream inputStream) {
 
 		Metadata metadata = super.extractMetadata(
 			extension, mimeType, inputStream);

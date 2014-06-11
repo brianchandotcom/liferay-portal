@@ -36,8 +36,7 @@ public class UserGroupGroupRoleFinderImpl
 		UserGroupGroupRoleFinder.class.getName() + ".findByUserGroupsUsers";
 
 	@Override
-	public List<UserGroupGroupRole> findByUserGroupsUsers(long userId)
-		throws SystemException {
+	public List<UserGroupGroupRole> findByUserGroupsUsers(long userId) {
 
 		Session session = null;
 

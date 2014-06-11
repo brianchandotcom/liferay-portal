@@ -50,9 +50,8 @@ import java.util.List;
 public class UpgradePermission extends UpgradeProcess {
 
 	protected ResourceBlock convertResourcePermissions(
-			String tableName, String pkColumnName, long companyId, long groupId,
-			String name, long primKey)
-		throws SystemException {
+		String tableName, String pkColumnName, long companyId, long groupId,
+		String name, long primKey) {
 
 		PermissionedModel permissionedModel = new UpgradePermissionedModel(
 			tableName, pkColumnName, primKey);
@@ -165,9 +164,8 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(
-				long companyId, long groupId, String name, long primKey)
-		throws SystemException {
+		getResourceBlockPermissionsContainer(
+			long companyId, long groupId, String name, long primKey) {
 
 		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
 			new ResourceBlockPermissionsContainer();
@@ -236,7 +234,7 @@ public class UpgradePermission extends UpgradeProcess {
 		}
 
 		@Override
-		public void persist() throws SystemException {
+		public void persist() {
 			try {
 				StringBundler sb = new StringBundler(8);
 

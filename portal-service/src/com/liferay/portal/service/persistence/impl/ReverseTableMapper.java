@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
 
@@ -31,38 +30,34 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
-	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey)
-		throws SystemException {
+	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey) {
 
 		return _tableMapper.addTableMapping(rightPrimaryKey, leftPrimaryKey);
 	}
 
 	@Override
 	public boolean containsTableMapping(
-			long leftPrimaryKey, long rightPrimaryKey)
-		throws SystemException {
+		long leftPrimaryKey, long rightPrimaryKey) {
 
 		return _tableMapper.containsTableMapping(
 			rightPrimaryKey, leftPrimaryKey);
 	}
 
 	@Override
-	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey)
-		throws SystemException {
+	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
 
 		return _tableMapper.deleteRightPrimaryKeyTableMappings(leftPrimaryKey);
 	}
 
 	@Override
-	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey)
-		throws SystemException {
+	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
 
 		return _tableMapper.deleteLeftPrimaryKeyTableMappings(rightPrimaryKey);
 	}
 
 	@Override
-	public boolean deleteTableMapping(long leftPrimaryKey, long rightPrimaryKey)
-		throws SystemException {
+	public boolean deleteTableMapping(
+		long leftPrimaryKey, long rightPrimaryKey) {
 
 		return _tableMapper.deleteTableMapping(rightPrimaryKey, leftPrimaryKey);
 	}
@@ -74,16 +69,14 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public List<L> getLeftBaseModels(
-			long rightPrimaryKey, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long rightPrimaryKey, int start, int end, OrderByComparator obc) {
 
 		return _tableMapper.getRightBaseModels(
 			rightPrimaryKey, start, end, obc);
 	}
 
 	@Override
-	public long[] getLeftPrimaryKeys(long rightPrimaryKey)
-		throws SystemException {
+	public long[] getLeftPrimaryKeys(long rightPrimaryKey) {
 
 		return _tableMapper.getRightPrimaryKeys(rightPrimaryKey);
 	}
@@ -95,15 +88,13 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public List<R> getRightBaseModels(
-			long leftPrimaryKey, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long leftPrimaryKey, int start, int end, OrderByComparator obc) {
 
 		return _tableMapper.getLeftBaseModels(leftPrimaryKey, start, end, obc);
 	}
 
 	@Override
-	public long[] getRightPrimaryKeys(long leftPrimaryKey)
-		throws SystemException {
+	public long[] getRightPrimaryKeys(long leftPrimaryKey) {
 
 		return _tableMapper.getLeftPrimaryKeys(leftPrimaryKey);
 	}

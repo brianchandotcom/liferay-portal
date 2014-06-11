@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -28,7 +27,7 @@ public class OrganizationPermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, long organizationId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getOrganizationPermission().check(
 			permissionChecker, organizationId, actionId);
@@ -37,7 +36,7 @@ public class OrganizationPermissionUtil {
 	public static void check(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getOrganizationPermission().check(
 			permissionChecker, organization, actionId);
@@ -46,7 +45,7 @@ public class OrganizationPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long organizationId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getOrganizationPermission().contains(
 			permissionChecker, organizationId, actionId);
@@ -55,7 +54,7 @@ public class OrganizationPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long[] organizationIds,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getOrganizationPermission().contains(
 			permissionChecker, organizationIds, actionId);
@@ -64,7 +63,7 @@ public class OrganizationPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getOrganizationPermission().contains(
 			permissionChecker, organization, actionId);

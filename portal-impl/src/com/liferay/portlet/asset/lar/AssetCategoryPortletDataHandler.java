@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -152,8 +151,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getCategoryActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
+		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			AssetCategoryLocalServiceUtil.getExportActionableDynamicQuery(
@@ -167,8 +165,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getVocabularyActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
+		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			AssetVocabularyLocalServiceUtil.getExportActionableDynamicQuery(

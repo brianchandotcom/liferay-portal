@@ -14,7 +14,6 @@
 
 package com.liferay.portal.metadata;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -111,8 +110,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 	@Override
 	protected Metadata extractMetadata(
-			String extension, String mimeType, File file)
-		throws SystemException {
+		String extension, String mimeType, File file) {
 
 		Metadata metadata = null;
 
@@ -132,8 +130,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 	@Override
 	protected Metadata extractMetadata(
-			String extension, String mimeType, InputStream inputStream)
-		throws SystemException {
+		String extension, String mimeType, InputStream inputStream) {
 
 		Metadata metadata = null;
 

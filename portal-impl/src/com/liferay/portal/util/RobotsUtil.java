@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,9 +44,7 @@ public class RobotsUtil {
 		return ContentUtil.get(PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
-	public static String getRobots(LayoutSet layoutSet)
-		throws PortalException, SystemException {
-
+	public static String getRobots(LayoutSet layoutSet) throws PortalException {
 		if (layoutSet == null) {
 			return getDefaultRobots(null);
 		}

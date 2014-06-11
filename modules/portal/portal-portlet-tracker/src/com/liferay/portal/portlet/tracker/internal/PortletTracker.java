@@ -284,7 +284,7 @@ public class PortletTracker
 			ServiceReference<Portlet> serviceReference,
 			com.liferay.portal.model.Portlet portletModel,
 			List<Company> companies)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<String> portletActions =
 			_resourceActions.getPortletResourceActions(
@@ -732,7 +732,7 @@ public class PortletTracker
 			ServiceReference<Portlet> serviceReference,
 			com.liferay.portal.model.Portlet portletModel,
 			List<Company> companies)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String categoryName = (String)serviceReference.getProperty(
 			"com.liferay.portal.portlet.display.category");

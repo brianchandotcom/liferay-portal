@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -51,8 +50,8 @@ public class ClusterExecutorUtil {
 		clusterExecutor.destroy();
 	}
 
-	public static FutureClusterResponses execute(ClusterRequest clusterRequest)
-		throws SystemException {
+	public static FutureClusterResponses execute(
+		ClusterRequest clusterRequest) {
 
 		ClusterExecutor clusterExecutor = getClusterExecutor();
 
@@ -64,9 +63,8 @@ public class ClusterExecutorUtil {
 	}
 
 	public static void execute(
-			ClusterRequest clusterRequest,
-			ClusterResponseCallback clusterResponseCallback)
-		throws SystemException {
+		ClusterRequest clusterRequest,
+		ClusterResponseCallback clusterResponseCallback) {
 
 		ClusterExecutor clusterExecutor = getClusterExecutor();
 
@@ -78,10 +76,9 @@ public class ClusterExecutorUtil {
 	}
 
 	public static void execute(
-			ClusterRequest clusterRequest,
-			ClusterResponseCallback clusterResponseCallback, long timeout,
-			TimeUnit timeUnit)
-		throws SystemException {
+		ClusterRequest clusterRequest,
+		ClusterResponseCallback clusterResponseCallback, long timeout,
+		TimeUnit timeUnit) {
 
 		ClusterExecutor clusterExecutor = getClusterExecutor();
 
@@ -127,7 +124,7 @@ public class ClusterExecutorUtil {
 		return clusterExecutor.getClusterNodes();
 	}
 
-	public static ClusterNode getLocalClusterNode() throws SystemException {
+	public static ClusterNode getLocalClusterNode() {
 		ClusterExecutor clusterExecutor = getClusterExecutor();
 
 		if (clusterExecutor == null) {

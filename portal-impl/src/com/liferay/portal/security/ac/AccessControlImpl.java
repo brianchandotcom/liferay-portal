@@ -15,7 +15,6 @@
 package com.liferay.portal.security.ac;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -86,9 +85,7 @@ public class AccessControlImpl implements AccessControl {
 	}
 
 	@Override
-	public AuthVerifierResult.State verifyRequest()
-		throws PortalException, SystemException {
-
+	public AuthVerifierResult.State verifyRequest() throws PortalException {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
 

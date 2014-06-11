@@ -52,7 +52,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.
@@ -339,9 +339,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	protected DLFileEntryType fetchExistingFileEntryType(
-			String uuid, long groupId, String fileEntryTypeKey,
-			boolean preloaded)
-		throws SystemException {
+		String uuid, long groupId, String fileEntryTypeKey, boolean preloaded) {
 
 		DLFileEntryType existingDLFileEntryType = null;
 

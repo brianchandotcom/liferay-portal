@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -32,7 +31,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
@@ -41,7 +40,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	@Override
 	public long createStagingRequest(long groupId, String checksum)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
@@ -54,7 +53,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	public void publishStagingRequest(
 			long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
@@ -65,7 +64,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	@Override
 	public void updateStagingRequest(
 			long stagingRequestId, String fileName, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
@@ -77,7 +76,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	public MissingReferences validateStagingRequest(
 			long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
@@ -86,7 +85,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	protected void checkPermission(long stagingRequestId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 			stagingRequestId);

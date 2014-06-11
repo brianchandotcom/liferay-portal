@@ -15,7 +15,6 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -23,20 +22,18 @@ import com.liferay.portal.service.ServiceContext;
  */
 public class ServiceContextTestUtil {
 
-	public static ServiceContext getServiceContext()
-		throws PortalException, SystemException {
-
+	public static ServiceContext getServiceContext() throws PortalException {
 		return getServiceContext(TestPropsValues.getGroupId());
 	}
 
 	public static ServiceContext getServiceContext(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getServiceContext(groupId, TestPropsValues.getUserId());
 	}
 
 	public static ServiceContext getServiceContext(long groupId, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 

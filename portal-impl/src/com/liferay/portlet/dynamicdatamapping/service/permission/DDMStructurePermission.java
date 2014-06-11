@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -41,7 +40,7 @@ public class DDMStructurePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			String structureKey, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, groupId, classNameId, structureKey,
@@ -54,7 +53,7 @@ public class DDMStructurePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long structureId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, structureId, actionId)) {
 			throw new PrincipalException();
@@ -98,7 +97,7 @@ public class DDMStructurePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			String structureKey, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			groupId, classNameId, structureKey);
@@ -109,7 +108,7 @@ public class DDMStructurePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long structureId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return contains(permissionChecker, structureId, null, actionId);
 	}
@@ -117,7 +116,7 @@ public class DDMStructurePermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long structureId,
 			String portletId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			structureId);

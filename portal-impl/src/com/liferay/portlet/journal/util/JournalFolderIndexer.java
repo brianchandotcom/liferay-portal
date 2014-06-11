@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -189,9 +188,7 @@ public class JournalFolderIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexFolders(long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexFolders(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
 			JournalFolderLocalServiceUtil.getActionableDynamicQuery();
 

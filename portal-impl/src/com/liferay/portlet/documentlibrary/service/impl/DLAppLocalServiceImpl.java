@@ -117,7 +117,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file entry
 	 * @throws PortalException if the parent folder could not be found or if the
 	 *         file entry's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry addFileEntry(
@@ -125,7 +124,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, byte[] bytes,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File file = null;
 
@@ -178,7 +177,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file entry
 	 * @throws PortalException if the parent folder could not be found or if the
 	 *         file entry's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry addFileEntry(
@@ -186,7 +184,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return addFileEntry(
@@ -241,7 +239,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file entry
 	 * @throws PortalException if the parent folder could not be found or if the
 	 *         file entry's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry addFileEntry(
@@ -249,7 +246,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream is, long size,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (is == null) {
 			is = new UnsyncByteArrayInputStream(new byte[0]);
@@ -307,13 +304,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank addFileRank(
-			long repositoryId, long companyId, long userId, long fileEntryId,
-			ServiceContext serviceContext)
-		throws SystemException {
+		long repositoryId, long companyId, long userId, long fileEntryId,
+		ServiceContext serviceContext) {
 
 		return dlFileRankLocalService.addFileRank(
 			repositoryId, companyId, userId, fileEntryId, serviceContext);
@@ -333,13 +328,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file shortcut
 	 * @throws PortalException if the parent folder or file entry could not be
 	 *         found, or if the file shortcut's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut addFileShortcut(
 			long userId, long repositoryId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return dlFileShortcutLocalService.addFileShortcut(
 			userId, repositoryId, folderId, toFileEntryId, serviceContext);
@@ -360,13 +354,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the folder
 	 * @throws PortalException if the parent folder could not be found or if the
 	 *         new folder's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Folder addFolder(
 			long userId, long repositoryId, long parentFolderId, String name,
 			String description, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
@@ -384,21 +377,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  repositoryId the primary key of the data's repository
 	 * @throws PortalException if the repository could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAll(long repositoryId)
-		throws PortalException, SystemException {
-
+	public void deleteAll(long repositoryId) throws PortalException {
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		deleteRepository(localRepository);
 	}
 
 	@Override
-	public void deleteAllRepositories(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteAllRepositories(long groupId) throws PortalException {
 		List<LocalRepository> localRepositories =
 			repositoryLocalService.getGroupLocalRepositoryImpl(groupId);
 
@@ -412,12 +400,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  fileEntryId the primary key of the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFileEntry(long fileEntryId)
-		throws PortalException, SystemException {
-
+	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
@@ -433,11 +418,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * only supported by the Liferay repository.
 	 *
 	 * @param  fileEntryId the primary key of the file entry
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId)
-		throws SystemException {
+	public void deleteFileRanksByFileEntryId(long fileEntryId) {
 
 		dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
 	}
@@ -447,10 +430,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * supported by the Liferay repository.
 	 *
 	 * @param  userId the primary key of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFileRanksByUserId(long userId) throws SystemException {
+	public void deleteFileRanksByUserId(long userId) {
 		dlFileRankLocalService.deleteFileRanksByUserId(userId);
 	}
 
@@ -460,11 +442,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  dlFileShortcut the file shortcut
 	 * @throws PortalException if the file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteFileShortcut(DLFileShortcut dlFileShortcut)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		dlFileShortcutLocalService.deleteFileShortcut(dlFileShortcut);
 	}
@@ -475,12 +456,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  fileShortcutId the primary key of the file shortcut
 	 * @throws PortalException if the file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFileShortcut(long fileShortcutId)
-		throws PortalException, SystemException {
-
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
 		dlFileShortcutLocalService.deleteFileShortcut(fileShortcutId);
 	}
 
@@ -491,12 +469,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  toFileEntryId the primary key of the associated file entry
 	 * @throws PortalException if the file shortcut for the file entry could not
 	 *         be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFileShortcuts(long toFileEntryId)
-		throws PortalException, SystemException {
-
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
 		dlFileShortcutLocalService.deleteFileShortcuts(toFileEntryId);
 	}
 
@@ -505,12 +480,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  folderId the primary key of the folder
 	 * @throws PortalException if the folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public void deleteFolder(long folderId) throws PortalException {
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
 		List<FileEntry> fileEntries =
@@ -534,12 +506,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @return the file entry with the primary key
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public FileEntry getFileEntry(long fileEntryId)
-		throws PortalException, SystemException {
-
+	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
@@ -554,11 +523,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  title the file entry's title
 	 * @return the file entry with the title in the folder
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry getFileEntry(long groupId, long folderId, String title)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			LocalRepository localRepository = getLocalRepository(groupId);
@@ -580,11 +548,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the file entry's group
 	 * @return the file entry with the UUID and group
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			LocalRepository localRepository = getLocalRepository(groupId);
@@ -627,11 +594,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  repositoryId the primary key of the repository
 	 * @param  userId the primary key of the user
 	 * @return the file ranks from the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DLFileRank> getFileRanks(long repositoryId, long userId)
-		throws SystemException {
+	public List<DLFileRank> getFileRanks(long repositoryId, long userId) {
 
 		return dlFileRankLocalService.getFileRanks(repositoryId, userId);
 	}
@@ -643,11 +608,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileShortcutId the primary key of the file shortcut
 	 * @return the file shortcut with the primary key
 	 * @throws PortalException if the file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
 	}
@@ -658,11 +622,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileVersionId the primary key of the file version
 	 * @return the file version with the primary key
 	 * @throws PortalException if the file version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFileVersionLocalRepository(
 			fileVersionId);
@@ -676,12 +639,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  folderId the primary key of the folder
 	 * @return the folder with the primary key
 	 * @throws PortalException if the folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Folder getFolder(long folderId)
-		throws PortalException, SystemException {
-
+	public Folder getFolder(long folderId) throws PortalException {
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
 		return localRepository.getFolder(folderId);
@@ -695,11 +655,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  name the folder's name
 	 * @return the folder with the name in the parent folder
 	 * @throws PortalException if the folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Folder getFolder(long repositoryId, long parentFolderId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
@@ -714,12 +673,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the folder used for mounting third-party repositories
 	 * @throws PortalException if the repository or mount folder could not be
 	 *         found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Folder getMountFolder(long repositoryId)
-		throws PortalException, SystemException {
-
+	public Folder getMountFolder(long repositoryId) throws PortalException {
 		DLFolder dlFolder = dlFolderLocalService.getMountFolder(repositoryId);
 
 		return new LiferayFolder(dlFolder);
@@ -735,13 +691,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file entry
 	 * @throws PortalException if the file entry or the new folder could not be
 	 *         found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
 
@@ -779,7 +734,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public FileEntry moveFileEntryFromTrash(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
@@ -803,11 +758,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @return the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
@@ -821,7 +775,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SystemEventHierarchyEntryThreadLocal.push(Folder.class);
 
@@ -877,11 +831,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
@@ -899,12 +852,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the file entry type's group
 	 * @param  fileEntryTypeId the primary key of the file entry type
 	 * @throws PortalException if the user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void subscribeFileEntryType(
 			long userId, long groupId, long fileEntryTypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (fileEntryTypeId ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
@@ -924,11 +876,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the folder's group
 	 * @param  folderId the primary key of the folder
 	 * @throws PortalException if the user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void subscribeFolder(long userId, long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderId = groupId;
@@ -946,12 +897,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the file entry type's group
 	 * @param  fileEntryTypeId the primary key of the file entry type
 	 * @throws PortalException if the user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void unsubscribeFileEntryType(
 			long userId, long groupId, long fileEntryTypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (fileEntryTypeId ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
@@ -971,11 +921,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the folder's group
 	 * @param  folderId the primary key of the folder
 	 * @throws PortalException if the user or group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void unsubscribeFolder(long userId, long groupId, long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderId = groupId;
@@ -996,14 +945,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  assetTagNames the new asset tag names
 	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
 	 * @throws PortalException if the file entry or version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,
 			long[] assetLinkEntryIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntry.getFileEntryId());
@@ -1047,14 +995,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, byte[] bytes, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		File file = null;
 
@@ -1110,14 +1057,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntry(
@@ -1178,7 +1124,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if the file entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public FileEntry updateFileEntry(
@@ -1186,7 +1131,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(mimeType) ||
 			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
@@ -1252,13 +1197,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file rank's file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank updateFileRank(
-			long repositoryId, long companyId, long userId, long fileEntryId,
-			ServiceContext serviceContext)
-		throws SystemException {
+		long repositoryId, long companyId, long userId, long fileEntryId,
+		ServiceContext serviceContext) {
 
 		return dlFileRankLocalService.updateFileRank(
 			repositoryId, companyId, userId, fileEntryId, serviceContext);
@@ -1278,13 +1221,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file shortcut
 	 * @throws PortalException if the file shortcut, folder, or file entry could
 	 *         not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return dlFileShortcutLocalService.updateFileShortcut(
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
@@ -1298,12 +1240,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  oldToFileEntryId the primary key of the old file entry pointed to
 	 * @param  newToFileEntryId the primary key of the new file entry to point
 	 *         to
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void updateFileShortcuts(
-			long toRepositoryId, long oldToFileEntryId, long newToFileEntryId)
-		throws SystemException {
+		long toRepositoryId, long oldToFileEntryId, long newToFileEntryId) {
 
 		dlFileShortcutLocalService.updateFileShortcuts(
 			oldToFileEntryId, newToFileEntryId);
@@ -1331,13 +1271,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the folder
 	 * @throws PortalException if the current or new parent folder could not be
 	 *         found, or if the new parent folder's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Folder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
@@ -1355,7 +1294,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	protected FileEntry copyFileEntry(
 			long userId, LocalRepository toLocalRepository, FileEntry fileEntry,
 			long newFolderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<FileVersion> fileVersions = fileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
@@ -1404,7 +1343,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long oldFileEntryId, long newFileEntryId,
 			LocalRepository fromLocalRepository,
 			LocalRepository toLocalRepository)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			FileEntry fileEntry = fromLocalRepository.getFileEntry(
@@ -1427,7 +1366,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected void deleteRepository(LocalRepository localRepository)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryId = localRepository.getRepositoryId();
 
@@ -1437,7 +1376,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected LocalRepository getFileEntryLocalRepository(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
@@ -1455,7 +1394,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected LocalRepository getFileVersionLocalRepository(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
@@ -1473,7 +1412,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected LocalRepository getFolderLocalRepository(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
@@ -1492,7 +1431,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	protected LocalRepository getFolderLocalRepository(
 			long folderId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LocalRepository localRepository = null;
 
@@ -1507,7 +1446,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected LocalRepository getLocalRepository(long repositoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(repositoryId);
@@ -1527,7 +1466,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long userId, long fileEntryId, long newFolderId,
 			LocalRepository fromLocalRepository,
 			LocalRepository toLocalRepository, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry sourceFileEntry = fromLocalRepository.getFileEntry(
 			fileEntryId);
@@ -1548,7 +1487,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			LocalRepository sourceLocalRepository,
 			LocalRepository destinationLocalRepository,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Folder sourceFolder = sourceLocalRepository.getFolder(folderId);
 

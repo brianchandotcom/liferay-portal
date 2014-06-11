@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.service.base.UserIdMapperLocalServiceBaseImpl;
 
@@ -28,13 +27,13 @@ public class UserIdMapperLocalServiceImpl
 	extends UserIdMapperLocalServiceBaseImpl {
 
 	@Override
-	public void deleteUserIdMappers(long userId) throws SystemException {
+	public void deleteUserIdMappers(long userId) {
 		userIdMapperPersistence.removeByUserId(userId);
 	}
 
 	@Override
 	public UserIdMapper getUserIdMapper(long userId, String type)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userIdMapperPersistence.findByU_T(userId, type);
 	}
@@ -42,22 +41,20 @@ public class UserIdMapperLocalServiceImpl
 	@Override
 	public UserIdMapper getUserIdMapperByExternalUserId(
 			String type, String externalUserId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userIdMapperPersistence.findByT_E(type, externalUserId);
 	}
 
 	@Override
-	public List<UserIdMapper> getUserIdMappers(long userId)
-		throws SystemException {
+	public List<UserIdMapper> getUserIdMappers(long userId) {
 
 		return userIdMapperPersistence.findByUserId(userId);
 	}
 
 	@Override
 	public UserIdMapper updateUserIdMapper(
-			long userId, String type, String description, String externalUserId)
-		throws SystemException {
+		long userId, String type, String description, String externalUserId) {
 
 		UserIdMapper userIdMapper = userIdMapperPersistence.fetchByU_T(
 			userId, type);

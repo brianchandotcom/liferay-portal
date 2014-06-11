@@ -55,7 +55,7 @@ import java.util.Locale;
 public class DDMXMLImpl implements DDMXML {
 
 	@Override
-	public String formatXML(Document document) throws SystemException {
+	public String formatXML(Document document) {
 		try {
 			return document.formattedString(_XML_INDENT);
 		}
@@ -65,7 +65,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	@Override
-	public String formatXML(String xml) throws SystemException {
+	public String formatXML(String xml) {
 
 		// This is only supposed to format your xml, however, it will also
 		// unwantingly change &#169; and other characters like it into their
@@ -88,7 +88,7 @@ public class DDMXMLImpl implements DDMXML {
 
 	@Override
 	public Fields getFields(DDMStructure structure, String xml)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getFields(structure, null, xml, null);
 	}
@@ -97,7 +97,7 @@ public class DDMXMLImpl implements DDMXML {
 	public Fields getFields(
 			DDMStructure structure, XPath xPath, String xml,
 			List<String> fieldNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Document document = null;
 
@@ -174,8 +174,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	@Override
-	public String getXML(Document document, Fields fields)
-		throws SystemException {
+	public String getXML(Document document, Fields fields) {
 
 		Element rootElement = null;
 
@@ -211,7 +210,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	@Override
-	public String getXML(Fields fields) throws SystemException {
+	public String getXML(Fields fields) {
 		return getXML(null, fields);
 	}
 
@@ -221,9 +220,8 @@ public class DDMXMLImpl implements DDMXML {
 
 	@Override
 	public String updateXMLDefaultLocale(
-			String xml, Locale contentDefaultLocale,
-			Locale contentNewDefaultLocale)
-		throws SystemException {
+		String xml, Locale contentDefaultLocale,
+		Locale contentNewDefaultLocale) {
 
 		try {
 			if (LocaleUtil.equals(

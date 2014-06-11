@@ -35,8 +35,7 @@ import java.util.List;
  */
 public class FileEntryUtil {
 
-	public static FileEntry fetchByPrimaryKey(long fileEntryId)
-		throws SystemException {
+	public static FileEntry fetchByPrimaryKey(long fileEntryId) {
 
 		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByPrimaryKey(
 			fileEntryId);
@@ -49,8 +48,7 @@ public class FileEntryUtil {
 	}
 
 	public static FileEntry fetchByR_F_T(
-			long repositoryId, long folderId, String title)
-		throws SystemException {
+		long repositoryId, long folderId, String title) {
 
 		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByG_F_T(
 			repositoryId, folderId, title);
@@ -62,8 +60,7 @@ public class FileEntryUtil {
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
-	public static FileEntry fetchByUUID_R(String uuid, long repositoryId)
-		throws SystemException {
+	public static FileEntry fetchByUUID_R(String uuid, long repositoryId) {
 
 		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByUUID_G(
 			uuid, repositoryId);
@@ -79,8 +76,7 @@ public class FileEntryUtil {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	public static List<FileEntry> findByR_F(long repositoryId, long folderId)
-		throws SystemException {
+	public static List<FileEntry> findByR_F(long repositoryId, long folderId) {
 
 		List<DLFileEntry> dlFileEntries = DLFileEntryUtil.findByG_F(
 			repositoryId, folderId);
@@ -103,7 +99,7 @@ public class FileEntryUtil {
 	}
 
 	public static InputStream getContentStream(FileEntry fileEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryId = DLFolderConstants.getDataRepositoryId(
 			fileEntry.getRepositoryId(), fileEntry.getFolderId());

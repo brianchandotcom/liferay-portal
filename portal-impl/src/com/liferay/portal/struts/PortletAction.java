@@ -257,7 +257,7 @@ public class PortletAction extends Action {
 
 	protected PortletPreferences getStrictPortletSetup(
 			Layout layout, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(portletId)) {
 			return null;
@@ -276,7 +276,7 @@ public class PortletAction extends Action {
 
 	protected PortletPreferences getStrictPortletSetup(
 			PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String portletResource = ParamUtil.getString(
 			portletRequest, "portletResource");
@@ -315,8 +315,7 @@ public class PortletAction extends Action {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
-	protected boolean isDisplaySuccessMessage(PortletRequest portletRequest)
-		throws SystemException {
+	protected boolean isDisplaySuccessMessage(PortletRequest portletRequest) {
 
 		if (!SessionErrors.isEmpty(portletRequest)) {
 			return false;

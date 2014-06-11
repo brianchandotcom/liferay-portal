@@ -45,7 +45,7 @@ public class CyrusUserUtil {
 		getPersistence().remove(userId);
 	}
 
-	public static void update(CyrusUser user) throws SystemException {
+	public static void update(CyrusUser user) {
 		getPersistence().update(user);
 	}
 

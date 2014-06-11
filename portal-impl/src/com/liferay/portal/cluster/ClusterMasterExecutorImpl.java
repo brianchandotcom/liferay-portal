@@ -61,8 +61,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public <T> Future<T> executeOnMaster(MethodHandler methodHandler)
-		throws SystemException {
+	public <T> Future<T> executeOnMaster(MethodHandler methodHandler) {
 
 		if (!_enabled) {
 			if (_log.isWarnEnabled()) {

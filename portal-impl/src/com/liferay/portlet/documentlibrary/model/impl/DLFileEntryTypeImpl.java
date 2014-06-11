@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -39,7 +38,7 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	}
 
 	@Override
-	public List<DDMStructure> getDDMStructures() throws SystemException {
+	public List<DDMStructure> getDDMStructures() {
 		return DDMStructureLocalServiceUtil.getDLFileEntryTypeStructures(
 			getFileEntryTypeId());
 	}
@@ -61,7 +60,7 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	public String getUnambiguousName(
 			List<DLFileEntryType> dlFileEntryTypes, long groupId,
 			final Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (getGroupId() == groupId ) {
 			return getName(locale);

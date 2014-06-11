@@ -16,7 +16,6 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -60,7 +59,7 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 
 	protected String getLayoutURL(
 			long groupId, String portletId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long plid = serviceContext.getPlid();
 

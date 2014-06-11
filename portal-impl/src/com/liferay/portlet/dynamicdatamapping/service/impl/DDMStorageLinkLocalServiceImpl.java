@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStorageLinkLocalServiceBaseImpl;
@@ -31,9 +30,8 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public DDMStorageLink addStorageLink(
-			long classNameId, long classPK, long structureId,
-			ServiceContext serviceContext)
-		throws SystemException {
+		long classNameId, long classPK, long structureId,
+		ServiceContext serviceContext) {
 
 		long storageLinkId = counterLocalService.increment();
 
@@ -50,9 +48,7 @@ public class DDMStorageLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteClassStorageLink(long classPK)
-		throws PortalException, SystemException {
-
+	public void deleteClassStorageLink(long classPK) throws PortalException {
 		DDMStorageLink storageLink = ddmStorageLinkPersistence.findByClassPK(
 			classPK);
 
@@ -60,16 +56,13 @@ public class DDMStorageLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStorageLink(DDMStorageLink storageLink)
-		throws SystemException {
+	public void deleteStorageLink(DDMStorageLink storageLink) {
 
 		ddmStorageLinkPersistence.remove(storageLink);
 	}
 
 	@Override
-	public void deleteStorageLink(long storageLinkId)
-		throws PortalException, SystemException {
-
+	public void deleteStorageLink(long storageLinkId) throws PortalException {
 		DDMStorageLink storageLink = ddmStorageLinkPersistence.findByPrimaryKey(
 			storageLinkId);
 
@@ -77,8 +70,7 @@ public class DDMStorageLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStructureStorageLinks(long structureId)
-		throws SystemException {
+	public void deleteStructureStorageLinks(long structureId) {
 
 		List<DDMStorageLink> storageLinks =
 			ddmStorageLinkPersistence.findByStructureId(structureId);
@@ -90,28 +82,26 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public DDMStorageLink getClassStorageLink(long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddmStorageLinkPersistence.findByClassPK(classPK);
 	}
 
 	@Override
 	public DDMStorageLink getStorageLink(long storageLinkId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ddmStorageLinkPersistence.findByPrimaryKey(storageLinkId);
 	}
 
 	@Override
-	public List<DDMStorageLink> getStructureStorageLinks(long structureId)
-		throws SystemException {
+	public List<DDMStorageLink> getStructureStorageLinks(long structureId) {
 
 		return ddmStorageLinkPersistence.findByStructureId(structureId);
 	}
 
 	@Override
-	public int getStructureStorageLinksCount(long structureId)
-		throws SystemException {
+	public int getStructureStorageLinksCount(long structureId) {
 
 		return ddmStorageLinkPersistence.countByStructureId(structureId);
 	}
@@ -119,7 +109,7 @@ public class DDMStorageLinkLocalServiceImpl
 	@Override
 	public DDMStorageLink updateStorageLink(
 			long storageLinkId, long classNameId, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStorageLink storageLink = ddmStorageLinkPersistence.findByPrimaryKey(
 			storageLinkId);

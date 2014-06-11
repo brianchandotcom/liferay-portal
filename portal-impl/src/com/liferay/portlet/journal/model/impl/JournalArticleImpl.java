@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.model.impl;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -98,7 +97,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public String buildTreePath() throws PortalException, SystemException {
+	public String buildTreePath() throws PortalException {
 		JournalFolder folder = getFolder();
 
 		return folder.buildTreePath();
@@ -106,8 +105,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public long getArticleImageId(
-			String elInstanceId, String elName, String languageId)
-		throws SystemException {
+		String elInstanceId, String elName, String languageId) {
 
 		return JournalArticleImageLocalServiceUtil.getArticleImageId(
 			getGroupId(), getArticleId(), getVersion(), elInstanceId, elName,
@@ -131,17 +129,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public JournalArticleResource getArticleResource()
-		throws PortalException, SystemException {
-
+	public JournalArticleResource getArticleResource() throws PortalException {
 		return JournalArticleResourceLocalServiceUtil.getArticleResource(
 			getResourcePrimKey());
 	}
 
 	@Override
-	public String getArticleResourceUuid()
-		throws PortalException, SystemException {
-
+	public String getArticleResourceUuid() throws PortalException {
 		JournalArticleResource articleResource = getArticleResource();
 
 		return articleResource.getUuid();
@@ -181,9 +175,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public DDMStructure getDDMStructure()
-		throws PortalException, SystemException {
-
+	public DDMStructure getDDMStructure() throws PortalException {
 		return DDMStructureLocalServiceUtil.fetchStructure(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
@@ -191,9 +183,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public DDMTemplate getDDMTemplate()
-		throws PortalException, SystemException {
-
+	public DDMTemplate getDDMTemplate() throws PortalException {
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
 			PortalUtil.getSiteGroupId(getGroupId()),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
@@ -240,7 +230,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public JournalFolder getFolder() throws PortalException, SystemException {
+	public JournalFolder getFolder() throws PortalException {
 		if (getFolderId() <= 0) {
 			return new JournalFolderImpl();
 		}
@@ -249,7 +239,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public String getSmallImageType() throws PortalException, SystemException {
+	public String getSmallImageType() throws PortalException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
 				getSmallImageId());
@@ -288,7 +278,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public boolean hasApprovedVersion() throws SystemException {
+	public boolean hasApprovedVersion() {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				getGroupId(), getArticleId(),

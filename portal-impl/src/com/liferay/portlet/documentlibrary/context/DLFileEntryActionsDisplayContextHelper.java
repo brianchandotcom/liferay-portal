@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -55,9 +54,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 		return _fileVersion;
 	}
 
-	public boolean hasDeletePermission()
-		throws PortalException, SystemException {
-
+	public boolean hasDeletePermission() throws PortalException {
 		if (_hasDeletePermission == null) {
 			_hasDeletePermission = DLFileEntryPermission.contains(
 				_permissionChecker, _fileEntry, ActionKeys.DELETE);
@@ -74,9 +71,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 		return _hasLock;
 	}
 
-	public boolean hasOverrideCheckoutPermission()
-		throws PortalException, SystemException {
-
+	public boolean hasOverrideCheckoutPermission() throws PortalException {
 		if (_hasOverrideCheckoutPermission == null) {
 			_hasOverrideCheckoutPermission = DLFileEntryPermission.contains(
 				_permissionChecker, _fileEntry, ActionKeys.OVERRIDE_CHECKOUT);
@@ -85,9 +80,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 		return _hasOverrideCheckoutPermission;
 	}
 
-	public boolean hasPermissionsPermission()
-		throws PortalException, SystemException {
-
+	public boolean hasPermissionsPermission() throws PortalException {
 		if (_hasPermissionsPermission == null) {
 			_hasPermissionsPermission = DLFileEntryPermission.contains(
 				_permissionChecker, _fileEntry, ActionKeys.PERMISSIONS);
@@ -96,9 +89,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 		return _hasPermissionsPermission;
 	}
 
-	public boolean hasUpdatePermission()
-		throws PortalException, SystemException {
-
+	public boolean hasUpdatePermission() throws PortalException {
 		if (_hasUpdatePermission == null) {
 			_hasUpdatePermission = DLFileEntryPermission.contains(
 				_permissionChecker, _fileEntry, ActionKeys.UPDATE);
@@ -107,7 +98,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 		return _hasUpdatePermission;
 	}
 
-	public boolean hasViewPermission() throws PortalException, SystemException {
+	public boolean hasViewPermission() throws PortalException {
 		if (_hasViewPermission == null) {
 			_hasViewPermission = DLFileEntryPermission.contains(
 				_permissionChecker, _fileEntry, ActionKeys.VIEW);

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -39,7 +38,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 	public Website addWebsite(
 			String className, long classPK, String url, int typeId,
 			boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -52,7 +51,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 	public Website addWebsite(
 			String className, long classPK, String url, int typeId,
 			boolean primary, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
@@ -63,9 +62,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteWebsite(long websiteId)
-		throws PortalException, SystemException {
-
+	public void deleteWebsite(long websiteId) throws PortalException {
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
 
 		CommonPermissionUtil.check(
@@ -76,9 +73,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 	}
 
 	@Override
-	public Website getWebsite(long websiteId)
-		throws PortalException, SystemException {
-
+	public Website getWebsite(long websiteId) throws PortalException {
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
 
 		CommonPermissionUtil.check(
@@ -90,7 +85,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
 	@Override
 	public List<Website> getWebsites(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
@@ -104,7 +99,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 	@Override
 	public Website updateWebsite(
 			long websiteId, String url, int typeId, boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
 

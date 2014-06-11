@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
@@ -33,8 +32,7 @@ public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 	}
 
 	@Override
-	public List<SCFrameworkVersion> getFrameworkVersions()
-		throws SystemException {
+	public List<SCFrameworkVersion> getFrameworkVersions() {
 
 		return SCFrameworkVersionLocalServiceUtil.
 			getProductVersionFrameworkVersions(getProductVersionId());

@@ -32,9 +32,7 @@ import java.io.InputStream;
 public class DLHook extends BaseHook {
 
 	@Override
-	public void deleteImage(Image image)
-		throws PortalException, SystemException {
-
+	public void deleteImage(Image image) throws PortalException {
 		String fileName = getFileName(image.getImageId(), image.getType());
 
 		try {
@@ -46,9 +44,7 @@ public class DLHook extends BaseHook {
 	}
 
 	@Override
-	public byte[] getImageAsBytes(Image image)
-		throws PortalException, SystemException {
-
+	public byte[] getImageAsBytes(Image image) throws PortalException {
 		String fileName = getFileName(image.getImageId(), image.getType());
 
 		InputStream is = DLStoreUtil.getFileAsStream(
@@ -67,9 +63,7 @@ public class DLHook extends BaseHook {
 	}
 
 	@Override
-	public InputStream getImageAsStream(Image image)
-		throws PortalException, SystemException {
-
+	public InputStream getImageAsStream(Image image) throws PortalException {
 		String fileName = getFileName(image.getImageId(), image.getType());
 
 		return DLStoreUtil.getFileAsStream(
@@ -78,7 +72,7 @@ public class DLHook extends BaseHook {
 
 	@Override
 	public void updateImage(Image image, String type, byte[] bytes)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String fileName = getFileName(image.getImageId(), image.getType());
 

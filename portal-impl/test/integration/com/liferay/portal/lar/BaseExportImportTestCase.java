@@ -15,7 +15,6 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -148,14 +147,14 @@ public class BaseExportImportTestCase {
 
 	@SuppressWarnings("unused")
 	protected StagedModel getStagedModel(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return null;
 	}
 
 	@SuppressWarnings("unused")
 	protected String getStagedModelUuid(StagedModel stagedModel)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return stagedModel.getUuid();
 	}

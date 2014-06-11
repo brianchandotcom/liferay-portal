@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -89,7 +88,7 @@ public class ShoppingSettings {
 	};
 
 	public static ShoppingSettings getInstance(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, ShoppingConstants.SERVICE_NAME);
@@ -99,7 +98,7 @@ public class ShoppingSettings {
 
 	public static ShoppingSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, ShoppingConstants.SERVICE_NAME);

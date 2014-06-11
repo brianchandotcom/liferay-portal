@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -27,14 +26,14 @@ public class GroupPermissionUtil {
 
 	public static void check(
 			PermissionChecker permissionChecker, Group group, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getGroupPermission().check(permissionChecker, group, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		getGroupPermission().check(permissionChecker, groupId, actionId);
 	}
@@ -48,7 +47,7 @@ public class GroupPermissionUtil {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Group group, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getGroupPermission().contains(
 			permissionChecker, group, actionId);
@@ -56,7 +55,7 @@ public class GroupPermissionUtil {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getGroupPermission().contains(
 			permissionChecker, groupId, actionId);

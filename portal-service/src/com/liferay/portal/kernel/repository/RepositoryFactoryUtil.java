@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
@@ -23,15 +22,13 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class RepositoryFactoryUtil {
 
-	public static Repository create(long repositoryId)
-		throws PortalException, SystemException {
-
+	public static Repository create(long repositoryId) throws PortalException {
 		return getRepositoryFactory().create(repositoryId);
 	}
 
 	public static Repository create(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getRepositoryFactory().create(
 			folderId, fileEntryId, fileVersionId);

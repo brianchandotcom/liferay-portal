@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -63,7 +62,7 @@ public class MBMessageStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBMessage message =
 			MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
@@ -88,7 +87,7 @@ public class MBMessageStagedModelDataHandler
 			PortletDataContext portletDataContext, long userId, long threadId,
 			long parentMessageId, MBMessage message,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBDiscussion discussion =
 			MBDiscussionLocalServiceUtil.getThreadDiscussion(threadId);

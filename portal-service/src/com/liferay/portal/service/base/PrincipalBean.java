@@ -15,7 +15,6 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,7 +47,7 @@ public class PrincipalBean {
 
 	public static final String WEBLOGIC_ANONYMOUS = "<anonymous>";
 
-	public User getGuestOrUser() throws PortalException, SystemException {
+	public User getGuestOrUser() throws PortalException {
 		try {
 			return getUser();
 		}
@@ -89,7 +88,7 @@ public class PrincipalBean {
 		return permissionChecker;
 	}
 
-	public User getUser() throws PortalException, SystemException {
+	public User getUser() throws PortalException {
 		return UserLocalServiceUtil.getUserById(getUserId());
 	}
 

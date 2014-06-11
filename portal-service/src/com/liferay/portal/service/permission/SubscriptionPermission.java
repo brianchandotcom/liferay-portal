@@ -15,7 +15,6 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
@@ -33,7 +32,7 @@ public interface SubscriptionPermission {
 	@Deprecated
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Checks if the user has permission to subscribe to the subscription entity
@@ -49,14 +48,13 @@ public interface SubscriptionPermission {
 	 * @throws PortalException if the user did not have permission to view the
 	 *         inferred entity or receive notifications about the subscribed
 	 *         entity, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 * @see    #contains(PermissionChecker, String, long, String, long)
 	 */
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
@@ -65,7 +63,7 @@ public interface SubscriptionPermission {
 	@Deprecated
 	public boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the user has permission to subscribe to the
@@ -102,12 +100,11 @@ public interface SubscriptionPermission {
 	 * @throws PortalException if the user did not have permission to view the
 	 *         inferred entity or receive notifications about it via the
 	 *         subscribed entity, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

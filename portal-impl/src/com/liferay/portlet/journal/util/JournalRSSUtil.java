@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,8 +54,7 @@ import java.util.Set;
  */
 public class JournalRSSUtil {
 
-	public static List<JournalArticle> getArticles(JournalFeed feed)
-		throws SystemException {
+	public static List<JournalArticle> getArticles(JournalFeed feed) {
 
 		long companyId = feed.getCompanyId();
 		long groupId = feed.getGroupId();

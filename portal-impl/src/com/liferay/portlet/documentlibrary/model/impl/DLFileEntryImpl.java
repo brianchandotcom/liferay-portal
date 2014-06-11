@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,23 +64,19 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public String buildTreePath() throws PortalException, SystemException {
+	public String buildTreePath() throws PortalException {
 		DLFolder dlFolder = getFolder();
 
 		return dlFolder.buildTreePath();
 	}
 
 	@Override
-	public InputStream getContentStream()
-		throws PortalException, SystemException {
-
+	public InputStream getContentStream() throws PortalException {
 		return getContentStream(getVersion());
 	}
 
 	@Override
-	public InputStream getContentStream(String version)
-		throws PortalException, SystemException {
-
+	public InputStream getContentStream(String version) throws PortalException {
 		return DLFileEntryServiceUtil.getFileAsStream(
 			getFileEntryId(), version);
 	}
@@ -134,7 +129,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public Map<String, Fields> getFieldsMap(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
 
@@ -167,36 +162,31 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public DLFileVersion getFileVersion()
-		throws PortalException, SystemException {
-
+	public DLFileVersion getFileVersion() throws PortalException {
 		return getFileVersion(getVersion());
 	}
 
 	@Override
-	public DLFileVersion getFileVersion(String version)
-		throws PortalException, SystemException {
-
+	public DLFileVersion getFileVersion(String version) throws PortalException {
 		return DLFileVersionLocalServiceUtil.getFileVersion(
 			getFileEntryId(), version);
 	}
 
 	@Override
-	public List<DLFileVersion> getFileVersions(int status)
-		throws SystemException {
+	public List<DLFileVersion> getFileVersions(int status) {
 
 		return DLFileVersionLocalServiceUtil.getFileVersions(
 			getFileEntryId(), status);
 	}
 
 	@Override
-	public int getFileVersionsCount(int status) throws SystemException {
+	public int getFileVersionsCount(int status) {
 		return DLFileVersionLocalServiceUtil.getFileVersionsCount(
 			getFileEntryId(), status);
 	}
 
 	@Override
-	public DLFolder getFolder() throws PortalException, SystemException {
+	public DLFolder getFolder() throws PortalException {
 		if (getFolderId() <= 0) {
 			return new DLFolderImpl();
 		}
@@ -216,7 +206,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public DLFileVersion getLatestFileVersion(boolean trusted)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (trusted) {
 			return DLFileVersionLocalServiceUtil.getLatestFileVersion(

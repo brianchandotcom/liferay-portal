@@ -16,7 +16,6 @@ package com.liferay.portlet.asset.model.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -42,7 +41,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public List<AssetCategory> getCategories() throws SystemException {
+	public List<AssetCategory> getCategories() {
 		return AssetCategoryLocalServiceUtil.getVocabularyCategories(
 			getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -115,7 +114,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	public String getUnambiguousTitle(
 			List<AssetVocabulary> vocabularies, long groupId,
 			final Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (getGroupId() == groupId ) {
 			return getTitle(locale);
@@ -150,8 +149,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds)
-		throws SystemException {
+	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds) {
 
 		PredicateFilter<AssetCategory> predicateFilter =
 			new PredicateFilter<AssetCategory>() {
@@ -181,8 +179,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMissingRequiredCategory(
-			long classNameId, final long[] categoryIds)
-		throws SystemException {
+		long classNameId, final long[] categoryIds) {
 
 		if (!isRequired(classNameId)) {
 			return false;

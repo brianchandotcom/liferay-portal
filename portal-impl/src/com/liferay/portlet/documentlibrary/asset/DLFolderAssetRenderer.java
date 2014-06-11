@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -80,7 +79,7 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
-	public String getIconCssClass() throws PortalException, SystemException {
+	public String getIconCssClass() throws PortalException {
 		try {
 			if (_folder.isMountPoint()) {
 				return "icon-drive";
@@ -242,7 +241,7 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.UPDATE);
@@ -250,7 +249,7 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return DLFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);

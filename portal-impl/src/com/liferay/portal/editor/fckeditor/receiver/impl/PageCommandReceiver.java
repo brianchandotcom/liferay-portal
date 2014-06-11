@@ -18,7 +18,6 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -265,7 +264,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 	}
 
 	private String _getRelativeURL(Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay, false);

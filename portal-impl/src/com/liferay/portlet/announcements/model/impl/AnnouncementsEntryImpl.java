@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -31,7 +30,7 @@ public class AnnouncementsEntryImpl extends AnnouncementsEntryBaseImpl {
 	}
 
 	@Override
-	public long getGroupId() throws PortalException, SystemException {
+	public long getGroupId() throws PortalException {
 		long groupId = 0;
 
 		long classPK = getClassPK();

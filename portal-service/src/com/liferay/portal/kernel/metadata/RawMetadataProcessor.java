@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.metadata;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.xml.Element;
@@ -47,11 +46,11 @@ public interface RawMetadataProcessor {
 
 	public Map<String, Fields> getRawMetadataMap(
 			String extension, String mimeType, File file)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public Map<String, Fields> getRawMetadataMap(
 			String extension, String mimeType, InputStream inputStream)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,

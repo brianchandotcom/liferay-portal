@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -76,8 +75,7 @@ public class ServiceContextUtil {
 	}
 
 	public static PortletPreferences getPortletPreferences(
-			ServiceContext serviceContext)
-		throws SystemException {
+		ServiceContext serviceContext) {
 
 		if (serviceContext == null) {
 			return null;

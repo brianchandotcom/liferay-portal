@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Tuple;
@@ -42,19 +41,19 @@ public interface AssetRendererFactory {
 	public static final int TYPE_LATEST_APPROVED = 1;
 
 	public AssetEntry getAssetEntry(long assetEntryId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AssetEntry getAssetEntry(String classNameId, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AssetRenderer getAssetRenderer(long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public String getClassName();
 
@@ -113,12 +112,12 @@ public interface AssetRendererFactory {
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public PortletURL getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasAddPermission(
 			PermissionChecker permissionChecker, long groupId, long classTypeId)

@@ -59,9 +59,8 @@ public class CalEventFinderImpl
 
 	@Override
 	public int countByG_SD_T(
-			long groupId, Date startDateGT, Date startDateLT,
-			boolean timeZoneSensitive, String[] types)
-		throws SystemException {
+		long groupId, Date startDateGT, Date startDateLT,
+		boolean timeZoneSensitive, String[] types) {
 
 		Timestamp startDateGT_TS = CalendarUtil.getTimestamp(startDateGT);
 		Timestamp startDateLT_TS = CalendarUtil.getTimestamp(startDateLT);
@@ -116,7 +115,7 @@ public class CalEventFinderImpl
 	}
 
 	@Override
-	public List<CalEvent> findByFutureReminders() throws SystemException {
+	public List<CalEvent> findByFutureReminders() {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.add(Calendar.HOUR, -24);
@@ -151,7 +150,7 @@ public class CalEventFinderImpl
 	}
 
 	@Override
-	public List<CalEvent> findByNoAssets() throws SystemException {
+	public List<CalEvent> findByNoAssets() {
 		Session session = null;
 
 		try {
@@ -175,9 +174,8 @@ public class CalEventFinderImpl
 
 	@Override
 	public List<CalEvent> findByG_SD_T(
-			long groupId, Date startDateGT, Date startDateLT,
-			boolean timeZoneSensitive, String[] types)
-		throws SystemException {
+		long groupId, Date startDateGT, Date startDateLT,
+		boolean timeZoneSensitive, String[] types) {
 
 		return findByG_SD_T(
 			groupId, startDateGT, startDateLT, timeZoneSensitive, types,
@@ -186,9 +184,8 @@ public class CalEventFinderImpl
 
 	@Override
 	public List<CalEvent> findByG_SD_T(
-			long groupId, Date startDateGT, Date startDateLT,
-			boolean timeZoneSensitive, String[] types, int start, int end)
-		throws SystemException {
+		long groupId, Date startDateGT, Date startDateLT,
+		boolean timeZoneSensitive, String[] types, int start, int end) {
 
 		Timestamp startDateGT_TS = CalendarUtil.getTimestamp(startDateGT);
 		Timestamp startDateLT_TS = CalendarUtil.getTimestamp(startDateLT);

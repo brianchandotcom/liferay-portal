@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,10 +25,9 @@ import java.util.Locale;
 public interface ClassTypeReader {
 
 	public List<ClassType> getAvailableClassTypes(
-			long[] groupIds, Locale locale)
-		throws SystemException;
+		long[] groupIds, Locale locale);
 
 	public ClassType getClassType(long classTypeId, Locale locale)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,7 +75,7 @@ public class ShoppingOrderLocalServiceImpl
 
 	@Override
 	public ShoppingOrder addLatestOrder(long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Order
 
@@ -155,7 +154,7 @@ public class ShoppingOrderLocalServiceImpl
 			String number, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
 			boolean updateInventory, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Order
 
@@ -227,9 +226,7 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	@Override
-	public void deleteOrder(long orderId)
-		throws PortalException, SystemException {
-
+	public void deleteOrder(long orderId) throws PortalException {
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
 
@@ -237,8 +234,7 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	@Override
-	public void deleteOrder(ShoppingOrder order)
-		throws PortalException, SystemException {
+	public void deleteOrder(ShoppingOrder order) throws PortalException {
 
 		// Order
 
@@ -261,9 +257,7 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	@Override
-	public void deleteOrders(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteOrders(long groupId) throws PortalException {
 		List<ShoppingOrder> orders = shoppingOrderPersistence.findByGroupId(
 			groupId);
 
@@ -274,7 +268,7 @@ public class ShoppingOrderLocalServiceImpl
 
 	@Override
 	public ShoppingOrder getLatestOrder(long userId, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<ShoppingOrder> orders = shoppingOrderPersistence.findByG_U_PPPS(
 			groupId, userId, ShoppingOrderConstants.STATUS_LATEST, 0, 1);
@@ -292,29 +286,25 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	@Override
-	public ShoppingOrder getOrder(long orderId)
-		throws PortalException, SystemException {
-
+	public ShoppingOrder getOrder(long orderId) throws PortalException {
 		return shoppingOrderPersistence.findByPrimaryKey(orderId);
 	}
 
 	@Override
-	public ShoppingOrder getOrder(String number)
-		throws PortalException, SystemException {
-
+	public ShoppingOrder getOrder(String number) throws PortalException {
 		return shoppingOrderPersistence.findByNumber(number);
 	}
 
 	@Override
 	public ShoppingOrder getPayPalTxnIdOrder(String ppTxnId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return shoppingOrderPersistence.findByPPTxnId(ppTxnId);
 	}
 
 	@Override
 	public ShoppingOrder saveLatestOrder(ShoppingCart cart)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 		Date now = new Date();
@@ -390,12 +380,11 @@ public class ShoppingOrderLocalServiceImpl
 
 	@Override
 	public List<ShoppingOrder> search(
-			long groupId, long companyId, long userId, String number,
-			String billingFirstName, String billingLastName,
-			String billingEmailAddress, String shippingFirstName,
-			String shippingLastName, String shippingEmailAddress,
-			String ppPaymentStatus, boolean andOperator, int start, int end)
-		throws SystemException {
+		long groupId, long companyId, long userId, String number,
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator, int start, int end) {
 
 		OrderDateComparator obc = new OrderDateComparator(false);
 
@@ -408,12 +397,11 @@ public class ShoppingOrderLocalServiceImpl
 
 	@Override
 	public int searchCount(
-			long groupId, long companyId, long userId, String number,
-			String billingFirstName, String billingLastName,
-			String billingEmailAddress, String shippingFirstName,
-			String shippingLastName, String shippingEmailAddress,
-			String ppPaymentStatus, boolean andOperator)
-		throws SystemException {
+		long groupId, long companyId, long userId, String number,
+		String billingFirstName, String billingLastName,
+		String billingEmailAddress, String shippingFirstName,
+		String shippingLastName, String shippingEmailAddress,
+		String ppPaymentStatus, boolean andOperator) {
 
 		return shoppingOrderFinder.countByG_C_U_N_PPPS(
 			groupId, companyId, userId, number, billingFirstName,
@@ -425,7 +413,7 @@ public class ShoppingOrderLocalServiceImpl
 	@Override
 	public void sendEmail(
 			long orderId, String emailType, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
@@ -437,7 +425,7 @@ public class ShoppingOrderLocalServiceImpl
 	public void sendEmail(
 			ShoppingOrder order, String emailType,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingSettings shoppingSettings = ShoppingSettings.getInstance(
 			order.getGroupId());
@@ -479,7 +467,7 @@ public class ShoppingOrderLocalServiceImpl
 			String shippingZip, String shippingCountry, String shippingPhone,
 			String ccName, String ccType, String ccNumber, int ccExpMonth,
 			int ccExpYear, String ccVerNumber, String comments)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingOrder order = getLatestOrder(userId, groupId);
 
@@ -497,7 +485,7 @@ public class ShoppingOrderLocalServiceImpl
 	public ShoppingOrder updateOrder(
 			long orderId, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
@@ -526,7 +514,7 @@ public class ShoppingOrderLocalServiceImpl
 			String shippingState, String shippingZip, String shippingCountry,
 			String shippingPhone, String ccName, String ccType, String ccNumber,
 			int ccExpMonth, int ccExpYear, String ccVerNumber, String comments)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
@@ -594,7 +582,7 @@ public class ShoppingOrderLocalServiceImpl
 		return order;
 	}
 
-	protected String getNumber() throws SystemException {
+	protected String getNumber() {
 		String number = PwdGenerator.getPassword(
 			12, PwdGenerator.KEY1, PwdGenerator.KEY2);
 
@@ -610,7 +598,7 @@ public class ShoppingOrderLocalServiceImpl
 	protected void notifyUser(
 			ShoppingOrder order, String emailType,
 			ShoppingSettings shoppingSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(order.getUserId());
 

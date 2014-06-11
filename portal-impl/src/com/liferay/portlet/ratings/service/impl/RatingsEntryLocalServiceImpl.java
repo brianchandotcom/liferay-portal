@@ -16,7 +16,6 @@ package com.liferay.portlet.ratings.service.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,7 +45,7 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public void deleteEntry(long userId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Entry
 
@@ -84,8 +83,8 @@ public class RatingsEntryLocalServiceImpl
 	}
 
 	@Override
-	public RatingsEntry fetchEntry(long userId, String className, long classPK)
-		throws SystemException {
+	public RatingsEntry fetchEntry(
+		long userId, String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -95,8 +94,7 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public List<RatingsEntry> getEntries(
-			long userId, String className, List<Long> classPKs)
-		throws SystemException {
+		long userId, String className, List<Long> classPKs) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -104,8 +102,7 @@ public class RatingsEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<RatingsEntry> getEntries(String className, long classPK)
-		throws SystemException {
+	public List<RatingsEntry> getEntries(String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -114,8 +111,7 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public List<RatingsEntry> getEntries(
-			String className, long classPK, double score)
-		throws SystemException {
+		String className, long classPK, double score) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -123,8 +119,7 @@ public class RatingsEntryLocalServiceImpl
 	}
 
 	@Override
-	public int getEntriesCount(String className, long classPK, double score)
-		throws SystemException {
+	public int getEntriesCount(String className, long classPK, double score) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -134,7 +129,7 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public RatingsEntry getEntry(long userId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -146,7 +141,7 @@ public class RatingsEntryLocalServiceImpl
 	public RatingsEntry updateEntry(
 			long userId, String className, long classPK, double score,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Entry
 

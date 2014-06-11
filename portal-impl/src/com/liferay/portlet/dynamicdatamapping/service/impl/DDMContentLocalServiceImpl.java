@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -41,7 +40,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	public DDMContent addContent(
 			long userId, long groupId, String name, String description,
 			String xml, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -77,12 +76,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteContent(DDMContent content) throws SystemException {
+	public void deleteContent(DDMContent content) {
 		ddmContentPersistence.remove(content);
 	}
 
 	@Override
-	public void deleteContents(long groupId) throws SystemException {
+	public void deleteContents(long groupId) {
 		List<DDMContent> contents = ddmContentPersistence.findByGroupId(
 			groupId);
 
@@ -92,31 +91,28 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public DDMContent getContent(long contentId)
-		throws PortalException, SystemException {
-
+	public DDMContent getContent(long contentId) throws PortalException {
 		return ddmContentPersistence.findByPrimaryKey(contentId);
 	}
 
 	@Override
-	public List<DDMContent> getContents() throws SystemException {
+	public List<DDMContent> getContents() {
 		return ddmContentPersistence.findAll();
 	}
 
 	@Override
-	public List<DDMContent> getContents(long groupId) throws SystemException {
+	public List<DDMContent> getContents(long groupId) {
 		return ddmContentPersistence.findByGroupId(groupId);
 	}
 
 	@Override
-	public List<DDMContent> getContents(long groupId, int start, int end)
-		throws SystemException {
+	public List<DDMContent> getContents(long groupId, int start, int end) {
 
 		return ddmContentPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override
-	public int getContentsCount(long groupId) throws SystemException {
+	public int getContentsCount(long groupId) {
 		return ddmContentPersistence.countByGroupId(groupId);
 	}
 
@@ -124,7 +120,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	public DDMContent updateContent(
 			long contentId, String name, String description, String xml,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			xml = DDMXMLUtil.formatXML(xml);

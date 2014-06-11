@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -33,9 +32,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 	}
 
 	@Override
-	public List<Long> getAncestorFolderIds()
-		throws PortalException, SystemException {
-
+	public List<Long> getAncestorFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<Long>();
 
 		JournalFolder folder = this;
@@ -59,9 +56,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 	}
 
 	@Override
-	public List<JournalFolder> getAncestors()
-		throws PortalException, SystemException {
-
+	public List<JournalFolder> getAncestors() throws PortalException {
 		List<JournalFolder> ancestors = new ArrayList<JournalFolder>();
 
 		JournalFolder folder = this;
@@ -76,9 +71,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 	}
 
 	@Override
-	public JournalFolder getParentFolder()
-		throws PortalException, SystemException {
-
+	public JournalFolder getParentFolder() throws PortalException {
 		if (getParentFolderId() ==
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 

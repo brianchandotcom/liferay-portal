@@ -15,7 +15,6 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -678,7 +677,7 @@ public class AssetPublisherDisplayContext {
 		return _mergeURLTags;
 	}
 
-	public boolean isOpenOfficeServerEnabled() throws SystemException {
+	public boolean isOpenOfficeServerEnabled() {
 		if (_openOfficeServerEnabled == null) {
 			_openOfficeServerEnabled = PrefsPropsUtil.getBoolean(
 				PropsKeys.OPENOFFICE_SERVER_ENABLED,

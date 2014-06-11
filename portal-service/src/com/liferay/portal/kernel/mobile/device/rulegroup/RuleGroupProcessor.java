@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.mobile.device.rulegroup;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
@@ -26,8 +25,7 @@ import java.util.Collection;
  */
 public interface RuleGroupProcessor {
 
-	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay)
-		throws SystemException;
+	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay);
 
 	public RuleHandler getRuleHandler(String ruleType);
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -37,7 +36,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	@Override
 	protected BaseRepository createExternalRepository(
 			long repositoryId, long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return createExternalRepositoryImpl(repositoryId, classNameId);
 	}
@@ -45,7 +44,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	@Override
 	protected Repository createExternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
@@ -68,7 +67,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 	@Override
 	protected long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileEntryLocalService dlFileEntryLocalService =
 			getDlFileEntryLocalService();
@@ -81,7 +80,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 	@Override
 	protected long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DLFileVersionLocalService dlFileVersionLocalService =
 			getDlFileVersionLocalService();
@@ -93,9 +92,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	}
 
 	@Override
-	protected long getFolderRepositoryId(long folderId)
-		throws PortalException, SystemException {
-
+	protected long getFolderRepositoryId(long folderId) throws PortalException {
 		DLFolderLocalService dlFolderLocalService = getDlFolderLocalService();
 
 		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
@@ -105,8 +102,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 	@Override
 	protected com.liferay.portal.model.Repository getRepository(
-			long repositoryId)
-		throws SystemException {
+			long repositoryId) {
 
 		RepositoryLocalService repositoryLocalService =
 			getRepositoryLocalService();

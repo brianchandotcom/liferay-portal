@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -370,7 +369,7 @@ public class AssetEntryQueryTest {
 	protected AssetEntryQuery buildAssetEntryQuery(
 			long groupId, long[] assetCategoryIds, String[] assetTagNames,
 			boolean any, boolean not)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -415,7 +414,7 @@ public class AssetEntryQueryTest {
 	}
 
 	protected AssetEntryQuery buildAssetEntryQueryWithAssetTagIds(
-			AssetEntryQuery assetEntryQuery, long[] assetTagIds, boolean any,
+		AssetEntryQuery assetEntryQuery, long[] assetTagIds, boolean any,
 		boolean not) {
 
 		if (any && not) {

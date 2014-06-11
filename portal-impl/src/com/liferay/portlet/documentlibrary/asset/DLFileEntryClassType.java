@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.asset.model.ClassTypeField;
 import com.liferay.portlet.asset.model.DDMStructureClassType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -37,9 +36,7 @@ public class DLFileEntryClassType extends DDMStructureClassType {
 	}
 
 	@Override
-	public List<ClassTypeField> getClassTypeFields()
-		throws PortalException, SystemException {
-
+	public List<ClassTypeField> getClassTypeFields() throws PortalException {
 		List<ClassTypeField> classTypeFields = new ArrayList<ClassTypeField>();
 
 		DLFileEntryType dlFileEntryType =

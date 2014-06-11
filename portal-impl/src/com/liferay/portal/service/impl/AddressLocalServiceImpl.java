@@ -18,7 +18,6 @@ import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
@@ -53,7 +52,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, int typeId, boolean mailing,
 			boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addAddress(
 			userId, className, classPK, street1, street2, street3, city, zip,
@@ -67,7 +66,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, int typeId, boolean mailing,
 			boolean primary, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -109,24 +108,22 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public Address deleteAddress(Address address) throws SystemException {
+	public Address deleteAddress(Address address) {
 		addressPersistence.remove(address);
 
 		return address;
 	}
 
 	@Override
-	public Address deleteAddress(long addressId)
-		throws PortalException, SystemException {
-
+	public Address deleteAddress(long addressId) throws PortalException {
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
 		return addressLocalService.deleteAddress(address);
 	}
 
 	@Override
-	public void deleteAddresses(long companyId, String className, long classPK)
-		throws SystemException {
+	public void deleteAddresses(
+		long companyId, String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -139,14 +136,13 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Address> getAddresses() throws SystemException {
+	public List<Address> getAddresses() {
 		return addressPersistence.findAll();
 	}
 
 	@Override
 	public List<Address> getAddresses(
-			long companyId, String className, long classPK)
-		throws SystemException {
+		long companyId, String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -158,7 +154,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, int typeId,
 			boolean mailing, boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(
 			addressId, 0, 0, 0, street1, city, zip, regionId, countryId, typeId,
@@ -184,9 +180,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			long addressId, long companyId, long classNameId, long classPK,
-			boolean mailing, boolean primary)
-		throws SystemException {
+		long addressId, long companyId, long classNameId, long classPK,
+		boolean mailing, boolean primary) {
 
 		// Check to make sure there isn't another address with the same company
 		// id, class name, and class pk that also has mailing set to true
@@ -225,7 +220,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			long addressId, long companyId, long classNameId, long classPK,
 			String street1, String city, String zip, long regionId,
 			long countryId, int typeId, boolean mailing, boolean primary)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(street1)) {
 			throw new AddressStreetException();

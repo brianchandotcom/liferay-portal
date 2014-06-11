@@ -25,7 +25,6 @@ import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -910,9 +909,8 @@ public class LayoutImporter {
 	}
 
 	protected void updateLayoutPriorities(
-			PortletDataContext portletDataContext, List<Element> layoutElements,
-			boolean privateLayout)
-		throws SystemException {
+		PortletDataContext portletDataContext, List<Element> layoutElements,
+		boolean privateLayout) {
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(

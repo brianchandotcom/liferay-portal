@@ -15,7 +15,6 @@
 package com.liferay.portlet.iframe.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,7 +38,7 @@ public class IFrameUtil {
 
 	public static String getPassword(
 			PortletRequest portletRequest, String password)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!isPasswordTokenEnabled(portletRequest)) {
 			return StringPool.BLANK;
@@ -58,7 +57,7 @@ public class IFrameUtil {
 
 	public static String getUserName(
 			PortletRequest portletRequest, String userName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = PortalUtil.getUser(portletRequest);
 
@@ -80,7 +79,7 @@ public class IFrameUtil {
 	}
 
 	public static boolean isPasswordTokenEnabled(PortletRequest portletRequest)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

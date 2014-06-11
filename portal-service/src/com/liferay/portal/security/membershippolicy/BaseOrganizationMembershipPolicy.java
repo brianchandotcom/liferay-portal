@@ -16,7 +16,6 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -46,13 +45,13 @@ public abstract class BaseOrganizationMembershipPolicy
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long organizationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(
@@ -69,7 +68,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (permissionChecker.isOrganizationOwner(organizationId)) {
 			return false;
@@ -107,7 +106,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long organizationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			checkMembership(
@@ -122,7 +121,7 @@ public abstract class BaseOrganizationMembershipPolicy
 
 	@Override
 	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
@@ -151,7 +150,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (permissionChecker.isOrganizationOwner(organizationId)) {
 			return false;
@@ -183,7 +182,7 @@ public abstract class BaseOrganizationMembershipPolicy
 
 	@Override
 	public boolean isRoleRequired(long userId, long organizationId, long roleId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
@@ -215,7 +214,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	}
 
 	@Override
-	public void verifyPolicy() throws PortalException, SystemException {
+	public void verifyPolicy() throws PortalException {
 		ActionableDynamicQuery organizationActionableDynamicQuery =
 			OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
@@ -224,7 +223,7 @@ public abstract class BaseOrganizationMembershipPolicy
 
 				@Override
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Organization organization = (Organization)object;
 
@@ -241,7 +240,7 @@ public abstract class BaseOrganizationMembershipPolicy
 
 							@Override
 							public void performAction(Object object)
-								throws PortalException, SystemException {
+								throws PortalException {
 
 								UserGroupRole userGroupRole =
 									(UserGroupRole)object;
@@ -260,9 +259,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	}
 
 	@Override
-	public void verifyPolicy(Organization organization)
-		throws PortalException, SystemException {
-
+	public void verifyPolicy(Organization organization) throws PortalException {
 		verifyPolicy(organization, null, null, null, null);
 	}
 

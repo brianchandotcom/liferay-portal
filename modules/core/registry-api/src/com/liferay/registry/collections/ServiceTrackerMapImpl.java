@@ -28,7 +28,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
-		Class<S> serviceClass, String filter) {
+		Class<S> serviceClass, String filter,
+		ServiceReferenceMapper<K> serviceReferenceMapper,
+		ServiceTrackerMapBucketFactory<S, R> bucketFactory) {
+
+		_serviceReferenceMapper = serviceReferenceMapper;
+		_bucketFactory = bucketFactory;
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -61,8 +66,10 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 		_serviceTracker.open();
 	}
 
+	private ServiceTrackerMapBucketFactory<S, R> _bucketFactory;
 	private ConcurrentHashMap<K, Bucket<S, R>> _indexedServices =
 		new ConcurrentHashMap<K, Bucket<S, R>>();
+	private final ServiceReferenceMapper<K> _serviceReferenceMapper;
 	private final ServiceTracker<S, ServiceReference<S>> _serviceTracker;
 
 	interface Bucket<S, R> {

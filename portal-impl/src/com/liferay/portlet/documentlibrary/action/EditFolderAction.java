@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -328,8 +329,10 @@ public class EditFolderAction extends PortletAction {
 			FileEntry fileEntry, String path, ZipWriter zipWriter)
 		throws Exception {
 
+		String zipEntryName = HtmlUtil.escapeURL(fileEntry.getTitle());
+
 		zipWriter.addEntry(
-			path.concat(StringPool.SLASH).concat(fileEntry.getTitle()),
+			path.concat(StringPool.SLASH).concat(zipEntryName),
 			fileEntry.getContentStream());
 	}
 

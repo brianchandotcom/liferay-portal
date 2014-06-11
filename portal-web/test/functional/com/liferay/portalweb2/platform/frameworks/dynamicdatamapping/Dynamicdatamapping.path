@@ -211,6 +211,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_WIDTH</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Width')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -440,6 +445,11 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_OPTIONS_REMOVE_1</td>
 	<td>//div[contains(@class,'celleditor-edit-option-row')]//a[contains(@class,'celleditor-edit-delete-option')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_WIDTH</td>
+	<td>//label/input[@value='${key_widthSize}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -22,6 +22,11 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="WebContent#tearDownCP" />
@@ -1468,6 +1473,119 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="ViewAuthorChangeViaAP" priority="3">
+		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
+			<var name="addMetadata" value="true" />
+			<var name="metadataField" value="Author" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="WC Author" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionsCP">
+			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<for list="author1,author2" param="userScreenName">
+			<var name="userEmailAddress" value="${userScreenName}ea@liferay.com" />
+			<var name="userFirstName" value="${userScreenName}" />
+			<var name="userLastName" value="${userScreenName}" />
+
+			<execute macro="User#addCP">
+				<var name="userEmailAddress" value="${userEmailAddress}" />
+				<var name="userFirstName" value="${userFirstName}" />
+				<var name="userLastName" value="${userLastName}" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
+
+			<execute macro="User#editPasswordCP">
+				<var name="userEmailAddress" value="${userEmailAddress}" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Roles" />
+			</execute>
+
+			<execute macro="Role#assignRegRoleCP">
+				<var name="roleName" value="WC Author" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
+		</for>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="author1ea@liferay.com" />
+			<var name="userLoginFullName" value="author1 author1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="nonAdminUser" value="true" />
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="author" value="author1" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="author2ea@liferay.com" />
+			<var name="userLoginFullName" value="author2 author2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="nonAdminUser" value="true" />
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="author" value="author2" />
+			<var name="webContentContent" value="WC WebContent Content Edit" />
+			<var name="webContentTitle" value="WC WebContent Title Edit" />
 		</execute>
 	</command>
 

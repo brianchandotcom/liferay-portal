@@ -951,9 +951,9 @@ public class JournalUtil {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, PortletKeys.JOURNAL,
-				PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-				PortletRequest.RENDER_PHASE);
+			portletRequest, PortletKeys.JOURNAL,
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/journal/view");
 		portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -1462,8 +1462,8 @@ public class JournalUtil {
 		throws Exception {
 
 		return _transformer.transform(
-				themeDisplay, tokens, viewMode, languageId, document,
-				portletRequestModel, script, langType);
+			themeDisplay, tokens, viewMode, languageId, document,
+			portletRequestModel, script, langType);
 	}
 
 	private static void _addElementOptions(

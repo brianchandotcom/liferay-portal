@@ -72,5 +72,6 @@
 		</if>
 
 		<execute action="Dockbar#assertTextEquals" locator-key1="PREVIEW_MESSAGE" value1="Preview may not be accurate." />
+		<execute action="Dockbar#selectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
 </definition>

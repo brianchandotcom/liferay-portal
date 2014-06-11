@@ -1,0 +1,126 @@
+{
+	"defaultLanguageId": "en_US",
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": false,
+			"multiple": false,
+			"name": "ParentField",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "",
+					"localizable": false,
+					"name": "ChildField",
+					"multiple": true,
+					"options": [
+						{
+							"label": {
+								"en_US": "Option 1",
+								"pt_BR": "Opcao 1"
+							},
+							"value": "Value 1"
+						}, 
+						{
+							"label": {
+								"en_US": "Option 2",
+								"pt_BR": "Opcao 2"
+							},
+							"value": "Value 2"
+			         	}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"type": "select"
+				}
+		     ],
+			"predefinedValue": {
+				"en_US": "Example",
+				"pt_BR": "Exemplo"
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"type": "text"
+		}, 
+		{
+			"dataType": "string",
+			"localizable": false,
+			"multiple": false,
+			"name": "BooleanField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+		     	}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"type": "radio"
+		},
+		{
+			"dataType": "string",
+			"indexType": "",
+			"localizable": false,
+			"multiple": true,
+			"name": "SelectField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				}, 
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"type": "select"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"pt_BR": "Texto",
+				"en_US": "Text"
+			},
+			"localizable": false,
+			"multiple": false,
+			"name": "TextField",
+			"predefinedValue": {
+				"en_US": "Example",
+				"pt_BR": "Exemplo"
+		     },
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"type": "text"
+		}
+	]
+}

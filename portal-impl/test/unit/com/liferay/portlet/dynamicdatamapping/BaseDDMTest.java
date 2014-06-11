@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -55,8 +57,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest(
 	{
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		HtmlUtil.class, LocaleUtil.class, LocalizationUtil.class,
-		PropsUtil.class, SAXReaderUtil.class
+		HtmlUtil.class, JSONFactoryUtil.class, LocaleUtil.class,
+		LocalizationUtil.class, PropsUtil.class, SAXReaderUtil.class
 	})
 @RunWith(PowerMockRunner.class)
 public class BaseDDMTest extends PowerMockito {
@@ -68,6 +70,7 @@ public class BaseDDMTest extends PowerMockito {
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();
+		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 		setUpLocalizationUtil();
 		setUpPropsUtil();
@@ -231,6 +234,16 @@ public class BaseDDMTest extends PowerMockito {
 			HtmlUtil.getHtml()
 		).thenReturn(
 			new HtmlImpl()
+		);
+	}
+
+	protected void setUpJSONFactoryUtil() {
+		spy(JSONFactoryUtil.class);
+
+		when(
+			JSONFactoryUtil.getJSONFactory()
+		).thenReturn(
+			new JSONFactoryImpl()
 		);
 	}
 

@@ -32,11 +32,12 @@ public abstract class BaseCapabilityRepository<T>
 		Set<Class<? extends Capability>> exportedCapabilityClasses) {
 
 		super(supportedCapabilitiesMap, exportedCapabilityClasses);
+
 		_repository = repository;
 	}
 
 	@Override
-	protected String getProviderId() {
+	protected String getProviderKey() {
 		return String.format(
 			"%s:%s", getRepository().getClass(), getRepositoryId());
 	}

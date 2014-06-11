@@ -47,7 +47,13 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	@Override
 	public R getService(K key) {
-		return null;
+		Bucket<S, R> bucket = _indexedServices.get(key);
+
+		if (bucket == null) {
+			return null;
+		}
+
+		return bucket.getContent();
 	}
 
 	@Override

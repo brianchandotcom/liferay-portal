@@ -96,7 +96,7 @@ public class LocalRepositoryFactoryTest {
 	public void testCreateRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		LocalRepositoryFactoryUtil.create(0, fileEntryId, 0);
 	}
@@ -105,14 +105,14 @@ public class LocalRepositoryFactoryTest {
 	public void testCreateRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		LocalRepositoryFactoryUtil.create(0, 0, fileVersionId);
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
 	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		LocalRepositoryFactoryUtil.create(folderId, 0, 0);
 	}

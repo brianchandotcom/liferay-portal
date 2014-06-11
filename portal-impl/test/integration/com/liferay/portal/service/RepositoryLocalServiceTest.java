@@ -22,6 +22,7 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -95,7 +96,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateLocalRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, fileEntryId, 0);
 	}
@@ -104,7 +105,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateLocalRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, 0, fileVersionId);
 	}
@@ -113,7 +114,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateLocalRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
-		long repositoryId = 42L;
+		long repositoryId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
 	}
@@ -122,7 +123,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateLocalRepositoryFromInvalidFolderId()
 		throws Exception {
 
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getLocalRepositoryImpl(folderId, 0, 0);
 	}
@@ -175,7 +176,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0);
 	}
@@ -184,14 +185,14 @@ public class RepositoryLocalServiceTest {
 	public void testCreateRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(0, 0, fileVersionId);
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
 	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(folderId, 0, 0);
 	}
@@ -200,7 +201,7 @@ public class RepositoryLocalServiceTest {
 	public void testCreateRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
-		long repositoryId = 42L;
+		long repositoryId = RandomTestUtil.randomLong();
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(repositoryId);
 	}

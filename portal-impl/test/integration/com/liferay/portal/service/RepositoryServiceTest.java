@@ -26,6 +26,7 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -99,7 +100,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(0, fileEntryId, 0);
 	}
@@ -108,7 +109,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(0, 0, fileVersionId);
 	}
@@ -117,7 +118,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromInexistingFolderId()
 		throws Exception {
 
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(folderId, 0, 0);
 	}
@@ -126,7 +127,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
-		long repositoryId = 42L;
+		long repositoryId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
 	}
@@ -199,7 +200,7 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getRepositoryImpl(0, fileEntryId, 0);
 	}
@@ -208,14 +209,14 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getRepositoryImpl(0, 0, fileVersionId);
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
 	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getRepositoryImpl(folderId, 0, 0);
 	}
@@ -224,7 +225,7 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
-		long repositoryId = 42L;
+		long repositoryId = RandomTestUtil.randomLong();
 
 		RepositoryServiceUtil.getRepositoryImpl(repositoryId);
 	}

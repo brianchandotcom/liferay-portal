@@ -28,6 +28,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -119,7 +120,7 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
-		long fileEntryId = 42L;
+		long fileEntryId = RandomTestUtil.randomLong();
 
 		RepositoryFactoryUtil.create(0, fileEntryId, 0);
 	}
@@ -128,14 +129,14 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
-		long fileVersionId = 42L;
+		long fileVersionId = RandomTestUtil.randomLong();
 
 		RepositoryFactoryUtil.create(0, 0, fileVersionId);
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
 	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
+		long folderId = RandomTestUtil.randomLong();
 
 		RepositoryFactoryUtil.create(folderId, 0, 0);
 	}
@@ -144,7 +145,7 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
-		long repositoryId = 42L;
+		long repositoryId = RandomTestUtil.randomLong();
 
 		RepositoryFactoryUtil.create(repositoryId);
 	}

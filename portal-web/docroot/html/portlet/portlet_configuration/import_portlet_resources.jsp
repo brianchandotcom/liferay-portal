@@ -137,7 +137,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 									</ul>
 
 									<aui:script>
-										Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+										Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 									</aui:script>
 								</li>
 							</ul>
@@ -196,7 +196,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 															</ul>
 
 															<aui:script>
-																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
+																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>', '<portlet:namespace />showDeleteContentWarning');
 															</aui:script>
 
 															<c:if test="<%= importControls != null %>">
@@ -258,7 +258,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 										</ul>
 
 										<aui:script>
-											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 										</aui:script>
 
 									<%
@@ -350,7 +350,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 </div>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
+	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>', '<portlet:namespace />permissionsUl');
 </aui:script>
 
 <aui:script use="aui-base">
@@ -374,14 +374,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 </aui:script>
 
 <aui:script use="liferay-export-import">
+debugger;
 	new Liferay.ExportImport(
 		{
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox'
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>'
 		}
 	);
 </aui:script>

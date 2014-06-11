@@ -187,7 +187,7 @@ AUI.add(
 						A.one('#' + namespace + 'deleteSelectedTags').on(EVENT_CLICK, instance._deleteSelectedTags, instance);
 						A.one('#' + namespace + 'mergeSelectedTags').on(EVENT_CLICK, instance._mergeSelectedTags, instance);
 
-						var checkAllTagsCheckbox = A.one('#' + namespace + 'checkAllTagsCheckbox');
+						var checkAllTagsCheckbox = A.one('#' + namespace + 'checkAllTags');
 
 						checkAllTagsCheckbox.on(EVENT_CLICK, instance._checkAllTags, instance);
 
@@ -358,7 +358,7 @@ AUI.add(
 							tagCheck.attr('checked', checked);
 						}
 
-						Liferay.Util.checkAllBox(instance._tagsList, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTagsCheckbox');
+						Liferay.Util.checkAllBox(instance._tagsList, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTags');
 					},
 
 					_createTagPanelAdd: function() {
@@ -1464,7 +1464,7 @@ AUI.add(
 						var target = event.target;
 
 						if (target.hasClass('tag-item-check')) {
-							Liferay.Util.checkAllBox(event.currentTarget, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTagsCheckbox');
+							Liferay.Util.checkAllBox(event.currentTarget, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTags');
 
 							instance._toggleStagedTagItem(target);
 						}

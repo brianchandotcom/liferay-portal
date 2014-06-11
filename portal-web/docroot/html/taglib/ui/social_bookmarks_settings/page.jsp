@@ -73,5 +73,5 @@ if (Validator.isNull(displayStyle)) {
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarks','<portlet:namespace />socialBookmarksOptions');
 </aui:script>

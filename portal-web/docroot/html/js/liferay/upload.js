@@ -21,7 +21,7 @@ AUI.add(
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
 					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}">',
-						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ Liferay.Util.escapeHTML(values.name) ]}" />',
+						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ Liferay.Util.escapeHTML(values.name) ]}" />',
 						'<span class="file-title" title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}">{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}</span>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
@@ -104,7 +104,7 @@ AUI.add(
 					'<span class="field field-choice select-files">',
 						'<span class="field-content">',
 							'<span class="field-element">',
-								'<input class="select-all-files" id="{$ns}allRowIdsCheckbox" name="{$ns}allRowIdsCheckbox" type="checkbox" />',
+								'<input class="select-all-files" id="{$ns}allRowIds" name="{$ns}allRowIds" type="checkbox" />',
 							'</span>',
 						'</span>',
 					'</span>',
@@ -933,12 +933,12 @@ AUI.add(
 
 						instance._fileListTPL = new A.Template(TPL_FILE_LIST, templateConfig);
 
-						instance._selectUploadedFileCheckboxId = instance.ns('selectUploadedFileCheckbox');
+						instance._selectUploadedFileCheckboxId = instance.ns('selectUploadedFile');
 
 						var NS = instance.NS;
 
 						instance._fileListSelector = formatSelectorNS(NS, '#fileList');
-						instance._allRowIdsCheckboxSelector = formatSelectorNS(NS, '#allRowIdsCheckbox');
+						instance._allRowIdsCheckboxSelector = formatSelectorNS(NS, '#allRowIds');
 
 						var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render(
 							{

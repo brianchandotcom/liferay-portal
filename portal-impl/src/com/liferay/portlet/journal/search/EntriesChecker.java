@@ -139,19 +139,19 @@ public class EntriesChecker extends RowChecker {
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
 		sb.append(JournalFolder.class.getSimpleName());
-		sb.append("Checkbox', '");
+		sb.append("', '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
 		sb.append(JournalArticle.class.getSimpleName());
-		sb.append("Checkbox']");
+		sb.append("']");
 
 		String checkBoxRowIds = sb.toString();
 
 		return getRowCheckBox(
 			request, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-				name + "Checkbox",
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",
+				name + "",
+			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}
 

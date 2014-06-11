@@ -46,7 +46,7 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	var enableEmailSubscription = A.one('#<portlet:namespace />enableEmailSubscriptionCheckbox');
+	var enableEmailSubscription = A.one('#<portlet:namespace />enableEmailSubscription');
 
 	enableEmailSubscription.on(
 		'change',

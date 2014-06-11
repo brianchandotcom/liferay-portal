@@ -232,11 +232,11 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />changeableCheckbox', '<portlet:namespace />changeableSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />checkSyntaxCheckbox', '<portlet:namespace />syntaxSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />historyCheckbox', '<portlet:namespace />historySettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />expireableCheckbox', '<portlet:namespace />expirationSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />lockoutCheckbox', '<portlet:namespace />lockoutSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />changeable', '<portlet:namespace />changeableSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />checkSyntax', '<portlet:namespace />syntaxSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />history', '<portlet:namespace />historySettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />expireable', '<portlet:namespace />expirationSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />lockout', '<portlet:namespace />lockoutSettings');
 </aui:script>
 
 <%

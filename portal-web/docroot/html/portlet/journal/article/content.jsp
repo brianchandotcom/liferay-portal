@@ -410,7 +410,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 		}
 	);
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleIdCheckbox','<portlet:namespace />newArticleId', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId','<portlet:namespace />newArticleId', true);
 </aui:script>
 
 <%!

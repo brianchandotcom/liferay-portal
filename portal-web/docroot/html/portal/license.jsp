@@ -487,7 +487,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 					function(message) {
 						var A = AUI();
 
-						A.one('#node_<%= clusterNode.getClusterNodeId() %>_registerCheckbox').attr('disabled', false);
+						A.one('#node_<%= clusterNode.getClusterNodeId() %>_register').attr('disabled', false);
 
 						if (!message) {
 							A.one('#node_<%= clusterNode.getClusterNodeId() %>_licenseProperties').html('<liferay-ui:message key="license-information-is-not-available" />');

@@ -147,7 +147,7 @@ boolean splitThread = true;
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		if (document.getElementById('<portlet:namespace />addExplanationPostCheckbox').checked) {
+		if (document.getElementById('<portlet:namespace />addExplanationPost').checked) {
 			document.getElementById('<portlet:namespace />explanationPost').style.display = '';
 		}
 		else {

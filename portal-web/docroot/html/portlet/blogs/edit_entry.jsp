@@ -528,8 +528,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					var expanded = !instance.get('expanded');
 
-					A.one('#<portlet:namespace />smallImage').set('value', expanded);
-					A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+					A.one('#<portlet:namespace />smallImage').set('checked', expanded);
 
 					if (expanded) {
 						types.each(

@@ -193,7 +193,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 			var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
 
-			var values = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]:checked').val();
+			var values = A.all('input[name=<portlet:namespace />selectUploadedFile]:checked').val();
 
 			var buffer = [];
 			var dataBuffer = [];

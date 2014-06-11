@@ -410,7 +410,7 @@ AUI.add(
 
 						var allRowIds = instance.get('allRowIds');
 
-						var allRowsIdCheckbox = instance.ns(allRowIds + 'Checkbox');
+						var allRowsIdCheckbox = instance.ns(allRowIds);
 
 						var processEntryIds = instance.get('processEntryIds');
 

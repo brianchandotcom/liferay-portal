@@ -91,7 +91,7 @@
 </aui:form>
 
 <aui:script use="aui-base">
-	var showAssetCount = A.one('#<portlet:namespace />showAssetCountCheckbox');
+	var showAssetCount = A.one('#<portlet:namespace />showAssetCount');
 
 	function showHiddenFields() {
 		var assetCountOptions = A.one('#<portlet:namespace />assetCountOptions');

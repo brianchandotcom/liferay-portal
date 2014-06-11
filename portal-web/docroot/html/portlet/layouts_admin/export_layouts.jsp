@@ -506,7 +506,7 @@ if (!cmd.equals(Constants.ADD)) {
 																</ul>
 
 																<aui:script>
-																	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
+																	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
 																</aui:script>
 
 															<%
@@ -610,14 +610,14 @@ if (!cmd.equals(Constants.ADD)) {
 
 	new Liferay.ExportImport(
 		{
-			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>Checkbox',
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			exportLAR: true,
 			form: document.<portlet:namespace />fm1,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
-			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
+			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
 			namespace: '<portlet:namespace />',
 			pageTreeId: '<%= treeId %>',
 			processesNode: '#exportProcesses',
@@ -625,10 +625,10 @@ if (!cmd.equals(Constants.ADD)) {
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
-			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
-			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
+			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
+			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}
 	);
 
@@ -645,18 +645,6 @@ if (!cmd.equals(Constants.ADD)) {
 
 			if (allContentRadioChecked) {
 				var selectedContents = A.one('#<portlet:namespace />selectContents');
-
-				var checkedNodes = selectedContents.all('input[type=checkbox]');
-
-				checkedNodes.each(
-					function(item, index, collection) {
-						if (!item.attr('checked')) {
-							item.attr('checked', true);
-
-							Liferay.Util.updateCheckboxValue(item);
-						}
-					}
-				);
 
 				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 

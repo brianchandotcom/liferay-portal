@@ -27,9 +27,9 @@ AUI.add(
 
 		var STR_PAGINATION_DATA = 'paginationData';
 
-		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolderCheckbox';
+		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolder';
 
-		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticleCheckbox';
+		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticle';
 
 		var STR_SEARCH_ARTICLE_ID = 'searchArticleId';
 

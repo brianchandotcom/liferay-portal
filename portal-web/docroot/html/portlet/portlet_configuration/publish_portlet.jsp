@@ -165,7 +165,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 												</ul>
 
 												<aui:script>
-													Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+													Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 												</aui:script>
 											</li>
 										</ul>
@@ -356,7 +356,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																				</ul>
 
 																				<aui:script>
-																					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
+																					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>', '<portlet:namespace />showDeleteContentWarning');
 																				</aui:script>
 
 																				<c:if test="<%= exportControls != null %>">
@@ -418,7 +418,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															</ul>
 
 															<aui:script>
-																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 															</aui:script>
 
 														<%
@@ -493,9 +493,9 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 			new Liferay.ExportImport(
 				{
-					commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-					deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
-					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+					commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+					deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>',
+					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 					form: document.<portlet:namespace />fm1,
 					incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 					namespace: '<portlet:namespace />',
@@ -505,7 +505,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					rangeDateRangeNode: '#rangeDateRange',
 					rangeLastNode: '#rangeLast',
 					rangeLastPublishNode: '#rangeLastPublish',
-					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox'
+					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>'
 				}
 			);
 		</aui:script>

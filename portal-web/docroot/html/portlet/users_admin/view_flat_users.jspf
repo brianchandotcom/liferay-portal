@@ -23,7 +23,7 @@ SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentU
 
 RowChecker rowChecker = new RowChecker(renderResponse);
 
-rowChecker.setRowIds("rowIdsUserCheckbox");
+rowChecker.setRowIds("rowIdsUser");
 
 searchContainer.setRowChecker(rowChecker);
 

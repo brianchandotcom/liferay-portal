@@ -161,5 +161,5 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoCodeCheckbox', '<portlet:namespace />code', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoCode', '<portlet:namespace />code', true);
 </aui:script>

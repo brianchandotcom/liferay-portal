@@ -258,7 +258,7 @@ if (organization != null) {
 				return currentValue != '';
 			}
 
-			Liferay.Util.toggleBoxes('<portlet:namespace />siteCheckbox','<portlet:namespace />siteTemplates');
+			Liferay.Util.toggleBoxes('<portlet:namespace />site','<portlet:namespace />siteTemplates');
 
 			Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
 			Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');

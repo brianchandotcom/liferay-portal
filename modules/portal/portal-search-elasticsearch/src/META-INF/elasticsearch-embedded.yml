@@ -5,6 +5,8 @@
 
 cluster.name: LiferayElasticSearch
 
+cluster.routing.allocation.enable: all
+
 http.enabled: true
 
 index.number_of_shards: 1

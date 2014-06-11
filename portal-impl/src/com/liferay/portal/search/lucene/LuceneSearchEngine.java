@@ -12,16 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.index;
+package com.liferay.portal.search.lucene;
 
-import org.elasticsearch.client.AdminClient;
+import com.liferay.portal.kernel.search.BaseSearchEngine;
 
 /**
  * @author Michael C. Han
  */
-public interface IndexFactory {
+public class LuceneSearchEngine extends BaseSearchEngine {
 
-	public void createIndices(AdminClient adminClient, long companyId)
-		throws Exception;
+	@Override
+	public void initialize(long companyId) {
+		super.initialize(companyId);
+
+		LuceneHelperUtil.startup(companyId);
+	}
 
 }

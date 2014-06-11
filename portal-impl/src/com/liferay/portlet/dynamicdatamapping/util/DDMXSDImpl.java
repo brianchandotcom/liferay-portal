@@ -347,7 +347,7 @@ public class DDMXSDImpl implements DDMXSD {
 		JSONArray jsonArray = null;
 
 		if (Validator.isNull(xsd)) {
-			jsonArray = getJSONArray(structure.getDocument());
+			jsonArray = getJSONArray(structure.getXsd());
 		}
 		else {
 			jsonArray = getJSONArray(xsd);

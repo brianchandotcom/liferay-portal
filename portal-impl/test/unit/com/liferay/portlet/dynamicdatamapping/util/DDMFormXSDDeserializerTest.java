@@ -31,24 +31,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Pablo Carvalho
  */
-@PrepareForTest({DDMFormXSDDeserializerUtil.class})
 public class DDMFormXSDDeserializerTest extends BaseDDMTest {
-
-	@Before
-	@Override
-	public void setUp() {
-		super.setUp();
-
-		setUpDDMFormXSDDeserializer();
-	}
 
 	@Test
 	public void testAllFieldsTypesDeserialization() throws Exception {
@@ -78,16 +66,6 @@ public class DDMFormXSDDeserializerTest extends BaseDDMTest {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
-	}
-
-	protected void setUpDDMFormXSDDeserializer() {
-		spy(DDMFormXSDDeserializerUtil.class);
-
-		when(
-			DDMFormXSDDeserializerUtil.getDDMFormXSDDeserializer()
-		).thenReturn(
-			_ddmFormXSDDeserializer
-		);
 	}
 
 	protected void testAvailableLocales(DDMForm ddmForm) {

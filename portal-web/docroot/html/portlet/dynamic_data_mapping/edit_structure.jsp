@@ -53,7 +53,7 @@ if (Validator.isNotNull(script)) {
 			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
 		}
 		catch (Exception e) {
-			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDocument());
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getXsd());
 		}
 	}
 	else {

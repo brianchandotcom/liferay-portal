@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util.test;
 
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -48,7 +49,7 @@ public class DLTestUtil {
 		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-			RandomTestUtil.randomString(), "text/plain",
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, is, bytes.length, serviceContext);

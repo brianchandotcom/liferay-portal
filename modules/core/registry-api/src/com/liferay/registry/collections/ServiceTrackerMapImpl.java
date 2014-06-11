@@ -18,6 +18,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
@@ -33,7 +34,8 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 			"(&(objectClass="+serviceClass.getName()+")"+filter+")";
 
 		_serviceTracker = registry.trackServices(
-			registry.getFilter(completeFilter));
+			registry.getFilter(completeFilter),
+			new MapServiceTrackerCustomizer());
 	}
 
 	@Override
@@ -52,5 +54,30 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 	}
 
 	private final ServiceTracker<S, ServiceReference<S>> _serviceTracker;
+
+	private class MapServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<S, ServiceReference<S>> {
+
+		@Override
+		public ServiceReference<S> addingService(
+			final ServiceReference<S> serviceReference) {
+
+		}
+
+		@Override
+		public void modifiedService(
+			final ServiceReference<S> newServiceReference,
+				final ServiceReference<S> oldServiceReference) {
+
+		}
+
+		@Override
+		public void removedService(
+			final ServiceReference<S> serviceReference,
+				ServiceReference<S> serviceReference2) {
+
+		}
+
+	}
 
 }

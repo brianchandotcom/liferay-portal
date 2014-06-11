@@ -75,6 +75,11 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	@Override
+	public void initialize(long companyId) {
+		_searchEngine.initialize(companyId);
+	}
+
+	@Override
 	public boolean isClusteredWrite() {
 		return _searchEngine.isClusteredWrite();
 	}

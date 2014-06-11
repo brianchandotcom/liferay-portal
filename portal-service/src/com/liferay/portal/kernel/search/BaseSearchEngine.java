@@ -157,6 +157,10 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	@Override
+	public void initialize(long companyId) {
+	}
+
+	@Override
 	public boolean isClusteredWrite() {
 		return _clusteredWrite;
 	}

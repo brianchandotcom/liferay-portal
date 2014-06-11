@@ -4,8 +4,10 @@
 
 	<!-- Elasticsearch engine adapter -->
 
-	<bean class="com.liferay.portal.kernel.search.BaseSearchEngine" id="com.liferay.portal.search.elasticsearch.ElasticsearchEngineImpl">
+	<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchSearchEngine" id="com.liferay.portal.search.elasticsearch.ElasticsearchEngineImpl">
 		<property name="clusteredWrite" value="false" />
+		<property name="elasticsearchConnectionManager" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" />
+		<property name="indexFactory" ref="com.liferay.portal.search.elasticsearch.index.IndexFactory" />
 		<property name="indexSearcher" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" />
 		<property name="indexWriter" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" />
 		<property name="luceneBased" value="true" />
@@ -44,7 +46,6 @@
 		<property name="elasticsearchConnection" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection" />
 	</bean>
 	<bean class="com.liferay.portal.search.elasticsearch.index.CompanyIndexFactory" id="com.liferay.portal.search.elasticsearch.index.IndexFactory">
-		<property name="companyLocalService" ref="com.liferay.portal.service.CompanyLocalService" />
 		<property name="typeMappings">
 			<map>
 				<entry key="LiferayDocumentType" value="/META-INF/type_mappings.json" />
@@ -73,14 +74,12 @@
 	<!-- References -->
 
 	<reference id="com.liferay.portal.kernel.messaging.MessageBus" interface="com.liferay.portal.kernel.messaging.MessageBus" timeout="30000" />
-	<reference id="com.liferay.portal.service.CompanyLocalService" interface="com.liferay.portal.service.CompanyLocalService" timeout="30000" />
 
 	<!-- Configurator -->
 
 	<service auto-export="all-classes" id="com.liferay.portal.search.elasticsearch.ElasticsearchEngineConfigurator">
 		<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchEngineConfigurator">
 			<property name="elasticsearchConnectionManager" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" />
-			<property name="indexFactory" ref="com.liferay.portal.search.elasticsearch.index.IndexFactory" />
 			<property name="indexSearcher" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" />
 			<property name="indexWriter" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" />
 			<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />

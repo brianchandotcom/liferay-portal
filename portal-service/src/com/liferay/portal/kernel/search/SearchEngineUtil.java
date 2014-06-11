@@ -830,6 +830,12 @@ public class SearchEngineUtil {
 		_searchPermissionChecker.updatePermissionFields(name, primKey);
 	}
 
+	public synchronized static void initialize(long companyId) {
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.initialize(companyId);
+		}
+	}
+
 	public void setExcludedEntryClassNames(
 		List<String> excludedEntryClassNames) {
 
@@ -869,6 +875,25 @@ public class SearchEngineUtil {
 			new SearchEngineConfiguratorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Waiting for search engine registration");
+			}
+
+			if (_serviceTracker.isEmpty()) {
+				_serviceTracker.waitForService(30000);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search engine registered, proceeding");
+			}
+		}
+		catch (InterruptedException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Service tracker interrupted", e);
+			}
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);

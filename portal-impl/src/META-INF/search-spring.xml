@@ -129,7 +129,7 @@
 	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter">
 		<property name="spellCheckIndexWriter" ref="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" />
 	</bean>
-	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
+	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.search.lucene.LuceneSearchEngine">
 		<property name="booleanClauseFactory" >
 			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
 		</property>

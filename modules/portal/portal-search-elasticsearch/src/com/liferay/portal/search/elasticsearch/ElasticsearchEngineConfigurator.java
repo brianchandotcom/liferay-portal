@@ -21,10 +21,16 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
+import java.util.concurrent.Future;
+
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.ClusterAdminClient;
+import org.elasticsearch.common.unit.TimeValue;
 
 /**
  * @author Michael C. Han
@@ -45,11 +51,33 @@ public class ElasticsearchEngineConfigurator
 
 		AdminClient adminClient = client.admin();
 
+		ClusterAdminClient clusterAdminClient = adminClient.cluster();
+
+		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
+			clusterAdminClient.prepareHealth();
+
+		clusterHealthRequestBuilder.setWaitForGreenStatus();
+		clusterHealthRequestBuilder.setWaitForNodes(">1");
+		clusterHealthRequestBuilder.setTimeout(TimeValue.timeValueSeconds(30));
+
+		Future<ClusterHealthResponse> future =
+			clusterHealthRequestBuilder.execute();
+
+		ClusterHealthResponse clusterHealthResponse = null;
+
 		try {
-			_indexFactory.createIndices(adminClient);
+			clusterHealthResponse = future.get();
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
+		}
+
+		ClusterHealthStatus clusterHealthStatus =
+			clusterHealthResponse.getStatus();
+
+		if (clusterHealthStatus == ClusterHealthStatus.RED) {
+			throw new IllegalStateException(
+				"Elasticsearch cluster not properly initialized");
 		}
 	}
 
@@ -67,10 +95,6 @@ public class ElasticsearchEngineConfigurator
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	public void setIndexFactory(IndexFactory indexFactory) {
-		_indexFactory = indexFactory;
 	}
 
 	public void setIndexSearcher(IndexSearcher indexSearcher) {
@@ -113,7 +137,6 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private IndexFactory _indexFactory;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private MessageBus _messageBus;

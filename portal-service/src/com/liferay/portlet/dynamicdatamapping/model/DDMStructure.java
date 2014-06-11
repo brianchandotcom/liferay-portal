@@ -39,10 +39,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String getCompleteXsd()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -120,6 +116,10 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldType(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -46,6 +46,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -110,18 +111,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		return fieldNames;
-	}
-
-	@Override
-	public String getCompleteXsd() throws PortalException {
-		if (getParentStructureId() == 0) {
-			return getXsd();
-		}
-
-		DDMStructure parentStructure =
-			DDMStructureLocalServiceUtil.getStructure(getParentStructureId());
-
-		return _mergeXsds(getXsd(), parentStructure.getCompleteXsd());
 	}
 
 	@Override
@@ -303,6 +292,26 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	@Override
 	public String getFieldType(String fieldName) throws PortalException {
 		return getFieldProperty(fieldName, "type");
+	}
+
+	@Override
+	public DDMForm getFullHierarchyDDMForm()
+		throws PortalException, SystemException {
+
+		DDMForm ddmForm = getDDMForm();
+
+		DDMStructure parentDDMStructure = getParentDDMStructure();
+
+		if (parentDDMStructure != null) {
+			DDMForm ancestorsDDMForm =
+				parentDDMStructure.getFullHierarchyDDMForm();
+
+			List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+			ddmFormFields.addAll(ancestorsDDMForm.getDDMFormFields());
+		}
+
+		return ddmForm;
 	}
 
 	@Override
@@ -577,6 +586,19 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		setXsd(DDMFormXSDSerializerUtil.serialize(ddmForm));
 	}
 
+	protected DDMStructure getParentDDMStructure()
+		throws PortalException, SystemException {
+
+		if (getParentStructureId() == 0) {
+			return null;
+		}
+
+		DDMStructure parentStructure =
+			DDMStructureLocalServiceUtil.getStructure(getParentStructureId());
+
+		return parentStructure;
+	}
+
 	private Document _getDocument() throws PortalException {
 		try {
 			return SAXReaderUtil.read(getXsd());
@@ -726,27 +748,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		localizedFieldsMap.put(locale, fieldsMap);
 		localizedPersistentFieldsMap.put(locale, persistentFieldsMap);
 		localizedTransientFieldsMap.put(locale, transientFieldsMap);
-	}
-
-	private String _mergeXsds(String xsd1, String xsd2) {
-		try {
-			Document document1 = SAXReaderUtil.read(xsd1);
-			Document document2 = SAXReaderUtil.read(xsd2);
-
-			Element rootElement1 = document1.getRootElement();
-			Element rootElement2 = document2.getRootElement();
-
-			for (Element element : rootElement1.elements()) {
-				rootElement1.remove(element);
-
-				rootElement2.add(element);
-			}
-
-			return rootElement2.formattedString();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);

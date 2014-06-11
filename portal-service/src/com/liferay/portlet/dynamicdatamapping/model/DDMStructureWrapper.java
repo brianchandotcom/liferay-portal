@@ -926,13 +926,6 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public java.lang.String getCompleteXsd()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructure.getCompleteXsd();
-	}
-
-	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getDDMForm();
@@ -1065,6 +1058,13 @@ public class DDMStructureWrapper implements DDMStructure,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getFieldType(fieldName);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFullHierarchyDDMForm();
 	}
 
 	@Override

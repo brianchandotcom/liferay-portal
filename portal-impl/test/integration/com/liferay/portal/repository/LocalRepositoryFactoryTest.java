@@ -52,7 +52,7 @@ public class LocalRepositoryFactoryTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -64,7 +64,7 @@ public class LocalRepositoryFactoryTest {
 	public void testCreateRepositoryFromExistingFileVersionId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -77,7 +77,7 @@ public class LocalRepositoryFactoryTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFolderId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		LocalRepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
 	}
@@ -86,7 +86,7 @@ public class LocalRepositoryFactoryTest {
 	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		LocalRepositoryFactoryUtil.create(dlFolder.getRepositoryId());
 	}

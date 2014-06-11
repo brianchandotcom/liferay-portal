@@ -54,14 +54,14 @@ public class DLTestUtil {
 			null, is, bytes.length, serviceContext);
 	}
 
-	public static DLFolder addFolder(long groupId) throws Exception {
+	public static DLFolder addDLFolder(long groupId) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		return addFolder(groupId, serviceContext);
+		return addDLFolder(groupId, serviceContext);
 	}
 
-	public static DLFolder addFolder(
+	public static DLFolder addDLFolder(
 			long groupId, boolean deleteExisting, ServiceContext serviceContext)
 		throws Exception {
 
@@ -84,11 +84,11 @@ public class DLTestUtil {
 			false, serviceContext);
 	}
 
-	public static DLFolder addFolder(
+	public static DLFolder addDLFolder(
 			long groupId, ServiceContext serviceContext)
 		throws Exception {
 
-		return addFolder(groupId, true, serviceContext);
+		return addDLFolder(groupId, true, serviceContext);
 	}
 
 }

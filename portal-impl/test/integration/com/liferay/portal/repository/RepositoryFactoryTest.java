@@ -55,7 +55,7 @@ public class RepositoryFactoryTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -67,7 +67,7 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromExistingFileVersionId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -79,7 +79,7 @@ public class RepositoryFactoryTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFolderId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
 	}
@@ -88,7 +88,7 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromExistingFolderWithoutPermissions()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -109,7 +109,7 @@ public class RepositoryFactoryTest {
 	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryFactoryUtil.create(dlFolder.getRepositoryId());
 	}

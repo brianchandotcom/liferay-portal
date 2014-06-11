@@ -50,7 +50,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromExistingFileEntryId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -63,7 +63,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromExistingFileVersionId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -78,7 +78,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromExistingFolderId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(
 			dlFolder.getFolderId(), 0, 0);
@@ -88,7 +88,7 @@ public class RepositoryServiceTest {
 	public void testCreateLocalRepositoryFromExistingRepositoryId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryServiceUtil.getLocalRepositoryImpl(
 			dlFolder.getRepositoryId());
@@ -132,7 +132,7 @@ public class RepositoryServiceTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -145,7 +145,7 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromExistingFileVersionId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
 			dlFolder.getFolderId());
@@ -158,7 +158,7 @@ public class RepositoryServiceTest {
 
 	@Test
 	public void testCreateRepositoryFromExistingFolderId() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryServiceUtil.getRepositoryImpl(dlFolder.getFolderId(), 0, 0);
 	}
@@ -167,7 +167,7 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromExistingFolderWithoutPermissions()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -189,7 +189,7 @@ public class RepositoryServiceTest {
 	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
 
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		RepositoryServiceUtil.getRepositoryImpl(dlFolder.getRepositoryId());
 	}

@@ -56,22 +56,26 @@ public class MultipleItemsBucketFactory<S>
 
 		@Override
 		public List<S> getContent() {
-			return null;
+			return _services;
 		}
 
 		@Override
-		public boolean isDisposable() {
-			return false;
+		public synchronized boolean isDisposable() {
+			return _orderedSet.isEmpty();
 		}
 
 		@Override
 		public synchronized void remove(ServiceReference<S> serviceReference) {
+			_orderedSet.remove(serviceReference);
 
+			_rebuildList();
 		}
 
 		@Override
 		public synchronized void store(ServiceReference<S> serviceReference) {
+			_orderedSet.add(serviceReference);
 
+			_rebuildList();
 		}
 
 		private void _rebuildList() {
@@ -97,7 +101,6 @@ public class MultipleItemsBucketFactory<S>
 		private final Set<ServiceReference<S>> _orderedSet;
 
 		private List<S> _services;
-
 	}
 
 }

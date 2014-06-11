@@ -77,7 +77,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 			String[] availableLanguageIds = new String[availableLocales.size()];
 
-			for (int i = 0; i < availableLocales.size(); ++i) {
+			for (int i = 0; i < availableLocales.size(); i++) {
 				availableLanguageIds[i] = LocaleUtil.toLanguageId(
 					availableLocales.get(i));
 			}
@@ -86,9 +86,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 		catch (PortalException pe) {
 			_log.error(pe.getMessage());
-
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override
@@ -138,9 +138,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 		catch (PortalException pe) {
 			_log.error(pe.getMessage());
-
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override
@@ -577,6 +577,15 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		setXsd(DDMFormXSDSerializerUtil.serialize(ddmForm));
 	}
 
+	private Document _getDocument() throws PortalException {
+		try {
+			return SAXReaderUtil.read(getXsd());
+		}
+		catch (DocumentException de) {
+			throw new PortalException(de);
+		}
+	}
+
 	private Map<String, String> _getField(Element element, String locale) {
 		Map<String, String> field = new HashMap<String, String>();
 
@@ -686,16 +695,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 
-		Document document;
-
-		try {
-			document = SAXReaderUtil.read(getXsd());
-		}
-		catch (DocumentException de) {
-			throw new PortalException(de);
-		}
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
+		List<Node> nodes = xPathSelector.selectNodes(_getDocument());
 
 		for (Node node : nodes) {
 			Element element = (Element)node;

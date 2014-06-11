@@ -1962,6 +1962,8 @@ public class PropsValues {
 
 	public static final String[] VIRTUAL_HOSTS_IGNORE_EXTENSIONS = PropsUtil.getArray(PropsKeys.VIRTUAL_HOSTS_IGNORE_EXTENSIONS);
 
+	public static final String[] VIRTUAL_HOSTS_VALID_HOSTS = PropsUtil.getArray(PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS);
+
 	public static final boolean WEB_SERVER_DISPLAY_NODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_DISPLAY_NODE));
 
 	public static final String WEB_SERVER_HOST = PropsUtil.get(PropsKeys.WEB_SERVER_HOST);

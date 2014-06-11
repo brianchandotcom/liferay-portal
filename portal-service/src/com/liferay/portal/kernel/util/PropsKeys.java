@@ -2727,6 +2727,8 @@ public interface PropsKeys {
 
 	public static final String VIRTUAL_HOSTS_IGNORE_PATHS = "virtual.hosts.ignore.paths";
 
+	public static final String VIRTUAL_HOSTS_VALID_HOSTS = "virtual.hosts.valid.hosts";
+
 	public static final String WEB_SERVER_DISPLAY_NODE = "web.server.display.node";
 
 	public static final String WEB_SERVER_HOST = "web.server.host";

@@ -259,6 +259,7 @@ public class JournalArticleStagedModelDataHandler
 			if (_log.isInfoEnabled()) {
 				_log.info("Unable to validate reference", se);
 			}
+
 			return false;
 		}
 	}

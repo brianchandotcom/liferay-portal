@@ -8195,8 +8195,10 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getValidPortalDomain(String domain, long companyId) {
-		if (StringUtil.equalsIgnoreCase(domain, _LOCALHOST)) {
-			return _LOCALHOST;
+		for (String validVirtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, validVirtualHost)) {
+				return validVirtualHost;
+			}
 		}
 
 		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
@@ -8213,6 +8215,13 @@ public class PortalImpl implements Portal {
 
 		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
 			return domain;
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Portal is not configured to use domain " + domain +
+					". If this domain is valid, please configure " +
+					PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS + " property");
 		}
 
 		try {

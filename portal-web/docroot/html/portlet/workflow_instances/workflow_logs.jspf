@@ -34,15 +34,15 @@ for (WorkflowLog workflowLog : workflowLogs) {
 		<div class="task-activity-date">
 			<c:choose>
 				<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
-					<i class="icon-file-alt"></i>
+					<liferay-ui:icon iconCssClass="icon-file-alt" />
 				</c:when>
 				<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_UPDATE %>">
-					<i class="icon-time"></i>
+					<liferay-ui:icon iconCssClass="icon-time" />
 				</c:when>
 				<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
 				</c:when>
 				<c:otherwise>
-					<i class="icon-signin"></i>
+					<liferay-ui:icon iconCssClass="icon-signin" />
 				</c:otherwise>
 			</c:choose>
 

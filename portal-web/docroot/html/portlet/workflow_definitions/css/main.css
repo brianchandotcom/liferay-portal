@@ -19,10 +19,6 @@
 		font-weight: bold;
 	}
 
-	.task-type-1, .task-type-2, .task-type-3 {
-		background: url() no-repeat 0 50%;
-	}
-
 	h3.task-content-title {
 		border-bottom: 1px solid #DDD;
 		margin-top: 0;

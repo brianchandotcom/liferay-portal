@@ -89,6 +89,31 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 		public ServiceReference<S> addingService(
 			final ServiceReference<S> serviceReference) {
 
+			//Ask the mapper for keys
+			_serviceReferenceMapper.map(
+				serviceReference, new ServiceReferenceMapper.Emitter<K>() {
+
+				@Override
+				public void emit(K key) {
+					//Find if a bucket exists with provided key
+					Bucket<S, R> bucket = _indexedServices.get(key);
+
+					if (bucket == null) {
+						//If a bucket does not exist ask the factory
+						Bucket<S, R> newBucket = _bucketFactory.create();
+
+						bucket = _indexedServices.putIfAbsent(key, newBucket);
+
+						if (bucket == null) {
+							bucket = newBucket;
+						}
+					}
+					//Store the reference in the bucket
+					bucket.store(serviceReference);
+				}
+			});
+
+			return serviceReference;
 		}
 
 		@Override

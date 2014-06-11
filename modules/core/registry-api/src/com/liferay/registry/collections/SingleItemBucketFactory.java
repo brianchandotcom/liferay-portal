@@ -48,7 +48,7 @@ public class SingleItemBucketFactory<S>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return false;
+			return _queue.isEmpty();
 		}
 
 		@Override

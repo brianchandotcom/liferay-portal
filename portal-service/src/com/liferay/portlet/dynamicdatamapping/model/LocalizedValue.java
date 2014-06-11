@@ -42,6 +42,10 @@ public class LocalizedValue {
 		return _values.keySet();
 	}
 
+	public Locale getDefaultLocale() {
+		return _defaultLocale;
+	}
+
 	public String getValue(Locale locale) {
 		String value = _values.get(locale);
 
@@ -50,6 +54,10 @@ public class LocalizedValue {
 		}
 
 		return value;
+	}
+
+	public Map<Locale, String> getValues() {
+		return _values;
 	}
 
 	private Locale _defaultLocale;

@@ -26,100 +26,77 @@
 </c:if>
 
 <%
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("layout-template");
-headerNames.add("active");
-headerNames.add("roles");
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
-
-List layoutTemplates = layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
-
-int total = layoutTemplates.size();
-
-searchContainer.setTotal(total);
-
-List results = ListUtil.subList(layoutTemplates, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	LayoutTemplate layoutTemplate = (LayoutTemplate)results.get(i);
-
-	PluginPackage pluginPackage = layoutTemplate.getPluginPackage();
-	PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), layoutTemplate.getLayoutTemplateId(), Plugin.TYPE_LAYOUT_TEMPLATE);
-
-	ResultRow row = new ResultRow(layoutTemplate, layoutTemplate.getLayoutTemplateId(), i);
-
-	PortletURL rowURL = renderResponse.createRenderURL();
-
-	rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
-	rowURL.setParameter("redirect", currentURL);
-
-	if (pluginPackage != null) {
-		rowURL.setParameter("moduleId", pluginPackage.getModuleId());
-	}
-
-	rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
-	rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
-	rowURL.setParameter("title", layoutTemplate.getName());
-
-	// Name and thumbnail
-
-	StringBundler sb = new StringBundler(18);
-
-	if (showEditPluginHREF) {
-		sb.append("<a href=\"");
-		sb.append(rowURL.toString());
-		sb.append("\">");
-	}
-
-	sb.append("<img alt=\"");
-	sb.append(LanguageUtil.get(locale, "thumbnail"));
-	sb.append("\" class=\"plugin-thumbnail\" src=\"");
-	sb.append(layoutTemplate.getStaticResourcePath());
-	sb.append(HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()));
-	sb.append("\" />");
-	sb.append(HtmlUtil.escape(layoutTemplate.getName(locale)));
-
-	if (showEditPluginHREF) {
-		sb.append("</a>");
-	}
-
-	sb.append("<br />");
-	sb.append(LanguageUtil.get(pageContext, "package"));
-	sb.append(": ");
-
-	if (pluginPackage == null) {
-		sb.append(LanguageUtil.get(pageContext, "unknown"));
-	}
-	else {
-		sb.append(HtmlUtil.escape(pluginPackage.getName()));
-
-		if (pluginPackage.getContext() != null) {
-			sb.append(" (");
-			sb.append(pluginPackage.getContext());
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-	}
-
-	row.addText(sb.toString());
-
-	// Active
-
-	row.addText(LanguageUtil.get(pageContext, (pluginSetting.isActive() ? "yes" : "no")));
-
-	// Roles
-
-	row.addText(HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), ", ")));
-
-	// Add result row
-
-	resultRows.add(row);
-}
+List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 %>
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-container
+	iteratorURL="<%= portletURL %>"
+	total="<%= layoutTemplates.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= ListUtil.subList(layoutTemplates, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.LayoutTemplate"
+		modelVar="layoutTemplate"
+	>
+
+		<%
+		PluginPackage pluginPackage = layoutTemplate.getPluginPackage();
+		PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), layoutTemplate.getLayoutTemplateId(), Plugin.TYPE_LAYOUT_TEMPLATE);
+
+		PortletURL rowURL = renderResponse.createRenderURL();
+
+		rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
+		rowURL.setParameter("redirect", currentURL);
+
+		if (pluginPackage != null) {
+			rowURL.setParameter("moduleId", pluginPackage.getModuleId());
+		}
+
+		rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
+		rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
+		rowURL.setParameter("title", layoutTemplate.getName());
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="layout-template"
+		>
+			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
+				<img alt="<%= LanguageUtil.get(locale, "thumbnail") %>" class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
+
+				<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>
+			</aui:a>
+
+			<br />
+
+			<liferay-ui:message key="package" />:
+
+			<c:choose>
+				<c:when test="<%= pluginPackage == null %>">
+					<liferay-ui:message key="unknown" />
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(pluginPackage.getName()) %>
+
+					<c:if test="<%= pluginPackage.getContext() != null %>">
+						(<%= pluginPackage.getContext() %>)
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			name="active"
+			value='<%= LanguageUtil.get(pageContext, (pluginSetting.isActive() ? "yes" : "no")) %>'
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="roles"
+			value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator/>
+</liferay-ui:search-container>

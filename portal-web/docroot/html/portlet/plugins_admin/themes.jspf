@@ -26,118 +26,87 @@
 </c:if>
 
 <%
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("theme");
-headerNames.add("active");
-headerNames.add("roles");
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
-
 List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
-
-int total = themes.size();
-
-searchContainer.setTotal(total);
-
-List results = ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	Theme theme2 = (Theme)results.get(i);
-
-	PluginPackage pluginPackage = theme2.getPluginPackage();
-	PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), theme2.getThemeId(), Plugin.TYPE_THEME);
-
-	ResultRow row = new ResultRow(theme2, theme2.getThemeId(), i);
-
-	PortletURL rowURL = renderResponse.createRenderURL();
-
-	rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
-	rowURL.setParameter("redirect", currentURL);
-
-	if (pluginPackage != null) {
-		rowURL.setParameter("moduleId", pluginPackage.getModuleId());
-	}
-
-	rowURL.setParameter("pluginId", theme2.getThemeId());
-	rowURL.setParameter("pluginType", Plugin.TYPE_THEME);
-	rowURL.setParameter("title", theme2.getName());
-
-	// Name and thumbnail
-
-	StringBundler sb = new StringBundler();
-
-	if (showEditPluginHREF) {
-		sb.append("<a href=\"");
-		sb.append(rowURL.toString());
-		sb.append("\">");
-	}
-
-	sb.append("<img alt=\"");
-	sb.append(LanguageUtil.get(locale, "thumbnail"));
-	sb.append("\" class=\"plugin-thumbnail\" src=\"");
-	sb.append(theme2.getStaticResourcePath());
-	sb.append(HtmlUtil.escapeAttribute(theme2.getImagesPath()));
-	sb.append("/thumbnail.png\" />");
-	sb.append(HtmlUtil.escape(theme2.getName()));
-
-	if (showEditPluginHREF) {
-		sb.append("</a>");
-	}
-
-	sb.append("<br />");
-	sb.append(LanguageUtil.get(pageContext, "package"));
-	sb.append(": ");
-
-	if (pluginPackage == null) {
-		sb.append(LanguageUtil.get(pageContext, "unknown"));
-	}
-	else {
-		sb.append(HtmlUtil.escape(pluginPackage.getName()));
-
-		if (pluginPackage.getContext() != null) {
-			sb.append(" (");
-			sb.append(pluginPackage.getContext());
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-	}
-
-	List colorSchemes = theme2.getColorSchemes();
-
-	if (!colorSchemes.isEmpty()) {
-		sb.append("<br />");
-		sb.append(LanguageUtil.get(pageContext, "color-schemes"));
-		sb.append(": ");
-
-		for (int j = 0; j < colorSchemes.size(); j++) {
-			ColorScheme colorScheme2 = (ColorScheme)colorSchemes.get(j);
-
-			sb.append(HtmlUtil.escape(colorScheme2.getName()));
-
-			if ((j + 1) < colorSchemes.size()) {
-				sb.append(", ");
-			}
-		}
-	}
-
-	row.addText(sb.toString());
-
-	// Active
-
-	row.addText(LanguageUtil.get(pageContext, (pluginSetting.isActive() ? "yes" : "no")));
-
-	// Roles
-
-	row.addText(HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), ", ")));
-
-	// Add result row
-
-	resultRows.add(row);
-}
 %>
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-container
+	iteratorURL="<%= portletURL %>"
+	total="<%= themes.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Theme"
+		modelVar="curTheme"
+	>
+
+		<%
+		PluginPackage pluginPackage = curTheme.getPluginPackage();
+		PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), curTheme.getThemeId(), Plugin.TYPE_THEME);
+
+		PortletURL rowURL = renderResponse.createRenderURL();
+
+		rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
+		rowURL.setParameter("redirect", currentURL);
+
+		if (pluginPackage != null) {
+			rowURL.setParameter("moduleId", pluginPackage.getModuleId());
+		}
+
+		rowURL.setParameter("pluginId", curTheme.getThemeId());
+		rowURL.setParameter("pluginType", Plugin.TYPE_THEME);
+		rowURL.setParameter("title", curTheme.getName());
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="themes"
+		>
+			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
+				<img alt="<%= LanguageUtil.get(locale, "thumbnail") %>" class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
+			</aui:a>
+
+			<br />
+
+			<liferay-ui:message key="package" />:
+
+			<c:choose>
+				<c:when test="<%= pluginPackage == null %>">
+			   		<liferay-ui:message key="unknown" />
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(pluginPackage.getName()) %>
+
+					<c:if test="<%= pluginPackage.getContext() != null %>">
+						(<%= pluginPackage.getContext() %>)
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+
+			<%
+			List colorSchemes = curTheme.getColorSchemes();
+			%>
+
+			<c:if test="<%= !colorSchemes.isEmpty() %>">
+				<br />
+
+				<liferay-ui:message key="color-schemes" />:
+
+				<%= ListUtil.toString(colorSchemes, ColorScheme.COLOR_SCHEME_NAME_ACCESSOR, StringPool.COMMA_AND_SPACE) %>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			name="active"
+			value='<%= LanguageUtil.get(pageContext, (pluginSetting.isActive() ? "yes" : "no")) %>'
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="roles"
+			value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator/>
+</liferay-ui:search-container>

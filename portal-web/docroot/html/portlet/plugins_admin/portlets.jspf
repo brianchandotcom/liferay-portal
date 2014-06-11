@@ -26,136 +26,107 @@
 </c:if>
 
 <%
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("portlet");
-headerNames.add("active");
-
-if (showReindexButton) {
-	headerNames.add("search-index");
-}
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
-
 List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId(), false, false);
 
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
-
-int total = portlets.size();
-
-searchContainer.setTotal(total);
-
-List<Portlet> results = ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	Portlet portlet = results.get(i);
-
-	PluginPackage pluginPackage = portlet.getPluginPackage();
-
-	ResultRow row = new ResultRow(portlet, portlet.getId(), i);
-
-	PortletURL rowURL = renderResponse.createRenderURL();
-
-	rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
-	rowURL.setParameter("redirect", currentURL);
-
-	if (pluginPackage != null) {
-		rowURL.setParameter("moduleId", pluginPackage.getModuleId());
-	}
-
-	rowURL.setParameter("pluginId", portlet.getPortletId());
-	rowURL.setParameter("pluginType", Plugin.TYPE_PORTLET);
-
-	String title = PortalUtil.getPortletTitle(portlet, application, locale);
-
-	rowURL.setParameter("title", title);
-
-	// Name and description
-
-	StringBundler sb = new StringBundler(14);
-
-	String displayName = portlet.getDisplayName();
-
-	if (showEditPluginHREF) {
-		sb.append("<a href=\"");
-		sb.append(rowURL.toString());
-		sb.append("\">");
-	}
-
-	sb.append(title);
-
-	if (showEditPluginHREF) {
-		sb.append("</a>");
-	}
-
-	sb.append("<br />");
-	sb.append(LanguageUtil.get(pageContext, "package"));
-	sb.append(": ");
-
-	if (pluginPackage == null) {
-		sb.append(LanguageUtil.get(pageContext, "unknown"));
-	}
-	else {
-		sb.append(HtmlUtil.escape(pluginPackage.getName()));
-
-		if (pluginPackage.getContext() != null) {
-			sb.append(" (");
-			sb.append(pluginPackage.getContext());
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-	}
-
-	if (Validator.isNotNull(displayName) && !title.equals(displayName)) {
-		sb.append("<br />");
-		sb.append(portlet.getDisplayName());
-	}
-
-	row.addText(sb.toString());
-
-	// Active
-
-	row.addText(LanguageUtil.get(pageContext, (portlet.isActive() ? "yes" : "no")));
-
-	// Search index
-
-	if (showReindexButton) {
-		List<String> indexerClasses = portlet.getIndexerClasses();
-
-		if (!indexerClasses.isEmpty()) {
-			sb.setIndex(0);
-
-			sb.append("<input onclick=\"");
-			sb.append(renderResponse.getNamespace());
-			sb.append("reindexPortlet('");
-			sb.append(HtmlUtil.escapeJS(portlet.getPortletId()));
-			sb.append("');\" type=\"button\" value=\"");
-			sb.append(LanguageUtil.get(pageContext, "reindex"));
-			sb.append("\" />");
-
-			row.addText(sb.toString());
-		}
-		else {
-			row.addText(StringPool.BLANK);
-		}
-	}
-
-	// Add result row
-
-	resultRows.add(row);
-}
 %>
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-container
+	iteratorURL="<%= portletURL %>"
+	total="<%= portlets.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= ListUtil.subList(portlets, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
 
-<c:if test="<%= showReindexButton %>">
-	<aui:script>
-		function <portlet:namespace />reindexPortlet(portletId) {
-			document.<portlet:namespace />fm.<portlet:namespace />portletId.value = portletId;
-			<portlet:namespace />saveServer('reindex');
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Portlet"
+		modelVar="portlet"
+	>
+
+		<%
+		PluginPackage pluginPackage = portlet.getPluginPackage();
+
+		PortletURL rowURL = renderResponse.createRenderURL();
+
+		rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
+		rowURL.setParameter("redirect", currentURL);
+
+		if (pluginPackage != null) {
+			rowURL.setParameter("moduleId", pluginPackage.getModuleId());
 		}
-	</aui:script>
-</c:if>
+
+		rowURL.setParameter("pluginId", portlet.getPortletId());
+		rowURL.setParameter("pluginType", Plugin.TYPE_PORTLET);
+
+		String title = PortalUtil.getPortletTitle(portlet, application, locale);
+
+		rowURL.setParameter("title", title);
+		%>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="portlet"
+		>
+			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
+				<%= title %>
+			</aui:a>
+
+			<br />
+			<liferay-ui:message key="package" />:
+
+			<c:choose>
+				<c:when test="<%= pluginPackage == null %>">
+					<liferay-ui:message key="unknown" />
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(pluginPackage.getName()) %>
+
+					<c:if test="<%= pluginPackage.getContext() != null %>">
+						(<%= pluginPackage.getContext() %>)
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+
+			<%
+			String displayName = portlet.getDisplayName();
+			%>
+
+			<c:if test="<%= Validator.isNotNull(displayName) && !title.equals(displayName) %>">
+				<br />
+
+				<%= displayName %>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			name="active"
+			value='<%= LanguageUtil.get(pageContext, (portlet.isActive() ? "yes" : "no")) %>'
+		/>
+
+		<c:if test="<%= showReindexButton %>">
+			<liferay-ui:search-container-column-text
+				name="search-index"
+			>
+
+				<%
+				List<String> indexerClasses = portlet.getIndexerClasses();
+				%>
+
+				<c:if test="<%= !indexerClasses.isEmpty() %>">
+
+					<%
+					Map<String, String> data = new HashMap<String, String>();
+
+					data.put(Constants.CMD, "reindex");
+					data.put("portletid", HtmlUtil.escapeJS(portlet.getPortletId()));
+					%>
+
+					<aui:button cssClass="save-server-button" data="<%= data %>" value="reindex" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
+		</c:if>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator/>
+</liferay-ui:search-container>

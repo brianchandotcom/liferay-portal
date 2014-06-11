@@ -20,32 +20,6 @@
 	<c:when test="<%= permissionChecker.isOmniadmin() %>">
 
 		<%
-		String tabs1 = ParamUtil.getString(request, "tabs1", "server");
-
-		boolean showTabs1 = false;
-
-		if (portletName.equals(PortletKeys.ADMIN_INSTANCE)) {
-			tabs1 = "instances";
-		}
-		else if (portletName.equals(PortletKeys.ADMIN_PLUGINS)) {
-			tabs1 = "plugins";
-		}
-		else if (portletName.equals(PortletKeys.ADMIN_SERVER)) {
-			tabs1 = "server";
-		}
-		else if (portletName.equals(PortletKeys.ADMIN)) {
-			showTabs1 = true;
-		}
-
-		String tabs2 = ParamUtil.getString(request, "tabs2");
-		String tabs3 = ParamUtil.getString(request, "tabs3");
-
-		if (tabs1.equals("plugins")) {
-			if (!tabs2.equals("portlet-plugins") && !tabs2.equals("theme-plugins") && !tabs2.equals("layout-template-plugins") && !tabs2.equals("hook-plugins") && !tabs2.equals("web-plugins")) {
-				tabs2 = "portlet-plugins";
-			}
-		}
-
 		int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 
@@ -82,7 +56,7 @@
 
 			<c:choose>
 				<c:when test='<%= tabs1.equals("server") %>'>
-					<%@ include file="/html/portlet/admin/server.jspf" %>
+					<liferay-util:include page="/html/portlet/admin/server.jsp" />
 
 					<aui:script use="liferay-admin">
 						new Liferay.Portlet.Admin(
@@ -115,13 +89,23 @@
 			</c:choose>
 		</aui:form>
 
-		<aui:script>
-			function <portlet:namespace />saveServer(cmd) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
-				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/view" /><portlet:param name="tabs1" value="<%= tabs1 %>" /><portlet:param name="tabs2" value="<%= tabs2 %>" /><portlet:param name="tabs3" value="<%= tabs3 %>" /><portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" /><portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" /></portlet:renderURL>';
+		<aui:script use="aui-base">
+			A.one('#<portlet:namespace />fm').delegate(
+				'click',
+				function(event) {
+					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = event.currentTarget.attr('data-cmd');
+					document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/view" /><portlet:param name="tabs1" value="<%= tabs1 %>" /><portlet:param name="tabs2" value="<%= tabs2 %>" /><portlet:param name="tabs3" value="<%= tabs3 %>" /><portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" /><portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" /></portlet:renderURL>';
 
-				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>');
-			}
+					var portletId = event.currentTarget.attr('data-portletid');
+
+					if (portletId) {
+						document.<portlet:namespace />fm.<portlet:namespace />portletId.value = portletId;
+					}
+
+					submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>');
+				},
+				'.save-server-button'
+			);
 		</aui:script>
 	</c:when>
 	<c:otherwise>

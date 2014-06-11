@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment;
+package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
@@ -21,22 +22,32 @@ import com.liferay.portal.service.ServiceContext;
 /**
  * @author André de Oliveira
  */
-public interface CommentManager {
+public class NullCommentManagerImpl implements CommentManager {
 
+	@Override
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException;
+		throws PortalException {
 
+		return 0;
+	}
+
+	@Override
 	public void addInitialDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
-		throws PortalException;
+		throws PortalException {
+	}
 
-	public void deleteComment(long commentId) throws PortalException;
+	@Override
+	public void deleteComment(long commentId) throws PortalException {
+	}
 
+	@Override
 	public void deleteDiscussion(String className, long classPK)
-		throws PortalException;
+		throws PortalException {
+	}
 
 }

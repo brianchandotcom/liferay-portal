@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -25,7 +27,7 @@ import java.util.Set;
 public class DDMFormFieldOptions {
 
 	public void addOption(String value) {
-		_options.put(value, new LocalizedValue());
+		_options.put(value, new LocalizedValue(_defaultLocale));
 	}
 
 	public void addOptionLabel(
@@ -34,12 +36,16 @@ public class DDMFormFieldOptions {
 		LocalizedValue labels = _options.get(optionValue);
 
 		if (labels == null) {
-			labels = new LocalizedValue();
+			labels = new LocalizedValue(_defaultLocale);
 
 			_options.put(optionValue, labels);
 		}
 
 		labels.addValue(locale, label);
+	}
+
+	public Locale getDefaultLocale() {
+		return _defaultLocale;
 	}
 
 	public LocalizedValue getOptionLabels(String optionValue) {
@@ -50,6 +56,15 @@ public class DDMFormFieldOptions {
 		return _options.keySet();
 	}
 
+	public void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
+
+		for (LocalizedValue labels : _options.values()) {
+			labels.setDefaultLocale(defaultLocale);
+		}
+	}
+
+	private Locale _defaultLocale = LocaleUtil.getDefault();
 	private Map<String, LocalizedValue> _options =
 		new LinkedHashMap<String, LocalizedValue>();
 

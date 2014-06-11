@@ -133,7 +133,7 @@ if (Validator.isNotNull(historyKey)) {
 					%>
 
 							<c:if test="<%= Validator.isNotNull(category) %>">
-								<li class="dropdown-header list-group-item"><liferay-ui:message key="<%= category %>" /></li>
+								<li class="list-group-item nav-header "><liferay-ui:message key="<%= category %>" /></li>
 							</c:if>
 
 							<%

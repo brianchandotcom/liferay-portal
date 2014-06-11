@@ -132,6 +132,11 @@
 	padding: 0;
 }
 
+.nav.list-group .list-group-item.nav-header {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
 	padding: 11px 14px;
 

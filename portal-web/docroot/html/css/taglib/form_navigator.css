@@ -3,7 +3,9 @@
 
 .taglib-form-navigator {
 	ul.form-navigator.list-group {
-		float: right;
+		@include respond-to(desktop) {
+			float: right;
+		}
 	}
 
 	.error-notice, .modified-notice {

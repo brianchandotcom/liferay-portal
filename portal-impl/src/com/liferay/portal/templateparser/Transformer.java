@@ -199,218 +199,6 @@ public class Transformer {
 		return unsyncStringWriter.toString();
 	}
 
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
-			String langType)
-		throws Exception {
-
-		// Setup listeners
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Language " + languageId);
-		}
-
-		if (Validator.isNull(viewMode)) {
-			viewMode = Constants.VIEW;
-		}
-
-		if (_logTokens.isDebugEnabled()) {
-			String tokensString = PropertiesUtil.list(tokens);
-
-			_logTokens.debug(tokensString);
-		}
-
-		if (_logTransformBefore.isDebugEnabled()) {
-			_logTransformBefore.debug(document);
-		}
-
-		for (TransformerListener transformerListener : _transformerListeners) {
-
-			// Modify XML
-
-			if (_logXmlBeforeListener.isDebugEnabled()) {
-				_logXmlBeforeListener.debug(document);
-			}
-
-			if (transformerListener != null) {
-				document = transformerListener.onXml(
-					document, languageId, tokens);
-
-				if (_logXmlAfterListener.isDebugEnabled()) {
-					_logXmlAfterListener.debug(document);
-				}
-			}
-
-			// Modify script
-
-			if (_logScriptBeforeListener.isDebugEnabled()) {
-				_logScriptBeforeListener.debug(script);
-			}
-
-			if (transformerListener != null) {
-				script = transformerListener.onScript(
-					script, document, languageId, tokens);
-
-				if (_logScriptAfterListener.isDebugEnabled()) {
-					_logScriptAfterListener.debug(script);
-				}
-			}
-		}
-
-		// Transform
-
-		String output = null;
-
-		if (Validator.isNull(langType)) {
-			output = LocalizationUtil.getLocalization(
-				document.asXML(), languageId);
-		}
-		else {
-			long companyId = 0;
-			long companyGroupId = 0;
-			long articleGroupId = 0;
-
-			if (tokens != null) {
-				companyId = GetterUtil.getLong(tokens.get("company_id"));
-				companyGroupId = GetterUtil.getLong(
-					tokens.get("company_group_id"));
-				articleGroupId = GetterUtil.getLong(
-					tokens.get("article_group_id"));
-			}
-
-			long scopeGroupId = 0;
-			long siteGroupId = 0;
-
-			if (themeDisplay != null) {
-				companyId = themeDisplay.getCompanyId();
-				companyGroupId = themeDisplay.getCompanyGroupId();
-				scopeGroupId = themeDisplay.getScopeGroupId();
-				siteGroupId = themeDisplay.getSiteGroupId();
-			}
-
-			String templateId = tokens.get("template_id");
-
-			templateId = getTemplateId(
-				templateId, companyId, companyGroupId, articleGroupId);
-
-			Template template = getTemplate(
-				templateId, tokens, languageId, document, script, langType);
-
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			try {
-				if (document != null) {
-					Element rootElement = document.getRootElement();
-
-					List<TemplateNode> templateNodes = getTemplateNodes(
-						themeDisplay, rootElement);
-
-					if (templateNodes != null) {
-						for (TemplateNode templateNode : templateNodes) {
-							template.put(templateNode.getName(), templateNode);
-						}
-					}
-
-					if (portletRequestModel != null) {
-						template.put("request", portletRequestModel.toMap());
-
-						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-							Document requestDocument = SAXReaderUtil.read(
-								portletRequestModel.toXML());
-
-							Element requestElement =
-								requestDocument.getRootElement();
-
-							template.put("xmlRequest", requestElement.asXML());
-						}
-					}
-					else {
-						Element requestElement = rootElement.element("request");
-
-						template.put(
-							"request", insertRequestVariables(requestElement));
-
-						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-							template.put("xmlRequest", requestElement.asXML());
-						}
-					}
-				}
-
-				template.put("articleGroupId", articleGroupId);
-				template.put("company", getCompany(themeDisplay, companyId));
-				template.put("companyId", companyId);
-				template.put("device", getDevice(themeDisplay));
-
-				String templatesPath = getTemplatesPath(
-					companyId, articleGroupId);
-
-				Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-				template.put("locale", locale);
-
-				template.put(
-					"permissionChecker",
-					PermissionThreadLocal.getPermissionChecker());
-				template.put(
-					"randomNamespace",
-					StringUtil.randomId() + StringPool.UNDERLINE);
-				template.put("scopeGroupId", scopeGroupId);
-				template.put("siteGroupId", siteGroupId);
-				template.put("templatesPath", templatesPath);
-				template.put("viewMode", viewMode);
-
-				// Deprecated variables
-
-				template.put("groupId", articleGroupId);
-				template.put("journalTemplatesPath", templatesPath);
-
-				mergeTemplate(template, unsyncStringWriter);
-			}
-			catch (Exception e) {
-				if (e instanceof DocumentException) {
-					throw new TransformException(
-						"Unable to read XML document", e);
-				}
-				else if (e instanceof IOException) {
-					throw new TransformException("Error reading template", e);
-				}
-				else if (e instanceof TransformException) {
-					throw (TransformException)e;
-				}
-				else {
-					throw new TransformException("Unhandled exception", e);
-				}
-			}
-
-			output = unsyncStringWriter.toString();
-		}
-
-		// Postprocess output
-
-		for (TransformerListener transformerListener : _transformerListeners) {
-
-			// Modify output
-
-			if (_logOutputBeforeListener.isDebugEnabled()) {
-				_logOutputBeforeListener.debug(output);
-			}
-
-			output = transformerListener.onOutput(output, languageId, tokens);
-
-			if (_logOutputAfterListener.isDebugEnabled()) {
-				_logOutputAfterListener.debug(output);
-			}
-		}
-
-		if (_logTransfromAfter.isDebugEnabled()) {
-			_logTransfromAfter.debug(output);
-		}
-
-		return output;
-	}
-
 	protected Company getCompany(ThemeDisplay themeDisplay, long companyId)
 		throws Exception {
 
@@ -670,6 +458,218 @@ public class Transformer {
 		}
 
 		template.prepare(themeDisplay.getRequest());
+	}
+
+	protected String transform(
+			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			String viewMode, String languageId, Document document,
+			PortletRequestModel portletRequestModel, String script,
+			String langType)
+		throws Exception {
+
+		// Setup listeners
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Language " + languageId);
+		}
+
+		if (Validator.isNull(viewMode)) {
+			viewMode = Constants.VIEW;
+		}
+
+		if (_logTokens.isDebugEnabled()) {
+			String tokensString = PropertiesUtil.list(tokens);
+
+			_logTokens.debug(tokensString);
+		}
+
+		if (_logTransformBefore.isDebugEnabled()) {
+			_logTransformBefore.debug(document);
+		}
+
+		for (TransformerListener transformerListener : _transformerListeners) {
+
+			// Modify XML
+
+			if (_logXmlBeforeListener.isDebugEnabled()) {
+				_logXmlBeforeListener.debug(document);
+			}
+
+			if (transformerListener != null) {
+				document = transformerListener.onXml(
+					document, languageId, tokens);
+
+				if (_logXmlAfterListener.isDebugEnabled()) {
+					_logXmlAfterListener.debug(document);
+				}
+			}
+
+			// Modify script
+
+			if (_logScriptBeforeListener.isDebugEnabled()) {
+				_logScriptBeforeListener.debug(script);
+			}
+
+			if (transformerListener != null) {
+				script = transformerListener.onScript(
+					script, document, languageId, tokens);
+
+				if (_logScriptAfterListener.isDebugEnabled()) {
+					_logScriptAfterListener.debug(script);
+				}
+			}
+		}
+
+		// Transform
+
+		String output = null;
+
+		if (Validator.isNull(langType)) {
+			output = LocalizationUtil.getLocalization(
+				document.asXML(), languageId);
+		}
+		else {
+			long companyId = 0;
+			long companyGroupId = 0;
+			long articleGroupId = 0;
+
+			if (tokens != null) {
+				companyId = GetterUtil.getLong(tokens.get("company_id"));
+				companyGroupId = GetterUtil.getLong(
+					tokens.get("company_group_id"));
+				articleGroupId = GetterUtil.getLong(
+					tokens.get("article_group_id"));
+			}
+
+			long scopeGroupId = 0;
+			long siteGroupId = 0;
+
+			if (themeDisplay != null) {
+				companyId = themeDisplay.getCompanyId();
+				companyGroupId = themeDisplay.getCompanyGroupId();
+				scopeGroupId = themeDisplay.getScopeGroupId();
+				siteGroupId = themeDisplay.getSiteGroupId();
+			}
+
+			String templateId = tokens.get("template_id");
+
+			templateId = getTemplateId(
+				templateId, companyId, companyGroupId, articleGroupId);
+
+			Template template = getTemplate(
+				templateId, tokens, languageId, document, script, langType);
+
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+			try {
+				if (document != null) {
+					Element rootElement = document.getRootElement();
+
+					List<TemplateNode> templateNodes = getTemplateNodes(
+						themeDisplay, rootElement);
+
+					if (templateNodes != null) {
+						for (TemplateNode templateNode : templateNodes) {
+							template.put(templateNode.getName(), templateNode);
+						}
+					}
+
+					if (portletRequestModel != null) {
+						template.put("request", portletRequestModel.toMap());
+
+						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+							Document requestDocument = SAXReaderUtil.read(
+								portletRequestModel.toXML());
+
+							Element requestElement =
+								requestDocument.getRootElement();
+
+							template.put("xmlRequest", requestElement.asXML());
+						}
+					}
+					else {
+						Element requestElement = rootElement.element("request");
+
+						template.put(
+							"request", insertRequestVariables(requestElement));
+
+						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+							template.put("xmlRequest", requestElement.asXML());
+						}
+					}
+				}
+
+				template.put("articleGroupId", articleGroupId);
+				template.put("company", getCompany(themeDisplay, companyId));
+				template.put("companyId", companyId);
+				template.put("device", getDevice(themeDisplay));
+
+				String templatesPath = getTemplatesPath(
+					companyId, articleGroupId);
+
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+				template.put("locale", locale);
+
+				template.put(
+					"permissionChecker",
+					PermissionThreadLocal.getPermissionChecker());
+				template.put(
+					"randomNamespace",
+					StringUtil.randomId() + StringPool.UNDERLINE);
+				template.put("scopeGroupId", scopeGroupId);
+				template.put("siteGroupId", siteGroupId);
+				template.put("templatesPath", templatesPath);
+				template.put("viewMode", viewMode);
+
+				// Deprecated variables
+
+				template.put("groupId", articleGroupId);
+				template.put("journalTemplatesPath", templatesPath);
+
+				mergeTemplate(template, unsyncStringWriter);
+			}
+			catch (Exception e) {
+				if (e instanceof DocumentException) {
+					throw new TransformException(
+						"Unable to read XML document", e);
+				}
+				else if (e instanceof IOException) {
+					throw new TransformException("Error reading template", e);
+				}
+				else if (e instanceof TransformException) {
+					throw (TransformException)e;
+				}
+				else {
+					throw new TransformException("Unhandled exception", e);
+				}
+			}
+
+			output = unsyncStringWriter.toString();
+		}
+
+		// Postprocess output
+
+		for (TransformerListener transformerListener : _transformerListeners) {
+
+			// Modify output
+
+			if (_logOutputBeforeListener.isDebugEnabled()) {
+				_logOutputBeforeListener.debug(output);
+			}
+
+			output = transformerListener.onOutput(output, languageId, tokens);
+
+			if (_logOutputAfterListener.isDebugEnabled()) {
+				_logOutputAfterListener.debug(output);
+			}
+		}
+
+		if (_logTransfromAfter.isDebugEnabled()) {
+			_logTransfromAfter.debug(output);
+		}
+
+		return output;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Transformer.class);

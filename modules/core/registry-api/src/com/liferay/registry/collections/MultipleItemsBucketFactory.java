@@ -16,8 +16,11 @@ package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceReference;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Carlos Sierra Andrés
@@ -44,6 +47,8 @@ public class MultipleItemsBucketFactory<S>
 
 		ListBucket() {
 
+			_orderedSet = new TreeSet<ServiceReference<S>>(_comparator);
+			_services = new ArrayList<S>();
 		}
 
 		@Override
@@ -65,6 +70,10 @@ public class MultipleItemsBucketFactory<S>
 		public synchronized void store(ServiceReference<S> serviceReference) {
 
 		}
+
+		private final Set<ServiceReference<S>> _orderedSet;
+
+		private List<S> _services;
 
 	}
 

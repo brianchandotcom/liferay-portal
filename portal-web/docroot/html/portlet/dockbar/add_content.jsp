@@ -54,14 +54,12 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	</div>
 
 	<aui:nav-bar>
-		<aui:nav collapsible="<%= false %>" cssClass="display-style-buttons-container">
-			<aui:nav-item cssClass="display-style-buttons-container">
-				<liferay-ui:app-view-display-style
-					displayStyle="<%= displayStyle %>"
-					displayStyles="<%= _DISPLAY_VIEWS %>"
-					eventName='<%= "AddContent:changeDisplayStyle" %>'
-				/>
-			</aui:nav-item>
+		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+			<liferay-ui:app-view-display-style
+				displayStyle="<%= displayStyle %>"
+				displayStyles="<%= _DISPLAY_VIEWS %>"
+				eventName='<%= "AddContent:changeDisplayStyle" %>'
+			/>
 		</aui:nav>
 
 		<span class="add-content-button">

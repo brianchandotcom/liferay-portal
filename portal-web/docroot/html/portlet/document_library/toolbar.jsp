@@ -29,15 +29,12 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <aui:nav-bar>
-	<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
-		<aui:nav-item>
-			<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
-				<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
-					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-				</c:if>
-			</span>
-		</aui:nav-item>
+	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+		<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
+			<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+		</c:if>
 	</aui:nav>
+
 
 	<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">

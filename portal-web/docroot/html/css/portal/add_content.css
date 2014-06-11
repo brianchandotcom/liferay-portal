@@ -51,12 +51,6 @@
 		}
 
 		.display-style-buttons-container {
-			float: right;
-
-			@include respond-to(desktop) {
-				margin: 4px 0;
-			}
-
 			.lfr-icon-menu {
 				.lfr-icon-menu-arrow {
 					border-bottom-color: #333;

@@ -28,7 +28,7 @@ String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS)
 		<c:otherwise>
 
 			<%
-			double version = GetterUtil.getDouble(request.getAttribute("version"));
+			double version = GetterUtil.getDouble(request.getAttribute(WebKeys.DIFF_VERSION));
 			%>
 
 			<div class="alert alert-info">

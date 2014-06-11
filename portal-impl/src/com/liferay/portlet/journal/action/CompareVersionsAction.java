@@ -105,7 +105,8 @@ public class CompareVersionsAction extends PortletAction {
 				themeDisplay);
 		}
 		catch (CompareVersionsException cve) {
-			resourceRequest.setAttribute("version", cve.getVersion());
+			resourceRequest.setAttribute(
+				WebKeys.DIFF_VERSION, cve.getVersion());
 		}
 
 		resourceRequest.setAttribute(
@@ -199,7 +200,7 @@ public class CompareVersionsAction extends PortletAction {
 				themeDisplay);
 		}
 		catch (CompareVersionsException cve) {
-			renderRequest.setAttribute("version", cve.getVersion());
+			renderRequest.setAttribute(WebKeys.DIFF_VERSION, cve.getVersion());
 		}
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);

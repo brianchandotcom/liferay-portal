@@ -119,6 +119,7 @@
 		<execute action="PGDocumentsandmediaConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
 		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
 		<execute action="PGDocumentsandmediaConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultPG">

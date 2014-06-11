@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -259,8 +258,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		_unusedVariablesExclusions = getExclusionsProperties(
-			"source_formatter_jsp_unused_variables_exclusions.properties");
+		_unusedVariablesExclusions = getExclusions(
+			"jsp.unused.variables.excludes");
 
 		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
 		String[] includes = new String[] {
@@ -376,9 +375,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, "move imports to init.jsp: " + fileName);
 		}
 
-		newContent = fixCopyright(
-			newContent, getCopyright(), getOldCopyright(), absolutePath,
-			fileName);
+		newContent = fixCopyright(newContent, absolutePath, fileName);
 
 		newContent = StringUtil.replace(
 			newContent,
@@ -1190,7 +1187,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
-	private Properties _unusedVariablesExclusions;
+	private List<String> _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

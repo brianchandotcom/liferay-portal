@@ -37,6 +37,17 @@ import java.util.Map;
  */
 public class MBSettings {
 
+	public static final String[] ALL_KEYS = {
+		"emailFromAddress", "emailFromName", "emailMessageAddedBody",
+		"emailMessageAddedSubject", "emailMessageUpdatedBody",
+		"emailMessageUpdatedSubject", "messageFormat", "priorities", "ranks",
+		"recentPostsDateOffset", "rssDelta", "rssDisplayStyle", "rssFeedType",
+		"allowAnonymousPosting", "emailHtmlFormat", "emailMessageAddedEnabled",
+		"emailMessageUpdatedEnabled", "enableFlags", "enableRatings",
+		"enableRss", "subscribeByDefault", "threadAsQuestionByDefault"};
+
+	public static final String[] MULTI_VALUED_KEYS = {"ranks"};
+
 	public static MBSettings getInstance(long groupId)
 		throws PortalException, SystemException {
 

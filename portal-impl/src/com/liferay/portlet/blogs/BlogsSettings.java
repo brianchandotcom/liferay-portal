@@ -33,6 +33,13 @@ import java.util.Map;
  */
 public class BlogsSettings {
 
+	public static final String[] ALL_KEYS = {
+		"emailEntryAddedBody", "emailEntryAddedSubject",
+		"emailEntryUpdatedBody", "emailEntryUpdatedSubject", "emailFromAddress",
+		"emailFromName", "emailEntryAddedEnabled", "emailEntryUpdatedEnabled"};
+
+	public static final String[] MULTI_VALUED_KEYS = {};
+
 	public static BlogsSettings getInstance(long groupId)
 		throws PortalException, SystemException {
 

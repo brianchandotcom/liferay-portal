@@ -36,10 +36,16 @@ import java.util.Map;
  */
 public class DLPortletInstanceSettings {
 
+	public static final String[] ALL_KEYS = {
+		"rootFolderId", "displayViews", "entriesPerPage", "entryColumns",
+		"fileEntriesPerPage", "fileEntryColumns", "folderColumns",
+		"foldersPerPage", "mimeTypes", "enableCommentRatings", "enableRatings",
+		"enableRelatedAssets", "showActions", "showFolderMenu",
+		"showFoldersSearch", "showSubfolders", "showTabs"};
+
 	public static final String[] MULTI_VALUED_KEYS = {
 		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
-		"mimeTypes"
-	};
+		"mimeTypes"};
 
 	public static DLPortletInstanceSettings getInstance(
 			Layout layout, String portletId)

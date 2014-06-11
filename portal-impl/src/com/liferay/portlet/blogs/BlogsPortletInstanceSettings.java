@@ -34,6 +34,14 @@ import java.util.Map;
  */
 public class BlogsPortletInstanceSettings {
 
+	public static final String[] ALL_KEYS = {
+		"displayStyle", "displayStyleGroupId", "pageDelta", "rssDelta",
+		"rssDisplayStyle", "rssFeedType", "socialBookmarksDisplayPosition",
+		"socialBookmarksDisplayStyle", "socialBookmarksTypes",
+		"enableCommentRatings", "enableComments", "enableFlags",
+		"enableRatings", "enableRelatedAssets", "enableRss",
+		"enableSocialBookmarks"};
+
 	public static final String[] MULTI_VALUED_KEYS = {};
 
 	public static BlogsPortletInstanceSettings getInstance(

@@ -33,6 +33,12 @@ import java.util.Map;
  */
 public class DLSettings {
 
+	public static final String[] ALL_KEYS = {
+		"emailFileEntryAddedBody", "emailFileEntryAddedSubject",
+		"emailFileEntryUpdatedBody", "emailFileEntryUpdatedSubject",
+		"emailFromAddress", "emailFromName", "emailFileEntryAddedEnabled",
+		"emailFileEntryUpdatedEnabled"};
+
 	public static final String[] MULTI_VALUED_KEYS = {};
 
 	public static DLSettings getInstance(long groupId)

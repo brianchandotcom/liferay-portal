@@ -171,7 +171,7 @@ public class UpgradeLayout extends UpgradeProcess {
 				typeSettingsProperties, javaScript1, javaScript2, javaScript3);
 		}
 
-		updateTypeSettings(plid, typeSettingsProperties.toString());
+		updateTypeSettings(plid, typeSettingsProperties.toSortedString());
 	}
 
 	protected UnicodeProperties updateMetaField(

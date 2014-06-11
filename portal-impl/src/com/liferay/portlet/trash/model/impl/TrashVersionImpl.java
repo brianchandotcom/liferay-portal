@@ -30,7 +30,7 @@ public class TrashVersionImpl extends TrashVersionBaseImpl {
 			return super.getTypeSettings();
 		}
 		else {
-			return _typeSettingsProperties.toString();
+			return _typeSettingsProperties.toSortedString();
 		}
 	}
 
@@ -72,7 +72,7 @@ public class TrashVersionImpl extends TrashVersionBaseImpl {
 
 		_typeSettingsProperties = typeSettingsProperties;
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsProperties.toSortedString());
 	}
 
 	private UnicodeProperties _typeSettingsProperties;

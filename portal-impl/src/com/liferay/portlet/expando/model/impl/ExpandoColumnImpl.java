@@ -131,7 +131,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 			return super.getTypeSettings();
 		}
 		else {
-			return _typeSettingsProperties.toString();
+			return _typeSettingsProperties.toSortedString();
 		}
 	}
 
@@ -164,7 +164,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 
 		_typeSettingsProperties = typeSettingsProperties;
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsProperties.toSortedString());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExpandoColumnImpl.class);

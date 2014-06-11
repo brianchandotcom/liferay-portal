@@ -210,7 +210,10 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		if (currentURL.contains("/portal/login")) {
 			String redirect = ParamUtil.getString(request, "redirect");
 
-			if (Validator.isNull(redirect)) {
+			if (Validator.isNotNull(redirect)) {
+				redirect = PortalUtil.escapeRedirect(redirect);
+			}
+			else {
 				redirect = PortalUtil.getPathMain();
 			}
 

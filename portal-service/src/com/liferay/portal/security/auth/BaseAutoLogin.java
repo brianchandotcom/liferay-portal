@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Properties;
 
@@ -86,7 +87,8 @@ public abstract class BaseAutoLogin implements AuthVerifier, AutoLogin {
 
 		if (Validator.isNotNull(redirect)) {
 			request.setAttribute(
-				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, redirect);
+				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				PortalUtil.escapeRedirect(redirect));
 		}
 	}
 

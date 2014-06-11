@@ -87,12 +87,22 @@ if (layout != null) {
 				<c:choose>
 					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
 						dropNodes: '.portlet-column',
-						handles: ['.portlet-title', '.portlet-title-default'],
 					</c:when>
 					<c:otherwise>
 						dropNodes: '.portlet-boundary',
 						freeForm: true,
 						freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
+					</c:otherwise>
+				</c:choose>
+
+				<c:choose>
+					<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+						handles: Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || ['.portlet-title-text'],
+					</c:when>
+					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
+						handles: ['.portlet-title', '.portlet-title-default'],
+					</c:when>
+					<c:otherwise>
 						handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
 					</c:otherwise>
 				</c:choose>

@@ -188,7 +188,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//li[contains(@class,'add-page')]/a[contains(.,'${key_pageName}')] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,'${key_pageName}')]</td>
+	<td>//li[contains(@class,'add-page')]/a[contains(.,&quot;${key_pageName}&quot;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
 	<td>Page</td>
 </tr>
 <tr>
@@ -289,17 +289,17 @@
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_1</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[1]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_2</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[2]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_3</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[3]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

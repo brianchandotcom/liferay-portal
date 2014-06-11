@@ -231,6 +231,17 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+
+		<if>
+			<equals arg1="${addSearchedContent}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+				<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
+				<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+			</then>
+		</if>
+
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
 	</command>
 

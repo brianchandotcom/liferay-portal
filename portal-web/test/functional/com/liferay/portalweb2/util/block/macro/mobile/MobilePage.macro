@@ -60,7 +60,14 @@
 	</command>
 
 	<command name="gotoPG">
-		<execute macro="Page#openURL" />
+		<if>
+			<not>
+				<equals arg1="${mobilePreview}" arg2="true" />
+			</not>
+			<then>
+				<execute macro="Page#openURL" />
+			</then>
+		</if>
 
 		<execute action="Mobiledockbar#click" locator-key1="REORDER_ICON" />
 
@@ -84,5 +91,20 @@
 				<execute action="MobileCPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewPortlet">
+		<if>
+			<not>
+				<equals arg1="${mobilePreview}" arg2="true" />
+			</not>
+			<then>
+				<execute macro="Page#openURL" />
+			</then>
+		</if>
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="BasePortlet#mouseMove" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="${portletName}" />
 	</command>
 </definition>

@@ -18,6 +18,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>Dockbar</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DOCKBAR-->
 <tr>
 	<td>DOCKBAR_EDIT</td>

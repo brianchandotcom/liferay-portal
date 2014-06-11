@@ -59,6 +59,36 @@ public class DDMFormXSDDeserializerTest extends BaseDDMTest {
 		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
 	}
 
+	@Test
+	public void testDefaultLocaleDifferentFromSiteDefault() throws Exception {
+		String xml = readXML(
+			"dynamic-data-mapping-different-default-language.xml");
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
+
+		Assert.assertEquals(LocaleUtil.BRAZIL, ddmForm.getDefaultLocale());
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		DDMFormField selectDDMFormField = ddmFormFieldsMap.get("Select5979");
+
+		LocalizedValue selectLabel = selectDDMFormField.getLabel();
+
+		Assert.assertEquals(LocaleUtil.BRAZIL, selectLabel.getDefaultLocale());
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			selectDDMFormField.getDDMFormFieldOptions();
+
+		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
+				optionValue);
+
+			Assert.assertEquals(
+				LocaleUtil.BRAZIL, optionLabel.getDefaultLocale());
+		}
+	}
+
 	protected String readXML(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 

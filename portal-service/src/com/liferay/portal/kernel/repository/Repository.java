@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -35,7 +36,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public interface Repository {
+public interface Repository extends CapabilityProvider {
 
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,

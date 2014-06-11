@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
@@ -53,7 +55,8 @@ import java.util.List;
  *
  * @author Alexander Chow
  */
-public abstract class BaseRepositoryImpl implements BaseRepository {
+public abstract class BaseRepositoryImpl
+	implements BaseRepository, CapabilityProvider {
 
 	@Override
 	public FileEntry addFileEntry(
@@ -120,6 +123,14 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		Folder folder = getFolder(parentFolderId, title);
 
 		deleteFolder(folder.getFolderId());
+	}
+
+	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		throw new IllegalArgumentException(
+			String.format(
+				"Capability %s not supported by repository %s",
+				capabilityClass.getName(), getRepositoryId()));
 	}
 
 	public long getCompanyId() {
@@ -295,6 +306,13 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	@Override
 	public abstract void initRepository()
 		throws PortalException, SystemException;
+
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return false;
+	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,

@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ADD_SUBCATEGORY_BUTTON</td>
-	<td>//div[@class='category-buttons']/button[contains(.,'Add Subcategory')]</td>
+	<td>//div[@class='category-buttons']/a[contains(.,'Add Subcategory')]</td>
 	<td></td>
 </tr>
 <tr>

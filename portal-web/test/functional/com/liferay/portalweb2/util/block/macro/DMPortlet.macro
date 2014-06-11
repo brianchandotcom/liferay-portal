@@ -1,5 +1,5 @@
 <definition>
-	<command name="configureCurrentDisplayStyleViewsPG">
+	<command name="configureDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -14,20 +14,53 @@
 		</if>
 
 		<if>
+			<equals arg1="${enableDisplaySettingsShowSearch}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${enableDisplaySettingsShowSearch}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmediaConfiguration#uncheck" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<isset var="entriesToDisplayCount" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="${entriesToDisplayCount}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#check" locator-key1="DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmediaConfiguration#uncheck" locator-key1="DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
 			<isset var="currentDisplayStyleViews" />
 			<then>
 				<while>
-					<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
+					<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
 					<then>
-						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
-						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
+						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 					</then>
 				</while>
 
 				<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
-					<execute action="PGDocumentsandmediaConfiguration#select" locator-key1="DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
-					<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
+					<execute action="PGDocumentsandmediaConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
+					<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+					<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
 				</for>
 			</then>
 		</if>
@@ -53,7 +86,7 @@
 
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="ROOT_FOLDER_SELECT_FOLDER_IFRAME" />
 
@@ -63,9 +96,29 @@
 		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ROOT_FOLDER_SELECT_FOLDER_TABLE_FOLDER_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewDefaultConfigurationDisplaySettingsPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<if>
+			<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_DROPDOWN" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
+		<execute action="PGDocumentsandmediaConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
@@ -85,7 +138,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

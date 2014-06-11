@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECT_VERSION_IFRAME</td>
-	<td>//iframe[contains(@id,'selectVersion')]</td>
+	<td>//iframe[contains(@id,'compareVersions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>SELECT_VERSION_CHOOSE_BUTTON_OLD</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[3]/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[3]/a[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

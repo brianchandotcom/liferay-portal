@@ -74,6 +74,10 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewAbstractEntryViaAPPG">
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />

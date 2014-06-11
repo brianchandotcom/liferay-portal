@@ -81,7 +81,7 @@
 		<while>
 			<condition action="PGAnnouncementsManageentries#isElementPresent" locator-key1="ENTRY_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGAnnouncementsManageentries#assertClick" locator-key1="ENTRY_TABLE_ACTIONS_GENERIC" value1="Actions" />
+				<execute action="PGAnnouncementsManageentries#click" locator-key1="ENTRY_TABLE_ACTIONS_GENERIC" />
 				<execute action="PGAnnouncementsManageentries#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="PGAnnouncementsManageentries#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>

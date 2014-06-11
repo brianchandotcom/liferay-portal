@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_VERSION_IFRAME</td>
+	<td>//iframe[contains(@id,'compareVersions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

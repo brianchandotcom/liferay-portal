@@ -32,6 +32,8 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -49,6 +51,7 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -449,12 +452,22 @@ public class JournalArticleServiceTest {
 
 	@Test
 	public void testUpdateArticle() throws Exception {
+		Date now = new Date();
+
+		_article.setDisplayDate(now);
+
 		_article = JournalTestUtil.updateArticle(_article, "Version 2");
 
 		Assert.assertEquals(
 			"Version 2", _article.getTitle(LocaleUtil.getDefault()));
 		Assert.assertTrue(_article.isApproved());
 		Assert.assertEquals(1.1, _article.getVersion(), 0);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			_article.getModelClassName(), _article.getResourcePrimKey());
+
+		Assert.assertEquals(
+			_article.getDisplayDate(), assetEntry.getPublishDate());
 	}
 
 	protected List<JournalArticle> addArticles(int count, String content)

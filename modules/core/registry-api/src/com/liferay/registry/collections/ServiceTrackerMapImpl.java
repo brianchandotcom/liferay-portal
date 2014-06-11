@@ -14,18 +14,31 @@
 
 package com.liferay.registry.collections;
 
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerMapImpl<K, R> implements ServiceTrackerMap<K, R> {
+public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
-	public ServiceTrackerMapImpl() {
+	public ServiceTrackerMapImpl(
+		Class<S> serviceClass, String filter) {
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		String completeFilter =
+			"(&(objectClass="+serviceClass.getName()+")"+filter+")";
+
+		_serviceTracker = registry.trackServices(
+			registry.getFilter(completeFilter));
 	}
 
 	@Override
 	public void close() {
-		
+		_serviceTracker.close();
 	}
 
 	@Override
@@ -35,7 +48,9 @@ public class ServiceTrackerMapImpl<K, R> implements ServiceTrackerMap<K, R> {
 
 	@Override
 	public void open() {
-		
+		_serviceTracker.open();
 	}
+
+	private final ServiceTracker<S, ServiceReference<S>> _serviceTracker;
 
 }

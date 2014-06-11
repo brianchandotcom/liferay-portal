@@ -41,7 +41,7 @@ public class SingleItemBucketFactory<S>
 
 		@Override
 		public S getContent() {
-			return null;
+			return _service;
 		}
 
 		@Override
@@ -57,11 +57,14 @@ public class SingleItemBucketFactory<S>
 		public SingleBucket() {
 			_queue = new PriorityQueue<ServiceReference<S>>(1, _comparator);
 
+			_service = null;
 		}
 
 		public synchronized void store(ServiceReference<S> serviceReference) {
 
 		}
+
+		private S _service;
 
 		private PriorityQueue<ServiceReference<S>> _queue;
 

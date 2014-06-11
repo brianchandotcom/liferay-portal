@@ -51,6 +51,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 			setDDMFormAvailableLocales(document.getRootElement(), ddmForm);
 			setDDMFormDefaultLocale(document.getRootElement(), ddmForm);
 			setDDMFormFields(document.getRootElement(), ddmForm);
+			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
 
 			return ddmForm;
 		}
@@ -213,6 +214,33 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		ddmFormField.setLocalizable(localizable);
 	}
 
+	protected void setDDMFormFieldLocalizedValuesDefaultLocale(
+		DDMFormField ddmFormField, Locale defaultLocale) {
+
+		LocalizedValue label = ddmFormField.getLabel();
+		label.setDefaultLocale(defaultLocale);
+
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+		predefinedValue.setDefaultLocale(defaultLocale);
+
+		LocalizedValue style = ddmFormField.getStyle();
+		style.setDefaultLocale(defaultLocale);
+
+		LocalizedValue tip = ddmFormField.getTip();
+		tip.setDefaultLocale(defaultLocale);
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+		ddmFormFieldOptions.setDefaultLocale(defaultLocale);
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			setDDMFormFieldLocalizedValuesDefaultLocale(
+				nestedDDMFormField, defaultLocale);
+		}
+	}
+
 	protected void setDDMFormFieldMetadata(
 		Element metadataElement, DDMFormField ddmFormField) {
 
@@ -303,6 +331,13 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		List<DDMFormField> ddmFormFields = getDDMFormFields(rootElement);
 
 		ddmForm.setDDMFormFields(ddmFormFields);
+	}
+
+	protected void setDDMFormLocalizedValuesDefaultLocale(DDMForm ddmForm) {
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			setDDMFormFieldLocalizedValuesDefaultLocale(
+				ddmFormField, ddmForm.getDefaultLocale());
+		}
 	}
 
 	protected void setNestedDDMFormField(

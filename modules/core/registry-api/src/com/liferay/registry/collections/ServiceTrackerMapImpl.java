@@ -121,6 +121,9 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 			final ServiceReference<S> newServiceReference,
 				final ServiceReference<S> oldServiceReference) {
 
+			removedService(oldServiceReference, oldServiceReference);
+
+			addingService(newServiceReference);
 		}
 
 		@Override

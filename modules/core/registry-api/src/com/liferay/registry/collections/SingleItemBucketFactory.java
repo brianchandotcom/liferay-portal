@@ -14,6 +14,8 @@
 
 package com.liferay.registry.collections;
 
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 
 import java.util.Comparator;
@@ -61,7 +63,11 @@ public class SingleItemBucketFactory<S>
 		}
 
 		public synchronized void store(ServiceReference<S> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
 
+			_queue.add(serviceReference);
+
+			_service = registry.getService(_queue.peek());
 		}
 
 		private S _service;

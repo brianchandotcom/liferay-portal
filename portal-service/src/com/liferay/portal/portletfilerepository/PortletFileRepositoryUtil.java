@@ -147,6 +147,21 @@ public class PortletFileRepositoryUtil {
 			groupId, portletId);
 	}
 
+	public static String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString) {
+
+		return getPortletFileRepository().getDownloadPortletFileEntryURL(
+			themeDisplay, fileEntry, queryString);
+	}
+
+	public static String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
+		boolean absoluteURL) {
+
+		return getPortletFileRepository().getDownloadPortletFileEntryURL(
+			themeDisplay, fileEntry, queryString, absoluteURL);
+	}
+
 	public static List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId)
 		throws SystemException {

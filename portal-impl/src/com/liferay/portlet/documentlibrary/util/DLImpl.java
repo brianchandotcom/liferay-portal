@@ -473,6 +473,27 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getDownloadURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString) {
+
+		return getDownloadURL(
+			fileEntry, fileVersion, themeDisplay, queryString, true, true);
+	}
+
+	@Override
+	public String getDownloadURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		String previewURL = getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			absoluteURL);
+
+		return HttpUtil.addParameter(previewURL, "download", true);
+	}
+
+	@Override
 	public Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {

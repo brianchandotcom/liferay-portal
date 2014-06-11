@@ -95,6 +95,13 @@ public interface PortletFileRepository {
 	public Repository fetchPortletRepository(long groupId, String portletId)
 		throws SystemException;
 
+	public String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString);
+
+	public String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
+		boolean absoluteURL);
+
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException;
 

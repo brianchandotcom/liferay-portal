@@ -347,6 +347,25 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
+	public String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString) {
+
+		return getDownloadPortletFileEntryURL(
+			themeDisplay, fileEntry, queryString, true);
+	}
+
+	@Override
+	public String getDownloadPortletFileEntryURL(
+		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
+		boolean absoluteURL) {
+
+		String portletFileEntryURL = getPortletFileEntryURL(
+			themeDisplay, fileEntry, queryString, absoluteURL);
+
+		return HttpUtil.addParameter(portletFileEntryURL, "download", true);
+	}
+
+	@Override
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 

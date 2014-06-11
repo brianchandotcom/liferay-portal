@@ -355,7 +355,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 											iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 											label="<%= true %>"
 											message="<%= sb.toString() %>"
-											url="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
+											url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
 										/>
 									</li>
 

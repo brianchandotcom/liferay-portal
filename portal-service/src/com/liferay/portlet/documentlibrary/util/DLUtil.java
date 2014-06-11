@@ -153,6 +153,23 @@ public class DLUtil {
 		return getDL().getDLFolderControlPanelLink(portletRequest, folderId);
 	}
 
+	public static String getDownloadURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString) {
+
+		return getDL().getDownloadURL(
+			fileEntry, fileVersion, themeDisplay, queryString);
+	}
+
+	public static String getDownloadURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		return getDL().getDownloadURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			absoluteURL);
+	}
+
 	public static Map<String, String> getEmailDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 

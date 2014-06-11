@@ -14,10 +14,13 @@
 
 package com.liferay.registry.collections;
 
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -70,6 +73,26 @@ public class MultipleItemsBucketFactory<S>
 		@Override
 		public synchronized void store(ServiceReference<S> serviceReference) {
 
+		}
+
+		private void _rebuildList() {
+			Registry registry = RegistryUtil.getRegistry();
+
+			try {
+				_services = new ArrayList<S>(_orderedSet.size());
+
+				for (ServiceReference<S> serviceReference : _orderedSet) {
+					_services.add(registry.getService(serviceReference));
+				}
+
+				_services = Collections.unmodifiableList(_services);
+			}
+			catch (IllegalStateException e) {
+				//BundleContext seems to be no longer usable
+				_orderedSet.clear();
+
+				_services = new ArrayList<S>();
+			}
 		}
 
 		private final Set<ServiceReference<S>> _orderedSet;

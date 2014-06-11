@@ -24,9 +24,9 @@ import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
+import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
 /**
  * @author Adolfo Pérez
@@ -70,11 +70,9 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	protected long getFileEntryRepositoryId(long fileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileEntryLocalService dlFileEntryLocalService =
-			getDlFileEntryLocalService();
+		DLFileEntryService dlFileEntryService = getDlFileEntryService();
 
-		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-			fileEntryId);
+		DLFileEntry dlFileEntry = dlFileEntryService.getFileEntry(fileEntryId);
 
 		return dlFileEntry.getRepositoryId();
 	}
@@ -83,10 +81,9 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	protected long getFileVersionRepositoryId(long fileVersionId)
 		throws PortalException, SystemException {
 
-		DLFileVersionLocalService dlFileVersionLocalService =
-			getDlFileVersionLocalService();
+		DLFileVersionService dlFileVersionService = getDlFileVersionService();
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
+		DLFileVersion dlFileVersion = dlFileVersionService.getFileVersion(
 			fileVersionId);
 
 		return dlFileVersion.getRepositoryId();
@@ -96,9 +93,9 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	protected long getFolderRepositoryId(long folderId)
 		throws PortalException, SystemException {
 
-		DLFolderLocalService dlFolderLocalService = getDlFolderLocalService();
+		DLFolderService dlFolderService = getDlFolderService();
 
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
+		DLFolder dlFolder = dlFolderService.getFolder(folderId);
 
 		return dlFolder.getRepositoryId();
 	}

@@ -81,7 +81,7 @@ boolean hasAddPortletURLs = false;
 	%>
 
 	<c:if test="<%= groupIds.length > 0 %>">
-		<aui:nav-bar cssClass='<%= groupIds.length == 1 ? "single-item-button" : StringPool.BLANK %>'>
+		<aui:nav-bar cssClass='<%= "add-asset-selector lfr-meta-actions " + (groupIds.length == 1 ? "single-item-button" : StringPool.BLANK) %>'>
 
 			<%
 			for (long groupId : groupIds) {
@@ -93,9 +93,7 @@ boolean hasAddPortletURLs = false;
 			%>
 
 				<c:if test="<%= !addPortletURLs.isEmpty() %>">
-					<div class="add-asset-selector lfr-meta-actions">
-						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-					</div>
+					<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
 				</c:if>
 
 			<%

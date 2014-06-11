@@ -128,6 +128,24 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 			final ServiceReference<S> serviceReference,
 				ServiceReference<S> serviceReference2) {
 
+			_serviceReferenceMapper.map(
+				serviceReference, new ServiceReferenceMapper.Emitter<K>() {
+
+				@Override
+				public void emit(K key) {
+					Bucket<S, R> bucket = _indexedServices.get(key);
+
+					if (bucket == null) {
+						return;
+					}
+
+					bucket.remove(serviceReference);
+
+					if (bucket.isDisposable()) {
+						_indexedServices.remove(key);
+					}
+				}
+			});
 		}
 
 	}

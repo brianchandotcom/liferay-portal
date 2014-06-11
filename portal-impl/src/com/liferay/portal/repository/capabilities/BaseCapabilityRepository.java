@@ -14,8 +14,8 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.portal.kernel.repository.capabilities.BaseCapabilityProvider;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,63 +24,21 @@ import java.util.Set;
  * @author Adolfo Pérez
  */
 public abstract class BaseCapabilityRepository<T>
-	implements CapabilityProvider {
+	extends BaseCapabilityProvider {
 
 	public BaseCapabilityRepository(
 		T repository,
 		Map<Class<? extends Capability>, Capability> supportedCapabilitiesMap,
 		Set<Class<? extends Capability>> exportedCapabilityClasses) {
 
-		Set<Class<? extends Capability>> supportedCapabilities =
-			supportedCapabilitiesMap.keySet();
-
-		if (!supportedCapabilities.containsAll(exportedCapabilityClasses)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Exporting capabilities not explicitly supported is not " +
-						"allowed. Repository supports %s, but tried to " +
-							"export %s",
-					supportedCapabilitiesMap.keySet(),
-					exportedCapabilityClasses));
-		}
-
+		super(supportedCapabilitiesMap, exportedCapabilityClasses);
 		_repository = repository;
-		_supportedCapabilitiesMap = supportedCapabilitiesMap;
-		_exportedCapabilityClasses = exportedCapabilityClasses;
 	}
 
 	@Override
-	public <S extends Capability> S getCapability(Class<S> capabilityClass) {
-		if (_exportedCapabilityClasses.contains(capabilityClass)) {
-			return getInternalCapability(capabilityClass);
-		}
-
-		throw new IllegalArgumentException(
-			String.format(
-				"Capability %s not exported by repository %s",
-				capabilityClass.getName(), getRepositoryId()));
-	}
-
-	@Override
-	public <S extends Capability> boolean isCapabilityProvided(
-		Class<S> capabilityClass) {
-
-		return _exportedCapabilityClasses.contains(capabilityClass);
-	}
-
-	protected <S extends Capability> S getInternalCapability(
-		Class<S> capabilityClass) {
-
-		Capability capability = _supportedCapabilitiesMap.get(capabilityClass);
-
-		if (capability == null) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Capability %s not supported by repository %s",
-					capabilityClass.getName(), getRepositoryId()));
-		}
-
-		return (S)capability;
+	protected String getProviderId() {
+		return String.format(
+			"%s:%s", getRepository().getClass(), getRepositoryId());
 	}
 
 	protected T getRepository() {
@@ -89,9 +47,6 @@ public abstract class BaseCapabilityRepository<T>
 
 	protected abstract long getRepositoryId();
 
-	private final Set<Class<? extends Capability>> _exportedCapabilityClasses;
 	private final T _repository;
-	private final Map<Class<? extends Capability>, Capability>
-		_supportedCapabilitiesMap;
 
 }

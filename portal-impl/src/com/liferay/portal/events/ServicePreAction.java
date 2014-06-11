@@ -753,6 +753,7 @@ public class ServicePreAction extends Action {
 		themeDisplay.setCDNDynamicResourcesHost(dynamicResourcesCDNHost);
 		themeDisplay.setFacebookCanvasPageURL(facebookCanvasPageURL);
 		themeDisplay.setPortalURL(portalURL);
+		themeDisplay.setRefererPlid(refererPlid);
 		themeDisplay.setSecure(request.isSecure());
 		themeDisplay.setServerName(request.getServerName());
 		themeDisplay.setServerPort(request.getServerPort());
@@ -802,7 +803,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setRealCompanyLogoWidth(realCompanyLogoWidth);
 		themeDisplay.setRealUser(realUser);
 		themeDisplay.setRefererGroupId(refererGroupId);
-		themeDisplay.setRefererPlid(refererPlid);
 		themeDisplay.setScopeGroupId(scopeGroupId);
 		themeDisplay.setSignedIn(signedIn);
 		themeDisplay.setSiteDefaultLocale(

@@ -4171,12 +4171,7 @@ public class PortalImpl implements Portal {
 		if (layout != null) {
 			Layout virtualHostLayout = layout;
 
-			long refererPlid = 0;
-
-			if (themeDisplay.getRequest() != null) {
-				refererPlid = ParamUtil.getLong(
-					themeDisplay.getRequest(), "refererPlid");
-			}
+			long refererPlid = themeDisplay.getRefererPlid();
 
 			if (refererPlid > 0) {
 				virtualHostLayout = LayoutLocalServiceUtil.getLayout(

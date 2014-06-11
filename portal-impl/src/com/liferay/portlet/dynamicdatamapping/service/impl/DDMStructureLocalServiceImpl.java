@@ -1446,14 +1446,7 @@ public class DDMStructureLocalServiceImpl
 			throw new StructureXsdException();
 		}
 
-		DDMForm parentDDMForm = null;
-
-		DDMStructure parentStructure =
-			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
-
-		if (parentStructure != null) {
-			parentDDMForm = parentStructure.getFullHierarchyDDMForm();
-		}
+		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 
 		validate(nameMap, parentDDMForm, xsd);
 
@@ -1532,6 +1525,19 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		return elementNames;
+	}
+
+	protected DDMForm getParentDDMForm(long parentStructureId)
+		throws PortalException, SystemException {
+
+		DDMStructure parentStructure =
+			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
+
+		if (parentStructure == null) {
+			return null;
+		}
+
+		return parentStructure.getFullHierarchyDDMForm();
 	}
 
 	protected String getStructureKey(String structureKey) {
@@ -1694,14 +1700,7 @@ public class DDMStructureLocalServiceImpl
 			throw sdske;
 		}
 
-		DDMForm parentDDMForm = null;
-
-		DDMStructure parentStructure =
-			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
-
-		if (parentStructure != null) {
-			parentDDMForm = parentStructure.getFullHierarchyDDMForm();
-		}
+		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 
 		validate(nameMap, parentDDMForm, xsd);
 	}
@@ -1722,7 +1721,7 @@ public class DDMStructureLocalServiceImpl
 
 			validate(document);
 
-			if (Validator.isNotNull(parentDDMForm)) {
+			if (parentDDMForm != null) {
 				validate(parentDDMForm, document);
 			}
 		}

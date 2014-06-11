@@ -35,7 +35,7 @@ import java.io.InputStream;
  */
 public class DLTestUtil {
 
-	public static DLFileEntry addFileEntry(long dlFolderId) throws Exception {
+	public static DLFileEntry addDLFileEntry(long dlFolderId) throws Exception {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolderId);
 
 		ServiceContext serviceContext =

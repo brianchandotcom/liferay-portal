@@ -133,7 +133,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				}
 
 				ClassWriter classWriter = new ClassWriter(
-					ClassWriter.COMPUTE_MAXS);
+					ClassWriter.COMPUTE_FRAMES);
 
 				String name = className.replace(
 					CharPool.SLASH, CharPool.PERIOD);

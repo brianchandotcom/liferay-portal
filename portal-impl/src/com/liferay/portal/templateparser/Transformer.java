@@ -542,8 +542,10 @@ public class Transformer {
 
 			Map<String, String> attributes = new HashMap<String, String>();
 
-			for (Attribute attribute : dynamicContentElement.attributes()) {
-				attributes.put(attribute.getName(), attribute.getValue());
+			if (dynamicContentElement != null) {
+				for (Attribute attribute : dynamicContentElement.attributes()) {
+					attributes.put(attribute.getName(), attribute.getValue());
+				}
 			}
 
 			TemplateNode templateNode = new TemplateNode(

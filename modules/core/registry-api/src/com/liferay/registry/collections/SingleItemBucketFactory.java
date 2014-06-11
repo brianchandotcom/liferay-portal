@@ -53,7 +53,27 @@ public class SingleItemBucketFactory<S>
 
 		@Override
 		public synchronized void remove(ServiceReference<S> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
 
+			_queue.remove(serviceReference);
+
+			ServiceReference<S> peek = _queue.peek();
+
+			if (peek != null) {
+				try {
+					_service = registry.getService(peek);
+				}
+				catch (IllegalStateException e) {
+					//Registry is no longer usable...
+
+					_service = null;
+
+					_queue.clear();
+				}
+			}
+			else {
+				_service = null;
+			}
 		}
 
 		public SingleBucket() {

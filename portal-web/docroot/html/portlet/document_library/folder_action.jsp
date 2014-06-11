@@ -115,7 +115,26 @@ String iconMenuId = null;
 
 <liferay-util:buffer var="iconMenu">
 	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" triggerCssClass="btn">
+
+		<%
+		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
+		%>
+
 		<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+			<c:if test="<%= hasViewPermission %>">
+				<portlet:resourceURL var="downloadURL">
+					<portlet:param name="struts_action" value="/document_library/edit_folder" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				</portlet:resourceURL>
+
+				<liferay-ui:icon
+					iconCssClass="icon-download"
+					message="download"
+					url="<%= downloadURL %>"
+				/>
+			</c:if>
+
 			<c:choose>
 				<c:when test="<%= folder != null %>">
 
@@ -272,10 +291,6 @@ String iconMenuId = null;
 				</c:otherwise>
 			</c:choose>
 		</c:if>
-
-		<%
-		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-		%>
 
 		<c:choose>
 			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">

@@ -57,7 +57,7 @@ public abstract class BaseCapabilityRepository<T>
 
 		throw new IllegalArgumentException(
 			String.format(
-				"Capability %s not exported by repository %d",
+				"Capability %s not exported by repository %s",
 				capabilityClass.getName(), getRepositoryId()));
 	}
 
@@ -76,7 +76,7 @@ public abstract class BaseCapabilityRepository<T>
 		if (capability == null) {
 			throw new IllegalArgumentException(
 				String.format(
-					"Capability %s not supported by repository %d",
+					"Capability %s not supported by repository %s",
 					capabilityClass.getName(), getRepositoryId()));
 		}
 

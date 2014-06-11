@@ -16,14 +16,17 @@ package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceReference;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * @author Carlos Sierra Andrés
  */
 public class SingleItemBucketFactory<S>
 	implements ServiceTrackerMapBucketFactory<S, S> {
 
-	public SingleItemBucketFactory() {
-		
+	public SingleItemBucketFactory(Comparator<ServiceReference<S>> comparator) {
+		_comparator = comparator;
 	}
 
 	@Override
@@ -31,6 +34,8 @@ public class SingleItemBucketFactory<S>
 
 		return new SingleBucket();
 	}
+
+	private final Comparator<ServiceReference<S>> _comparator;
 
 	private class SingleBucket implements ServiceTrackerMapImpl.Bucket<S, S> {
 
@@ -50,12 +55,15 @@ public class SingleItemBucketFactory<S>
 		}
 
 		public SingleBucket() {
+			_queue = new PriorityQueue<ServiceReference<S>>(1, _comparator);
 
 		}
 
 		public synchronized void store(ServiceReference<S> serviceReference) {
 
 		}
+
+		private PriorityQueue<ServiceReference<S>> _queue;
 
 	}
 

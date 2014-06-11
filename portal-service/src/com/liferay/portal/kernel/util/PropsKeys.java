@@ -197,6 +197,8 @@ public interface PropsKeys {
 
 	public static final String AUTH_TOKEN_IMPL = "auth.token.impl";
 
+	public static final String AUTH_TOKEN_LENGTH = "auth.token.length";
+
 	public static final String AUTH_TOKEN_SHARED_SECRET = "auth.token.shared.secret";
 
 	public static final String AUTH_VERIFIER = "auth.verifier.";

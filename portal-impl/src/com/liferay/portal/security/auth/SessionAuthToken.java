@@ -138,7 +138,8 @@ public class SessionAuthToken implements AuthToken {
 			tokenKey);
 
 		if (createToken && Validator.isNull(sessionAuthenticationToken)) {
-			sessionAuthenticationToken = PwdGenerator.getPassword();
+			sessionAuthenticationToken = PwdGenerator.getPassword(
+				PropsValues.AUTH_TOKEN_LENGTH);
 
 			session.setAttribute(tokenKey, sessionAuthenticationToken);
 		}

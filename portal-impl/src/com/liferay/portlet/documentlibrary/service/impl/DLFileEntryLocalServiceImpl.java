@@ -1354,12 +1354,6 @@ public class DLFileEntryLocalServiceImpl
 			hasLock = dlFolderService.hasInheritableLock(folderId);
 		}
 
-		if (checkedOut != hasLock) {
-			dlAppHelperLocalService.registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_UPDATE,
-				new LiferayFileEntry(dlFileEntry));
-		}
-
 		return hasLock;
 	}
 

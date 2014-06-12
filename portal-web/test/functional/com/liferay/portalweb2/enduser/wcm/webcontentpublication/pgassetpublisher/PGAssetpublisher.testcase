@@ -1091,6 +1091,42 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureAPPortletScopeMultipleSites" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addDuplicatePG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
+			<var name="addSite" value="true" />
+			<var name="siteName" value="Test Site" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleSiteScopesAddDropdowns">
+			<var name="siteName1" value="Liferay" />
+			<var name="siteName2" value="Test Site" />
+		</execute>
+	</command>
+
 	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />

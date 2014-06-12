@@ -3192,15 +3192,6 @@ public class JournalArticleLocalServiceImpl
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
-		if (!articleVersions.isEmpty()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			for (JournalArticle articleVersion : articleVersions) {
-				indexer.reindex(articleVersion);
-			}
-		}
-
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				article.getCompanyId(), article.getGroupId(),
@@ -3393,15 +3384,6 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
-
-		if (!articleVersions.isEmpty()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			for (JournalArticle articleVersion : articleVersions) {
-				indexer.reindex(articleVersion);
-			}
-		}
 
 		return article;
 	}
@@ -5355,11 +5337,6 @@ public class JournalArticleLocalServiceImpl
 			displayDate, WorkflowConstants.STATUS_SCHEDULED);
 
 		for (JournalArticle article : articles) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			indexer.reindex(article);
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCommand(Constants.UPDATE);

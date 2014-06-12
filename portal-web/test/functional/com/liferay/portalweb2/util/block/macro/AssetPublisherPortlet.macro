@@ -26,6 +26,10 @@
 			<then>
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
+
+				<var name="key_siteName" value="${globalSite}" />
+
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="Global" />
 			</then>
 		</if>
 
@@ -44,6 +48,8 @@
 
 				<execute action="PGAssetpublisherConfiguration#selectFrame" />
 				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="${otherSiteName}" />
 			</then>
 		</if>
 
@@ -62,6 +68,8 @@
 
 				<execute action="PGAssetpublisherConfiguration#selectFrame" />
 				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="${siteName}" />
 			</then>
 			<else>
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
@@ -79,17 +87,22 @@
 			</else>
 		</if>
 
-		<var name="key_siteName" value="${siteName}" />
+		<if>
+			<equals arg1="${nonDefaultSite}" arg2="true" />
+			<then>
+				<var name="key_siteName" value="${siteName}" />
 
-		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_CURRENT_SCOPE_NAME" value1="Current Site (${key_siteName})" />
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_CURRENT_SCOPE_NAME" value1="Current Site (${siteName})" />
 
-		<var name="key_siteName" value="${globalSite}" />
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="Liferay" />
+			</then>
+			<else>
+				<var name="key_siteName" value="Liferay" />
 
-		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="Global" />
+				<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_CURRENT_SCOPE_NAME" value1="Current Site (Liferay)" />
+			</else>
+		</if>
 
-		<var name="key_siteName" value="${otherSiteName}" />
-
-		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="Liferay" />
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
@@ -786,6 +799,17 @@
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_GENERIC_TITLE_1" value1="${assetTitle1}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_GENERIC_TITLE_2" value1="${assetTitle2}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_GENERIC_TITLE_3" value1="${assetTitle3}" />
+
+	<command name="viewMultipleSiteScopesAddDropdowns">
+		<var name="key_siteScope" value="${siteName1}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName1}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ADD_NEW_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<var name="key_siteScope" value="${siteName2}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteName2}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ADD_NEW_MENULIST_2_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 	</command>
 
 	<command name="viewNoEditLinkPG">

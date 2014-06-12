@@ -41,8 +41,6 @@ boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKe
 			if (!trashEnabled && trashEnabledDefault) {
 				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "disabling-the-recycle-bin-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
 					currentTarget.attr('checked', true);
-
-					trashEnabled = true;
 				}
 			}
 		}

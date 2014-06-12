@@ -32,6 +32,8 @@ if ((organization != null) && Validator.isNull(reminderQueries)) {
 }
 
 Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(renderRequest, "reminderQueries");
+
+String portletId = portletDisplay.getRootPortletId();
 %>
 
 <h3><liferay-ui:message key="reminder-queries" /></h3>
@@ -96,11 +98,11 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 </aui:fieldset>
 
 <aui:script>
-	var reminderQueriesChanged = false;
-	var lastLanguageId = '<%= currentLanguageId %>';
+	var <portlet:namespace />lastLanguageId = '<%= currentLanguageId %>';
+	var <portlet:namespace />reminderQueriesChanged = false;
 
 	function <portlet:namespace />onReminderQueriesChanged() {
-		reminderQueriesChanged = true;
+		<portlet:namespace />reminderQueriesChanged = true;
 	}
 
 	Liferay.provide(
@@ -109,17 +111,17 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 		function() {
 			var A = AUI();
 
-			if (lastLanguageId != '<%= defaultLanguageId %>') {
-				if (reminderQueriesChanged) {
+			if (<portlet:namespace />lastLanguageId != '<%= defaultLanguageId %>') {
+				if (<portlet:namespace />reminderQueriesChanged) {
 					var reminderQueriesValue = A.one('#<portlet:namespace />reminderQueries_temp').attr('value');
 
 					if (reminderQueriesValue == null) {
 						reminderQueriesValue = '';
 					}
 
-					A.one('#<portlet:namespace />reminderQueries_' + lastLanguageId).attr('value', reminderQueriesValue);
+					A.one('#<portlet:namespace />reminderQueries_' + <portlet:namespace />lastLanguageId).attr('value', reminderQueriesValue);
 
-					reminderQueriesChanged = false;
+					<portlet:namespace />reminderQueriesChanged = false;
 				}
 			}
 
@@ -142,7 +144,7 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 				A.one('#<portlet:namespace />reminderQueries_temp').hide();
 			}
 
-			lastLanguageId = selLanguageId;
+			<portlet:namespace />lastLanguageId = selLanguageId;
 		},
 		['aui-base']
 	);
@@ -181,12 +183,17 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 		['aui-base']
 	);
 
-	<portlet:namespace />updateReminderQueriesLanguageTemps(lastLanguageId);
+	<portlet:namespace />updateReminderQueriesLanguageTemps(<portlet:namespace />lastLanguageId);
 
-	Liferay.on(
-		'submitForm',
-		function(event, data) {
-			<portlet:namespace />updateReminderQueriesLanguage();
+	var <portlet:namespace />reminderQueriesHandle = Liferay.on('submitForm', <portlet:namespace />updateReminderQueriesLanguage);
+
+	var <portlet:namespace />clearReminderQueriesHandle = function(event) {
+		if (event.portletId === '<%= portletId %>') {
+			<portlet:namespace />reminderQueriesHandle.detach();
+
+			Liferay.detach('destroyPortlet', <portlet:namespace />clearReminderQueriesHandle);
 		}
-	);
+	};
+
+	Liferay.on('destroyPortlet', <portlet:namespace />clearReminderQueriesHandle);
 </aui:script>

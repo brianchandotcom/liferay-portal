@@ -162,6 +162,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_NEW_MENULIST_2_BASIC_WEB_CONTENT</td>
+	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_NEW_MENULIST_CUSTOM_STRUCTURE</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'${key_structureName}')]</td>
 	<td></td>

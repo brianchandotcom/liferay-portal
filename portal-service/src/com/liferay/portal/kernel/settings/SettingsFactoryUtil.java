@@ -96,10 +96,12 @@ public class SettingsFactoryUtil {
 		return _settingsFactory;
 	}
 
-	public static void registerFallbackKeys(
-		String settingsId, FallbackKeys fallbackKeys) {
+	public static void registerMetadata(
+		String settingsId, FallbackKeys fallbackKeys,
+		String[] multiValuedKeys) {
 
-		getSettingsFactory().registerFallbackKeys(settingsId, fallbackKeys);
+		getSettingsFactory().registerMetadata(
+			settingsId, fallbackKeys, multiValuedKeys);
 	}
 
 	public void setSettingsFactory(SettingsFactory settingsFactory) {

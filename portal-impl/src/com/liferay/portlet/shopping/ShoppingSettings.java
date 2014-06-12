@@ -323,14 +323,15 @@ public class ShoppingSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			ShoppingConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			ShoppingConstants.SERVICE_NAME, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

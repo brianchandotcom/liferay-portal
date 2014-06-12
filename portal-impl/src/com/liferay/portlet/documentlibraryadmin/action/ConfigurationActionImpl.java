@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.DLSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,10 +28,6 @@ import javax.portlet.PortletConfig;
  * @author Sergio González
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	public ConfigurationActionImpl() {
-		addMultiValuedKeys(DLSettings.MULTI_VALUED_KEYS);
-	}
 
 	@Override
 	public void processAction(

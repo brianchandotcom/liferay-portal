@@ -38,10 +38,6 @@ import javax.portlet.ValidatorException;
  */
 public class WikiPortletInstanceSettings {
 
-	public static final String[] MULTI_VALUED_KEYS = {
-		"visibleNodes", "hiddenNodes"
-	};
-
 	public static WikiPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {
@@ -159,17 +155,20 @@ public class WikiPortletInstanceSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {
+		"hiddenNodes", "visibleNodes"
+	};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(PortletKeys.WIKI, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.WIKI_ADMIN, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.WIKI_DISPLAY, fallbackKeys);
+		settingsFactory.registerMetadata(
+			PortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

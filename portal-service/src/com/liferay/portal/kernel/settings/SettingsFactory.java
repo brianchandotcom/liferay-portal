@@ -36,6 +36,8 @@ public interface SettingsFactory {
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
 		throws PortalException;
 
+	public List<String> getMultiValuedKeys(String settingsId);
+
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
 		throws PortalException;
@@ -53,7 +55,8 @@ public interface SettingsFactory {
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
 		throws PortalException;
 
-	public void registerFallbackKeys(
-		String settingsId, FallbackKeys fallbackKeys);
+	public void registerMetadata(
+		String settingsId, FallbackKeys fallbackKeys,
+		String[] multiValuedKeysArray);
 
 }

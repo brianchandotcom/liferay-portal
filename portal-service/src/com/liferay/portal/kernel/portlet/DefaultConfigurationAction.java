@@ -80,4 +80,13 @@ public class DefaultConfigurationAction
 		}
 	}
 
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+
+		// Legacy configuration actions which are not based on Settings must
+		// ignore this method to avoid failures due to multi valued keys not
+		// being registered with SettingsConfigurationAction
+
+	}
+
 }

@@ -35,11 +35,6 @@ import java.util.Map;
  */
 public class DLPortletInstanceSettings {
 
-	public static final String[] MULTI_VALUED_KEYS = {
-		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
-		"mimeTypes"
-	};
-
 	public static DLPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {
@@ -170,24 +165,31 @@ public class DLPortletInstanceSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(
+		DLUtil.getAllMediaGalleryMimeTypes());
 
+	private static final String[] _MULTI_VALUED_KEYS = {
+		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
+		"mimeTypes"
+	};
+
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY_ADMIN, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.MEDIA_GALLERY_DISPLAY, fallbackKeys);
+		settingsFactory.registerMetadata(
+			PortletKeys.DOCUMENT_LIBRARY, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.DOCUMENT_LIBRARY_ADMIN, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.MEDIA_GALLERY_DISPLAY, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
 	}
-
-	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(
-		DLUtil.getAllMediaGalleryMimeTypes());
 
 	private TypedSettings _typedSettings;
 

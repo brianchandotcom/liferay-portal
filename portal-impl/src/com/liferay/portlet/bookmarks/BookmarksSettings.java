@@ -191,14 +191,17 @@ public class BookmarksSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {
+		"entryColumns", "folderColumns"
+	};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			BookmarksConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			BookmarksConstants.SERVICE_NAME, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

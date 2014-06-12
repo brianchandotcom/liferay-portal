@@ -15,7 +15,6 @@
 package com.liferay.portlet.wikiadmin.action;
 
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
-import com.liferay.portlet.wiki.WikiSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,10 +24,6 @@ import javax.portlet.PortletConfig;
  * @author Iván Zaera
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	public ConfigurationActionImpl() {
-		addMultiValuedKeys(WikiSettings.MULTI_VALUED_KEYS);
-	}
 
 	@Override
 	public void processAction(

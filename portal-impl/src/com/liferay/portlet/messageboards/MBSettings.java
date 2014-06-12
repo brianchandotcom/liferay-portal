@@ -250,14 +250,14 @@ public class MBSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			MBConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			MBConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

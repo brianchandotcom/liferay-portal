@@ -144,14 +144,15 @@ public class BlogsSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			BlogsConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			BlogsConstants.SERVICE_NAME, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 
 import java.util.Map;
@@ -170,14 +171,14 @@ public class DLSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			DLConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			PortletKeys.BLOGS, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

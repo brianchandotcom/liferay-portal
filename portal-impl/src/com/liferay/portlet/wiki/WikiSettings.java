@@ -32,8 +32,6 @@ import java.util.Map;
  */
 public class WikiSettings {
 
-	public static final String[] MULTI_VALUED_KEYS = {};
-
 	public static WikiSettings getInstance(long groupId)
 		throws PortalException {
 
@@ -143,14 +141,14 @@ public class WikiSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(
-			WikiConstants.SERVICE_NAME, fallbackKeys);
+		settingsFactory.registerMetadata(
+			WikiConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

@@ -36,6 +36,7 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -80,6 +81,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		return applyFallbackKeys(
 			serviceName, getGroupSettings(groupId, serviceName));
+	}
+
+	@Override
+	public List<String> getMultiValuedKeys(String settingsId) {
+		return _multiValuedKeysMap.get(settingsId);
 	}
 
 	@Override
@@ -159,10 +165,19 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
-	public void registerFallbackKeys(
-		String settingsId, FallbackKeys fallbackKeys) {
+	public void registerMetadata(
+		String settingsId, FallbackKeys fallbackKeys,
+		String[] multiValuedKeysArray) {
 
 		_fallbackKeysMap.put(settingsId, fallbackKeys);
+
+		List<String> multiValuedKeysList = new ArrayList<String>();
+
+		Collections.addAll(multiValuedKeysList, multiValuedKeysArray);
+
+		multiValuedKeysList = Collections.unmodifiableList(multiValuedKeysList);
+
+		_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
 	}
 
 	protected Settings applyFallbackKeys(String settingsId, Settings settings) {
@@ -265,6 +280,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<String, FallbackKeys>();
+	private ConcurrentMap<String, List<String>> _multiValuedKeysMap =
+		new ConcurrentHashMap<String, List<String>>();
 	private Map<String, Properties> _propertiesMap =
 		new ConcurrentHashMap<String, Properties>();
 

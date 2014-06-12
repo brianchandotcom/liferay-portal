@@ -33,8 +33,6 @@ import java.util.Map;
  */
 public class BlogsPortletInstanceSettings {
 
-	public static final String[] MULTI_VALUED_KEYS = {};
-
 	public static BlogsPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {
@@ -163,15 +161,16 @@ public class BlogsPortletInstanceSettings {
 		return fallbackKeys;
 	}
 
-	static {
-		FallbackKeys fallbackKeys = _getFallbackKeys();
+	private static final String[] _MULTI_VALUED_KEYS = {};
 
+	static {
 		SettingsFactory settingsFactory =
 			SettingsFactoryUtil.getSettingsFactory();
 
-		settingsFactory.registerFallbackKeys(PortletKeys.BLOGS, fallbackKeys);
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.BLOGS_ADMIN, fallbackKeys);
+		settingsFactory.registerMetadata(
+			PortletKeys.BLOGS, _getFallbackKeys(), _MULTI_VALUED_KEYS);
+		settingsFactory.registerMetadata(
+			PortletKeys.BLOGS_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
 	private TypedSettings _typedSettings;

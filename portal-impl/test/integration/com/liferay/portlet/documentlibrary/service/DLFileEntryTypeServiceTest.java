@@ -316,9 +316,11 @@ public class DLFileEntryTypeServiceTest {
 	private DLFileEntryType _contractDLFileEntryType;
 	private List<DLFileEntryType> _dlFileEntryTypes;
 	private Folder _folder;
-	private DLFileEntryType _marketingBannerDLFileEntryType;
 
 	@DeleteAfterTestRun
-	private Group _group; private Folder _subfolder;
+	private Group _group;
+
+	private DLFileEntryType _marketingBannerDLFileEntryType;
+	private Folder _subfolder;
 
 }

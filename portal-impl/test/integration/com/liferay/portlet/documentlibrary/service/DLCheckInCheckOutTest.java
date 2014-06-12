@@ -428,9 +428,10 @@ public class DLCheckInCheckOutTest {
 	private FileEntry _fileEntry;
 	private Folder _folder;
 	private Group _group;
-	private ServiceContext _serviceContext;
-	
+
 	@DeleteAfterTestRun
 	private User _overriderUser;
+
+	private ServiceContext _serviceContext;
 
 }

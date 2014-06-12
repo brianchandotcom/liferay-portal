@@ -668,8 +668,8 @@ public class StagingImpl implements Staging {
 			if (Validator.equals(cmd, Constants.PUBLISH)) {
 				errorMessage = LanguageUtil.get(
 					locale,
-					"file-size-limit-exceeded-please-ensure-that-the-file-" +
-						"does-not-exceed-the-file-size-limits-in-both-the-" +
+					"file-size-limit-exceeded.-please-ensure-that-the-file-" +
+						"does-not-exceed-the-file-size-limit-in-both-the-" +
 							"live-environment-and-the-staging-environment");
 			}
 			else {

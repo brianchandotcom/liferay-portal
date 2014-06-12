@@ -158,6 +158,8 @@ AUI.add(
 				NAME: 'liferayformbuilder',
 
 				prototype: {
+					NAMES_HASH: {},
+
 					initializer: function() {
 						var instance = this;
 
@@ -177,8 +179,6 @@ AUI.add(
 
 						instance._toggleInputDirection(translationManager.get('defaultLocale'));
 					},
-
-					NAMES_HASH: {},
 
 					bindUI: function() {
 						var instance = this;
@@ -493,33 +493,37 @@ AUI.add(
 
 						var editingField = instance.editingField;
 
-						var namesList = instance.NAMES_HASH;
-
-						var oldValue = editingField.get('name');
-
-						var newValue;
-
 						if (editingField) {
+							var oldValue = editingField.get('name');
+
 							var modelList = instance.propertyList.get('data');
 
-							modelList.each(function(model) {
-								var attributeName = model.get('attributeName');
+							var newValue;
 
-								var attributeValue = model.get('value');
+							modelList.each(
+								function(model) {
+									var attributeName = model.get('attributeName');
 
-								if (attributeName === 'name' && attributeValue !== oldValue) {
-									newValue = attributeValue;
+									var attributeValue = model.get('value');
+
+									if (attributeName === 'name' && attributeValue !== oldValue) {
+										newValue = attributeValue;
+									}
 								}
-							});
+							);
+
+							var namesList = instance.NAMES_HASH;
 
 							if (namesList[newValue]) {
-								alert (instance.get('strings').duplicateNameMessage);
+								alert(instance.get('strings').duplicateNameMessage);
+
 								editingField.focus();
 							}
 
 							else {
 								if (newValue !== undefined) {
 									delete namesList[oldValue];
+
 									namesList[newValue] = true;
 								}
 

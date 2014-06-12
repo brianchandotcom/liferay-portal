@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -93,6 +94,7 @@ public class EditVocabularyAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
 		long[] classNameIds = new long[indexes.length];
+		long[] classTypeIds = new long[indexes.length];
 		boolean[] requireds = new boolean[indexes.length];
 
 		for (int i = 0; i < indexes.length; i++) {
@@ -101,11 +103,17 @@ public class EditVocabularyAction extends PortletAction {
 			classNameIds[i] = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
+			classTypeIds[i] = ParamUtil.getLong(
+				actionRequest, "subtype" + classNameIds[i] +
+				"-classNameId" + index,
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+
 			requireds[i] = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
 		}
 
-		vocabularySettingsHelper.setClassNameIds(classNameIds, requireds);
+		vocabularySettingsHelper.setClassNameAndTypeIds(
+			classNameIds, classTypeIds, requireds);
 
 		boolean multiValued = ParamUtil.getBoolean(
 			actionRequest, "multiValued");

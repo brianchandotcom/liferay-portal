@@ -57,6 +57,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
+	public long getClassTypePK() {
+		return _classTypePK;
+	}
+
 	public java.lang.String getCssClass() {
 		return _cssClass;
 	}
@@ -243,6 +247,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_classPK = classPK;
 
 		setScopedAttribute("classPK", classPK);
+	}
+
+	public void setClassTypePK(long classTypePK) {
+		_classTypePK = classTypePK;
+
+		setScopedAttribute("classTypePK", classTypePK);
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -481,6 +491,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_changesContext = false;
 		_checked = false;
 		_classPK = 0;
+		_classTypePK = -1;
 		_cssClass = null;
 		_data = null;
 		_dateTogglerCheckboxLabel = null;
@@ -534,6 +545,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "changesContext", _changesContext);
 		setNamespacedAttribute(request, "checked", _checked);
 		setNamespacedAttribute(request, "classPK", _classPK);
+		setNamespacedAttribute(request, "classTypePK", _classTypePK);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "dateTogglerCheckboxLabel", _dateTogglerCheckboxLabel);
@@ -585,6 +597,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _changesContext = false;
 	private boolean _checked = false;
 	private long _classPK = 0;
+	private long _classTypePK = -1;
 	private java.lang.String _cssClass = null;
 	private java.lang.Object _data = null;
 	private java.lang.String _dateTogglerCheckboxLabel = null;

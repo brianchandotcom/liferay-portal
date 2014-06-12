@@ -95,7 +95,7 @@ public class AssetTestUtil {
 	}
 
 	public static AssetVocabulary addVocabulary(
-			long groupId, long classNameId, boolean required)
+			long groupId, long classNameId, long classTypeId, boolean required)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
@@ -111,8 +111,9 @@ public class AssetTestUtil {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		vocabularySettingsHelper.setClassNameIds(
-			new long[] {classNameId}, new boolean[] {required});
+		vocabularySettingsHelper.setClassNameAndTypeIds(
+			new long[] {classNameId}, new long[] {classTypeId},
+			new boolean[] {required});
 		vocabularySettingsHelper.setMultiValued(true);
 
 		ServiceContext serviceContext =

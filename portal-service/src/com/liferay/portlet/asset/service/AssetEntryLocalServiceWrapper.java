@@ -851,6 +851,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.updateVisible(className, classPK, visible);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	*/
+	@Deprecated
 	@Override
 	public void validate(long groupId, java.lang.String className,
 		long[] categoryIds, java.lang.String[] tagNames)
@@ -858,6 +862,15 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_assetEntryLocalService.validate(groupId, className, categoryIds,
 			tagNames);
+	}
+
+	@Override
+	public void validate(long groupId, java.lang.String className,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_assetEntryLocalService.validate(groupId, className, classTypeId,
+			categoryIds, tagNames);
 	}
 
 	/**

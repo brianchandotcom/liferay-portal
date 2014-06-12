@@ -56,11 +56,13 @@ else {
 }
 
 String cssClass = StringPool.BLANK;
+String listGroupItemCssClass = StringPool.BLANK;
 
 boolean view = false;
 
 if (row == null) {
 	cssClass = "nav list-group";
+	listGroupItemCssClass = "list-group-item";
 
 	view = true;
 }
@@ -76,7 +78,7 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass="list-group-item"
+			cssClass="<%= listGroupItemCssClass %>"
 			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
@@ -93,7 +95,7 @@ if (row == null) {
 		/>
 
 		<liferay-ui:icon
-			cssClass="list-group-item"
+			cssClass="<%= listGroupItemCssClass %>"
 			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
@@ -113,7 +115,7 @@ if (row == null) {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					cssClass="list-group-item"
+					cssClass="<%= listGroupItemCssClass %>"
 					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
@@ -128,7 +130,7 @@ if (row == null) {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					cssClass="list-group-item"
+					cssClass="<%= listGroupItemCssClass %>"
 					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeURL %>"
@@ -144,7 +146,7 @@ if (row == null) {
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon cssClass="list-group-item" iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
+		<liferay-ui:icon cssClass="<%= listGroupItemCssClass %>" iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
 	</c:if>
 
 	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ENTRY) %>">
@@ -155,7 +157,7 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass="list-group-item"
+			cssClass="<%= listGroupItemCssClass %>"
 			iconCssClass="icon-plus"
 			message="add-bookmark"
 			url="<%= editEntryURL %>"
@@ -176,7 +178,7 @@ if (row == null) {
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			cssClass="list-group-item"
+			cssClass="<%= listGroupItemCssClass %>"
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>

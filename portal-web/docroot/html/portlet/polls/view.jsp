@@ -36,7 +36,7 @@
 
 		<c:if test="<%= showAddPollButton || showPermissionsButton %>">
 			<aui:nav-bar>
-				<aui:nav>
+				<aui:nav cssClass="navbar-nav">
 					<c:if test="<%= showAddPollButton %>">
 						<portlet:renderURL var="editQuestionURL">
 							<portlet:param name="struts_action" value="/polls/edit_question" />

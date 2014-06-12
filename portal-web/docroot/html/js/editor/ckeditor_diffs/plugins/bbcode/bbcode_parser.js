@@ -576,13 +576,13 @@
 				var width = dimensions[0];
 
 				if (width && width !== 'auto') {
-					imageSize += 'width: ' + CKTools.htmlEncodeAttr(dimensions[0]) + 'px;';
+					imageSize += 'width: ' + CKTools.htmlEncodeAttr(width) + 'px;';
 				}
 
 				var height = dimensions[1];
 
 				if (height && height !== 'auto') {
-					imageSize += 'height: ' + CKTools.htmlEncodeAttr(dimensions[1]) + 'px;';
+					imageSize += 'height: ' + CKTools.htmlEncodeAttr(height) + 'px;';
 				}
 
 				imageSize += '"';

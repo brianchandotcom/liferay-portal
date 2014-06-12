@@ -93,7 +93,7 @@
 
 	var TAG_TD = 'td';
 
-	var tplImage = new CKEDITOR.template('<img src="{image}">');
+	var tplImage = new CKEDITOR.template('<img src="{image}" />');
 
 	var tplImageOpenTag = new CKEDITOR.template('[img={width}x{height}]');
 
@@ -506,7 +506,6 @@
 				var domElement = new CKEDITOR.dom.element(element);
 
 				var width = domElement.getStyle('width').replace('px', '') || 'auto';
-
 				var height = domElement.getStyle('height').replace('px', '') || 'auto';
 
 				var openTag = '[img]';
@@ -521,7 +520,6 @@
 				}
 
 				listTagsIn.push(openTag);
-
 				listTagsIn.push(attrSrc);
 
 				listTagsOut.push('[/img]');

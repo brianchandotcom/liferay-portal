@@ -10,8 +10,6 @@ AUI.add(
 
 		var LiferayModal = A.Component.create(
 			{
-				NAME: A.Modal.NAME,
-
 				ATTRS: {
 					autoHeight: {
 						value: false
@@ -36,6 +34,8 @@ AUI.add(
 
 				EXTENDS: A.Modal,
 
+				NAME: A.Modal.NAME,
+
 				prototype: {
 				}
 			}
@@ -46,8 +46,8 @@ AUI.add(
 			{
 				DEFAULTS: {
 					centered: true,
-					modal: true,
 					headerContent: '&nbsp;',
+					modal: true,
 					visible: true,
 					zIndex: Liferay.zIndex.WINDOW
 				},
@@ -183,6 +183,71 @@ AUI.add(
 					}
 				},
 
+				_getDialogIframeConfig: function(config) {
+					var instance = this;
+
+					var dialogIframeConfig;
+
+					var iframeId = config.iframeId;
+
+					var uri = config.uri;
+
+					if (uri) {
+						if (config.cache === false) {
+							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
+						}
+
+						dialogIframeConfig = A.merge(
+							config.dialogIframe,
+							{
+								bindLoadHandler: function() {
+									var instance = this;
+
+									var modal = instance.get('host');
+
+									var popupReady = false;
+
+									var liferayHandles = modal._liferayHandles;
+
+									liferayHandles.push(
+										Liferay.on(
+											'popupReady',
+											function(event) {
+												instance.fire('load', event);
+
+												popupReady = true;
+											}
+										)
+									);
+
+									liferayHandles.push(
+										instance.node.on(
+											'load',
+											function(event) {
+												if (!popupReady) {
+													Liferay.fire(
+														'popupReady',
+														{
+															windowName: iframeId
+														}
+													);
+												}
+
+												popupReady = false;
+											}
+										)
+									);
+								},
+
+								iframeId: iframeId,
+								uri: uri
+							}
+						);
+					}
+
+					return dialogIframeConfig;
+				},
+
 				_getWindow: function(config) {
 					var instance = this;
 
@@ -276,71 +341,6 @@ AUI.add(
 					delete modalConfig.headerContent;
 
 					return modalConfig;
-				},
-
-				_getDialogIframeConfig: function(config) {
-					var instance = this;
-
-					var dialogIframeConfig;
-
-					var iframeId = config.iframeId;
-
-					var uri = config.uri;
-
-					if (uri) {
-						if (config.cache === false) {
-							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
-						}
-
-						dialogIframeConfig = A.merge(
-							config.dialogIframe,
-							{
-								bindLoadHandler: function() {
-									var instance = this;
-
-									var modal = instance.get('host');
-
-									var popupReady = false;
-
-									var liferayHandles = modal._liferayHandles;
-
-									liferayHandles.push(
-										Liferay.on(
-											'popupReady',
-											function(event) {
-												instance.fire('load', event);
-
-												popupReady = true;
-											}
-										)
-									);
-
-									liferayHandles.push(
-										instance.node.on(
-											'load',
-											function(event) {
-												if (!popupReady) {
-													Liferay.fire(
-														'popupReady',
-														{
-															windowName: iframeId
-														}
-													);
-												}
-
-												popupReady = false;
-											}
-										)
-									);
-								},
-
-								iframeId: iframeId,
-								uri: uri
-							}
-						);
-					}
-
-					return dialogIframeConfig;
 				},
 
 				_register: function(modal) {

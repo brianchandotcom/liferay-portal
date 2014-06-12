@@ -283,8 +283,8 @@ public class FinderCacheImpl
 			Set<Serializable> primaryKeysSet = new HashSet<Serializable>(
 				primaryKeys);
 
-			Map<Serializable, Serializable> map =
-				(Map<Serializable, Serializable>)
+			Map<Serializable, ? extends BaseModel<?>> map =
+				(Map<Serializable, ? extends BaseModel<?>>)
 					basePersistenceImpl.fetchByPrimaryKeys(primaryKeysSet);
 
 			if (map.size() < primaryKeysSet.size()) {

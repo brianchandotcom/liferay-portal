@@ -544,6 +544,7 @@ public class DynamicCSSUtil {
 
 			if (urlQuotesMatcher.find()) {
 				urlStart = urlQuotesMatcher.replaceAll("$1");
+
 				hasQuotes = true;
 			}
 
@@ -552,7 +553,6 @@ public class DynamicCSSUtil {
 			if (urlStart.indexOf(CharPool.QUESTION) == -1) {
 				sb.append(CharPool.QUESTION);
 			}
-
 			else {
 				sb.append(CharPool.AMPERSAND);
 			}

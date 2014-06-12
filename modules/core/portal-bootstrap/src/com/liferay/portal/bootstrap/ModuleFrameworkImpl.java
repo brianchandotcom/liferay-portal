@@ -704,12 +704,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return String.valueOf(level);
 	}
 
-	private String _getHashcode(String[] keys) {
+	private String _getHashcode(String[] ... keys) {
 		try {
 			CacheKeyGenerator cacheKeyGenerator = new JavaMD5CacheKeyGenerator(
 				128);
 
-			return String.valueOf(cacheKeyGenerator.getCacheKey(keys));
+			for (String[] key : keys) {
+				cacheKeyGenerator.append(key);
+			}
+
+			return String.valueOf(cacheKeyGenerator.finish());
 		}
 		catch (NoSuchAlgorithmException nsae) {
 			throw new RuntimeException(nsae);
@@ -744,7 +748,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String[] systemPackagesExtra =
 			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
 
-		String hashcode = _getHashcode(systemPackagesExtra);
+		String hashcode = _getHashcode(
+			systemPackagesExtra,
+			PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
 
 		File coreDir = new File(
 			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");

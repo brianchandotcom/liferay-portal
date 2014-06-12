@@ -98,11 +98,11 @@ String portletId = portletDisplay.getRootPortletId();
 </aui:fieldset>
 
 <aui:script>
-	var reminderQueriesChanged = false;
-	var lastLanguageId = '<%= currentLanguageId %>';
+	var <portlet:namespace />lastLanguageId = '<%= currentLanguageId %>';
+	var <portlet:namespace />reminderQueriesChanged = false;
 
 	function <portlet:namespace />onReminderQueriesChanged() {
-		reminderQueriesChanged = true;
+		<portlet:namespace />reminderQueriesChanged = true;
 	}
 
 	Liferay.provide(
@@ -111,17 +111,17 @@ String portletId = portletDisplay.getRootPortletId();
 		function() {
 			var A = AUI();
 
-			if (lastLanguageId != '<%= defaultLanguageId %>') {
-				if (reminderQueriesChanged) {
+			if (<portlet:namespace />lastLanguageId != '<%= defaultLanguageId %>') {
+				if (<portlet:namespace />reminderQueriesChanged) {
 					var reminderQueriesValue = A.one('#<portlet:namespace />reminderQueries_temp').attr('value');
 
 					if (reminderQueriesValue == null) {
 						reminderQueriesValue = '';
 					}
 
-					A.one('#<portlet:namespace />reminderQueries_' + lastLanguageId).attr('value', reminderQueriesValue);
+					A.one('#<portlet:namespace />reminderQueries_' + <portlet:namespace />lastLanguageId).attr('value', reminderQueriesValue);
 
-					reminderQueriesChanged = false;
+					<portlet:namespace />reminderQueriesChanged = false;
 				}
 			}
 
@@ -144,7 +144,7 @@ String portletId = portletDisplay.getRootPortletId();
 				A.one('#<portlet:namespace />reminderQueries_temp').hide();
 			}
 
-			lastLanguageId = selLanguageId;
+			<portlet:namespace />lastLanguageId = selLanguageId;
 		},
 		['aui-base']
 	);
@@ -183,18 +183,17 @@ String portletId = portletDisplay.getRootPortletId();
 		['aui-base']
 	);
 
-	<portlet:namespace />updateReminderQueriesLanguageTemps(lastLanguageId);
+	<portlet:namespace />updateReminderQueriesLanguageTemps(<portlet:namespace />lastLanguageId);
 
-	var reminderQueriesHandle = Liferay.on('submitForm', <portlet:namespace />updateReminderQueriesLanguage);
+	var <portlet:namespace />reminderQueriesHandle = Liferay.on('submitForm', <portlet:namespace />updateReminderQueriesLanguage);
 
-	var clearReminderQueriesHandle = function(event) {
+	var <portlet:namespace />clearReminderQueriesHandle = function(event) {
 		if (event.portletId === '<%= portletId %>') {
-			reminderQueriesHandle.detach();
+			<portlet:namespace />reminderQueriesHandle.detach();
 
-			Liferay.detach('destroyPortlet', clearReminderQueriesHandle);
+			Liferay.detach('destroyPortlet', <portlet:namespace />clearReminderQueriesHandle);
 		}
 	};
 
-	Liferay.on('destroyPortlet', clearReminderQueriesHandle);
-
+	Liferay.on('destroyPortlet', <portlet:namespace />clearReminderQueriesHandle);
 </aui:script>

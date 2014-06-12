@@ -789,8 +789,8 @@ body.html-editor {
 
 		.dialog-iframe-bd {
 			max-height: none !important;
-			-webkit-overflow-scrolling: touch;
 			overflow: auto;
+			-webkit-overflow-scrolling: touch;
 		}
 
 		.modal-content {

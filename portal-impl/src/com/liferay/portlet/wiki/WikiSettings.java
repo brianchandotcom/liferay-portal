@@ -34,6 +34,12 @@ public class WikiSettings {
 
 	public static final String[] MULTI_VALUED_KEYS = {};
 
+	public static String[] ALL_KEYS = {
+		"emailFromAddress", "emailFromName", "emailPageAddedBody",
+		"emailPageAddedSubject", "emailPageUpdatedBody",
+		"emailPageUpdatedSubject", "emailPageAddedEnabled",
+		"emailPageUpdatedEnabled"};
+
 	public static WikiSettings getInstance(long groupId)
 		throws PortalException {
 

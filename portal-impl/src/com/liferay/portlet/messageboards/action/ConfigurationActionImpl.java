@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.messageboards.MBSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,10 @@ import javax.portlet.PortletConfig;
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
+	public ConfigurationActionImpl() {
+		addMultiValuedKeys(MBSettings.MULTI_VALUED_KEYS);
+	}
+
 	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -52,9 +57,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
 		validateEmailFrom(actionRequest);
-
-		updateThreadPriorities(actionRequest);
-		updateUserRanks(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -70,9 +72,15 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		return true;
 	}
 
-	protected void updateThreadPriorities(ActionRequest actionRequest)
-		throws Exception {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
 
+		updateThreadPriorities(actionRequest);
+		updateUserRanks(actionRequest);
+	}
+
+	protected void updateThreadPriorities(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -110,9 +118,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 	}
 
-	protected void updateUserRanks(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateUserRanks(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

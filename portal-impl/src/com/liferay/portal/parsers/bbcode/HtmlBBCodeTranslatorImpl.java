@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslator;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -387,6 +388,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		sb.append("<img src=\"");
 
+		int pos = marker.getValue();
+
 		String src = extractData(
 			bbCodeItems, marker, "img", BBCodeParser.TYPE_DATA, true);
 
@@ -396,7 +399,33 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			sb.append(HtmlUtil.escapeAttribute(src));
 		}
 
-		sb.append("\" />");
+		sb.append("\"");
+
+		BBCodeItem bbCodeItem = bbCodeItems.get(pos);
+
+		String dimensions = bbCodeItem.getAttribute();
+
+		if (Validator.isNotNull(dimensions)) {
+			String[] dim = StringUtil.split(dimensions, CharPool.LOWER_CASE_X);
+
+			sb.append("style=\"");
+
+			if (!dim[0].equals("auto")) {
+				sb.append("width:");
+				sb.append(HtmlUtil.escapeAttribute(dim[0]));
+				sb.append("px;");
+			}
+
+			if (!dim[1].equals("auto")) {
+				sb.append("height:");
+				sb.append(HtmlUtil.escapeAttribute(dim[1]));
+				sb.append("px;");
+			}
+
+			sb.append("\"");
+		}
+
+		sb.append(" />");
 	}
 
 	protected void handleItalic(StringBundler sb, Stack<String> tags) {

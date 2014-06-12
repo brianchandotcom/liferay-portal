@@ -25,7 +25,7 @@
 		}
 
 		.form-search {
-			margin: 10px 0;
+			margin: 9px 0;
 
 			@media (min-width: 768px) {
 				float: right;

@@ -911,10 +911,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Vocabularies select box in sites categories ---------- */
 
 	.portlet-asset-category-admin {
-		.categories-admin-select-search {
-			margin: 0 10px 0 0;
-		}
-
 		.form-group {
 			margin-bottom: 0;
 		}

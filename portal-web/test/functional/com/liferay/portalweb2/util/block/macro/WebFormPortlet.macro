@@ -6,9 +6,17 @@
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_TITLE_FIELD" value1="${formInformationTitle}" />
 		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_INFORMATION_DESCRIPTION_FIELD" value1="${formInformationDescription}" />
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_TEXT_NAME_FIELD" value1="${formTextTitle}" />
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_DROPDOWN_NAME_FIELD" value1="${formDropdownTitle}" />
-		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_TEXTBOX_NAME_FIELD" value1="${formTextboxTitle}" />
+		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_1_NAME_FIELD" value1="${form1Title}" />
+		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_2_NAME_FIELD" value1="${form2Title}" />
+
+		<if>
+			<equals arg1="${checkbox}" arg2="true" />
+			<then>
+				<execute action="PGWebformConfiguration#select" locator-key1="SETUP_FORM_FIELDS_2_SELECT" value1="Check Box" />
+			</then>
+		</if>
+
+		<execute action="PGWebformConfiguration#type" locator-key1="SETUP_FORM_FIELDS_3_NAME_FIELD" value1="${form3Title}" />
 
 		<execute action="PGWebformConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
@@ -19,9 +27,9 @@
 		<execute action="PGWebform#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_TEXT_NAME_FIELD" />
-		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_DROPDOWN_NAME_FIELD" />
-		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_TEXTBOX_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_1_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_2_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_3_NAME_FIELD" />
 	</command>
 
 	<command name="viewSetUpFormFieldsSentPG">
@@ -30,8 +38,8 @@
 
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_TEXT_NAME_FIELD" />
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_DROPDOWN_NAME_FIELD" />
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_TEXTBOX_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_1_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_2_NAME_FIELD" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_3_NAME_FIELD" />
 	</command>
 </definition>

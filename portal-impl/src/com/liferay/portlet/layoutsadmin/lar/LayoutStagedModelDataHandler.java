@@ -1166,7 +1166,8 @@ public class LayoutStagedModelDataHandler
 			previousTypeSettingsProperties.setProperty(
 				columnId, StringUtil.merge(portletIds));
 
-			layout.setTypeSettings(previousTypeSettingsProperties.toString());
+			layout.setTypeSettings(
+				previousTypeSettingsProperties.toSortedString());
 		}
 		catch (IOException ioe) {
 			layout.setTypeSettings(newTypeSettings);

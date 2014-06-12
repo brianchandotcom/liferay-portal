@@ -86,7 +86,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 		return addAction(
 			ruleGroupInstanceId, nameMap, descriptionMap, type,
-			typeSettingsProperties.toString(), serviceContext);
+			typeSettingsProperties.toSortedString(), serviceContext);
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 		return updateAction(
 			actionId, nameMap, descriptionMap, type,
-			typeSettingsProperties.toString(), serviceContext);
+			typeSettingsProperties.toSortedString(), serviceContext);
 	}
 
 }

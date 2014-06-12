@@ -110,7 +110,7 @@ public class UpgradeExpando extends UpgradeProcess {
 				typeSettingsProperties.remove("indexable");
 
 				updateColumnTypeSettings(
-					columnId, typeSettingsProperties.toString());
+					columnId, typeSettingsProperties.toSortedString());
 			}
 		}
 		finally {

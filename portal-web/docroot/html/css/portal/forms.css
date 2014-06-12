@@ -143,6 +143,16 @@
 	margin-top: 6px;
 }
 
+.label-required {
+	&:after {
+		content: ")";
+	}
+
+	&:before {
+		content: "(";
+	}
+}
+
 .lfr-input-resource {
 	width: @model_hints_constants_text_display_width@px;
 }

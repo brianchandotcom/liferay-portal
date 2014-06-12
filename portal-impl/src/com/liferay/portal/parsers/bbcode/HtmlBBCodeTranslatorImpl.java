@@ -412,13 +412,13 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 			if (!dim[0].equals("auto")) {
 				sb.append("width:");
-				sb.append(dim[0]);
+				sb.append(HtmlUtil.escapeAttribute(dim[0]));
 				sb.append("px;");
 			}
 
 			if (!dim[1].equals("auto")) {
 				sb.append("height:");
-				sb.append(dim[1]);
+				sb.append(HtmlUtil.escapeAttribute(dim[1]));
 				sb.append("px;");
 			}
 

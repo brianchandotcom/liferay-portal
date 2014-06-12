@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .lfr-device-preview-panel {
 	width: 220px;
@@ -33,6 +34,8 @@
 }
 
 .lfr-device {
+	@include box-sizing(content-box);
+
 	.modal-header {
 		display: none;
 	}

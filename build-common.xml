@@ -1291,7 +1291,7 @@ rerun your task.
 				<isset property="test.suite.classes.available" />
 			</not>
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" printsummary="on">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
@@ -1313,7 +1313,7 @@ rerun your task.
 				</junit>
 			</then>
 			<else>
-				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" printsummary="on">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
@@ -1396,7 +1396,7 @@ rerun your task.
 						<equals arg1="${test.with.security.count}" arg2="0" />
 					</not>
 					<then>
-						<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+						<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
 							<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 							<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 							<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
@@ -1447,7 +1447,7 @@ rerun your task.
 						<equals arg1="${test.without.security.count}" arg2="0" />
 					</not>
 					<then>
-						<junit dir="${project.dir}" fork="on" forkmode="${junit.forkmode}" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+						<junit dir="${project.dir}" fork="on" forkmode="${junit.forkmode}" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
 							<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 							<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 							<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
@@ -1564,7 +1564,7 @@ rerun your task.
 			replace="com."
 		/>
 
-		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
 			<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 			<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 			<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />

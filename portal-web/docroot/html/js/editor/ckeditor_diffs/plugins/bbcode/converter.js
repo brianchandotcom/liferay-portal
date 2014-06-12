@@ -1,6 +1,7 @@
 ;(function() {
 	var BBCodeUtil = Liferay.BBCodeUtil;
 	var Util = Liferay.Util;
+	var CKTools = CKEDITOR.tools;
 
 	var Parser = Liferay.BBCodeParser;
 
@@ -100,8 +101,6 @@
 
 	var STR_TAG_END_OPEN = '</';
 
-	var STR_TAG_IMAGE_TPL = '<img src="{imageSrc}" {imageSize} />';
-
 	var STR_TAG_LIST_ITEM_SHORT = '*';
 
 	var STR_TAG_OPEN = '<';
@@ -121,6 +120,8 @@
 	var TOKEN_TAG_END = Parser.TOKEN_TAG_END;
 
 	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
+
+	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {imageSize} />');
 
 	var Converter = function(config) {
 		var instance = this;
@@ -262,7 +263,7 @@
 					hrefInput = STR_MAILTO + hrefInput;
 				}
 
-				href = CKEDITOR.tools.htmlEncodeAttr(hrefInput);
+				href = CKTools.htmlEncodeAttr(hrefInput);
 			}
 
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
@@ -275,7 +276,7 @@
 
 			var fontName = token.attribute;
 
-			fontName = CKEDITOR.tools.htmlEncodeAttr(fontName);
+			fontName = CKTools.htmlEncodeAttr(fontName);
 
 			instance._result.push(STR_TAG_SPAN_STYLE_OPEN + 'font-family: ' + fontName + STR_TAG_ATTR_CLOSE);
 
@@ -290,7 +291,7 @@
 			var imageSrcInput = instance._extractData(STR_IMG, true);
 
 			if (REGEX_IMAGE_SRC.test(imageSrcInput)) {
-				imageSrc = CKEDITOR.tools.htmlEncodeAttr(imageSrcInput);
+				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
 
 			var imageSize = '';
@@ -303,19 +304,24 @@
 				var width = dimensions[0];
 
 				if (width && width !== 'auto') {
-					imageSize += 'width: ' + dimensions[0] + 'px;';
+					imageSize += 'width: ' + CKTools.htmlEncodeAttr(dimensions[0]) + 'px;';
 				}
 
 				var height = dimensions[1];
 
 				if (height && height !== 'auto') {
-					imageSize += 'height: ' + dimensions[1] + 'px;';
+					imageSize += 'height: ' + CKTools.htmlEncodeAttr(dimensions[1]) + 'px;';
 				}
 
 				imageSize += '"';
 			}
 
-			var result = STR_TAG_IMAGE_TPL.replace('{imageSrc}', imageSrc).replace('{imageSize}', imageSize);
+			var result = tplImage.output(
+				{
+					imageSize: imageSize,
+					imageSrc: imageSrc
+				}
+			);
 
 			instance._result.push(result);
 		},
@@ -513,7 +519,7 @@
 			var hrefInput = token.attribute || instance._extractData(STR_TAG_URL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
-				href = CKEDITOR.tools.htmlEncodeAttr(hrefInput);
+				href = CKTools.htmlEncodeAttr(hrefInput);
 			}
 
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);

@@ -453,6 +453,12 @@
 		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
+	<command name="viewPagesOrderCP">
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${pageName1}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${pageName2}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="${pageName3}" />
+	</command>
+
 	<command name="viewPageTemplatePG">
 		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 		<execute action="Dockbar#click" locator-key1="EDIT" />

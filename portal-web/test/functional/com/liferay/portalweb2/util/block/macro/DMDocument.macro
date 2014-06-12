@@ -192,6 +192,19 @@
 		</if>
 	</command>
 
+	<command name="addPGViaAP">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGAssetpublisher#selectFrame" locator-key1="CONTENT_IFRAME" />
+
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGAssetpublisher#selectFrame" locator1="relative=top" />
+	</command>
+
 	<command name="addPGViaFlashUploader">
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
@@ -539,6 +552,27 @@
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editPGViaAP">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#click" locator-key1="ASSET_ABSTRACT_EDIT" />
+
+		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+
+		<if>
+			<not>
+				<contains string="${dmDocumentTitleEdit}" substring="{dmDocumentTitleEdit}" />
+			</not>
+			<then>
+				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGAssetpublisher#selectFrame" locator1="relative=top" />
 	</command>
 
 	<command name="editPGViaMG">
@@ -1517,10 +1551,15 @@
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${dmDocumentDescription}" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 
-		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${dmDocumentDescription}" />
+		<if>
+			<condition action="PGAssetpublisher#isElementPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+			<then>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${dmDocumentDescription}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewPGViaMG">

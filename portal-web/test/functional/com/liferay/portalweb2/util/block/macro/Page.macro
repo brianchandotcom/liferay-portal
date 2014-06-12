@@ -551,6 +551,12 @@
 		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_SEO_META_TAGS_DESCRIPTION" />
 	</command>
 
+	<command name="viewPageOrderStagingLivePG">
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_1_STAGING_LIVE" value1="${pageName1}" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_2_STAGING_LIVE" value1="${pageName2}" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_3_STAGING_LIVE" value1="${pageName3}" />
+	</command>
+
 	<command name="viewPanelPortletListPG">
 		<var name="key_componentName" value="${componentName}" />
 

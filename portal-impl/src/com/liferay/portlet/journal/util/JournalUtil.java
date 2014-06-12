@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.CompareVersionsException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -472,6 +473,12 @@ public class JournalUtil {
 			JournalArticleLocalServiceUtil.getArticle(
 				groupId, articleId, sourceVersion);
 
+		if (!JournalArticleLocalServiceUtil.isRenderable(
+				sourceArticle, portletRequestModel, themeDisplay)) {
+
+			throw new CompareVersionsException(sourceVersion);
+		}
+
 		JournalArticleDisplay sourceArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				sourceArticle, null, Constants.VIEW, languageId, 1,
@@ -481,6 +488,12 @@ public class JournalUtil {
 			JournalArticleLocalServiceUtil.getArticle(
 				groupId, articleId, targetVersion);
 
+		if (!JournalArticleLocalServiceUtil.isRenderable(
+				targetArticle, portletRequestModel, themeDisplay)) {
+
+			throw new CompareVersionsException(targetVersion);
+		}
+
 		JournalArticleDisplay targetArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				targetArticle, null, Constants.VIEW, languageId, 1,
@@ -489,6 +502,18 @@ public class JournalUtil {
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
+	}
+
+	public static String doTransform(
+			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			String viewMode, String languageId, Document document,
+			PortletRequestModel portletRequestModel, String script,
+			String langType)
+		throws Exception {
+
+		return _transformer.doTransform(
+			themeDisplay, tokens, viewMode, languageId, document,
+			portletRequestModel, script, langType);
 	}
 
 	public static String formatVM(String vm) {

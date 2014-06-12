@@ -12,27 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.kernel.template;
+package com.liferay.portal;
 
-import java.io.Writer;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Tina Tian
+ * @author Eudaldo Alonso
  */
-public interface Template {
+public class CompareVersionsException extends PortalException {
 
-	public void doProcessTemplate(Writer writer) throws Exception;
+	public CompareVersionsException(double version) {
+		super();
 
-	public Object get(String key);
+		_version = version;
+	}
 
-	public String[] getKeys();
+	public CompareVersionsException(String msg) {
+		super(msg);
+	}
 
-	public void prepare(HttpServletRequest request);
+	public CompareVersionsException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public void processTemplate(Writer writer) throws TemplateException;
+	public CompareVersionsException(Throwable cause) {
+		super(cause);
+	}
 
-	public void put(String key, Object value);
+	public double getVersion() {
+		return _version;
+	}
+
+	private double _version;
 
 }

@@ -81,6 +81,19 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	@Override
+	public void doProcessTemplate(Writer writer) throws Exception {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		processTemplate(templateResource, unsyncStringWriter);
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		sb.writeTo(writer);
+	}
+
+	@Override
 	public Object get(String key) {
 		if (key == null) {
 			return null;
@@ -120,15 +133,7 @@ public abstract class AbstractTemplate implements Template {
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
 		try {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			put(TemplateConstants.WRITER, unsyncStringWriter);
-
-			processTemplate(templateResource, unsyncStringWriter);
-
-			StringBundler sb = unsyncStringWriter.getStringBundler();
-
-			sb.writeTo(writer);
+			doProcessTemplate(writer);
 		}
 		catch (Exception e) {
 			put(TemplateConstants.WRITER, writer);

@@ -79,7 +79,7 @@
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#deleteAllPrivatepagesCP" />
+		<execute macro="SitePage#deletePrivatePageCP" />
 	</command>
 
 	<command name="CannotDeleteLastPublicPage" priority="3">
@@ -87,7 +87,7 @@
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#deleteAllPublicpagesCP">
+		<execute macro="SitePage#deletePublicPageCP">
 			<var name="lastPublicSitepage" value="true" />
 		</execute>
 
@@ -105,10 +105,10 @@
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#deleteAllPublicpagesCP" />
+		<execute macro="SitePage#deletePublicPageCP" />
 	</command>
 
-	<command name="ChangePageTypeToLinkToPageHideChildPages" priority="3">
+	<command name="ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -147,7 +147,7 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="SitePage#addSitePageTypeLinkToAPageOfThisSiteCP">
+		<execute macro="SitePage#changePageTypeLayoutCP">
 			<var name="indexNumber" value="4" />
 			<var name="pageType" value="Link to a Page of This Site" />
 			<var name="sitePageName" value="- - Child Page Name" />

@@ -131,26 +131,6 @@
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
 	</command>
 
-	<command name="addSitePageTypeLinkToAPageOfThisSiteCP">
-		<var name="key_pageType" value="${pageType}" />
-
-		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
-
-		<var name="key_indexNumber" value="${indexNumber}" />
-
-		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="index=${indexNumber}" />
-
-		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
-
-		<var name="key_sitePageName" value="${sitePageName}" />
-
-		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="${sitePageName}" />
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
-	</command>
-
 	<command name="addSitePageTypeLinkToURLCP">
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
@@ -161,6 +141,24 @@
 
 		<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_PANEL_CHECKBOX" />
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+	</command>
+
+	<command name="changePageTypeLayoutCP">
+		<var name="key_pageType" value="${pageType}" />
+
+		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
+
+		<if>
+			<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
+			<then>
+				<var name="key_indexNumber" value="${indexNumber}" />
+
+				<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="index=${indexNumber}" />
+			</then>
+		</if>
+
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="changePageTypeLayoutPG">
@@ -182,7 +180,7 @@
 		<execute action="CPBlogs#assertTextNotPresent" locator-key1="PORTLET_TITLE" value1="Blogs" />
 	</command>
 
-	<command name="deleteAllPrivatepagesCP">
+	<command name="deletePrivatePageCP">
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 
 		<if>
@@ -199,7 +197,7 @@
 		</if>
 	</command>
 
-	<command name="deleteAllPublicpagesCP">
+	<command name="deletePublicPageCP">
 		<if>
 			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 			<then>
@@ -549,6 +547,16 @@
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 		<execute action="Dockbar#assertTextEquals" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute action="Dockbar#assertChecked" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
+	</command>
+
+	<command name="viewPageTypeLayoutCP">
+		<var name="key_pageType" value="${pageType}" />
+
+		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="${sitePageName}" />
 	</command>
 
 	<command name="viewPanelPortletListCP">

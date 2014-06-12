@@ -25,6 +25,7 @@
 
 		<column name="title" type="String" />
 		<column name="urlTitle" type="String" />
+		<column name="deckTitle" type="String" />
 		<column name="description" type="String" />
 		<column name="content" type="String" />
 		<column name="displayDate" type="Date" />

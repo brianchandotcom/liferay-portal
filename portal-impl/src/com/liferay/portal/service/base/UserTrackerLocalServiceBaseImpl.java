@@ -97,7 +97,6 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param userTrackerId the primary key of the user tracker
 	 * @return the user tracker that was removed
 	 * @throws PortalException if a user tracker with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -111,7 +110,6 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param userTracker the user tracker
 	 * @return the user tracker that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

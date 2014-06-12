@@ -272,22 +272,19 @@ public class ResourceActionLocalServiceWrapper
 	}
 
 	@Override
-	public void checkResourceActions()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void checkResourceActions() {
 		_resourceActionLocalService.checkResourceActions();
 	}
 
 	@Override
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<java.lang.String> actionIds) {
 		_resourceActionLocalService.checkResourceActions(name, actionIds);
 	}
 
 	@Override
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<java.lang.String> actionIds, boolean addDefaultActions) {
 		_resourceActionLocalService.checkResourceActions(name, actionIds,
 			addDefaultActions);
 	}
@@ -307,14 +304,12 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return _resourceActionLocalService.getResourceActions(name);
 	}
 
 	@Override
-	public int getResourceActionsCount(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getResourceActionsCount(java.lang.String name) {
 		return _resourceActionLocalService.getResourceActionsCount(name);
 	}
 

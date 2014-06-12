@@ -54,8 +54,7 @@ public class LayoutBranchServiceHttp {
 		HttpPrincipal httpPrincipal, long layoutRevisionId,
 		java.lang.String name, java.lang.String description, boolean master,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"addLayoutBranch", _addLayoutBranchParameterTypes0);
@@ -73,10 +72,6 @@ public class LayoutBranchServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -91,8 +86,7 @@ public class LayoutBranchServiceHttp {
 
 	public static void deleteLayoutBranch(HttpPrincipal httpPrincipal,
 		long layoutBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"deleteLayoutBranch", _deleteLayoutBranchParameterTypes1);
@@ -106,10 +100,6 @@ public class LayoutBranchServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -126,8 +116,7 @@ public class LayoutBranchServiceHttp {
 		HttpPrincipal httpPrincipal, long layoutBranchId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"updateLayoutBranch", _updateLayoutBranchParameterTypes2);
@@ -143,10 +132,6 @@ public class LayoutBranchServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

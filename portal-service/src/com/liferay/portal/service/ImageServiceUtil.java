@@ -60,8 +60,7 @@ public class ImageServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getImage(imageId);
 	}
 

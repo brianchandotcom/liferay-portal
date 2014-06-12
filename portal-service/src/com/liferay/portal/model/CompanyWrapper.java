@@ -499,8 +499,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 	@Override
 	public com.liferay.portal.model.Account getAccount()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getAccount();
 	}
 
@@ -510,15 +509,13 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public java.lang.String getAuthType()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getAuthType() {
 		return _company.getAuthType();
 	}
 
 	@Override
 	public com.liferay.portal.model.User getDefaultUser()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getDefaultUser();
 	}
 
@@ -534,15 +531,13 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 	@Override
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getGroup();
 	}
 
 	@Override
 	public long getGroupId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getGroupId();
 	}
 
@@ -553,43 +548,37 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 	@Override
 	public java.util.Locale getLocale()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getLocale();
 	}
 
 	@Override
 	public java.lang.String getName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getName();
 	}
 
 	@Override
 	public java.lang.String getPortalURL(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getPortalURL(groupId);
 	}
 
 	@Override
 	public java.lang.String getShardName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getShardName();
 	}
 
 	@Override
 	public java.lang.String getShortName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getShortName();
 	}
 
 	@Override
 	public java.util.TimeZone getTimeZone()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getTimeZone();
 	}
 
@@ -599,50 +588,42 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public boolean hasCompanyMx(java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasCompanyMx(java.lang.String emailAddress) {
 		return _company.hasCompanyMx(emailAddress);
 	}
 
 	@Override
-	public boolean isAutoLogin()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isAutoLogin() {
 		return _company.isAutoLogin();
 	}
 
 	@Override
-	public boolean isSendPassword()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isSendPassword() {
 		return _company.isSendPassword();
 	}
 
 	@Override
-	public boolean isSendPasswordResetLink()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isSendPasswordResetLink() {
 		return _company.isSendPasswordResetLink();
 	}
 
 	@Override
-	public boolean isSiteLogo()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isSiteLogo() {
 		return _company.isSiteLogo();
 	}
 
 	@Override
-	public boolean isStrangers()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isStrangers() {
 		return _company.isStrangers();
 	}
 
 	@Override
-	public boolean isStrangersVerify()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isStrangersVerify() {
 		return _company.isStrangersVerify();
 	}
 
 	@Override
-	public boolean isStrangersWithMx()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isStrangersWithMx() {
 		return _company.isStrangersWithMx();
 	}
 

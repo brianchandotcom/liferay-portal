@@ -115,12 +115,10 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param companyId the primary key of the company
 	 * @return the company that was removed
 	 * @throws PortalException if a company with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Company deleteCompany(long companyId)
-		throws PortalException {
+	public Company deleteCompany(long companyId) throws PortalException {
 		return companyPersistence.remove(companyId);
 	}
 

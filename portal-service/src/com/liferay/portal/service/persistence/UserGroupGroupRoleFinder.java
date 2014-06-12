@@ -22,5 +22,5 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface UserGroupGroupRoleFinder {
 	public java.util.List<com.liferay.portal.model.UserGroupGroupRole> findByUserGroupsUsers(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 }

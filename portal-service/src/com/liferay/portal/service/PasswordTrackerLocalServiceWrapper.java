@@ -273,32 +273,28 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public void deletePasswordTrackers(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deletePasswordTrackers(long userId) {
 		_passwordTrackerLocalService.deletePasswordTrackers(userId);
 	}
 
 	@Override
 	public boolean isSameAsCurrentPassword(long userId,
 		java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordTrackerLocalService.isSameAsCurrentPassword(userId,
 			newClearTextPwd);
 	}
 
 	@Override
 	public boolean isValidPassword(long userId, java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordTrackerLocalService.isValidPassword(userId,
 			newClearTextPwd);
 	}
 
 	@Override
 	public void trackPassword(long userId, java.lang.String encPassword)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_passwordTrackerLocalService.trackPassword(userId, encPassword);
 	}
 

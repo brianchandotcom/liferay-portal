@@ -256,15 +256,13 @@ public class ShardLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Shard addShard(
-		java.lang.String className, long classPK, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK, java.lang.String name) {
 		return getService().addShard(className, classPK, name);
 	}
 
 	public static com.liferay.portal.model.Shard getShard(
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShard(className, classPK);
 	}
 

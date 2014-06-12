@@ -259,20 +259,17 @@ public class BrowserTrackerLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void deleteUserBrowserTracker(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserBrowserTracker(long userId) {
 		getService().deleteUserBrowserTracker(userId);
 	}
 
 	public static com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long browserKey) {
 		return getService().getBrowserTracker(userId, browserKey);
 	}
 
 	public static com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long browserKey) {
 		return getService().updateBrowserTracker(userId, browserKey);
 	}
 

@@ -260,34 +260,29 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId) {
 		return getService().fetchVirtualHost(companyId, layoutSetId);
 	}
 
 	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String hostname) {
 		return getService().fetchVirtualHost(hostname);
 	}
 
 	public static com.liferay.portal.model.VirtualHost getVirtualHost(
 		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVirtualHost(companyId, layoutSetId);
 	}
 
 	public static com.liferay.portal.model.VirtualHost getVirtualHost(
 		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVirtualHost(hostname);
 	}
 
 	public static com.liferay.portal.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId, java.lang.String hostname) {
 		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
 	}
 

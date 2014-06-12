@@ -102,7 +102,6 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	 * @param layoutSetBranchId the primary key of the layout set branch
 	 * @return the layout set branch that was removed
 	 * @throws PortalException if a layout set branch with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -117,13 +116,11 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	 * @param layoutSetBranch the layout set branch
 	 * @return the layout set branch that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutSetBranch deleteLayoutSetBranch(
-		LayoutSetBranch layoutSetBranch)
-		throws PortalException {
+		LayoutSetBranch layoutSetBranch) throws PortalException {
 		return layoutSetBranchPersistence.remove(layoutSetBranch);
 	}
 

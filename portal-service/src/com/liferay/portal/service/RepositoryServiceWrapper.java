@@ -56,8 +56,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.addRepository(groupId, classNameId,
 			parentFolderId, name, description, portletId,
 			typeSettingsProperties, serviceContext);
@@ -65,69 +64,60 @@ public class RepositoryServiceWrapper implements RepositoryService,
 
 	@Override
 	public void checkRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_repositoryService.checkRepository(repositoryId);
 	}
 
 	@Override
 	public void deleteRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_repositoryService.deleteRepository(repositoryId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getLocalRepositoryImpl(repositoryId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		long folderId, long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getLocalRepositoryImpl(folderId, fileEntryId,
 			fileVersionId);
 	}
 
 	@Override
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getRepository(repositoryId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getRepositoryImpl(repositoryId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		long folderId, long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getRepositoryImpl(folderId, fileEntryId,
 			fileVersionId);
 	}
 
 	@Override
-	public java.lang.String[] getSupportedConfigurations(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String[] getSupportedConfigurations(long classNameId) {
 		return _repositoryService.getSupportedConfigurations(classNameId);
 	}
 
 	@Override
 	public java.lang.String[] getSupportedParameters(long classNameId,
-		java.lang.String configuration)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String configuration) {
 		return _repositoryService.getSupportedParameters(classNameId,
 			configuration);
 	}
@@ -135,16 +125,14 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getTypeSettingsProperties(repositoryId);
 	}
 
 	@Override
 	public void updateRepository(long repositoryId, java.lang.String name,
 		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_repositoryService.updateRepository(repositoryId, name, description);
 	}
 

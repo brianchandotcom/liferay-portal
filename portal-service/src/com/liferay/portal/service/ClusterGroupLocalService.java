@@ -231,10 +231,8 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds);
 
 	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 }

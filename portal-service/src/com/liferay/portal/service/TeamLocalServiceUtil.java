@@ -68,11 +68,9 @@ public class TeamLocalServiceUtil {
 	* @param teamId the primary key of the team
 	* @return the team that was removed
 	* @throws PortalException if a team with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Team deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTeam(teamId);
 	}
 
@@ -82,12 +80,10 @@ public class TeamLocalServiceUtil {
 	* @param team the team
 	* @return the team that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Team deleteTeam(
 		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTeam(team);
 	}
 
@@ -428,56 +424,48 @@ public class TeamLocalServiceUtil {
 
 	public static com.liferay.portal.model.Team addTeam(long userId,
 		long groupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTeam(userId, groupId, name, description);
 	}
 
 	public static void deleteTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTeams(groupId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Team> getGroupTeams(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getService().getGroupTeams(groupId);
 	}
 
 	public static com.liferay.portal.model.Team getTeam(long groupId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTeam(groupId, name);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long groupId) {
 		return getService().getUserTeams(userId, groupId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Team> search(
 		long groupId, java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService()
 				   .search(groupId, name, description, params, start, end, obc);
 	}
 
 	public static int searchCount(long groupId, java.lang.String name,
 		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return getService().searchCount(groupId, name, description, params);
 	}
 
 	public static com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTeam(teamId, name, description);
 	}
 

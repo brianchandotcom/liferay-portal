@@ -62,30 +62,26 @@ public class MembershipRequestServiceUtil {
 	public static com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long groupId, java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addMembershipRequest(groupId, comments, serviceContext);
 	}
 
 	public static void deleteMembershipRequests(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteMembershipRequests(groupId, statusId);
 	}
 
 	public static com.liferay.portal.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMembershipRequest(membershipRequestId);
 	}
 
 	public static void updateStatus(long membershipRequestId,
 		java.lang.String reviewComments, int statusId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateStatus(membershipRequestId, reviewComments, statusId,
 			serviceContext);

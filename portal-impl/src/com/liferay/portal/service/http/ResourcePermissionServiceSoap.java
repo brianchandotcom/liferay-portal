@@ -103,7 +103,6 @@ public class ResourcePermissionServiceSoap {
 	resource permissions, or if scope was set to individual scope or
 	if a role with the primary key or a resource action with the name
 	and action ID could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
@@ -141,7 +140,6 @@ public class ResourcePermissionServiceSoap {
 	* @throws PortalException if the user did not have permission to remove
 	resource permissions, or if a role with the primary key or a
 	resource action with the name and action ID could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
@@ -173,7 +171,6 @@ public class ResourcePermissionServiceSoap {
 	* @throws PortalException if the user did not have permission to remove
 	resource permissions, or if a role with the primary key or a
 	resource action with the name and action ID could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeResourcePermissions(long groupId, long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
@@ -215,7 +212,6 @@ public class ResourcePermissionServiceSoap {
 	* @throws PortalException if the user did not have permission to set
 	resource permissions, or if a role with the primary key or a
 	resource action with the name and action ID could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
 		long companyId, java.lang.String name, java.lang.String primKey,

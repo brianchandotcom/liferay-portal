@@ -267,21 +267,18 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 
 	@Override
 	public com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return _classNameLocalService.addClassName(value);
 	}
 
 	@Override
-	public void checkClassNames()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void checkClassNames() {
 		_classNameLocalService.checkClassNames();
 	}
 
 	@Override
 	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return _classNameLocalService.fetchClassName(value);
 	}
 
@@ -297,8 +294,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 
 	@Override
 	public com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return _classNameLocalService.getClassName(value);
 	}
 

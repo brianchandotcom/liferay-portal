@@ -110,7 +110,6 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param layoutPrototypeId the primary key of the layout prototype
 	 * @return the layout prototype that was removed
 	 * @throws PortalException if a layout prototype with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -125,13 +124,11 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param layoutPrototype the layout prototype
 	 * @return the layout prototype that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutPrototype deleteLayoutPrototype(
-		LayoutPrototype layoutPrototype)
-		throws PortalException {
+		LayoutPrototype layoutPrototype) throws PortalException {
 		return layoutPrototypePersistence.remove(layoutPrototype);
 	}
 

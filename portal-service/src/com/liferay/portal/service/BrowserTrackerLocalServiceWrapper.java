@@ -272,22 +272,19 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserBrowserTracker(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteUserBrowserTracker(long userId) {
 		_browserTrackerLocalService.deleteUserBrowserTracker(userId);
 	}
 
 	@Override
 	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long browserKey) {
 		return _browserTrackerLocalService.getBrowserTracker(userId, browserKey);
 	}
 
 	@Override
 	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long browserKey) {
 		return _browserTrackerLocalService.updateBrowserTracker(userId,
 			browserKey);
 	}

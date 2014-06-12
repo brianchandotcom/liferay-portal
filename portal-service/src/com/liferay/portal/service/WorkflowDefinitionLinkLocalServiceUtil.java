@@ -265,8 +265,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		long userId, long companyId, long groupId, java.lang.String className,
 		long classPK, long typePK, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addWorkflowDefinitionLink(userId, companyId, groupId,
 			className, classPK, typePK, workflowDefinitionName,
@@ -275,16 +274,14 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static void deleteWorkflowDefinitionLink(long companyId,
 		long groupId, java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK);
 	}
 
 	public static com.liferay.portal.model.WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
-		long companyId, java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK, long typePK) {
 		return getService()
 				   .fetchDefaultWorkflowDefinitionLink(companyId, className,
 			classPK, typePK);
@@ -292,9 +289,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK);
@@ -303,8 +298,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	public static com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
 		long typePK, boolean strict)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK, strict);
@@ -312,8 +306,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 		long companyId, java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getDefaultWorkflowDefinitionLink(companyId, className,
 			classPK, typePK);
@@ -321,9 +314,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK);
@@ -332,16 +323,14 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	public static com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
 		long companyId, long groupId, java.lang.String className, long classPK,
 		long typePK, boolean strict)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK, strict);
 	}
 
 	public static int getWorkflowDefinitionLinksCount(long companyId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion) {
 		return getService()
 				   .getWorkflowDefinitionLinksCount(companyId,
 			workflowDefinitionName, workflowDefinitionVersion);
@@ -349,16 +338,14 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static boolean hasWorkflowDefinitionLink(long companyId,
 		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .hasWorkflowDefinitionLink(companyId, groupId, className);
 	}
 
 	public static boolean hasWorkflowDefinitionLink(long companyId,
 		long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .hasWorkflowDefinitionLink(companyId, groupId, className,
 			classPK);
@@ -366,8 +353,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 	public static boolean hasWorkflowDefinitionLink(long companyId,
 		long groupId, java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .hasWorkflowDefinitionLink(companyId, groupId, className,
 			classPK, typePK);
@@ -376,8 +362,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	public static void updateWorkflowDefinitionLink(long userId,
 		long companyId, long groupId, java.lang.String className, long classPK,
 		long typePK, java.lang.String workflowDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateWorkflowDefinitionLink(userId, companyId, groupId,
 			className, classPK, typePK, workflowDefinition);
@@ -387,8 +372,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		long userId, long companyId, long groupId, java.lang.String className,
 		long classPK, long typePK, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateWorkflowDefinitionLink(userId, companyId, groupId,
 			className, classPK, typePK, workflowDefinitionName,
@@ -398,8 +382,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	public static void updateWorkflowDefinitionLinks(long userId,
 		long companyId, long groupId, java.lang.String className, long classPK,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.String>> workflowDefinitionOVPs)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateWorkflowDefinitionLinks(userId, companyId, groupId,
 			className, classPK, workflowDefinitionOVPs);

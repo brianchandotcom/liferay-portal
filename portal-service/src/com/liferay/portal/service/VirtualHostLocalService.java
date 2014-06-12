@@ -232,27 +232,22 @@ public interface VirtualHostLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String hostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
 		long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost getVirtualHost(
 		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, long layoutSetId, java.lang.String hostname);
 }

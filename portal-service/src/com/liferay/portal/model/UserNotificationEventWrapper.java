@@ -59,6 +59,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
+		attributes.put("actionRequired", getActionRequired());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliverBy", getDeliverBy());
 		attributes.put("delivered", getDelivered());
@@ -111,6 +112,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 
 		if (timestamp != null) {
 			setTimestamp(timestamp);
+		}
+
+		Boolean actionRequired = (Boolean)attributes.get("actionRequired");
+
+		if (actionRequired != null) {
+			setActionRequired(actionRequired);
 		}
 
 		Integer deliveryType = (Integer)attributes.get("deliveryType");
@@ -322,6 +329,36 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	@Override
 	public void setTimestamp(long timestamp) {
 		_userNotificationEvent.setTimestamp(timestamp);
+	}
+
+	/**
+	* Returns the action required of this user notification event.
+	*
+	* @return the action required of this user notification event
+	*/
+	@Override
+	public boolean getActionRequired() {
+		return _userNotificationEvent.getActionRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this user notification event is action required.
+	*
+	* @return <code>true</code> if this user notification event is action required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActionRequired() {
+		return _userNotificationEvent.isActionRequired();
+	}
+
+	/**
+	* Sets whether this user notification event is action required.
+	*
+	* @param actionRequired the action required of this user notification event
+	*/
+	@Override
+	public void setActionRequired(boolean actionRequired) {
+		_userNotificationEvent.setActionRequired(actionRequired);
 	}
 
 	/**

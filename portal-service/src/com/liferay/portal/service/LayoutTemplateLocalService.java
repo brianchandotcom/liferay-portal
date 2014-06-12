@@ -60,8 +60,7 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getContent(java.lang.String layoutTemplateId,
-		boolean standard, java.lang.String themeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean standard, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutTemplate getLayoutTemplate(
@@ -77,8 +76,7 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getWapContent(java.lang.String layoutTemplateId,
-		boolean standard, java.lang.String themeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean standard, java.lang.String themeId);
 
 	public java.util.List<com.liferay.portal.model.LayoutTemplate> init(
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,

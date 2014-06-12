@@ -260,8 +260,7 @@ public class UserTrackerPathLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserTrackerPath> getUserTrackerPaths(
-		long userTrackerId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userTrackerId, int start, int end) {
 		return getService().getUserTrackerPaths(userTrackerId, start, end);
 	}
 

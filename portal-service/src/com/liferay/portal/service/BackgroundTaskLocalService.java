@@ -69,12 +69,10 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task that was removed
 	* @throws PortalException if a background task with the primary key could not be found
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the background task from the database. Also notifies the appropriate model listeners.
@@ -82,12 +80,10 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTask the background task
 	* @return the background task that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -159,8 +155,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask fetchBackgroundTask(
-		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long backgroundTaskId);
 
 	/**
 	* Returns the background task with the primary key.
@@ -168,13 +163,11 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task
 	* @throws PortalException if a background task with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask getBackgroundTask(
 		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
@@ -245,168 +238,138 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.Class<?> taskExecutorClass,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
 		java.lang.String fileName, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
 		java.lang.String fileName, java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int status, com.liferay.portal.service.ServiceContext serviceContext);
 
 	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public void cleanUpBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask, int status);
 
-	public void cleanUpBackgroundTasks()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void cleanUpBackgroundTasks();
 
 	public void deleteCompanyBackgroundTasks(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteGroupBackgroundTasks(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
 		long groupId, java.lang.String taskExecutorClassName,
 		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
-		java.lang.String taskExecutorClassName, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String taskExecutorClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String taskExecutorClassName, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String[] taskExecutorClassNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String[] taskExecutorClassNames, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String[] taskExecutorClassNames, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String[] taskExecutorClassNames, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String[] taskExecutorClassNames, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName, boolean completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String taskExecutorClassName, boolean completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String[] taskExecutorClassNames)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String[] taskExecutorClassNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String[] taskExecutorClassNames, boolean completed)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String[] taskExecutorClassNames, boolean completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
-	public void resumeBackgroundTask(long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void resumeBackgroundTask(long backgroundTaskId);
 
 	public void triggerBackgroundTask(long backgroundTaskId);
 }

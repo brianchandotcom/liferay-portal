@@ -69,12 +69,10 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the layout prototype that was removed
 	* @throws PortalException if a layout prototype with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutPrototype(layoutPrototypeId);
 	}
 
@@ -84,12 +82,10 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @param layoutPrototype the layout prototype
 	* @return the layout prototype that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		com.liferay.portal.model.LayoutPrototype layoutPrototype)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutPrototype(layoutPrototype);
 	}
 
@@ -302,8 +298,7 @@ public class LayoutPrototypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPrototype(userId, companyId, nameMap,
 			descriptionMap, active, serviceContext);
@@ -318,8 +313,7 @@ public class LayoutPrototypeLocalServiceUtil {
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPrototype(userId, companyId, nameMap, description,
 			active);
@@ -335,16 +329,14 @@ public class LayoutPrototypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPrototype(userId, companyId, nameMap, description,
 			active, serviceContext);
 	}
 
 	public static void deleteNondefaultLayoutPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteNondefaultLayoutPrototypes(companyId);
 	}
 
@@ -355,20 +347,17 @@ public class LayoutPrototypeLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
 		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutPrototypeByUuid(uuid);
 	}
 
 	public static java.util.List<com.liferay.portal.model.LayoutPrototype> search(
 		long companyId, java.lang.Boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService().search(companyId, active, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, java.lang.Boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int searchCount(long companyId, java.lang.Boolean active) {
 		return getService().searchCount(companyId, active);
 	}
 
@@ -377,8 +366,7 @@ public class LayoutPrototypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			descriptionMap, active, serviceContext);
@@ -393,8 +381,7 @@ public class LayoutPrototypeLocalServiceUtil {
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			description, active);
@@ -410,8 +397,7 @@ public class LayoutPrototypeLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			description, active, serviceContext);

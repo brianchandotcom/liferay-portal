@@ -268,22 +268,19 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	public static com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationDelivery(userId, portletId, classNameId,
 			notificationType, deliveryType, deliver);
 	}
 
-	public static void deleteUserNotificationDeliveries(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserNotificationDeliveries(long userId) {
 		getService().deleteUserNotificationDeliveries(userId);
 	}
 
 	public static void deleteUserNotificationDelivery(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int deliveryType) {
 		getService()
 			.deleteUserNotificationDelivery(userId, portletId, classNameId,
 			notificationType, deliveryType);
@@ -291,8 +288,7 @@ public class UserNotificationDeliveryLocalServiceUtil {
 
 	public static com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int notificationType, int deliveryType) {
 		return getService()
 				   .fetchUserNotificationDelivery(userId, portletId,
 			classNameId, notificationType, deliveryType);
@@ -301,16 +297,14 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserNotificationDelivery(userId, portletId, classNameId,
 			notificationType, deliveryType, deliver);
 	}
 
 	public static com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
-		long userNotificationDeliveryId, boolean deliver)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userNotificationDeliveryId, boolean deliver) {
 		return getService()
 				   .updateUserNotificationDelivery(userNotificationDeliveryId,
 			deliver);

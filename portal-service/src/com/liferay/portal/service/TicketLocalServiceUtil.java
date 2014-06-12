@@ -258,23 +258,20 @@ public class TicketLocalServiceUtil {
 	public static com.liferay.portal.model.Ticket addTicket(long companyId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addTicket(companyId, className, classPK, type, extraInfo,
 			expirationDate, serviceContext);
 	}
 
 	public static com.liferay.portal.model.Ticket fetchTicket(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) {
 		return getService().fetchTicket(key);
 	}
 
 	public static com.liferay.portal.model.Ticket getTicket(
 		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTicket(key);
 	}
 

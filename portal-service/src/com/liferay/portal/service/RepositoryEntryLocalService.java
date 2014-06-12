@@ -286,16 +286,13 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 		long userId, long groupId, long repositoryId,
 		java.lang.String mappedId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long repositoryId);
 
 	public com.liferay.portal.model.RepositoryEntry updateRepositoryEntry(
 		long repositoryEntryId, java.lang.String mappedId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -68,11 +68,9 @@ public class AddressLocalServiceUtil {
 	* @param addressId the primary key of the address
 	* @return the address that was removed
 	* @throws PortalException if a address with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Address deleteAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteAddress(addressId);
 	}
 
@@ -81,11 +79,9 @@ public class AddressLocalServiceUtil {
 	*
 	* @param address the address
 	* @return the address that was removed
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Address deleteAddress(
-		com.liferay.portal.model.Address address)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Address address) {
 		return getService().deleteAddress(address);
 	}
 
@@ -301,8 +297,7 @@ public class AddressLocalServiceUtil {
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long regionId,
 		long countryId, int typeId, boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAddress(userId, className, classPK, street1, street2,
 			street3, city, zip, regionId, countryId, typeId, mailing, primary);
@@ -314,8 +309,7 @@ public class AddressLocalServiceUtil {
 		java.lang.String city, java.lang.String zip, long regionId,
 		long countryId, int typeId, boolean mailing, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAddress(userId, className, classPK, street1, street2,
 			street3, city, zip, regionId, countryId, typeId, mailing, primary,
@@ -323,19 +317,16 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static void deleteAddresses(long companyId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		getService().deleteAddresses(companyId, className, classPK);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Address> getAddresses()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Address> getAddresses() {
 		return getService().getAddresses();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Address> getAddresses(
-		long companyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK) {
 		return getService().getAddresses(companyId, className, classPK);
 	}
 
@@ -344,8 +335,7 @@ public class AddressLocalServiceUtil {
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long regionId, long countryId, int typeId, boolean mailing,
 		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateAddress(addressId, street1, street2, street3, city,
 			zip, regionId, countryId, typeId, mailing, primary);

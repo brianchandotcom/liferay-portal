@@ -229,12 +229,10 @@ public interface PortletLocalService extends BaseLocalService,
 	public void addPortletCategory(long companyId, java.lang.String categoryName);
 
 	public void checkPortlet(com.liferay.portal.model.Portlet portlet)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void checkPortlets(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void clearCache();
 
@@ -251,25 +249,19 @@ public interface PortletLocalService extends BaseLocalService,
 		java.lang.String portletId);
 
 	public void deletePortlet(long companyId, java.lang.String portletId,
-		long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long plid) throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deletePortlets(long companyId, java.lang.String[] portletIds,
-		long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long plid) throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Portlet deployRemotePortlet(
 		com.liferay.portal.model.Portlet portlet, java.lang.String categoryName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Portlet deployRemotePortlet(
 		com.liferay.portal.model.Portlet portlet,
 		java.lang.String[] categoryNames)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void destroyPortlet(com.liferay.portal.model.Portlet portlet);
 
@@ -280,8 +272,7 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PortletCategory getEARDisplay(
-		java.lang.String xml)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String xml);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Portlet> getFriendlyURLMapperPortlets();
@@ -295,8 +286,7 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Portlet getPortletById(long companyId,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Portlet getPortletById(
@@ -304,33 +294,28 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Portlet getPortletByStrutsPath(
-		long companyId, java.lang.String strutsPath)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, java.lang.String strutsPath);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Portlet> getPortlets();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		long companyId, boolean showSystem, boolean showPortal)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, boolean showSystem, boolean showPortal);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Portlet> getScopablePortlets();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PortletCategory getWARDisplay(
-		java.lang.String servletContextName, java.lang.String xml)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String servletContextName, java.lang.String xml);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasPortlet(long companyId, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasPortlet(long companyId, java.lang.String portletId);
 
 	public void initEAR(javax.servlet.ServletContext servletContext,
 		java.lang.String[] xmls,
@@ -343,12 +328,10 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsPool(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	public void removeCompanyPortletsPool(long companyId);
 
 	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
-		java.lang.String portletId, java.lang.String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String portletId, java.lang.String roles, boolean active);
 }

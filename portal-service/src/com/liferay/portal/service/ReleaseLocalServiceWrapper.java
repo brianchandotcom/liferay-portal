@@ -266,36 +266,31 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 
 	@Override
 	public com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String servletContextName, int buildNumber) {
 		return _releaseLocalService.addRelease(servletContextName, buildNumber);
 	}
 
 	@Override
-	public void createTablesAndPopulate()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void createTablesAndPopulate() {
 		_releaseLocalService.createTablesAndPopulate();
 	}
 
 	@Override
 	public com.liferay.portal.model.Release fetchRelease(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String servletContextName) {
 		return _releaseLocalService.fetchRelease(servletContextName);
 	}
 
 	@Override
 	public int getBuildNumberOrCreate()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.getBuildNumberOrCreate();
 	}
 
 	@Override
 	public com.liferay.portal.model.Release updateRelease(long releaseId,
 		int buildNumber, java.util.Date buildDate, boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.updateRelease(releaseId, buildNumber,
 			buildDate, verified);
 	}

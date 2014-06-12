@@ -59,8 +59,7 @@ public class QuartzLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void checkQuartzTables()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void checkQuartzTables() {
 		getService().checkQuartzTables();
 	}
 

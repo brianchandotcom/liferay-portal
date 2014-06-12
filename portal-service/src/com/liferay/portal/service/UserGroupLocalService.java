@@ -68,11 +68,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userGroupId the primary key of the user group
 	* @return the user group that was removed
 	* @throws PortalException if a user group with the primary key could not be found
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.UserGroup deleteUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the user group from the database. Also notifies the appropriate model listeners.
@@ -80,12 +78,10 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userGroup the user group
 	* @return the user group that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.UserGroup deleteUserGroup(
 		com.liferay.portal.model.UserGroup userGroup)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -251,18 +247,10 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public void addGroupUserGroup(long groupId,
 		com.liferay.portal.model.UserGroup userGroup);
 
-	/**
-	* @throws SystemException
-	*/
-	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addGroupUserGroups(long groupId, long[] userGroupIds);
 
-	/**
-	* @throws SystemException
-	*/
 	public void addGroupUserGroups(long groupId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups);
 
 	public void clearGroupUserGroups(long groupId);
 
@@ -314,18 +302,10 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public void addTeamUserGroup(long teamId,
 		com.liferay.portal.model.UserGroup userGroup);
 
-	/**
-	* @throws SystemException
-	*/
-	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addTeamUserGroups(long teamId, long[] userGroupIds);
 
-	/**
-	* @throws SystemException
-	*/
 	public void addTeamUserGroups(long teamId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups);
 
 	public void clearTeamUserGroups(long teamId);
 
@@ -382,11 +362,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public void addUserUserGroups(long userId,
 		java.util.List<com.liferay.portal.model.UserGroup> UserGroups);
 
-	/**
-	* @throws SystemException
-	*/
-	public void clearUserUserGroups(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearUserUserGroups(long userId);
 
 	public void deleteUserUserGroup(long userId, long userGroupId);
 
@@ -431,11 +407,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 
 	/**
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public void setUserUserGroups(long userId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -467,15 +441,13 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param description the user group's description
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a user group.
@@ -496,13 +468,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	user group.
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Copies the user group's layout to the user.
@@ -511,13 +481,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @throws PortalException if a user with the primary key could not be
 	found or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0
 	*/
 	@Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Copies the user group's layouts to the users who are not already members
@@ -527,13 +495,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userIds the primary keys of the users
 	* @throws PortalException if any one of the users could not be found or
 	if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Copies the user groups' layouts to the user.
@@ -542,28 +508,23 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @throws PortalException if a user with the primary key could not be
 	found or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteUserGroups(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup fetchUserGroup(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
 		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the user group with the name.
@@ -572,25 +533,21 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param name the user group's name
 	* @return Returns the user group with the name
 	* @throws PortalException if a user group with the name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the user groups belonging to the company.
 	*
 	* @param companyId the primary key of the user groups' company
 	* @return the user groups belonging to the company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	/**
 	* Returns all the user groups with the primary keys.
@@ -598,13 +555,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param userGroupIds the primary keys of the user groups
 	* @return the user groups with the primary keys
 	* @throws PortalException if any one of the user groups could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
 		long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns an ordered range of all the user groups that match the keywords.
@@ -631,15 +586,13 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param obc the comparator to order the user groups (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by comparator <code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> search(
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns an ordered range of all the user groups that match the keywords,
@@ -668,15 +621,13 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param sort the field and direction by which to sort (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by sort
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end, com.liferay.portal.kernel.search.Sort sort);
 
 	/**
 	* Returns an ordered range of all the user groups that match the name and
@@ -707,7 +658,6 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param obc the comparator to order the user groups (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by comparator <code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -715,8 +665,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 		long companyId, java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns an ordered range of all the user groups that match the name and
@@ -748,7 +697,6 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param sort the field and direction by which to sort (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by sort
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -756,8 +704,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.search.Sort sort);
 
 	/**
 	* Returns the number of user groups that match the keywords
@@ -769,13 +716,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	information see {@link
 	com.liferay.portal.service.persistence.UserGroupFinder}
 	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of user groups that match the name and description.
@@ -790,23 +735,20 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param andOperator whether every field must match its keywords or just
 	one field
 	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.UserGroupFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.UserGroup> searchUserGroups(
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.UserGroup> searchUserGroups(
@@ -814,28 +756,23 @@ public interface UserGroupLocalService extends BaseLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the user groups from the group.
 	*
 	* @param groupId the primary key of the group
 	* @param userGroupIds the primary keys of the user groups
-	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void unsetGroupUserGroups(long groupId, long[] userGroupIds);
 
 	/**
 	* Removes the user groups from the team.
 	*
 	* @param teamId the primary key of the team
 	* @param userGroupIds the primary keys of the user groups
-	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void unsetTeamUserGroups(long teamId, long[] userGroupIds);
 
 	/**
 	* Updates the user group.
@@ -847,15 +784,13 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @return the user group
 	* @throws PortalException if a user group with the primary key could
 	not be found or if the new information was invalid
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,
 		long userGroupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the user group.
@@ -870,11 +805,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @return the user group
 	* @throws PortalException if a user group with the primary key could not be
 	found or if the new information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,
 		long userGroupId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

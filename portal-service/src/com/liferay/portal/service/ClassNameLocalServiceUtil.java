@@ -260,19 +260,16 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return getService().addClassName(value);
 	}
 
-	public static void checkClassNames()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void checkClassNames() {
 		getService().checkClassNames();
 	}
 
 	public static com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return getService().fetchClassName(value);
 	}
 
@@ -285,8 +282,7 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return getService().getClassName(value);
 	}
 

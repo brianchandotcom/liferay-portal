@@ -52,8 +52,7 @@ public class ImageServiceWrapper implements ImageService,
 
 	@Override
 	public com.liferay.portal.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageService.getImage(imageId);
 	}
 

@@ -275,46 +275,42 @@ public class ResourceTypePermissionLocalServiceWrapper
 
 	@Override
 	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId) {
 		return _resourceTypePermissionLocalService.getCompanyScopeActionIds(companyId,
 			name, roleId);
 	}
 
 	@Override
 	public long getGroupScopeActionIds(long companyId, long groupId,
-		java.lang.String name, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, long roleId) {
 		return _resourceTypePermissionLocalService.getGroupScopeActionIds(companyId,
 			groupId, name, roleId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
-		long companyId, java.lang.String name, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String name, long roleId) {
 		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
 			name, roleId);
 	}
 
 	@Override
 	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, java.lang.String name) {
 		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
 			groupId, name);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getRoleResourceTypePermissions(
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId) {
 		return _resourceTypePermissionLocalService.getRoleResourceTypePermissions(roleId);
 	}
 
 	@Override
 	public boolean hasCompanyScopePermission(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.hasCompanyScopePermission(companyId,
 			name, roleId, actionId);
 	}
@@ -322,8 +318,7 @@ public class ResourceTypePermissionLocalServiceWrapper
 	@Override
 	public boolean hasEitherScopePermission(long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.hasEitherScopePermission(companyId,
 			name, roleId, actionId);
 	}
@@ -331,16 +326,14 @@ public class ResourceTypePermissionLocalServiceWrapper
 	@Override
 	public boolean hasGroupScopePermission(long companyId, long groupId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.hasGroupScopePermission(companyId,
 			groupId, name, roleId, actionId);
 	}
 
 	@Override
 	public void updateCompanyScopeResourceTypePermissions(long companyId,
-		java.lang.String name, long roleId, long actionIdsLong, long operator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, long roleId, long actionIdsLong, long operator) {
 		_resourceTypePermissionLocalService.updateCompanyScopeResourceTypePermissions(companyId,
 			name, roleId, actionIdsLong, operator);
 	}
@@ -348,8 +341,7 @@ public class ResourceTypePermissionLocalServiceWrapper
 	@Override
 	public void updateGroupScopeResourceTypePermissions(long companyId,
 		long groupId, java.lang.String name, long roleId, long actionIdsLong,
-		long operator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long operator) {
 		_resourceTypePermissionLocalService.updateGroupScopeResourceTypePermissions(companyId,
 			groupId, name, roleId, actionIdsLong, operator);
 	}

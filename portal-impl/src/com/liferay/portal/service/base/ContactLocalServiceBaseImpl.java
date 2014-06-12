@@ -103,12 +103,10 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param contactId the primary key of the contact
 	 * @return the contact that was removed
 	 * @throws PortalException if a contact with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Contact deleteContact(long contactId)
-		throws PortalException {
+	public Contact deleteContact(long contactId) throws PortalException {
 		return contactPersistence.remove(contactId);
 	}
 
@@ -117,7 +115,6 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param contact the contact
 	 * @return the contact that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

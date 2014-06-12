@@ -685,6 +685,8 @@ create unique index IX_D1C44A6E on UserIdMapper (userId, type_);
 
 create unique index IX_8B6E3ACE on UserNotificationDelivery (userId, portletId, classNameId, notificationType, deliveryType);
 
+create index IX_5CE95F03 on UserNotificationEvent (userId, actionRequired, archived);
+create index IX_C8E61027 on UserNotificationEvent (userId, actionRequired, delivered);
 create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_24F1BF0 on UserNotificationEvent (userId, delivered);
 create index IX_A6BAFDFE on UserNotificationEvent (uuid_, companyId);

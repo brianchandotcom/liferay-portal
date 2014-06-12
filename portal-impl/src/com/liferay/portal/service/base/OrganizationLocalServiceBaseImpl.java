@@ -130,7 +130,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @param organizationId the primary key of the organization
 	 * @return the organization that was removed
 	 * @throws PortalException if a organization with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -145,7 +144,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @param organization the organization
 	 * @return the organization that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -428,7 +426,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
@@ -438,12 +435,10 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId,
-		List<Organization> Organizations)
-		throws PortalException {
+		List<Organization> Organizations) throws PortalException {
 		groupPersistence.addOrganizations(groupId, Organizations);
 	}
 
@@ -541,7 +536,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void setGroupOrganizations(long groupId, long[] organizationIds)

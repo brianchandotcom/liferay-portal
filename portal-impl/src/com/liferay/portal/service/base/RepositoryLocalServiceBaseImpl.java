@@ -123,7 +123,6 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 * @param repositoryId the primary key of the repository
 	 * @return the repository that was removed
 	 * @throws PortalException if a repository with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -137,7 +136,6 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 *
 	 * @param repository the repository
 	 * @return the repository that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

@@ -79,7 +79,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if the web domain, virtual host name, or mail
 	domain was invalid or if the user was not a universal
 	administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap addCompany(
 		java.lang.String webId, java.lang.String virtualHost,
@@ -119,7 +118,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if the company with the primary key could not be
 	found or if the company's logo could not be found or if the user
 	was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteLogo(long companyId) throws RemoteException {
 		try {
@@ -139,7 +137,6 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the primary key
 	* @throws PortalException if a company with the primary key could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap getCompanyById(
 		long companyId) throws RemoteException {
@@ -161,7 +158,6 @@ public class CompanyServiceSoap {
 	* @param logoId the ID of the company's logo
 	* @return Returns the company with the logo
 	* @throws PortalException if the company with the logo could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap getCompanyByLogoId(
 		long logoId) throws RemoteException {
@@ -184,7 +180,6 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the mail domain
 	* @throws PortalException if the company with the mail domain could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap getCompanyByMx(
 		java.lang.String mx) throws RemoteException {
@@ -208,7 +203,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if the company with the virtual host name could
 	not be found or if the virtual host was not associated with a
 	company
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap getCompanyByVirtualHost(
 		java.lang.String virtualHost) throws RemoteException {
@@ -231,7 +225,6 @@ public class CompanyServiceSoap {
 	* @return Returns the company with the web domain
 	* @throws PortalException if the company with the web domain could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap getCompanyByWebId(
 		java.lang.String webId) throws RemoteException {
@@ -257,7 +250,6 @@ public class CompanyServiceSoap {
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
 	* @throws PortalException if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removePreferences(long companyId, java.lang.String[] keys)
 		throws RemoteException {
@@ -284,7 +276,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if a company with the primary key could not be
 	found or if the new information was invalid or if the user was
 	not a universal administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
@@ -330,7 +321,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if a company with the primary key could not be
 	found or if the new information was invalid or if the user was
 	not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
@@ -384,7 +374,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if a company with the primary key could not
 	be found or if the new information was invalid or if the user
 	was not an administrator
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
@@ -419,7 +408,6 @@ public class CompanyServiceSoap {
 	* @param timeZoneId the ID of the company's default user's time zone
 	* @throws PortalException if the company's default user could not be found
 	or if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void updateDisplay(long companyId,
 		java.lang.String languageId, java.lang.String timeZoneId)
@@ -443,7 +431,6 @@ public class CompanyServiceSoap {
 	* @throws PortalException if the company's logo ID could not be found or if
 	the logo's image was corrupted or if the user was an
 	administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.CompanySoap updateLogo(
 		long companyId, byte[] bytes) throws RemoteException {
@@ -478,7 +465,6 @@ public class CompanyServiceSoap {
 	* @param siteLogo whether to to allow site administrators to use their own
 	logo instead of the enterprise logo
 	* @throws PortalException if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void updateSecurity(long companyId,
 		java.lang.String authType, boolean autoLogin, boolean sendPassword,

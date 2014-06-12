@@ -51,8 +51,7 @@ import com.liferay.portal.service.ClassNameServiceUtil;
  */
 public class ClassNameServiceHttp {
 	public static com.liferay.portal.model.ClassName fetchClassName(
-		HttpPrincipal httpPrincipal, java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, java.lang.String value) {
 		try {
 			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassName", _fetchClassNameParameterTypes0);
@@ -65,10 +64,6 @@ public class ClassNameServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

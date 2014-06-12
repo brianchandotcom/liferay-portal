@@ -268,22 +268,19 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public com.liferay.portal.model.Ticket addTicket(long companyId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _ticketLocalService.addTicket(companyId, className, classPK,
 			type, extraInfo, expirationDate, serviceContext);
 	}
 
 	@Override
-	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key) {
 		return _ticketLocalService.fetchTicket(key);
 	}
 
 	@Override
 	public com.liferay.portal.model.Ticket getTicket(java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.getTicket(key);
 	}
 

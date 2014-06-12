@@ -250,53 +250,42 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void clear()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clear();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Lock getLock(java.lang.String className,
-		long key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long key) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Lock getLock(java.lang.String className,
 		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasLock(long userId, java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasLock(long userId, java.lang.String className, long key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLocked(java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isLocked(java.lang.String className, long key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLocked(java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isLocked(java.lang.String className, java.lang.String key);
 
 	public com.liferay.portal.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,
 		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String key, java.lang.String owner);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
@@ -304,13 +293,11 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@Deprecated
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String key, java.lang.String owner, boolean retrieveFromCache);
 
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
-		java.lang.String updatedOwner)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String updatedOwner);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
@@ -319,23 +306,18 @@ public interface LockLocalService extends BaseLocalService,
 	@Deprecated
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
-		java.lang.String updatedOwner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String updatedOwner, boolean retrieveFromCache);
 
 	public com.liferay.portal.model.Lock refresh(java.lang.String uuid,
 		long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void unlock(java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void unlock(java.lang.String className, long key);
 
-	public void unlock(java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void unlock(java.lang.String className, java.lang.String key);
 
 	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String owner);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
@@ -343,6 +325,5 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@Deprecated
 	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String owner, boolean retrieveFromCache);
 }

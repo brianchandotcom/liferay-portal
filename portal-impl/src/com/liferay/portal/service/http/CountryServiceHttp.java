@@ -54,8 +54,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String a2, java.lang.String a3, java.lang.String number,
 		java.lang.String idd, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"addCountry", _addCountryParameterTypes0);
@@ -73,10 +72,6 @@ public class CountryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -90,8 +85,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Country fetchCountry(
-		HttpPrincipal httpPrincipal, long countryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long countryId) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountry", _fetchCountryParameterTypes1);
@@ -104,10 +98,6 @@ public class CountryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -121,8 +111,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Country fetchCountryByA2(
-		HttpPrincipal httpPrincipal, java.lang.String a2)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, java.lang.String a2) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA2", _fetchCountryByA2ParameterTypes2);
@@ -135,10 +124,6 @@ public class CountryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -152,8 +137,7 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Country fetchCountryByA3(
-		HttpPrincipal httpPrincipal, java.lang.String a3)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, java.lang.String a3) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA3", _fetchCountryByA3ParameterTypes3);
@@ -166,10 +150,6 @@ public class CountryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -183,8 +163,7 @@ public class CountryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Country> getCountries(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountries", _getCountriesParameterTypes4);
@@ -197,10 +176,6 @@ public class CountryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -214,8 +189,7 @@ public class CountryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Country> getCountries(
-		HttpPrincipal httpPrincipal, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, boolean active) {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountries", _getCountriesParameterTypes5);
@@ -228,10 +202,6 @@ public class CountryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -246,8 +216,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.model.Country getCountry(
 		HttpPrincipal httpPrincipal, long countryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountry", _getCountryParameterTypes6);
@@ -264,10 +233,6 @@ public class CountryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -282,8 +247,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.model.Country getCountryByA2(
 		HttpPrincipal httpPrincipal, java.lang.String a2)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByA2", _getCountryByA2ParameterTypes7);
@@ -300,10 +264,6 @@ public class CountryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -318,8 +278,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.model.Country getCountryByA3(
 		HttpPrincipal httpPrincipal, java.lang.String a3)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByA3", _getCountryByA3ParameterTypes8);
@@ -336,10 +295,6 @@ public class CountryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -354,8 +309,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.model.Country getCountryByName(
 		HttpPrincipal httpPrincipal, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByName", _getCountryByNameParameterTypes9);
@@ -370,10 +324,6 @@ public class CountryServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

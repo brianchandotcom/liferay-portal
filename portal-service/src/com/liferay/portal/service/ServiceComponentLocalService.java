@@ -232,15 +232,13 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 
 	public void destroyServiceComponent(
 		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.ClassLoader classLoader);
 
 	public com.liferay.portal.model.ServiceComponent initServiceComponent(
 		javax.servlet.ServletContext servletContext,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void upgradeDB(java.lang.ClassLoader classLoader,
 		java.lang.String buildNamespace, long buildNumber,
@@ -249,6 +247,5 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 		java.lang.String tablesSQL, java.lang.String sequencesSQL,
 		java.lang.String indexesSQL) throws java.lang.Exception;
 
-	public void verifyDB()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void verifyDB();
 }

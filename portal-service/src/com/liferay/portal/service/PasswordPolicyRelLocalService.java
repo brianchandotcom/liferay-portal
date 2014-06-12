@@ -231,46 +231,36 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.PasswordPolicyRel addPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long passwordPolicyId, java.lang.String className, long classPK);
 
 	public void addPasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String className, long[] classPKs);
 
 	public void deletePasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String className, long classPK);
 
-	public void deletePasswordPolicyRel(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deletePasswordPolicyRel(java.lang.String className, long classPK);
 
-	public void deletePasswordPolicyRels(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deletePasswordPolicyRels(long passwordPolicyId);
 
 	public void deletePasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String className, long[] classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
 		long passwordPolicyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String className, long classPK);
 }

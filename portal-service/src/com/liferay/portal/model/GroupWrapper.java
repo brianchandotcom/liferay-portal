@@ -805,15 +805,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getAncestors();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getChildren(
-		boolean site)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean site) {
 		return _group.getChildren(site);
 	}
 
@@ -824,22 +822,19 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
-		boolean site, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean site, int start, int end) {
 		return _group.getChildrenWithLayouts(site, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
 		boolean site, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _group.getChildrenWithLayouts(site, start, end, obc);
 	}
 
 	@Override
-	public int getChildrenWithLayoutsCount(boolean site)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getChildrenWithLayoutsCount(boolean site) {
 		return _group.getChildrenWithLayoutsCount(site);
 	}
 
@@ -855,22 +850,19 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getDescendants(
-		boolean site)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean site) {
 		return _group.getDescendants(site);
 	}
 
 	@Override
 	public java.lang.String getDescriptiveName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getDescriptiveName();
 	}
 
 	@Override
 	public java.lang.String getDescriptiveName(java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getDescriptiveName(locale);
 	}
 
@@ -909,8 +901,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public com.liferay.portal.model.Group getParentGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getParentGroup();
 	}
 
@@ -953,8 +944,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public java.lang.String getScopeDescriptiveName(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getScopeDescriptiveName(themeDisplay);
 	}
 
@@ -1102,8 +1092,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public boolean isShowSite(
 		com.liferay.portal.security.permission.PermissionChecker permissionChecker,
 		boolean privateSite)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.isShowSite(permissionChecker, privateSite);
 	}
 

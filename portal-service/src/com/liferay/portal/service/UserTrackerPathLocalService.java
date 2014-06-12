@@ -232,6 +232,5 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserTrackerPath> getUserTrackerPaths(
-		long userTrackerId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userTrackerId, int start, int end);
 }

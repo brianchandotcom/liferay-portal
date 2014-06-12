@@ -62,7 +62,6 @@ public class PermissionServiceSoap {
 	* @throws PortalException if the group did not have permission to the
 	service, if a group with the primary key could not be found or if
 	the permission information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
 		long primKey) throws RemoteException {
@@ -85,7 +84,6 @@ public class PermissionServiceSoap {
 	* @throws PortalException if the group did not have permission to the
 	service, if a group with the primary key could not be found or if
 	the permission information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
 		java.lang.String primKey) throws RemoteException {

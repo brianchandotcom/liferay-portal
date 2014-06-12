@@ -68,11 +68,9 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param roleId the primary key of the role
 	* @return the role that was removed
 	* @throws PortalException if a role with the primary key could not be found
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Role deleteRole(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the role from the database. Also notifies the appropriate model listeners.
@@ -80,12 +78,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param role the role
 	* @return the role that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Role deleteRole(
 		com.liferay.portal.model.Role role)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -305,20 +301,16 @@ public interface RoleLocalService extends BaseLocalService,
 
 	/**
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public void addUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public void addUserRoles(long userId,
 		java.util.List<com.liferay.portal.model.Role> Roles)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void clearUserRoles(long userId);
 
@@ -364,11 +356,9 @@ public interface RoleLocalService extends BaseLocalService,
 
 	/**
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public void setUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -399,7 +389,6 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if the class name or the role name were
 	invalid, if the role is a duplicate, or if a user with the
 	primary key could not be found
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
@@ -408,9 +397,7 @@ public interface RoleLocalService extends BaseLocalService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		int type) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a role with additional parameters. The user is reindexed after role
@@ -432,7 +419,6 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if the class name or the role name were
 	invalid, if the role is a duplicate, or if a user with the
 	primary key could not be found
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
@@ -442,8 +428,7 @@ public interface RoleLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int type, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a role with additional parameters. The user is reindexed after role
@@ -468,7 +453,6 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if the class name or the role name were invalid,
 	if the role is a duplicate, or if a user with the primary key
 	could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Role addRole(long userId,
 		java.lang.String className, long classPK, java.lang.String name,
@@ -476,8 +460,7 @@ public interface RoleLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int type, java.lang.String subtype,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
@@ -485,11 +468,9 @@ public interface RoleLocalService extends BaseLocalService,
 	*
 	* @throws PortalException if the current user did not have permission to
 	set applicable permissions on a role
-	* @throws SystemException if a system exception occurred
 	*/
 	public void checkSystemRoles()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
@@ -498,11 +479,9 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @throws PortalException if the current user did not have permission to
 	set applicable permissions on a role
-	* @throws SystemException if a system exception occurred
 	*/
 	public void checkSystemRoles(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the role with the name in the company.
@@ -516,12 +495,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param name the role's name
 	* @return Returns the role with the name or <code>null</code> if a role
 	with the name could not be found in the company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role fetchRole(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	/**
 	* Returns the default role for the group with the primary key.
@@ -541,24 +518,20 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the default role for the group with the primary key
 	* @throws PortalException if a group with the primary key could not be
 	found, or if a default role could not be found for the group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role getDefaultGroupRole(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getGroupRelatedRoles(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getResourceBlockRoles(
 		long resourceBlockId, java.lang.String className,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String actionId);
 
 	/**
 	* Returns a map of role names to associated action IDs for the named
@@ -569,15 +542,13 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param scope the permission scope
 	* @param primKey the primary key of the resource's class
 	* @return the role names and action IDs
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByC_N_S_P(
 	long, String, int, String)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, java.util.List<java.lang.String>> getResourceRoles(
 		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String primKey);
 
 	/**
 	* Returns all the roles associated with the action ID in the company within
@@ -589,15 +560,13 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param primKey the primary key of the resource's class
 	* @param actionId the name of the resource action
 	* @return the roles
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByC_N_S_P_A(
 	long, String, int, String, String)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getResourceRoles(
 		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String primKey, java.lang.String actionId);
 
 	/**
 	* Returns the role with the name in the company.
@@ -612,13 +581,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role with the name
 	* @throws PortalException if a role with the name could not be found in the
 	company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role getRole(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the roles of the type and subtype.
@@ -626,24 +593,20 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param type the role's type (optionally <code>0</code>)
 	* @param subtype the role's subtype (optionally <code>null</code>)
 	* @return the roles of the type and subtype
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getRoles(int type,
-		java.lang.String subtype)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String subtype);
 
 	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
 	* @return the roles in the company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	/**
 	* Returns all the roles with the types.
@@ -651,12 +614,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param types the role types (optionally <code>null</code>)
 	* @return the roles with the types
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
-		long companyId, int[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int[] types);
 
 	/**
 	* Returns all the roles with the primary keys.
@@ -665,36 +626,30 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the roles with the primary keys
 	* @throws PortalException if any one of the roles with the primary keys
 	could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
 		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the roles of the subtype.
 	*
 	* @param subtype the role's subtype (optionally <code>null</code>)
 	* @return the roles of the subtype
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getSubtypeRoles(
-		java.lang.String subtype)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String subtype);
 
 	/**
 	* Returns the number of roles of the subtype.
 	*
 	* @param subtype the role's subtype (optionally <code>null</code>)
 	* @return the number of roles of the subtype
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSubtypeRolesCount(java.lang.String subtype)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getSubtypeRolesCount(java.lang.String subtype);
 
 	/**
 	* Returns the team role in the company.
@@ -704,12 +659,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the team role in the company
 	* @throws PortalException if a role could not be found in the team and
 	company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role getTeamRole(long companyId, long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the team role map for the group.
@@ -719,13 +672,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a group with the primary key could not be
 	found, if a role could not be found in one of the group's teams,
 	or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<com.liferay.portal.model.Team, com.liferay.portal.model.Role> getTeamRoleMap(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the team roles in the group.
@@ -735,13 +686,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a group with the primary key could not be
 	found, if a role could not be found in one of the group's teams,
 	or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the team roles in the group, excluding the specified role IDs.
@@ -753,24 +702,20 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a group with the primary key could not be
 	found, if a role could not be found in one of the group's teams,
 	or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
 		long groupId, long[] excludedRoleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the roles of the type.
 	*
 	* @param type the role's type (optionally <code>0</code>)
 	* @return the range of the roles of the type
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Role> getTypeRoles(int type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Role> getTypeRoles(int type);
 
 	/**
 	* Returns a range of all the roles of the type.
@@ -780,23 +725,19 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of roles to return (not
 	inclusive)
 	* @return the range of the roles of the type
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getTypeRoles(
-		int type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int type, int start, int end);
 
 	/**
 	* Returns the number of roles of the type.
 	*
 	* @param type the role's type (optionally <code>0</code>)
 	* @return the number of roles of the type
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTypeRolesCount(int type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getTypeRolesCount(int type);
 
 	/**
 	* Returns all the user's roles within the user group.
@@ -804,14 +745,12 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByUserGroupGroupRole(
 	long, long)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId);
 
 	/**
 	* Returns all the user's roles within the user group.
@@ -819,14 +758,12 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByUserGroupRole(
 	long, long)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getUserGroupRoles(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId);
 
 	/**
 	* Returns the union of all the user's roles within the groups.
@@ -834,14 +771,12 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByU_G(long,
 	List)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
-		long userId, java.util.List<com.liferay.portal.model.Group> groups)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, java.util.List<com.liferay.portal.model.Group> groups);
 
 	/**
 	* Returns all the user's roles within the group.
@@ -849,14 +784,12 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the group
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByU_G(long,
 	long)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId);
 
 	/**
 	* Returns the union of all the user's roles within the groups.
@@ -864,14 +797,12 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupIds the primary keys of the groups
 	* @return the union of all the user's roles within the groups
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder#findByU_G(long,
 	long[])
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
-		long userId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long[] groupIds);
 
 	/**
 	* Returns <code>true</code> if the user is associated with the named
@@ -886,13 +817,11 @@ public interface RoleLocalService extends BaseLocalService,
 	role; <code>false</code> otherwise
 	* @throws PortalException if a default user for the company could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserRole(long userId, long companyId,
 		java.lang.String name, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns <code>true</code> if the user has any one of the named regular
@@ -908,13 +837,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if any one of the roles with the names could not
 	be found in the company or if the default user for the company
 	could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserRoles(long userId, long companyId,
 		java.lang.String[] names, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a role with the name in the company.
@@ -923,12 +850,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param name the role's name (optionally <code>null</code>)
 	* @return the role with the name, or <code>null</code> if a role with the
 	name could not be found in the company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role loadFetchRole(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	/**
 	* Returns a role with the name in the company.
@@ -938,13 +863,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role with the name in the company
 	* @throws PortalException if a role with the name could not be found in the
 	company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role loadGetRole(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns an ordered range of all the roles that match the keywords and
@@ -971,14 +894,12 @@ public interface RoleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of the matching roles, ordered by
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> search(
 		long companyId, java.lang.String keywords, java.lang.Integer[] types,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the keywords, types,
@@ -1008,15 +929,13 @@ public interface RoleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of the matching roles, ordered by
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> search(
 		long companyId, java.lang.String keywords, java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the name,
@@ -1043,15 +962,13 @@ public interface RoleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of the matching roles, ordered by
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Role> search(
 		long companyId, java.lang.String name, java.lang.String description,
 		java.lang.Integer[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns an ordered range of all the roles that match the name,
@@ -1081,7 +998,6 @@ public interface RoleLocalService extends BaseLocalService,
 	<code>null</code>)
 	* @return the ordered range of the matching roles, ordered by
 	<code>obc</code>
-	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.service.persistence.RoleFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1089,8 +1005,7 @@ public interface RoleLocalService extends BaseLocalService,
 		long companyId, java.lang.String name, java.lang.String description,
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
 
 	/**
 	* Returns the number of roles that match the keywords and types.
@@ -1100,12 +1015,10 @@ public interface RoleLocalService extends BaseLocalService,
 	role's name or description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @return the number of matching roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.Integer[] types);
 
 	/**
 	* Returns the number of roles that match the keywords, types and params.
@@ -1117,13 +1030,11 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param params the finder parameters. For more information, see {@link
 	com.liferay.portal.service.persistence.RoleFinder}
 	* @return the number of matching roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.lang.Integer[] types,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of roles that match the name, description, and types.
@@ -1133,12 +1044,10 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param description the role's description (optionally <code>null</code>)
 	* @param types the role types (optionally <code>null</code>)
 	* @return the number of matching roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description, java.lang.Integer[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String description, java.lang.Integer[] types);
 
 	/**
 	* Returns the number of roles that match the name, description, types, and
@@ -1152,13 +1061,11 @@ public interface RoleLocalService extends BaseLocalService,
 	"usersRoles" key. For more information, see {@link
 	com.liferay.portal.service.persistence.RoleFinder}
 	* @return the number of matching roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description, java.lang.Integer[] types,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Removes the matching roles associated with the user. The user is
@@ -1168,11 +1075,9 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param roleIds the primary keys of the roles
 	* @throws PortalException if a user with the primary key could not be found
 	or if a role with any one of the primary keys could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public void unsetUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the role with the primary key.
@@ -1190,7 +1095,6 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role with the primary key
 	* @throws PortalException if a role with the primary could not be found or
 	if the role's name was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Role updateRole(long roleId,
 		java.lang.String name,
@@ -1198,6 +1102,5 @@ public interface RoleLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String subtype,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

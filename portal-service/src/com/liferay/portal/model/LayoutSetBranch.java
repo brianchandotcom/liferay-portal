@@ -32,12 +32,10 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutSetBranchImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.ColorScheme getColorScheme();
 
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.LayoutSet getLayoutSet();
 
@@ -49,18 +47,14 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 
 	public java.lang.String getSettingsProperty(java.lang.String key);
 
-	public com.liferay.portal.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Theme getTheme();
 
 	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String device);
 
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.ColorScheme getWapColorScheme();
 
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Theme getWapTheme();
 
 	public boolean isLayoutSetPrototypeLinkActive();
 

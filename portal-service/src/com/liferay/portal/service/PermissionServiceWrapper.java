@@ -59,13 +59,11 @@ public class PermissionServiceWrapper implements PermissionService,
 	* @throws PortalException if the group did not have permission to the
 	service, if a group with the primary key could not be found or if
 	the permission information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public void checkPermission(long groupId, java.lang.String name,
 		long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_permissionService.checkPermission(groupId, name, primKey);
 	}
 
@@ -78,13 +76,11 @@ public class PermissionServiceWrapper implements PermissionService,
 	* @throws PortalException if the group did not have permission to the
 	service, if a group with the primary key could not be found or if
 	the permission information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public void checkPermission(long groupId, java.lang.String name,
 		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_permissionService.checkPermission(groupId, name, primKey);
 	}
 

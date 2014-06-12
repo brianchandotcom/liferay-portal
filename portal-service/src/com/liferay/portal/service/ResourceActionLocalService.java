@@ -230,16 +230,13 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void checkResourceActions()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void checkResourceActions();
 
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<java.lang.String> actionIds);
 
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<java.lang.String> actionIds, boolean addDefaultActions);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceAction fetchResourceAction(
@@ -252,10 +249,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getResourceActionsCount(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getResourceActionsCount(java.lang.String name);
 }

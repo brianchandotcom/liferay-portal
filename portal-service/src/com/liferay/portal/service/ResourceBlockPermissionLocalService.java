@@ -231,29 +231,24 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void addResourceBlockPermissions(long resourceBlockId,
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
 
-	public void deleteResourceBlockPermissions(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteResourceBlockPermissions(long resourceBlockId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourceBlockId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException;
+		long roleId);
 
 	public void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long roleId, long actionIdsLong, int operator);
 }

@@ -55,24 +55,21 @@ public class ExportImportConfigurationServiceWrapper
 	@Override
 	public void deleteExportImportConfiguration(
 		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_exportImportConfigurationService.deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
 	@Override
 	public com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationService.moveExportImportConfigurationToTrash(exportImportConfigurationId);
 	}
 
 	@Override
 	public com.liferay.portal.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationService.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
 	}
 

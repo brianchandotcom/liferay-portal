@@ -52,8 +52,7 @@ import com.liferay.portal.service.BackgroundTaskServiceUtil;
 public class BackgroundTaskServiceHttp {
 	public static int getBackgroundTasksCount(HttpPrincipal httpPrincipal,
 		long groupId, java.lang.String taskExecutorClassName,
-		java.lang.String completed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String completed) {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
 					"getBackgroundTasksCount",
@@ -68,10 +67,6 @@ public class BackgroundTaskServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

@@ -52,8 +52,7 @@ import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
 public class ExportImportConfigurationServiceHttp {
 	public static void deleteExportImportConfiguration(
 		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
 					"deleteExportImportConfiguration",
@@ -70,10 +69,6 @@ public class ExportImportConfigurationServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -86,8 +81,7 @@ public class ExportImportConfigurationServiceHttp {
 
 	public static com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
 		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
 					"moveExportImportConfigurationToTrash",
@@ -106,10 +100,6 @@ public class ExportImportConfigurationServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -124,8 +114,7 @@ public class ExportImportConfigurationServiceHttp {
 
 	public static com.liferay.portal.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
 					"restoreExportImportConfigurationFromTrash",
@@ -142,10 +131,6 @@ public class ExportImportConfigurationServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

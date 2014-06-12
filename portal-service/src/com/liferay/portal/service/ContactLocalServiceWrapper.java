@@ -59,12 +59,10 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	* @param contactId the primary key of the contact
 	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Contact deleteContact(long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactLocalService.deleteContact(contactId);
 	}
 
@@ -73,12 +71,10 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	*
 	* @param contact the contact
 	* @return the contact that was removed
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Contact deleteContact(
-		com.liferay.portal.model.Contact contact)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Contact contact) {
 		return _contactLocalService.deleteContact(contact);
 	}
 
@@ -280,8 +276,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		java.lang.String mySpaceSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String ymSn,
 		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactLocalService.addContact(userId, className, classPK,
 			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
 			male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
@@ -292,15 +287,13 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Contact> getContacts(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _contactLocalService.getContacts(classNameId, classPK, start,
 			end, orderByComparator);
 	}
 
 	@Override
-	public int getContactsCount(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getContactsCount(long classNameId, long classPK) {
 		return _contactLocalService.getContactsCount(classNameId, classPK);
 	}
 
@@ -315,8 +308,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		java.lang.String mySpaceSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String ymSn,
 		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactLocalService.updateContact(contactId, emailAddress,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,

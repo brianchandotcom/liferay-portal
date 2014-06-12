@@ -234,33 +234,26 @@ public interface SystemEventLocalService extends BaseLocalService,
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, java.lang.String referrerClassName,
 		int type, java.lang.String extraData)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
 		java.lang.String className, long classPK, java.lang.String classUuid,
 		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteSystemEvents(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteSystemEvents(long groupId);
 
-	public void deleteSystemEvents(long groupId, long systemEventSetKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteSystemEvents(long groupId, long systemEventSetKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
-		long classNameId, long classPK, int type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK, int type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long classNameId, long classPK, int type);
 }

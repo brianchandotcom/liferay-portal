@@ -66,13 +66,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "userId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "timestamp", Types.BIGINT },
+			{ "actionRequired", Types.BOOLEAN },
 			{ "deliveryType", Types.INTEGER },
 			{ "deliverBy", Types.BIGINT },
 			{ "delivered", Types.BOOLEAN },
 			{ "payload", Types.CLOB },
 			{ "archived", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,actionRequired BOOLEAN,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
@@ -88,12 +89,13 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserNotificationEvent"),
 			true);
-	public static long ARCHIVED_COLUMN_BITMASK = 1L;
-	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long DELIVERED_COLUMN_BITMASK = 4L;
-	public static long USERID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
-	public static long TIMESTAMP_COLUMN_BITMASK = 32L;
+	public static long ACTIONREQUIRED_COLUMN_BITMASK = 1L;
+	public static long ARCHIVED_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long DELIVERED_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long TIMESTAMP_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -141,6 +143,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
+		attributes.put("actionRequired", getActionRequired());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliverBy", getDeliverBy());
 		attributes.put("delivered", getDelivered());
@@ -196,6 +199,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		if (timestamp != null) {
 			setTimestamp(timestamp);
+		}
+
+		Boolean actionRequired = (Boolean)attributes.get("actionRequired");
+
+		if (actionRequired != null) {
+			setActionRequired(actionRequired);
 		}
 
 		Integer deliveryType = (Integer)attributes.get("deliveryType");
@@ -360,6 +369,33 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
+	public boolean getActionRequired() {
+		return _actionRequired;
+	}
+
+	@Override
+	public boolean isActionRequired() {
+		return _actionRequired;
+	}
+
+	@Override
+	public void setActionRequired(boolean actionRequired) {
+		_columnBitmask |= ACTIONREQUIRED_COLUMN_BITMASK;
+
+		if (!_setOriginalActionRequired) {
+			_setOriginalActionRequired = true;
+
+			_originalActionRequired = _actionRequired;
+		}
+
+		_actionRequired = actionRequired;
+	}
+
+	public boolean getOriginalActionRequired() {
+		return _originalActionRequired;
+	}
+
+	@Override
 	public int getDeliveryType() {
 		return _deliveryType;
 	}
@@ -486,6 +522,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventImpl.setUserId(getUserId());
 		userNotificationEventImpl.setType(getType());
 		userNotificationEventImpl.setTimestamp(getTimestamp());
+		userNotificationEventImpl.setActionRequired(getActionRequired());
 		userNotificationEventImpl.setDeliveryType(getDeliveryType());
 		userNotificationEventImpl.setDeliverBy(getDeliverBy());
 		userNotificationEventImpl.setDelivered(getDelivered());
@@ -571,6 +608,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventModelImpl._setOriginalUserId = false;
 
+		userNotificationEventModelImpl._originalActionRequired = userNotificationEventModelImpl._actionRequired;
+
+		userNotificationEventModelImpl._setOriginalActionRequired = false;
+
 		userNotificationEventModelImpl._originalDelivered = userNotificationEventModelImpl._delivered;
 
 		userNotificationEventModelImpl._setOriginalDelivered = false;
@@ -612,6 +653,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventCacheModel.timestamp = getTimestamp();
 
+		userNotificationEventCacheModel.actionRequired = getActionRequired();
+
 		userNotificationEventCacheModel.deliveryType = getDeliveryType();
 
 		userNotificationEventCacheModel.deliverBy = getDeliverBy();
@@ -633,7 +676,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -649,6 +692,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getType());
 		sb.append(", timestamp=");
 		sb.append(getTimestamp());
+		sb.append(", actionRequired=");
+		sb.append(getActionRequired());
 		sb.append(", deliveryType=");
 		sb.append(getDeliveryType());
 		sb.append(", deliverBy=");
@@ -666,7 +711,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationEvent");
@@ -699,6 +744,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(
 			"<column><column-name>timestamp</column-name><column-value><![CDATA[");
 		sb.append(getTimestamp());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>actionRequired</column-name><column-value><![CDATA[");
+		sb.append(getActionRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>deliveryType</column-name><column-value><![CDATA[");
@@ -742,6 +791,9 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private boolean _setOriginalUserId;
 	private String _type;
 	private long _timestamp;
+	private boolean _actionRequired;
+	private boolean _originalActionRequired;
+	private boolean _setOriginalActionRequired;
 	private int _deliveryType;
 	private long _deliverBy;
 	private boolean _delivered;

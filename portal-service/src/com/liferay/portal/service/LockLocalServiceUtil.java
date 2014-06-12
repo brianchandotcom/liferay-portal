@@ -281,52 +281,45 @@ public class LockLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void clear()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clear() {
 		getService().clear();
 	}
 
 	public static com.liferay.portal.model.Lock getLock(
 		java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLock(className, key);
 	}
 
 	public static com.liferay.portal.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLock(className, key);
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
-		long key) throws com.liferay.portal.kernel.exception.SystemException {
+		long key) {
 		return getService().hasLock(userId, className, key);
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) {
 		return getService().hasLock(userId, className, key);
 	}
 
-	public static boolean isLocked(java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean isLocked(java.lang.String className, long key) {
 		return getService().isLocked(className, key);
 	}
 
 	public static boolean isLocked(java.lang.String className,
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) {
 		return getService().isLocked(className, key);
 	}
 
 	public static com.liferay.portal.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,
 		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .lock(userId, className, key, owner, inheritable,
 			expirationTime);
@@ -335,16 +328,14 @@ public class LockLocalServiceUtil {
 	public static com.liferay.portal.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .lock(userId, className, key, owner, inheritable,
 			expirationTime);
 	}
 
 	public static com.liferay.portal.model.Lock lock(
-		java.lang.String className, java.lang.String key, java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, java.lang.String key, java.lang.String owner) {
 		return getService().lock(className, key, owner);
 	}
 
@@ -355,15 +346,13 @@ public class LockLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.model.Lock lock(
 		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String owner, boolean retrieveFromCache) {
 		return getService().lock(className, key, owner, retrieveFromCache);
 	}
 
 	public static com.liferay.portal.model.Lock lock(
 		java.lang.String className, java.lang.String key,
-		java.lang.String expectedOwner, java.lang.String updatedOwner)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String expectedOwner, java.lang.String updatedOwner) {
 		return getService().lock(className, key, expectedOwner, updatedOwner);
 	}
 
@@ -375,8 +364,7 @@ public class LockLocalServiceUtil {
 	public static com.liferay.portal.model.Lock lock(
 		java.lang.String className, java.lang.String key,
 		java.lang.String expectedOwner, java.lang.String updatedOwner,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getService()
 				   .lock(className, key, expectedOwner, updatedOwner,
 			retrieveFromCache);
@@ -384,24 +372,20 @@ public class LockLocalServiceUtil {
 
 	public static com.liferay.portal.model.Lock refresh(java.lang.String uuid,
 		long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().refresh(uuid, companyId, expirationTime);
 	}
 
-	public static void unlock(java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void unlock(java.lang.String className, long key) {
 		getService().unlock(className, key);
 	}
 
-	public static void unlock(java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void unlock(java.lang.String className, java.lang.String key) {
 		getService().unlock(className, key);
 	}
 
 	public static void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String owner) {
 		getService().unlock(className, key, owner);
 	}
 
@@ -411,8 +395,7 @@ public class LockLocalServiceUtil {
 	*/
 	@Deprecated
 	public static void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String owner, boolean retrieveFromCache) {
 		getService().unlock(className, key, owner, retrieveFromCache);
 	}
 

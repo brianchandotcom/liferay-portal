@@ -59,12 +59,10 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	* @param phoneId the primary key of the phone
 	* @return the phone that was removed
 	* @throws PortalException if a phone with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Phone deletePhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.deletePhone(phoneId);
 	}
 
@@ -73,12 +71,10 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	*
 	* @param phone the phone
 	* @return the phone that was removed
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Phone deletePhone(
-		com.liferay.portal.model.Phone phone)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Phone phone) {
 		return _phoneLocalService.deletePhone(phone);
 	}
 
@@ -311,8 +307,7 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.addPhone(userId, className, classPK, number,
 			extension, typeId, primary);
 	}
@@ -322,29 +317,25 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.addPhone(userId, className, classPK, number,
 			extension, typeId, primary, serviceContext);
 	}
 
 	@Override
 	public void deletePhones(long companyId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		_phoneLocalService.deletePhones(companyId, className, classPK);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.Phone> getPhones()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<com.liferay.portal.model.Phone> getPhones() {
 		return _phoneLocalService.getPhones();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Phone> getPhones(
-		long companyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK) {
 		return _phoneLocalService.getPhones(companyId, className, classPK);
 	}
 
@@ -352,8 +343,7 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.model.Phone updatePhone(long phoneId,
 		java.lang.String number, java.lang.String extension, int typeId,
 		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.updatePhone(phoneId, number, extension,
 			typeId, primary);
 	}

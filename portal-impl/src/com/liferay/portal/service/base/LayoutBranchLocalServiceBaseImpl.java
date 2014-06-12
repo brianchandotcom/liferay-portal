@@ -100,7 +100,6 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param LayoutBranchId the primary key of the layout branch
 	 * @return the layout branch that was removed
 	 * @throws PortalException if a layout branch with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

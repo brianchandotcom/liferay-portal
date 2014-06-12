@@ -321,23 +321,20 @@ public class RepositoryEntryLocalServiceUtil {
 		long userId, long groupId, long repositoryId,
 		java.lang.String mappedId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRepositoryEntry(userId, groupId, repositoryId, mappedId,
 			serviceContext);
 	}
 
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long repositoryId) {
 		return getService().getRepositoryEntries(repositoryId);
 	}
 
 	public static com.liferay.portal.model.RepositoryEntry updateRepositoryEntry(
 		long repositoryEntryId, java.lang.String mappedId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateRepositoryEntry(repositoryEntryId, mappedId);
 	}
 

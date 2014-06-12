@@ -473,8 +473,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 	@Override
 	public com.liferay.portal.model.Role getRole()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _team.getRole();
 	}
 

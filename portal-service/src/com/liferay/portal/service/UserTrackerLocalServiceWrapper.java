@@ -61,13 +61,11 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	* @param userTrackerId the primary key of the user tracker
 	* @return the user tracker that was removed
 	* @throws PortalException if a user tracker with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.UserTracker deleteUserTracker(
 		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userTrackerLocalService.deleteUserTracker(userTrackerId);
 	}
 
@@ -76,12 +74,10 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	*
 	* @param userTracker the user tracker
 	* @return the user tracker that was removed
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.UserTracker deleteUserTracker(
-		com.liferay.portal.model.UserTracker userTracker)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.UserTracker userTracker) {
 		return _userTrackerLocalService.deleteUserTracker(userTracker);
 	}
 
@@ -279,8 +275,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 		long userId, java.util.Date modifiedDate, java.lang.String sessionId,
 		java.lang.String remoteAddr, java.lang.String remoteHost,
 		java.lang.String userAgent,
-		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths) {
 		return _userTrackerLocalService.addUserTracker(companyId, userId,
 			modifiedDate, sessionId, remoteAddr, remoteHost, userAgent,
 			userTrackerPaths);
@@ -288,8 +283,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return _userTrackerLocalService.getUserTrackers(companyId, start, end);
 	}
 

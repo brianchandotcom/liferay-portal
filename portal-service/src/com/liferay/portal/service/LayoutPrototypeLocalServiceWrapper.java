@@ -62,13 +62,11 @@ public class LayoutPrototypeLocalServiceWrapper
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the layout prototype that was removed
 	* @throws PortalException if a layout prototype with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototypeId);
 	}
 
@@ -78,13 +76,11 @@ public class LayoutPrototypeLocalServiceWrapper
 	* @param layoutPrototype the layout prototype
 	* @return the layout prototype that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		com.liferay.portal.model.LayoutPrototype layoutPrototype)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
 	}
 
@@ -320,8 +316,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, descriptionMap, active, serviceContext);
 	}
@@ -336,8 +331,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, description, active);
 	}
@@ -353,16 +347,14 @@ public class LayoutPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, description, active, serviceContext);
 	}
 
 	@Override
 	public void deleteNondefaultLayoutPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutPrototypeLocalService.deleteNondefaultLayoutPrototypes(companyId);
 	}
 
@@ -374,23 +366,20 @@ public class LayoutPrototypeLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
 		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.getLayoutPrototypeByUuid(uuid);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> search(
 		long companyId, java.lang.Boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _layoutPrototypeLocalService.search(companyId, active, start,
 			end, obc);
 	}
 
 	@Override
-	public int searchCount(long companyId, java.lang.Boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int searchCount(long companyId, java.lang.Boolean active) {
 		return _layoutPrototypeLocalService.searchCount(companyId, active);
 	}
 
@@ -400,8 +389,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, descriptionMap, active, serviceContext);
 	}
@@ -416,8 +404,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, description, active);
 	}
@@ -433,8 +420,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, description, active, serviceContext);
 	}

@@ -57,6 +57,5 @@ public interface QuartzLocalService extends BaseLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void checkQuartzTables()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void checkQuartzTables();
 }

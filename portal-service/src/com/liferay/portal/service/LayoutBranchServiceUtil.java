@@ -63,16 +63,14 @@ public class LayoutBranchServiceUtil {
 		long layoutRevisionId, java.lang.String name,
 		java.lang.String description, boolean master,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutBranch(layoutRevisionId, name, description,
 			master, serviceContext);
 	}
 
 	public static void deleteLayoutBranch(long layoutBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteLayoutBranch(layoutBranchId);
 	}
 
@@ -80,8 +78,7 @@ public class LayoutBranchServiceUtil {
 		long layoutBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutBranch(layoutBranchId, name, description,
 			serviceContext);

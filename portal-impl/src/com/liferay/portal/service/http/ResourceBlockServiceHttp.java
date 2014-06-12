@@ -53,8 +53,7 @@ public class ResourceBlockServiceHttp {
 	public static void addCompanyScopePermission(HttpPrincipal httpPrincipal,
 		long scopeGroupId, long companyId, java.lang.String name, long roleId,
 		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addCompanyScopePermission",
@@ -71,10 +70,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -88,8 +83,7 @@ public class ResourceBlockServiceHttp {
 	public static void addGroupScopePermission(HttpPrincipal httpPrincipal,
 		long scopeGroupId, long companyId, long groupId, java.lang.String name,
 		long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addGroupScopePermission",
@@ -106,10 +100,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -124,8 +114,7 @@ public class ResourceBlockServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addIndividualScopePermission",
@@ -142,10 +131,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -159,8 +144,7 @@ public class ResourceBlockServiceHttp {
 	public static void removeAllGroupScopePermissions(
 		HttpPrincipal httpPrincipal, long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeAllGroupScopePermissions",
@@ -177,10 +161,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -194,8 +174,7 @@ public class ResourceBlockServiceHttp {
 	public static void removeCompanyScopePermission(
 		HttpPrincipal httpPrincipal, long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeCompanyScopePermission",
@@ -212,10 +191,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -229,8 +204,7 @@ public class ResourceBlockServiceHttp {
 	public static void removeGroupScopePermission(HttpPrincipal httpPrincipal,
 		long scopeGroupId, long companyId, long groupId, java.lang.String name,
 		long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeGroupScopePermission",
@@ -247,10 +221,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -265,8 +235,7 @@ public class ResourceBlockServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeIndividualScopePermission",
@@ -283,10 +252,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -300,8 +265,7 @@ public class ResourceBlockServiceHttp {
 	public static void setCompanyScopePermissions(HttpPrincipal httpPrincipal,
 		long scopeGroupId, long companyId, java.lang.String name, long roleId,
 		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setCompanyScopePermissions",
@@ -318,10 +282,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -335,8 +295,7 @@ public class ResourceBlockServiceHttp {
 	public static void setGroupScopePermissions(HttpPrincipal httpPrincipal,
 		long scopeGroupId, long companyId, long groupId, java.lang.String name,
 		long roleId, java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setGroupScopePermissions",
@@ -353,10 +312,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -371,8 +326,7 @@ public class ResourceBlockServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setIndividualScopePermissions",
@@ -389,10 +343,6 @@ public class ResourceBlockServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -407,8 +357,7 @@ public class ResourceBlockServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String name, long primKey,
 		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setIndividualScopePermissions",
@@ -423,10 +372,6 @@ public class ResourceBlockServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

@@ -103,7 +103,6 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block that was removed
 	 * @throws PortalException if a resource block with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -117,7 +116,6 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @param resourceBlock the resource block
 	 * @return the resource block that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

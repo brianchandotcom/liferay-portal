@@ -60,29 +60,25 @@ public class CMISRepositoryLocalServiceUtil {
 	}
 
 	public static java.lang.Object getSession(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSession(repositoryId);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry toFileEntry(
 		long repositoryId, java.lang.Object object)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().toFileEntry(repositoryId, object);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileVersion toFileVersion(
 		long repositoryId, java.lang.Object object)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().toFileVersion(repositoryId, object);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.Folder toFolder(
 		long repositoryId, java.lang.Object object)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().toFolder(repositoryId, object);
 	}
 

@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 public class LockFinderUtil {
 	public static com.liferay.portal.model.Lock fetchByC_K(
 		java.lang.String className, java.lang.String key,
-		com.liferay.portal.kernel.dao.orm.LockMode lockMode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.LockMode lockMode) {
 		return getFinder().fetchByC_K(className, key, lockMode);
 	}
 

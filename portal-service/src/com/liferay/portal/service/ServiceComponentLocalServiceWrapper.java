@@ -275,8 +275,7 @@ public class ServiceComponentLocalServiceWrapper
 	@Override
 	public void destroyServiceComponent(
 		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.ClassLoader classLoader) {
 		_serviceComponentLocalService.destroyServiceComponent(servletContext,
 			classLoader);
 	}
@@ -286,8 +285,7 @@ public class ServiceComponentLocalServiceWrapper
 		javax.servlet.ServletContext servletContext,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _serviceComponentLocalService.initServiceComponent(servletContext,
 			classLoader, buildNamespace, buildNumber, buildDate,
 			buildAutoUpgrade);
@@ -306,8 +304,7 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	@Override
-	public void verifyDB()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void verifyDB() {
 		_serviceComponentLocalService.verifyDB();
 	}
 

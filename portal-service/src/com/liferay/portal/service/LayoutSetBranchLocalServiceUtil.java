@@ -69,12 +69,10 @@ public class LayoutSetBranchLocalServiceUtil {
 	* @param layoutSetBranchId the primary key of the layout set branch
 	* @return the layout set branch that was removed
 	* @throws PortalException if a layout set branch with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
@@ -84,12 +82,10 @@ public class LayoutSetBranchLocalServiceUtil {
 	* @param layoutSetBranch the layout set branch
 	* @return the layout set branch that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutSetBranch(layoutSetBranch);
 	}
 
@@ -270,8 +266,7 @@ public class LayoutSetBranchLocalServiceUtil {
 		java.lang.String name, java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetBranch(userId, groupId, privateLayout, name,
 			description, master, copyLayoutSetBranchId, serviceContext);
@@ -280,49 +275,42 @@ public class LayoutSetBranchLocalServiceUtil {
 	public static com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch,
 		boolean includeMaster)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutSetBranch(layoutSetBranch, includeMaster);
 	}
 
 	public static void deleteLayoutSetBranches(long groupId,
 		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteLayoutSetBranches(groupId, privateLayout);
 	}
 
 	public static void deleteLayoutSetBranches(long groupId,
 		boolean privateLayout, boolean includeMaster)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteLayoutSetBranches(groupId, privateLayout, includeMaster);
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean privateLayout, java.lang.String name) {
 		return getService().fetchLayoutSetBranch(groupId, privateLayout, name);
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutSetBranch(groupId, privateLayout, name);
 	}
 
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean privateLayout) {
 		return getService().getLayoutSetBranches(groupId, privateLayout);
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch getMasterLayoutSetBranch(
 		long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMasterLayoutSetBranch(groupId, privateLayout);
 	}
 
@@ -333,8 +321,7 @@ public class LayoutSetBranchLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserLayoutSetBranch(userId, groupId, privateLayout,
 			layoutSetBranchId);
@@ -343,8 +330,7 @@ public class LayoutSetBranchLocalServiceUtil {
 	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetId,
 		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserLayoutSetBranch(userId, groupId, privateLayout,
 			layoutSetId, layoutSetBranchId);
@@ -353,8 +339,7 @@ public class LayoutSetBranchLocalServiceUtil {
 	public static com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .mergeLayoutSetBranch(layoutSetBranchId,
 			mergeLayoutSetBranchId, serviceContext);
@@ -364,8 +349,7 @@ public class LayoutSetBranchLocalServiceUtil {
 		long layoutSetBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetBranch(layoutSetBranchId, name, description,
 			serviceContext);

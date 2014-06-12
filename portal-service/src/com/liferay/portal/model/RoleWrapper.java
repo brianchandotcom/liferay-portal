@@ -889,8 +889,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 
 	@Override
 	public java.lang.String getDescriptiveName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _role.getDescriptiveName();
 	}
 

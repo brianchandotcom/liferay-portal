@@ -265,43 +265,38 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	public static void addResourceBlockPermissions(long resourceBlockId,
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
 		getService()
 			.addResourceBlockPermissions(resourceBlockId,
 			resourceBlockPermissionsContainer);
 	}
 
-	public static void deleteResourceBlockPermissions(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteResourceBlockPermissions(long resourceBlockId) {
 		getService().deleteResourceBlockPermissions(resourceBlockId);
 	}
 
 	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAvailableResourceBlockPermissionActionIds(roleIds, name,
 			primKey, actionIds);
 	}
 
 	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourceBlockId) {
 		return getService().getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
 	public static int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId) {
 		return getService()
 				   .getResourceBlockPermissionsCount(resourceBlockId, roleId);
 	}
 
 	public static void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId, long actionIdsLong, int operator) {
 		getService()
 			.updateResourceBlockPermission(resourceBlockId, roleId,
 			actionIdsLong, operator);

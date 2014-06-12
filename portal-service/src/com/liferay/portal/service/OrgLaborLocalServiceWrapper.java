@@ -270,8 +270,7 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		int typeId, int sunOpen, int sunClose, int monOpen, int monClose,
 		int tueOpen, int tueClose, int wedOpen, int wedClose, int thuOpen,
 		int thuClose, int friOpen, int friClose, int satOpen, int satClose)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborLocalService.addOrgLabor(organizationId, typeId,
 			sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen,
 			wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
@@ -279,8 +278,7 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.OrgLabor> getOrgLabors(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId) {
 		return _orgLaborLocalService.getOrgLabors(organizationId);
 	}
 
@@ -289,8 +287,7 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		int typeId, int sunOpen, int sunClose, int monOpen, int monClose,
 		int tueOpen, int tueClose, int wedOpen, int wedClose, int thuOpen,
 		int thuClose, int friOpen, int friClose, int satOpen, int satClose)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborLocalService.updateOrgLabor(orgLaborId, typeId,
 			sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen,
 			wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose);

@@ -270,8 +270,7 @@ public class PluginSettingLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
 		return getService().getPluginSetting(companyId, pluginId, pluginType);
 	}
 
@@ -282,8 +281,7 @@ public class PluginSettingLocalServiceUtil {
 
 	public static com.liferay.portal.model.PluginSetting updatePluginSetting(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String roles, boolean active) {
 		return getService()
 				   .updatePluginSetting(companyId, pluginId, pluginType, roles,
 			active);

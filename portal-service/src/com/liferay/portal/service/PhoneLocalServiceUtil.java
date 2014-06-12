@@ -68,11 +68,9 @@ public class PhoneLocalServiceUtil {
 	* @param phoneId the primary key of the phone
 	* @return the phone that was removed
 	* @throws PortalException if a phone with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Phone deletePhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePhone(phoneId);
 	}
 
@@ -81,11 +79,9 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param phone the phone
 	* @return the phone that was removed
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Phone deletePhone(
-		com.liferay.portal.model.Phone phone)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Phone phone) {
 		return getService().deletePhone(phone);
 	}
 
@@ -298,8 +294,7 @@ public class PhoneLocalServiceUtil {
 	public static com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPhone(userId, className, classPK, number, extension,
 			typeId, primary);
@@ -309,35 +304,30 @@ public class PhoneLocalServiceUtil {
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPhone(userId, className, classPK, number, extension,
 			typeId, primary, serviceContext);
 	}
 
 	public static void deletePhones(long companyId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		getService().deletePhones(companyId, className, classPK);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Phone> getPhones()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Phone> getPhones() {
 		return getService().getPhones();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Phone> getPhones(
-		long companyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK) {
 		return getService().getPhones(companyId, className, classPK);
 	}
 
 	public static com.liferay.portal.model.Phone updatePhone(long phoneId,
 		java.lang.String number, java.lang.String extension, int typeId,
 		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePhone(phoneId, number, extension, typeId, primary);
 	}

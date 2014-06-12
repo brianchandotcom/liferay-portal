@@ -262,48 +262,40 @@ public class MembershipRequestLocalServiceUtil {
 	public static com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long userId, long groupId, java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addMembershipRequest(userId, groupId, comments,
 			serviceContext);
 	}
 
-	public static void deleteMembershipRequests(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteMembershipRequests(long groupId) {
 		getService().deleteMembershipRequests(groupId);
 	}
 
-	public static void deleteMembershipRequests(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteMembershipRequests(long groupId, int statusId) {
 		getService().deleteMembershipRequests(groupId, statusId);
 	}
 
-	public static void deleteMembershipRequestsByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteMembershipRequestsByUserId(long userId) {
 		getService().deleteMembershipRequestsByUserId(userId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		long userId, long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long groupId, int statusId) {
 		return getService().getMembershipRequests(userId, groupId, statusId);
 	}
 
 	public static boolean hasMembershipRequest(long userId, long groupId,
-		int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int statusId) {
 		return getService().hasMembershipRequest(userId, groupId, statusId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.MembershipRequest> search(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status, int start, int end) {
 		return getService().search(groupId, status, start, end);
 	}
 
-	public static int searchCount(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int searchCount(long groupId, int status) {
 		return getService().searchCount(groupId, status);
 	}
 
@@ -311,8 +303,7 @@ public class MembershipRequestLocalServiceUtil {
 		long membershipRequestId, java.lang.String replyComments, int statusId,
 		boolean addUserToGroup,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateStatus(replierUserId, membershipRequestId, replyComments,
 			statusId, addUserToGroup, serviceContext);

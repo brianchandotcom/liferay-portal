@@ -233,39 +233,30 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long userId, long groupId, java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteMembershipRequests(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteMembershipRequests(long groupId);
 
-	public void deleteMembershipRequests(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteMembershipRequests(long groupId, int statusId);
 
-	public void deleteMembershipRequestsByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteMembershipRequestsByUserId(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		long userId, long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId, int statusId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasMembershipRequest(long userId, long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasMembershipRequest(long userId, long groupId, int statusId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.MembershipRequest> search(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int searchCount(long groupId, int status);
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, int statusId, boolean addUserToGroup,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

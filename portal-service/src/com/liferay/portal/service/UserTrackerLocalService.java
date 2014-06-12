@@ -69,23 +69,19 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTrackerId the primary key of the user tracker
 	* @return the user tracker that was removed
 	* @throws PortalException if a user tracker with the primary key could not be found
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.UserTracker deleteUserTracker(
 		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTracker the user tracker
 	* @return the user tracker that was removed
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.UserTracker deleteUserTracker(
-		com.liferay.portal.model.UserTracker userTracker)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.UserTracker userTracker);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -238,11 +234,9 @@ public interface UserTrackerLocalService extends BaseLocalService,
 		long userId, java.util.Date modifiedDate, java.lang.String sessionId,
 		java.lang.String remoteAddr, java.lang.String remoteHost,
 		java.lang.String userAgent,
-		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int start, int end);
 }

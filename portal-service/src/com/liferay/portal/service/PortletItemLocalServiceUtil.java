@@ -262,8 +262,7 @@ public class PortletItemLocalServiceUtil {
 	public static com.liferay.portal.model.PortletItem addPortletItem(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPortletItem(userId, groupId, name, portletId, className);
 	}
@@ -271,28 +270,24 @@ public class PortletItemLocalServiceUtil {
 	public static com.liferay.portal.model.PortletItem getPortletItem(
 		long groupId, java.lang.String name, java.lang.String portletId,
 		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPortletItem(groupId, name, portletId, className);
 	}
 
 	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String className) {
 		return getService().getPortletItems(groupId, className);
 	}
 
 	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String portletId, java.lang.String className) {
 		return getService().getPortletItems(groupId, portletId, className);
 	}
 
 	public static com.liferay.portal.model.PortletItem updatePortletItem(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePortletItem(userId, groupId, name, portletId,
 			className);

@@ -117,7 +117,6 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param userGroupGroupRole the user group group role
 	 * @return the user group group role that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

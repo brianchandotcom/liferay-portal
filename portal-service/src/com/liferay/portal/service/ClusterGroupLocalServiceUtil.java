@@ -260,14 +260,12 @@ public class ClusterGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
 		return getService().addClusterGroup(name, clusterNodeIds);
 	}
 
 	public static com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getService().addWholeClusterGroup(name);
 	}
 

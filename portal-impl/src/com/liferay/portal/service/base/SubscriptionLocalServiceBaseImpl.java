@@ -106,7 +106,6 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * @param subscriptionId the primary key of the subscription
 	 * @return the subscription that was removed
 	 * @throws PortalException if a subscription with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -121,7 +120,6 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 * @param subscription the subscription
 	 * @return the subscription that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

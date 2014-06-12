@@ -231,8 +231,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long ownerId, int ownerType, java.lang.String defaultPreferences);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
@@ -241,18 +240,15 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	@Deprecated
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String defaultPreferences);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long ownerId,
-		int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int ownerType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long ownerId,
-		int ownerType, java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int ownerType, java.lang.String defaultPreferences);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
@@ -260,8 +256,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long ownerId, int ownerType);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
@@ -270,15 +265,12 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType, java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long ownerId, int ownerType, java.lang.String defaultPreferences);
 
 	public com.liferay.portal.model.PortalPreferences updatePreferences(
 		long ownerId, int ownerType,
-		com.liferay.portlet.PortalPreferences portalPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.PortalPreferences portalPreferences);
 
 	public com.liferay.portal.model.PortalPreferences updatePreferences(
-		long ownerId, int ownerType, java.lang.String xml)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long ownerId, int ownerType, java.lang.String xml);
 }

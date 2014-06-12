@@ -1807,22 +1807,19 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildren() {
 		return _layoutRevision.getChildren();
 	}
 
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getColorScheme();
 	}
 
 	@Override
 	public java.lang.String getCssText()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getCssText();
 	}
 
@@ -1843,30 +1840,26 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 	@Override
 	public com.liferay.portal.model.LayoutBranch getLayoutBranch()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getLayoutBranch();
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getLayoutSet();
 	}
 
 	@Override
 	public java.lang.String getRegularURL(
 		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getRegularURL(request);
 	}
 
 	@Override
 	public com.liferay.portal.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getTheme();
 	}
 
@@ -1894,21 +1887,18 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 	@Override
 	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getWapColorScheme();
 	}
 
 	@Override
 	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevision.getWapTheme();
 	}
 
 	@Override
-	public boolean hasChildren()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasChildren() {
 		return _layoutRevision.hasChildren();
 	}
 

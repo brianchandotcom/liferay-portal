@@ -76,17 +76,14 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the web domain, virtual host name, or mail
 	domain was invalid or if the user was not a universal
 	administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String shardName, boolean system, int maxUsers, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Company deleteCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the company's logo.
@@ -95,11 +92,9 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the company with the primary key could not be
 	found or if the company's logo could not be found or if the user
 	was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteLogo(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the primary key.
@@ -108,12 +103,10 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the primary key
 	* @throws PortalException if a company with the primary key could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyById(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the logo.
@@ -121,12 +114,10 @@ public interface CompanyService extends BaseService {
 	* @param logoId the ID of the company's logo
 	* @return Returns the company with the logo
 	* @throws PortalException if the company with the logo could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the mail domian.
@@ -135,12 +126,10 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the mail domain
 	* @throws PortalException if the company with the mail domain could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByMx(java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the virtual host name.
@@ -150,13 +139,11 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the company with the virtual host name could
 	not be found or if the virtual host was not associated with a
 	company
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByVirtualHost(
 		java.lang.String virtualHost)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the web domain.
@@ -165,13 +152,11 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the web domain
 	* @throws PortalException if the company with the web domain could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByWebId(
 		java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the values that match the keys of the company's preferences.
@@ -183,11 +168,9 @@ public interface CompanyService extends BaseService {
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
 	* @throws PortalException if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removePreferences(long companyId, java.lang.String[] keys)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company
@@ -202,13 +185,11 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if a company with the primary key could not be
 	found or if the new information was invalid or if the user was
 	not a universal administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
 		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company with additional account information.
@@ -238,7 +219,6 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if a company with the primary key could not be
 	found or if the new information was invalid or if the user was
 	not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
@@ -247,8 +227,7 @@ public interface CompanyService extends BaseService {
 		java.lang.String legalId, java.lang.String legalType,
 		java.lang.String sicCode, java.lang.String tickerSymbol,
 		java.lang.String industry, java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company with addition information.
@@ -285,7 +264,6 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException the company with the primary key could not be
 	found or if the new information was invalid or if the user was
 	not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
@@ -301,8 +279,7 @@ public interface CompanyService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company with additional account information.
@@ -333,7 +310,6 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if a company with the primary key could not
 	be found or if the new information was invalid or if the user
 	was not an administrator
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
@@ -346,8 +322,7 @@ public interface CompanyService extends BaseService {
 		java.lang.String legalType, java.lang.String sicCode,
 		java.lang.String tickerSymbol, java.lang.String industry,
 		java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company with addition information.
@@ -385,7 +360,6 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException the company with the primary key could not be
 	found or if the new information was invalid or if the user
 	was not an administrator
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
@@ -406,8 +380,7 @@ public interface CompanyService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Update the company's display.
@@ -417,12 +390,10 @@ public interface CompanyService extends BaseService {
 	* @param timeZoneId the ID of the company's default user's time zone
 	* @throws PortalException if the company's default user could not be found
 	or if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public void updateDisplay(long companyId, java.lang.String languageId,
 		java.lang.String timeZoneId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company's logo.
@@ -433,12 +404,10 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the company's logo ID could not be found or if
 	the logo's image was corrupted or if the user was an
 	administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateLogo(long companyId,
 		byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company's logo.
@@ -449,12 +418,10 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the company's logo ID could not be found or if
 	the logo's image was corrupted or if the user was an
 	administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateLogo(long companyId,
 		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company's preferences. The company's default properties are
@@ -464,12 +431,10 @@ public interface CompanyService extends BaseService {
 	* @param properties the company's properties. See {@link
 	com.liferay.portal.kernel.util.UnicodeProperties}
 	* @throws PortalException if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public void updatePreferences(long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the company's security properties.
@@ -489,11 +454,9 @@ public interface CompanyService extends BaseService {
 	* @param siteLogo whether to to allow site administrators to use their own
 	logo instead of the enterprise logo
 	* @throws PortalException if the user was not an administrator
-	* @throws SystemException if a system exception occurred
 	*/
 	public void updateSecurity(long companyId, java.lang.String authType,
 		boolean autoLogin, boolean sendPassword, boolean strangers,
 		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

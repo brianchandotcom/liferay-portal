@@ -68,11 +68,9 @@ public class WebsiteLocalServiceUtil {
 	* @param websiteId the primary key of the website
 	* @return the website that was removed
 	* @throws PortalException if a website with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Website deleteWebsite(long websiteId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWebsite(websiteId);
 	}
 
@@ -81,11 +79,9 @@ public class WebsiteLocalServiceUtil {
 	*
 	* @param website the website
 	* @return the website that was removed
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Website deleteWebsite(
-		com.liferay.portal.model.Website website)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Website website) {
 		return getService().deleteWebsite(website);
 	}
 
@@ -298,8 +294,7 @@ public class WebsiteLocalServiceUtil {
 	public static com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addWebsite(userId, className, classPK, url, typeId, primary);
 	}
@@ -308,34 +303,29 @@ public class WebsiteLocalServiceUtil {
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addWebsite(userId, className, classPK, url, typeId,
 			primary, serviceContext);
 	}
 
 	public static void deleteWebsites(long companyId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		getService().deleteWebsites(companyId, className, classPK);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Website> getWebsites()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Website> getWebsites() {
 		return getService().getWebsites();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Website> getWebsites(
-		long companyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK) {
 		return getService().getWebsites(companyId, className, classPK);
 	}
 
 	public static com.liferay.portal.model.Website updateWebsite(
 		long websiteId, java.lang.String url, int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateWebsite(websiteId, url, typeId, primary);
 	}
 

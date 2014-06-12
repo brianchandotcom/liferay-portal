@@ -307,8 +307,7 @@ public class UserNotificationEventLocalServiceWrapper
 	public com.liferay.portal.model.UserNotificationEvent addUserNotificationEvent(
 		long userId,
 		com.liferay.portal.kernel.notifications.NotificationEvent notificationEvent)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.addUserNotificationEvent(userId,
 			notificationEvent);
 	}
@@ -318,8 +317,7 @@ public class UserNotificationEventLocalServiceWrapper
 		long userId, java.lang.String type, long timestamp, int deliveryType,
 		long deliverBy, java.lang.String payload, boolean archived,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.addUserNotificationEvent(userId,
 			type, timestamp, deliveryType, deliverBy, payload, archived,
 			serviceContext);
@@ -335,8 +333,7 @@ public class UserNotificationEventLocalServiceWrapper
 		long userId, java.lang.String type, long timestamp, long deliverBy,
 		java.lang.String payload, boolean archived,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.addUserNotificationEvent(userId,
 			type, timestamp, deliverBy, payload, archived, serviceContext);
 	}
@@ -345,79 +342,70 @@ public class UserNotificationEventLocalServiceWrapper
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> addUserNotificationEvents(
 		long userId,
 		java.util.Collection<com.liferay.portal.kernel.notifications.NotificationEvent> notificationEvents)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.addUserNotificationEvents(userId,
 			notificationEvents);
 	}
 
 	@Override
 	public void deleteUserNotificationEvent(java.lang.String uuid,
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId) {
 		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid,
 			companyId);
 	}
 
 	@Override
 	public void deleteUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.Collection<java.lang.String> uuids, long companyId) {
 		_userNotificationEventLocalService.deleteUserNotificationEvents(uuids,
 			companyId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
 			archived);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
-		long userId, boolean archived, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived, int start, int end) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
 			archived, start, end);
 	}
 
 	@Override
 	public int getArchivedUserNotificationEventsCount(long userId,
-		boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
 			archived);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
-		long userId, boolean delivered)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean delivered) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
 			delivered);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
-		long userId, boolean delivered, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean delivered, int start, int end) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
 			delivered, start, end);
 	}
 
 	@Override
 	public int getDeliveredUserNotificationEventsCount(long userId,
-		boolean delivered)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean delivered) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
 			delivered);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId);
 	}
 
@@ -428,8 +416,7 @@ public class UserNotificationEventLocalServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
 			archived);
 	}
@@ -441,23 +428,20 @@ public class UserNotificationEventLocalServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived, int start, int end) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
 			archived, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
 			start, end);
 	}
 
 	@Override
-	public int getUserNotificationEventsCount(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserNotificationEventsCount(long userId) {
 		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId);
 	}
 
@@ -467,8 +451,7 @@ public class UserNotificationEventLocalServiceWrapper
 	*/
 	@Deprecated
 	@Override
-	public int getUserNotificationEventsCount(long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserNotificationEventsCount(long userId, boolean archived) {
 		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
 			archived);
 	}
@@ -477,16 +460,14 @@ public class UserNotificationEventLocalServiceWrapper
 	public com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(
 		long userId, java.lang.String portletId, int deliveryType,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
 			portletId, deliveryType, notificationEventJSONObject);
 	}
 
 	@Override
 	public com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(
-		java.lang.String uuid, long companyId, boolean archive)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, boolean archive) {
 		return _userNotificationEventLocalService.updateUserNotificationEvent(uuid,
 			companyId, archive);
 	}
@@ -494,8 +475,7 @@ public class UserNotificationEventLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> updateUserNotificationEvents(
 		java.util.Collection<java.lang.String> uuids, long companyId,
-		boolean archive)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean archive) {
 		return _userNotificationEventLocalService.updateUserNotificationEvents(uuids,
 			companyId, archive);
 	}

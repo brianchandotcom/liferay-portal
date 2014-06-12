@@ -274,8 +274,7 @@ public class UserTrackerPathLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserTrackerPath> getUserTrackerPaths(
-		long userTrackerId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userTrackerId, int start, int end) {
 		return _userTrackerPathLocalService.getUserTrackerPaths(userTrackerId,
 			start, end);
 	}

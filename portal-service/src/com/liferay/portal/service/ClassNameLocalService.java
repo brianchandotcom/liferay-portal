@@ -227,16 +227,13 @@ public interface ClassNameLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String value);
 
-	public void checkClassNames()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void checkClassNames();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long fetchClassNameId(java.lang.Class<?> clazz);
@@ -246,8 +243,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getClassNameId(java.lang.Class<?> clazz);

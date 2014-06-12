@@ -581,8 +581,7 @@ public class EmailAddressWrapper implements EmailAddress,
 
 	@Override
 	public com.liferay.portal.model.ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddress.getType();
 	}
 

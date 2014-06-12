@@ -56,8 +56,7 @@ public class RepositoryServiceHttp {
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"addRepository", _addRepositoryParameterTypes0);
@@ -76,10 +75,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -94,8 +89,7 @@ public class RepositoryServiceHttp {
 
 	public static void checkRepository(HttpPrincipal httpPrincipal,
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"checkRepository", _checkRepositoryParameterTypes1);
@@ -111,10 +105,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -127,8 +117,7 @@ public class RepositoryServiceHttp {
 
 	public static void deleteRepository(HttpPrincipal httpPrincipal,
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"deleteRepository", _deleteRepositoryParameterTypes2);
@@ -144,10 +133,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -160,8 +145,7 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		HttpPrincipal httpPrincipal, long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getLocalRepositoryImpl",
@@ -180,10 +164,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -199,8 +179,7 @@ public class RepositoryServiceHttp {
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		HttpPrincipal httpPrincipal, long folderId, long fileEntryId,
 		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getLocalRepositoryImpl",
@@ -219,10 +198,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -237,8 +212,7 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.model.Repository getRepository(
 		HttpPrincipal httpPrincipal, long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepository", _getRepositoryParameterTypes5);
@@ -256,10 +230,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -274,8 +244,7 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		HttpPrincipal httpPrincipal, long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepositoryImpl", _getRepositoryImplParameterTypes6);
@@ -293,10 +262,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -312,8 +277,7 @@ public class RepositoryServiceHttp {
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		HttpPrincipal httpPrincipal, long folderId, long fileEntryId,
 		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepositoryImpl", _getRepositoryImplParameterTypes7);
@@ -331,10 +295,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -348,8 +308,7 @@ public class RepositoryServiceHttp {
 	}
 
 	public static java.lang.String[] getSupportedConfigurations(
-		HttpPrincipal httpPrincipal, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long classNameId) {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedConfigurations",
@@ -364,10 +323,6 @@ public class RepositoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -382,8 +337,7 @@ public class RepositoryServiceHttp {
 
 	public static java.lang.String[] getSupportedParameters(
 		HttpPrincipal httpPrincipal, long classNameId,
-		java.lang.String configuration)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String configuration) {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedParameters",
@@ -398,10 +352,6 @@ public class RepositoryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -416,8 +366,7 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		HttpPrincipal httpPrincipal, long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getTypeSettingsProperties",
@@ -436,10 +385,6 @@ public class RepositoryServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -454,8 +399,7 @@ public class RepositoryServiceHttp {
 
 	public static void updateRepository(HttpPrincipal httpPrincipal,
 		long repositoryId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"updateRepository", _updateRepositoryParameterTypes11);
@@ -469,10 +413,6 @@ public class RepositoryServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

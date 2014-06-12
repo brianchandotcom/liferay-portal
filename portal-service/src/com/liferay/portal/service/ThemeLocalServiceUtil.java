@@ -71,27 +71,23 @@ public class ThemeLocalServiceUtil {
 
 	public static com.liferay.portal.model.ColorScheme getColorScheme(
 		long companyId, java.lang.String themeId,
-		java.lang.String colorSchemeId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String colorSchemeId, boolean wapTheme) {
 		return getService()
 				   .getColorScheme(companyId, themeId, colorSchemeId, wapTheme);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
-		long companyId, long userId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long userId, boolean wapTheme) {
 		return getService().getControlPanelThemes(companyId, userId, wapTheme);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Theme> getPageThemes(
-		long companyId, long groupId, long userId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, long userId, boolean wapTheme) {
 		return getService().getPageThemes(companyId, groupId, userId, wapTheme);
 	}
 
 	public static com.liferay.portal.model.Theme getTheme(long companyId,
-		java.lang.String themeId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String themeId, boolean wapTheme) {
 		return getService().getTheme(companyId, themeId, wapTheme);
 	}
 
@@ -105,8 +101,7 @@ public class ThemeLocalServiceUtil {
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, long userId, boolean wapTheme) {
 		return getService().getThemes(companyId, groupId, userId, wapTheme);
 	}
 

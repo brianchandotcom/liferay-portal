@@ -61,13 +61,11 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	* @param emailAddressId the primary key of the email address
 	* @return the email address that was removed
 	* @throws PortalException if a email address with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
 		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.deleteEmailAddress(emailAddressId);
 	}
 
@@ -76,12 +74,10 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	*
 	* @param emailAddress the email address
 	* @return the email address that was removed
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
-		com.liferay.portal.model.EmailAddress emailAddress)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.EmailAddress emailAddress) {
 		return _emailAddressLocalService.deleteEmailAddress(emailAddress);
 	}
 
@@ -319,8 +315,7 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.addEmailAddress(userId, className,
 			classPK, address, typeId, primary);
 	}
@@ -330,30 +325,26 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.addEmailAddress(userId, className,
 			classPK, address, typeId, primary, serviceContext);
 	}
 
 	@Override
 	public void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		_emailAddressLocalService.deleteEmailAddresses(companyId, className,
 			classPK);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses() {
 		return _emailAddressLocalService.getEmailAddresses();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
-		long companyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String className, long classPK) {
 		return _emailAddressLocalService.getEmailAddresses(companyId,
 			className, classPK);
 	}
@@ -362,8 +353,7 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	public com.liferay.portal.model.EmailAddress updateEmailAddress(
 		long emailAddressId, java.lang.String address, int typeId,
 		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.updateEmailAddress(emailAddressId,
 			address, typeId, primary);
 	}

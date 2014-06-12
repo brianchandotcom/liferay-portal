@@ -239,8 +239,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, java.lang.String pluginId, java.lang.String pluginType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPermission(long userId, java.lang.String pluginId,
@@ -248,6 +247,5 @@ public interface PluginSettingLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.PluginSetting updatePluginSetting(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String roles, boolean active);
 }

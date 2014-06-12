@@ -107,7 +107,6 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	 * @param layoutRevisionId the primary key of the layout revision
 	 * @return the layout revision that was removed
 	 * @throws PortalException if a layout revision with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -122,7 +121,6 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	 * @param layoutRevision the layout revision
 	 * @return the layout revision that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

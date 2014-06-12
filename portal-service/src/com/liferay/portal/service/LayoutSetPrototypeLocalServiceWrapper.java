@@ -62,13 +62,11 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype that was removed
 	* @throws PortalException if a layout set prototype with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
@@ -78,13 +76,11 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.deleteLayoutSetPrototype(layoutSetPrototype);
 	}
 
@@ -321,8 +317,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(userId,
 			companyId, nameMap, descriptionMap, active, layoutsUpdateable,
 			serviceContext);
@@ -340,8 +335,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(userId,
 			companyId, nameMap, description, active, layoutsUpdateable,
 			serviceContext);
@@ -349,15 +343,13 @@ public class LayoutSetPrototypeLocalServiceWrapper
 
 	@Override
 	public void deleteLayoutSetPrototypes()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutSetPrototypeLocalService.deleteLayoutSetPrototypes();
 	}
 
 	@Override
 	public void deleteNondefaultLayoutSetPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(companyId);
 	}
 
@@ -369,30 +361,26 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
 		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.getLayoutSetPrototypeByUuid(uuid);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> getLayoutSetPrototypes(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId) {
 		return _layoutSetPrototypeLocalService.getLayoutSetPrototypes(companyId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(
 		long companyId, java.lang.Boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _layoutSetPrototypeLocalService.search(companyId, active, start,
 			end, obc);
 	}
 
 	@Override
-	public int searchCount(long companyId, java.lang.Boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int searchCount(long companyId, java.lang.Boolean active) {
 		return _layoutSetPrototypeLocalService.searchCount(companyId, active);
 	}
 
@@ -403,8 +391,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
@@ -422,8 +409,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			nameMap, description, active, layoutsUpdateable, serviceContext);
 	}
@@ -431,8 +417,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String settings)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			settings);
 	}

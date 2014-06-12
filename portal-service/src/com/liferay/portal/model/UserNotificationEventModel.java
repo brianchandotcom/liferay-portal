@@ -176,6 +176,27 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	public void setTimestamp(long timestamp);
 
 	/**
+	 * Returns the action required of this user notification event.
+	 *
+	 * @return the action required of this user notification event
+	 */
+	public boolean getActionRequired();
+
+	/**
+	 * Returns <code>true</code> if this user notification event is action required.
+	 *
+	 * @return <code>true</code> if this user notification event is action required; <code>false</code> otherwise
+	 */
+	public boolean isActionRequired();
+
+	/**
+	 * Sets whether this user notification event is action required.
+	 *
+	 * @param actionRequired the action required of this user notification event
+	 */
+	public void setActionRequired(boolean actionRequired);
+
+	/**
 	 * Returns the delivery type of this user notification event.
 	 *
 	 * @return the delivery type of this user notification event

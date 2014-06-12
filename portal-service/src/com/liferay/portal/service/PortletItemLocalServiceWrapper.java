@@ -274,8 +274,7 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	public com.liferay.portal.model.PortletItem addPortletItem(long userId,
 		long groupId, java.lang.String name, java.lang.String portletId,
 		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletItemLocalService.addPortletItem(userId, groupId, name,
 			portletId, className);
 	}
@@ -284,23 +283,20 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
 		java.lang.String name, java.lang.String portletId,
 		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletItemLocalService.getPortletItem(groupId, name,
 			portletId, className);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String className) {
 		return _portletItemLocalService.getPortletItems(groupId, className);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String portletId, java.lang.String className) {
 		return _portletItemLocalService.getPortletItems(groupId, portletId,
 			className);
 	}
@@ -309,8 +305,7 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	public com.liferay.portal.model.PortletItem updatePortletItem(long userId,
 		long groupId, java.lang.String name, java.lang.String portletId,
 		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletItemLocalService.updatePortletItem(userId, groupId,
 			name, portletId, className);
 	}

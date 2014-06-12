@@ -70,12 +70,10 @@ public class UserServiceUtil {
 	be found, if the user did not have permission to assign group
 	members, or if the operation was not allowed by the membership
 	policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupUsers(long groupId, long[] userIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addGroupUsers(groupId, userIds, serviceContext);
 	}
 
@@ -89,11 +87,9 @@ public class UserServiceUtil {
 	organization members, if current user did not have an
 	organization in common with a given user, or if the operation was
 	not allowed by the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addOrganizationUsers(long organizationId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addOrganizationUsers(organizationId, userIds);
 	}
 
@@ -105,12 +101,10 @@ public class UserServiceUtil {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the user did not have permission to assign
 	policy members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addPasswordPolicyUsers(long passwordPolicyId,
 		long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
@@ -123,11 +117,9 @@ public class UserServiceUtil {
 	be found, if the user did not have permission to assign role
 	members, or if the operation was not allowed by the membership
 	policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addRoleUsers(roleId, userIds);
 	}
 
@@ -139,11 +131,9 @@ public class UserServiceUtil {
 	* @throws PortalException if a team or user with the primary key could not
 	be found or if the user did not have permission to assign team
 	members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addTeamUsers(long teamId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addTeamUsers(teamId, userIds);
 	}
 
@@ -195,7 +185,6 @@ public class UserServiceUtil {
 	operation was not allowed by the membership policy, if the
 	creator did not have permission to add users, or if the email
 	address was reserved
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User addUser(long companyId,
 		boolean autoPassword, java.lang.String password1,
@@ -208,8 +197,7 @@ public class UserServiceUtil {
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUser(companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
@@ -271,7 +259,6 @@ public class UserServiceUtil {
 	creator did not have permission to add users, if the email
 	address was reserved, if the operation was not allowed by the
 	membership policy, or if some other portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User addUser(long companyId,
 		boolean autoPassword, java.lang.String password1,
@@ -290,8 +277,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUser(companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
@@ -310,11 +296,9 @@ public class UserServiceUtil {
 	could not be found, if the current user did not have permission
 	to assign group members, or if the operation was not allowed by
 	the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addUserGroupUsers(userGroupId, userIds);
 	}
 
@@ -366,7 +350,6 @@ public class UserServiceUtil {
 	operation was not allowed by the membership policy, if the
 	creator did not have permission to add users, or if the email
 	address was reserved
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User addUserWithWorkflow(
 		long companyId, boolean autoPassword, java.lang.String password1,
@@ -379,8 +362,7 @@ public class UserServiceUtil {
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserWithWorkflow(companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, facebookId,
@@ -443,7 +425,6 @@ public class UserServiceUtil {
 	operation was not allowed by the membership policy, if the
 	creator did not have permission to add users, if the email
 	address was reserved, or if some other portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User addUserWithWorkflow(
 		long companyId, boolean autoPassword, java.lang.String password1,
@@ -462,8 +443,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserWithWorkflow(companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, facebookId,
@@ -481,11 +461,9 @@ public class UserServiceUtil {
 	* @throws PortalException if a user with the primary key could not be
 	found, if the user's portrait could not be found, or if the
 	current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deletePortrait(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePortrait(userId);
 	}
 
@@ -497,11 +475,9 @@ public class UserServiceUtil {
 	* @throws PortalException if a role or user with the primary key could not
 	be found, or if the current user did not have permission to
 	assign role members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRoleUser(roleId, userId);
 	}
 
@@ -511,24 +487,20 @@ public class UserServiceUtil {
 	* @param userId the primary key of the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to delete the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteUser(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUser(userId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyUsers(companyId, start, end);
 	}
 
 	public static int getCompanyUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCompanyUsersCount(companyId);
 	}
 
@@ -539,11 +511,9 @@ public class UserServiceUtil {
 	* @return the primary keys of the users belonging to the group
 	* @throws PortalException if the current user did not have permission to
 	view group assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getGroupUserIds(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupUserIds(groupId);
 	}
 
@@ -554,12 +524,10 @@ public class UserServiceUtil {
 	* @return the users belonging to the group
 	* @throws PortalException if the current user did not have permission to
 	view group assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.User> getGroupUsers(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupUsers(groupId);
 	}
 
@@ -570,11 +538,9 @@ public class UserServiceUtil {
 	* @return the primary keys of the users belonging to the organization
 	* @throws PortalException if the current user did not have permission to
 	view organization assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getOrganizationUserIds(long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrganizationUserIds(organizationId);
 	}
 
@@ -585,12 +551,10 @@ public class UserServiceUtil {
 	* @return users belonging to the organization
 	* @throws PortalException if the current user did not have permission to
 	view organization assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
 		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrganizationUsers(organizationId);
 	}
 
@@ -601,11 +565,9 @@ public class UserServiceUtil {
 	* @return the primary keys of the users belonging to the role
 	* @throws PortalException if the current user did not have permission to
 	view role members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getRoleUserIds(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRoleUserIds(roleId);
 	}
 
@@ -618,12 +580,10 @@ public class UserServiceUtil {
 	* @throws PortalException if a user with the email address could not be
 	found or if the current user did not have permission to view the
 	user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User getUserByEmailAddress(
 		long companyId, java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserByEmailAddress(companyId, emailAddress);
 	}
 
@@ -634,11 +594,9 @@ public class UserServiceUtil {
 	* @return the user with the primary key
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to view the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User getUserById(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserById(userId);
 	}
 
@@ -650,19 +608,16 @@ public class UserServiceUtil {
 	* @return the user with the screen name
 	* @throws PortalException if a user with the screen name could not be found
 	or if the current user did not have permission to view the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User getUserByScreenName(
 		long companyId, java.lang.String screenName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserByScreenName(companyId, screenName);
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
 		long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserGroupUsers(userGroupId);
 	}
 
@@ -674,12 +629,10 @@ public class UserServiceUtil {
 	* @return the primary key of the user with the email address
 	* @throws PortalException if a user with the email address could not be
 	found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long getUserIdByEmailAddress(long companyId,
 		java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserIdByEmailAddress(companyId, emailAddress);
 	}
 
@@ -690,12 +643,10 @@ public class UserServiceUtil {
 	* @param screenName the user's screen name
 	* @return the primary key of the user with the screen name
 	* @throws PortalException if a user with the screen name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long getUserIdByScreenName(long companyId,
 		java.lang.String screenName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserIdByScreenName(companyId, screenName);
 	}
 
@@ -708,11 +659,9 @@ public class UserServiceUtil {
 	<code>false</code> otherwise
 	* @throws PortalException if the current user did not have permission to
 	view the user or group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasGroupUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasGroupUser(groupId, userId);
 	}
 
@@ -725,11 +674,9 @@ public class UserServiceUtil {
 	<code>false</code> otherwise
 	* @throws PortalException if the current user did not have permission to
 	view the user or role members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasRoleUser(roleId, userId);
 	}
 
@@ -746,12 +693,10 @@ public class UserServiceUtil {
 	* @return <code>true</code> if the user has the role; <code>false</code>
 	otherwise
 	* @throws PortalException if a role with the name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasRoleUser(long companyId, java.lang.String name,
 		long userId, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasRoleUser(companyId, name, userId, inherited);
 	}
 
@@ -764,11 +709,9 @@ public class UserServiceUtil {
 	* @throws PortalException if the current user did not have permission to
 	assign role members or if the operation was not allowed by the
 	membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().setRoleUsers(roleId, userIds);
 	}
 
@@ -780,11 +723,9 @@ public class UserServiceUtil {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
 	assign group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().setUserGroupUsers(userGroupId, userIds);
 	}
 
@@ -795,11 +736,9 @@ public class UserServiceUtil {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
 	modify user group assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetGroupTeamsUsers(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetGroupTeamsUsers(groupId, userIds);
 	}
 
@@ -813,12 +752,10 @@ public class UserServiceUtil {
 	* @throws PortalException if the current user did not have permission to
 	modify group assignments or if the operation was not allowed by
 	the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetGroupUsers(long groupId, long[] userIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
@@ -830,12 +767,10 @@ public class UserServiceUtil {
 	* @throws PortalException if the current user did not have permission to
 	modify organization assignments or if the operation was not
 	allowed by the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetOrganizationUsers(long organizationId,
 		long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetOrganizationUsers(organizationId, userIds);
 	}
 
@@ -846,12 +781,10 @@ public class UserServiceUtil {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
 	modify policy assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetPasswordPolicyUsers(long passwordPolicyId,
 		long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
@@ -863,11 +796,9 @@ public class UserServiceUtil {
 	* @throws PortalException if the current user did not have permission to
 	modify role assignments or if the operation was not allowed by
 	the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetRoleUsers(long roleId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetRoleUsers(roleId, userIds);
 	}
 
@@ -878,11 +809,9 @@ public class UserServiceUtil {
 	* @param userIds the primary keys of the users
 	* @throws PortalException if the current user did not have permission to
 	modify team assignments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetTeamUsers(long teamId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetTeamUsers(teamId, userIds);
 	}
 
@@ -894,11 +823,9 @@ public class UserServiceUtil {
 	* @throws PortalException if the current user did not have permission to
 	modify user group assignments or if the operation was not allowed
 	by the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetUserGroupUsers(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetUserGroupUsers(userGroupId, userIds);
 	}
 
@@ -910,12 +837,10 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if the current user did not have permission to
 	update the user's agreement to terms-of-use
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateAgreedToTermsOfUse(
 		long userId, boolean agreedToTermsOfUse)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateAgreedToTermsOfUse(userId, agreedToTermsOfUse);
 	}
 
@@ -932,14 +857,12 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateEmailAddress(
 		long userId, java.lang.String password, java.lang.String emailAddress1,
 		java.lang.String emailAddress2,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEmailAddress(userId, password, emailAddress1,
 			emailAddress2, serviceContext);
@@ -982,7 +905,6 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if the user's information was invalid or if the
 	email address was reserved
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateIncompleteUser(
 		long companyId, boolean autoPassword, java.lang.String password1,
@@ -995,8 +917,7 @@ public class UserServiceUtil {
 		java.lang.String jobTitle, boolean updateUserInformation,
 		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateIncompleteUser(companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, facebookId,
@@ -1013,12 +934,10 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if the user did not have permission to lock out
 	the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateLockoutById(long userId,
 		boolean lockout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateLockoutById(userId, lockout);
 	}
 
@@ -1030,12 +949,10 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateOpenId(long userId,
 		java.lang.String openId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateOpenId(userId, openId);
 	}
 
@@ -1049,12 +966,10 @@ public class UserServiceUtil {
 	whether user indexing is enabled.
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void updateOrganizations(long userId, long[] organizationIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateOrganizations(userId, organizationIds, serviceContext);
 	}
 
@@ -1069,13 +984,11 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updatePassword(long userId,
 		java.lang.String password1, java.lang.String password2,
 		boolean passwordReset)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePassword(userId, password1, password2, passwordReset);
 	}
@@ -1089,12 +1002,10 @@ public class UserServiceUtil {
 	* @throws PortalException if a user with the primary key could not be
 	found, if the new portrait was invalid, or if the current user
 	did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updatePortrait(long userId,
 		byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updatePortrait(userId, bytes);
 	}
 
@@ -1108,12 +1019,10 @@ public class UserServiceUtil {
 	* @throws PortalException if a user with the primary key could not be
 	found, if the new question or answer were invalid, or if the
 	current user did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateReminderQuery(
 		long userId, java.lang.String question, java.lang.String answer)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateReminderQuery(userId, question, answer);
 	}
 
@@ -1126,12 +1035,10 @@ public class UserServiceUtil {
 	* @throws PortalException if a user with the primary key could not be
 	found, if the new screen name was invalid, or if the current user
 	did not have permission to update the user
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateScreenName(long userId,
 		java.lang.String screenName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateScreenName(userId, screenName);
 	}
 
@@ -1147,15 +1054,12 @@ public class UserServiceUtil {
 	com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED},
 	or if the current user did not have permission to update the
 	user's workflow status.
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.User updateStatus(long userId,
-		int status)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, status);
 	}
 
@@ -1174,12 +1078,10 @@ public class UserServiceUtil {
 	com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED},
 	or if the current user did not have permission to update the
 	user's workflow status.
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateStatus(long userId,
 		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, status, serviceContext);
 	}
 
@@ -1246,7 +1148,6 @@ public class UserServiceUtil {
 	found, if the new information was invalid, if the current user
 	did not have permission to update the user, or if the operation
 	was not allowed by the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
@@ -1275,8 +1176,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.model.Website> websites,
 		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
@@ -1351,7 +1251,6 @@ public class UserServiceUtil {
 	found, if the new information was invalid, if the current
 	user did not have permission to update the user, or if the
 	operation was not allowed by the membership policy
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateUser(long, String,
 	String, String, boolean, String, String, String, String,
 	long, String, String, String, String, String, String, String,
@@ -1389,8 +1288,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.model.Website> websites,
 		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
@@ -1459,7 +1357,6 @@ public class UserServiceUtil {
 	found, if the new information was invalid, if the current user
 	did not have permission to update the user, or if the operation
 	was not allowed by the membership policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
@@ -1482,8 +1379,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,

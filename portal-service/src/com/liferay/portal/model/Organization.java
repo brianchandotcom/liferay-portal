@@ -54,49 +54,39 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public com.liferay.portal.model.Address getAddress();
 
-	public java.util.List<com.liferay.portal.model.Address> getAddresses()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Address> getAddresses();
 
 	public java.util.List<com.liferay.portal.model.Organization> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String[] getChildrenTypes();
 
-	public java.util.List<com.liferay.portal.model.Organization> getDescendants()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Organization> getDescendants();
 
 	public com.liferay.portal.model.Group getGroup();
 
 	public long getGroupId();
 
 	public com.liferay.portal.model.Organization getParentOrganization()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.lang.String getParentOrganizationName()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.lang.String getParentOrganizationName();
 
-	public javax.portlet.PortletPreferences getPreferences()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public javax.portlet.PortletPreferences getPreferences();
 
 	public int getPrivateLayoutsPageCount();
 
 	public int getPublicLayoutsPageCount();
 
 	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.Locale locale);
 
 	public java.util.Set<java.lang.String> getReminderQueryQuestions(
-		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String languageId);
 
-	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations();
 
-	public int getSuborganizationsSize()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getSuborganizationsSize();
 
 	public int getTypeOrder();
 
@@ -104,8 +94,7 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public boolean hasPublicLayouts();
 
-	public boolean hasSuborganizations()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasSuborganizations();
 
 	public boolean isParentable();
 

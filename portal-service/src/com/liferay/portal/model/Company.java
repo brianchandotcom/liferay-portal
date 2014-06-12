@@ -33,82 +33,63 @@ public interface Company extends CompanyModel, PersistedModel {
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.CompanyImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.model.Account getAccount()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getAdminName();
 
-	public java.lang.String getAuthType()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.lang.String getAuthType();
 
 	public com.liferay.portal.model.User getDefaultUser()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getDefaultWebId();
 
 	public java.lang.String getEmailAddress();
 
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getGroupId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.security.Key getKeyObj();
 
 	public java.util.Locale getLocale()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.bean.AutoEscape()
 	public java.lang.String getName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getPortalURL(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getShardName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getShortName()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.TimeZone getTimeZone()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getVirtualHostname();
 
-	public boolean hasCompanyMx(java.lang.String emailAddress)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasCompanyMx(java.lang.String emailAddress);
 
-	public boolean isAutoLogin()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isAutoLogin();
 
-	public boolean isSendPassword()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isSendPassword();
 
-	public boolean isSendPasswordResetLink()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isSendPasswordResetLink();
 
-	public boolean isSiteLogo()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isSiteLogo();
 
-	public boolean isStrangers()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isStrangers();
 
-	public boolean isStrangersVerify()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isStrangersVerify();
 
-	public boolean isStrangersWithMx()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean isStrangersWithMx();
 
 	public void setKeyObj(java.security.Key keyObj);
 

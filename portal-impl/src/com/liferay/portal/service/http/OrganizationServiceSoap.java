@@ -72,7 +72,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if a group or organization with the primary key
 	could not be found or if the user did not have permission to
 	assign group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupOrganizations(long groupId,
 		long[] organizationIds) throws RemoteException {
@@ -120,7 +119,6 @@ public class OrganizationServiceSoap {
 	could not be found, if the organization's information was
 	invalid, or if the user did not have permission to add the
 	organization
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addOrganization(long,
 	String, String, long, long, int, String, boolean,
 	java.util.List, java.util.List, java.util.List,
@@ -190,7 +188,6 @@ public class OrganizationServiceSoap {
 	key could not be found, if the organization information was
 	invalid, or if the user did not have permission to add the
 	organization
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addOrganization(long,
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
@@ -247,7 +244,6 @@ public class OrganizationServiceSoap {
 	could not be found, if the organization's information was
 	invalid, or if the user did not have permission to add the
 	organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
@@ -308,7 +304,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if the parent organization with the primary key
 	could not be found, if the organization information was invalid,
 	or if the user did not have permission to add the organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
@@ -338,7 +333,6 @@ public class OrganizationServiceSoap {
 	* @param organizationIds the primary keys of the organizations
 	* @throws PortalException if the user did not have permission to update the
 	password policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addPasswordPolicyOrganizations(long passwordPolicyId,
 		long[] organizationIds) throws RemoteException {
@@ -360,7 +354,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if an organization with the primary key could not
 	be found, if the organization's logo could not be found, or if
 	the user did not have permission to update the organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteLogo(long organizationId)
 		throws RemoteException {
@@ -383,7 +376,6 @@ public class OrganizationServiceSoap {
 	be found, if the user did not have permission to delete the
 	organization, if the organization had a workflow in approved
 	status, or if the organization was a parent organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteOrganization(long organizationId)
 		throws RemoteException {
@@ -404,7 +396,6 @@ public class OrganizationServiceSoap {
 	* @param max the maximum number of the organizations to be considered
 	* @return the organizations which the user has permission to manage
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
@@ -432,7 +423,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if an organization with the primary key could not
 	be found or if the user did not have permission to view the
 	organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap getOrganization(
 		long organizationId) throws RemoteException {
@@ -457,7 +447,6 @@ public class OrganizationServiceSoap {
 	<code>0</code> if the organization could not be found
 	* @throws PortalException if the user did not have permission to view the
 	organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long getOrganizationId(long companyId, java.lang.String name)
 		throws RemoteException {
@@ -481,7 +470,6 @@ public class OrganizationServiceSoap {
 	* @param parentOrganizationId the primary key of the organizations' parent
 	organization
 	* @return the organizations belonging to the parent organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap[] getOrganizations(
 		long companyId, long parentOrganizationId) throws RemoteException {
@@ -519,7 +507,6 @@ public class OrganizationServiceSoap {
 	* @param end the upper bound of the range of organizations to return (not
 	inclusive)
 	* @return the range of organizations belonging to the parent organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap[] getOrganizations(
 		long companyId, long parentOrganizationId, int start, int end)
@@ -544,7 +531,6 @@ public class OrganizationServiceSoap {
 	* @param parentOrganizationId the primary key of the organizations' parent
 	organization
 	* @return the number of organizations belonging to the parent organization
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int getOrganizationsCount(long companyId,
 		long parentOrganizationId) throws RemoteException {
@@ -567,7 +553,6 @@ public class OrganizationServiceSoap {
 	* @param userId the primary key of the user
 	* @return the organizations associated with the user
 	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap[] getUserOrganizations(
 		long userId) throws RemoteException {
@@ -592,7 +577,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if a group or organization with the primary key
 	could not be found or if the user did not have permission to
 	assign group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setGroupOrganizations(long groupId,
 		long[] organizationIds) throws RemoteException {
@@ -615,7 +599,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if a group or organization with the primary key
 	could not be found or if the user did not have permission to
 	assign group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetGroupOrganizations(long groupId,
 		long[] organizationIds) throws RemoteException {
@@ -638,7 +621,6 @@ public class OrganizationServiceSoap {
 	* @throws PortalException if a password policy or organization with the
 	primary key could not be found, or if the user did not have
 	permission to update the password policy
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetPasswordPolicyOrganizations(long passwordPolicyId,
 		long[] organizationIds) throws RemoteException {
@@ -683,7 +665,6 @@ public class OrganizationServiceSoap {
 	with the primary key could not be found, if the user did not
 	have permission to update the organization information, or if
 	the new information was invalid
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
 	java.util.List, java.util.List, java.util.List,
@@ -751,7 +732,6 @@ public class OrganizationServiceSoap {
 	with the primary key could not be found, if the user did not
 	have permission to update the organization, or if the new
 	information was invalid
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
@@ -807,7 +787,6 @@ public class OrganizationServiceSoap {
 	the primary key could not be found, if the user did not have
 	permission to update the organization information, or if the new
 	information was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
@@ -872,7 +851,6 @@ public class OrganizationServiceSoap {
 	with the primary key could not be found, if the user did not
 	have permission to update the organization information, or if
 	the new information was invalid
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
 	java.util.List, java.util.List, java.util.List,
@@ -938,7 +916,6 @@ public class OrganizationServiceSoap {
 	the primary key could not be found, if the user did not have
 	permission to update the organization, or if the new information
 	was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,

@@ -230,15 +230,12 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void deleteUserBrowserTracker(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserBrowserTracker(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long browserKey);
 
 	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		long userId, long browserKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long browserKey);
 }

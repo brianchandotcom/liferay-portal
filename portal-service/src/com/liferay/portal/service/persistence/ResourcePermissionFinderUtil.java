@@ -24,14 +24,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ResourcePermissionFinderUtil {
-	public static int countByR_S(long roleId, int[] scopes)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByR_S(long roleId, int[] scopes) {
 		return getFinder().countByR_S(roleId, scopes);
 	}
 
 	public static int countByC_N_S_P_R_A(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds, long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int scope, java.lang.String primKey, long[] roleIds, long actionId) {
 		return getFinder()
 				   .countByC_N_S_P_R_A(companyId, name, scope, primKey,
 			roleIds, actionId);
@@ -39,14 +37,12 @@ public class ResourcePermissionFinderUtil {
 
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByResource(
 		long companyId, long groupId, java.lang.String name,
-		java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String primKey) {
 		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
-		long roleId, int[] scopes, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId, int[] scopes, int start, int end) {
 		return getFinder().findByR_S(roleId, scopes, start, end);
 	}
 

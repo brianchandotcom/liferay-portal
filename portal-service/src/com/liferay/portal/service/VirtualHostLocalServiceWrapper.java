@@ -272,38 +272,33 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 
 	@Override
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId) {
 		return _virtualHostLocalService.fetchVirtualHost(companyId, layoutSetId);
 	}
 
 	@Override
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String hostname) {
 		return _virtualHostLocalService.fetchVirtualHost(hostname);
 	}
 
 	@Override
 	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
 		long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _virtualHostLocalService.getVirtualHost(companyId, layoutSetId);
 	}
 
 	@Override
 	public com.liferay.portal.model.VirtualHost getVirtualHost(
 		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _virtualHostLocalService.getVirtualHost(hostname);
 	}
 
 	@Override
 	public com.liferay.portal.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId, java.lang.String hostname) {
 		return _virtualHostLocalService.updateVirtualHost(companyId,
 			layoutSetId, hostname);
 	}

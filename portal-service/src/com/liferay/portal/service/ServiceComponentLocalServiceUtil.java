@@ -261,8 +261,7 @@ public class ServiceComponentLocalServiceUtil {
 
 	public static void destroyServiceComponent(
 		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.ClassLoader classLoader) {
 		getService().destroyServiceComponent(servletContext, classLoader);
 	}
 
@@ -270,8 +269,7 @@ public class ServiceComponentLocalServiceUtil {
 		javax.servlet.ServletContext servletContext,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .initServiceComponent(servletContext, classLoader,
 			buildNamespace, buildNumber, buildDate, buildAutoUpgrade);
@@ -289,8 +287,7 @@ public class ServiceComponentLocalServiceUtil {
 			sequencesSQL, indexesSQL);
 	}
 
-	public static void verifyDB()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void verifyDB() {
 		getService().verifyDB();
 	}
 

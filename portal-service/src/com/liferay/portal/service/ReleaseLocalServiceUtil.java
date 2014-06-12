@@ -256,33 +256,28 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String servletContextName, int buildNumber) {
 		return getService().addRelease(servletContextName, buildNumber);
 	}
 
-	public static void createTablesAndPopulate()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void createTablesAndPopulate() {
 		getService().createTablesAndPopulate();
 	}
 
 	public static com.liferay.portal.model.Release fetchRelease(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String servletContextName) {
 		return getService().fetchRelease(servletContextName);
 	}
 
 	public static int getBuildNumberOrCreate()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBuildNumberOrCreate();
 	}
 
 	public static com.liferay.portal.model.Release updateRelease(
 		long releaseId, int buildNumber, java.util.Date buildDate,
 		boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRelease(releaseId, buildNumber, buildDate, verified);
 	}

@@ -267,8 +267,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	@Override
 	public com.liferay.portal.model.Account getAccount(long companyId,
 		long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _accountLocalService.getAccount(companyId, accountId);
 	}
 

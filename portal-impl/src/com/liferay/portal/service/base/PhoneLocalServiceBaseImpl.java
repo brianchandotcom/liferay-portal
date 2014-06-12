@@ -107,12 +107,10 @@ public abstract class PhoneLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param phoneId the primary key of the phone
 	 * @return the phone that was removed
 	 * @throws PortalException if a phone with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Phone deletePhone(long phoneId)
-		throws PortalException {
+	public Phone deletePhone(long phoneId) throws PortalException {
 		return phonePersistence.remove(phoneId);
 	}
 
@@ -121,7 +119,6 @@ public abstract class PhoneLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param phone the phone
 	 * @return the phone that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

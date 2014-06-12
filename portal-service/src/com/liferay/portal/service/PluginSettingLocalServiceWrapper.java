@@ -285,8 +285,7 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
 		return _pluginSettingLocalService.getPluginSetting(companyId, pluginId,
 			pluginType);
 	}
@@ -301,8 +300,7 @@ public class PluginSettingLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.PluginSetting updatePluginSetting(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String roles, boolean active) {
 		return _pluginSettingLocalService.updatePluginSetting(companyId,
 			pluginId, pluginType, roles, active);
 	}

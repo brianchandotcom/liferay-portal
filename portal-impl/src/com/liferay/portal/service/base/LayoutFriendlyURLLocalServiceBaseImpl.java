@@ -118,7 +118,6 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param layoutFriendlyURL the layout friendly u r l
 	 * @return the layout friendly u r l that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

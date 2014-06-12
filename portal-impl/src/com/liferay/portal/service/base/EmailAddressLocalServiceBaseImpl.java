@@ -108,7 +108,6 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param emailAddressId the primary key of the email address
 	 * @return the email address that was removed
 	 * @throws PortalException if a email address with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -122,7 +121,6 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param emailAddress the email address
 	 * @return the email address that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

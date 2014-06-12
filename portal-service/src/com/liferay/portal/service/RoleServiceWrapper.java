@@ -71,7 +71,6 @@ public class RoleServiceWrapper implements RoleService,
 	found, if the user did not have permission to add roles, if the
 	class name or the role name were invalid, or if the role is a
 	duplicate
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Role addRole(java.lang.String className,
@@ -80,8 +79,7 @@ public class RoleServiceWrapper implements RoleService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int type, java.lang.String subtype,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.addRole(className, classPK, name, titleMap,
 			descriptionMap, type, subtype, serviceContext);
 	}
@@ -100,7 +98,6 @@ public class RoleServiceWrapper implements RoleService,
 	found, if the user did not have permission to add roles, if
 	the class name or the role name were invalid, or if the role
 	is a duplicate
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
@@ -109,9 +106,7 @@ public class RoleServiceWrapper implements RoleService,
 	public com.liferay.portal.model.Role addRole(java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int type) throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.addRole(name, titleMap, descriptionMap, type);
 	}
 
@@ -124,12 +119,10 @@ public class RoleServiceWrapper implements RoleService,
 	* @throws PortalException if a user with the primary key could not be found
 	or if the user did not have permission to assign members to one
 	of the roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public void addUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleService.addUserRoles(userId, roleIds);
 	}
 
@@ -141,12 +134,10 @@ public class RoleServiceWrapper implements RoleService,
 	role, if a role with the primary key could not be found, if the
 	role is a default system role, or if the role's resource could
 	not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public void deleteRole(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleService.deleteRole(roleId);
 	}
 
@@ -156,13 +147,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @param groupId the primary key of the group
 	* @return the roles associated with the group
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getGroupRoles(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getGroupRoles(groupId);
 	}
 
@@ -173,12 +162,10 @@ public class RoleServiceWrapper implements RoleService,
 	* @return the role with the primary key
 	* @throws PortalException if a role with the primary key could not be found
 	or if the user did not have permission to view the role
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Role getRole(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getRole(roleId);
 	}
 
@@ -195,13 +182,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @return the role with the name
 	* @throws PortalException if a role with the name could not be found in the
 	company or if the user did not have permission to view the role
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Role getRole(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getRole(companyId, name);
 	}
 
@@ -212,13 +197,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
 		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getUserGroupGroupRoles(userId, groupId);
 	}
 
@@ -229,13 +212,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getUserGroupRoles(
 		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getUserGroupRoles(userId, groupId);
 	}
 
@@ -246,13 +227,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
 		long userId, java.util.List<com.liferay.portal.model.Group> groups)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getUserRelatedRoles(userId, groups);
 	}
 
@@ -262,13 +241,10 @@ public class RoleServiceWrapper implements RoleService,
 	* @param userId the primary key of the user
 	* @return the roles associated with the user
 	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getUserRoles(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getUserRoles(userId);
 	}
 
@@ -285,13 +261,11 @@ public class RoleServiceWrapper implements RoleService,
 	role; <code>false</code> otherwise
 	* @throws PortalException if a role with the name could not be found in the
 	company or if a default user for the company could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean hasUserRole(long userId, long companyId,
 		java.lang.String name, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.hasUserRole(userId, companyId, name, inherited);
 	}
 
@@ -309,13 +283,11 @@ public class RoleServiceWrapper implements RoleService,
 	* @throws PortalException if any one of the roles with the names could not
 	be found in the company or if the default user for the company
 	could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean hasUserRoles(long userId, long companyId,
 		java.lang.String[] names, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.hasUserRoles(userId, companyId, names, inherited);
 	}
 
@@ -329,12 +301,10 @@ public class RoleServiceWrapper implements RoleService,
 	found, if the user did not have permission to remove members from
 	a role, or if a role with any one of the primary keys could not
 	be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public void unsetUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleService.unsetUserRoles(userId, roleIds);
 	}
 
@@ -355,7 +325,6 @@ public class RoleServiceWrapper implements RoleService,
 	* @throws PortalException if the user did not have permission to update the
 	role, if a role with the primary could not be found, or if the
 	role's name was invalid
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Role updateRole(long roleId,
@@ -364,8 +333,7 @@ public class RoleServiceWrapper implements RoleService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String subtype,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.updateRole(roleId, name, titleMap, descriptionMap,
 			subtype, serviceContext);
 	}

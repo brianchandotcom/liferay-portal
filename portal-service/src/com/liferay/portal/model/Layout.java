@@ -51,51 +51,40 @@ public interface Layout extends LayoutModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.portal.model.Layout> getAllChildren()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Layout> getAllChildren();
 
 	public long getAncestorLayoutId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getAncestorPlid()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.model.Layout> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.model.Layout> getChildren()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Layout> getChildren();
 
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
 		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getCssText()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getDefaultThemeSetting(java.lang.String key,
 		java.lang.String device, boolean inheritLookAndFeel);
 
 	public java.lang.String getFriendlyURL(java.util.Locale locale);
 
-	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap();
 
-	public java.lang.String getFriendlyURLsXML()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.lang.String getFriendlyURLsXML();
 
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getHTMLTitle(java.util.Locale locale);
 
@@ -104,42 +93,34 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean getIconImage();
 
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.LayoutType getLayoutType();
 
-	public com.liferay.portal.model.Layout getLinkedToLayout()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Layout getLinkedToLayout();
 
 	public long getParentPlid()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getRegularURL(
 		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getResetLayoutURL(
 		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getResetMaxStateURL(
 		javax.servlet.http.HttpServletRequest request)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Group getScopeGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getTarget();
 
 	public com.liferay.portal.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device);
@@ -155,28 +136,22 @@ public interface Layout extends LayoutModel, PersistedModel {
 		java.lang.String defaultValue);
 
 	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasAncestor(long layoutId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean hasChildren()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasChildren();
 
 	public boolean hasScopeGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isChildSelected(boolean selectable,
 		com.liferay.portal.model.Layout layout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isContentDisplayPage();
 

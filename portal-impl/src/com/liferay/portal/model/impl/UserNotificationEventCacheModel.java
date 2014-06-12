@@ -46,7 +46,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -62,6 +62,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(type);
 		sb.append(", timestamp=");
 		sb.append(timestamp);
+		sb.append(", actionRequired=");
+		sb.append(actionRequired);
 		sb.append(", deliveryType=");
 		sb.append(deliveryType);
 		sb.append(", deliverBy=");
@@ -102,6 +104,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		userNotificationEventImpl.setTimestamp(timestamp);
+		userNotificationEventImpl.setActionRequired(actionRequired);
 		userNotificationEventImpl.setDeliveryType(deliveryType);
 		userNotificationEventImpl.setDeliverBy(deliverBy);
 		userNotificationEventImpl.setDelivered(delivered);
@@ -129,6 +132,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		userId = objectInput.readLong();
 		type = objectInput.readUTF();
 		timestamp = objectInput.readLong();
+		actionRequired = objectInput.readBoolean();
 		deliveryType = objectInput.readInt();
 		deliverBy = objectInput.readLong();
 		delivered = objectInput.readBoolean();
@@ -160,6 +164,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		objectOutput.writeLong(timestamp);
+		objectOutput.writeBoolean(actionRequired);
 		objectOutput.writeInt(deliveryType);
 		objectOutput.writeLong(deliverBy);
 		objectOutput.writeBoolean(delivered);
@@ -181,6 +186,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public long userId;
 	public String type;
 	public long timestamp;
+	public boolean actionRequired;
 	public int deliveryType;
 	public long deliverBy;
 	public boolean delivered;

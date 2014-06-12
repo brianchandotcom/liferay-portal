@@ -230,27 +230,23 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void deleteUserIdMappers(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserIdMappers(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserIdMapper getUserIdMapper(long userId,
 		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserIdMapper getUserIdMapperByExternalUserId(
 		java.lang.String type, java.lang.String externalUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserIdMapper> getUserIdMappers(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
 	public com.liferay.portal.model.UserIdMapper updateUserIdMapper(
 		long userId, java.lang.String type, java.lang.String description,
-		java.lang.String externalUserId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String externalUserId);
 }

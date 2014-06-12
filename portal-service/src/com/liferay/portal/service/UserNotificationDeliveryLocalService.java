@@ -233,31 +233,25 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	public com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteUserNotificationDeliveries(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserNotificationDeliveries(long userId);
 
 	public void deleteUserNotificationDelivery(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int deliveryType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int notificationType, int deliveryType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
-		long userNotificationDeliveryId, boolean deliver)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userNotificationDeliveryId, boolean deliver);
 }

@@ -68,8 +68,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyService.addPasswordPolicy(name, description,
 			changeable, changeRequired, minAge, checkSyntax,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
@@ -89,8 +88,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyService.addPasswordPolicy(name, description,
 			changeable, changeRequired, minAge, checkSyntax,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
@@ -102,8 +100,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 
 	@Override
 	public void deletePasswordPolicy(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
 	}
 
@@ -125,8 +122,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyService.updatePasswordPolicy(passwordPolicyId,
 			name, description, changeable, changeRequired, minAge, checkSyntax,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
@@ -147,8 +143,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyService.updatePasswordPolicy(passwordPolicyId,
 			name, description, changeable, changeRequired, minAge, checkSyntax,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,

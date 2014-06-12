@@ -806,15 +806,13 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.ColorScheme getColorScheme() {
 		return _layoutSetBranch.getColorScheme();
 	}
 
 	@Override
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranch.getGroup();
 	}
 
@@ -844,27 +842,23 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	@Override
-	public com.liferay.portal.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Theme getTheme() {
 		return _layoutSetBranch.getTheme();
 	}
 
 	@Override
 	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String device) {
 		return _layoutSetBranch.getThemeSetting(key, device);
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.ColorScheme getWapColorScheme() {
 		return _layoutSetBranch.getWapColorScheme();
 	}
 
 	@Override
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Theme getWapTheme() {
 		return _layoutSetBranch.getWapTheme();
 	}
 

@@ -71,12 +71,10 @@ public class ExportImportConfigurationLocalServiceUtil {
 	* @param exportImportConfigurationId the primary key of the export import configuration
 	* @return the export import configuration that was removed
 	* @throws PortalException if a export import configuration with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration deleteExportImportConfiguration(
 		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteExportImportConfiguration(exportImportConfigurationId);
 	}
@@ -87,12 +85,10 @@ public class ExportImportConfigurationLocalServiceUtil {
 	* @param exportImportConfiguration the export import configuration
 	* @return the export import configuration that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration deleteExportImportConfiguration(
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteExportImportConfiguration(exportImportConfiguration);
 	}
@@ -277,8 +273,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addExportImportConfiguration(userId, groupId, name,
 			description, type, settingsMap, status, serviceContext);
@@ -289,48 +284,41 @@ public class ExportImportConfigurationLocalServiceUtil {
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addExportImportConfiguration(userId, groupId, name,
 			description, type, settingsMap, serviceContext);
 	}
 
 	public static void deleteExportImportConfigurations(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteExportImportConfigurations(groupId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int type) {
 		return getService().getExportImportConfigurations(groupId, type);
 	}
 
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
 		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getExportImportConfigurations(groupId, type, start, end,
 			orderByComparator);
 	}
 
-	public static int getExportImportConfigurationsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getExportImportConfigurationsCount(long groupId) {
 		return getService().getExportImportConfigurationsCount(groupId);
 	}
 
-	public static int getExportImportConfigurationsCount(long groupId, int type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getExportImportConfigurationsCount(long groupId, int type) {
 		return getService().getExportImportConfigurationsCount(groupId, type);
 	}
 
 	public static com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveExportImportConfigurationToTrash(userId,
 			exportImportConfigurationId);
@@ -338,8 +326,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 
 	public static com.liferay.portal.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		long userId, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .restoreExportImportConfigurationFromTrash(userId,
 			exportImportConfigurationId);
@@ -350,8 +337,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 		java.lang.String description,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateExportImportConfiguration(userId,
 			exportImportConfigurationId, name, description, settingsMap,
@@ -360,8 +346,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 
 	public static com.liferay.portal.model.ExportImportConfiguration updateStatus(
 		long userId, long exportImportConfigurationId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, exportImportConfigurationId, status);
 	}

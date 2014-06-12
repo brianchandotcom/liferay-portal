@@ -114,7 +114,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param userGroupId the primary key of the user group
 	 * @return the user group that was removed
 	 * @throws PortalException if a user group with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -129,7 +128,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param userGroup the user group
 	 * @return the user group that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -410,7 +408,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -418,7 +415,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, List<UserGroup> UserGroups) {
@@ -537,7 +533,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
@@ -545,7 +540,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void addTeamUserGroups(long teamId, List<UserGroup> UserGroups) {
@@ -678,7 +672,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void clearUserUserGroups(long userId) {
@@ -770,7 +763,6 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void setUserUserGroups(long userId, long[] userGroupIds)

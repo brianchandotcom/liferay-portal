@@ -98,12 +98,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param imageId the primary key of the image
 	 * @return the image that was removed
 	 * @throws PortalException if a image with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Image deleteImage(long imageId)
-		throws PortalException {
+	public Image deleteImage(long imageId) throws PortalException {
 		return imagePersistence.remove(imageId);
 	}
 

@@ -69,12 +69,10 @@ public class PasswordPolicyLocalServiceUtil {
 	* @param passwordPolicyId the primary key of the password policy
 	* @return the password policy that was removed
 	* @throws PortalException if a password policy with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePasswordPolicy(passwordPolicyId);
 	}
 
@@ -84,12 +82,10 @@ public class PasswordPolicyLocalServiceUtil {
 	* @param passwordPolicy the password policy
 	* @return the password policy that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePasswordPolicy(passwordPolicy);
 	}
 
@@ -314,8 +310,7 @@ public class PasswordPolicyLocalServiceUtil {
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPasswordPolicy(userId, defaultPolicy, name, description,
 			changeable, changeRequired, minAge, checkSyntax,
@@ -336,8 +331,7 @@ public class PasswordPolicyLocalServiceUtil {
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPasswordPolicy(userId, defaultPolicy, name, description,
 			changeable, changeRequired, minAge, checkSyntax,
@@ -349,27 +343,23 @@ public class PasswordPolicyLocalServiceUtil {
 	}
 
 	public static void checkDefaultPasswordPolicy(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkDefaultPasswordPolicy(companyId);
 	}
 
 	public static void deleteNondefaultPasswordPolicies(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteNondefaultPasswordPolicies(companyId);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String name) {
 		return getService().fetchPasswordPolicy(companyId, name);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
 		long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDefaultPasswordPolicy(companyId);
 	}
 
@@ -379,35 +369,29 @@ public class PasswordPolicyLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long organizationId, long locationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getPasswordPolicy(companyId, organizationId, locationId);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPasswordPolicy(companyId, organizationIds);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUserId(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPasswordPolicyByUserId(userId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.PasswordPolicy> search(
 		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService().search(companyId, name, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int searchCount(long companyId, java.lang.String name) {
 		return getService().searchCount(companyId, name);
 	}
 
@@ -428,8 +412,7 @@ public class PasswordPolicyLocalServiceUtil {
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePasswordPolicy(passwordPolicyId, name, description,
 			changeable, changeRequired, minAge, checkSyntax,
@@ -450,8 +433,7 @@ public class PasswordPolicyLocalServiceUtil {
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePasswordPolicy(passwordPolicyId, name, description,
 			changeable, changeRequired, minAge, checkSyntax,

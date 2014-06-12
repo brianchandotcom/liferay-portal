@@ -276,56 +276,48 @@ public class MembershipRequestLocalServiceWrapper
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long userId, long groupId, java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _membershipRequestLocalService.addMembershipRequest(userId,
 			groupId, comments, serviceContext);
 	}
 
 	@Override
-	public void deleteMembershipRequests(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteMembershipRequests(long groupId) {
 		_membershipRequestLocalService.deleteMembershipRequests(groupId);
 	}
 
 	@Override
-	public void deleteMembershipRequests(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteMembershipRequests(long groupId, int statusId) {
 		_membershipRequestLocalService.deleteMembershipRequests(groupId,
 			statusId);
 	}
 
 	@Override
-	public void deleteMembershipRequestsByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteMembershipRequestsByUserId(long userId) {
 		_membershipRequestLocalService.deleteMembershipRequestsByUserId(userId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		long userId, long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long groupId, int statusId) {
 		return _membershipRequestLocalService.getMembershipRequests(userId,
 			groupId, statusId);
 	}
 
 	@Override
-	public boolean hasMembershipRequest(long userId, long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasMembershipRequest(long userId, long groupId, int statusId) {
 		return _membershipRequestLocalService.hasMembershipRequest(userId,
 			groupId, statusId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.MembershipRequest> search(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status, int start, int end) {
 		return _membershipRequestLocalService.search(groupId, status, start, end);
 	}
 
 	@Override
-	public int searchCount(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int searchCount(long groupId, int status) {
 		return _membershipRequestLocalService.searchCount(groupId, status);
 	}
 
@@ -333,8 +325,7 @@ public class MembershipRequestLocalServiceWrapper
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, int statusId, boolean addUserToGroup,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_membershipRequestLocalService.updateStatus(replierUserId,
 			membershipRequestId, replyComments, statusId, addUserToGroup,
 			serviceContext);

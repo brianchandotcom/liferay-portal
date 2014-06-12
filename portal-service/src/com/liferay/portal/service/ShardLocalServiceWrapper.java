@@ -266,16 +266,14 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 
 	@Override
 	public com.liferay.portal.model.Shard addShard(java.lang.String className,
-		long classPK, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String name) {
 		return _shardLocalService.addShard(className, classPK, name);
 	}
 
 	@Override
 	public com.liferay.portal.model.Shard getShard(java.lang.String className,
 		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shardLocalService.getShard(className, classPK);
 	}
 

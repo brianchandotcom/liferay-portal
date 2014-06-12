@@ -272,15 +272,13 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 
 	@Override
 	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
 		return _clusterGroupLocalService.addClusterGroup(name, clusterNodeIds);
 	}
 
 	@Override
 	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return _clusterGroupLocalService.addWholeClusterGroup(name);
 	}
 

@@ -59,12 +59,10 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	* @param teamId the primary key of the team
 	* @return the team that was removed
 	* @throws PortalException if a team with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Team deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.deleteTeam(teamId);
 	}
 
@@ -74,13 +72,11 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	* @param team the team
 	* @return the team that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Team deleteTeam(
 		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.deleteTeam(team);
 	}
 
@@ -471,37 +467,32 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	@Override
 	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.addTeam(userId, groupId, name, description);
 	}
 
 	@Override
 	public void deleteTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_teamLocalService.deleteTeams(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return _teamLocalService.getGroupTeams(groupId);
 	}
 
 	@Override
 	public com.liferay.portal.model.Team getTeam(long groupId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.getTeam(groupId, name);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long groupId) {
 		return _teamLocalService.getUserTeams(userId, groupId);
 	}
 
@@ -509,8 +500,7 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
 		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _teamLocalService.search(groupId, name, description, params,
 			start, end, obc);
 	}
@@ -518,16 +508,14 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	@Override
 	public int searchCount(long groupId, java.lang.String name,
 		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return _teamLocalService.searchCount(groupId, name, description, params);
 	}
 
 	@Override
 	public com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.updateTeam(teamId, name, description);
 	}
 

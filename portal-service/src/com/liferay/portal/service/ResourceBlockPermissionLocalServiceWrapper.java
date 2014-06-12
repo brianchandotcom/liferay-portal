@@ -275,15 +275,13 @@ public class ResourceBlockPermissionLocalServiceWrapper
 
 	@Override
 	public void addResourceBlockPermissions(long resourceBlockId,
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
 		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
 			resourceBlockPermissionsContainer);
 	}
 
 	@Override
-	public void deleteResourceBlockPermissions(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteResourceBlockPermissions(long resourceBlockId) {
 		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
 	}
 
@@ -291,30 +289,27 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
 			name, primKey, actionIds);
 	}
 
 	@Override
 	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourceBlockId) {
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
 	@Override
 	public int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId) {
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
 			roleId);
 	}
 
 	@Override
 	public void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId, long actionIdsLong, int operator) {
 		_resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockId,
 			roleId, actionIdsLong, operator);
 	}

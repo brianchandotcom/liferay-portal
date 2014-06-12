@@ -51,8 +51,7 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService,
 	}
 
 	@Override
-	public void checkQuartzTables()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void checkQuartzTables() {
 		_quartzLocalService.checkQuartzTables();
 	}
 

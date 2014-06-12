@@ -259,28 +259,24 @@ public class PasswordTrackerLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void deletePasswordTrackers(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deletePasswordTrackers(long userId) {
 		getService().deletePasswordTrackers(userId);
 	}
 
 	public static boolean isSameAsCurrentPassword(long userId,
 		java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isSameAsCurrentPassword(userId, newClearTextPwd);
 	}
 
 	public static boolean isValidPassword(long userId,
 		java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isValidPassword(userId, newClearTextPwd);
 	}
 
 	public static void trackPassword(long userId, java.lang.String encPassword)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().trackPassword(userId, encPassword);
 	}
 

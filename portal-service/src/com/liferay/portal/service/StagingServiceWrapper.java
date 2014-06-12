@@ -52,15 +52,13 @@ public class StagingServiceWrapper implements StagingService,
 
 	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingService.cleanUpStagingRequest(stagingRequestId);
 	}
 
 	@Override
 	public long createStagingRequest(long groupId, java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingService.createStagingRequest(groupId, checksum);
 	}
 
@@ -68,8 +66,7 @@ public class StagingServiceWrapper implements StagingService,
 	public void publishStagingRequest(long stagingRequestId,
 		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingService.publishStagingRequest(stagingRequestId, privateLayout,
 			parameterMap);
 	}
@@ -77,8 +74,7 @@ public class StagingServiceWrapper implements StagingService,
 	@Override
 	public void updateStagingRequest(long stagingRequestId,
 		java.lang.String fileName, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingService.updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
@@ -86,8 +82,7 @@ public class StagingServiceWrapper implements StagingService,
 	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingService.validateStagingRequest(stagingRequestId,
 			privateLayout, parameterMap);
 	}

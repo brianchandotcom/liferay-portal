@@ -59,8 +59,7 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 	public com.liferay.portal.model.EmailAddress addEmailAddress(
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.addEmailAddress(className, classPK,
 			address, typeId, primary);
 	}
@@ -70,32 +69,28 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.addEmailAddress(className, classPK,
 			address, typeId, primary, serviceContext);
 	}
 
 	@Override
 	public void deleteEmailAddress(long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_emailAddressService.deleteEmailAddress(emailAddressId);
 	}
 
 	@Override
 	public com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.getEmailAddress(emailAddressId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.getEmailAddresses(className, classPK);
 	}
 
@@ -103,8 +98,7 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 	public com.liferay.portal.model.EmailAddress updateEmailAddress(
 		long emailAddressId, java.lang.String address, int typeId,
 		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.updateEmailAddress(emailAddressId, address,
 			typeId, primary);
 	}

@@ -259,20 +259,17 @@ public class ResourceActionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void checkResourceActions()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void checkResourceActions() {
 		getService().checkResourceActions();
 	}
 
 	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<java.lang.String> actionIds) {
 		getService().checkResourceActions(name, actionIds);
 	}
 
 	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<java.lang.String> actionIds, boolean addDefaultActions) {
 		getService().checkResourceActions(name, actionIds, addDefaultActions);
 	}
 
@@ -288,13 +285,11 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getService().getResourceActions(name);
 	}
 
-	public static int getResourceActionsCount(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getResourceActionsCount(java.lang.String name) {
 		return getService().getResourceActionsCount(name);
 	}
 

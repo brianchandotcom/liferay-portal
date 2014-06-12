@@ -52,8 +52,7 @@ import com.liferay.portal.service.PermissionServiceUtil;
 public class PermissionServiceHttp {
 	public static void checkPermission(HttpPrincipal httpPrincipal,
 		long groupId, java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
 					"checkPermission", _checkPermissionParameterTypes0);
@@ -69,10 +68,6 @@ public class PermissionServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}
@@ -85,8 +80,7 @@ public class PermissionServiceHttp {
 
 	public static void checkPermission(HttpPrincipal httpPrincipal,
 		long groupId, java.lang.String name, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
 					"checkPermission", _checkPermissionParameterTypes1);
@@ -100,10 +94,6 @@ public class PermissionServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

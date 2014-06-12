@@ -69,12 +69,10 @@ public class RepositoryLocalServiceUtil {
 	* @param repositoryId the primary key of the repository
 	* @return the repository that was removed
 	* @throws PortalException if a repository with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Repository deleteRepository(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRepository(repositoryId);
 	}
 
@@ -83,11 +81,9 @@ public class RepositoryLocalServiceUtil {
 	*
 	* @param repository the repository
 	* @return the repository that was removed
-	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Repository deleteRepository(
-		com.liferay.portal.model.Repository repository)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Repository repository) {
 		return getService().deleteRepository(repository);
 	}
 
@@ -326,8 +322,7 @@ public class RepositoryLocalServiceUtil {
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		boolean hidden, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRepository(userId, groupId, classNameId, parentFolderId,
 			name, description, portletId, typeSettingsProperties, hidden,
@@ -346,54 +341,46 @@ public class RepositoryLocalServiceUtil {
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRepository(userId, groupId, classNameId, parentFolderId,
 			name, description, portletId, typeSettingsProperties, serviceContext);
 	}
 
-	public static void checkRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void checkRepository(long repositoryId) {
 		getService().checkRepository(repositoryId);
 	}
 
 	public static void deleteRepositories(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRepositories(groupId);
 	}
 
 	public static com.liferay.portal.model.Repository fetchRepository(
-		long groupId, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String portletId) {
 		return getService().fetchRepository(groupId, portletId);
 	}
 
 	public static com.liferay.portal.model.Repository fetchRepository(
-		long groupId, java.lang.String name, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String name, java.lang.String portletId) {
 		return getService().fetchRepository(groupId, name, portletId);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getGroupLocalRepositoryImpl(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupLocalRepositoryImpl(groupId);
 	}
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLocalRepositoryImpl(repositoryId);
 	}
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		long folderId, long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
 	}
@@ -404,37 +391,32 @@ public class RepositoryLocalServiceUtil {
 
 	public static com.liferay.portal.model.Repository getRepository(
 		long groupId, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepository(groupId, portletId);
 	}
 
 	public static com.liferay.portal.model.Repository getRepository(
 		long groupId, java.lang.String name, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepository(groupId, name, portletId);
 	}
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepositoryImpl(repositoryId);
 	}
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		long folderId, long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getRepositoryImpl(folderId, fileEntryId, fileVersionId);
 	}
 
 	public static com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTypeSettingsProperties(repositoryId);
 	}
 
@@ -444,8 +426,7 @@ public class RepositoryLocalServiceUtil {
 
 	public static void updateRepository(long repositoryId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateRepository(repositoryId, name, description);
 	}
 

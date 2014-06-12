@@ -102,7 +102,6 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	 * @param workflowInstanceLinkId the primary key of the workflow instance link
 	 * @return the workflow instance link that was removed
 	 * @throws PortalException if a workflow instance link with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -117,13 +116,11 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	 * @param workflowInstanceLink the workflow instance link
 	 * @return the workflow instance link that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public WorkflowInstanceLink deleteWorkflowInstanceLink(
-		WorkflowInstanceLink workflowInstanceLink)
-		throws PortalException {
+		WorkflowInstanceLink workflowInstanceLink) throws PortalException {
 		return workflowInstanceLinkPersistence.remove(workflowInstanceLink);
 	}
 

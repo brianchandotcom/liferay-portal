@@ -666,22 +666,19 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.ColorScheme getColorScheme() {
 		return _layoutSet.getColorScheme();
 	}
 
 	@Override
 	public com.liferay.portal.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSet.getGroup();
 	}
 
 	@Override
 	public long getLayoutSetPrototypeId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSet.getLayoutSetPrototypeId();
 	}
 
@@ -706,15 +703,13 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public com.liferay.portal.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Theme getTheme() {
 		return _layoutSet.getTheme();
 	}
 
 	@Override
 	public java.lang.String getThemeSetting(java.lang.String key,
-		java.lang.String device)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String device) {
 		return _layoutSet.getThemeSetting(key, device);
 	}
 
@@ -724,14 +719,12 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public com.liferay.portal.model.ColorScheme getWapColorScheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.ColorScheme getWapColorScheme() {
 		return _layoutSet.getWapColorScheme();
 	}
 
 	@Override
-	public com.liferay.portal.model.Theme getWapTheme()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Theme getWapTheme() {
 		return _layoutSet.getWapTheme();
 	}
 

@@ -107,12 +107,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param websiteId the primary key of the website
 	 * @return the website that was removed
 	 * @throws PortalException if a website with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Website deleteWebsite(long websiteId)
-		throws PortalException {
+	public Website deleteWebsite(long websiteId) throws PortalException {
 		return websitePersistence.remove(websiteId);
 	}
 
@@ -121,7 +119,6 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param website the website
 	 * @return the website that was removed
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override

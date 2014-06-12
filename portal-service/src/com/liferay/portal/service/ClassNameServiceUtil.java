@@ -60,8 +60,7 @@ public class ClassNameServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return getService().fetchClassName(value);
 	}
 

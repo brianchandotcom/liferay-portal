@@ -260,8 +260,7 @@ public class PortalPreferencesLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.PortalPreferences addPortalPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ownerId, int ownerType, java.lang.String defaultPreferences) {
 		return getService()
 				   .addPortalPreferences(ownerId, ownerType, defaultPreferences);
 	}
@@ -273,22 +272,19 @@ public class PortalPreferencesLocalServiceUtil {
 	@Deprecated
 	public static com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String defaultPreferences) {
 		return getService()
 				   .addPortalPreferences(companyId, ownerId, ownerType,
 			defaultPreferences);
 	}
 
 	public static javax.portlet.PortletPreferences getPreferences(
-		long ownerId, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ownerId, int ownerType) {
 		return getService().getPreferences(ownerId, ownerType);
 	}
 
 	public static javax.portlet.PortletPreferences getPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ownerId, int ownerType, java.lang.String defaultPreferences) {
 		return getService()
 				   .getPreferences(ownerId, ownerType, defaultPreferences);
 	}
@@ -298,8 +294,7 @@ public class PortalPreferencesLocalServiceUtil {
 	*/
 	@Deprecated
 	public static javax.portlet.PortletPreferences getPreferences(
-		long companyId, long ownerId, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long ownerId, int ownerType) {
 		return getService().getPreferences(companyId, ownerId, ownerType);
 	}
 
@@ -310,8 +305,7 @@ public class PortalPreferencesLocalServiceUtil {
 	@Deprecated
 	public static javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String defaultPreferences) {
 		return getService()
 				   .getPreferences(companyId, ownerId, ownerType,
 			defaultPreferences);
@@ -319,15 +313,13 @@ public class PortalPreferencesLocalServiceUtil {
 
 	public static com.liferay.portal.model.PortalPreferences updatePreferences(
 		long ownerId, int ownerType,
-		com.liferay.portlet.PortalPreferences portalPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.PortalPreferences portalPreferences) {
 		return getService()
 				   .updatePreferences(ownerId, ownerType, portalPreferences);
 	}
 
 	public static com.liferay.portal.model.PortalPreferences updatePreferences(
-		long ownerId, int ownerType, java.lang.String xml)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ownerId, int ownerType, java.lang.String xml) {
 		return getService().updatePreferences(ownerId, ownerType, xml);
 	}
 

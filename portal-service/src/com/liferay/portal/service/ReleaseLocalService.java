@@ -227,24 +227,19 @@ public interface ReleaseLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String servletContextName, int buildNumber);
 
-	public void createTablesAndPopulate()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void createTablesAndPopulate();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Release fetchRelease(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String servletContextName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBuildNumberOrCreate()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.model.Release updateRelease(long releaseId,
 		int buildNumber, java.util.Date buildDate, boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

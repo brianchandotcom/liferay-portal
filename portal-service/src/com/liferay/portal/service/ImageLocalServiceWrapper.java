@@ -59,12 +59,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Image deleteImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.deleteImage(imageId);
 	}
 
@@ -277,29 +275,26 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.Image> getImages()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<com.liferay.portal.model.Image> getImages() {
 		return _imageLocalService.getImages();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Image> getImagesBySize(
-		int size) throws com.liferay.portal.kernel.exception.SystemException {
+		int size) {
 		return _imageLocalService.getImagesBySize(size);
 	}
 
 	@Override
 	public com.liferay.portal.model.Image updateImage(long imageId, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.updateImage(imageId, bytes);
 	}
 
 	@Override
 	public com.liferay.portal.model.Image updateImage(long imageId,
 		byte[] bytes, java.lang.String type, int height, int width, int size)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.updateImage(imageId, bytes, type, height,
 			width, size);
 	}
@@ -307,24 +302,21 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	@Override
 	public com.liferay.portal.model.Image updateImage(long imageId,
 		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.updateImage(imageId, file);
 	}
 
 	@Override
 	public com.liferay.portal.model.Image updateImage(long imageId,
 		java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.updateImage(imageId, is);
 	}
 
 	@Override
 	public com.liferay.portal.model.Image updateImage(long imageId,
 		java.io.InputStream is, boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
 	}
 

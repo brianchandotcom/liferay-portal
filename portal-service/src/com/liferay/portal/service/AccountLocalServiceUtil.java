@@ -257,8 +257,7 @@ public class AccountLocalServiceUtil {
 
 	public static com.liferay.portal.model.Account getAccount(long companyId,
 		long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAccount(companyId, accountId);
 	}
 

@@ -68,22 +68,18 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contactId the primary key of the contact
 	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Contact deleteContact(long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the contact from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contact the contact
 	* @return the contact that was removed
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Contact deleteContact(
-		com.liferay.portal.model.Contact contact)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Contact contact);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -241,18 +237,15 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String mySpaceSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String ymSn,
 		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Contact> getContacts(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContactsCount(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getContactsCount(long classNameId, long classPK);
 
 	public com.liferay.portal.model.Contact updateContact(long contactId,
 		java.lang.String emailAddress, java.lang.String firstName,
@@ -264,6 +257,5 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String mySpaceSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String ymSn,
 		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -53,8 +53,7 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 
 	@Override
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, java.lang.String completed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String taskExecutorClassName, java.lang.String completed) {
 		return _backgroundTaskService.getBackgroundTasksCount(groupId,
 			taskExecutorClassName, completed);
 	}

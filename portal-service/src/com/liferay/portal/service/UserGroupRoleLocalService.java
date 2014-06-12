@@ -79,11 +79,9 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	*
 	* @param userGroupRole the user group role
 	* @return the user group role that was removed
-	* @throws SystemException
 	*/
 	public com.liferay.portal.model.UserGroupRole deleteUserGroupRole(
-		com.liferay.portal.model.UserGroupRole userGroupRole)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.UserGroupRole userGroupRole);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -233,79 +231,61 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public java.util.List<com.liferay.portal.model.UserGroupRole> addUserGroupRoles(
-		long userId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId, long[] roleIds);
 
 	public java.util.List<com.liferay.portal.model.UserGroupRole> addUserGroupRoles(
-		long[] userIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userIds, long groupId, long roleId);
 
-	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds);
 
-	public void deleteUserGroupRoles(long userId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRoles(long userId, long[] groupIds);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRoles(long[] userIds, long groupId);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId);
 
-	public void deleteUserGroupRolesByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRolesByGroupId(long groupId);
 
-	public void deleteUserGroupRolesByRoleId(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRolesByRoleId(long roleId);
 
-	public void deleteUserGroupRolesByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserGroupRolesByUserId(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRoles(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRoles(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroup(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroupAndRole(
-		long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByUserUserGroupAndGroup(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupRole(long userId, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasUserGroupRole(long userId, long groupId, long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId, long roleId,
-		boolean inherit)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean inherit);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName, boolean inherit)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -2989,6 +2989,7 @@
 
 		<column name="type" type="String" />
 		<column name="timestamp" type="long" />
+		<column name="actionRequired" type="boolean" />
 		<column name="deliveryType" type="int" />
 		<column name="deliverBy" type="long" />
 		<column name="delivered" type="boolean" />
@@ -3012,6 +3013,16 @@
 		</finder>
 		<finder name="U_A" return-type="Collection">
 			<finder-column name="userId" />
+			<finder-column name="archived" />
+		</finder>
+		<finder name="U_A_D" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="actionRequired" />
+			<finder-column name="delivered" />
+		</finder>
+		<finder name="U_A_A" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="actionRequired" />
 			<finder-column name="archived" />
 		</finder>
 

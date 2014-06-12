@@ -62,13 +62,11 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
 	* @return the workflow instance link that was removed
 	* @throws PortalException if a workflow instance link with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
 		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(workflowInstanceLinkId);
 	}
 
@@ -78,13 +76,11 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	* @param workflowInstanceLink the workflow instance link
 	* @return the workflow instance link that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(workflowInstanceLink);
 	}
 
@@ -283,8 +279,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	public com.liferay.portal.model.WorkflowInstanceLink addWorkflowInstanceLink(
 		long userId, long companyId, long groupId, java.lang.String className,
 		long classPK, long workflowInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.addWorkflowInstanceLink(userId,
 			companyId, groupId, className, classPK, workflowInstanceId);
 	}
@@ -292,8 +287,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
 		long companyId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(companyId,
 			groupId, className, classPK);
 	}
@@ -301,16 +295,14 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public void deleteWorkflowInstanceLinks(long companyId, long groupId,
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(companyId,
 			groupId, className, classPK);
 	}
 
 	@Override
 	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
-		long companyId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, java.lang.String className, long classPK) {
 		return _workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(companyId,
 			groupId, className, classPK);
 	}
@@ -318,8 +310,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public java.lang.String getState(long companyId, long groupId,
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.getState(companyId, groupId,
 			className, classPK);
 	}
@@ -327,24 +318,21 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.WorkflowInstanceLink getWorkflowInstanceLink(
 		long companyId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.getWorkflowInstanceLink(companyId,
 			groupId, className, classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> getWorkflowInstanceLinks(
-		long companyId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, java.lang.String className, long classPK) {
 		return _workflowInstanceLinkLocalService.getWorkflowInstanceLinks(companyId,
 			groupId, className, classPK);
 	}
 
 	@Override
 	public boolean hasWorkflowInstanceLink(long companyId, long groupId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return _workflowInstanceLinkLocalService.hasWorkflowInstanceLink(companyId,
 			groupId, className, classPK);
 	}
@@ -352,8 +340,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public boolean isEnded(long companyId, long groupId,
 		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.isEnded(companyId, groupId,
 			className, classPK);
 	}
@@ -362,8 +349,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	public void startWorkflowInstance(long companyId, long groupId,
 		long userId, java.lang.String className, long classPK,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_workflowInstanceLinkLocalService.startWorkflowInstance(companyId,
 			groupId, userId, className, classPK, workflowContext);
 	}
@@ -371,8 +357,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	@Override
 	public void updateClassPK(long companyId, long groupId,
 		java.lang.String className, long oldClassPK, long newClassPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_workflowInstanceLinkLocalService.updateClassPK(companyId, groupId,
 			className, oldClassPK, newClassPK);
 	}

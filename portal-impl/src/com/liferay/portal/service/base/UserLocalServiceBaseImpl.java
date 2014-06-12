@@ -150,7 +150,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param userId the primary key of the user
 	 * @return the user that was removed
 	 * @throws PortalException if a user with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -164,7 +163,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param user the user
 	 * @return the user that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -442,7 +440,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupUsers(long groupId, long[] userIds)
@@ -452,7 +449,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addGroupUsers(long groupId, List<User> Users)
@@ -572,7 +568,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addOrganizationUsers(long organizationId, long[] userIds)
@@ -582,7 +577,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addOrganizationUsers(long organizationId, List<User> Users)
@@ -591,7 +585,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void clearOrganizationUsers(long organizationId) {
@@ -705,7 +698,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addRoleUsers(long roleId, long[] userIds)
@@ -715,7 +707,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addRoleUsers(long roleId, List<User> Users)
@@ -732,7 +723,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void deleteRoleUser(long roleId, long userId)
@@ -742,7 +732,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void deleteRoleUser(long roleId, User user)
@@ -820,7 +809,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void setRoleUsers(long roleId, long[] userIds)
@@ -844,7 +832,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addTeamUsers(long teamId, long[] userIds)
@@ -854,7 +841,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addTeamUsers(long teamId, List<User> Users)
@@ -974,7 +960,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
@@ -984,7 +969,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void addUserGroupUsers(long userGroupId, List<User> Users)
@@ -993,7 +977,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * @throws SystemException
 	 */
 	@Override
 	public void clearUserGroupUsers(long userGroupId) {
@@ -1002,7 +985,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void deleteUserGroupUser(long userGroupId, long userId)
@@ -1012,7 +994,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void deleteUserGroupUser(long userGroupId, User user)
@@ -1091,7 +1072,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	/**
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Override
 	public void setUserGroupUsers(long userGroupId, long[] userIds)

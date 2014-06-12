@@ -69,11 +69,9 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a group or user group with the primary key
 	could not be found, or if the user did not have permission to
 	assign group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the user groups to the team
@@ -83,11 +81,9 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a team or user group with the primary key
 	could not be found, or if the user did not have permission to
 	assign team members
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a user group.
@@ -102,15 +98,13 @@ public interface UserGroupService extends BaseService {
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid
 	or if the user did not have permission to add the user group
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	ServiceContext)}
 	*/
 	@Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a user group.
@@ -128,13 +122,11 @@ public interface UserGroupService extends BaseService {
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid or if
 	the user did not have permission to add the user group
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the user group.
@@ -143,11 +135,9 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a user group with the primary key could not be
 	found, if the user did not have permission to delete the user
 	group, or if the user group had a workflow in approved status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the user group with the primary key.
@@ -157,12 +147,10 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a user group with the primary key could not be
 	found or if the user did not have permission to view the user
 	group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the user group with the name.
@@ -171,13 +159,11 @@ public interface UserGroupService extends BaseService {
 	* @return Returns the user group with the name
 	* @throws PortalException if a user group with the name could not be found
 	or if the user did not have permission to view the user group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns all the user groups to which the user belongs.
@@ -186,13 +172,10 @@ public interface UserGroupService extends BaseService {
 	* @return the user groups to which the user belongs
 	* @throws PortalException if the current user did not have permission to
 	view the user or any one of the user group members
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long userId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the user groups from the group.
@@ -201,11 +184,9 @@ public interface UserGroupService extends BaseService {
 	* @param userGroupIds the primary keys of the user groups
 	* @throws PortalException if the user did not have permission to assign
 	group members
-	* @throws SystemException if a system exception occurred
 	*/
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the user groups from the team.
@@ -214,11 +195,9 @@ public interface UserGroupService extends BaseService {
 	* @param userGroupIds the primary keys of the user groups
 	* @throws PortalException if the user did not have permission to assign
 	team members
-	* @throws SystemException if a system exception occurred
 	*/
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the user group.
@@ -230,15 +209,13 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a user group with the primary key was not
 	found, if the new information was invalid, or if the user did
 	not have permission to update the user group information
-	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	String, String, ServiceContext)}
 	*/
 	@Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the user group.
@@ -253,11 +230,9 @@ public interface UserGroupService extends BaseService {
 	* @throws PortalException if a user group with the primary key was not
 	found, if the new information was invalid, or if the user did not
 	have permission to update the user group information
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

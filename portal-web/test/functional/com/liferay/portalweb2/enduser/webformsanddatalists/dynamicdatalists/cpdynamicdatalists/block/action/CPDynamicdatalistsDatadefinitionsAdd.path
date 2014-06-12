@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[@id='structureDetailsSectionPanel']/div/div</td>
 	<td></td>

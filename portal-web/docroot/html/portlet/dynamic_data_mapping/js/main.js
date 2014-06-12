@@ -158,7 +158,18 @@ AUI.add(
 				NAME: 'liferayformbuilder',
 
 				prototype: {
-					NAMES_HASH: {},
+					NAMES: {
+						hash: {},
+						add: function(value) {
+							this.hash[value] = true;
+						},
+						get: function(value) {
+							return this.hash[value];
+						},
+						remove: function(value) {
+							delete this.hash[value];
+						}
+					},
 
 					initializer: function() {
 						var instance = this;
@@ -196,7 +207,7 @@ AUI.add(
 						field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
 						field.set('strings', instance.get('strings'));
 
-						instance.NAMES_HASH[field.get('name')] = true;
+						instance.NAMES.add(field.get('name'));
 
 						return field;
 					},
@@ -512,9 +523,7 @@ AUI.add(
 								}
 							);
 
-							var namesList = instance.NAMES_HASH;
-
-							if (namesList[newValue]) {
+							if (instance.NAMES.get(newValue)) {
 								alert(instance.get('strings').duplicateNameMessage);
 
 								editingField.focus();
@@ -522,9 +531,9 @@ AUI.add(
 
 							else {
 								if (newValue !== undefined) {
-									delete namesList[oldValue];
+									instance.NAMES.remove(oldValue);
 
-									namesList[newValue] = true;
+									instance.NAMES.add(newValue);
 								}
 
 								LiferayFormBuilder.superclass._handleSaveEvent.apply(this, arguments);

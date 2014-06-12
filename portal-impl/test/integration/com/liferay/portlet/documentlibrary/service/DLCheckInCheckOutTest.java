@@ -33,6 +33,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -91,15 +92,10 @@ public class DLCheckInCheckOutTest {
 
 	@After
 	public void tearDown() throws Exception {
-		DLAppServiceUtil.deleteFolder(_folder.getFolderId());
-
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
-
-		UserLocalServiceUtil.deleteUser(_authorUser.getUserId());
-		UserLocalServiceUtil.deleteUser(_overriderUser.getUserId());
 	}
 
 	@Test
@@ -426,11 +422,15 @@ public class DLCheckInCheckOutTest {
 	private static final String _TEST_CONTENT =
 		"LIFERAY\nEnterprise. Open Source. For Life.";
 
+	@DeleteAfterTestRun
 	private User _authorUser;
+
 	private FileEntry _fileEntry;
 	private Folder _folder;
 	private Group _group;
-	private User _overriderUser;
 	private ServiceContext _serviceContext;
+	
+	@DeleteAfterTestRun
+	private User _overriderUser;
 
 }

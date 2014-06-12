@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
@@ -47,7 +47,6 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,11 +99,6 @@ public class DLFileEntryTypeServiceTest {
 				_marketingBannerDLFileEntryType = dlFileEntryType;
 			}
 		}
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -322,8 +316,9 @@ public class DLFileEntryTypeServiceTest {
 	private DLFileEntryType _contractDLFileEntryType;
 	private List<DLFileEntryType> _dlFileEntryTypes;
 	private Folder _folder;
-	private Group _group;
 	private DLFileEntryType _marketingBannerDLFileEntryType;
-	private Folder _subfolder;
+
+	@DeleteAfterTestRun
+	private Group _group; private Folder _subfolder;
 
 }

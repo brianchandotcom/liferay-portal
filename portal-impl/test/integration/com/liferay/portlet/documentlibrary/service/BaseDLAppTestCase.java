@@ -20,7 +20,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -55,8 +55,6 @@ public abstract class BaseDLAppTestCase {
 	public void tearDown() throws Exception {
 		PrincipalThreadLocal.setName(_name);
 
-		GroupLocalServiceUtil.deleteGroup(group);
-
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
@@ -66,7 +64,9 @@ public abstract class BaseDLAppTestCase {
 	protected static final String CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
+	@DeleteAfterTestRun
 	protected Group group;
+
 	protected Folder parentFolder;
 
 	private String _name;

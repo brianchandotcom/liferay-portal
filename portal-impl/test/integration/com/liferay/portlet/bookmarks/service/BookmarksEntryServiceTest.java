@@ -16,14 +16,13 @@ package com.liferay.portlet.bookmarks.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,11 +37,6 @@ public class BookmarksEntryServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -66,6 +60,7 @@ public class BookmarksEntryServiceTest {
 		BookmarksEntryServiceUtil.getEntry(entry.getEntryId());
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

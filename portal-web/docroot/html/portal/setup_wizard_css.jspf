@@ -41,10 +41,6 @@
 	padding: 0 20px;
 }
 
-.rtl #banner .configuration-title {
-	float: left;
-}
-
 #banner .logo {
 	margin-right: 20px;
 }
@@ -102,6 +98,10 @@
 .alert-block .lfr-inline-code {
 	background-color: #EEB;
 	color: #333;
+}
+
+.rtl #banner .configuration-title {
+	float: left;
 }
 
 .ie6 #wrapper {

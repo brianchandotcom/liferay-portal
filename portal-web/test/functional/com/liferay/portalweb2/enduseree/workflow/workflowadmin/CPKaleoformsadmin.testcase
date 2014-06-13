@@ -8,7 +8,7 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="KaleoFormsAdmin#tearDownProcess" />
+		<execute macro="KaleoFormsAdmin#tearDownProcessCP" />
 	</tear-down>
 
 	<command name="AddProcessPredefined" priority="5">
@@ -18,33 +18,33 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#addProcess" />
+		<execute macro="KaleoFormsAdmin#addProcessCP" />
 
-		<execute macro="KaleoFormsAdmin#addProcessDetails">
+		<execute macro="KaleoFormsAdmin#addProcessDetailsCP">
 			<var name="processName" value="${processName}" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#nextCmd" />
 
-		<execute macro="KaleoFormsAdmin#addProcessChoose">
+		<execute macro="KaleoFormsAdmin#addProcessChooseCP">
 			<var name="fieldsDefinitionName" value="To Do" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#nextCmd" />
 
-		<execute macro="KaleoFormsAdmin#addProcessChoose">
+		<execute macro="KaleoFormsAdmin#addProcessChooseCP">
 			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#nextCmd" />
 
-		<execute macro="KaleoFormsAdmin#assignCreatedForm">
+		<execute macro="KaleoFormsAdmin#assignCreatedFormCP">
 			<var name="formName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess" />
+		<execute macro="KaleoFormsAdmin#saveProcessCmd" />
 
-		<execute macro="KaleoFormsAdmin#viewProcess">
+		<execute macro="KaleoFormsAdmin#viewProcessCP">
 			<var name="processName" value="${processName}" />
 		</execute>
 	</command>

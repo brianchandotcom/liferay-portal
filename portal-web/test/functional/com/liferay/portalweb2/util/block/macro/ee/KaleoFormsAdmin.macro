@@ -1,5 +1,5 @@
 <definition>
-	<command name="addForm">
+	<command name="addFormCP">
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="ADD_FORM_BUTTON" value1="Add Form" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
@@ -8,16 +8,16 @@
 
 		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrameTop" />
 
-		<execute macro="KaleoFormsAdmin#addProcessChoose">
+		<execute macro="KaleoFormsAdmin#addProcessChooseCP">
 			<var name="formName" value="${formName}" />
 		</execute>
 	</command>
 
-	<command name="addProcess">
+	<command name="addProcessCP">
 		<execute action="CPKaleoformsadmin#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 	</command>
 
-	<command name="addProcessChoose">
+	<command name="addProcessChooseCP">
 		<if>
 			<isset var="fieldsDefinitionName" />
 			<then>
@@ -61,30 +61,30 @@
 		</if>
 	</command>
 
-	<command name="addProcessDetails">
+	<command name="addProcessDetailsCP">
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="NEXT_BUTTON_INACTIVE" value1="Next" />
 		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${processName}" />
 	</command>
 
-	<command name="assignCreatedForm">
+	<command name="assignCreatedFormCP">
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FORMS_TABLE_CREATED_TASK_ASSIGN_FORM" value1="Assign Form" />
 
-		<execute macro="KaleoFormsAdmin#addForm">
+		<execute macro="KaleoFormsAdmin#addFormCP">
 			<var name="formName" value="${formName}" />
 		</execute>
 	</command>
 
-	<command name="next">
+	<command name="nextCmd">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="NEXT_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="NEXT_BUTTON" value1="Next" />
 	</command>
 
-	<command name="saveProcess">
+	<command name="saveProcessCmd">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="SAVE_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
-	<command name="tearDownProcess">
+	<command name="tearDownProcessCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -99,7 +99,7 @@
 		</while>
 	</command>
 
-	<command name="viewProcess">
+	<command name="viewProcessCP">
 		<var name="key_processName" value="${processName}" />
 
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_NAME" value1="${processName}" />

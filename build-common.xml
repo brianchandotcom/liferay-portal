@@ -494,19 +494,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="ant.target" />
 
 		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
-					</exec>
-				</then>
-				<else>
-					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant.bat" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
-					</exec>
-				</else>
-			</if>
+			<ant dir="@{ant.dir}" antfile="@{ant.build.file}" target="@{ant.target}" inheritall="false">
+				<property name="is.portal.invoked" value="true" />
+			</ant>
 		</sequential>
 	</macrodef>
 

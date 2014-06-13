@@ -38,9 +38,9 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.SearchContextTestUtil;
@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,11 +73,6 @@ public abstract class BaseTrashHandlerTestCase {
 		FinderCacheUtil.clearCache();
 
 		group = GroupTestUtil.addGroup();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test
@@ -1382,6 +1376,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected BaseModel<?> baseModel;
+
+	@DeleteAfterTestRun
 	protected Group group;
 
 }

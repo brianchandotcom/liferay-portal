@@ -17,12 +17,9 @@ package com.liferay.portlet.usergroupsadmin.lar;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.test.UserGroupTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -36,7 +33,6 @@ public class UserGroupsAdminPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		_userGroup = UserGroupTestUtil.addUserGroup();
 	}
 
 	@Override
@@ -48,8 +44,5 @@ public class UserGroupsAdminPortletDataHandlerTest
 	protected String getPortletId() {
 		return PortletKeys.USER_GROUPS_ADMIN;
 	}
-
-	@DeleteAfterTestRun
-	private UserGroup _userGroup;
 
 }

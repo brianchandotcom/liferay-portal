@@ -20,6 +20,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -51,8 +52,6 @@ public class UserGroupStagedModelDataHandlerTest
 
 		_userGroup = UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
 			_userGroup.getUuid(), _userGroup.getCompanyId());
-
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 	}
 
 	@Override
@@ -92,6 +91,7 @@ public class UserGroupStagedModelDataHandlerTest
 		return UserGroup.class;
 	}
 
+	@DeleteAfterTestRun
 	private UserGroup _userGroup;
 
 }

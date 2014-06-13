@@ -24,17 +24,15 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -42,7 +40,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,21 +50,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JournalTransformerTest {
-
-	@After
-	public void tearDown() throws Exception {
-		if (_article != null) {
-			JournalArticleLocalServiceUtil.deleteArticle(_article);
-		}
-
-		if (_ddmTemplate != null) {
-			DDMTemplateLocalServiceUtil.deleteDDMTemplate(_ddmTemplate);
-		}
-
-		if (_ddmStructure != null) {
-			DDMStructureLocalServiceUtil.deleteDDMStructure(_ddmStructure);
-		}
-	}
 
 	@Test
 	public void testContentTransformerListener() throws Exception {
@@ -273,8 +255,13 @@ public class JournalTransformerTest {
 		return tokens;
 	}
 
+	@DeleteAfterTestRun
 	private JournalArticle _article;
+
+	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;
+
+	@DeleteAfterTestRun
 	private DDMTemplate _ddmTemplate;
 
 }

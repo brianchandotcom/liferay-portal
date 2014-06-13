@@ -112,5 +112,5 @@ public class FriendlyURLServletTest {
 	private Group _group;
 
 	private HttpServletRequest _request = new MockHttpServletRequest();
-	
+
 }

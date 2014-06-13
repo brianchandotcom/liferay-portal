@@ -830,7 +830,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userPersistence.update(user, serviceContext);
 
-		// Resources
+		// Contact
 
 		String creatorUserName = StringPool.BLANK;
 
@@ -847,12 +847,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			creatorUserName = creatorUser.getFullName();
 		}
-
-		resourceLocalService.addResources(
-			companyId, 0, creatorUserId, User.class.getName(), user.getUserId(),
-			false, false, false);
-
-		// Contact
 
 		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
@@ -885,6 +879,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			User.class.getName(), user.getUserId(), null, null, 0,
 			StringPool.SLASH + screenName, false, true, null);
+
+		// Resources
+
+		resourceLocalService.addResources(
+			companyId, 0, creatorUserId, User.class.getName(), user.getUserId(),
+			false, false, false);
 
 		// Groups
 

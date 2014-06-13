@@ -45,6 +45,7 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	public int doEndTag() throws JspException {
+		updateFormCheckboxNames();
 		updateFormValidators();
 
 		return super.doEndTag();
@@ -299,6 +300,28 @@ public class InputTag extends BaseInputTag {
 		if ((_validators != null) && (_validators.get("required") != null)) {
 			setNamespacedAttribute(
 				request, "required", Boolean.TRUE.toString());
+		}
+	}
+
+	protected void updateFormCheckboxNames() {
+		if (!Validator.equals(getType(), "checkbox")) {
+			return;
+		}
+
+		List<String> checkboxNames = (List<String>)request.getAttribute(
+			"aui:form:checkboxNames");
+
+		if (checkboxNames != null) {
+			String inputName = _inputName;
+
+			String languageId = getLanguageId();
+
+			if (Validator.isNotNull(languageId)) {
+				inputName = LocalizationUtil.getLocalizedName(
+					inputName, languageId);
+			}
+
+			checkboxNames.add(inputName);
 		}
 	}
 

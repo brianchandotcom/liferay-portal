@@ -21,5 +21,6 @@ if (themeDisplay.isAddSessionIdToURL()) {
 	action = PortalUtil.getURLWithSessionId(action, themeDisplay.getSessionId());
 }
 
+List<String> checkboxNames = (List<String>)request.getAttribute("aui:form:checkboxNames");
 Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("aui:form:validatorTagsMap");
 %>

@@ -193,18 +193,8 @@
 </tr>
 <!--FORMS_TABLE-->
 <tr>
-	<td>FORMS_TABLE_CREATED_TASK_ASSIGN_FORM</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'created')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORMS_TABLE_UPDATE_TASK_ASSIGN_FORM</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'update')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORMS_TABLE_REVIEW_TASK_ASSIGN_FORM</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'update')]/td[3]/a</td>
+	<td>FORMS_TABLE_ASSIGN_FORM</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowDefinitionTask}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>

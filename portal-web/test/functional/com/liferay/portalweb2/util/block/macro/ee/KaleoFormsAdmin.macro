@@ -1,90 +1,72 @@
 <definition>
-	<command name="addFormCP">
+	<command name="addForm">
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="ADD_FORM_BUTTON" value1="Add Form" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#type" locator-key1="NAME_FIELD" value1="${formName}" />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrameTop" />
-
-		<execute macro="KaleoFormsAdmin#addProcessChooseCP">
-			<var name="formName" value="${formName}" />
-		</execute>
+		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addProcessCP">
+	<command name="addProcess">
 		<execute action="CPKaleoformsadmin#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 	</command>
 
-	<command name="addProcessChooseCP">
-		<if>
-			<isset var="fieldsDefinitionName" />
-			<then>
-				<var name="key_fieldsDefinitionName" value="${fieldsDefinitionName}" />
-
-				<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_NAME" value1="${fieldsDefinitionName}" />
-				<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
-				<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_CHOOSE" value1="Choose" />
-				<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${fieldsDefinitionName}" />
-			</then>
-			<elseif>
-				<isset var="workflowDefinition" />
-				<then>
-					<var name="key_workflowDefinition" value="${workflowDefinition}" />
-
-					<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_NAME" value1="${workflowDefinition}" />
-					<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
-					<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
-
-					<if>
-						<equals arg1="${workflowDefinition}" arg2="Single Approver" />
-						<then>
-							<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
-						</then>
-						<else>
-							<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition}" />
-						</else>
-					</if>
-				</then>
-			</elseif>
-			<elseif>
-				<isset var="formName" />
-				<then>
-					<var name="key_formName" value="${formName}" />
-
-					<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${formName}" />
-					<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_ACTIONS" value1="Actions" />
-					<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_MENULIST_CHOOSE" value1="Choose" />
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="addProcessDetailsCP">
+	<command name="addProcessDetails">
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="NEXT_BUTTON_INACTIVE" value1="Next" />
 		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${processName}" />
 	</command>
 
-	<command name="assignCreatedFormCP">
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FORMS_TABLE_CREATED_TASK_ASSIGN_FORM" value1="Assign Form" />
+	<command name="assignForm">
+		<var name="key_workflowDefinitionTask" value="${workflowDefinitionTask}" />
 
-		<execute macro="KaleoFormsAdmin#addFormCP">
-			<var name="formName" value="${formName}" />
-		</execute>
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FORMS_TABLE_ASSIGN_FORM" value1="Assign Form" />
 	</command>
 
-	<command name="nextCmd">
+	<command name="chooseFieldsDefinition">
+		<var name="key_fieldsDefinitionName" value="${fieldsDefinitionName}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_NAME" value1="${fieldsDefinitionName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_CHOOSE" value1="Choose" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${fieldsDefinitionName}" />
+	</command>
+
+	<command name="chooseForm">
+		<var name="key_formName" value="${formName}" />
+
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${formName}" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_MENULIST_CHOOSE" value1="Choose" />
+	</command>
+
+	<command name="chooseWorkflow">
+		<var name="key_workflowDefinition" value="${workflowDefinition}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_NAME" value1="${workflowDefinition}" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
+	</command>
+
+	<command name="next">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="NEXT_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="NEXT_BUTTON" value1="Next" />
 	</command>
 
-	<command name="saveProcessCmd">
+	<command name="saveForm">
+		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
+		<execute action="CPKaleoformsadminNewprocessSelectformNewform#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrameTop" />
+	</command>
+
+	<command name="saveProcess">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="SAVE_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
-	<command name="tearDownProcessCP">
+	<command name="tearDownProcess">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -99,7 +81,7 @@
 		</while>
 	</command>
 
-	<command name="viewProcessCP">
+	<command name="viewProcess">
 		<var name="key_processName" value="${processName}" />
 
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_NAME" value1="${processName}" />

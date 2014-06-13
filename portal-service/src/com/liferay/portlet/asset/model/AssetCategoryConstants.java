@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class AssetCategoryConstants {
 
+	public static final long ALL_CLASS_NAME_IDS = 0;
+
 	public static final String ALL_CLASS_NAMES_AND_TYPES =
 		AssetCategoryConstants.ALL_CLASS_NAME_IDS + StringPool.COLON +
 			AssetCategoryConstants.ALL_CLASS_TYPE_PKS;
-
-	public static final long ALL_CLASS_NAME_IDS = 0;
 
 	public static final long ALL_CLASS_TYPE_PKS = -1;
 

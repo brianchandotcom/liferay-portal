@@ -124,14 +124,12 @@ public class AssetVocabularySettingsHelperTest {
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndType(1, 0));
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndType(1, 1));
-		Assert.assertFalse(
-			vocabularySettingsHelper.hasClassNameAndType(2, 2));
+		Assert.assertFalse(vocabularySettingsHelper.hasClassNameAndType(2, 2));
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(1, 1, true);
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndType(1, 1));
-		Assert.assertFalse(
-			vocabularySettingsHelper.hasClassNameAndType(2, 2));
+		Assert.assertFalse(vocabularySettingsHelper.hasClassNameAndType(2, 2));
 	}
 
 	@Test

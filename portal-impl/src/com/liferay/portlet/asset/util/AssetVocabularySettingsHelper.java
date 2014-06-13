@@ -147,11 +147,6 @@ public class AssetVocabularySettingsHelper {
 		return _properties.toString();
 	}
 
-	protected String getClassNameAndType(long classNameId, long classTypePK) {
-		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
-			String.valueOf(classTypePK));
-	}
-
 	protected String[] getClassNameAndType() {
 		String propertyValue = _properties.getProperty(
 			_KEY_SELECTED_CLASS_NAME_AND_TYPE_IDS);
@@ -164,6 +159,11 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return StringUtil.split(propertyValue);
+	}
+
+	protected String getClassNameAndType(long classNameId, long classTypePK) {
+		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
+			String.valueOf(classTypePK));
 	}
 
 	protected long getClassNameId(String classNameAndType) {

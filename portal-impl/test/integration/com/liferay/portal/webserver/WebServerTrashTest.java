@@ -30,7 +30,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
@@ -79,14 +79,6 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		if (_user != null) {
-			UserLocalServiceUtil.deleteUser(_user.getUserId());
-		}
-
-		if (_role != null) {
-			RoleLocalServiceUtil.deleteRole(_role.getRoleId());
-		}
 
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
@@ -164,7 +156,10 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		return mockHttpServletResponse;
 	}
 
+	@DeleteAfterTestRun
 	private Role _role;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

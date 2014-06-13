@@ -22,7 +22,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -32,7 +32,6 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.Locale;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,11 +42,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortalImplAlternateURLTest {
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-	}
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
@@ -175,6 +169,7 @@ public class PortalImplAlternateURLTest {
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

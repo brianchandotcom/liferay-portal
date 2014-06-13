@@ -15,10 +15,9 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 
-import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -32,11 +31,6 @@ public abstract class BaseSubscriptionTestCase {
 		group = GroupTestUtil.addGroup();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-	}
-
 	protected long addBaseModel(long containerModelId) throws Exception {
 		return 0;
 	}
@@ -47,6 +41,7 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected static final long PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 
+	@DeleteAfterTestRun
 	protected Group group;
 
 }

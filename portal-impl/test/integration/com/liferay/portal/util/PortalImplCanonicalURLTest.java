@@ -27,6 +27,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,7 +39,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -102,11 +102,6 @@ public class PortalImplCanonicalURLTest {
 			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
 				_defaultGroup.getGroupId(), "two");
 		}
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -406,7 +401,10 @@ public class PortalImplCanonicalURLTest {
 	private Group _defaultGroup;
 	private Layout _defaultGrouplayout1;
 	private Layout _defaultGrouplayout2;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private Layout _layout1;
 	private Layout _layout2;
 

@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PropsValues;
@@ -64,8 +64,6 @@ public class AssetVocabularyServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-
 		LocaleThreadLocal.setSiteDefaultLocale(_locale);
 	}
 
@@ -194,7 +192,9 @@ public class AssetVocabularyServiceTest {
 		return results.getLength();
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private Locale _locale;
 
 }

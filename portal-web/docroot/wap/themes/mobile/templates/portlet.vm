@@ -15,7 +15,7 @@
 #end
 
 <p>
-	<a href="$portlet_max_url">$portlet_wap_title</a>
+	<a href="$portlet_max_url">$htmlUtil.escape($portlet_wap_title)</a>
 </p>
 
 #if ($portlet_display.isStateMax())

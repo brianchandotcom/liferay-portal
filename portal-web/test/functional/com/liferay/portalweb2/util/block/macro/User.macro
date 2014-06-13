@@ -1142,7 +1142,7 @@
 		<execute action="CPUsersandorganizationsUser#selectFrame" locator-key1="SITES_SELECT_IFRAME" />
 
 		<execute action="CPUsersandorganizationsUser#type" locator-key1="SITES_SELECT_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPUsersandorganizationsUser#keyPress" locator-key1="SITES_SELECT_SEARCH_BUTTON" value1="\\13" />
+		<execute action="CPUsersandorganizationsUser#keyPress" locator-key1="SITES_SELECT_SEARCH_FIELD" value1="\\13" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SITES_SELECT_TABLE_NAME" value1="${siteName}" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SITES_SELECT_CHOOSE_BUTTON" value1="Choose" />
 

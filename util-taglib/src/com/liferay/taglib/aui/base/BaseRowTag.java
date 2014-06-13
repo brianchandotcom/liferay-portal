@@ -37,10 +37,6 @@ public class BaseRowTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
-	public boolean getFluid() {
-		return _fluid;
-	}
-
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -49,12 +45,6 @@ public class BaseRowTag extends com.liferay.taglib.util.IncludeTag {
 		_cssClass = cssClass;
 
 		setScopedAttribute("cssClass", cssClass);
-	}
-
-	public void setFluid(boolean fluid) {
-		_fluid = fluid;
-
-		setScopedAttribute("fluid", fluid);
 	}
 
 	public void setId(java.lang.String id) {
@@ -66,7 +56,6 @@ public class BaseRowTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
-		_fluid = true;
 		_id = null;
 	}
 
@@ -83,7 +72,6 @@ public class BaseRowTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
-		setNamespacedAttribute(request, "fluid", _fluid);
 		setNamespacedAttribute(request, "id", _id);
 	}
 
@@ -96,7 +84,6 @@ public class BaseRowTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/row/start.jsp";
 
 	private java.lang.String _cssClass = null;
-	private boolean _fluid = true;
 	private java.lang.String _id = null;
 
 }

@@ -492,7 +492,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_first = false;
 		_formName = null;
 		_helpMessage = null;
-		_helpTextCssClass = "add-on";
+		_helpTextCssClass = "input-group-addon";
 		_id = null;
 		_ignoreRequestValue = false;
 		_inlineField = false;
@@ -596,7 +596,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _first = false;
 	private java.lang.String _formName = null;
 	private java.lang.String _helpMessage = null;
-	private java.lang.String _helpTextCssClass = "add-on";
+	private java.lang.String _helpTextCssClass = "input-group-addon";
 	private java.lang.String _id = null;
 	private boolean _ignoreRequestValue = false;
 	private boolean _inlineField = false;

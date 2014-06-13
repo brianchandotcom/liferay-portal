@@ -36,7 +36,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long classTypeId,
+			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] entryNames)
 		throws PortalException {
 
@@ -64,7 +64,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
 
 		for (AssetVocabulary vocabulary : vocabularies) {
-			validate(classNameId, classTypeId, categoryIds, vocabulary);
+			validate(classNameId, classTypePK, categoryIds, vocabulary);
 		}
 	}
 
@@ -85,12 +85,12 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 	}
 
 	protected void validate(
-			long classNameId, long classTypeId, final long[] categoryIds,
+			long classNameId, long classTypePK, final long[] categoryIds,
 			AssetVocabulary vocabulary)
 		throws PortalException {
 
-		if (!vocabulary.isAssociatedToClassNameAndTypeId(
-				classNameId, classTypeId)) {
+		if (!vocabulary.isAssociatedToClassNameAndType(
+				classNameId, classTypePK)) {
 
 			return;
 		}
@@ -100,7 +100,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		}
 
 		if (vocabulary.isMissingRequiredCategory(
-				classNameId, classTypeId, categoryIds)) {
+				classNameId, classTypePK, categoryIds)) {
 
 			throw new AssetCategoryException(
 				vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);

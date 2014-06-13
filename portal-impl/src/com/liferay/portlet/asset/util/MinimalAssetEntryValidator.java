@@ -26,7 +26,7 @@ public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long classTypeId,
+			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 

@@ -64,11 +64,11 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public long[] getSelectedClassTypeIds() {
+	public long[] getSelectedClassTypePKs() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.getClassTypeIds();
+		return vocabularySettingsHelper.getClassTypePKs();
 	}
 
 	@Override
@@ -179,27 +179,27 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isAssociatedToClassNameAndTypeId(
-		long classNameId, long classTypeId) {
+	public boolean isAssociatedToClassNameAndType(
+		long classNameId, long classTypePK) {
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.hasClassNameAndTypeId(
-			classNameId, classTypeId);
+		return vocabularySettingsHelper.hasClassNameAndType(
+			classNameId, classTypePK);
 	}
 
 	@Override
 	public boolean isAssociatedToClassNameId(long classNameId) {
-		return isAssociatedToClassNameAndTypeId(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+		return isAssociatedToClassNameAndType(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 	}
 
 	@Override
 	public boolean isMissingRequiredCategory(
-		long classNameId, long classTypeId, final long[] categoryIds) {
+		long classNameId, long classTypePK, final long[] categoryIds) {
 
-		if (!isRequired(classNameId, classTypeId)) {
+		if (!isRequired(classNameId, classTypePK)) {
 			return false;
 		}
 
@@ -232,16 +232,16 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	@Override
 	public boolean isRequired(long classNameId) {
 		return isRequired(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 	}
 
 	@Override
-	public boolean isRequired(long classNameId, long classTypeId) {
+	public boolean isRequired(long classNameId, long classTypePK) {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.isClassNameAndTypeIdRequired(
-			classNameId, classTypeId);
+		return vocabularySettingsHelper.isClassNameAndTypeRequired(
+			classNameId, classTypePK);
 	}
 
 	@Override

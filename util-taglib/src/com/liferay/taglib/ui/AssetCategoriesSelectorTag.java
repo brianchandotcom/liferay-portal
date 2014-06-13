@@ -53,7 +53,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		_className = null;
 		_classPK = 0;
-		_classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_IDS;
+		_classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PKS;
 		_contentCallback = null;
 		_curCategoryIds = null;
 		_hiddenInput = "assetCategoryIds";
@@ -89,7 +89,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
-	private long _classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_IDS;
+	private long _classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PKS;
 	private String _contentCallback;
 	private String _curCategoryIds;
 	private String _hiddenInput = "assetCategoryIds";

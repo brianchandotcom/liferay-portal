@@ -101,9 +101,9 @@ public class UpgradeAsset extends UpgradeProcess {
 		long[] requiredClassNameIds = StringUtil.split(
 			oldProperties.getProperty("requiredClassNameIds"), 0L);
 
-		long[] classTypeIds = new long[classNameIds.length];
+		long[] classTypePKs = new long[classNameIds.length];
 
-		Arrays.fill(classTypeIds, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+		Arrays.fill(classTypePKs, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 
 		boolean[] requireds = new boolean[classNameIds.length];
 
@@ -112,8 +112,8 @@ public class UpgradeAsset extends UpgradeProcess {
 				requiredClassNameIds, classNameIds[i]);
 		}
 
-		newProperties.setClassNameAndTypeIds(
-			classNameIds, classTypeIds, requireds);
+		newProperties.setClassNamesAndTypes(
+			classNameIds, classTypePKs, requireds);
 
 		return newProperties.toString();
 	}

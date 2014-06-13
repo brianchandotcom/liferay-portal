@@ -38,11 +38,11 @@ List<AssetRendererFactory> assetFactoriesWithClassTypes = ListUtil.filter(
 	});
 
 long[] selectedClassNameIds = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSNAME_IDS;
-long[] selectedClassTypeIds = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSTYPE_IDS;
+long[] selectedClassTypePKs = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSTYPE_PKS;
 
 if (vocabulary != null) {
 	selectedClassNameIds = vocabulary.getSelectedClassNameIds();
-	selectedClassTypeIds = vocabulary.getSelectedClassTypeIds();
+	selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
 }
 %>
 
@@ -60,7 +60,7 @@ if (vocabulary != null) {
 			String rowClassNameId = "classNameId" + index;
 
 			long classNameId = selectedClassNameIds[index];
-			long classTypeId = selectedClassTypeIds[index];
+			long classTypePK = selectedClassTypePKs[index];
 		%>
 
 			<div class="lfr-form-row lfr-form-row-inline">
@@ -85,7 +85,7 @@ if (vocabulary != null) {
 					%>
 
 						<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>
-							<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
+							<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PKS %>" />
 
 							<%
 							List<ClassType> classTypes = assetRendererFactory.getClassTypeReader().getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
@@ -97,7 +97,7 @@ if (vocabulary != null) {
 							for (ClassType classType : classTypes) {
 							%>
 
-								<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypeId == (classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
+								<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == (classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
 
 							<%
 							}
@@ -109,7 +109,7 @@ if (vocabulary != null) {
 					}
 					%>
 
-					<aui:input cssClass="vocabulary-checkbox" label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypeId) : false %>" />
+					<aui:input cssClass="vocabulary-checkbox" label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
 				</div>
 			</div>
 

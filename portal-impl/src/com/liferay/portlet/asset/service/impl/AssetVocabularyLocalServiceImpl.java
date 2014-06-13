@@ -267,12 +267,12 @@ public class AssetVocabularyLocalServiceImpl
 		long[] groupIds, String className) {
 
 		return getGroupsVocabularies(
-			groupIds, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+			groupIds, className, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 	}
 
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(
-			long[] groupIds, String className, long classTypeId)
+			long[] groupIds, String className, long classTypePK)
 		throws SystemException {
 
 		List<AssetVocabulary> vocabularies =
@@ -283,7 +283,7 @@ public class AssetVocabularyLocalServiceImpl
 		}
 
 		return AssetUtil.filterVocabularies(
-			vocabularies, className, classTypeId);
+			vocabularies, className, classTypePK);
 	}
 
 	@Override

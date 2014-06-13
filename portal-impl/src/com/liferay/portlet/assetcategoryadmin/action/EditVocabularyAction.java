@@ -94,7 +94,7 @@ public class EditVocabularyAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
 		long[] classNameIds = new long[indexes.length];
-		long[] classTypeIds = new long[indexes.length];
+		long[] classTypePKs = new long[indexes.length];
 		boolean[] requireds = new boolean[indexes.length];
 
 		for (int i = 0; i < indexes.length; i++) {
@@ -103,17 +103,17 @@ public class EditVocabularyAction extends PortletAction {
 			classNameIds[i] = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
-			classTypeIds[i] = ParamUtil.getLong(
+			classTypePKs[i] = ParamUtil.getLong(
 				actionRequest, "subtype" + classNameIds[i] +
 				"-classNameId" + index,
-				AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+				AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 
 			requireds[i] = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
 		}
 
-		vocabularySettingsHelper.setClassNameAndTypeIds(
-			classNameIds, classTypeIds, requireds);
+		vocabularySettingsHelper.setClassNamesAndTypes(
+			classNameIds, classTypePKs, requireds);
 
 		boolean multiValued = ParamUtil.getBoolean(
 			actionRequest, "multiValued");

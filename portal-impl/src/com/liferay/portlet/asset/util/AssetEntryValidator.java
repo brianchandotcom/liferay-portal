@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface AssetEntryValidator {
 
 	public void validate(
-			long groupId, String className, long classTypeId,
+			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] entryNames)
 		throws PortalException;
 

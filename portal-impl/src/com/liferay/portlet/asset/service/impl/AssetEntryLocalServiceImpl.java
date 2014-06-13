@@ -844,7 +844,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public void validate(
-			long groupId, String className, long classTypeId,
+			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
@@ -856,7 +856,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			PropsValues.ASSET_ENTRY_VALIDATOR);
 
 		validator.validate(
-			groupId, className, classTypeId, categoryIds, tagNames);
+			groupId, className, classTypePK, categoryIds, tagNames);
 	}
 
 	/**
@@ -870,7 +870,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		validate(
-			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_PKS,
 			categoryIds, tagNames);
 	}
 

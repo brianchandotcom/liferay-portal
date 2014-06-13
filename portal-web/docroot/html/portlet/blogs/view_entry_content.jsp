@@ -51,6 +51,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
+				<% String deckTitle = entry.getDeckTitle(); %>
+
+				<c:if test="<%= Validator.isNotNull(deckTitle) %>">
+					<div class="entry-deck-title">
+						<p><%= HtmlUtil.escape(deckTitle) %></p>
+					</div>
+				</c:if>
+
 				<div class="entry-date icon-calendar">
 					<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 

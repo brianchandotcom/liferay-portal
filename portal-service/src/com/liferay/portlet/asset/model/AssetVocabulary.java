@@ -40,6 +40,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public long[] getSelectedClassNameIds();
 
+	public long[] getSelectedClassTypePKs();
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -53,14 +55,23 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds);
 
+	public boolean isAssociatedToClassNameAndType(long classNameId,
+		long classTypePK);
+
 	public boolean isAssociatedToClassNameId(long classNameId);
 
 	public boolean isMissingRequiredCategory(long classNameId,
-		long[] categoryIds);
+		long classTypePK, long[] categoryIds);
 
 	public boolean isMultiValued();
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	*/
+	@java.lang.Deprecated()
 	public boolean isRequired(long classNameId);
+
+	public boolean isRequired(long classNameId, long classTypePK);
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement

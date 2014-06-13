@@ -139,6 +139,13 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
+		long[] groupIds, java.lang.String className, long classTypePK) {
+		return _assetVocabularyService.getGroupsVocabularies(groupIds,
+			className, classTypePK);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupVocabularies(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

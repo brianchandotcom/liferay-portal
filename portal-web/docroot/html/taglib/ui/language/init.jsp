@@ -18,7 +18,7 @@
 
 <%
 if (Validator.isNull(namespace)) {
-	namespace = StringPool.UNDERLINE + PortletKeys.LANGUAGE + StringPool.UNDERLINE;
+	namespace = PortalUtil.getPortletNamespace(PortletKeys.LANGUAGE);
 }
 
 String formName = (String)request.getAttribute("liferay-ui:language:formName");

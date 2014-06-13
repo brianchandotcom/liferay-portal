@@ -222,6 +222,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_1_STAGING_LIVE</td>
+	<td>//div/ul/li[@id='layout_1']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_2</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a</td>
 	<td>2nd Page</td>
@@ -237,9 +242,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_2_STAGING_LIVE</td>
+	<td>//div/ul/li[@id='layout_2']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_3</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a</td>
 	<td>3rd Page</td>
+</tr>
+<tr>
+	<td>PAGE_3_STAGING_LIVE</td>
+	<td>//div/ul/li[@id='layout_3']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>

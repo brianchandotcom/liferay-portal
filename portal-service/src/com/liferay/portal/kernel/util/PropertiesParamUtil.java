@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -341,15 +346,30 @@ public class PropertiesParamUtil {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		for (String param : parameterMap.keySet()) {
-			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
-				String key = param.substring(
-					prefix.length(), param.length() - 2);
+		List<String> params = filterParams(
+			prefix, ListUtil.fromCollection(parameterMap.keySet()), null);
 
-				String value = request.getParameter(param);
+		for (String param : params) {
+			String key = param.substring(prefix.length(), param.length() - 2);
 
-				properties.setProperty(key, value);
-			}
+			String value = request.getParameter(param);
+
+			properties.setProperty(key, value);
+		}
+
+		String checkboxNames = ParamUtil.getString(request, "checkboxNames");
+
+		if (Validator.isNull(checkboxNames)) {
+			return properties;
+		}
+
+		List<String> checkboxParams = filterParams(
+			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
+			params);
+
+		for (String param : checkboxParams) {
+			properties.setProperty(
+				getKey(param, prefix), Boolean.FALSE.toString());
 		}
 
 		return properties;
@@ -360,17 +380,33 @@ public class PropertiesParamUtil {
 
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		for (String param : portletRequest.getParameterMap().keySet()) {
-			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
-				String key = param.substring(
-					prefix.length(), param.length() - 2);
+		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
-				String[] values = portletRequest.getParameterValues(param);
+		List<String> params = filterParams(
+			prefix, ListUtil.fromCollection(parameterMap.keySet()), null);
 
-				String value = StringUtil.merge(values);
+		for (String param : params) {
+			String[] values = portletRequest.getParameterValues(param);
 
-				properties.setProperty(key, value);
-			}
+			String value = StringUtil.merge(values);
+
+			properties.setProperty(getKey(param, prefix), value);
+		}
+
+		String checkboxNames = ParamUtil.getString(
+			portletRequest, "checkboxNames");
+
+		if (Validator.isNull(checkboxNames)) {
+			return properties;
+		}
+
+		List<String> checkboxParams = filterParams(
+			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
+			params);
+
+		for (String param : checkboxParams) {
+			properties.setProperty(
+				getKey(param, prefix), Boolean.FALSE.toString());
 		}
 
 		return properties;
@@ -450,6 +486,37 @@ public class PropertiesParamUtil {
 			propertiesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
+	}
+
+	protected static List<String> filterParams(
+		final String prefix, List<String> params,
+		final List<String> excludeParams) {
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String param) {
+					if (!param.startsWith(prefix)) {
+						return false;
+					}
+
+					if ((excludeParams != null) &&
+						excludeParams.contains(param)) {
+
+						return false;
+					}
+
+					return true;
+				}
+
+			};
+
+		return ListUtil.filter(params, predicateFilter);
+	}
+
+	protected static String getKey(String param, String prefix) {
+		return param.substring(prefix.length(), param.length() - 2);
 	}
 
 }

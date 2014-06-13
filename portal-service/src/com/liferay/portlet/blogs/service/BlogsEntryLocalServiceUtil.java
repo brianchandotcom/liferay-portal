@@ -334,6 +334,25 @@ public class BlogsEntryLocalServiceUtil {
 			smallImageInputStream, serviceContext);
 	}
 
+	public static com.liferay.portlet.blogs.model.BlogsEntry addEntry(
+		long userId, java.lang.String title, java.lang.String deckTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntry(userId, title, deckTitle, description, content,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+			smallImage, smallImageURL, smallImageFileName,
+			smallImageInputStream, serviceContext);
+	}
+
 	public static void addEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -767,6 +786,25 @@ public class BlogsEntryLocalServiceUtil {
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,
 			smallImageInputStream, serviceContext);
+	}
+
+	public static com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
+		long userId, long entryId, java.lang.String title,
+		java.lang.String deckTitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, boolean smallImage,
+		java.lang.String smallImageURL, java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(userId, entryId, title, deckTitle, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, smallImage, smallImageURL,
+			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
 	public static void updateEntryResources(

@@ -117,6 +117,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addEntry(
+			userId, title, StringPool.BLANK, description, content,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+			smallImage, smallImageURL, smallImageFileName,
+			smallImageInputStream, serviceContext);
+	}
+
+	@Override
+	public BlogsEntry addEntry(
+			long userId, String title, String deckTitle, String description,
+			String content, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, boolean smallImage, String smallImageURL,
+			String smallImageFileName, InputStream smallImageInputStream,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -157,6 +176,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setUrlTitle(
 			getUniqueUrlTitle(entryId, title, null, serviceContext));
+		entry.setDeckTitle(deckTitle);
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -991,6 +1011,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateEntry(
+			userId, entryId, title, StringPool.BLANK, description, content,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+			smallImage, smallImageURL, smallImageFileName,
+			smallImageInputStream, serviceContext);
+	}
+
+	@Override
+	public BlogsEntry updateEntry(
+			long userId, long entryId, String title, String deckTitle,
+			String description, String content, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
+			String smallImageURL, String smallImageFileName,
+			InputStream smallImageInputStream, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -1022,6 +1061,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setUrlTitle(
 			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
+		entry.setDeckTitle(deckTitle);
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);

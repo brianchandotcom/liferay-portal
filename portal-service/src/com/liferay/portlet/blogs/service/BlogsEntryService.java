@@ -73,6 +73,18 @@ public interface BlogsEntryService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
+		java.lang.String title, java.lang.String deckTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -167,6 +179,18 @@ public interface BlogsEntryService extends BaseService {
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String deckTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;

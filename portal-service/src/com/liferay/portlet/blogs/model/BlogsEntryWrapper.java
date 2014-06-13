@@ -63,6 +63,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("urlTitle", getUrlTitle());
+		attributes.put("deckTitle", getDeckTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
 		attributes.put("displayDate", getDisplayDate());
@@ -140,6 +141,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 
 		if (urlTitle != null) {
 			setUrlTitle(urlTitle);
+		}
+
+		String deckTitle = (String)attributes.get("deckTitle");
+
+		if (deckTitle != null) {
+			setDeckTitle(deckTitle);
 		}
 
 		String description = (String)attributes.get("description");
@@ -459,6 +466,26 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setUrlTitle(java.lang.String urlTitle) {
 		_blogsEntry.setUrlTitle(urlTitle);
+	}
+
+	/**
+	* Returns the deck title of this blogs entry.
+	*
+	* @return the deck title of this blogs entry
+	*/
+	@Override
+	public java.lang.String getDeckTitle() {
+		return _blogsEntry.getDeckTitle();
+	}
+
+	/**
+	* Sets the deck title of this blogs entry.
+	*
+	* @param deckTitle the deck title of this blogs entry
+	*/
+	@Override
+	public void setDeckTitle(java.lang.String deckTitle) {
+		_blogsEntry.setDeckTitle(deckTitle);
 	}
 
 	/**

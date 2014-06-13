@@ -460,6 +460,7 @@ public class EditEntryAction extends PortletAction {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
+		String deckTitle = ParamUtil.getString(actionRequest, "deckTitle");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String content = ParamUtil.getString(actionRequest, "content");
 
@@ -525,7 +526,7 @@ public class EditEntryAction extends PortletAction {
 				// Add entry
 
 				entry = BlogsEntryServiceUtil.addEntry(
-					title, description, content, displayDateMonth,
+					title, deckTitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
 					trackbacks, smallImage, smallImageURL, smallImageFileName,
@@ -544,11 +545,11 @@ public class EditEntryAction extends PortletAction {
 				String tempOldUrlTitle = entry.getUrlTitle();
 
 				entry = BlogsEntryServiceUtil.updateEntry(
-					entryId, title, description, content, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL, smallImageFileName,
-					smallImageInputStream, serviceContext);
+					entryId, title, deckTitle, description, content,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, smallImage, smallImageURL,
+					smallImageFileName, smallImageInputStream, serviceContext);
 
 				if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 					oldUrlTitle = tempOldUrlTitle;

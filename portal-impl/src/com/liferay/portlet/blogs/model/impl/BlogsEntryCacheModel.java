@@ -38,7 +38,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(title);
 		sb.append(", urlTitle=");
 		sb.append(urlTitle);
+		sb.append(", deckTitle=");
+		sb.append(deckTitle);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", content=");
@@ -142,6 +144,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setUrlTitle(urlTitle);
 		}
 
+		if (deckTitle == null) {
+			blogsEntryImpl.setDeckTitle(StringPool.BLANK);
+		}
+		else {
+			blogsEntryImpl.setDeckTitle(deckTitle);
+		}
+
 		if (description == null) {
 			blogsEntryImpl.setDescription(StringPool.BLANK);
 		}
@@ -217,6 +226,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		modifiedDate = objectInput.readLong();
 		title = objectInput.readUTF();
 		urlTitle = objectInput.readUTF();
+		deckTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = objectInput.readUTF();
 		displayDate = objectInput.readLong();
@@ -269,6 +279,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		}
 		else {
 			objectOutput.writeUTF(urlTitle);
+		}
+
+		if (deckTitle == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(deckTitle);
 		}
 
 		if (description == null) {
@@ -329,6 +346,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public long modifiedDate;
 	public String title;
 	public String urlTitle;
+	public String deckTitle;
 	public String description;
 	public String content;
 	public long displayDate;

@@ -55,7 +55,7 @@ refererURL.setParameter("updateLayout", "true");
 		int portletCategoryIndex = 0;
 		%>
 
-		<liferay-ui:panel-container id="<%= panelContainerId %>">
+		<liferay-ui:panel-container accordion="<%= BrowserSnifferUtil.isMobile(request) %>" id="<%= panelContainerId %>">
 			<c:if test="<%= portlets.size() > 0 %>">
 
 				<%

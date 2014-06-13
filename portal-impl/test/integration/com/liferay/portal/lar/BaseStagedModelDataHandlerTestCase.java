@@ -39,6 +39,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -94,9 +95,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(liveGroup);
-		GroupLocalServiceUtil.deleteGroup(stagingGroup);
-
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -608,11 +606,16 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		Assert.assertTrue(importedRatingsEntries.isEmpty());
 	}
 
+	@DeleteAfterTestRun
 	protected Group liveGroup;
+
 	protected Element missingReferencesElement;
 	protected PortletDataContext portletDataContext;
 	protected Element rootElement;
+
+	@DeleteAfterTestRun
 	protected Group stagingGroup;
+
 	protected UserIdStrategy userIdStrategy;
 	protected ZipReader zipReader;
 	protected ZipWriter zipWriter;

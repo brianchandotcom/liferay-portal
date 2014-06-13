@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -60,10 +60,6 @@ public class BaseExportImportTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-
-		GroupLocalServiceUtil.deleteGroup(importedGroup);
-
 		if ((larFile != null) && larFile.exists()) {
 			FileUtil.delete(larFile);
 		}
@@ -159,8 +155,12 @@ public class BaseExportImportTestCase {
 		return stagedModel.getUuid();
 	}
 
+	@DeleteAfterTestRun
 	protected Group group;
+
+	@DeleteAfterTestRun
 	protected Group importedGroup;
+
 	protected Layout importedLayout;
 	protected File larFile;
 	protected Layout layout;

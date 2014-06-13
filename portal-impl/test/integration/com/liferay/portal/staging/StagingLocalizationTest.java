@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -76,9 +76,6 @@ public class StagingLocalizationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_sourceGroup);
-		GroupLocalServiceUtil.deleteGroup(_targetGroup);
-
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), _availableLocales, _defaultLocale);
 	}
@@ -170,7 +167,11 @@ public class StagingLocalizationTest {
 	private Locale _defaultLocale;
 	private Locale[] _locales =
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
+
+	@DeleteAfterTestRun
 	private Group _sourceGroup;
+
+	@DeleteAfterTestRun
 	private Group _targetGroup;
 
 }

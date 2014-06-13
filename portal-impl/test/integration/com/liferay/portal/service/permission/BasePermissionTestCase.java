@@ -21,10 +21,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -58,9 +57,6 @@ public abstract class BasePermissionTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-		UserLocalServiceUtil.deleteUser(user);
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		removePortletModelViewPermission();
@@ -84,9 +80,13 @@ public abstract class BasePermissionTestCase {
 			ActionKeys.VIEW);
 	}
 
+	@DeleteAfterTestRun
 	protected Group group;
+
 	protected PermissionChecker permissionChecker;
 	protected ServiceContext serviceContext;
+
+	@DeleteAfterTestRun
 	protected User user;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -100,6 +101,8 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 		List<Theme> themes = ThemeLocalServiceUtil.init(
 			servletContextName, servletContext, null, true, xmls,
 			hotDeployEvent.getPluginPackage());
+
+		FileTimestampUtil.reset();
 
 		_themes.put(servletContextName, themes);
 

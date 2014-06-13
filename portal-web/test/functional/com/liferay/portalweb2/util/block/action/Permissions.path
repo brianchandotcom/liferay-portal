@@ -207,6 +207,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_PREFERENCES']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_UPDATE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
 	<td></td>

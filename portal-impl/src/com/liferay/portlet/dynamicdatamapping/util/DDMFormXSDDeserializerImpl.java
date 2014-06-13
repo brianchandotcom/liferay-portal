@@ -218,19 +218,24 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		DDMFormField ddmFormField, Locale defaultLocale) {
 
 		LocalizedValue label = ddmFormField.getLabel();
+
 		label.setDefaultLocale(defaultLocale);
 
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+
 		predefinedValue.setDefaultLocale(defaultLocale);
 
 		LocalizedValue style = ddmFormField.getStyle();
+
 		style.setDefaultLocale(defaultLocale);
 
 		LocalizedValue tip = ddmFormField.getTip();
+
 		tip.setDefaultLocale(defaultLocale);
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
+
 		ddmFormFieldOptions.setDefaultLocale(defaultLocale);
 
 		for (DDMFormField nestedDDMFormField :

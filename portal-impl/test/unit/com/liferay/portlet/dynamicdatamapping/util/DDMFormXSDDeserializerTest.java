@@ -60,9 +60,11 @@ public class DDMFormXSDDeserializerTest extends BaseDDMTest {
 	}
 
 	@Test
-	public void testDefaultLocaleDifferentFromSiteDefault() throws Exception {
+	public void testDefaultLocaleDifferentFromSiteDefaultLocale()
+		throws Exception {
+
 		String xml = readXML(
-			"dynamic-data-mapping-different-default-language.xml");
+			"dynamic-data-mapping-different-default-locale.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
 

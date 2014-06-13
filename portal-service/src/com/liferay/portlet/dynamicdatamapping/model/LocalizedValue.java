@@ -56,12 +56,12 @@ public class LocalizedValue {
 		return value;
 	}
 
-	public void setDefaultLocale(Locale defaultLocale) {
-		_defaultLocale = defaultLocale;
-	}
-
 	public Map<Locale, String> getValues() {
 		return _values;
+	}
+
+	public void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
 	}
 
 	private Locale _defaultLocale;

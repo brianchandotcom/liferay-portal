@@ -59,8 +59,8 @@ public class DDMFormFieldOptions {
 	public void setDefaultLocale(Locale defaultLocale) {
 		_defaultLocale = defaultLocale;
 
-		for (LocalizedValue labels : _options.values()) {
-			labels.setDefaultLocale(defaultLocale);
+		for (LocalizedValue localizedValue : _options.values()) {
+			localizedValue.setDefaultLocale(defaultLocale);
 		}
 	}
 

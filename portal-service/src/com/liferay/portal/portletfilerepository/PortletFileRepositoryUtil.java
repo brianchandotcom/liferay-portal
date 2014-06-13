@@ -180,6 +180,13 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, status, start, end, obc);
 	}
 
+	public static List<FileEntry> getPortletFileEntries(
+		long groupId, long folderId, OrderByComparator obc) {
+
+		return getPortletFileRepository().getPortletFileEntries(
+			groupId, folderId, obc);
+	}
+
 	public static int getPortletFileEntriesCount(long groupId, long folderId) {
 
 		return getPortletFileRepository().getPortletFileEntriesCount(

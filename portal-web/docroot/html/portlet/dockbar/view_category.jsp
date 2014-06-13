@@ -79,7 +79,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<div class="lfr-add-content">
-		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category list-unstyled" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
+		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category list-unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
 
 			<aui:nav collapsible="<%= false %>">
 
@@ -189,7 +189,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
 							%>
 
-								<aui:nav-item cssClass="lfr-content-item lfr-archived-setup" href="">
+								<aui:nav-item cssClass="lfr-archived-setup lfr-content-item" href="">
 									<span <%= AUIUtil.buildData(portletItemData) %> class="<%= cssClass %>">
 										<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
 

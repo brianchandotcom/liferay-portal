@@ -49,7 +49,7 @@
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
-	<div class="tags-admin-container lfr-app-column-view">
+	<div class="lfr-app-column-view tags-admin-container">
 		<div class="tags-admin-content-wrapper">
 			<aui:row cssClass="tags-admin-content">
 				<aui:col cssClass="tags-admin-list-container" width="<%= 35 %>">
@@ -67,7 +67,7 @@
 						<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "available") %></h3>
 					</div>
 
-					<div class="tags-admin-list list-unstyled"></div>
+					<div class="list-unstyled tags-admin-list"></div>
 
 					<div class="tags-pagination"></div>
 				</aui:col>

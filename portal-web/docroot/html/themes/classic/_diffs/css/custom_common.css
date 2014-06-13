@@ -985,7 +985,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Extras ---------- */
 
-	$prefixes: ("-webkit-","-moz-", "-o-", "");
+	$prefixes: ("-webkit-", "-moz-", "-o-", "");
 
 	@each $prefix in $prefixes {
 		::#{$prefix}selection {

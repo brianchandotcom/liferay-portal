@@ -69,7 +69,7 @@
 				@include respond-to(phone) {
 					> .dropdown-menu {
 						background-color: transparent;
-						border: 0;
+						border-width: 0;
 
 						@include box-shadow(none);
 

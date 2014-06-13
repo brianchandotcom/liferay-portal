@@ -95,7 +95,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 			<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
 				<aui:fieldset cssClass="options-group" label="application">
-					<ul class="lfr-tree select-options list-unstyled">
+					<ul class="lfr-tree list-unstyled select-options">
 						<li class="options">
 							<ul class="portlet-list">
 								<li class="tree-item">
@@ -154,7 +154,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 			<c:if test="<%= !portletDataHandler.isDisplayPortlet() && ((importModelCount != 0) || (modelDeletionCount != 0)) %>">
 				<aui:fieldset cssClass="options-group" label="content">
-					<ul class="lfr-tree select-options list-unstyled">
+					<ul class="lfr-tree list-unstyled select-options">
 						<li class="options">
 							<ul class="portlet-list">
 								<li class="tree-item">

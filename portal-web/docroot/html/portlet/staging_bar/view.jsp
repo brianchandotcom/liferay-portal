@@ -89,7 +89,7 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<aui:nav-item anchorCssClass="staging-link" cssClass="active staging-toggle site-variations" dropdown="<%= true %>" id="stagingLink" label="staging" toggle="<%= true %>">
+						<aui:nav-item anchorCssClass="staging-link" cssClass="active site-variations staging-toggle" dropdown="<%= true %>" id="stagingLink" label="staging" toggle="<%= true %>">
 							<aui:nav-item cssClass="row">
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">

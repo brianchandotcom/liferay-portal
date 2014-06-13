@@ -66,7 +66,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 				<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
 					<aui:fieldset cssClass="options-group" label="application">
-						<ul class="lfr-tree select-options list-unstyled">
+						<ul class="lfr-tree list-unstyled select-options">
 							<li class="options">
 								<ul class="portlet-list">
 									<li class="tree-item">
@@ -138,7 +138,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 					<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
 						<aui:fieldset cssClass="options-group" label="content">
-							<ul class="lfr-tree select-options list-unstyled">
+							<ul class="lfr-tree list-unstyled select-options">
 								<li class="tree-item">
 									<div class="hide" id="<portlet:namespace />range">
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">

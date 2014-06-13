@@ -127,7 +127,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 			</c:choose>
 		</td>
 		<td class="lfr-top">
-			<div class="thread-top float-container">
+			<div class="float-container thread-top">
 				<div class="subject">
 					<c:choose>
 						<c:when test="<%= showPermanentLink %>">

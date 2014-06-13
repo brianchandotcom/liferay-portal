@@ -45,7 +45,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		}
 		%>
 
-		<div class="progress progress-striped active">
+		<div class="active progress progress-striped">
 			<div class="progress-bar" style="width: <%= percentage %>%;">
 				<c:if test="<%= allModelAdditionCountersTotal > 0 %>">
 					<%= currentModelAdditionCountersTotal %> / <%= allModelAdditionCountersTotal %>

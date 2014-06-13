@@ -27,7 +27,7 @@
 				</a>
 
 				#if ($nav_item.hasChildren())
-					<ul class="dropdown-menu child-menu" role="menu">
+					<ul class="child-menu dropdown-menu" role="menu">
 						#foreach ($nav_child in $nav_item.getChildren())
 							#set ($nav_child_attr_selected="")
 							#set ($nav_child_css_class="lfr-nav-item")

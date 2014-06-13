@@ -7,7 +7,6 @@ $FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 .aui {
 	@import "aui_variables";
 
-
 	@import "aui/bootstrap";
 	@import "aui_custom";
 	@import "liferay_custom";

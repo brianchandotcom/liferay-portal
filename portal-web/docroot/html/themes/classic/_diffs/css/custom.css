@@ -59,6 +59,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.lfr-nav-item {
 			span, a {
 				@include ellipsis;
+
 				@include respond-to(desktop) {
 					max-width: 300px;
 				}

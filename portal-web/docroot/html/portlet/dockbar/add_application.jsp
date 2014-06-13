@@ -35,7 +35,7 @@ refererURL.setParameter("updateLayout", "true");
 	<div id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="btn-toolbar search-panel">
-				<aui:input cssClass="search-query col-md-12" label="" name="searchApplication" type="text" />
+				<aui:input cssClass="col-md-12 search-query" label="" name="searchApplication" type="text" />
 			</div>
 		</c:if>
 

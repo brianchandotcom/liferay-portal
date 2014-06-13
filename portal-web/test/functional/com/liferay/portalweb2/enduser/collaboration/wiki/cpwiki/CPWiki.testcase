@@ -68,6 +68,19 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="WikiPage#viewCP">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
 	</command>
 
 	<command name="CompareVersionsWikiPage" priority="5">

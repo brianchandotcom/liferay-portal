@@ -1313,7 +1313,6 @@
 	<command name="viewCP">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />

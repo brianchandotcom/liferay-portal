@@ -45,6 +45,12 @@
 		<execute action="CPWiki#assertTextNotEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 	</command>
 
+	<command name="gotoCP">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />

@@ -35,6 +35,7 @@ summary = HtmlUtil.replaceNewLine(summary);
 
 if (Validator.isNull(summary)) {
 	summary = HtmlUtil.escape(entry.getDeckTitle());
+
 	summary = HtmlUtil.replaceNewLine(summary);
 }
 

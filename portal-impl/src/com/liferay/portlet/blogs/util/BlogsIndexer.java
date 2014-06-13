@@ -113,10 +113,10 @@ public class BlogsIndexer extends BaseIndexer {
 
 		document.addText(
 			Field.CONTENT, HtmlUtil.extractText(entry.getContent()));
+		document.addText(Field.DECK_TITLE, entry.getDeckTitle());
 		document.addText(Field.DESCRIPTION, entry.getDescription());
 		document.addDate(Field.MODIFIED_DATE, entry.getModifiedDate());
 		document.addText(Field.TITLE, entry.getTitle());
-		document.addText(Field.DECK_TITLE, entry.getDeckTitle());
 
 		return document;
 	}

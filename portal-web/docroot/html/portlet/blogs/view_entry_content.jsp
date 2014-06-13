@@ -51,7 +51,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<% String deckTitle = entry.getDeckTitle(); %>
+				<%
+				String deckTitle = entry.getDeckTitle();
+				%>
 
 				<c:if test="<%= Validator.isNotNull(deckTitle) %>">
 					<div class="entry-deck-title">

@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -106,40 +104,11 @@ public class ServletContextUtil {
 				}
 			}
 			else {
-				try {
-					URL url = servletContext.getResource(curPath);
+				long curLastModified = FileTimestampUtil.getTimestamp(
+					servletContext, curPath);
 
-					if (url == null) {
-						_log.error("Resource URL for " + curPath + " is null");
-					}
-					else {
-						URLConnection urlConnection = null;
-
-						try {
-							urlConnection = url.openConnection();
-
-							if (urlConnection.getLastModified() >
-									lastModified) {
-
-								lastModified = urlConnection.getLastModified();
-							}
-						}
-						finally {
-							if (urlConnection != null) {
-								try {
-									InputStream inputStream =
-										urlConnection.getInputStream();
-
-									inputStream.close();
-								}
-								catch (IOException ioe) {
-								}
-							}
-						}
-					}
-				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
+				if (curLastModified > lastModified) {
+					lastModified = curLastModified;
 				}
 			}
 		}

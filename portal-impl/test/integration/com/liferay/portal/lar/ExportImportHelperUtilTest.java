@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -44,6 +43,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -77,7 +77,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -168,12 +167,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_referrerStagedModel = JournalTestUtil.addArticle(
 			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_liveGroup);
-		GroupLocalServiceUtil.deleteGroup(_stagingGroup);
 	}
 
 	@Test
@@ -732,13 +725,19 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	private static String _OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
 	private FileEntry _fileEntry;
+
+	@DeleteAfterTestRun
 	private Group _liveGroup;
+
 	private Layout _livePublicLayout;
 	private Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;
+
+	@DeleteAfterTestRun
 	private Group _stagingGroup;
+
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
 

@@ -18,9 +18,9 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.Portal;
@@ -61,8 +61,6 @@ public class FriendlyURLServletTest {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -109,7 +107,10 @@ public class FriendlyURLServletTest {
 	}
 
 	private FriendlyURLServlet _friendlyURLServlet = new FriendlyURLServlet();
-	private Group _group;
-	private HttpServletRequest _request = new MockHttpServletRequest();
 
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private HttpServletRequest _request = new MockHttpServletRequest();
+	
 }

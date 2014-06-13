@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -33,7 +33,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,11 +56,6 @@ public class I18nFilterTest {
 		_mockHttpServletResponse = new MockHttpServletResponse();
 
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -218,7 +212,9 @@ public class I18nFilterTest {
 			_mockHttpServletRequest, localePrependFriendlyURLStyle);
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private I18nFilter _i18nFilter;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;

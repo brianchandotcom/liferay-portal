@@ -188,7 +188,7 @@ public class AssetVocabularySettingsHelperTest {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		vocabularySettingsHelper.setClassNamesAndTypes(
+		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);
 		vocabularySettingsHelper.setMultiValued(multiValued);
 

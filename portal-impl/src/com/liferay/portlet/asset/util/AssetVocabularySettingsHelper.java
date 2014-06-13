@@ -92,7 +92,7 @@ public class AssetVocabularySettingsHelper {
 		return GetterUtil.getBoolean(value, true);
 	}
 
-	public void setClassNamesAndTypes(
+	public void setClassNameIdsAndClassTypePKs(
 		long[] classNameIds, long[] classTypePKs, boolean[] requireds) {
 
 		Set<String> requiredClassNameIds = new LinkedHashSet<String>();

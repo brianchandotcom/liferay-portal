@@ -112,7 +112,7 @@ public class UpgradeAsset extends UpgradeProcess {
 				requiredClassNameIds, classNameIds[i]);
 		}
 
-		newProperties.setClassNamesAndTypes(
+		newProperties.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);
 
 		return newProperties.toString();

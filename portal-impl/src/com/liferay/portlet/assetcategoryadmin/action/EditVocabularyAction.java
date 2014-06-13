@@ -112,7 +112,7 @@ public class EditVocabularyAction extends PortletAction {
 				actionRequest, "required" + index);
 		}
 
-		vocabularySettingsHelper.setClassNamesAndTypes(
+		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);
 
 		boolean multiValued = ParamUtil.getBoolean(

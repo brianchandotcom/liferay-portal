@@ -111,7 +111,7 @@ public class AssetTestUtil {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		vocabularySettingsHelper.setClassNamesAndTypes(
+		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			new long[] {classNameId}, new long[] {classTypePK},
 			new boolean[] {required});
 		vocabularySettingsHelper.setMultiValued(true);

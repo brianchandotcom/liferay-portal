@@ -97,6 +97,26 @@ public class ComboServlet extends HttpServlet {
 		}
 	}
 
+	protected static String getModuleContextPath(String modulePathString) {
+		int index = modulePathString.indexOf(CharPool.COLON);
+
+		if (index > 0) {
+			return modulePathString.substring(0, index);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected static String getResourcePath(String modulePathString) {
+		int index = modulePathString.indexOf(CharPool.COLON);
+
+		if (index > 0) {
+			return modulePathString.substring(index + 1);
+		}
+
+		return modulePathString;
+	}
+
 	protected void doService(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -226,12 +246,9 @@ public class ComboServlet extends HttpServlet {
 			URL resourceURL, String resourcePath, String minifierType)
 		throws IOException {
 
-		ModulePathContainer modulePathContainer = new ModulePathContainer(
-			resourcePath);
+		String moduleContextPath = getModuleContextPath(resourcePath);
 
-		resourcePath =
-			modulePathContainer.getModuleContextPath() +
-				modulePathContainer.getResourcePath();
+		resourcePath = moduleContextPath.concat(getResourcePath(resourcePath));
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);
@@ -311,8 +328,7 @@ public class ComboServlet extends HttpServlet {
 				}
 				else if (minifierType.equals("js")) {
 					stringFileContent = translate(
-						request, modulePathContainer.getModuleContextPath(),
-						stringFileContent);
+						request, moduleContextPath, stringFileContent);
 
 					stringFileContent = MinifierUtil.minifyJavaScript(
 						resourcePath, stringFileContent);
@@ -336,20 +352,17 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected URL getResourceURL(String modulePath) throws Exception {
-		ModulePathContainer modulePathContainer = new ModulePathContainer(
-			modulePath);
+		String moduleContextPath = getModuleContextPath(modulePath);
+		String resourcePath = getResourcePath(modulePath);
 
-		ServletContext servletContext = getServletContext(
-			modulePathContainer.getModuleContextPath());
+		ServletContext servletContext = getServletContext(moduleContextPath);
 
-		URL url = servletContext.getResource(
-			modulePathContainer.getResourcePath());
+		URL url = servletContext.getResource(resourcePath);
 
 		if (url == null) {
 			throw new ServletException(
-				"Resource " + modulePathContainer.getResourcePath() +
-					" does not exist in " +
-						modulePathContainer.getModuleContextPath());
+				"Resource " + resourcePath + " does not exist in " +
+					moduleContextPath);
 		}
 
 		return url;
@@ -428,37 +441,6 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		return validModuleExtension;
-	}
-
-	protected static class ModulePathContainer {
-
-		public String getModuleContextPath() {
-			return _moduleContextPath;
-		}
-
-		public String getResourcePath() {
-			return _resourcePath;
-		}
-
-		ModulePathContainer(String modulePathString) {
-			int index = modulePathString.indexOf(CharPool.COLON);
-
-			if (index > 0) {
-				String moduleContextPath = modulePathString.substring(0, index);
-
-				String resourcePath = modulePathString.substring(index + 1);
-
-				_moduleContextPath = moduleContextPath;
-				_resourcePath = resourcePath;
-			}
-			else {
-				_moduleContextPath = StringPool.BLANK;
-				_resourcePath = modulePathString;
-			}
-		}
-
-		private String _moduleContextPath;
-		private String _resourcePath;
 	}
 
 	private static final String _CSS_EXTENSION = "css";

@@ -226,6 +226,9 @@ public class ComboServlet extends HttpServlet {
 			URL resourceURL, String resourcePath, String minifierType)
 		throws IOException {
 
+		ModulePathContainer modulePathContainer = new ModulePathContainer(
+			resourcePath);
+
 		int colonIndex = resourcePath.indexOf(CharPool.COLON);
 
 		if (colonIndex > 0) {
@@ -311,9 +314,6 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent);
 				}
 				else if (minifierType.equals("js")) {
-					ModulePathContainer modulePathContainer =
-						new ModulePathContainer(resourcePath);
-
 					stringFileContent = translate(
 						request, modulePathContainer.getModuleContextPath(),
 						stringFileContent);

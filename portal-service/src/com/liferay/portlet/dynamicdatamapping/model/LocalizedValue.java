@@ -31,7 +31,7 @@ public class LocalizedValue {
 	}
 
 	public LocalizedValue(Locale defaultLocale) {
-		_values = new HashMap<Locale, String>();
+		setDefaultLocale(defaultLocale);
 	}
 
 	public void addValue(Locale locale, String value) {
@@ -60,7 +60,11 @@ public class LocalizedValue {
 		return _values;
 	}
 
+	public void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
+	}
+
 	private Locale _defaultLocale;
-	private Map<Locale, String> _values;
+	private Map<Locale, String> _values = new HashMap<Locale, String>();
 
 }

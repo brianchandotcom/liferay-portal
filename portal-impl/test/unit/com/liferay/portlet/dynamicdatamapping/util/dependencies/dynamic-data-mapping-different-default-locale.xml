@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,pt_BR" default-locale="pt_BR">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="Select5979" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+		<dynamic-element name="option10572" type="option" value="Value 1">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Option 1]]></entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label"><![CDATA[Opcao 1]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option10573" type="option" value="Value 2">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Option 2]]></entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label"><![CDATA[Opcao 2]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option10574" type="option" value="Value 3">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Option 3]]></entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label"><![CDATA[Opcao 3]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Select]]></entry>
+			<entry name="predefinedValue"><![CDATA[[""]]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+		<meta-data locale="pt_BR">
+			<entry name="label"><![CDATA[Select]]></entry>
+			<entry name="predefinedValue"><![CDATA[[""]]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

@@ -235,7 +235,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				<li class="<%= (cur != 1) ? "" : "disabled" %> first">
 					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" target="<%= target %>">
 						<c:choose>
-							<c:when test='<%= PortalUtil.isRightToLeft(request) %>'>
+							<c:when test="<%= PortalUtil.isRightToLeft(request) %>">
 								&rarr;
 							</c:when>
 							<c:otherwise>
@@ -273,7 +273,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<liferay-ui:message key="last" />
 
 						<c:choose>
-							<c:when test='<%= PortalUtil.isRightToLeft(request) %>'>
+							<c:when test="<%= PortalUtil.isRightToLeft(request) %>">
 								&larr;
 							</c:when>
 							<c:otherwise>

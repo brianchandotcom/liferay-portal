@@ -72,7 +72,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME_FIELD</td>
-	<td>//input[@id='kaleoformsportlet_name']</td>
+	<td>//input[contains(@id,'kaleoformsportlet_name')]</td>
 	<td></td>
 </tr>
 <tr>

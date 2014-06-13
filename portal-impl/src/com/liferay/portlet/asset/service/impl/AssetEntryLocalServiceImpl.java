@@ -39,6 +39,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -530,7 +531,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		validate(groupId, className, categoryIds, tagNames);
+		validate(groupId, className, classTypeId, categoryIds, tagNames);
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -843,8 +844,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
+			long groupId, String className, long classTypePK,
+			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
@@ -854,7 +855,23 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntryValidator validator = (AssetEntryValidator)InstancePool.get(
 			PropsValues.ASSET_ENTRY_VALIDATOR);
 
-		validator.validate(groupId, className, categoryIds, tagNames);
+		validator.validate(
+			groupId, className, classTypePK, categoryIds, tagNames);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	 */
+	@Deprecated
+	@Override
+	public void validate(
+			long groupId, String className, long[] categoryIds,
+			String[] tagNames)
+		throws PortalException {
+
+		validate(
+			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_PKS,
+			categoryIds, tagNames);
 	}
 
 	protected long[] getClassNameIds(long companyId, String className) {

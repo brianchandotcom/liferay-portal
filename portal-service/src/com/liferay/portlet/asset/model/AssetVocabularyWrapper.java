@@ -809,6 +809,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.getSelectedClassNameIds();
 	}
 
+	@Override
+	public long[] getSelectedClassTypePKs() {
+		return _assetVocabulary.getSelectedClassTypePKs();
+	}
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -833,15 +838,22 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public boolean isAssociatedToClassNameAndType(long classNameId,
+		long classTypePK) {
+		return _assetVocabulary.isAssociatedToClassNameAndType(classNameId,
+			classTypePK);
+	}
+
+	@Override
 	public boolean isAssociatedToClassNameId(long classNameId) {
 		return _assetVocabulary.isAssociatedToClassNameId(classNameId);
 	}
 
 	@Override
 	public boolean isMissingRequiredCategory(long classNameId,
-		long[] categoryIds) {
+		long classTypePK, long[] categoryIds) {
 		return _assetVocabulary.isMissingRequiredCategory(classNameId,
-			categoryIds);
+			classTypePK, categoryIds);
 	}
 
 	@Override
@@ -849,9 +861,18 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.isMultiValued();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	*/
+	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
 		return _assetVocabulary.isRequired(classNameId);
+	}
+
+	@Override
+	public boolean isRequired(long classNameId, long classTypePK) {
+		return _assetVocabulary.isRequired(classNameId, classTypePK);
 	}
 
 	/**

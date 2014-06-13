@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -60,6 +61,14 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			getVocabularySettingsHelper();
 
 		return vocabularySettingsHelper.getClassNameIds();
+	}
+
+	@Override
+	public long[] getSelectedClassTypePKs() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
+
+		return vocabularySettingsHelper.getClassTypePKs();
 	}
 
 	@Override
@@ -170,18 +179,27 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isAssociatedToClassNameId(long classNameId) {
+	public boolean isAssociatedToClassNameAndType(
+		long classNameId, long classTypePK) {
+
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.hasClassNameId(classNameId);
+		return vocabularySettingsHelper.hasClassNameAndType(
+			classNameId, classTypePK);
+	}
+
+	@Override
+	public boolean isAssociatedToClassNameId(long classNameId) {
+		return isAssociatedToClassNameAndType(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 	}
 
 	@Override
 	public boolean isMissingRequiredCategory(
-		long classNameId, final long[] categoryIds) {
+		long classNameId, long classTypePK, final long[] categoryIds) {
 
-		if (!isRequired(classNameId)) {
+		if (!isRequired(classNameId, classTypePK)) {
 			return false;
 		}
 
@@ -207,12 +225,23 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		return vocabularySettingsHelper.isMultiValued();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
+		return isRequired(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
+	}
+
+	@Override
+	public boolean isRequired(long classNameId, long classTypePK) {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.isClassNameIdRequired(classNameId);
+		return vocabularySettingsHelper.isClassNameAndTypeRequired(
+			classNameId, classTypePK);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:input:bean")
 boolean changesContext = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:changesContext")));
 boolean checked = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:checked")));
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:input:classPK")));
+long classTypePK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:input:classTypePK")), -1);
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:cssClass"));
 java.util.Map data = (java.util.Map)request.getAttribute("aui:input:data");
 java.lang.String dateTogglerCheckboxLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:dateTogglerCheckboxLabel"));

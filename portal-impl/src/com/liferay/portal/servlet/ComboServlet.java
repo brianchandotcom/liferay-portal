@@ -229,13 +229,9 @@ public class ComboServlet extends HttpServlet {
 		ModulePathContainer modulePathContainer = new ModulePathContainer(
 			resourcePath);
 
-		int colonIndex = resourcePath.indexOf(CharPool.COLON);
-
-		if (colonIndex > 0) {
-			resourcePath =
-				resourcePath.substring(0, colonIndex) +
-					resourcePath.substring(colonIndex + 1);
-		}
+		resourcePath =
+			modulePathContainer.getModuleContextPath() +
+				modulePathContainer.getResourcePath();
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);

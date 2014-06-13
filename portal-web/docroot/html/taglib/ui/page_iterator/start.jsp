@@ -230,7 +230,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			<%@ include file="/html/taglib/ui/page_iterator/showing_x_results.jspf" %>
 		</c:if>
 
-		<ul class="pager lfr-pagination-buttons">
+		<ul class="lfr-pagination-buttons pager">
 			<c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
 				<li class="<%= (cur != 1) ? "" : "disabled" %> first">
 					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" target="<%= target %>">

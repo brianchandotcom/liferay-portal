@@ -185,8 +185,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(
-			long[] groupIds, String className, long classTypePK)
-		throws SystemException {
+		long[] groupIds, String className, long classTypePK) {
 
 		List<AssetVocabulary> vocabularies =
 			assetVocabularyPersistence.filterFindByGroupId(groupIds);

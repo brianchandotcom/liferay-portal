@@ -141,8 +141,9 @@ AUI.add(
 							if (!portletMetaData.instanceable) {
 								instance._disablePortletEntry(portletId);
 							}
-							else if (Util.isPhone() || Util.isTablet()) {
-								instance._instanceablePortletFeedback(portletId);
+
+							if (Util.isPhone() || Util.isTablet()) {
+								instance._portletFeedback(portletId);
 							}
 
 							var beforePortletLoaded = null;
@@ -272,7 +273,7 @@ AUI.add(
 						return instance._searchData;
 					},
 
-					_instanceablePortletFeedback: function(portletId) {
+					_portletFeedback: function(portletId) {
 						var instance = this;
 
 						var addedMessagePortlet = instance.byId('portletName');

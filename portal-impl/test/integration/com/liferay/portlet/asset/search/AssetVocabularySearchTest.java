@@ -148,4 +148,9 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 		return "Title";
 	}
 
+	@Override
+	protected Locale getSearchLocale() {
+		return LocaleUtil.HUNGARY;
+	}
+
 }

@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -44,8 +45,6 @@ public class JournalArticleLocalServiceTreeTest {
 		for (int i = _articles.size() - 1; i >= 0; i--) {
 			JournalArticleLocalServiceUtil.deleteArticle(_articles.get(i));
 		}
-
-		JournalFolderLocalServiceUtil.deleteFolder(_folder);
 	}
 
 	@Test
@@ -87,6 +86,8 @@ public class JournalArticleLocalServiceTreeTest {
 	}
 
 	private List<JournalArticle> _articles = new ArrayList<JournalArticle>();
+
+	@DeleteAfterTestRun
 	private JournalFolder _folder;
 
 }

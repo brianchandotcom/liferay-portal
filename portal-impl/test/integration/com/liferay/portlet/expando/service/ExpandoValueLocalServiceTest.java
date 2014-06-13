@@ -17,6 +17,7 @@ package com.liferay.portlet.expando.service;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
@@ -36,7 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,11 +59,6 @@ public class ExpandoValueLocalServiceTest {
 
 		_expandoTable = ExpandoTestUtil.addTable(
 			_classNameId, "testExpandoTable");
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ExpandoTableLocalServiceUtil.deleteExpandoTable(_expandoTable);
 	}
 
 	@Test
@@ -235,7 +230,10 @@ public class ExpandoValueLocalServiceTest {
 
 	private long _classNameId;
 	private Locale _enLocale;
+
+	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
+
 	private Locale _frLocale;
 	private Locale _ptLocale;
 

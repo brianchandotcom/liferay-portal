@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -89,8 +89,6 @@ public class JournalArticleServiceTest {
 	public void tearDown() throws Exception {
 		JournalArticleLocalServiceUtil.deleteArticle(
 			_group.getGroupId(), _article.getArticleId(), new ServiceContext());
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -633,8 +631,9 @@ public class JournalArticleServiceTest {
 	}
 
 	private JournalArticle _article;
-	private Group _group;
 	private String _keyword;
-	private JournalArticle _latestArticle;
+
+	@DeleteAfterTestRun
+	private Group _group; private JournalArticle _latestArticle;
 
 }

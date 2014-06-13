@@ -15,10 +15,13 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -139,8 +142,19 @@ public class InputEditorTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
+
+		if (_contentsLanguageId == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+			Locale locale = themeDisplay.getLocale();
+
+			_contentsLanguageId = LocaleUtil.toLanguageId(locale);
+		}
+
 		request.setAttribute(
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
+
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-editor:cssClasses", cssClasses);
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);

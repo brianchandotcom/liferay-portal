@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<AssetRendererFactory> availableAssetFactories = ListUtil.filter(
+List<AssetRendererFactory> availableAssetRendererFactories = ListUtil.filter(
 	AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()),
 	new PredicateFilter<AssetRendererFactory>() {
 
@@ -26,8 +26,8 @@ List<AssetRendererFactory> availableAssetFactories = ListUtil.filter(
 
 	});
 
-List<AssetRendererFactory> assetFactoriesWithClassTypes = ListUtil.filter(
-	availableAssetFactories,
+List<AssetRendererFactory> classTypedAssetRendererFactories = ListUtil.filter(
+	availableAssetRendererFactories,
 	new PredicateFilter<AssetRendererFactory>() {
 
 		@Override
@@ -69,7 +69,7 @@ if (vocabulary != null) {
 						<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 						<%
-						for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
+						for (AssetRendererFactory assetRendererFactory : availableAssetRendererFactories) {
 						%>
 
 							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
@@ -81,7 +81,7 @@ if (vocabulary != null) {
 					</aui:select>
 
 					<%
-					for (AssetRendererFactory assetRendererFactory : assetFactoriesWithClassTypes) {
+					for (AssetRendererFactory assetRendererFactory : classTypedAssetRendererFactories) {
 					%>
 
 						<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>

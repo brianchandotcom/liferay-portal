@@ -631,9 +631,11 @@ public class JournalArticleServiceTest {
 	}
 
 	private JournalArticle _article;
-	private String _keyword;
 
 	@DeleteAfterTestRun
-	private Group _group; private JournalArticle _latestArticle;
+	private Group _group;
+
+	private String _keyword;
+	private JournalArticle _latestArticle;
 
 }

@@ -19,8 +19,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionTestCase;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -41,60 +40,13 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
+public class WikiSubscriptionBaseModelTest
+	extends BaseSubscriptionBaseModelTestCase {
 
 	@Ignore
 	@Override
 	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionClassType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionDefaultClassType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionLocalizedContent() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
 	}
 
 	@Override
@@ -118,24 +70,6 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 		WikiPageLocalServiceUtil.subscribePage(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
-	}
-
-	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		WikiNodeLocalServiceUtil.subscribeNode(
-			TestPropsValues.getUserId(), containerModelId);
-	}
-
-	@Override
-	protected String getPortletId() {
-		return PortletKeys.WIKI;
-	}
-
-	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailPageAddedBody";
 	}
 
 	@Override

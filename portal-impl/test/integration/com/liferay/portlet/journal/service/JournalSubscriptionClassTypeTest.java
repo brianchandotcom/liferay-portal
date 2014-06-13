@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -24,10 +23,8 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.BaseSubscriptionClassTypeTestCase;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -37,14 +34,11 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
-import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -58,27 +52,8 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
-
-	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), containerModelId);
-
-		return article.getResourcePrimKey();
-	}
+public class JournalSubscriptionClassTypeTest
+	extends BaseSubscriptionClassTypeTestCase {
 
 	@Override
 	protected long addBaseModelWithClassType(long containerId, long classTypeId)
@@ -117,26 +92,9 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString());
-
-		return folder.getFolderId();
-	}
-
-	@Override
 	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		JournalArticleLocalServiceUtil.subscribeStructure(
 			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
-	}
-
-	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		JournalFolderLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
@@ -152,27 +110,6 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 		Assert.assertNotNull(ddmStructure);
 
 		return ddmStructure.getStructureId();
-	}
-
-	@Override
-	protected String getPortletId() {
-		return PortletKeys.JOURNAL;
-	}
-
-	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailArticleAddedBody";
-	}
-
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				baseModelId, WorkflowConstants.STATUS_APPROVED, true);
-
-		article = JournalTestUtil.updateArticle(article);
-
-		return article.getResourcePrimKey();
 	}
 
 	protected DDMStructure _ddmStructure;

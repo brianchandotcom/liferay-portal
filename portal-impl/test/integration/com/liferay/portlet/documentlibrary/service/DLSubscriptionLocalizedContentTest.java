@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service;
+package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -24,14 +25,12 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.documentlibrary.util.DLConstants;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,80 +44,33 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionClassType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionDefaultClassType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
-	}
+public class DLSubscriptionLocalizedContentTest
+	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			group.getGroupId(), group.getGroupId(), containerModelId, true);
 
-		return entry.getEntryId();
+		return fileEntry.getFileEntryId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+		DLAppLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override
 	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailEntryAddedBody";
+		return "emailFileEntryAddedBody";
 	}
 
 	@Override
@@ -126,7 +78,7 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), BlogsConstants.SERVICE_NAME);
+			group.getGroupId(), DLConstants.SERVICE_NAME);
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

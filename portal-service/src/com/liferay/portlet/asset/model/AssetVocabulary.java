@@ -55,7 +55,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds);
 
-	public boolean isAssociatedToClassNameAndType(long classNameId,
+	public boolean isAssociatedToClassNameIdAndClassTypePK(long classNameId,
 		long classTypePK);
 
 	public boolean isAssociatedToClassNameId(long classNameId);

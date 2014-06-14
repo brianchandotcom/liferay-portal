@@ -17,5 +17,5 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-namespace = "_" + PortletKeys.JOURNAL_CONTENT_SEARCH + "_";
+namespace = PortalUtil.getPortletNamespace(PortletKeys.JOURNAL_CONTENT_SEARCH);
 %>

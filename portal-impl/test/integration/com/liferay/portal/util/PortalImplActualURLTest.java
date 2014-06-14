@@ -31,6 +31,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,11 +57,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortalImplActualURLTest {
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-	}
 
 	@Test
 	public void testChildLayoutFriendlyURL() throws Exception {
@@ -193,6 +188,7 @@ public class PortalImplActualURLTest {
 		return requestContext;
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

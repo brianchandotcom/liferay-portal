@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -49,7 +49,6 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -114,11 +113,6 @@ public class AssetEntryQueryTest {
 			_fashionCategoryId, _foodCategoryId, _healthCategoryId,
 			_sportCategoryId
 		};
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -614,7 +608,10 @@ public class AssetEntryQueryTest {
 	private long[] _assetCategoryIds2;
 	private long _fashionCategoryId;
 	private long _foodCategoryId;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private long _healthCategoryId;
 	private long _sportCategoryId;
 	private long _travelCategoryId;

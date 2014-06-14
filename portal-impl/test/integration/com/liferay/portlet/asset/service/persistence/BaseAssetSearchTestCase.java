@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -53,7 +53,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -138,11 +137,6 @@ public abstract class BaseAssetSearchTestCase {
 		_assetTagsNames1 =
 			new String[] {"liferay", "architecture", "modularity", "osgi"};
 		_assetTagsNames2 = new String[] {"liferay", "architecture", "services"};
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -1234,7 +1228,10 @@ public abstract class BaseAssetSearchTestCase {
 	private String[] _assetTagsNames2;
 	private long _fashionCategoryId;
 	private long _foodCategoryId;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private long _healthCategoryId;
 	private long _sportCategoryId;
 	private long _travelCategoryId;

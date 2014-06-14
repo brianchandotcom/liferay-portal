@@ -23,10 +23,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
@@ -62,10 +61,6 @@ public abstract class BaseUserNotificationTestCase {
 		deleteUserNotificationEvents(user.getUserId());
 
 		deleteUserNotificationDeliveries();
-
-		GroupLocalServiceUtil.deleteGroup(group);
-
-		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	@Test
@@ -411,8 +406,12 @@ public abstract class BaseUserNotificationTestCase {
 		}
 	}
 
+	@DeleteAfterTestRun
 	protected Group group;
+
+	@DeleteAfterTestRun
 	protected User user;
+
 	protected List<UserNotificationDelivery> userNotificationDeliveries =
 		new ArrayList<UserNotificationDelivery>();
 

@@ -51,10 +51,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	}
 
 	@After
-	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		LocaleThreadLocal.setDefaultLocale(defaultLocale);
 	}
 

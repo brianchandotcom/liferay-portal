@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
-<project name="build-common"
+<project name="portal-common"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
 	xmlns:sonar="antlib:org.sonar.ant"
 >
-	<dirname file="${ant.file.build-common}" property="project.dir.native" />
+	<dirname file="${ant.file.portal-common}" property="project.dir.native" />
 
 	<pathconvert property="project.dir" targetos="unix">
 		<path location="${project.dir.native}" />
@@ -494,19 +494,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="ant.target" />
 
 		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
-					</exec>
-				</then>
-				<else>
-					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant.bat" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
-					</exec>
-				</else>
-			</if>
+			<ant dir="@{ant.dir}" antfile="@{ant.build.file}" target="@{ant.target}" inheritall="false">
+				<property name="portal.invoked" value="true" />
+			</ant>
 		</sequential>
 	</macrodef>
 

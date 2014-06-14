@@ -58,7 +58,7 @@ public class InputSearchTag extends IncludeTag {
 		_title = title;
 	}
 
-	public void setuseNamespace(boolean useNamespace) {
+	public void setUseNamespace(boolean useNamespace) {
 		_useNamespace = useNamespace;
 	}
 

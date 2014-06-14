@@ -179,20 +179,20 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isAssociatedToClassNameAndType(
+	public boolean isAssociatedToClassNameId(long classNameId) {
+		return isAssociatedToClassNameIdAndClassTypePK(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
+	}
+
+	@Override
+	public boolean isAssociatedToClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK) {
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.hasClassNameAndType(
+		return vocabularySettingsHelper.hasClassNameIdAndClassTypePK(
 			classNameId, classTypePK);
-	}
-
-	@Override
-	public boolean isAssociatedToClassNameId(long classNameId) {
-		return isAssociatedToClassNameAndType(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PKS);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.isClassNameAndTypeRequired(
+		return vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(
 			classNameId, classTypePK);
 	}
 

@@ -89,7 +89,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			AssetVocabulary vocabulary)
 		throws PortalException {
 
-		if (!vocabulary.isAssociatedToClassNameAndType(
+		if (!vocabulary.isAssociatedToClassNameIdAndClassTypePK(
 				classNameId, classTypePK)) {
 
 			return;

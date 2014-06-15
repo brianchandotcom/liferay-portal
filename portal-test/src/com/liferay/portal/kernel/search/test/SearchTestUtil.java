@@ -70,13 +70,13 @@ public class SearchTestUtil {
 	}
 
 	public static Document createDocument(
-		String entryClassName, long entryClassPk) {
+		String entryClassName, long entryClassPK) {
 
 		Document document = new DocumentImpl();
 
 		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		documentHelper.setEntryKey(entryClassName, entryClassPk);
+		documentHelper.setEntryKey(entryClassName, entryClassPK);
 
 		return document;
 	}

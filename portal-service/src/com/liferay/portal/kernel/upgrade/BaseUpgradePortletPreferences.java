@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Jorge Ferrer
@@ -308,6 +312,17 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void upgradeMultiValuePreference(
+			PortletPreferences portletPreferences, String key)
+		throws ReadOnlyException {
+
+		String value = portletPreferences.getValue(key, StringPool.BLANK);
+
+		if (Validator.isNotNull(value)) {
+			portletPreferences.setValues(key, StringUtil.split(value));
 		}
 	}
 

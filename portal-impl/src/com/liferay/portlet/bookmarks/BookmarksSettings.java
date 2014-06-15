@@ -33,6 +33,14 @@ import java.util.Map;
  */
 public class BookmarksSettings {
 
+	public static final String[] ALL_KEYS = {
+		"emailEntryAddedBody", "emailEntryAddedSubject",
+		"emailEntryUpdatedBody", "emailEntryUpdatedSubject", "emailFromAddress",
+		"emailFromName", "entriesPerPage", "entryColumns", "folderColumns",
+		"foldersPerPage", "rootFolderId", "emailEntryAddedEnabled",
+		"emailEntryUpdatedEnabled", "enableRelatedAssets", "showFoldersSearch",
+		"showSubfolders"};
+
 	public static BookmarksSettings getInstance(long groupId)
 		throws PortalException {
 

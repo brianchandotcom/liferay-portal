@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class NullCommentManagerImplTest {
+public class DummyCommentManagerImplTest {
 
 	@Test
 	public void testAllCallsDoNothing() throws PortalException {

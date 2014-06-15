@@ -21,7 +21,7 @@ import com.liferay.portal.service.ServiceContext;
 /**
  * @author André de Oliveira
  */
-public class NullCommentManagerImpl implements CommentManager {
+public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
 	public long addComment(

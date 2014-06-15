@@ -101,7 +101,7 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	private CommentManager _defaultCommentManager =
-		new NullCommentManagerImpl();
+		new DummyCommentManagerImpl();
 	private ServiceTracker<CommentManager, CommentManager> _serviceTracker;
 
 }

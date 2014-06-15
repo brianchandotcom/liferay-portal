@@ -58,6 +58,6 @@ public class NullCommentManagerImplTest {
 
 	private static final String _USER_NAME = RandomTestUtil.randomString();
 
-	private CommentManager _commentManager = new NullCommentManagerImpl();
+	private CommentManager _commentManager = new DummyCommentManagerImpl();
 
 }

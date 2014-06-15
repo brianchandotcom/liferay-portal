@@ -33,9 +33,11 @@ public class CommentManagerImpl implements CommentManager {
 	public CommentManagerImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
+		Class<?> clazz = getClass();
+
 		Filter filter = registry.getFilter(
 			"(&(objectClass=" + CommentManager.class.getName() +
-				")(!(objectClass=" + getClass().getName() + ")))");
+				")(!(objectClass=" + clazz.getName() + ")))");
 
 		_serviceTracker = registry.trackServices(filter);
 
@@ -49,7 +51,7 @@ public class CommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		CommentManager commentManager = _getCommentManager();
+		CommentManager commentManager = getCommentManager();
 
 		return commentManager.addComment(
 			userId, groupId, className, classPK, userName, subject, body,
@@ -62,7 +64,7 @@ public class CommentManagerImpl implements CommentManager {
 			String userName)
 		throws PortalException {
 
-		CommentManager commentManager = _getCommentManager();
+		CommentManager commentManager = getCommentManager();
 
 		commentManager.addInitialDiscussion(
 			userId, groupId, className, classPK, userName);
@@ -70,7 +72,7 @@ public class CommentManagerImpl implements CommentManager {
 
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
-		CommentManager commentManager = _getCommentManager();
+		CommentManager commentManager = getCommentManager();
 
 		commentManager.deleteComment(commentId);
 	}
@@ -79,21 +81,23 @@ public class CommentManagerImpl implements CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 
-		CommentManager commentManager = _getCommentManager();
+		CommentManager commentManager = getCommentManager();
 
 		commentManager.deleteDiscussion(className, classPK);
 	}
 
-	protected void setDefaultCommentManager(CommentManager commentManager) {
-		_defaultCommentManager = commentManager;
-	}
-
-	private CommentManager _getCommentManager() {
+	protected CommentManager getCommentManager() {
 		if (_serviceTracker.isEmpty()) {
 			return _defaultCommentManager;
 		}
 
 		return _serviceTracker.getService();
+	}
+
+	protected void setDefaultCommentManager(
+		CommentManager defaultCommentManager) {
+
+		_defaultCommentManager = defaultCommentManager;
 	}
 
 	private CommentManager _defaultCommentManager =

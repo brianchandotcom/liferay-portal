@@ -1490,6 +1490,10 @@ public abstract class BaseIndexer implements Indexer {
 			classPK = (Long)baseModel.getPrimaryKeyObj();
 		}
 
+		DocumentHelper documentHelper = new DocumentHelper(document);
+
+		documentHelper.setEntryKey(className, classPK);
+
 		document.addUID(portletId, classPK);
 
 		List<AssetCategory> assetCategories =
@@ -1519,10 +1523,6 @@ public abstract class BaseIndexer implements Indexer {
 			ListUtil.toString(assetTags, AssetTag.TAG_ID_ACCESSOR), 0L);
 
 		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
-
-		DocumentHelper documentHelper = new DocumentHelper(document);
-
-		documentHelper.setEntryKey(className, classPK);
 
 		document.addKeyword(Field.PORTLET_ID, portletId);
 

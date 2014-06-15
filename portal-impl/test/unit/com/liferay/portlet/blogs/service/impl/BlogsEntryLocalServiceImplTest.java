@@ -46,7 +46,7 @@ public class BlogsEntryLocalServiceImplTest {
 	}
 
 	@Test
-	public void testAddInitialDiscussion() throws Exception {
+	public void testAddDiscussion() throws Exception {
 		long entryId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -75,10 +75,10 @@ public class BlogsEntryLocalServiceImplTest {
 	}
 
 	@Test
-	public void testAddInitialDiscussionWhenCommentsAreDisabled()
+	public void testAddDiscussionWhenCommentsAreDisabled()
 		throws Exception {
 
-		boolean previous = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED;
+		boolean value = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED;
 
 		Whitebox.setInternalState(
 			PropsValues.class, "BLOGS_ENTRY_COMMENTS_ENABLED", false);
@@ -90,7 +90,7 @@ public class BlogsEntryLocalServiceImplTest {
 		}
 		finally {
 			Whitebox.setInternalState(
-				PropsValues.class, "BLOGS_ENTRY_COMMENTS_ENABLED", previous);
+				PropsValues.class, "BLOGS_ENTRY_COMMENTS_ENABLED", value);
 		}
 
 		Mockito.verifyZeroInteractions(_commentManager);

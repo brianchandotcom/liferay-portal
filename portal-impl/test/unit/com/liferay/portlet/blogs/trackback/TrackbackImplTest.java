@@ -56,10 +56,6 @@ public class TrackbackImplTest extends PowerMockito {
 		setUpPortal();
 		setUpThemeDisplay();
 		setUpUserLocalService();
-
-		_trackbackImpl = new TrackbackImpl();
-
-		_trackbackImpl.setCommentManager(_commentManager);
 	}
 
 	@Test
@@ -119,10 +115,12 @@ public class TrackbackImplTest extends PowerMockito {
 			commentId
 		);
 
-		_trackbackImpl.setCommentManager(_commentManager);
-		_trackbackImpl.setLinkbackConsumer(_linkbackConsumer);
+		Trackback trackback = new TrackbackImpl();
 
-		_trackbackImpl.addTrackback(
+		trackback.setCommentManager(_commentManager);
+		trackback.setLinkbackConsumer(_linkbackConsumer);
+
+		trackback.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
 			"__blogName__", "__title__", _serviceContextFunction
 		);
@@ -195,7 +193,6 @@ public class TrackbackImplTest extends PowerMockito {
 	private Function<String, ServiceContext> _serviceContextFunction;
 
 	private ThemeDisplay _themeDisplay;
-	private TrackbackImpl _trackbackImpl;
 
 	@Mock
 	private UserLocalService _userLocalService;

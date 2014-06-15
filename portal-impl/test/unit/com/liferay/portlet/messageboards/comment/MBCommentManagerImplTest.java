@@ -56,12 +56,12 @@ public class MBCommentManagerImplTest extends Mockito {
 			mbMessageId
 		);
 
-		long parentMessageId = RandomTestUtil.randomLong();
+		long rootMessageId = RandomTestUtil.randomLong();
 
 		when(
 			_mbThread.getRootMessageId()
 		).thenReturn(
-			parentMessageId
+			rootMessageId
 		);
 
 		long threadId = RandomTestUtil.randomLong();
@@ -85,24 +85,24 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		Mockito.verify(
 			_mbMessageLocalService
-		).getDiscussionMessageDisplay(
-			userId, groupId, className, classPK,
-			WorkflowConstants.STATUS_APPROVED
+		).addDiscussionMessage(
+			Matchers.eq(userId), Matchers.eq("__blogName__"),
+			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
+			Matchers.eq(threadId), Matchers.eq(rootMessageId),
+			Matchers.eq("__title__"), Matchers.eq("__body__"),
+			Matchers.same(_serviceContext)
 		);
 
 		Mockito.verify(
 			_mbMessageLocalService
-		).addDiscussionMessage(
-			Matchers.eq(userId), Matchers.eq("__blogName__"),
-			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
-			Matchers.eq(threadId), Matchers.eq(parentMessageId),
-			Matchers.eq("__title__"), Matchers.eq("__body__"),
-			Matchers.same(_serviceContext)
+		).getDiscussionMessageDisplay(
+			userId, groupId, className, classPK,
+			WorkflowConstants.STATUS_APPROVED
 		);
 	}
 
 	@Test
-	public void testAddInitialDiscussion() throws Exception {
+	public void testAddDiscussion() throws Exception {
 		long userId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();

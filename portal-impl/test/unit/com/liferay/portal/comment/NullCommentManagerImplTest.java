@@ -27,7 +27,7 @@ import org.junit.Test;
 public class NullCommentManagerImplTest {
 
 	@Test
-	public void testEverythingIsANoOp() throws PortalException {
+	public void testAllCallsDoNothing() throws PortalException {
 		Assert.assertEquals(
 			0,
 			_commentManager.addComment(

@@ -59,14 +59,14 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void addInitialDiscussion(
+	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
-		commentManager.addInitialDiscussion(
+		commentManager.addDiscussion(
 			userId, groupId, className, classPK, userName);
 	}
 

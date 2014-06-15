@@ -1312,7 +1312,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-			commentManager.addInitialDiscussion(
+			commentManager.addDiscussion(
 				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
 				entry.getUserName());
 		}

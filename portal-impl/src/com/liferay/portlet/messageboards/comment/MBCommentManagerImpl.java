@@ -57,7 +57,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void addInitialDiscussion(
+	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
 		throws PortalException {

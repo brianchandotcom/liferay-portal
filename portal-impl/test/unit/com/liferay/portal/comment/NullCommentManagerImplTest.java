@@ -34,7 +34,7 @@ public class NullCommentManagerImplTest {
 				_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME,
 				_SUBJECT, _BODY, null));
 
-		_commentManager.addInitialDiscussion(
+		_commentManager.addDiscussion(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME);
 
 		_commentManager.deleteComment(_COMMENT_ID);

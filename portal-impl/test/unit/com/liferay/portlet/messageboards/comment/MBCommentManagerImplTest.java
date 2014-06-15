@@ -107,7 +107,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		long groupId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
 
-		_mbCommentManagerImpl.addInitialDiscussion(
+		_mbCommentManagerImpl.addDiscussion(
 			userId, groupId, "__ClassName__", classPK, "__UserName__");
 
 		Mockito.verify(

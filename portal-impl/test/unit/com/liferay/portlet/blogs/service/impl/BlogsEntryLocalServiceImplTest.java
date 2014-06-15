@@ -69,7 +69,7 @@ public class BlogsEntryLocalServiceImplTest {
 
 		Mockito.verify(
 			_commentManager
-		).addInitialDiscussion(
+		).addDiscussion(
 			userId, groupId, BlogsEntry.class.getName(), entryId,
 			"__UserName__");
 	}

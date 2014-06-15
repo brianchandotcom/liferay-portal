@@ -129,7 +129,7 @@ public class CommentManagerImplTest extends Mockito {
 				_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME,
 				_SUBJECT, _BODY, _serviceContextFunction));
 
-		_commentManagerImpl.addInitialDiscussion(
+		_commentManagerImpl.addDiscussion(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME);
 
 		_commentManagerImpl.deleteComment(_COMMENT_ID);
@@ -138,7 +138,7 @@ public class CommentManagerImplTest extends Mockito {
 
 		Mockito.verify(
 			commentManager
-		).addInitialDiscussion(
+		).addDiscussion(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME
 		);
 

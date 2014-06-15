@@ -26,8 +26,8 @@ public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
+			long groupId, String className, long classTypePK,
+			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
 		if (!className.equals(MBDiscussion.class.getName()) &&

@@ -493,6 +493,12 @@
 				<outputType>long</outputType>
 			</attribute>
 			<attribute>
+				<name>classTypePK</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<defaultValue>-1</defaultValue>
+			</attribute>
+			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

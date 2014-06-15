@@ -21,6 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
+long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classTypePK"));
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
@@ -31,7 +32,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 
 if (Validator.isNotNull(className)) {
-	vocabularies = AssetUtil.filterVocabularies(vocabularies, className);
+	vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
 
 	long classNameId = PortalUtil.getClassNameId(className);
 
@@ -72,7 +73,7 @@ if (Validator.isNotNull(className)) {
 					(<%= vocabularyGroup.getDescriptiveName(locale) %>)
 				</c:if>
 
-				<c:if test="<%= vocabulary.isRequired(classNameId) %>">
+				<c:if test="<%= vocabulary.isRequired(classNameId, classTypePK) %>">
 					<span class="label-required">(<liferay-ui:message key="required" />)</span>
 				</c:if>
 			</label>

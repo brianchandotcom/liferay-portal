@@ -47,13 +47,13 @@ public class CommentManagerImplTest extends Mockito {
 	}
 
 	@Test
-	public void testCommentManagerFromRegistry() throws PortalException {
-		CommentManager commentManagerFromRegistry = mock(CommentManager.class);
+	public void testRegistryCommentManager() throws PortalException {
+		CommentManager registryCommentManager = mock(CommentManager.class);
 
 		when(
 			_serviceTracker.getService()
 		).thenReturn(
-			commentManagerFromRegistry
+			registryCommentManager
 		);
 
 		when(
@@ -66,7 +66,7 @@ public class CommentManagerImplTest extends Mockito {
 
 		_commentManagerImpl.setDefaultCommentManager(defaultCommentManager);
 
-		testAllCallsAreDelegated(commentManagerFromRegistry);
+		testAllCallsAreDelegated(registryCommentManager);
 
 		verifyZeroInteractions(defaultCommentManager);
 	}
@@ -90,13 +90,13 @@ public class CommentManagerImplTest extends Mockito {
 		Registry registry = mock(Registry.class);
 
 		when(
-			registry.setRegistry(registry)
+			registry.getRegistry()
 		).thenReturn(
 			registry
 		);
 
 		when(
-			registry.getRegistry()
+			registry.setRegistry(registry)
 		).thenReturn(
 			registry
 		);
@@ -132,21 +132,21 @@ public class CommentManagerImplTest extends Mockito {
 		_commentManagerImpl.addDiscussion(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME);
 
-		_commentManagerImpl.deleteComment(_COMMENT_ID);
-
-		_commentManagerImpl.deleteDiscussion(_CLASS_NAME, _CLASS_PK);
-
 		Mockito.verify(
 			commentManager
 		).addDiscussion(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME
 		);
 
+		_commentManagerImpl.deleteComment(_COMMENT_ID);
+
 		Mockito.verify(
 			commentManager
 		).deleteComment(
 			_COMMENT_ID
 		);
+
+		_commentManagerImpl.deleteDiscussion(_CLASS_NAME, _CLASS_PK);
 
 		Mockito.verify(
 			commentManager

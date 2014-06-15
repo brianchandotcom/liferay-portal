@@ -229,7 +229,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Comments
 
-		addInitialDiscussion(entry, userId, groupId);
+		addDiscussion(entry, userId, groupId);
 
 		// Workflow
 
@@ -369,13 +369,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		assetEntryLocalService.deleteEntry(
 			BlogsEntry.class.getName(), entry.getEntryId());
 
+		// Comment
+
+		deleteDiscussion(entry);
+
 		// Expando
 
 		expandoRowLocalService.deleteRows(entry.getEntryId());
-
-		// Comments
-
-		deleteDiscussion(entry);
 
 		// Ratings
 
@@ -1307,7 +1307,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected void addInitialDiscussion(
+	protected void addDiscussion(
 			BlogsEntry entry, long userId, long groupId)
 		throws PortalException {
 

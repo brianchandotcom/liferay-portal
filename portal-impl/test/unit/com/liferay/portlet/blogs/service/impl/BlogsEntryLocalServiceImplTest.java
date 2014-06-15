@@ -64,7 +64,7 @@ public class BlogsEntryLocalServiceImplTest {
 		long userId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 
-		_blogsEntryLocalServiceImpl.addInitialDiscussion(
+		_blogsEntryLocalServiceImpl.addDiscussion(
 			_blogsEntry, userId, groupId);
 
 		Mockito.verify(
@@ -84,7 +84,7 @@ public class BlogsEntryLocalServiceImplTest {
 			PropsValues.class, "BLOGS_ENTRY_COMMENTS_ENABLED", false);
 
 		try {
-			_blogsEntryLocalServiceImpl.addInitialDiscussion(
+			_blogsEntryLocalServiceImpl.addDiscussion(
 				_blogsEntry, RandomTestUtil.randomLong(),
 				RandomTestUtil.randomLong());
 		}

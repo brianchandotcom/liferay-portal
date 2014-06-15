@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import java.io.IOException;
 
@@ -38,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({PortalSocketPermission.class})
+@PrepareForTest({BlogsUtil.class, PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
 public class LinkbackConsumerImplTest extends PowerMockito {
 
@@ -46,6 +47,7 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpBlogsUtil();
 		setUpHttp();
 
 		_linkbackConsumer = new LinkbackConsumerImpl();
@@ -134,6 +136,10 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 		).URLtoString(
 			"__url__"
 		);
+	}
+
+	protected void setUpBlogsUtil() {
+		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
 	protected void setUpHttp() {

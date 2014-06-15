@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -225,14 +227,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		// Message boards
+		// Comments
 
-		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, entry.getUserName(), groupId,
-				BlogsEntry.class.getName(), entryId,
-				WorkflowConstants.ACTION_PUBLISH);
-		}
+		addInitialDiscussion(entry, userId, groupId);
 
 		// Workflow
 
@@ -376,10 +373,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(entry.getEntryId());
 
-		// Message boards
+		// Comments
 
-		mbMessageLocalService.deleteDiscussionMessages(
-			BlogsEntry.class.getName(), entry.getEntryId());
+		deleteDiscussion(entry);
 
 		// Ratings
 
@@ -1314,6 +1310,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	protected void addInitialDiscussion(
+			BlogsEntry entry, long userId, long groupId)
+		throws PortalException {
+
+		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
+			commentManager.addInitialDiscussion(
+				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
+				entry.getUserName());
+		}
+	}
+
+	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
+		commentManager.deleteDiscussion(
+			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
 	protected String getEntryURL(
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
@@ -1780,6 +1792,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	@BeanReference(type = CommentManager.class)
+	protected CommentManager commentManager;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);

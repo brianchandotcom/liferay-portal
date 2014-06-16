@@ -18,6 +18,8 @@
 			</else>
 		</if>
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
+
 		<if>
 			<condition action="SOTasksTask#isElementPresent" locator-key1="COMMENT_BE_THE_FIRST_LINK" />
 			<then>
@@ -31,6 +33,7 @@
 		<execute action="SOTasksTask#type" locator-key1="COMMENT_FIELD" value1="${taskComment}" />
 		<execute action="SOTasksTask#click" locator-key1="COMMENT_SUBMIT_BUTTON" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addTask">
@@ -43,6 +46,7 @@
 
 		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
 
+		<execute action="SOTasksAdd#selectFrame" locator-key1="ADD_TASK_IFRAME" />
 		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
 		<execute action="SOTasksAdd#select" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssignee}" />
 
@@ -111,6 +115,7 @@
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#openURL" />
 	</command>
@@ -168,6 +173,7 @@
 					</else>
 				</if>
 
+				<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
@@ -215,6 +221,7 @@
 					</else>
 				</if>
 
+				<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
@@ -242,6 +249,8 @@
 				</if>
 			</else>
 		</if>
+
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteComment">
@@ -263,11 +272,13 @@
 			</else>
 		</if>
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
 		<execute action="SOTasksTask#assertClick" locator-key1="COMMENT_DELETE_LINK" value1="Delete" />
 		<execute action="SOTasksTask#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
 		<execute action="SOTasksTask#assertElementNotPresent" locator-key1="COMMENT_BODY" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="${taskComment}" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Tasks" />
@@ -291,8 +302,10 @@
 			</else>
 		</if>
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertElementNotPresent" locator-key1="COMMENT_BODY" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="${taskComment}" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteTask">
@@ -302,8 +315,10 @@
 		<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
 		<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#click" locator-key1="TASK_DELETE_BUTTON" />
 		<execute action="SOTasksTask#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 		<execute action="SOTasks#click" locator-key1="ASSIGNED_TO_ME_LINK" />
 		<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
@@ -349,11 +364,13 @@
 			</else>
 		</if>
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
 		<execute action="SOTasksTask#assertClick" locator-key1="COMMENT_EDIT_LINK" value1="Edit" />
 		<execute action="SOTasksTask#type" locator-key1="COMMENT_EDIT_FIELD" value1="${taskCommentEdit}" />
 		<execute action="SOTasksTask#click" locator-key1="COMMENT_PUBLISH_BUTTON" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskCommentEdit}" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editTask">
@@ -363,6 +380,7 @@
 		<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
 		<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#click" locator-key1="TASK_EDIT_BUTTON" />
 
 		<if>
@@ -426,6 +444,8 @@
 			</then>
 		</if>
 
+		<execute action="SOTasksAdd#selectFrame" value1="relative=top" />
+
 		<execute macro="Page#openURL" />
 	</command>
 
@@ -436,6 +456,7 @@
 		<execute action="SOTasks#assertClick" locator-key1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
 		<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
@@ -444,6 +465,7 @@
 		<execute action="SOTasksTask#assertTextNotPresent" value1="Resolved" />
 		<execute action="SOTasksTask#click" locator-key1="TASK_RESOLVE_BUTTON" value1="Resolve" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_STATUS" value1="Resolved" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownTask">
@@ -463,8 +485,10 @@
 			<then>
 				<execute action="SOTasks#click" locator-key1="TASK_DESCRIPTION" />
 
+				<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 				<execute action="SOTasksTask#click" locator-key1="TASK_DELETE_BUTTON" />
 				<execute action="SOTasksTask#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+				<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 				<execute action="SOTasks#click" locator-key1="ASSIGNED_TO_ME_LINK" />
 				<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
@@ -479,8 +503,10 @@
 			<then>
 				<execute action="SOTasks#click" locator-key1="TASK_DESCRIPTION" />
 
+				<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 				<execute action="SOTasksTask#click" locator-key1="TASK_DELETE_BUTTON" />
 				<execute action="SOTasksTask#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this entry?" />
+				<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
 				<execute action="SOTasks#click" locator-key1="I_HAVE_CREATED_LINK" />
 				<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
@@ -604,6 +630,7 @@
 	</command>
 
 	<command name="viewTaskDetails">
+		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
@@ -698,6 +725,8 @@
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
 			</then>
 		</if>
+
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewTaskNotification">

@@ -42,21 +42,9 @@ public class MessageTag extends TagSupport {
 
 			boolean unicode = GetterUtil.getBoolean(
 				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
-			boolean escape = GetterUtil.getBoolean(
-				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
-			boolean escapeAttribute = GetterUtil.getBoolean(
-				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 
 			if (unicode) {
 				_unicode = unicode;
-			}
-
-			if (escape) {
-				_escape = escape;
-			}
-
-			if (escapeAttribute) {
-				_escapeAttribute = escapeAttribute;
 			}
 
 			if (_arguments == null) {
@@ -66,11 +54,13 @@ public class MessageTag extends TagSupport {
 				else if (_unicode) {
 					value = UnicodeLanguageUtil.get(pageContext, _key);
 				}
-				else if (_escapeAttribute) {
-					value = HtmlUtil.escapeAttribute(LanguageUtil.get(pageContext, _key));
-				}
 				else if (_escape) {
-					value = HtmlUtil.escape(LanguageUtil.get(pageContext, _key));
+					value = HtmlUtil.escape(
+						LanguageUtil.get(pageContext, _key));
+				}
+				else if (_escapeAttribute) {
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(pageContext, _key));
 				}
 				else {
 					value = LanguageUtil.get(pageContext, _key);

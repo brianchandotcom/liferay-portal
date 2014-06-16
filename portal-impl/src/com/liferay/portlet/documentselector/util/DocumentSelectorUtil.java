@@ -33,7 +33,7 @@ public class DocumentSelectorUtil {
 
 	public static String getCKEditorFuncNum(HttpServletRequest request) {
 		String ckEditorFuncNum = ParamUtil.getString(
-			request, "CKEditorFuncNum");
+			request, "ckEditorFuncNum");
 
 		HttpServletRequest originalRequest =
 			PortalUtil.getOriginalServletRequest(request);

@@ -42,12 +42,6 @@ public class ThemeDisplayTestUtil {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-		Group group = company.getGroup();
-
-		themeDisplay.setPlid(group.getDefaultPublicPlid());
-
 		HttpServletRequest request = new MockHttpServletRequest();
 
 		request.setAttribute(WebKeys.COMPANY_ID, companyId);
@@ -60,6 +54,12 @@ public class ThemeDisplayTestUtil {
 		themeDisplay.setSecure(false);
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setWidget(false);
+
+		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+		Group group = company.getGroup();
+
+		themeDisplay.setPlid(group.getDefaultPublicPlid());
 
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

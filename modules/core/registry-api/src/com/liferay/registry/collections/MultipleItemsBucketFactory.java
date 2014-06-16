@@ -40,7 +40,6 @@ public class MultipleItemsBucketFactory<S>
 
 	@Override
 	public ServiceTrackerMapImpl.Bucket<S, Collection<? extends S>> create() {
-
 		return new CollectionBucket();
 	}
 
@@ -50,8 +49,7 @@ public class MultipleItemsBucketFactory<S>
 		implements ServiceTrackerMapImpl.Bucket<S, Collection<? extends S>> {
 
 		CollectionBucket() {
-
-			_orderedSet = new TreeSet<ServiceReference<S>>(_comparator);
+			_serviceReferences = new TreeSet<ServiceReference<S>>(_comparator);
 			_services = new ArrayList<S>();
 		}
 
@@ -62,19 +60,19 @@ public class MultipleItemsBucketFactory<S>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return _orderedSet.isEmpty();
+			return _serviceReferences.isEmpty();
 		}
 
 		@Override
 		public synchronized void remove(ServiceReference<S> serviceReference) {
-			_orderedSet.remove(serviceReference);
+			_serviceReferences.remove(serviceReference);
 
 			_rebuildList();
 		}
 
 		@Override
 		public synchronized void store(ServiceReference<S> serviceReference) {
-			_orderedSet.add(serviceReference);
+			_serviceReferences.add(serviceReference);
 
 			_rebuildList();
 		}
@@ -83,24 +81,24 @@ public class MultipleItemsBucketFactory<S>
 			Registry registry = RegistryUtil.getRegistry();
 
 			try {
-				_services = new ArrayList<S>(_orderedSet.size());
+				_services = new ArrayList<S>(_serviceReferences.size());
 
-				for (ServiceReference<S> serviceReference : _orderedSet) {
+				for (
+					ServiceReference<S> serviceReference : _serviceReferences) {
+
 					_services.add(registry.getService(serviceReference));
 				}
 
 				_services = Collections.unmodifiableList(_services);
 			}
-			catch (IllegalStateException e) {
-				//BundleContext seems to be no longer usable
-				_orderedSet.clear();
+			catch (IllegalStateException ise) {
+				_serviceReferences.clear();
 
 				_services = new ArrayList<S>();
 			}
 		}
 
-		private final Set<ServiceReference<S>> _orderedSet;
-
+		private Set<ServiceReference<S>> _serviceReferences;
 		private List<S> _services;
 	}
 

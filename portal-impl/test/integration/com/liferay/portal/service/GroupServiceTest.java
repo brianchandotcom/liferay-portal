@@ -16,7 +16,6 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -85,8 +84,6 @@ public class GroupServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		_group = GroupTestUtil.addGroup();
 	}
 

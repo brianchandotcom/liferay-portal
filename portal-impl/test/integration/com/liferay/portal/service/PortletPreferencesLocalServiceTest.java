@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.deploy.hot.ServiceBag;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -65,8 +64,6 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);

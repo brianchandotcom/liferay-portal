@@ -15,7 +15,6 @@
 package com.liferay.portal.convert;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -83,8 +82,6 @@ public class ConvertDocumentLibraryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
 
 		Store store = (Store)InstanceFactory.newInstance(

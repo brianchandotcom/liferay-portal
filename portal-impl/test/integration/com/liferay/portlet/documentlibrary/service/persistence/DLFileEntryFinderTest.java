@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -1471,8 +1470,6 @@ public class DLFileEntryFinderTest {
 		dlFileVersion3.setExtraSettings("hello=world");
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion3);
-
-		FinderCacheUtil.clearCache();
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 

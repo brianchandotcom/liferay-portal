@@ -47,8 +47,6 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		stagingGroup = GroupTestUtil.addGroup();
 
 		portletDataHandler = createPortletDataHandler();

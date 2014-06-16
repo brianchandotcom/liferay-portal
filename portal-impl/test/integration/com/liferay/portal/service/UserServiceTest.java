@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.ReservedUserEmailAddressException;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -45,7 +44,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,11 +57,6 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserServiceTest {
-
-	@Before
-	public void setUp() {
-		FinderCacheUtil.clearCache();
-	}
 
 	@Test
 	public void testAddUser() throws Exception {

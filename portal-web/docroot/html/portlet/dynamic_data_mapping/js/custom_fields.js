@@ -579,7 +579,6 @@ AUI.add(
 							model,
 							function(item, index) {
 								var attributeName = item.attributeName;
-								var DLFileEntryCellEditor = Liferay.FormBuilder.CUSTOM_CELL_EDITORS['ddm-documentlibrary'];
 
 								if (attributeName === 'predefinedValue') {
 									item.editor = new DLFileEntryCellEditor();

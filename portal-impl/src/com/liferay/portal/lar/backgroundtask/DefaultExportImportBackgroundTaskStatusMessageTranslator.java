@@ -67,24 +67,17 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute("portletsNumberTotal", 0);
 	}
 
-	protected long getTotal(Map<String, ?> modelCounters) {
+	protected long getTotal(Map<String, LongWrapper> modelCounters) {
 		if (modelCounters == null) {
 			return 0;
 		}
 
 		long total = 0;
 
-		for (Map.Entry<String, ?> entry : modelCounters.entrySet()) {
-			Object value = entry.getValue();
+		for (Map.Entry<String, LongWrapper> entry : modelCounters.entrySet()) {
+			LongWrapper longWrapper = entry.getValue();
 
-			if (value instanceof LongWrapper) {
-				LongWrapper longWrapper = (LongWrapper)value;
-
-				total += longWrapper.getValue();
-			}
-			else if (value instanceof Long) {
-				total += GetterUtil.getLong(value);
-			}
+			total += longWrapper.getValue();
 		}
 
 		return total;

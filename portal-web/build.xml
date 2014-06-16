@@ -165,10 +165,6 @@
 
 				<!-- Images -->
 
-				<!-- <copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
-					<fileset dir="${alloy.build.dir}/aui-css/img" />
-				</copy> -->
-
 				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
 				</copy>
@@ -208,8 +204,6 @@
 				<!-- CSS -->
 
 				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/vendor/assets/stylesheets/bootstrap" />
-
-				<!-- <delete dir="${alloy.bootstrap.lib.dir}/tests" /> -->
 
 				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
 					<fileset dir="${alloy.bootstrap.lib.dir}/" />

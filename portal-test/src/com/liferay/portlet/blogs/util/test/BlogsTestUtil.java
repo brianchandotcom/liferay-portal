@@ -229,6 +229,10 @@ public class BlogsTestUtil {
 			new HashMap<String, Serializable>();
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, "http://localhost");
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_URL, "http://localhost");
 
 		return BlogsEntryLocalServiceUtil.updateStatus(
 			entry.getUserId(), entry.getEntryId(),

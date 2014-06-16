@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portlet.trash.service.persistence.TrashEntryFinder.findTrashEntryWithGroup">
+		<![CDATA[
+			SELECT
+				{TrashEntry.*}, {Group_.*}
+			FROM
+				TrashEntry
+			INNER JOIN Group_ ON
+				TrashEntry.groupId = Group_.groupId
+			WHERE
+				TrashEntry.entryId > ?
+			ORDER BY
+				TrashEntry.entryId ASC
+		]]>
+	</sql>
+</custom-sql>

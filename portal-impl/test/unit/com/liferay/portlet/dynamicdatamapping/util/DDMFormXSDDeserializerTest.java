@@ -32,7 +32,7 @@ public class DDMFormXSDDeserializerTest extends BaseDDMFormDeserializer {
 
 	@Test
 	public void testAllFieldsTypesDeserialization() throws Exception {
-		String xml = readXML("dynamic-data-mapping-all-fields-structure.xml");
+		String xml = readXML("ddm-form-xsd-deserializer-test-data.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
 
@@ -56,7 +56,7 @@ public class DDMFormXSDDeserializerTest extends BaseDDMFormDeserializer {
 		throws Exception {
 
 		String xml = readXML(
-			"dynamic-data-mapping-different-default-locale.xml");
+			"ddm-form-xsd-deserializer-different-default-locale.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
 

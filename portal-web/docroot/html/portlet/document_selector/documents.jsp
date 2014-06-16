@@ -33,17 +33,30 @@ if (folderId > 0) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
+String eventName = ParamUtil.getString(request, "eventName");
+boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+
 long repositoryId = groupId;
 
 if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
-}
+	PortletURL breadcrumbURL = renderResponse.createRenderURL();
 
-String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
-String eventName = ParamUtil.getString(request, "eventName");
-boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+	breadcrumbURL.setParameter("struts_action", "/document_selector/view");
+	breadcrumbURL.setParameter("groupId", String.valueOf(groupId));
+	breadcrumbURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	breadcrumbURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
+	breadcrumbURL.setParameter("eventName", eventName);
+	breadcrumbURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
+
+	PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.translate("home"), breadcrumbURL.toString());
+
+	breadcrumbURL.setParameter("folderId", String.valueOf(folderId));
+
+	DLUtil.addPortletBreadcrumbEntries(folder, request, breadcrumbURL);
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

@@ -17,7 +17,10 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -25,6 +28,7 @@ import java.util.Map;
 
 /**
  * @author Michael C. Han
+ * @author Daniel Kocsis
  */
 public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 	implements BackgroundTaskStatusMessageTranslator {
@@ -46,6 +50,24 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 	}
 
+	protected void clearBackgroundTaskStatus(
+		BackgroundTaskStatus backgroundTaskStatus) {
+
+		backgroundTaskStatus.clearAttributes();
+
+		backgroundTaskStatus.setAttribute(
+			"allModelAdditionCountersCurrent", 0L);
+		backgroundTaskStatus.setAttribute("allModelAdditionCountersTotal", 0L);
+		backgroundTaskStatus.setAttribute(
+			"modelAdditionsByPortletsCurrent",
+			new HashMap<String, LongWrapper>());
+		backgroundTaskStatus.setAttribute(
+			"modelAdditionsByPortletsTotal",
+			new HashMap<String, LongWrapper>());
+		backgroundTaskStatus.setAttribute("portletsNumberCurrent", 0L);
+		backgroundTaskStatus.setAttribute("portletsNumberTotal", 0L);
+	}
+
 	protected long getTotal(Map<String, LongWrapper> modelCounters) {
 		if (modelCounters == null) {
 			return 0;
@@ -65,51 +87,74 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 	protected synchronized void translateLayoutMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
-		Map<String, LongWrapper> modelAdditionCounters =
-			(Map<String, LongWrapper>)message.get("modelAdditionCounters");
+		// Portlets
+
+		String[] portletIds = (String[])message.get("portletIds");
+		long portletsNumberTotal = 0;
+
+		if (portletIds != null) {
+			portletsNumberTotal = portletIds.length;
+		}
 
 		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCounters",
-			new HashMap<String, LongWrapper>(modelAdditionCounters));
+			"portletsNumberTotal", portletsNumberTotal);
+
+		// Data
+
+		HashMap<String, LongWrapper> modelAdditionCounters =
+			(HashMap<String, LongWrapper>)message.get("modelAdditionCounters");
+
 		backgroundTaskStatus.setAttribute(
 			"allModelAdditionCountersTotal", getTotal(modelAdditionCounters));
-
-		Map<String, LongWrapper> modelDeletionCounters =
-			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
-
-		backgroundTaskStatus.setAttribute(
-			"allModelDeletionCounters",
-			new HashMap<String, LongWrapper>(modelDeletionCounters));
-		backgroundTaskStatus.setAttribute(
-			"allModelDeletionCountersTotal", getTotal(modelDeletionCounters));
 	}
 
 	protected synchronized void translatePortletMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
-		backgroundTaskStatus.clearAttributes();
-
-		Map<String, LongWrapper> modelAdditionCounters =
-			(Map<String, LongWrapper>)message.get("modelAdditionCounters");
-
-		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCounters",
-			new HashMap<String, LongWrapper>(modelAdditionCounters));
-		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCountersTotal", getTotal(modelAdditionCounters));
-
-		Map<String, LongWrapper> modelDeletionCounters =
-			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
-
-		backgroundTaskStatus.setAttribute(
-			"allModelDeletionCounters",
-			new HashMap<String, LongWrapper>(modelDeletionCounters));
-		backgroundTaskStatus.setAttribute(
-			"allModelDeletionCountersTotal", getTotal(modelDeletionCounters));
-
 		String portletId = message.getString("portletId");
 
 		backgroundTaskStatus.setAttribute("portletId", portletId);
+
+		// Portlet
+
+		long portletsNumberCurrent = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("portletsNumberCurrent"));
+		long portletsNumberTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("portletsNumberTotal"));
+
+		if (portletsNumberCurrent < portletsNumberTotal) {
+			backgroundTaskStatus.setAttribute(
+				"portletsNumberCurrent", ++portletsNumberCurrent);
+		}
+
+		// Data
+
+		HashMap<String, Long> modelAdditionsByPortletsCurrent =
+			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
+				"modelAdditionsByPortletsCurrent");
+
+		modelAdditionsByPortletsCurrent.put(portletId, 0L);
+
+		backgroundTaskStatus.setAttribute(
+			"modelAdditionsByPortletsCurrent", modelAdditionsByPortletsCurrent);
+
+		HashMap<String, Long> modelAdditionsByPortletsTotal =
+			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
+				"modelAdditionsByPortletsTotal");
+
+		long modelAdditionByPortlet = GetterUtil.getLong(
+			message.get("modelAdditionsByPortlet"));
+
+		modelAdditionsByPortletsTotal.put(portletId, modelAdditionByPortlet);
+
+		backgroundTaskStatus.setAttribute(
+			"modelAdditionsByPortletsTotal", modelAdditionsByPortletsTotal);
+
+		// Staged model
+
+		backgroundTaskStatus.setAttribute("stagedModelName", StringPool.BLANK);
+		backgroundTaskStatus.setAttribute("stagedModelType", StringPool.BLANK);
+		backgroundTaskStatus.setAttribute("uuid", StringPool.BLANK);
 	}
 
 	protected synchronized void translateStagedModelMessage(
@@ -122,25 +167,43 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			return;
 		}
 
-		Map<String, LongWrapper> modelAdditionCounters =
-			(Map<String, LongWrapper>)message.get("modelAdditionCounters");
+		// Model statistics
 
-		backgroundTaskStatus.setAttribute(
-			"currentModelAdditionCounters",
-			new HashMap<String, LongWrapper>(modelAdditionCounters));
-		backgroundTaskStatus.setAttribute(
-			"currentModelAdditionCountersTotal",
-			getTotal(modelAdditionCounters));
+		HashMap<String, Long> modelAdditionsByPortletsCurrent =
+			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
+				"modelAdditionsByPortletsCurrent");
 
-		Map<String, LongWrapper> modelDeletionCounters =
-			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
+		long modelAdditionsByPortletCurrent = MapUtil.getLong(
+			modelAdditionsByPortletsCurrent, portletId);
 
-		backgroundTaskStatus.setAttribute(
-			"currentModelDeletionCounters",
-			new HashMap<String, LongWrapper>(modelDeletionCounters));
-		backgroundTaskStatus.setAttribute(
-			"currentModelDeletionCountersTotal",
-			getTotal(modelDeletionCounters));
+		HashMap<String, Long> modelAdditionsByPortletsTotal =
+			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
+				"modelAdditionsByPortletsTotal");
+
+		long modelAdditionsByPortletTotal = MapUtil.getLong(
+			modelAdditionsByPortletsTotal, portletId);
+
+		long allModelAdditionCountersCurrent = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				"allModelAdditionCountersCurrent"));
+		long allModelAdditionCountersTotal = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+
+		if ((modelAdditionsByPortletCurrent < modelAdditionsByPortletTotal) &&
+			(allModelAdditionCountersCurrent < allModelAdditionCountersTotal)) {
+
+			modelAdditionsByPortletsCurrent.put(
+				portletId, ++modelAdditionsByPortletCurrent);
+
+			backgroundTaskStatus.setAttribute(
+				"allModelAdditionCountersCurrent",
+				++allModelAdditionCountersCurrent);
+			backgroundTaskStatus.setAttribute(
+				"modelAdditionsByPortletsCurrent",
+				modelAdditionsByPortletsCurrent);
+		}
+
+		// Model attributes
 
 		String stagedModelName = message.getString("stagedModelName");
 

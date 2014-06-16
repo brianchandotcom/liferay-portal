@@ -359,18 +359,7 @@ public class PropertiesParamUtil {
 
 		String checkboxNames = ParamUtil.getString(request, "checkboxNames");
 
-		if (Validator.isNull(checkboxNames)) {
-			return properties;
-		}
-
-		List<String> checkboxParams = filterParams(
-			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
-			params);
-
-		for (String param : checkboxParams) {
-			properties.setProperty(
-				getKey(param, prefix), Boolean.FALSE.toString());
-		}
+		addCheckboxValues(properties, params, prefix, checkboxNames);
 
 		return properties;
 	}
@@ -396,18 +385,7 @@ public class PropertiesParamUtil {
 		String checkboxNames = ParamUtil.getString(
 			portletRequest, "checkboxNames");
 
-		if (Validator.isNull(checkboxNames)) {
-			return properties;
-		}
-
-		List<String> checkboxParams = filterParams(
-			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
-			params);
-
-		for (String param : checkboxParams) {
-			properties.setProperty(
-				getKey(param, prefix), Boolean.FALSE.toString());
-		}
+		addCheckboxValues(properties, params, prefix, checkboxNames);
 
 		return properties;
 	}
@@ -431,18 +409,7 @@ public class PropertiesParamUtil {
 		String checkboxNames = ParamUtil.getString(
 			serviceContext, "checkboxNames");
 
-		if (Validator.isNull(checkboxNames)) {
-			return properties;
-		}
-
-		List<String> checkboxParams = filterParams(
-			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
-			params);
-
-		for (String param : checkboxParams) {
-			properties.setProperty(
-				getKey(param, prefix), Boolean.FALSE.toString());
-		}
+		addCheckboxValues(properties, params, prefix, checkboxNames);
 
 		return properties;
 	}
@@ -521,6 +488,24 @@ public class PropertiesParamUtil {
 			propertiesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
+	}
+
+	protected static void addCheckboxValues(
+		UnicodeProperties properties, List<String> params, String prefix,
+		String checkboxNames) {
+
+		if (Validator.isNull(checkboxNames)) {
+			return;
+		}
+
+		List<String> checkboxParams = filterParams(
+			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
+			params);
+
+		for (String param : checkboxParams) {
+			properties.setProperty(
+				getKey(param, prefix), Boolean.FALSE.toString());
+		}
 	}
 
 	protected static List<String> filterParams(

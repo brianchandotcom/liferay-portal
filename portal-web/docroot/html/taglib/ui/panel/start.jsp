@@ -18,7 +18,7 @@
 
 <div class="panel panel-default <%= cssClass %>" id="<%= id %>">
 	<div class="panel-heading <%= headerCssClass %>" data-persist-id="<%= persistState ? id : StringPool.BLANK %>">
-		<div class="accordion-toggle">
+		<div class="panel-toggle">
 			<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 				<i class="<%= iconCssClass %>"></i>
 			</c:if>

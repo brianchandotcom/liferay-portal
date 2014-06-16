@@ -41,7 +41,7 @@ if (row != null) {
 else {
 	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
 
-	cssClass = "nav list-group";
+	cssClass = "list-group nav";
 	listGroupItemCssClass = "list-group-item";
 
 	view = true;

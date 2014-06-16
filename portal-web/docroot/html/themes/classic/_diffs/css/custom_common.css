@@ -735,7 +735,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			overflow: hidden;
 			padding: 8px 0;
 
-			.accordion-toggle {
+			.panel-toggle {
 				&, &:hover {
 					text-decoration: none;
 				}
@@ -744,7 +744,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			&.toggler-header-collapsed, &.toggler-header-expanded {
 				background-image: none;
 
-				.accordion-toggle:before {
+				.panel-toggle:before {
 					@extend %toggler-header-icon-base;
 
 					@include opacity(0.5);
@@ -754,7 +754,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			&.toggler-header-collapsed {
 				position: relative;
 
-				.accordion-toggle:after {
+				.panel-toggle:after {
 					content: '';
 					margin-left: 10px;
 					position: absolute;
@@ -763,7 +763,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			&.toggler-header-expanded .accordion-toggle:before {
+			&.toggler-header-expanded .panel-toggle:before {
 				@extend %toggler-header-icon-expanded;
 			}
 		}
@@ -776,7 +776,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				overflow: hidden;
 				position: static;
 
-				.accordion-toggle {
+				.panel-toggle {
 					color: #999;
 					padding-left: 8px;
 
@@ -789,7 +789,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.panel-heading .accordion-toggle {
+	.panel-heading .panel-toggle {
 		padding-left: 0;
 	}
 
@@ -923,7 +923,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin-bottom: 0;
 			margin-top: 0;
 
-			.accordion-toggle {
+			.panel-toggle {
 				font-size: 16px;
 				font-weight: 300;
 				max-height: 20px;
@@ -940,13 +940,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				@include user-select(none);
 
-				.accordion-toggle {
+				.panel-toggle {
 					background: transparent url(../images/arrows/13_right.png) no-repeat 100% -20px;
 				}
 			}
 
 			.toggler-header-collapsed {
-				.accordion-toggle {
+				.panel-toggle {
 					background-position: 100% 0;
 
 					&:before {
@@ -955,7 +955,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			.toggler-header-expanded .accordion-toggle:before {
+			.toggler-header-expanded .panel-toggle:before {
 				display: none;
 			}
 		}

@@ -33,9 +33,9 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 		</div>
 
 		<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
-				<i class="icon-search"></i>
-				<i class="caret"></i>
-			</a>
+			<i class="icon-search"></i>
+			<i class="caret"></i>
+		</a>
 	</div>
 </div>
 

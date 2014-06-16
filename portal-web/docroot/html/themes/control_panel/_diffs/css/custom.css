@@ -663,14 +663,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 					.toggler-header {
 						background-color: #DDD;
 
-						.accordion-toggle {
+						.panel-toggle {
 							background: none no-repeat right;
 						}
 					}
 				}
 			}
 
-			.accordion-toggle {
+			.panel-toggle {
 				position: relative;
 				text-align: center;
 
@@ -723,7 +723,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 								border-width: 1px 0 0 0;
 							}
 
-							.accordion-toggle {
+							.panel-toggle {
 								background: none no-repeat right;
 							}
 						}
@@ -1147,7 +1147,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						float: left;
 						width: 80%;
 
-						.toggler-header .accordion-toggle {
+						.toggler-header .panel-toggle {
 							background-position: center;
 							right: auto;
 						}

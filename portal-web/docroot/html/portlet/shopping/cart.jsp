@@ -273,7 +273,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			else {
 				sb.append(LanguageUtil.get(pageContext, "availability"));
 				sb.append(": ");
-				sb.append("<div class=\"alert alert-daner\">");
+				sb.append("<div class=\"alert alert-danger\">");
 				sb.append(LanguageUtil.get(pageContext, "out-of-stock"));
 				sb.append("</div>");
 

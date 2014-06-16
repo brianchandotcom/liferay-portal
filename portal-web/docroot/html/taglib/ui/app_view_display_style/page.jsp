@@ -38,16 +38,12 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 
 					data.put("displayStyle", dataStyle);
 				%>
-					<aui:nav-item>
-						<aui:a
-							cssClass='<%= "icon-" + _getIcon(dataStyle) %>'
-							data="<%= data %>"
-							href="javascript:;"
-							label="<%= dataStyle %>"
-							onClick='<%= randomNamespace + "onClickDisplayStyle(this);" %>'
-						/>
-					</aui:nav-item>
-
+					<aui:nav-item
+						anchorData="<%= data %>"
+						href="javascript:;"
+						iconCssClass='<%= "icon-" + _getIcon(dataStyle) %>'
+						label="<%= dataStyle %>"
+					/>
 				<%
 				}
 				%>
@@ -89,28 +85,29 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			);
 		}
 
-		Liferay.provide(
-			window,
-			'<%= randomNamespace %>onClickDisplayStyle',
-			function(link) {
-				var displayStyleItem = A.one(link);
+		var displayStyleButtonsMenu = A.one('#<portlet:namespace />displayStyleButtons .dropdown-menu');
 
-				var displayStyle = displayStyleItem.attr('data-displayStyle');
+		if (displayStyleButtonsMenu) {
+			displayStyleButtonsMenu.delegate(
+				'click',
+				function(event) {
+					var displayStyle = event.currentTarget.attr('data-displayStyle');
 
-				if (<%= requestParams != null %>) {
-					changeDisplayStyle(displayStyle);
-				}
-				else if (<%= eventName != null %>) {
-					Liferay.fire(
-						'<%= eventName %>',
-						{
-							displayStyle: displayStyle
-						}
-					);
-				}
-			},
-			['aui-node']
-		);
+					if (<%= requestParams != null %>) {
+						changeDisplayStyle(displayStyle);
+					}
+					else if (<%= eventName != null %>) {
+						Liferay.fire(
+							'<%= eventName %>',
+							{
+								displayStyle: displayStyle
+							}
+						);
+					}
+				},
+				'li > a'
+			);
+		}
 	</aui:script>
 </c:if>
 

@@ -47,7 +47,7 @@ String cssClass = StringPool.BLANK;
 boolean view = false;
 
 if (row == null) {
-	cssClass = "nav list-group";
+	cssClass = "list-group nav";
 
 	view = true;
 }

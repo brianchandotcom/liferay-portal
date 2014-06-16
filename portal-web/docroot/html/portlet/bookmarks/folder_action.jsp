@@ -61,7 +61,7 @@ String listGroupItemCssClass = StringPool.BLANK;
 boolean view = false;
 
 if (row == null) {
-	cssClass = "nav list-group";
+	cssClass = "list-group nav";
 	listGroupItemCssClass = "list-group-item";
 
 	view = true;

@@ -76,7 +76,7 @@ if (Validator.isNotNull(historyKey)) {
 		<c:otherwise>
 
 			<%
-			String wrapperCssClass = "";
+			String wrapperCssClass = StringPool.BLANK;
 
 			if (displayStyle.equals("steps")) {
 				wrapperCssClass = "form-steps";

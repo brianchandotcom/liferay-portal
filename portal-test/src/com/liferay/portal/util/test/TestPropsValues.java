@@ -84,11 +84,11 @@ public class TestPropsValues {
 		return _groupId;
 	}
 
-	public static long getPlid() throws PortalException {
+	public static long getPlid() throws Exception {
 		return getPlid(getGroupId());
 	}
 
-	public static long getPlid(long groupId) {
+	public static long getPlid(long groupId) throws Exception {
 		if (_plid > 0) {
 			return _plid;
 		}

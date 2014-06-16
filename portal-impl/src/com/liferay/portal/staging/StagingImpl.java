@@ -617,6 +617,12 @@ public class StagingImpl implements Staging {
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
+		String cmd = null;
+
+		if (contextMap != null) {
+			cmd = (String)contextMap.get(Constants.CMD);
+		}
+
 		JSONObject exceptionMessagesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -657,12 +663,6 @@ public class StagingImpl implements Staging {
 				}
 			}
 			catch (Exception ex) {
-			}
-
-			String cmd = null;
-
-			if (contextMap != null) {
-				cmd = (String)contextMap.get(Constants.CMD);
 			}
 
 			if (Validator.equals(cmd, Constants.PUBLISH)) {
@@ -761,12 +761,6 @@ public class StagingImpl implements Staging {
 		}
 		else if (e instanceof MissingReferenceException) {
 			MissingReferenceException mre = (MissingReferenceException)e;
-
-			String cmd = null;
-
-			if (contextMap != null) {
-				cmd = (String)contextMap.get(Constants.CMD);
-			}
 
 			if (Validator.equals(cmd, Constants.PUBLISH)) {
 				errorMessage = LanguageUtil.get(

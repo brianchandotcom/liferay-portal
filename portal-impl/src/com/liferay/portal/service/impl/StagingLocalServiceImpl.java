@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -69,7 +69,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -800,21 +799,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return;
 		}
 
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
-
-		Set<String> parameterNames = attributes.keySet();
-
-		for (String parameterName : parameterNames) {
-			if (parameterName.startsWith(StagingConstants.STAGED_PORTLET) &&
-				!parameterName.endsWith("Checkbox")) {
-
-				boolean staged = ParamUtil.getBoolean(
-					serviceContext, parameterName);
-
-				typeSettingsProperties.setProperty(
-					parameterName, String.valueOf(staged));
-			}
-		}
+		typeSettingsProperties.putAll(
+			PropertiesParamUtil.getProperties(
+				serviceContext, StagingConstants.STAGED_PREFIX));
 	}
 
 	protected Layout updateLayoutWithLayoutRevision(

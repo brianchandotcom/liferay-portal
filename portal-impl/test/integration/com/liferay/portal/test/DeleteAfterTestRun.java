@@ -14,6 +14,8 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.model.PersistedModel;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,4 +29,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface DeleteAfterTestRun {
+
+	Class<? extends PersistedModel> elementType() default PersistedModel.class;
+
 }

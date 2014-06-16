@@ -26,7 +26,7 @@ boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String value = ParamUtil.getString(request, param, defaultValue);
 %>
 
-<textarea class="lfr-textarea <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= paramId %>" name="<%= namespace %><%= param %>" wrap="soft" onKeyDown="Liferay.Util.disableEsc();"><%= HtmlUtil.escape(value) %></textarea>
+<textarea class="form-control lfr-textarea <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= paramId %>" name="<%= namespace %><%= param %>" wrap="soft" onKeyDown="Liferay.Util.disableEsc();"><%= HtmlUtil.escape(value) %></textarea>
 
 <aui:script use="aui-char-counter">
 	new A.CharCounter(

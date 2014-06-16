@@ -32,7 +32,7 @@
 		}
 
 		.btn-toolbar {
-			.control-group-inline {
+			.form-group-inline {
 				display: inline;
 
 				.search-query, .aui-field-select {
@@ -46,7 +46,7 @@
 				}
 			}
 
-			.control-group-inline, .btn-group {
+			.form-group-inline, .btn-group {
 				margin-right: 5px;
 			}
 		}

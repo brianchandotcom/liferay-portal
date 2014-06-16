@@ -1,7 +1,7 @@
 @import "compass";
 @import "mixins";
 
-.control-group-inline {
+.form-group-inline {
 	display: inline-block;
 }
 

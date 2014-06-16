@@ -65,7 +65,7 @@ public class AUIUtil {
 		sb.append("form-group");
 
 		if (inlineField) {
-			sb.append(" control-group-inline");
+			sb.append(" form-group-inline");
 		}
 
 		if (Validator.isNotNull(inlineLabel)) {

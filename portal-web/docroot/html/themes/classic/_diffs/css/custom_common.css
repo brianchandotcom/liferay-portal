@@ -109,14 +109,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 		outline-offset: -2px;
 	}
 
-	.control-group-inline {
+	.form-group-inline {
 		#{$form_text_fields}, select {
 			margin-bottom: 0;
 		}
 	}
 
 	.form-search, .lfr-translation-manager-selector {
-		.control-group-inline {
+		.form-group-inline {
 			margin: 0;
 		}
 	}

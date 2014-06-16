@@ -52,7 +52,7 @@
 	.search-container-column {
 		padding-left: 10px;
 
-		.language-selector .control-group {
+		.language-selector .form-group {
 			margin-bottom: 10px;
 		}
 
@@ -61,7 +61,7 @@
 			position: relative;
 
 			.search-panels-bar {
-				.control-group {
+				.form-group {
 					margin-bottom: 10px;
 				}
 
@@ -149,7 +149,7 @@
 				margin-right: 15px;
 
 				&.diff-html-changed {
-			 		border-bottom: 2px dotted transparent;
+					border-bottom: 2px dotted transparent;
 				}
 			}
 		}
@@ -213,7 +213,7 @@
 
 	.search-container-column {
 		.language-selector {
-			.control-group {
+			.form-group {
 				select {
 					font-size: 13px;
 				}
@@ -222,7 +222,7 @@
 
 		.search-panels {
 			.search-panels-bar {
-				.control-group {
+				.form-group {
 					.search-panels-input {
 						@include border-radius(0);
 					}

@@ -32,7 +32,7 @@
 		padding-bottom: 30px;
 	}
 
-	.alert-error, .alert-success {
+	.alert-danger, .alert-success {
 		margin: 15px auto 5px;
 	}
 

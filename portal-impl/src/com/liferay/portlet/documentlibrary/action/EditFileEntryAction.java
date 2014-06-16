@@ -378,10 +378,20 @@ public class EditFileEntryAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
-			int pos = selectedFileName.indexOf(TEMP_RANDOM_SUFFIX);
+			int pos = selectedFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
 
 			if (pos != -1) {
-				selectedFileName = selectedFileName.substring(0, pos);
+				int periodPos = selectedFileName.lastIndexOf(StringPool.PERIOD);
+
+				if (periodPos == -1) {
+					periodPos = selectedFileName.length();
+				}
+
+				String tempRandomSuffix = selectedFileName.substring(
+					pos, periodPos);
+
+				selectedFileName = StringUtil.replace(
+					selectedFileName, tempRandomSuffix, StringPool.BLANK);
 			}
 
 			while (true) {
@@ -395,8 +405,13 @@ public class EditFileEntryAction extends PortletAction {
 					sb.append(FileUtil.stripExtension(selectedFileName));
 					sb.append(StringPool.DASH);
 					sb.append(StringUtil.randomString());
-					sb.append(StringPool.PERIOD);
-					sb.append(FileUtil.getExtension(selectedFileName));
+
+					String extension = FileUtil.getExtension(selectedFileName);
+
+					if (Validator.isNotNull(extension)) {
+						sb.append(StringPool.PERIOD);
+						sb.append(extension);
+					}
 
 					selectedFileName = sb.toString();
 				}
@@ -451,8 +466,20 @@ public class EditFileEntryAction extends PortletAction {
 
 		String title = sourceFileName;
 
-		sourceFileName = sourceFileName.concat(
-			TEMP_RANDOM_SUFFIX).concat(StringUtil.randomString());
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(FileUtil.stripExtension(sourceFileName));
+		sb.append(TEMP_RANDOM_SUFFIX);
+		sb.append(StringUtil.randomString());
+
+		String extension = FileUtil.getExtension(sourceFileName);
+
+		if (Validator.isNotNull(extension)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(extension);
+		}
+
+		sourceFileName = sb.toString();
 
 		InputStream inputStream = null;
 

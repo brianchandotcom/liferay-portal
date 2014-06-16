@@ -412,6 +412,41 @@ public class PropertiesParamUtil {
 		return properties;
 	}
 
+	public static UnicodeProperties getProperties(
+		ServiceContext serviceContext, String prefix) {
+
+		UnicodeProperties properties = new UnicodeProperties(true);
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		List<String> params = filterParams(
+			prefix, ListUtil.fromCollection(attributes.keySet()), null);
+
+		for (String param : params) {
+			String value = ParamUtil.getString(serviceContext, param);
+
+			properties.setProperty(getKey(param, prefix), value);
+		}
+
+		String checkboxNames = ParamUtil.getString(
+			serviceContext, "checkboxNames");
+
+		if (Validator.isNull(checkboxNames)) {
+			return properties;
+		}
+
+		List<String> checkboxParams = filterParams(
+			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
+			params);
+
+		for (String param : checkboxParams) {
+			properties.setProperty(
+				getKey(param, prefix), Boolean.FALSE.toString());
+		}
+
+		return properties;
+	}
+
 	public static String getString(
 		Properties properties, HttpServletRequest request, String param) {
 

@@ -55,6 +55,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -71,6 +72,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.reflect.Whitebox;
 
 /**
  * @author Sampsa Sohlman
@@ -116,7 +118,9 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 
 			while (!backgroundTasks.isEmpty() && (counter < 200)) {
 				Thread.sleep(100);
+
 				counter++;
+
 				backgroundTasks =
 					BackgroundTaskLocalServiceUtil.getBackgroundTasks(
 						group.getGroupId(),
@@ -133,23 +137,53 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		}
 
 		setTrashEntryCleanCount(_trashEntriesMaxCleanCount);
+
+		setReadCount(_readCount);
 	}
 
 	@Test
 	public void testGroupMaxAgeChanged() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
+
 		verifyCleanUpAfterTwoDays(group);
 	}
 
 	@Test
 	public void testGroupTrashDisabled() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
+
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+
 		setTrashEnableForGroup(group, false);
+
 		TrashEntryLocalServiceUtil.checkEntries();
+
 		Assert.assertEquals(
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+	}
+
+	@Test
+	public void testLimitedTrashEntryReadCount() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		setReadCount(9);
+
+		int actual = 0;
+
+		for (int i = 0; i < 10; i++) {
+			Group group = createGroup(companyId);
+
+			group = setTrashEntriesMaxAge(group, 2);
+
+			actual = actual + createTrashEntriesForTwoDaysExpiryTest(group);
+		}
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertEquals(
+			actual, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
@@ -159,6 +193,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		for (int i = 0; i < 4; i++ ) {
 			Group group = setTrashEntriesMaxAge(
 				createGroup(createCompany()), 2);
+
 			actual = actual + createTrashEntriesForTwoDaysExpiryTest(group);
 		}
 
@@ -176,6 +211,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 
 		for (int i = 0; i < 10; i++) {
 			Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
+
 			actual = actual + createTrashEntriesForTwoDaysExpiryTest(group);
 		}
 
@@ -188,23 +224,58 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 	@Test
 	public void testOneGroup() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
+
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 500);
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+
 		TrashEntryLocalServiceUtil.checkEntries();
+
 		Assert.assertEquals(
 			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+	}
+
+	@Test
+	public void testTrashEntryCleanCount() throws Exception {
+		long companyId = createCompany();
+
+		setTrashEntryCleanCount(6);
+
+		for (int i = 0; i < 10; i++ ) {
+			Group group = createGroup(companyId);
+
+			group = setTrashEntriesMaxAge(group, 2);
+
+			createTrashEntriesForTwoDaysExpiryTest(group);
+		}
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertEquals(
+			194, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertEquals(
+			188, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertEquals(
+			182, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
 	public void testWithLayoutGroup() throws Exception {
 		Group group = setTrashEntriesMaxAge(
 			createGroup(TestPropsValues.getCompanyId()), 2);
+
 		verifyCleanUpAfterTwoDays(createLayoutGroup(group.getGroupId()));
 	}
 
 	@Test
 	public void testWithStaging() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
 
 		User user = UserTestUtil.getAdminUser(companyId);
@@ -221,6 +292,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 	@Test
 	public void testWithStagingPageScope() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
 
 		User user = UserTestUtil.getAdminUser(companyId);
@@ -243,25 +315,24 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 	@Test
 	public void testWithStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEnableForGroup(createGroup(companyId), false);
 
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
+			ServiceContextTestUtil.getServiceContext(group, user.getUserId());
 
 		StagingLocalServiceUtil.enableLocalStaging(
 			user.getUserId(), group, false, false, serviceContext);
 
 		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
+
 		Group stagingGroup = group.getStagingGroup();
 
 		createFileEntriesAndMoveThemToTrash(stagingGroup.getGroupId(), 5, 0);
 
 		TrashEntryLocalServiceUtil.checkEntries();
-
-		// Note that this should be empty
 
 		Assert.assertEquals(
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
@@ -302,6 +373,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 			RandomTestUtil.randomString());
 
 		_companies.add(company.getCompanyId());
+
 		return company.getCompanyId();
 	}
 
@@ -355,9 +427,8 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		Group group = GroupTestUtil.addGroup(
-				companyId, user.getUserId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				RandomTestUtil.randomString(), "This is a test group.");
+			companyId, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(), "This is a test group.");
 
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
@@ -392,6 +463,11 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 3);
 
 		return 10;
+	}
+
+	protected void setReadCount(int value) throws Exception {
+		Whitebox.setInternalState(
+			TrashEntryLocalServiceImpl.class, "_READ_COUNT", value);
 	}
 
 	protected Group setTrashEnableForGroup(Group group, boolean value)
@@ -440,6 +516,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		group.setTypeSettingsProperties(typeSettingsProperties);
 
 		GroupLocalServiceUtil.updateGroup(group);
+
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
 
@@ -450,6 +527,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		field.setAccessible(true);
 
 		Field modifiersField = Field.class.getDeclaredField("modifiers");
+
 		modifiersField.setAccessible(true);
 		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 

@@ -29,7 +29,7 @@ import java.util.Date;
 /**
  * @author Raymond Augé
  */
-public class LayoutSetPrototypeLayoutSetListener
+public class LayoutSetPrototypeLayoutSetModelListener
 	extends BaseModelListener<LayoutSet> {
 
 	@Override
@@ -76,6 +76,6 @@ public class LayoutSetPrototypeLayoutSetListener
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeLayoutSetListener.class);
+		LayoutSetPrototypeLayoutSetModelListener.class);
 
 }

@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Raymond Augé
  * @author Vilmos Papp
  */
-public class UserListener extends BaseModelListener<User> {
+public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onAfterAddAssociation(

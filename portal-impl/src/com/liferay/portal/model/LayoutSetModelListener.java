@@ -12,41 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet.journal.model;
+package com.liferay.portal.model;
 
-import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jon Steer
+ * @author Alexander Chow
  * @author Raymond Augé
  */
-public class JournalArticleListener extends BaseModelListener<JournalArticle> {
+public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 
 	@Override
-	public void onAfterRemove(JournalArticle article) {
-		clearCache(article);
+	public void onAfterRemove(LayoutSet layoutSet) {
+		clearCache(layoutSet);
 	}
 
 	@Override
-	public void onAfterUpdate(JournalArticle article) {
-		clearCache(article);
+	public void onAfterUpdate(LayoutSet layoutSet) {
+		clearCache(layoutSet);
 	}
 
-	protected void clearCache(JournalArticle article) {
-		if (article == null) {
+	protected void clearCache(LayoutSet layoutSet) {
+		if (layoutSet == null) {
 			return;
 		}
 
-		// Journal content
-
-		JournalContentUtil.clearCache();
-
-		// Layout cache
-
-		CacheUtil.clearCache(article.getCompanyId());
+		if (!layoutSet.isPrivateLayout()) {
+			CacheUtil.clearCache(layoutSet.getCompanyId());
+		}
 	}
 
 }

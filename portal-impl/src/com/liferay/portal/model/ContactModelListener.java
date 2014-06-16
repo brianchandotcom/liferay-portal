@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class ContactListener extends BaseModelListener<Contact> {
+public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Override
 	public void onAfterCreate(Contact contact) throws ModelListenerException {

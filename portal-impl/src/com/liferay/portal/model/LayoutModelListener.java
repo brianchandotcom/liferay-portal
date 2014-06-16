@@ -25,7 +25,7 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class LayoutListener extends BaseModelListener<Layout> {
+public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) {

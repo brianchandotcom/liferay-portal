@@ -26,7 +26,8 @@ import java.util.Map;
 /**
  * @author Levente Hudák
  */
-public class BackgroundTaskListener extends BaseModelListener<BackgroundTask> {
+public class BackgroundTaskModelListener
+	extends BaseModelListener<BackgroundTask> {
 
 	@Override
 	public void onBeforeRemove(BackgroundTask backgroundTask)

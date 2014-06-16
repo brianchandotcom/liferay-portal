@@ -30,7 +30,7 @@ import java.util.Date;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class PortletPreferencesListener
+public class PortletPreferencesModelListener
 	extends BaseModelListener<PortletPreferences> {
 
 	@Override
@@ -134,6 +134,6 @@ public class PortletPreferencesListener
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		PortletPreferencesListener.class);
+		PortletPreferencesModelListener.class);
 
 }

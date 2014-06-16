@@ -752,7 +752,7 @@ public class LayoutImporter {
 			}
 
 			// The layout set may be stale because LayoutUtil#update(layout)
-			// triggers LayoutSetPrototypeLayoutListener and that may have
+			// triggers LayoutSetPrototypeLayoutModelListener and that may have
 			// updated this layout set
 
 			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(

@@ -52,7 +52,6 @@ public class AssetVocabularyFinderImpl
 
 	@Override
 	public int filterCountByG_N(long groupId, String name) {
-
 		return doCountByG_N(groupId, name, true);
 	}
 

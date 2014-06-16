@@ -1194,7 +1194,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public long getDefaultPlid(long groupId, boolean privateLayout) {
-
 		if (groupId > 0) {
 			List<Layout> layouts = layoutPersistence.findByG_P(
 				groupId, privateLayout, 0, 1);
@@ -1357,7 +1356,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-
 		return layoutPersistence.findByG_P(groupId, privateLayout);
 	}
 
@@ -1467,8 +1465,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public LayoutReference[] getLayouts(
-			long companyId, String portletId, String preferencesKey,
-			String preferencesValue) {
+		long companyId, String portletId, String preferencesKey,
+		String preferencesValue) {
 
 		List<LayoutReference> layoutReferences = layoutFinder.findByC_P_P(
 			companyId, portletId, preferencesKey, preferencesValue);
@@ -1571,7 +1569,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public long getNextLayoutId(long groupId, boolean privateLayout) {
-
 		long nextLayoutId = counterLocalService.increment(
 			getCounterName(groupId, privateLayout));
 
@@ -1600,7 +1597,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Layout> getNoPermissionLayouts(long roleId) {
-
 		return layoutFinder.findByNoPermissions(roleId);
 	}
 

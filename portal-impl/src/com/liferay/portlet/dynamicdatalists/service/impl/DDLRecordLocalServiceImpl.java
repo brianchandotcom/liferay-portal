@@ -263,14 +263,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getCompanyRecordsCount(long companyId, int scope) {
-
 		return getCompanyRecordsCount(
 			companyId, WorkflowConstants.STATUS_ANY, scope);
 	}
 
 	@Override
 	public int getCompanyRecordsCount(long companyId, int status, int scope) {
-
 		return ddlRecordFinder.countByC_S_S(companyId, status, scope);
 	}
 
@@ -296,7 +294,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Override
 	public Long[] getMinAndMaxCompanyRecordIds(
-			long companyId, int status, int scope) {
+		long companyId, int status, int scope) {
 
 		return ddlRecordFinder.findByC_S_S_MinAndMax(companyId, status, scope);
 	}
@@ -331,13 +329,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Override
 	public List<DDLRecord> getRecords(long recordSetId, long userId) {
-
 		return ddlRecordPersistence.findByR_U(recordSetId, userId);
 	}
 
 	@Override
 	public int getRecordsCount(long recordSetId, int status) {
-
 		return ddlRecordFinder.countByR_S(recordSetId, status);
 	}
 

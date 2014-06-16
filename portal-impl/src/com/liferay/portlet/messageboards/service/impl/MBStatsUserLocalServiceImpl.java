@@ -46,7 +46,6 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public MBStatsUser addStatsUser(long groupId, long userId) {
-
 		long statsUserId = counterLocalService.increment();
 
 		MBStatsUser statsUser = mbStatsUserPersistence.create(statsUserId);
@@ -110,7 +109,6 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public Date getLastPostDateByUserId(long groupId, long userId) {
-
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			MBThread.class, MBStatsUserImpl.TABLE_NAME,
 			ClassLoaderUtil.getPortalClassLoader());
@@ -188,7 +186,6 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public MBStatsUser getStatsUser(long groupId, long userId) {
-
 		MBStatsUser statsUser = mbStatsUserPersistence.fetchByG_U(
 			groupId, userId);
 
@@ -228,13 +225,11 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public List<MBStatsUser> getStatsUsersByUserId(long userId) {
-
 		return mbStatsUserPersistence.findByUserId(userId);
 	}
 
 	@Override
 	public MBStatsUser updateStatsUser(long groupId, long userId) {
-
 		return updateStatsUser(
 			groupId, userId, getLastPostDateByUserId(groupId, userId));
 	}

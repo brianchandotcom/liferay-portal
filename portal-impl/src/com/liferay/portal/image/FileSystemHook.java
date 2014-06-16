@@ -82,7 +82,6 @@ public class FileSystemHook extends BaseHook {
 
 	@Override
 	public void updateImage(Image image, String type, byte[] bytes) {
-
 		try {
 			File file = getFile(image.getImageId(), type);
 

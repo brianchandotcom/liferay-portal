@@ -48,7 +48,6 @@ public class UserIdMapperLocalServiceImpl
 
 	@Override
 	public List<UserIdMapper> getUserIdMappers(long userId) {
-
 		return userIdMapperPersistence.findByUserId(userId);
 	}
 

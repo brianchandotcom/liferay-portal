@@ -157,14 +157,12 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public int getExportImportConfigurationsCount(long groupId) {
-
 		return exportImportConfigurationPersistence.countByG_S(
 			groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getExportImportConfigurationsCount(long groupId, int type) {
-
 		return exportImportConfigurationPersistence.countByG_T_S(
 			groupId, type, WorkflowConstants.STATUS_APPROVED);
 	}

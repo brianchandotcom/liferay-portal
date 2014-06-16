@@ -83,7 +83,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
-
 		groupPersistence.addUserGroups(groupId, userGroupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -97,7 +96,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
-
 		teamPersistence.addUserGroups(teamId, userGroupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -414,7 +412,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 	@Override
 	public UserGroup fetchUserGroup(long companyId, String name) {
-
 		return userGroupPersistence.fetchByC_N(companyId, name);
 	}
 
@@ -476,7 +473,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<UserGroup> getUserGroups(long companyId) {
-
 		return userGroupPersistence.findByCompanyId(companyId);
 	}
 
@@ -878,7 +874,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds) {
-
 		List<Team> teams = teamPersistence.findByGroupId(groupId);
 
 		for (Team team : teams) {
@@ -901,7 +896,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
-
 		teamPersistence.removeUserGroups(teamId, userGroupIds);
 
 		PermissionCacheUtil.clearCache();

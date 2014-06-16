@@ -740,7 +740,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public int getFoldersAndFileEntriesCount(long folderId) {
-
 		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
 
 		return foldersAndFileEntries.size();
@@ -777,7 +776,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status) {
-
 		int count = 0;
 
 		for (long folderId : folderIds) {
@@ -869,7 +867,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public void getSubfolderIds(List<Long> folderIds, long folderId) {
-
 		try {
 			List<Folder> subfolders = getFolders(
 				folderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -886,7 +883,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public List<Long> getSubfolderIds(long folderId, boolean recurse) {
-
 		try {
 			List<Long> subfolderIds = new ArrayList<Long>();
 

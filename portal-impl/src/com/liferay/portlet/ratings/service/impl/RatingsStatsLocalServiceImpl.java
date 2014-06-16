@@ -32,7 +32,6 @@ public class RatingsStatsLocalServiceImpl
 
 	@Override
 	public RatingsStats addStats(long classNameId, long classPK) {
-
 		long statsId = counterLocalService.increment();
 
 		RatingsStats stats = ratingsStatsPersistence.create(statsId);
@@ -66,7 +65,6 @@ public class RatingsStatsLocalServiceImpl
 
 	@Override
 	public void deleteStats(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		try {
@@ -88,7 +86,6 @@ public class RatingsStatsLocalServiceImpl
 
 	@Override
 	public List<RatingsStats> getStats(String className, List<Long> classPKs) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsStatsFinder.findByC_C(classNameId, classPKs);
@@ -96,7 +93,6 @@ public class RatingsStatsLocalServiceImpl
 
 	@Override
 	public RatingsStats getStats(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		RatingsStats stats = ratingsStatsPersistence.fetchByC_C(

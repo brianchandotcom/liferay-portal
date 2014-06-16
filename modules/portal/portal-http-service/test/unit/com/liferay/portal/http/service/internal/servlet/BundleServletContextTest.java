@@ -391,7 +391,6 @@ public class BundleServletContextTest extends PowerMockito {
 
 	@Test
 	public void testUnregisterHttpSessionBindingListener() {
-
 		unregisterListener(_httpSessionBindingListener);
 	}
 

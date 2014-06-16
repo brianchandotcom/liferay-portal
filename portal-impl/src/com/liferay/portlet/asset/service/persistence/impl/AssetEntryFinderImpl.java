@@ -91,7 +91,6 @@ public class AssetEntryFinderImpl
 
 	@Override
 	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
-
 		Session session = null;
 
 		try {

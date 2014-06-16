@@ -501,7 +501,6 @@ public class OrganizationLocalServiceImpl
 
 	@Override
 	public Organization fetchOrganization(long companyId, String name) {
-
 		return organizationPersistence.fetchByC_N(companyId, name);
 	}
 
@@ -573,7 +572,6 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public long getOrganizationId(long companyId, String name) {
-
 		Organization organization = organizationPersistence.fetchByC_N(
 			companyId, name);
 
@@ -797,7 +795,6 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public int getSuborganizationsCount(long companyId, long organizationId) {
-
 		return organizationPersistence.countByC_P(companyId, organizationId);
 	}
 

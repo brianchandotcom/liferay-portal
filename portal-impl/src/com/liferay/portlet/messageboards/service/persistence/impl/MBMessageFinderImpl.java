@@ -70,7 +70,6 @@ public class MBMessageFinderImpl
 
 	@Override
 	public int countByC_T(Date createDate, long threadId) {
-
 		Timestamp createDate_TS = CalendarUtil.getTimestamp(createDate);
 
 		Session session = null;

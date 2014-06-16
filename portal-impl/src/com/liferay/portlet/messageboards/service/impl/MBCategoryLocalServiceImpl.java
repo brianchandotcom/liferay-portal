@@ -296,7 +296,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(long groupId, int status) {
-
 		return mbCategoryPersistence.findByG_S(groupId, status);
 	}
 
@@ -374,7 +373,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<Object> getCategoriesAndThreads(long groupId, long categoryId) {
-
 		List<Object> categoriesAndThreads = new ArrayList<Object>();
 
 		List<MBCategory> categories = getCategories(
@@ -398,13 +396,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(long groupId, int status) {
-
 		return mbCategoryPersistence.countByG_S(groupId, status);
 	}
 
 	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
-
 		return mbCategoryPersistence.countByG_P(groupId, parentCategoryId);
 	}
 
@@ -436,7 +432,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-
 		return mbCategoryPersistence.countByG_P(groupId, parentCategoryIds);
 	}
 
@@ -494,7 +489,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getCompanyCategoriesCount(long companyId) {
-
 		return mbCategoryPersistence.countByCompanyId(companyId);
 	}
 
@@ -528,7 +522,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public int getSubscribedCategoriesCount(long groupId, long userId) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY);
 

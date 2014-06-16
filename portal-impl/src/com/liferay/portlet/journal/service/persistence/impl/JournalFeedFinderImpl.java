@@ -48,7 +48,6 @@ public class JournalFeedFinderImpl
 
 	@Override
 	public int countByKeywords(long companyId, long groupId, String keywords) {
-
 		String[] feedIds = null;
 		String[] names = null;
 		String[] descriptions = null;

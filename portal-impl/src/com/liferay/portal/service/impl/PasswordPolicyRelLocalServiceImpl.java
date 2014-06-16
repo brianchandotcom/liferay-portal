@@ -88,7 +88,6 @@ public class PasswordPolicyRelLocalServiceImpl
 
 	@Override
 	public void deletePasswordPolicyRel(String className, long classPK) {
-
 		try {
 			long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -103,7 +102,6 @@ public class PasswordPolicyRelLocalServiceImpl
 
 	@Override
 	public void deletePasswordPolicyRels(long passwordPolicyId) {
-
 		List<PasswordPolicyRel> passwordPolicyRels =
 			passwordPolicyRelPersistence.findByPasswordPolicyId(
 				passwordPolicyId);

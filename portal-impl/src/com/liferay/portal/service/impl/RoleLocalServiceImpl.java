@@ -715,7 +715,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getRoles(int type, String subtype) {
-
 		return rolePersistence.findByT_S(type, subtype);
 	}
 
@@ -739,7 +738,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getRoles(long companyId, int[] types) {
-
 		return rolePersistence.findByC_T(companyId, types);
 	}
 
@@ -876,7 +874,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getTypeRoles(int type, int start, int end) {
-
 		return rolePersistence.findByType(type, start, end);
 	}
 
@@ -902,7 +899,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserGroupGroupRoles(long userId, long groupId) {
-
 		return roleFinder.findByUserGroupGroupRole(userId, groupId);
 	}
 
@@ -917,7 +913,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserGroupRoles(long userId, long groupId) {
-
 		return roleFinder.findByUserGroupRole(userId, groupId);
 	}
 
@@ -932,7 +927,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups) {
-
 		if ((groups == null) || groups.isEmpty()) {
 			return Collections.emptyList();
 		}
@@ -951,7 +945,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long groupId) {
-
 		return roleFinder.findByU_G(userId, groupId);
 	}
 
@@ -966,7 +959,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds) {
-
 		return roleFinder.findByU_G(userId, groupIds);
 	}
 
@@ -1082,7 +1074,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public Role loadFetchRole(long companyId, String name) {
-
 		return rolePersistence.fetchByC_N(companyId, name);
 	}
 
@@ -1267,7 +1258,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public int searchCount(long companyId, String keywords, Integer[] types) {
-
 		return searchCount(
 			companyId, keywords, types, new LinkedHashMap<String, Object>());
 	}

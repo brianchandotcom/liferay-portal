@@ -270,7 +270,6 @@ public class SCProductEntryLocalServiceImpl
 
 	@Override
 	public int getCompanyProductEntriesCount(long companyId) {
-
 		return scProductEntryPersistence.countByCompanyId(companyId);
 	}
 
@@ -311,7 +310,6 @@ public class SCProductEntryLocalServiceImpl
 
 	@Override
 	public int getProductEntriesCount(long groupId, long userId) {
-
 		return scProductEntryPersistence.countByG_U(groupId, userId);
 	}
 

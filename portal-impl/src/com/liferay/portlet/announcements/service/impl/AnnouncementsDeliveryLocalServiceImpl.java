@@ -83,7 +83,6 @@ public class AnnouncementsDeliveryLocalServiceImpl
 
 	@Override
 	public void deleteDelivery(AnnouncementsDelivery delivery) {
-
 		announcementsDeliveryPersistence.remove(delivery);
 	}
 
@@ -97,7 +96,6 @@ public class AnnouncementsDeliveryLocalServiceImpl
 
 	@Override
 	public void deleteDelivery(long userId, String type) {
-
 		AnnouncementsDelivery delivery =
 			announcementsDeliveryPersistence.fetchByU_T(userId, type);
 

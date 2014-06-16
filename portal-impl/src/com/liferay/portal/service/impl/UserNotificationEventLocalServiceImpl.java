@@ -126,7 +126,6 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public void deleteUserNotificationEvent(String uuid, long companyId) {
-
 		userNotificationEventPersistence.removeByUuid_C(uuid, companyId);
 	}
 
@@ -235,7 +234,6 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(long userId) {
-
 		return userNotificationEventPersistence.findByUserId(userId);
 	}
 
@@ -273,7 +271,6 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public int getUserNotificationEventsCount(long userId) {
-
 		return userNotificationEventPersistence.countByUserId(userId);
 	}
 
@@ -284,7 +281,6 @@ public class UserNotificationEventLocalServiceImpl
 	@Deprecated
 	@Override
 	public int getUserNotificationEventsCount(long userId, boolean archived) {
-
 		return getArchivedUserNotificationEventsCount(userId, archived);
 	}
 

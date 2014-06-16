@@ -554,7 +554,6 @@ public class DLStoreUtil {
 	 * @param  destDir the new directory's name
 	 */
 	public static void move(String srcDir, String destDir) {
-
 		getStore().move(srcDir, destDir);
 	}
 

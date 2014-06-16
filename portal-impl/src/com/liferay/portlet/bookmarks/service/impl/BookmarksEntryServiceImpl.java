@@ -79,14 +79,12 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public int getEntriesCount(long groupId, long folderId) {
-
 		return getEntriesCount(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getEntriesCount(long groupId, long folderId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return bookmarksEntryPersistence.filterCountByG_F_NotS(
 				groupId, folderId, WorkflowConstants.STATUS_IN_TRASH);
@@ -107,7 +105,6 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public int getFoldersEntriesCount(long groupId, List<Long> folderIds) {
-
 		return bookmarksEntryPersistence.filterCountByG_F_S(
 			groupId,
 			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])),

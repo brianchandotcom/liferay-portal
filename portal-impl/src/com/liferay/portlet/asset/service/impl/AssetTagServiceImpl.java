@@ -86,7 +86,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
-
 		Set<AssetTag> groupsTags = new TreeSet<AssetTag>(
 			new AssetTagNameComparator());
 
@@ -189,7 +188,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
-
 		return assetTagFinder.filterFindByG_C_N(
 			groupId, classNameId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
@@ -229,7 +227,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public int getTagsCount(long groupId, long classNameId, String name) {
-
 		return assetTagFinder.filterCountByG_C_N(groupId, classNameId, name);
 	}
 
@@ -240,7 +237,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public int getTagsCount(long groupId, String name, String[] tagProperties) {
-
 		return assetTagFinder.filterCountByG_N_P(groupId, name, tagProperties);
 	}
 

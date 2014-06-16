@@ -57,7 +57,6 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 	@Override
 	public List<Permission> convertPermissions(Role role) {
-
 		return convertPermissions(role, null);
 	}
 

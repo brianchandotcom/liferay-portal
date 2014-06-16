@@ -315,7 +315,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
-
 		List<AssetTag> groupsTags = new ArrayList<AssetTag>();
 
 		for (long groupId : groupIds) {
@@ -334,7 +333,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupTags(long groupId, int start, int end) {
-
 		return assetTagPersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -437,13 +435,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public String[] getTagNames(long classNameId, long classPK) {
-
 		return getTagNames(getTags(classNameId, classPK));
 	}
 
 	@Override
 	public String[] getTagNames(String className, long classPK) {
-
 		return getTagNames(getTags(className, classPK));
 	}
 
@@ -454,7 +450,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(long classNameId, long classPK) {
-
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
@@ -467,7 +462,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
-
 		return assetTagFinder.findByG_C_N(
 			groupId, classNameId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
@@ -484,7 +478,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	@Override
 	@ThreadLocalCachable
 	public List<AssetTag> getTags(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getTags(classNameId, classPK);
@@ -492,7 +485,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public int getTagsSize(long groupId, long classNameId, String name) {
-
 		return assetTagFinder.countByG_C_N(groupId, classNameId, name);
 	}
 

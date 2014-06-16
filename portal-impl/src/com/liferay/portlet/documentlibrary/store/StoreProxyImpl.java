@@ -180,7 +180,6 @@ public class StoreProxyImpl implements Store {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-
 		Store store = StoreFactory.getInstance();
 
 		return store.getFileNames(companyId, repositoryId);

@@ -27,7 +27,6 @@ public class ShoppingItemFieldLocalServiceImpl
 
 	@Override
 	public List<ShoppingItemField> getItemFields(long itemId) {
-
 		return shoppingItemFieldPersistence.findByItemId(itemId);
 	}
 

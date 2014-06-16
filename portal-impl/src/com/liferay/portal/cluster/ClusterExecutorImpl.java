@@ -127,7 +127,6 @@ public class ClusterExecutorImpl
 
 	@Override
 	public FutureClusterResponses execute(ClusterRequest clusterRequest) {
-
 		if (!isEnabled()) {
 			return null;
 		}

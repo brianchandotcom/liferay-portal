@@ -210,7 +210,6 @@ public class PortletPreferencesFinderImpl
 
 	@Override
 	public List<PortletPreferences> findByPortletId(String portletId) {
-
 		Session session = null;
 
 		try {

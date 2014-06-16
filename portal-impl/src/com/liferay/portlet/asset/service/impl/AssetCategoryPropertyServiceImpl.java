@@ -59,7 +59,6 @@ public class AssetCategoryPropertyServiceImpl
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
-
 		return assetCategoryPropertyLocalService.getCategoryProperties(entryId);
 	}
 

@@ -370,7 +370,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> getTemplates(long groupId, long classNameId) {
-
 		return ddmTemplatePersistence.filterFindByG_C(groupId, classNameId);
 	}
 
@@ -454,7 +453,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> getTemplatesByClassPK(long groupId, long classPK) {
-
 		return ddmTemplatePersistence.filterFindByG_CPK(groupId, classPK);
 	}
 

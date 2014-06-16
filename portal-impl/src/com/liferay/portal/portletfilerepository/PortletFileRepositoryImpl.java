@@ -337,7 +337,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public Repository fetchPortletRepository(long groupId, String portletId) {
-
 		return RepositoryLocalServiceUtil.fetchRepository(groupId, portletId);
 	}
 

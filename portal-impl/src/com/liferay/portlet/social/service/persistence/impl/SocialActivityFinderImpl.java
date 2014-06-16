@@ -170,7 +170,6 @@ public class SocialActivityFinderImpl
 
 	@Override
 	public int countByOrganizationId(long organizationId) {
-
 		Session session = null;
 
 		try {
@@ -208,7 +207,6 @@ public class SocialActivityFinderImpl
 
 	@Override
 	public int countByOrganizationUsers(long organizationId) {
-
 		Session session = null;
 
 		try {
@@ -283,7 +281,6 @@ public class SocialActivityFinderImpl
 
 	@Override
 	public int countByRelationType(long userId, int type) {
-
 		Session session = null;
 
 		try {
@@ -361,7 +358,6 @@ public class SocialActivityFinderImpl
 
 	@Override
 	public int countByUserGroupsAndOrganizations(long userId) {
-
 		Session session = null;
 
 		try {

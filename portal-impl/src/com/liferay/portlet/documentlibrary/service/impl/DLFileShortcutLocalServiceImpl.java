@@ -242,7 +242,6 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void disableFileShortcuts(long toFileEntryId) {
-
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
 

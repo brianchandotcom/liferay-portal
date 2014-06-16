@@ -812,7 +812,6 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public boolean isContentSharingWithChildrenEnabled(Group group) {
-
 		UnicodeProperties typeSettingsProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
@@ -1270,7 +1269,6 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet) {
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -1625,7 +1623,6 @@ public class SitesImpl implements Sites {
 	 * @param  layoutSet the site having its timestamp reset
 	 */
 	protected void doResetPrototype(LayoutSet layoutSet) {
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 

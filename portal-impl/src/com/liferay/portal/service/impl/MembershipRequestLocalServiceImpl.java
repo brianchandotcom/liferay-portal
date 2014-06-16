@@ -92,7 +92,6 @@ public class
 
 	@Override
 	public void deleteMembershipRequests(long groupId, int statusId) {
-
 		List<MembershipRequest> membershipRequests =
 			membershipRequestPersistence.findByG_S(groupId, statusId);
 
@@ -103,7 +102,6 @@ public class
 
 	@Override
 	public void deleteMembershipRequestsByUserId(long userId) {
-
 		List<MembershipRequest> membershipRequests =
 			membershipRequestPersistence.findByUserId(userId);
 

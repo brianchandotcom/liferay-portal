@@ -117,13 +117,11 @@ public class SCProductVersionLocalServiceImpl
 
 	@Override
 	public void deleteProductVersion(SCProductVersion productVersion) {
-
 		scProductVersionPersistence.remove(productVersion);
 	}
 
 	@Override
 	public void deleteProductVersions(long productEntryId) {
-
 		List<SCProductVersion> productVersions =
 			scProductVersionPersistence.findByProductEntryId(productEntryId);
 
@@ -158,7 +156,6 @@ public class SCProductVersionLocalServiceImpl
 
 	@Override
 	public int getProductVersionsCount(long productEntryId) {
-
 		return scProductVersionPersistence.countByProductEntryId(
 			productEntryId);
 	}

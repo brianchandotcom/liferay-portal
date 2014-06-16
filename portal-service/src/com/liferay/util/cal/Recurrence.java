@@ -272,7 +272,6 @@ public class Recurrence implements Serializable {
 	 * @return Calendar
 	 */
 	public Calendar getDtEnd() {
-
 		/*
 		 * Make dtEnd a cloned dtStart, so non-time fields of the Calendar
 		 * are accurate.

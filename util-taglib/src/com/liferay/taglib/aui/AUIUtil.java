@@ -125,8 +125,8 @@ public class AUIUtil {
 	 */
 	@Deprecated
 	public static String buildCss(
-			String prefix, String baseTypeCss, boolean disabled, boolean first,
-			boolean last, String cssClass) {
+		String prefix, String baseTypeCss, boolean disabled, boolean first,
+		boolean last, String cssClass) {
 
 		return buildCss(prefix, disabled, first, last, cssClass);
 	}

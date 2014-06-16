@@ -59,7 +59,6 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name) {
-
 		Session session = null;
 
 		try {

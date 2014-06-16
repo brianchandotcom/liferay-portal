@@ -438,7 +438,6 @@ public class DLFileEntryFinderImpl
 
 	@Override
 	public List<DLFileEntry> findByExtraSettings(int start, int end) {
-
 		Session session = null;
 
 		try {
@@ -509,7 +508,6 @@ public class DLFileEntryFinderImpl
 
 	@Override
 	public List<DLFileEntry> findByOrphanedFileEntries() {
-
 		Session session = null;
 
 		try {

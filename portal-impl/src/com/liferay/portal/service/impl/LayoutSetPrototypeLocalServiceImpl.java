@@ -239,7 +239,6 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 	@Override
 	public List<LayoutSetPrototype> getLayoutSetPrototypes(long companyId) {
-
 		return layoutSetPrototypePersistence.findByCompanyId(companyId);
 	}
 
@@ -260,7 +259,6 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 	@Override
 	public int searchCount(long companyId, Boolean active) {
-
 		if (active != null) {
 			return layoutSetPrototypePersistence.countByC_A(companyId, active);
 		}

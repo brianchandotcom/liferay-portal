@@ -51,7 +51,6 @@ public class TrashVersionLocalServiceImpl
 
 	@Override
 	public TrashVersion deleteTrashVersion(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		TrashVersion trashVersion = trashVersionPersistence.fetchByC_C(
@@ -81,7 +80,6 @@ public class TrashVersionLocalServiceImpl
 
 	@Override
 	public List<TrashVersion> getVersions(long entryId, String className) {
-
 		if (Validator.isNull(className)) {
 			return trashVersionPersistence.findByEntryId(entryId);
 		}

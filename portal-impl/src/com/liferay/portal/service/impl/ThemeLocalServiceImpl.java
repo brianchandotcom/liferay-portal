@@ -185,7 +185,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 	@Override
 	public Theme getTheme(long companyId, String themeId, boolean wapTheme) {
-
 		themeId = GetterUtil.getString(themeId);
 
 		Map<String, Theme> themes = _getThemes(companyId);

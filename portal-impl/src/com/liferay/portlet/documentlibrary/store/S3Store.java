@@ -126,7 +126,6 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName) {
-
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
 				_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
@@ -211,7 +210,6 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
 				_s3Bucket.getName(), getKey(companyId, repositoryId), null);
@@ -225,7 +223,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName) {
+		long companyId, long repositoryId, String dirName) {
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(

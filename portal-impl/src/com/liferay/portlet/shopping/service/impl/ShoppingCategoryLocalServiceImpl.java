@@ -186,7 +186,6 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public List<ShoppingCategory> getCategories(long groupId) {
-
 		return shoppingCategoryPersistence.findByGroupId(groupId);
 	}
 
@@ -200,7 +199,6 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
-
 		return shoppingCategoryPersistence.countByG_P(
 			groupId, parentCategoryId);
 	}

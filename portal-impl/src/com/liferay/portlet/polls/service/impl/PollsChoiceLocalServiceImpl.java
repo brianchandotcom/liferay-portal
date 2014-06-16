@@ -69,7 +69,6 @@ public class PollsChoiceLocalServiceImpl
 
 	@Override
 	public List<PollsChoice> getChoices(long questionId) {
-
 		return pollsChoicePersistence.findByQuestionId(questionId);
 	}
 

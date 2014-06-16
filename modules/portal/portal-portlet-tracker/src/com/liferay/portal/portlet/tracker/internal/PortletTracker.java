@@ -15,7 +15,6 @@
 package com.liferay.portal.portlet.tracker.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -157,14 +156,7 @@ public class PortletTracker
 
 		_portletInstanceFactory.destroy(portletModel);
 
-		List<Company> companies = null;
-
-		try {
-			companies = _companyLocalService.getCompanies();
-		}
-		catch (SystemException se) {
-			throw new RuntimeException(se);
-		}
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		for (Company company : companies) {
 			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
@@ -260,15 +252,9 @@ public class PortletTracker
 	protected com.liferay.portal.model.Portlet buildPortletModel(
 		String portletId) {
 
-		com.liferay.portal.model.Portlet portalPortletModel = null;
-
-		try {
-			portalPortletModel = _portletLocalService.getPortletById(
+		com.liferay.portal.model.Portlet portalPortletModel =
+			_portletLocalService.getPortletById(
 				CompanyConstants.SYSTEM, PortletKeys.PORTAL);
-		}
-		catch (SystemException se) {
-			throw new RuntimeException(se);
-		}
 
 		com.liferay.portal.model.Portlet portletModel = new PortletImpl(
 			CompanyConstants.SYSTEM, portletId);

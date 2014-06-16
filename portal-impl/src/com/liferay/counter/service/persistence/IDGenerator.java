@@ -29,16 +29,11 @@ public class IDGenerator implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(SessionImplementor session, Object object) {
-		try {
-			String name = object.getClass().getName();
+		String name = object.getClass().getName();
 
-			int currentId = (int)CounterLocalServiceUtil.increment(name);
+		int currentId = (int)CounterLocalServiceUtil.increment(name);
 
-			return new Integer(currentId);
-		}
-		catch (SystemException se) {
-			throw new RuntimeException(se);
-		}
+		return new Integer(currentId);
 	}
 
 }

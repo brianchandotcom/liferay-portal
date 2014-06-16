@@ -71,25 +71,18 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		try {
-			DDMForm ddmForm = getDDMForm();
+		DDMForm ddmForm = getDDMForm();
 
-			List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		List<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-			String[] availableLanguageIds = new String[availableLocales.size()];
+		String[] availableLanguageIds = new String[availableLocales.size()];
 
-			for (int i = 0; i < availableLocales.size(); i++) {
-				availableLanguageIds[i] = LocaleUtil.toLanguageId(
-					availableLocales.get(i));
-			}
-
-			return availableLanguageIds;
-		}
-		catch (PortalException pe) {
-			_log.error(pe.getMessage());
+		for (int i = 0; i < availableLocales.size(); i++) {
+			availableLanguageIds[i] = LocaleUtil.toLanguageId(
+				availableLocales.get(i));
 		}
 
-		return null;
+		return availableLanguageIds;
 	}
 
 	@Override
@@ -114,22 +107,24 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public DDMForm getDDMForm() throws PortalException {
-		return DDMFormXSDDeserializerUtil.deserialize(getXsd());
+	public DDMForm getDDMForm() {
+		if (_DDMForm == null) {
+			try {
+				_DDMForm = DDMFormXSDDeserializerUtil.deserialize(getXsd());
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return _DDMForm;
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		try {
-			DDMForm ddmForm = getDDMForm();
+		DDMForm ddmForm = getDDMForm();
 
-			return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
-		}
-		catch (PortalException pe) {
-			_log.error(pe.getMessage());
-		}
-
-		return null;
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 	}
 
 	@Override
@@ -550,6 +545,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public void setDDMForm(DDMForm ddmForm) {
+		_DDMForm = ddmForm;
+	}
+
+	@Override
 	public void setLocalizedFieldsMap(
 		Map<String, Map<String, Map<String, String>>> localizedFieldsMap) {
 
@@ -576,6 +576,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public void setXsd(String xsd) {
 		super.setXsd(xsd);
 
+		_DDMForm = null;
 		_localizedFieldsMap = null;
 		_localizedPersistentFieldsMap = null;
 		_localizedTransientFieldsMap = null;
@@ -751,6 +752,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
+
+	@CacheField
+	private DDMForm _DDMForm;
 
 	@CacheField
 	private Map<String, Map<String, Map<String, String>>> _localizedFieldsMap;

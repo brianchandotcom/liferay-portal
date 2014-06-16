@@ -38,8 +38,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm();
 
 	public java.lang.String getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -155,6 +154,9 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public boolean isFieldTransient(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void setDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);
 
 	public void setLocalizedFieldsMap(
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap);

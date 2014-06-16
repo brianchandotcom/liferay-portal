@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.Map;
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormField {
+public class DDMFormField implements Serializable {
 
 	public DDMFormField(String name, String type) {
 		_name = name;

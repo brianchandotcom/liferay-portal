@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
+<liferay-staging:defineStagingObjects />
+
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
@@ -58,38 +60,6 @@ else {
 
 		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	}
-}
-
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
-
-Group liveGroup = null;
-Group stagingGroup = null;
-
-if (group.isStagingGroup()) {
-	liveGroup = group.getLiveGroup();
-	stagingGroup = group;
-}
-else if (group.isStaged()) {
-	liveGroup = group;
-
-	if (group.isStagedRemotely()) {
-		stagingGroup = group;
-	}
-	else {
-		stagingGroup = group.getStagingGroup();
-	}
-}
-
-long liveGroupId = 0;
-
-if (liveGroup != null) {
-	liveGroupId = liveGroup.getGroupId();
-}
-
-long stagingGroupId = 0;
-
-if (stagingGroup != null) {
-	stagingGroupId = stagingGroup.getGroupId();
 }
 
 long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId", ParamUtil.getLong(request, "layoutSetBranchId"));
@@ -142,7 +112,7 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
+privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
 
 treeId = treeId + privateLayout + layoutSetBranchId;
 

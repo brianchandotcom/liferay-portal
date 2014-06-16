@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
+<liferay-staging:defineStagingObjects />
+
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
@@ -57,26 +59,7 @@ else {
 	}
 }
 
-long groupId = ParamUtil.getLong(request, "groupId");
-
-Group group = null;
-
-if (groupId > 0) {
-	group = GroupLocalServiceUtil.getGroup(groupId);
-}
-else {
-	group = (Group)request.getAttribute(WebKeys.GROUP);
-}
-
-long liveGroupId = group.getGroupId();
-
-if (group.isStagingGroup() && !group.isStagedRemotely()) {
-	Group liveGroup = group.getLiveGroup();
-
-	liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
-}
-
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = StringPool.BLANK;
 

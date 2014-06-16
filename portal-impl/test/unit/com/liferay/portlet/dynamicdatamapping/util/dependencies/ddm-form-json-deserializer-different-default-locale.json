@@ -1,0 +1,52 @@
+{
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "pt_BR",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"pt_BR": "Select",
+				"en_US": "Select"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Select5979",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				}, 
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				},
+				{
+					"label": {
+						"en_US": "Option 3",
+						"pt_BR": "Opcao 3"
+					},
+					"value": "Value 3"
+				}
+			],
+			"predefinedValue": {
+				"pt_BR": "[\"\"]",
+				"en_US": "[\"\"]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "select"
+		}
+	]
+}

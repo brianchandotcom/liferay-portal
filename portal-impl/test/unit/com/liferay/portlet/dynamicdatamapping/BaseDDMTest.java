@@ -35,6 +35,8 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
 
@@ -62,10 +64,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
-		DDMFormXSDDeserializerUtil.class, DDMStructureLocalServiceUtil.class,
-		DDMTemplateLocalServiceUtil.class, HtmlUtil.class,
-		JSONFactoryUtil.class, LocaleUtil.class, LocalizationUtil.class,
-		PropsUtil.class, SAXReaderUtil.class
+		DDMFormJSONDeserializerUtil.class, DDMFormXSDDeserializerUtil.class,
+		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
+		HtmlUtil.class, JSONFactoryUtil.class, LocaleUtil.class,
+		LocalizationUtil.class, PropsUtil.class, SAXReaderUtil.class
 	})
 @RunWith(PowerMockRunner.class)
 public class BaseDDMTest extends PowerMockito {
@@ -74,6 +76,7 @@ public class BaseDDMTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
+		setUpDDMFormJSONDeserializer();
 		setUpDDMFormXSDDeserializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
@@ -196,6 +199,16 @@ public class BaseDDMTest extends PowerMockito {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	protected void setUpDDMFormJSONDeserializer() {
+		spy(DDMFormJSONDeserializerUtil.class);
+
+		when(
+			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
+		).thenReturn(
+			new DDMFormJSONDeserializerImpl()
+		);
 	}
 
 	protected void setUpDDMFormXSDDeserializer() {

@@ -30,8 +30,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Akos Thurzo
  * @author Manuel de la Peña
@@ -97,20 +95,13 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 
 		Layout childLayout = LayoutTestUtil.addLayout(group);
 
-		updateThemeDisplay(
-			themeDisplay, "refererPlid", String.valueOf(childLayout.getPlid()));
+		themeDisplay.setRefererPlid(childLayout.getPlid());
 
 		Assert.assertEquals(
 			layoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
 
-		updateThemeDisplay(themeDisplay, "refererPlid", "foo");
-
-		Assert.assertEquals(
-			layoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
-
-		updateThemeDisplay(themeDisplay, "refererPlid", "1");
+		themeDisplay.setRefererPlid(1);
 
 		try {
 			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
@@ -119,17 +110,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		}
 		catch (NoSuchLayoutException nsle) {
 		}
-	}
-
-	protected void updateThemeDisplay(
-		ThemeDisplay themeDisplay, String paramName, String paramValue) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addParameter(paramName, paramValue);
-
-		themeDisplay.setRequest(mockHttpServletRequest);
 	}
 
 	protected String privateLayoutRelativeURL;

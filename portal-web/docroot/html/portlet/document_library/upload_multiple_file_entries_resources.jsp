@@ -197,7 +197,7 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 										function() {
 											var selectedFilesCountContainer = A.one('.selected-files-count');
 
-											var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]');
+											var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFile]');
 
 											var totalFilesCount = totalFiles.size();
 

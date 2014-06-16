@@ -276,13 +276,13 @@ AUI.add(
 
 						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
 
-						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabulariesCheckbox');
+						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabularies');
 
 						checkAllVocabulariesCheckbox.on(EVENT_CLICK, instance._checkAllVocabularies, instance);
 
 						instance._checkAllVocabulariesCheckbox = checkAllVocabulariesCheckbox;
 
-						var checkAllCategoriesCheckbox = A.one(idPrefix + 'checkAllCategoriesCheckbox');
+						var checkAllCategoriesCheckbox = A.one(idPrefix + 'checkAllCategories');
 
 						checkAllCategoriesCheckbox.on(EVENT_CLICK, instance._checkAllCategories, instance);
 

@@ -57,5 +57,5 @@
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />showListedCheckbox','<portlet:namespace />webContentDisplay', true);
+	Liferay.Util.toggleBoxes('<portlet:namespace />showListed','<portlet:namespace />webContentDisplay', true);
 </aui:script>

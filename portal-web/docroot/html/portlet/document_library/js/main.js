@@ -31,11 +31,11 @@ AUI.add(
 
 		var STR_PAGINATION_DATA = 'paginationData';
 
-		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcutCheckbox';
+		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcut';
 
-		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolderCheckbox';
+		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolder';
 
-		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntryCheckbox';
+		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntry';
 
 		var STR_SEARCH_FOLDER_ID = 'searchFolderId';
 

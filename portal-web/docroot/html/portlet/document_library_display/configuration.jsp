@@ -143,7 +143,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 		}
 	);
 
-	A.one('#<portlet:namespace />showActionsCheckbox').after(
+	A.one('#<portlet:namespace />showActions').after(
 		'change',
 		function(event) {
 			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');

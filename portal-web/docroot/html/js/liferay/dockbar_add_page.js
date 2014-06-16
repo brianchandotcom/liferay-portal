@@ -22,7 +22,7 @@ AUI.add(
 
 		var STR_CANCEL_ADD_OPERATION = 'cancelAddOperation';
 
-		var STR_HIDDEN_CHECKBOX = 'addLayoutHiddenCheckbox';
+		var STR_HIDDEN_CHECKBOX = 'addLayoutHidden';
 
 		var STR_ID = 'id';
 

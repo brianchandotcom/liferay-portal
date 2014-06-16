@@ -16,12 +16,22 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class InputCheckBoxTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		updateFormCheckboxNames();
+
+		return super.doEndTag();
+	}
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
@@ -78,6 +88,15 @@ public class InputCheckBoxTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-checkbox:id", _id);
 		request.setAttribute("liferay-ui:input-checkbox:onClick", _onClick);
 		request.setAttribute("liferay-ui:input-checkbox:param", _param);
+	}
+
+	protected void updateFormCheckboxNames() {
+		List<String> checkboxNames = (List<String>)request.getAttribute(
+			"aui:form:checkboxNames");
+
+		if (checkboxNames != null) {
+			checkboxNames.add(_param);
+		}
 	}
 
 	private static final String _PAGE =

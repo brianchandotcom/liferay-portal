@@ -130,7 +130,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 
 			var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
-			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategoryCheckbox');
+			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategory');
 
 			if (mergeWithParent) {
 				mergeWithParent.hide();

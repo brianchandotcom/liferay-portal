@@ -45,6 +45,7 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	public int doEndTag() throws JspException {
+		updateFormCheckboxNames();
 		updateFormValidators();
 
 		return super.doEndTag();
@@ -223,9 +224,6 @@ public class InputTag extends BaseInputTag {
 		if (Validator.equals(type,"assetTags")) {
 			forLabel = forLabel.concat("assetTagNames");
 		}
-		else if (Validator.equals(type, "checkbox")) {
-			forLabel = forLabel.concat("Checkbox");
-		}
 
 		String languageId = getLanguageId();
 
@@ -302,6 +300,28 @@ public class InputTag extends BaseInputTag {
 		}
 	}
 
+	protected void updateFormCheckboxNames() {
+		if (!Validator.equals(getType(), "checkbox")) {
+			return;
+		}
+
+		List<String> checkboxNames = (List<String>)request.getAttribute(
+			"aui:form:checkboxNames");
+
+		if (checkboxNames != null) {
+			String inputName = _inputName;
+
+			String languageId = getLanguageId();
+
+			if (Validator.isNotNull(languageId)) {
+				inputName = LocalizationUtil.getLocalizedName(
+					inputName, languageId);
+			}
+
+			checkboxNames.add(inputName);
+		}
+	}
+
 	protected void updateFormValidators() {
 		if (_validators == null) {
 			return;
@@ -319,10 +339,6 @@ public class InputTag extends BaseInputTag {
 				_validators);
 
 			String inputName = _inputName;
-
-			if (Validator.equals(getType(), "checkbox")) {
-				inputName = inputName.concat("Checkbox");
-			}
 
 			String languageId = getLanguageId();
 

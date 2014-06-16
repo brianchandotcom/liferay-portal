@@ -131,11 +131,7 @@ AUI.add(
 							p_v_l_s_g_id: themeDisplay.getSiteGroupId()
 						};
 
-						var checkboxName = checkbox.attr('name');
-
-						checkboxName = checkboxName.replace('Checkbox', '');
-
-						data[checkboxName] = checkbox.attr('checked');
+						data[checkbox.attr('name')] = checkbox.attr('checked');
 
 						A.io.request(
 							themeDisplay.getPathMain() + '/portal/update_layout',

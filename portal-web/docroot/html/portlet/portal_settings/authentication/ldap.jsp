@@ -252,18 +252,10 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 			function() {
 				var A = AUI();
 
-				var exportCheckbox = A.one('#<portlet:namespace />ldapExportEnabledCheckbox');
-				var importCheckbox = A.one('#<portlet:namespace />ldapImportEnabledCheckbox');
+				var exportCheckbox = A.one('#<portlet:namespace />ldapExportEnabled');
+				var importCheckbox = A.one('#<portlet:namespace />ldapImportEnabled');
 
-				var checked = importCheckbox.attr('checked');
-
-				if (checked) {
-					exportCheckbox.attr('checked', false);
-
-					Liferay.Util.updateCheckboxValue(exportCheckbox);
-				}
-
-				exportCheckbox.attr('disabled', checked);
+				exportCheckbox.attr('disabled', importCheckbox.attr('checked'));
 			},
 			['aui-base']
 		);
@@ -331,6 +323,5 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 		['aui-base']
 	);
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />ldapImportEnabledCheckbox', '<portlet:namespace />importEnabledSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />ldapExportEnabledCheckbox', '<portlet:namespace />exportEnabledSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />ldapImportEnabled', '<portlet:namespace />importEnabledSettings');
 </aui:script>

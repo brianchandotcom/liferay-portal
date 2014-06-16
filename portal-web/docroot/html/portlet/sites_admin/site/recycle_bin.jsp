@@ -47,7 +47,7 @@ double trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, re
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	var trashEnabledCheckbox = A.one('#<portlet:namespace />trashEnabledCheckbox');
+	var trashEnabledCheckbox = A.one('#<portlet:namespace />trashEnabled');
 
 	var trashEnabledDefault = trashEnabledCheckbox.attr('checked');
 

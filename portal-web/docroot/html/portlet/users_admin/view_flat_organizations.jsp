@@ -45,7 +45,7 @@ if (filterManageableOrganizations) {
 
 		RowChecker rowChecker = new RowChecker(renderResponse);
 
-		rowChecker.setRowIds("rowIdsOrganizationCheckbox");
+		rowChecker.setRowIds("rowIdsOrganization");
 
 		searchContainer.setRowChecker(rowChecker);
 		%>

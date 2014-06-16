@@ -99,7 +99,7 @@ AUI.add(
 
 						instance._entriesContainer = instance.byId('entriesContainer');
 
-						instance._selectAllCheckbox = instance.byId('allRowIdsCheckbox');
+						instance._selectAllCheckbox = instance.byId('allRowIds');
 
 						instance._folderContainer = instance.get('folderContainer');
 
@@ -310,8 +310,6 @@ AUI.add(
 								var selectElement = node.one(STR_DOT + instance._selector);
 
 								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
-
-								Util.updateCheckboxValue(selectElement);
 							}
 						}
 

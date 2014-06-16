@@ -958,7 +958,7 @@ AUI.add(
 					instance._defaultPortletTitle = Lang.trim(portletTitle ? portletTitle.text() : EMPTY);
 
 					instance._customTitleInput = instance._getNodeById('custom-title');
-					instance._customTitleCheckbox = instance._getNodeById('use-custom-titleCheckbox');
+					instance._customTitleCheckbox = instance._getNodeById('use-custom-title');
 					instance._showBorders = instance._getNodeById('show-borders');
 					instance._borderNote = A.one('#border-note');
 					instance._portletLanguage = instance._getNodeById('lfr-portlet-language');
@@ -967,8 +967,8 @@ AUI.add(
 					// Text
 
 					instance._fontFamily = instance._getNodeById('lfr-font-family');
-					instance._fontWeight = instance._getNodeById('lfr-font-boldCheckbox');
-					instance._fontStyle = instance._getNodeById('lfr-font-italicCheckbox');
+					instance._fontWeight = instance._getNodeById('lfr-font-bold');
+					instance._fontStyle = instance._getNodeById('lfr-font-italic');
 					instance._fontSize = instance._getNodeById('lfr-font-size');
 					instance._fontColor = instance._getNodeById('lfr-font-color');
 					instance._textAlign = instance._getNodeById('lfr-font-align');
@@ -983,9 +983,9 @@ AUI.add(
 
 					// Border
 
-					instance._ufaBorderWidth = instance._getNodeById('lfr-use-for-all-widthCheckbox');
-					instance._ufaBorderStyle = instance._getNodeById('lfr-use-for-all-styleCheckbox');
-					instance._ufaBorderColor = instance._getNodeById('lfr-use-for-all-colorCheckbox');
+					instance._ufaBorderWidth = instance._getNodeById('lfr-use-for-all-width');
+					instance._ufaBorderStyle = instance._getNodeById('lfr-use-for-all-style');
+					instance._ufaBorderColor = instance._getNodeById('lfr-use-for-all-color');
 
 					instance._borderTopInt = instance._getNodeById('lfr-border-width-top');
 					instance._borderTopUnit = instance._getNodeById('lfr-border-width-top-unit');
@@ -1008,8 +1008,8 @@ AUI.add(
 
 					// Spacing
 
-					instance._ufaPadding = instance._getNodeById('lfr-use-for-all-paddingCheckbox');
-					instance._ufaMargin = instance._getNodeById('lfr-use-for-all-marginCheckbox');
+					instance._ufaPadding = instance._getNodeById('lfr-use-for-all-padding');
+					instance._ufaMargin = instance._getNodeById('lfr-use-for-all-margin');
 
 					instance._paddingTopInt = instance._getNodeById('lfr-padding-top');
 					instance._paddingTopUnit = instance._getNodeById('lfr-padding-top-unit');

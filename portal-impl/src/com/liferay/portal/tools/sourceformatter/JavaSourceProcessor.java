@@ -925,7 +925,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(content, line, newLine);
 	}
 
-	protected String fixTabs(String content, Set<JavaTerm> javaTerms) {
+	protected String fixTabsAndIncorrectEmptyLines(
+		String content, Set<JavaTerm> javaTerms) {
+
 		Iterator<JavaTerm> itr = javaTerms.iterator();
 
 		while (itr.hasNext()) {
@@ -949,7 +951,29 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String[] lines = StringUtil.splitLines(methodNameAndParameters);
 
 			if (lines.length == 1) {
+				if (methodNameAndParameters.endsWith("{\n") &&
+					content.contains(methodNameAndParameters + "\n") &&
+					!content.contains(
+						methodNameAndParameters + "\n" + StringPool.TAB +
+							StringPool.TAB + "// ")) {
+
+					content = StringUtil.replace(
+						content, methodNameAndParameters + "\n",
+						methodNameAndParameters);
+				}
+
 				continue;
+			}
+
+			if (methodNameAndParameters.endsWith("{\n") &&
+				!content.contains(methodNameAndParameters + "\n") &&
+				!content.contains(
+					methodNameAndParameters + StringPool.TAB +
+						StringPool.CLOSE_CURLY_BRACE)) {
+
+				content = StringUtil.replace(
+					content, methodNameAndParameters,
+					methodNameAndParameters + "\n");
 			}
 
 			boolean throwsException = methodNameAndParameters.contains(
@@ -2159,7 +2183,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			newContent = sortJavaTerms(fileName, content, javaTerms);
 
-			newContent = fixTabs(content, javaTerms);
+			newContent = fixTabsAndIncorrectEmptyLines(content, javaTerms);
 		}
 
 		if (content.equals(newContent)) {

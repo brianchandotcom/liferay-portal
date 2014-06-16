@@ -33,7 +33,6 @@ public class SingleItemBucketFactory<S>
 
 	@Override
 	public ServiceTrackerMapImpl.Bucket<S, S> create() {
-
 		return new SingleBucket();
 	}
 
@@ -48,27 +47,28 @@ public class SingleItemBucketFactory<S>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return _queue.isEmpty();
+			return _serviceReferences.isEmpty();
 		}
 
 		@Override
 		public synchronized void remove(ServiceReference<S> serviceReference) {
 			Registry registry = RegistryUtil.getRegistry();
 
-			_queue.remove(serviceReference);
+			_serviceReferences.remove(serviceReference);
 
-			ServiceReference<S> peek = _queue.peek();
+			ServiceReference<S> peek = _serviceReferences.peek();
 
 			if (peek != null) {
 				try {
 					_service = registry.getService(peek);
 				}
-				catch (IllegalStateException e) {
-					//Registry is no longer usable...
+				catch (IllegalStateException ise) {
+
+					// Registry is no longer usable...
 
 					_service = null;
 
-					_queue.clear();
+					_serviceReferences.clear();
 				}
 			}
 			else {
@@ -77,7 +77,8 @@ public class SingleItemBucketFactory<S>
 		}
 
 		public SingleBucket() {
-			_queue = new PriorityQueue<ServiceReference<S>>(1, _comparator);
+			_serviceReferences = new PriorityQueue<ServiceReference<S>>(
+				1, _comparator);
 
 			_service = null;
 		}
@@ -85,14 +86,14 @@ public class SingleItemBucketFactory<S>
 		public synchronized void store(ServiceReference<S> serviceReference) {
 			Registry registry = RegistryUtil.getRegistry();
 
-			_queue.add(serviceReference);
+			_serviceReferences.add(serviceReference);
 
-			_service = registry.getService(_queue.peek());
+			_service = registry.getService(_serviceReferences.peek());
 		}
 
 		private S _service;
 
-		private PriorityQueue<ServiceReference<S>> _queue;
+		private PriorityQueue<ServiceReference<S>> _serviceReferences;
 
 	}
 

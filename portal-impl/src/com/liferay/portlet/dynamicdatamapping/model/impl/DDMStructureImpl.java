@@ -71,7 +71,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		DDMForm ddmForm = getDdmForm();
+		DDMForm ddmForm = getDDMForm();
 
 		List<Locale> availableLocales = ddmForm.getAvailableLocales();
 
@@ -107,22 +107,22 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public DDMForm getDdmForm() {
-		if (_ddmForm == null) {
+	public DDMForm getDDMForm() {
+		if (_DDMForm == null) {
 			try {
-				_ddmForm = DDMFormXSDDeserializerUtil.deserialize(getXsd());
+				_DDMForm = DDMFormXSDDeserializerUtil.deserialize(getXsd());
 			}
 			catch (Exception e) {
 				_log.error(e);
 			}
 		}
 
-		return _ddmForm;
+		return _DDMForm;
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		DDMForm ddmForm = getDdmForm();
+		DDMForm ddmForm = getDDMForm();
 
 		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 	}
@@ -293,7 +293,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMForm getFullHierarchyDDMForm()
 		throws PortalException, SystemException {
 
-		DDMForm ddmForm = getDdmForm();
+		DDMForm ddmForm = getDDMForm();
 
 		DDMStructure parentDDMStructure = getParentDDMStructure();
 
@@ -545,8 +545,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public void setDdmForm(DDMForm ddmForm) {
-		_ddmForm = ddmForm;
+	public void setDDMForm(DDMForm ddmForm) {
+		_DDMForm = ddmForm;
 	}
 
 	@Override
@@ -576,7 +576,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public void setXsd(String xsd) {
 		super.setXsd(xsd);
 
-		_ddmForm = null;
+		_DDMForm = null;
 		_localizedFieldsMap = null;
 		_localizedPersistentFieldsMap = null;
 		_localizedTransientFieldsMap = null;
@@ -754,7 +754,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
 
 	@CacheField
-	private DDMForm _ddmForm;
+	private DDMForm _DDMForm;
 
 	@CacheField
 	private Map<String, Map<String, Map<String, String>>> _localizedFieldsMap;

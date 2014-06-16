@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
-		Class<S> serviceClass, String filter,
+		Class<S> clazz, String filter,
 		ServiceReferenceMapper<K> serviceReferenceMapper,
 		ServiceTrackerMapBucketFactory<S, R> bucketFactory) {
 
@@ -37,12 +37,10 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		String completeFilter =
-			"(&(objectClass="+serviceClass.getName()+")"+filter+")";
+		filter = "(&(objectClass=" + clazz.getName() + ")" + filter + ")";
 
 		_serviceTracker = registry.trackServices(
-			registry.getFilter(completeFilter),
-			new MapServiceTrackerCustomizer());
+			registry.getFilter(filter), new MapServiceTrackerCustomizer());
 	}
 
 	@Override
@@ -70,6 +68,7 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 	private ConcurrentHashMap<K, Bucket<S, R>> _indexedServices =
 		new ConcurrentHashMap<K, Bucket<S, R>>();
 	private final ServiceReferenceMapper<K> _serviceReferenceMapper;
+
 	private final ServiceTracker<S, ServiceReference<S>> _serviceTracker;
 
 	interface Bucket<S, R> {
@@ -118,18 +117,18 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 		@Override
 		public void modifiedService(
-			final ServiceReference<S> newServiceReference,
-				final ServiceReference<S> oldServiceReference) {
+			final ServiceReference<S> serviceReference,
+			final ServiceReference<S> service) {
 
-			removedService(oldServiceReference, oldServiceReference);
+			removedService(service, service);
 
-			addingService(newServiceReference);
+			addingService(serviceReference);
 		}
 
 		@Override
 		public void removedService(
 			final ServiceReference<S> serviceReference,
-				ServiceReference<S> serviceReference2) {
+			ServiceReference<S> service) {
 
 			_serviceReferenceMapper.map(
 				serviceReference, new ServiceReferenceMapper.Emitter<K>() {

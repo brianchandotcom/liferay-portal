@@ -31,12 +31,12 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 
 		<div class="user-details">
 			<div class="row <%= (date == null) ? "line" : StringPool.BLANK %>">
-				<span class="span12 user-name"><%= HtmlUtil.escapeAttribute(user2.getFullName()) %></span>
+				<span class="col-md-12 user-name"><%= HtmlUtil.escapeAttribute(user2.getFullName()) %></span>
 			</div>
 
 			<c:if test="<%= date != null %>">
 				<div class="row">
-					<span class="span12 date-info">
+					<span class="col-md-12 date-info">
 						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</span>
 				</div>

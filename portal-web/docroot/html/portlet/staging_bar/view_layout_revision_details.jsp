@@ -110,7 +110,7 @@ else {
 	</c:if>
 </div>
 
-<div class="layout-revision-info <%= layoutRevision.isIncomplete() ? "incomplete" : "span7" %>">
+<div class="layout-revision-info <%= layoutRevision.isIncomplete() ? "incomplete" : "col-md-7" %>">
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">
 		<span class="layout-revision-version"><label><liferay-ui:message key="version" />:</label> <span class=""><%= layoutRevision.getLayoutRevisionId() %></span></span>
 

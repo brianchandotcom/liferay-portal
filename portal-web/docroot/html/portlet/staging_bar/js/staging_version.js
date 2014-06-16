@@ -180,7 +180,7 @@ AUI.add(
 						{
 							after: {
 								failure: function() {
-									layoutRevisionDetails.addClass('alert alert-error');
+									layoutRevisionDetails.addClass('alert alert-danger');
 
 									layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));
 								},

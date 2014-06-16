@@ -18,7 +18,7 @@ AUI.add(
 
 		var CSS_ACTIVE_AREA = 'active-area';
 
-		var CSS_MESSAGE_ERROR = 'alert-error';
+		var CSS_MESSAGE_ERROR = 'alert-danger';
 
 		var CSS_MESSAGE_SUCCESS = 'alert-success';
 
@@ -62,18 +62,18 @@ AUI.add(
 
 		var TPL_TAG_MERGE_BODY = '<div class="container-fluid tags-admin-merge-tag">' +
 			'<div class="row">' +
-				'<div class="span6">' +
+				'<div class="col-md-6">' +
 					'<div class="selected-tags-container">' +
 						'<label for="{namespace}selectedTagsList">' + Liferay.Language.get('tags-to-be-merged') + ':</label>' +
 						'<select id="{namespace}selectedTagsList" class="selected-tags-list" multiple>' +
 						'</select>' +
 					'</div>' +
 					'<div class="btn-group" id="{namespace}sortSelect">' +
-						'<button class="btn btn-mini tag-move-up" id="{namespace}tagMoveUp"><i class="icon-chevron-up"></i></button>' +
-						'<button class="btn btn-mini tag-move-down" id="{namespace}tagMoveDown"><i class="icon-chevron-down"></i></button>' +
+						'<button class="btn btn-xs tag-move-up" id="{namespace}tagMoveUp"><i class="icon-chevron-up"></i></button>' +
+						'<button class="btn btn-xs tag-move-down" id="{namespace}tagMoveDown"><i class="icon-chevron-down"></i></button>' +
 					'</div>' +
 				'</div>' +
-				'<div class="span6">' +
+				'<div class="col-md-6">' +
 					'<div class="target-tags-container">' +
 						'<label class="tags-label" for="{namespace}targetTagsList">' + Liferay.Language.get('target-tag') + ':</label>' +
 						'<select id="{namespace}targetTagsList" class="target-tags-list">' +
@@ -85,8 +85,8 @@ AUI.add(
 
 		var TPL_TAG_MERGE_FOOTER =
 			'<div class="container-fluid tags-admin-merge-tag">' +
-				'<div class="row-fluid">' +
-					'<div class="span7">' +
+				'<div class="row">' +
+					'<div class="col-md-7">' +
 						'<div class="pull-left tag-options">' +
 							'<label class="checkbox">' +
 								'<input id="{namespace}mergeOnlySelectedTags" type="checkbox">' + Liferay.Language.get('merge-only-selected-tags') +
@@ -96,7 +96,7 @@ AUI.add(
 							'</label>' +
 						'</div>' +
 					'</div>' +
-					'<div class="span5">' +
+					'<div class="col-md-5">' +
 						'<div id="{namespace}buttonsContainer"></div>' +
 					'</div>' +
 				'</div>' +

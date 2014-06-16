@@ -55,6 +55,10 @@ public class WorkflowConstants {
 
 	public static final String CONTEXT_USER_ID = "userId";
 
+	public static final String CONTEXT_USER_PORTRAIT_URL = "userPortraitURL";
+
+	public static final String CONTEXT_USER_URL = "userURL";
+
 	public static final long DEFAULT_GROUP_ID = 0;
 
 	public static final String LABEL_ANY = "any";

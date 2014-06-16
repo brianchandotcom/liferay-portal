@@ -2371,6 +2371,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected Tuple getJavaTermTuple(
 		String line, String content, int index, int numLines, int maxLines) {
 
+		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
+
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(StringPool.TAB + "public static final ") &&

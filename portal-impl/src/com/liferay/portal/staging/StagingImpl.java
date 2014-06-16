@@ -617,6 +617,12 @@ public class StagingImpl implements Staging {
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
+		String cmd = null;
+
+		if (contextMap != null) {
+			cmd = (String)contextMap.get(Constants.CMD);
+		}
+
 		JSONObject exceptionMessagesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -659,10 +665,22 @@ public class StagingImpl implements Staging {
 			catch (Exception ex) {
 			}
 
-			errorMessage = LanguageUtil.format(
-				locale,
-				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				TextFormatter.formatStorageSize(fileMaxSize, locale), false);
+			if (Validator.equals(cmd, Constants.PUBLISH)) {
+				errorMessage = LanguageUtil.get(
+					locale,
+					"file-size-limit-exceeded.-please-ensure-that-the-file-" +
+						"does-not-exceed-the-file-size-limit-in-both-the-" +
+							"live-environment-and-the-staging-environment");
+			}
+			else {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
+						"than-x",
+					TextFormatter.formatStorageSize(fileMaxSize, locale),
+					false);
+			}
+
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {
@@ -743,12 +761,6 @@ public class StagingImpl implements Staging {
 		}
 		else if (e instanceof MissingReferenceException) {
 			MissingReferenceException mre = (MissingReferenceException)e;
-
-			String cmd = null;
-
-			if (contextMap != null) {
-				cmd = (String)contextMap.get(Constants.CMD);
-			}
 
 			if (Validator.equals(cmd, Constants.PUBLISH)) {
 				errorMessage = LanguageUtil.get(

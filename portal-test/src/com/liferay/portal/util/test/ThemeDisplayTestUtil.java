@@ -42,7 +42,7 @@ public class ThemeDisplayTestUtil {
 
 		HttpServletRequest request = new MockHttpServletRequest();
 
-		request.setAttribute(WebKeys.COMPANY_ID, companyId);
+		request.setAttribute("COMPANY_ID", companyId);
 		request.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:80/web/guest/home");
 		request.setAttribute(WebKeys.USER, TestPropsValues.getUser());

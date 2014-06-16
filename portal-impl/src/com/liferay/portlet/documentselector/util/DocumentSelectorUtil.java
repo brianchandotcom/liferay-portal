@@ -14,8 +14,15 @@
 
 package com.liferay.portlet.documentselector.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +40,31 @@ public class DocumentSelectorUtil {
 
 		return ParamUtil.getString(
 			originalRequest, "CKEditorFuncNum", ckEditorFuncNum);
+	}
+
+	public static String[] getMimeTypes(HttpServletRequest request) {
+		HttpServletRequest originalServletRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		String type = ParamUtil.getString(originalServletRequest, "Type");
+
+		Set<String> mimeTypes = null;
+
+		if (StringUtil.equalsIgnoreCase(type, "audio")) {
+			mimeTypes = AudioProcessorUtil.getAudioMimeTypes();
+		}
+		else if (StringUtil.equalsIgnoreCase(type, "image")) {
+			mimeTypes = ImageProcessorUtil.getImageMimeTypes();
+		}
+		else if (StringUtil.equalsIgnoreCase(type, "video")) {
+			mimeTypes = VideoProcessorUtil.getVideoMimeTypes();
+		}
+
+		if (mimeTypes == null) {
+			return null;
+		}
+
+		return ArrayUtil.toStringArray(mimeTypes.toArray());
 	}
 
 }

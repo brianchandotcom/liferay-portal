@@ -273,6 +273,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setAttribute("groupId", groupId);
+		searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
 		searchContext.setAttribute("paginationType", "regular");
 
 		int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);

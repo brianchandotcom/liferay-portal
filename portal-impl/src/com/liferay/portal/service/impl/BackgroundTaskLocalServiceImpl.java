@@ -312,7 +312,6 @@ public class BackgroundTaskLocalServiceImpl
 
 	@Override
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId) {
-
 		return backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
 	}
 
@@ -350,7 +349,6 @@ public class BackgroundTaskLocalServiceImpl
 
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(long groupId, int status) {
-
 		return backgroundTaskPersistence.findByG_S(groupId, status);
 	}
 
@@ -514,7 +512,6 @@ public class BackgroundTaskLocalServiceImpl
 	@Clusterable(onMaster = true)
 	@Override
 	public void resumeBackgroundTask(long backgroundTaskId) {
-
 		BackgroundTask backgroundTask =
 			backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
 

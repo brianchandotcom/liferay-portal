@@ -104,7 +104,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds) {
-
 		for (long groupId : groupIds) {
 			userGroupGroupRolePersistence.removeByU_G(userGroupId, groupId);
 		}
@@ -114,7 +113,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId) {
-
 		for (long userGroupId : userGroupIds) {
 			userGroupGroupRolePersistence.removeByU_G(userGroupId, groupId);
 		}
@@ -142,7 +140,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupGroupRolesByGroupId(long groupId) {
-
 		userGroupGroupRolePersistence.removeByGroupId(groupId);
 
 		PermissionCacheUtil.clearCache();
@@ -150,7 +147,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupGroupRolesByRoleId(long roleId) {
-
 		userGroupGroupRolePersistence.removeByRoleId(roleId);
 
 		PermissionCacheUtil.clearCache();
@@ -158,7 +154,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupGroupRolesByUserGroupId(long userGroupId) {
-
 		userGroupGroupRolePersistence.removeByUserGroupId(userGroupId);
 
 		PermissionCacheUtil.clearCache();
@@ -166,7 +161,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public List<UserGroupGroupRole> getUserGroupGroupRoles(long userGroupId) {
-
 		return userGroupGroupRolePersistence.findByUserGroupId(userGroupId);
 	}
 
@@ -186,7 +180,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 	@Override
 	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId) {
-
 		return userGroupGroupRoleFinder.findByUserGroupsUsers(userId);
 	}
 

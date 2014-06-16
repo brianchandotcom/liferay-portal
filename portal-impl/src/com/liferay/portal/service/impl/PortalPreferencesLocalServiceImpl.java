@@ -97,7 +97,6 @@ public class PortalPreferencesLocalServiceImpl
 
 	@Override
 	public PortletPreferences getPreferences(long ownerId, int ownerType) {
-
 		return getPreferences(ownerId, ownerType, null);
 	}
 

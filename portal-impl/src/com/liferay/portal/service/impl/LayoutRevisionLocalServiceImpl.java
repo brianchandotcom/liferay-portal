@@ -237,7 +237,6 @@ public class LayoutRevisionLocalServiceImpl
 
 	@Override
 	public LayoutRevision fetchLastLayoutRevision(long plid, boolean head) {
-
 		try {
 			return layoutRevisionPersistence.findByH_P_Last(
 				head, plid, new LayoutRevisionCreateDateComparator(true));
@@ -319,7 +318,6 @@ public class LayoutRevisionLocalServiceImpl
 
 	@Override
 	public List<LayoutRevision> getLayoutRevisions(long plid) {
-
 		return layoutRevisionPersistence.findByPlid(plid);
 	}
 

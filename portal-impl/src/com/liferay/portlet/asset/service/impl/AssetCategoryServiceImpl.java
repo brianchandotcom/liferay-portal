@@ -300,7 +300,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public int getVocabularyCategoriesCount(long groupId, long vocabularyId) {
-
 		return assetCategoryPersistence.filterCountByG_V(groupId, vocabularyId);
 	}
 

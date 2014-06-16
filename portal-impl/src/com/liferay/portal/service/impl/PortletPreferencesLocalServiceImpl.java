@@ -111,7 +111,6 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public void deletePortletPreferencesByPlid(long plid) {
-
 		portletPreferencesPersistence.removeByPlid(plid);
 	}
 
@@ -162,7 +161,6 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public List<PortletPreferences> getPortletPreferences() {
-
 		return portletPreferencesPersistence.findAll();
 	}
 
@@ -209,7 +207,6 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public List<PortletPreferences> getPortletPreferencesByPlid(long plid) {
-
 		return portletPreferencesPersistence.findByPlid(plid);
 	}
 
@@ -223,7 +220,6 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public long getPortletPreferencesCount(int ownerType, String portletId) {
-
 		return portletPreferencesPersistence.countByO_P(ownerType, portletId);
 	}
 

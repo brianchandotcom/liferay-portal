@@ -69,7 +69,6 @@ public class DLFileRankFinderImpl
 
 	@Override
 	public List<DLFileRank> findByFolderId(long folderId) {
-
 		Session session = null;
 
 		try {

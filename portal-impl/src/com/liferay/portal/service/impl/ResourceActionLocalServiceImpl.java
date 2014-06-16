@@ -56,7 +56,6 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	public void checkResourceActions(String name, List<String> actionIds) {
-
 		checkResourceActions(name, actionIds, false);
 	}
 
@@ -198,7 +197,6 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	public List<ResourceAction> getResourceActions(String name) {
-
 		return resourceActionPersistence.findByName(name);
 	}
 

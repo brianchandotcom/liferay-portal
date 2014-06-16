@@ -108,7 +108,6 @@ public class SocialRequestLocalServiceImpl
 	 */
 	@Override
 	public void deleteReceiverUserRequests(long receiverUserId) {
-
 		List<SocialRequest> requests =
 			socialRequestPersistence.findByReceiverUserId(receiverUserId);
 
@@ -144,7 +143,6 @@ public class SocialRequestLocalServiceImpl
 
 	@Override
 	public void deleteRequests(long className, long classPK) {
-
 		List<SocialRequest> requests = socialRequestPersistence.findByC_C(
 			className, classPK);
 
@@ -230,7 +228,6 @@ public class SocialRequestLocalServiceImpl
 	 */
 	@Override
 	public int getReceiverUserRequestsCount(long receiverUserId) {
-
 		return socialRequestPersistence.countByReceiverUserId(receiverUserId);
 	}
 
@@ -244,7 +241,6 @@ public class SocialRequestLocalServiceImpl
 	 */
 	@Override
 	public int getReceiverUserRequestsCount(long receiverUserId, int status) {
-
 		return socialRequestPersistence.countByR_S(receiverUserId, status);
 	}
 
@@ -321,7 +317,6 @@ public class SocialRequestLocalServiceImpl
 	 */
 	@Override
 	public int getUserRequestsCount(long userId, int status) {
-
 		return socialRequestPersistence.countByU_S(userId, status);
 	}
 

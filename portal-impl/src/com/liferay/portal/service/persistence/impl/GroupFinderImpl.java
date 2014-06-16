@@ -185,7 +185,6 @@ public class GroupFinderImpl
 
 	@Override
 	public int countByG_U(long groupId, long userId, boolean inherit) {
-
 		LinkedHashMap<String, Object> params1 =
 			new LinkedHashMap<String, Object>();
 

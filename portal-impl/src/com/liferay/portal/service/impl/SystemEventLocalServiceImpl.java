@@ -86,7 +86,6 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void deleteSystemEvents(long groupId, long systemEventSetKey) {
-
 		systemEventPersistence.removeByG_S(groupId, systemEventSetKey);
 	}
 

@@ -79,7 +79,6 @@ public class FolderUtil {
 	 */
 	@Deprecated
 	public static List<Folder> findByRepositoryId(long repositoryId) {
-
 		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
 
 		return RepositoryModelUtil.toFolders(dlFolders);

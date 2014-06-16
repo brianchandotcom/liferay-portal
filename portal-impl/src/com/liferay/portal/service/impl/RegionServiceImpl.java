@@ -69,7 +69,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public Region fetchRegion(long countryId, String regionCode) {
-
 		return regionPersistence.fetchByC_R(countryId, regionCode);
 	}
 
@@ -102,7 +101,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public List<Region> getRegions(long countryId, boolean active) {
-
 		return regionPersistence.findByC_A(countryId, active);
 	}
 

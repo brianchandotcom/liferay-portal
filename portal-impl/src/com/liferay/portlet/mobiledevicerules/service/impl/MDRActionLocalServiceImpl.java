@@ -136,7 +136,6 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	@Override
 	public List<MDRAction> getActions(long ruleGroupInstanceId) {
-
 		return mdrActionPersistence.findByRuleGroupInstanceId(
 			ruleGroupInstanceId);
 	}
@@ -151,7 +150,6 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	@Override
 	public int getActionsCount(long ruleGroupInstanceId) {
-
 		return mdrActionPersistence.countByRuleGroupInstanceId(
 			ruleGroupInstanceId);
 	}

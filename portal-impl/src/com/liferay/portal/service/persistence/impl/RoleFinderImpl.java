@@ -132,7 +132,6 @@ public class RoleFinderImpl
 
 	@Override
 	public int countByU_G_R(long userId, long groupId, long roleId) {
-
 		Session session = null;
 
 		try {
@@ -302,7 +301,6 @@ public class RoleFinderImpl
 
 	@Override
 	public List<Role> findByUserGroupGroupRole(long userId, long groupId) {
-
 		Session session = null;
 
 		try {
@@ -331,7 +329,6 @@ public class RoleFinderImpl
 
 	@Override
 	public List<Role> findByUserGroupRole(long userId, long groupId) {
-
 		Session session = null;
 
 		try {
@@ -406,7 +403,6 @@ public class RoleFinderImpl
 
 	@Override
 	public List<Role> findByU_G(long userId, List<Group> groups) {
-
 		long[] groupIds = new long[groups.size()];
 
 		for (int i = 0; i < groups.size(); i++) {
@@ -420,13 +416,11 @@ public class RoleFinderImpl
 
 	@Override
 	public List<Role> findByU_G(long userId, long groupId) {
-
 		return findByU_G(userId, new long[] {groupId});
 	}
 
 	@Override
 	public List<Role> findByU_G(long userId, long[] groupIds) {
-
 		Session session = null;
 
 		try {

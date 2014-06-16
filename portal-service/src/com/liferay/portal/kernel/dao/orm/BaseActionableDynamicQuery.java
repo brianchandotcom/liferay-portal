@@ -124,7 +124,6 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public void setBaseLocalService(BaseLocalService baseLocalService) {
-
 		_baseLocalService = baseLocalService;
 
 		Class<?> clazz = _baseLocalService.getClass();

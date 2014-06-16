@@ -113,7 +113,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public long getFileVersionFileEntryMetadatasCount(long fileVersionId) {
-
 		return dlFileEntryMetadataPersistence.countByFileVersionId(
 			fileVersionId);
 	}

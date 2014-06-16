@@ -248,7 +248,6 @@ public class PasswordPolicyLocalServiceImpl
 
 	@Override
 	public PasswordPolicy fetchPasswordPolicy(long companyId, String name) {
-
 		return passwordPolicyPersistence.fetchByC_N(companyId, name);
 	}
 

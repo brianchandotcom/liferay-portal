@@ -82,7 +82,6 @@ public class RawMetadataProcessorImpl
 
 	@Override
 	public void generateMetadata(FileVersion fileVersion) {
-
 		long fileEntryMetadataCount =
 			DLFileEntryMetadataLocalServiceUtil.
 				getFileVersionFileEntryMetadatasCount(

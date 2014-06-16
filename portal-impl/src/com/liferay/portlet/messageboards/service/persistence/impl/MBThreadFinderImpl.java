@@ -392,7 +392,6 @@ public class MBThreadFinderImpl
 
 	@Override
 	public int filterCountByG_C(long groupId, long categoryId) {
-
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return MBThreadUtil.countByG_C(groupId, categoryId);
 		}

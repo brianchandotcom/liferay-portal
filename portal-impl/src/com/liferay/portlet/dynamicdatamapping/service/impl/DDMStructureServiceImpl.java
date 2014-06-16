@@ -365,7 +365,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long groupId) {
-
 		return ddmStructurePersistence.filterFindByGroupId(groupId);
 	}
 
@@ -378,7 +377,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long[] groupIds) {
-
 		return ddmStructurePersistence.filterFindByGroupId(groupIds);
 	}
 
@@ -394,7 +392,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId) {
-
 		return ddmStructurePersistence.filterFindByG_C(groupIds, classNameId);
 	}
 

@@ -42,7 +42,6 @@ public class AssetTagStatsLocalServiceImpl
 	 */
 	@Override
 	public AssetTagStats addTagStats(long tagId, long classNameId) {
-
 		long tagStatsId = counterLocalService.increment();
 
 		AssetTagStats tagStats = assetTagStatsPersistence.create(tagStatsId);
@@ -104,7 +103,6 @@ public class AssetTagStatsLocalServiceImpl
 	 */
 	@Override
 	public void deleteTagStatsByClassNameId(long classNameId) {
-
 		List<AssetTagStats> tagStatsList =
 			assetTagStatsPersistence.findByClassNameId(classNameId);
 
@@ -167,7 +165,6 @@ public class AssetTagStatsLocalServiceImpl
 	 */
 	@Override
 	public AssetTagStats getTagStats(long tagId, long classNameId) {
-
 		AssetTagStats tagStats = assetTagStatsPersistence.fetchByT_C(
 			tagId, classNameId);
 

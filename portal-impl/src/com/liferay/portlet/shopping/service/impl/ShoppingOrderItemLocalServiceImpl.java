@@ -27,7 +27,6 @@ public class ShoppingOrderItemLocalServiceImpl
 
 	@Override
 	public List<ShoppingOrderItem> getOrderItems(long orderId) {
-
 		return shoppingOrderItemPersistence.findByOrderId(orderId);
 	}
 

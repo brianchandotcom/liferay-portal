@@ -702,7 +702,6 @@ public class DLImpl implements DL {
 
 	@Override
 	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
-
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, DLFileEntryType.class.getName());

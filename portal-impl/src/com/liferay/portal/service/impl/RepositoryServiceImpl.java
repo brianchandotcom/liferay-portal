@@ -141,7 +141,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 	@Override
 	public String[] getSupportedConfigurations(long classNameId) {
-
 		try {
 			ClassName className = classNameLocalService.getClassName(
 				classNameId);

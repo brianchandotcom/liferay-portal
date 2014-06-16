@@ -90,7 +90,6 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected Hits getHits(SearchContext searchContext) throws SearchException {
-
 		return _baseIndexer.doSearch(searchContext);
 	}
 

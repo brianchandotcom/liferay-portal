@@ -2544,7 +2544,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
-
 		List<Portlet> portlets = getControlPanelPortlets(
 			PortletCategoryKeys.MY, themeDisplay);
 
@@ -5918,7 +5917,6 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public String getUserValue(long userId, String param, String defaultValue) {
-
 		if (Validator.isNotNull(defaultValue)) {
 			return defaultValue;
 		}
@@ -6627,7 +6625,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isLoginRedirectRequired(HttpServletRequest request) {
-
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
 			!request.isSecure()) {
 

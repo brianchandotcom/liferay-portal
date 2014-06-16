@@ -185,7 +185,6 @@ public class ExpandoColumnLocalServiceImpl
 
 	@Override
 	public ExpandoColumn getColumn(long tableId, String name) {
-
 		return expandoColumnPersistence.fetchByT_N(tableId, name);
 	}
 
@@ -334,7 +333,6 @@ public class ExpandoColumnLocalServiceImpl
 
 	@Override
 	public int getDefaultTableColumnsCount(long companyId, long classNameId) {
-
 		ExpandoTable table = expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
@@ -347,7 +345,6 @@ public class ExpandoColumnLocalServiceImpl
 
 	@Override
 	public int getDefaultTableColumnsCount(long companyId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumnsCount(

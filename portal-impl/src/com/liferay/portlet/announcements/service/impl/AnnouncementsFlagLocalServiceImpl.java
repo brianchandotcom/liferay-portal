@@ -30,7 +30,6 @@ public class AnnouncementsFlagLocalServiceImpl
 
 	@Override
 	public AnnouncementsFlag addFlag(long userId, long entryId, int value) {
-
 		long flagId = counterLocalService.increment();
 
 		AnnouncementsFlag flag = announcementsFlagPersistence.create(flagId);

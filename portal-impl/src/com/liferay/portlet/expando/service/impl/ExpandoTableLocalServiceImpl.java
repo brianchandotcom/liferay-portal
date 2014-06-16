@@ -160,7 +160,6 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public void deleteTables(long companyId, long classNameId) {
-
 		List<ExpandoTable> tables = expandoTablePersistence.findByC_C(
 			companyId, classNameId);
 
@@ -171,7 +170,6 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public void deleteTables(long companyId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		deleteTables(companyId, classNameId);
@@ -179,14 +177,12 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public ExpandoTable fetchDefaultTable(long companyId, long classNameId) {
-
 		return fetchTable(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 	@Override
 	public ExpandoTable fetchDefaultTable(long companyId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return fetchTable(
@@ -271,13 +267,11 @@ public class ExpandoTableLocalServiceImpl
 
 	@Override
 	public List<ExpandoTable> getTables(long companyId, long classNameId) {
-
 		return expandoTablePersistence.findByC_C(companyId, classNameId);
 	}
 
 	@Override
 	public List<ExpandoTable> getTables(long companyId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getTables(companyId, classNameId);

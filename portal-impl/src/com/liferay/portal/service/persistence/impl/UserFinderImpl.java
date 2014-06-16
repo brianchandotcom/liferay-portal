@@ -178,7 +178,6 @@ public class UserFinderImpl
 
 	@Override
 	public int countByUser(long userId, LinkedHashMap<String, Object> params) {
-
 		Session session = null;
 
 		try {
@@ -510,7 +509,6 @@ public class UserFinderImpl
 
 	@Override
 	public List<User> findByNoAnnouncementsDeliveries(String type) {
-
 		Session session = null;
 
 		try {

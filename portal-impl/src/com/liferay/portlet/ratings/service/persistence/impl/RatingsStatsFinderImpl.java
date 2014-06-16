@@ -49,7 +49,6 @@ public class RatingsStatsFinderImpl
 
 	@Override
 	public List<RatingsStats> findByC_C(long classNameId, List<Long> classPKs) {
-
 		Object[] finderArgs = new Object[] {
 			classNameId,
 			StringUtil.merge(classPKs.toArray(new Long[classPKs.size()]))

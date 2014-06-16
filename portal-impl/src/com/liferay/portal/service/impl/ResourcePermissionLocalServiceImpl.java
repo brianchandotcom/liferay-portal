@@ -497,7 +497,6 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	public List<ResourcePermission> getRoleResourcePermissions(long roleId) {
-
 		return resourcePermissionPersistence.findByRoleId(roleId);
 	}
 
@@ -546,7 +545,6 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	public List<ResourcePermission> getScopeResourcePermissions(int[] scopes) {
-
 		return resourcePermissionPersistence.findByScope(scopes);
 	}
 

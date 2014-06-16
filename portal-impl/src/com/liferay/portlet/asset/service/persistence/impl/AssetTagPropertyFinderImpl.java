@@ -83,7 +83,6 @@ public class AssetTagPropertyFinderImpl
 
 	@Override
 	public List<AssetTagProperty> findByG_K(long groupId, String key) {
-
 		return findByG_K(groupId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

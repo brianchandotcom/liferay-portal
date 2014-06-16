@@ -84,7 +84,6 @@ public class AssetCategoryPropertyFinderImpl
 
 	@Override
 	public List<AssetCategoryProperty> findByG_K(long groupId, String key) {
-
 		return findByG_K(groupId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

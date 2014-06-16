@@ -171,7 +171,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds) {
-
 		return getGroupsVocabularies(groupIds, null);
 	}
 
@@ -245,7 +244,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds) {
-
 		return assetVocabularyPersistence.filterFindByGroupId(groupIds);
 	}
 
@@ -256,13 +254,11 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public int getGroupVocabulariesCount(long groupId, String name) {
-
 		return assetVocabularyPersistence.filterCountByG_LikeN(groupId, name);
 	}
 
 	@Override
 	public int getGroupVocabulariesCount(long[] groupIds) {
-
 		return assetVocabularyPersistence.filterCountByGroupId(groupIds);
 	}
 

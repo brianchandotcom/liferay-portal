@@ -1176,7 +1176,6 @@ public class ExpandoValueLocalServiceImpl
 
 	@Override
 	public void deleteValues(long classNameId, long classPK) {
-
 		List<ExpandoValue> values = expandoValuePersistence.findByC_C(
 			classNameId, classPK);
 
@@ -1187,7 +1186,6 @@ public class ExpandoValueLocalServiceImpl
 
 	@Override
 	public void deleteValues(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		expandoValueLocalService.deleteValues(classNameId, classPK);
@@ -2071,7 +2069,6 @@ public class ExpandoValueLocalServiceImpl
 
 	@Override
 	public List<ExpandoValue> getRowValues(long rowId, int start, int end) {
-
 		return expandoValuePersistence.findByRowId(rowId, start, end);
 	}
 
@@ -2146,7 +2143,6 @@ public class ExpandoValueLocalServiceImpl
 
 	@Override
 	public ExpandoValue getValue(long tableId, long columnId, long classPK) {
-
 		return expandoValuePersistence.fetchByT_C_C(tableId, columnId, classPK);
 	}
 

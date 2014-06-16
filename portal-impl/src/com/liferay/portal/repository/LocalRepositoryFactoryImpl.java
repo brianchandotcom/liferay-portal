@@ -111,7 +111,6 @@ public class LocalRepositoryFactoryImpl
 
 	@Override
 	protected Repository getRepository(long repositoryId) {
-
 		RepositoryLocalService repositoryLocalService =
 			getRepositoryLocalService();
 

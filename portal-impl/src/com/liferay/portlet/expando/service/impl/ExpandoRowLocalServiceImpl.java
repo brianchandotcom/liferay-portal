@@ -127,14 +127,12 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 	@Override
 	public int getDefaultTableRowsCount(long companyId, long classNameId) {
-
 		return expandoRowLocalService.getRowsCount(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 	@Override
 	public int getDefaultTableRowsCount(long companyId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return expandoRowLocalService.getDefaultTableRowsCount(
@@ -179,7 +177,6 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 	@Override
 	public List<ExpandoRow> getRows(long tableId, int start, int end) {
-
 		return expandoRowPersistence.findByTableId(tableId, start, end);
 	}
 
@@ -261,7 +258,6 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getRowsCount(String className, String tableName) {
-
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		return expandoRowLocalService.getRowsCount(

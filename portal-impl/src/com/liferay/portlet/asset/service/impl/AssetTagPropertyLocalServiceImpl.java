@@ -96,7 +96,6 @@ public class AssetTagPropertyLocalServiceImpl
 	 */
 	@Override
 	public void deleteTagProperty(AssetTagProperty tagProperty) {
-
 		assetTagPropertyPersistence.remove(tagProperty);
 	}
 
@@ -133,7 +132,6 @@ public class AssetTagPropertyLocalServiceImpl
 	 */
 	@Override
 	public List<AssetTagProperty> getTagProperties(long tagId) {
-
 		return assetTagPropertyPersistence.findByTagId(tagId);
 	}
 

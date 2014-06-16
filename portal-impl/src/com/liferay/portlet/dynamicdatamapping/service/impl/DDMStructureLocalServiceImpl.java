@@ -502,7 +502,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public DDMStructure fetchStructure(long structureId) {
-
 		return ddmStructurePersistence.fetchByPrimaryKey(structureId);
 	}
 
@@ -587,7 +586,6 @@ public class DDMStructureLocalServiceImpl
 	@Deprecated
 	@Override
 	public List<DDMStructure> getClassStructures(long classNameId) {
-
 		return ddmStructurePersistence.findByClassNameId(classNameId);
 	}
 
@@ -849,7 +847,6 @@ public class DDMStructureLocalServiceImpl
 	@Deprecated
 	@Override
 	public List<DDMStructure> getStructureEntries(long groupId) {
-
 		return getStructures(groupId);
 	}
 
@@ -883,7 +880,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long groupId) {
-
 		return ddmStructurePersistence.findByGroupId(groupId);
 	}
 
@@ -908,7 +904,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long groupId, int start, int end) {
-
 		return ddmStructurePersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -922,7 +917,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long groupId, long classNameId) {
-
 		return ddmStructurePersistence.findByG_C(groupId, classNameId);
 	}
 
@@ -1004,7 +998,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long[] groupIds) {
-
 		return ddmStructurePersistence.findByGroupId(groupIds);
 	}
 
@@ -1019,7 +1012,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId) {
-
 		return ddmStructurePersistence.findByG_C(groupIds, classNameId);
 	}
 
@@ -1074,7 +1066,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public int getStructuresCount(long groupId, long classNameId) {
-
 		return ddmStructurePersistence.countByG_C(groupId, classNameId);
 	}
 
@@ -1089,7 +1080,6 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public int getStructuresCount(long[] groupIds, long classNameId) {
-
 		return ddmStructurePersistence.countByG_C(groupIds, classNameId);
 	}
 

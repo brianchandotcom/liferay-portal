@@ -175,7 +175,6 @@ public class DDMXMLImpl implements DDMXML {
 
 	@Override
 	public String getXML(Document document, Fields fields) {
-
 		Element rootElement = null;
 
 		try {

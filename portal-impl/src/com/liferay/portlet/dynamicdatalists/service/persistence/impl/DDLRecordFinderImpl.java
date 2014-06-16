@@ -100,7 +100,6 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 	@Override
 	public int countByC_S_S(long companyId, int status, int scope) {
-
 		Session session = null;
 
 		try {
@@ -231,7 +230,6 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 	@Override
 	public Long[] findByC_S_S_MinAndMax(long companyId, int status, int scope) {
-
 		Session session = null;
 
 		try {

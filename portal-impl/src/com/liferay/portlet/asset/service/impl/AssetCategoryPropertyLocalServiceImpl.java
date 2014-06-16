@@ -73,7 +73,6 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 	@Override
 	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty) {
-
 		assetCategoryPropertyPersistence.remove(categoryProperty);
 	}
 
@@ -90,13 +89,11 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryProperties() {
-
 		return assetCategoryPropertyPersistence.findAll();
 	}
 
 	@Override
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
-
 		return assetCategoryPropertyPersistence.findByCategoryId(entryId);
 	}
 

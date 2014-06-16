@@ -894,7 +894,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId) {
-
 		return dlFileEntryFinder.fetchByAnyImageId(imageId);
 	}
 
@@ -915,7 +914,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getExtraSettingsFileEntries(int start, int end) {
-
 		return dlFileEntryFinder.findByExtraSettings(start, end);
 	}
 
@@ -1057,13 +1055,11 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(int start, int end) {
-
 		return dlFileEntryPersistence.findAll(start, end);
 	}
 
 	@Override
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId) {
-
 		return dlFileEntryPersistence.findByG_F(groupId, folderId);
 	}
 
@@ -1115,7 +1111,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(long folderId, String name) {
-
 		return dlFileEntryPersistence.findByF_N(folderId, name);
 	}
 
@@ -1135,13 +1130,11 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId) {
-
 		return dlFileEntryPersistence.countByG_F(groupId, folderId);
 	}
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
-
 		List<Long> folderIds = new ArrayList<Long>();
 
 		folderIds.add(folderId);
@@ -1300,7 +1293,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getGroupFileEntriesCount(long groupId, long userId) {
-
 		if (userId <= 0) {
 			return dlFileEntryPersistence.countByGroupId(groupId);
 		}
@@ -1311,7 +1303,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getMisversionedFileEntries() {
-
 		return dlFileEntryFinder.findByMisversioned();
 	}
 
@@ -1359,7 +1350,6 @@ public class DLFileEntryLocalServiceImpl
 		configuration = "DLFileEntry", incrementClass = NumberIncrement.class)
 	@Override
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment) {
-
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}

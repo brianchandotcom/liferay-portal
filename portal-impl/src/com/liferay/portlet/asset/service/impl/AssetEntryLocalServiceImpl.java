@@ -127,13 +127,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public AssetEntry fetchEntry(long groupId, String classUuid) {
-
 		return assetEntryPersistence.fetchByG_CU(groupId, classUuid);
 	}
 
 	@Override
 	public AssetEntry fetchEntry(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return assetEntryPersistence.fetchByC_C(classNameId, classPK);
@@ -188,13 +186,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery) {
-
 		return assetEntryFinder.findEntries(entryQuery);
 	}
 
 	@Override
 	public int getEntriesCount(AssetEntryQuery entryQuery) {
-
 		return assetEntryFinder.countEntries(entryQuery);
 	}
 

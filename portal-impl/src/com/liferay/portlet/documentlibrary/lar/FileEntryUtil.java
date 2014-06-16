@@ -77,7 +77,6 @@ public class FileEntryUtil {
 	 */
 	@Deprecated
 	public static List<FileEntry> findByR_F(long repositoryId, long folderId) {
-
 		List<DLFileEntry> dlFileEntries = DLFileEntryUtil.findByG_F(
 			repositoryId, folderId);
 

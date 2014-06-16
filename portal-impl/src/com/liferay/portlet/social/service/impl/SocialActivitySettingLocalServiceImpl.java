@@ -117,13 +117,11 @@ public class SocialActivitySettingLocalServiceImpl
 
 	@Override
 	public List<SocialActivitySetting> getActivitySettings(long groupId) {
-
 		return socialActivitySettingPersistence.findByG_A(groupId, 0);
 	}
 
 	@Override
 	public boolean isEnabled(long groupId, long classNameId) {
-
 		SocialActivitySetting activitySetting =
 			socialActivitySettingPersistence.fetchByG_C_A_N(
 				groupId, classNameId, 0,
@@ -138,7 +136,6 @@ public class SocialActivitySettingLocalServiceImpl
 
 	@Override
 	public boolean isEnabled(long groupId, long classNameId, long classPK) {
-
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =

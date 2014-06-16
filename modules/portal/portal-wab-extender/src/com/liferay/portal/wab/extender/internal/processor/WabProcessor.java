@@ -41,9 +41,6 @@ public class WabProcessor {
 		return null;
 	}
 
-	public void process() throws IOException {
-	}
-
 	private BundleContext _bundleContext;
 	private ClassLoader _classLoader;
 	private File _file;

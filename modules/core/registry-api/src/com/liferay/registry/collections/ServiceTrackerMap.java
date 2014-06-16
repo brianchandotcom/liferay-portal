@@ -16,6 +16,9 @@ package com.liferay.registry.collections;
 
 import java.io.Closeable;
 
+/**
+ * @author Carlos Sierra Andrés
+ */
 public interface ServiceTrackerMap<K, R> extends Closeable {
 
 	@Override

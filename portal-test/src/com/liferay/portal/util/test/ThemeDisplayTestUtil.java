@@ -22,9 +22,9 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Manuel de la Peña

@@ -121,7 +121,7 @@ public class BaseDDMFormDeserializer extends BaseDDMTest {
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		Assert.assertEquals(
-			"[\"value 1\"]", predefinedValue.getValue(LocaleUtil.US));
+			"[\"Value 1\"]", predefinedValue.getValue(LocaleUtil.US));
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -129,16 +129,16 @@ public class BaseDDMFormDeserializer extends BaseDDMTest {
 		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
 
 		Assert.assertEquals(3, optionsValues.size());
-		Assert.assertTrue(optionsValues.contains("value 1"));
-		Assert.assertTrue(optionsValues.contains("value 2"));
-		Assert.assertTrue(optionsValues.contains("value 3"));
+		Assert.assertTrue(optionsValues.contains("Value 1"));
+		Assert.assertTrue(optionsValues.contains("Value 2"));
+		Assert.assertTrue(optionsValues.contains("Value 3"));
 
 		LocalizedValue value1Labels = ddmFormFieldOptions.getOptionLabels(
-			"value 1");
+			"Value 1");
 
-		Assert.assertEquals("option 1", value1Labels.getValue(LocaleUtil.US));
+		Assert.assertEquals("Option 1", value1Labels.getValue(LocaleUtil.US));
 		Assert.assertEquals(
-			"opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
+			"Opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
 	}
 
 }

@@ -5,6 +5,8 @@ AUI.add(
 
 		var DateMath = A.DataType.DateMath;
 
+		var FormBuilder = Liferay.FormBuilder;
+
 		var Lang = A.Lang;
 
 		var EMPTY_FN = A.Lang.emptyFn;
@@ -441,7 +443,7 @@ AUI.add(
 								var value = record.get(item.name);
 
 								if (type === 'ddm-link-to-page') {
-									value = SpreadSheet.Util.parseJSON(value);
+									value = FormBuilder.Util.parseJSON(value);
 
 									delete value.name;
 
@@ -730,7 +732,7 @@ AUI.add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										var fileData = SpreadSheet.Util.parseJSON(value);
+										var fileData = FormBuilder.Util.parseJSON(value);
 
 										if (fileData.title) {
 											label = fileData.title;
@@ -748,7 +750,7 @@ AUI.add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										var linkToPageData = SpreadSheet.Util.parseJSON(value);
+										var linkToPageData = FormBuilder.Util.parseJSON(value);
 
 										if (linkToPageData.name) {
 											label = linkToPageData.name;
@@ -890,51 +892,6 @@ AUI.add(
 			}
 		);
 
-		SpreadSheet.Util = {
-			getFileEntry: function(fileJSON, callback) {
-				var instance = this;
-
-				fileJSON = instance.parseJSON(fileJSON);
-
-				Liferay.Service(
-					'/dlapp/get-file-entry-by-uuid-and-group-id',
-					{
-						groupId: fileJSON.groupId,
-						uuid: fileJSON.uuid
-					},
-					callback
-				);
-			},
-
-			getFileEntryURL: function(fileEntry) {
-				var instance = this;
-
-				var buffer = [
-					themeDisplay.getPathContext(),
-					'documents',
-					fileEntry.groupId,
-					fileEntry.folderId,
-					encodeURIComponent(fileEntry.title)
-				];
-
-				return buffer.join('/');
-			},
-
-			parseJSON: function(value) {
-				var instance = this;
-
-				var data = {};
-
-				try {
-					data = JSON.parse(value);
-				}
-				catch (e) {
-				}
-
-				return data;
-			}
-		};
-
 		SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
 		SpreadSheet.TYPE_EDITOR['ddm-link-to-page'] = LinkToPageCellEditor;
 
@@ -972,6 +929,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-arraysort', 'aui-datatable', 'datatable-sort', 'json', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-arraysort', 'aui-datatable', 'datatable-sort', 'json', 'liferay-portlet-dynamic-data-mapping-custom-fields', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

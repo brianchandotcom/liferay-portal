@@ -17,7 +17,6 @@ package com.liferay.portlet.trash.service;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -42,7 +41,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.CompanyTestUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -55,9 +53,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,8 +126,6 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 				CompanyLocalServiceUtil.deleteCompany(companyId);
 			}
 		}
-
-		setTrashEntryCleanCount(_trashEntriesMaxCleanCount);
 	}
 
 	@Test
@@ -149,7 +142,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		setTrashEnableForGroup(group, false);
 		TrashEntryLocalServiceUtil.checkEntries();
 		Assert.assertEquals(
-			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
@@ -264,12 +257,10 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		// Note that this should be empty
 
 		Assert.assertEquals(
-			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
-	protected void clearTrashEntries(List<TrashEntry> list)
-		throws SystemException {
-
+	protected void clearTrashEntries(List<TrashEntry> list) {
 		for (TrashEntry entry : list) {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
@@ -443,19 +434,6 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
 
-	protected void setTrashEntryCleanCount(long value) throws Exception {
-		Field field = PropsValues.class.getField(
-			"TRASH_ENTRIES_MAX_CLEAN_COUNT");
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
-	}
-
 	protected void verifyCleanUpAfterTwoDays(Group group) throws Exception {
 		int actual = createTrashEntriesForTwoDaysExpiryTest(group);
 
@@ -471,7 +449,5 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 	private List<Long> _companies;
 	private List<Group> _groups;
 	private int _readCount = 10000;
-	private long _trashEntriesMaxCleanCount =
-		PropsValues.TRASH_ENTRIES_MAX_CLEAN_COUNT;
 
 }

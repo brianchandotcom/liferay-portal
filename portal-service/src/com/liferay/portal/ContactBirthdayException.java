@@ -16,6 +16,8 @@ package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Date;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -35,6 +37,21 @@ public class ContactBirthdayException extends PortalException {
 
 	public ContactBirthdayException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeFutureDate extends UserEmailAddressException {
+
+		public MustNotBeFutureDate(Date birthday) {
+			super(birthday + " is in the future");
+
+			_birthday = birthday;
+		}
+
+		public Date getBirthday() {
+			return _birthday;
+		}
+
+		private final Date _birthday;
 	}
 
 }

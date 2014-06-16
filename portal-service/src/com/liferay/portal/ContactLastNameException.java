@@ -15,6 +15,7 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,6 +36,15 @@ public class ContactLastNameException extends PortalException {
 
 	public ContactLastNameException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeNull extends UserEmailAddressException {
+
+		public MustNotBeNull() {
+			super(
+				"The portal property " + PropsKeys.USERS_LAST_NAME_REQUIRED +
+					" does not allow null last names");
+		}
 	}
 
 }

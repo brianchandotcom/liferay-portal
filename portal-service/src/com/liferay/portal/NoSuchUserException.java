@@ -35,4 +35,17 @@ public class NoSuchUserException extends NoSuchModelException {
 		super(cause);
 	}
 
+	public static class InvalidUUID extends NoSuchUserException {
+
+		public InvalidUUID(String uuid) {
+			super("User with UUID " + uuid + " does not exist in any company");
+		}
+
+		public InvalidUUID(String uuid, long companyId) {
+			super(
+				"User with UUID " + uuid + " does not exist in company" +
+					companyId);
+		}
+	}
+
 }

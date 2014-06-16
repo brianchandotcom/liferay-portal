@@ -37,4 +37,11 @@ public class ContactFirstNameException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustNotBeNull extends ContactFirstNameException {
+
+		public MustNotBeNull() {
+			super("First name must not be null");
+		}
+	}
+
 }

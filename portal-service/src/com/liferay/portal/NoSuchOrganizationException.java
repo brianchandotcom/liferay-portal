@@ -23,6 +23,12 @@ public class NoSuchOrganizationException extends NoSuchModelException {
 		super();
 	}
 
+	public NoSuchOrganizationException(long organizationId) {
+		super("Organization " + organizationId + " not found");
+
+		_organizationId = organizationId;
+	}
+
 	public NoSuchOrganizationException(String msg) {
 		super(msg);
 	}
@@ -34,5 +40,11 @@ public class NoSuchOrganizationException extends NoSuchModelException {
 	public NoSuchOrganizationException(Throwable cause) {
 		super(cause);
 	}
+
+	public long getOrganizationId() {
+		return _organizationId;
+	}
+
+	private long _organizationId = 0;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ReservedUserIdException extends PortalException {
 
+	@Deprecated
 	public ReservedUserIdException() {
 		super();
 	}

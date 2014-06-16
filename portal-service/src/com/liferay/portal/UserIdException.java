@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserIdException extends PortalException {
 
+	@Deprecated
 	public UserIdException() {
 		super();
 	}
@@ -35,6 +36,13 @@ public class UserIdException extends PortalException {
 
 	public UserIdException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeNull extends UserIdException {
+
+		public MustNotBeNull() {
+			super("User ID must not be null");
+		}
 	}
 
 }

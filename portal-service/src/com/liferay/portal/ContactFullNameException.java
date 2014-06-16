@@ -15,6 +15,7 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.auth.FullNameValidator;
 
 /**
  * @author Amos Fong
@@ -35,6 +36,45 @@ public class ContactFullNameException extends PortalException {
 
 	public ContactFullNameException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustValidate extends ContactFullNameException {
+
+		public MustValidate(
+			String firstName, String middleName, String lastName,
+			FullNameValidator fullNameValidator) {
+
+			super(
+				"First name " + firstName + ", middle name=" + middleName +
+					" and last name=" + lastName + " are not valid using " +
+						"validator " + fullNameValidator.getClass().getName());
+
+			_firstName = firstName;
+			_middleName = middleName;
+			_lastName = lastName;
+			_fullNameValidator = fullNameValidator;
+		}
+
+		public String getFirstName() {
+			return _firstName;
+		}
+
+		public String getMiddleName() {
+			return _middleName;
+		}
+
+		public String getLastName() {
+			return _lastName;
+		}
+
+		public FullNameValidator getFullNameValidator() {
+			return _fullNameValidator;
+		}
+
+		private final String _firstName;
+		private final String _middleName;
+		private final String _lastName;
+		private final FullNameValidator _fullNameValidator;
 	}
 
 }

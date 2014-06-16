@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserSmsException extends PortalException {
 
+	@Deprecated
 	public UserSmsException() {
 		super();
 	}
@@ -35,6 +36,22 @@ public class UserSmsException extends PortalException {
 
 	public UserSmsException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class InvalidEmailAddress extends UserSmsException {
+
+		public InvalidEmailAddress(String smsSn) {
+			super("Invalid email address " + smsSn);
+
+			_smsSn = smsSn;
+		}
+
+		public String getSmsSn() {
+			return _smsSn;
+		}
+
+		private final String _smsSn;
+
 	}
 
 }

@@ -15,12 +15,16 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.security.auth.ScreenNameValidator;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class UserScreenNameException extends PortalException {
 
+	@Deprecated
 	public UserScreenNameException() {
 		super();
 	}
@@ -35,6 +39,48 @@ public class UserScreenNameException extends PortalException {
 
 	public UserScreenNameException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeNull extends UserScreenNameException {
+
+		public MustNotBeNull() {
+			super("Screen Name must not be null");
+		}
+	}
+
+	public static class MustNotBeNumeric extends UserScreenNameException {
+
+		public MustNotBeNumeric(String screenName) {
+			super(
+				"Screen Name " + screenName + " is numeric but the portal " +
+					"property " + PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC +
+						" is enabled");
+		}
+	}
+
+	public static class MustValidate extends UserScreenNameException {
+
+		public MustValidate(
+			String screenName, ScreenNameValidator screenNameValidator) {
+
+			super(
+				"Invalid email address " + screenName + " according to " +
+					ClassUtil.getClassName(screenNameValidator));
+
+			_screenName = screenName;
+			_screenNameValidator = screenNameValidator;
+		}
+
+		public String getScreenName() {
+			return _screenName;
+		}
+
+		public ScreenNameValidator getScreenNameValidator() {
+			return _screenNameValidator;
+		}
+
+		private final String _screenName;
+		private final ScreenNameValidator _screenNameValidator;
 	}
 
 }

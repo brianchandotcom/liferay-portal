@@ -293,7 +293,7 @@ public class LDAPAuth implements Authenticator {
 							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT));
 
 					if (pos != -1) {
-						throw new UserLockoutException();
+						throw new UserLockoutException(userId);
 					}
 
 					pos = errorMessage.indexOf(
@@ -301,7 +301,7 @@ public class LDAPAuth implements Authenticator {
 							companyId, PropsKeys.LDAP_ERROR_PASSWORD_EXPIRED));
 
 					if (pos != -1) {
-						throw new PasswordExpiredException();
+						throw new PasswordExpiredException(userId);
 					}
 				}
 

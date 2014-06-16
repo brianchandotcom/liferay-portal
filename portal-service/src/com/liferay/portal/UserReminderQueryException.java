@@ -37,4 +37,19 @@ public class UserReminderQueryException extends PortalException {
 		super(cause);
 	}
 
+	public static class AnswerMustNotBeNull extends UserReminderQueryException {
+
+		public AnswerMustNotBeNull() {
+			super("Answer must not be null");
+		}
+	}
+
+	public static class QuestionMustNotBeNull
+		extends UserReminderQueryException {
+
+		public QuestionMustNotBeNull() {
+			super("Question must not be null");
+		}
+	}
+
 }

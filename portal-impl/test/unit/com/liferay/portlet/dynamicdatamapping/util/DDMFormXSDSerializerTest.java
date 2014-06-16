@@ -71,7 +71,7 @@ public class DDMFormXSDSerializerTest extends BaseDDMFormSerializer {
 	}
 
 	protected void testXSDMatchesExpected(String actualXSD) throws Exception {
-		String expectedXSD = readXML("ddm-form-xsd-serializer-test-data.xml");
+		String expectedXSD = read("ddm-form-xsd-serializer-test-data.xml");
 
 		Map<String, Map<String, String>> expectedMap =
 			DDMStructureTestUtil.getXSDMap(expectedXSD);

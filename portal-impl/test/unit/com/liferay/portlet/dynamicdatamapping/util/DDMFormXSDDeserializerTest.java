@@ -14,73 +14,29 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-
-import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * @author Pablo Carvalho
  */
 public class DDMFormXSDDeserializerTest extends BaseDDMFormDeserializer {
 
-	@Test
-	public void testAllFieldsTypesDeserialization() throws Exception {
-		String xml = readXML("ddm-form-xsd-deserializer-test-data.xml");
+	@Override
+	protected DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
-
-		testAvailableLocales(ddmForm);
-		testDefaultLocale(ddmForm);
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		testBooleanDDMFormField(ddmFormFieldsMap.get("Boolean2282"));
-		testDateDDMFormField(ddmFormFieldsMap.get("Date2510"));
-		testDecimalDDMFormField(ddmFormFieldsMap.get("Decimal3479"));
-		testDocumentLibraryDDMFormField(
-			ddmFormFieldsMap.get("Documents_and_Media4036"));
-		testNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
-		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
+		return DDMFormXSDDeserializerUtil.deserialize(serializedDDMForm);
 	}
 
-	@Test
-	public void testDefaultLocaleDifferentFromSiteDefaultLocale()
-		throws Exception {
+	@Override
+	protected String getDeserializerType() {
+		return "xsd";
+	}
 
-		String xml = readXML(
-			"ddm-form-xsd-deserializer-different-default-locale.xml");
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xml);
-
-		Assert.assertEquals(LocaleUtil.BRAZIL, ddmForm.getDefaultLocale());
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		DDMFormField selectDDMFormField = ddmFormFieldsMap.get("Select5979");
-
-		LocalizedValue selectLabel = selectDDMFormField.getLabel();
-
-		Assert.assertEquals(LocaleUtil.BRAZIL, selectLabel.getDefaultLocale());
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			selectDDMFormField.getDDMFormFieldOptions();
-
-		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
-				optionValue);
-
-			Assert.assertEquals(
-				LocaleUtil.BRAZIL, optionLabel.getDefaultLocale());
-		}
+	@Override
+	protected String getTestFileExtension() {
+		return ".xml";
 	}
 
 }

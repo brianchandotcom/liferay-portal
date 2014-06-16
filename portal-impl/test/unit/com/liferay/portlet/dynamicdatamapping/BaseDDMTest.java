@@ -189,7 +189,7 @@ public class BaseDDMTest extends PowerMockito {
 		}
 	}
 
-	protected String readXML(String fileName) throws IOException {
+	protected String read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(

@@ -39,8 +39,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializer {
 
 	@Test
 	public void testDDMFormSerialization() throws Exception {
-		String expectedJSON = readXML(
-			"ddm-form-json-serializer-test-data.json");
+		String expectedJSON = read("ddm-form-json-serializer-test-data.json");
 
 		DDMForm ddmForm = createDDMForm();
 

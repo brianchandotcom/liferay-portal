@@ -2484,6 +2484,7 @@ public class DataFactory {
 		blogsEntryModel.setCreateDate(new Date());
 		blogsEntryModel.setModifiedDate(new Date());
 		blogsEntryModel.setTitle("Test Blog " + index);
+		blogsEntryModel.setDeckTitle("Subtitle of Test Blog " + index);
 		blogsEntryModel.setUrlTitle("testblog" + index);
 		blogsEntryModel.setContent("This is test blog " + index + ".");
 		blogsEntryModel.setDisplayDate(new Date());

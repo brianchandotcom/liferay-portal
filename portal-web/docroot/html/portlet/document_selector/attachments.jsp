@@ -80,6 +80,7 @@ WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), p
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
+				data.put("ckeditorfuncnum", DocumentSelectorUtil.getCKEditorFuncNum(request));
 				data.put("groupid", fileEntry.getGroupId());
 				data.put("title", fileEntry.getTitle());
 				data.put("url", attachmentURLPrefix + fileEntry.getTitle());

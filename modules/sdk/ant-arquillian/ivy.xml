@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="provided->default" name="ant" org="org.apache.ant" rev="1.9.3" />
-		<dependency conf="provided->default" name="shrinkwrap-api" org="org.jboss.shrinkwrap" rev="1.2.1" />
+		<dependency name="ant" org="org.apache.ant" rev="1.9.3" />
+		<dependency name="shrinkwrap-api" org="org.jboss.shrinkwrap" rev="1.2.1" />
 	</dependencies>
 </ivy-module>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -36,6 +37,9 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -183,6 +187,15 @@ public class BaseDDMTest extends PowerMockito {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	protected String readXML(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
 	}
 
 	protected void setUpDDMFormXSDDeserializer() {

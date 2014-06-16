@@ -42,6 +42,8 @@ import org.osgi.framework.BundleContext;
  */
 public class WabURLConnection extends URLConnection {
 
+	public static final String WEB_CONTEXT_PATH = "Web-ContextPath";
+
 	public WabURLConnection(
 		BundleContext bundleContext, ClassLoader classLoader, URL url) {
 
@@ -65,10 +67,10 @@ public class WabURLConnection extends URLConnection {
 
 		Map<String, String[]> parameters = HttpUtil.getParameterMap(query);
 
-		if (!parameters.containsKey("Web-ContextPath")) {
+		if (!parameters.containsKey(WEB_CONTEXT_PATH)) {
 			throw new IllegalArgumentException(
 				"The parameter map does not contain the required parameter " +
-					"Web-ContextPath");
+					WEB_CONTEXT_PATH);
 		}
 
 		File file = transferToTempFile(new URL(url.getPath()));

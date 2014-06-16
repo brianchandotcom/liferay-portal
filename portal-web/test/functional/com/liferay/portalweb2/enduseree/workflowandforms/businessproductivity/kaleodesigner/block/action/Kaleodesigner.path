@@ -265,7 +265,7 @@
 <!--SOURCE_KALEO_XML-->
 <tr>
 	<td>SOURCE_KALEO_XML_CONTENT</td>
-	<td>//div[contains(@id,'kaleoformsportlet_editorWrapper']/div[2]</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_editorWrapper')]/div)[2]</td>
 	<td></td>
 </tr>
 <tr>

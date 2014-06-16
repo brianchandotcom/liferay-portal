@@ -33,7 +33,7 @@
 					</aui:a>
 				</h3>
 
-				<ul aria-labelledby="<%= categoryHeaderId %>" class="unstyled" role="menu">
+				<ul aria-labelledby="<%= categoryHeaderId %>" class="list-unstyled" role="menu">
 
 					<%
 					List<Portlet> categoryPortlets = categoriesMap.get(category);

@@ -6,12 +6,13 @@
 
 	.add-content-menu .lfr-add-page-toolbar {
 		bottom: 0;
+		left: 0;
 		margin-bottom: 0;
 		margin-top: 0;
 		padding: 10px 15px;
 		position: fixed;
 		text-align: right;
-		width: 295px;
+		width: 315px;
 	}
 
 	.lfr-page-template-description {
@@ -22,16 +23,16 @@
 
 .lfr-add-dialog, .lfr-add-panel {
 	.add-content-menu {
-		.accordion {
+		.panel-group {
 			margin-bottom: 20px;
 
-			.accordion-group .accordion-inner {
+			.panel.panel-default .panel-body {
 				padding: 6px 0;
 			}
 		}
 
 		.btn-toolbar {
-			.control-group-inline {
+			.form-group-inline {
 				display: inline;
 
 				.search-query, .aui-field-select {
@@ -45,15 +46,12 @@
 				}
 			}
 
-			.control-group-inline, .btn-group {
+			.form-group-inline, .btn-group {
 				margin-right: 5px;
 			}
 		}
 
 		.display-style-buttons-container {
-			float: right;
-			margin-right: 0;
-
 			.lfr-icon-menu {
 				.lfr-icon-menu-arrow {
 					border-bottom-color: #333;
@@ -79,11 +77,6 @@
 			}
 		}
 
-		ul.nav-list {
-			padding-left: 0;
-			padding-right: 0;
-		}
-
 		.template-selector {
 			margin-top: 1.5em;
 
@@ -102,7 +95,7 @@
 			margin-top: 30px;
 		}
 
-		.accordion-inner {
+		.panel-body {
 			padding-left: 0;
 			padding-right: 0;
 
@@ -179,6 +172,7 @@
 				position: relative;
 
 				label {
+					cursor: pointer;
 					margin-bottom: 5px;
 					margin-left: 0;
 					padding: 2px;

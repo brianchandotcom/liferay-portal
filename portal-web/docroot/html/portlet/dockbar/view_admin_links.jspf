@@ -26,7 +26,7 @@
 					String currentSiteCategory = PortletCategoryKeys.CURRENT_SITE.concat(StringPool.PERIOD);
 				%>
 
-					<ul class="unstyled site-administration-menu">
+					<ul class="list-unstyled site-administration-menu">
 
 						<%
 						for (String category : categoriesMap.keySet()) {

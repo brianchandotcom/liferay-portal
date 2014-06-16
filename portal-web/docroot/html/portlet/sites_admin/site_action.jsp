@@ -53,7 +53,7 @@ if (row == null) {
 }
 %>
 
-<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
 
 	<%
 	ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();

@@ -61,8 +61,8 @@ AUI.add(
 			'</fieldset>'
 		);
 
-		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search row-fluid">' +
-			'<input class="lfr-tag-selector-input search-query span12" placeholder="{0}" type="text" />' +
+		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search row">' +
+			'<input class="lfr-tag-selector-input search-query col-md-12" placeholder="{0}" type="text" />' +
 		'</form>';
 
 		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';

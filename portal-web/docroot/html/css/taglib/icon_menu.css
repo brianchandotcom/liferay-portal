@@ -10,7 +10,6 @@
 	overflow-x: hidden;
 }
 
-
 .lfr-menu-list {
 	float: none;
 	overflow-y: auto;
@@ -38,7 +37,7 @@
 		.search-panel {
 			margin-bottom: 0;
 
-			.control-group {
+			.form-group {
 				margin: 0 16px;
 			}
 

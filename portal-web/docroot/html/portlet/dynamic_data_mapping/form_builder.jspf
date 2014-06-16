@@ -28,7 +28,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
 
 <div class="separator"><!-- --></div>
 
-<div class="alert alert-error hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
+<div class="alert alert-danger hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(pageContext, "view[action]") + "," + LanguageUtil.get(pageContext, "source") %>'
@@ -49,7 +49,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
 					<div class="tabbable">
 						<div class="tabbable-content">
-							<ul class="nav nav-tabs">
+							<ul class="lfr-nav nav nav-tabs">
 								<li class="active">
 									<a href="javascript:;">
 										<liferay-ui:message key="fields" />
@@ -105,7 +105,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	var MESSAGE_SUCCESS = 1;
 
-	var CSS_MESSAGE_ERROR = 'alert alert-error';
+	var CSS_MESSAGE_ERROR = 'alert alert-danger';
 
 	var CSS_MESSAGE_SUCCESS = 'alert alert-success';
 

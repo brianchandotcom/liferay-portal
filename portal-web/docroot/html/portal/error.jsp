@@ -30,7 +30,7 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 %>
 
 <c:if test="<%= (staleSession != null) && staleSession.booleanValue() %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="you-have-been-logged-off-because-you-signed-on-with-this-account-using-a-different-session" />
 	</div>
 
@@ -41,37 +41,37 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, LayoutPermissionException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
 	</div>
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, PortletActiveException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="this-page-is-part-of-an-inactive-portlet" />
 	</div>
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-page" />
 	</div>
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, RequiredLayoutException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="please-contact-the-administrator-because-you-do-not-have-any-pages-configured" />
 	</div>
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, RequiredRoleException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="please-contact-the-administrator-because-you-do-not-have-any-roles" />
 	</div>
 </c:if>
 
 <c:if test="<%= SessionErrors.contains(request, UserActiveException.class.getName()) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<%= LanguageUtil.format(pageContext, "your-account-with-login-x-is-not-active", new LanguageWrapper[] {new LanguageWrapper("", HtmlUtil.escape(user.getFullName()), ""), new LanguageWrapper("<strong><em>", HtmlUtil.escape(userLogin), "</em></strong>")}, false) %><br /><br />
 	</div>
 

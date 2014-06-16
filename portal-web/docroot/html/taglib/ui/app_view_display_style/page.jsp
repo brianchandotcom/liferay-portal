@@ -26,26 +26,31 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 %>
 
 <c:if test="<%= displayStyles.length > 1 %>">
-	<div id="<portlet:namespace />displayStyleButtons">
-		<liferay-ui:icon-menu direction="down" icon='<%= "../aui/" + _getIcon(displayStyle) %>' message="" select="<%= true %>">
+	<span class="display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+		<div class="display-style-buttons" id="<portlet:namespace />displayStyleButtons">
+			<aui:nav-item anchorCssClass="btn btn-default" dropdown="<%= true %>" iconCssClass='<%= "icon-" + _getIcon(displayStyle) %>'>
 
-			<%
-			for (int i = 0; i < displayStyles.length; i++) {
-				String dataStyle = displayStyles[i];
+				<%
+				for (int i = 0; i < displayStyles.length; i++) {
+					String dataStyle = displayStyles[i];
 
-				Map<String, Object> data = new HashMap<String, Object>();
+					Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("displayStyle", dataStyle);
-			%>
+					data.put("displayStyle", dataStyle);
+				%>
+					<aui:nav-item
+						anchorData="<%= data %>"
+						href="javascript:;"
+						iconCssClass='<%= "icon-" + _getIcon(dataStyle) %>'
+						label="<%= dataStyle %>"
+					/>
+				<%
+				}
+				%>
 
-				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + _getIcon(dataStyle) %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(this);" %>' url="javascript:;" />
-
-			<%
-			}
-			%>
-
-		</liferay-ui:icon-menu>
-	</div>
+			</aui:nav-item>
+		</div>
+	</span>
 </c:if>
 
 <c:if test="<%= displayStyles.length > 1 %>">
@@ -80,28 +85,29 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			);
 		}
 
-		Liferay.provide(
-			window,
-			'<%= randomNamespace %>onClickDisplayStyle',
-			function(link) {
-				var displayStyleItem = A.one(link);
+		var displayStyleButtonsMenu = A.one('#<portlet:namespace />displayStyleButtons .dropdown-menu');
 
-				var displayStyle = displayStyleItem.attr('data-displayStyle');
+		if (displayStyleButtonsMenu) {
+			displayStyleButtonsMenu.delegate(
+				'click',
+				function(event) {
+					var displayStyle = event.currentTarget.attr('data-displayStyle');
 
-				if (<%= requestParams != null %>) {
-					changeDisplayStyle(displayStyle);
-				}
-				else if (<%= eventName != null %>) {
-					Liferay.fire(
-						'<%= eventName %>',
-						{
-							displayStyle: displayStyle
-						}
-					);
-				}
-			},
-			['aui-node']
-		);
+					if (<%= requestParams != null %>) {
+						changeDisplayStyle(displayStyle);
+					}
+					else if (<%= eventName != null %>) {
+						Liferay.fire(
+							'<%= eventName %>',
+							{
+								displayStyle: displayStyle
+							}
+						);
+					}
+				},
+				'li > a'
+			);
+		}
 	</aui:script>
 </c:if>
 

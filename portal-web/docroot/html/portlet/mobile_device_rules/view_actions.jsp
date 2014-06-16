@@ -81,7 +81,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 			</liferay-portlet:renderURL>
 
 			<aui:nav-bar>
-				<aui:nav>
+				<aui:nav cssClass="navbar-nav">
 					<aui:nav-item href="<%= addURL %>" iconCssClass="icon-plus" label="add-action" />
 				</aui:nav>
 			</aui:nav-bar>

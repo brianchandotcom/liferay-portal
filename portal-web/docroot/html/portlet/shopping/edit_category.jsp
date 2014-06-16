@@ -66,7 +66,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 			%>
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
 				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

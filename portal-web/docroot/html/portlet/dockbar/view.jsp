@@ -31,7 +31,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", ""));
 %>
 
-<aui:nav-bar cssClass="navbar-static-top dockbar" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
+<aui:nav-bar cssClass="dockbar navbar-static-top" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
 	<c:if test="<%= group.isControlPanel() %>">
 
 		<%
@@ -86,7 +86,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		%>
 
 		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-			<div class="brand">
+			<div class="navbar-brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
 
@@ -122,7 +122,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	%>
 
 	<c:if test="<%= !(group.isControlPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) %>">
-		<aui:nav collapsible="<%= true %>" cssClass="nav-navigation">
+		<aui:nav collapsible="<%= false %>" cssClass="nav-navigation navbar-nav">
 			<c:if test="<%= !group.isControlPanel() %>">
 				<aui:nav-item anchorCssClass="site-navigation-btn" anchorId="navSiteNavigation" href="javascript:;" iconCssClass="icon-reorder" />
 			</c:if>
@@ -180,7 +180,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
 	%>
 
-	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= true %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls" : "nav-add-controls nav-add-controls-notice" %>' icon="pencil" id="navAddControls">
+	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls navbar-nav" : "nav-add-controls nav-add-controls-notice navbar-nav" %>' icon="pencil" id="navAddControls">
 		<aui:nav-item cssClass="dockbar-item" dropdown="<%= true %>" iconCssClass="icon-pencil" toggleTouch="<%= false %>">
 
 			<%
@@ -246,7 +246,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 <c:if test="<%= !layoutPrototypes.isEmpty() %>">
 	<div class="html-template" id="layoutPrototypeTemplate">
-		<ul class="unstyled">
+		<ul class="list-unstyled">
 
 			<%
 			for (LayoutPrototype layoutPrototype : layoutPrototypes) {

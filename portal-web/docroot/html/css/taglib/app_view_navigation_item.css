@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .navigation-pane {
 	.body-row {
@@ -36,14 +37,18 @@
 			display: block;
 			overflow: hidden;
 			position: absolute;
-			right: -15px;
+			right: 0;
 			top: 0;
 
 			.btn {
 				background: transparent;
 				border-width: 0;
 				margin: 0;
-				padding: 9px 9px 4px;
+				padding: 7px 14px;
+
+				@include respond-to(desktop) {
+					padding: 10px;
+				}
 			}
 		}
 	}

@@ -7,12 +7,8 @@ $FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 .aui {
 	@import "aui_variables";
 
-	$iconSpritePath: '../images/aui/glyphicons-halflings.png' !default;
-	$iconWhiteSpritePath: '../images/aui/glyphicons-halflings-white.png' !default;
-
 	@import "aui/bootstrap";
 	@import "aui_custom";
-	@import "aui/responsive";
 	@import "liferay_custom";
 
 	@import "aui/alloy-font-awesome/scss/core";
@@ -21,10 +17,10 @@ $FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 	@import "aui/alloy-font-awesome/scss/icons-alloy";
 	@import "aui/alloy-font-awesome/scss/icons-alloy-extra";
 
-	background-color: $bodyBackground;
-	color: $textColor;
-	font-family: $baseFontFamily;
-	font-size: $baseFontSize;
-	line-height: $baseLineHeight;
+	background-color: $body-bg;
+	color: $text-color;
+	font-family: $font-family-base;
+	font-size: $font-size-base;
+	line-height: $line-height-base;
 	margin: 0;
 }

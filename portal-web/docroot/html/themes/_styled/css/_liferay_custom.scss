@@ -20,7 +20,7 @@
 /* ---------- Error messages ---------- */
 
 .portlet-msg-error {
-	@extend .alert-error;
+	@extend .alert-danger;
 }
 
 /* ---------- Success messages ---------- */

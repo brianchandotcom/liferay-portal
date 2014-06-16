@@ -543,7 +543,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		iconCssClass="icon-search"
 		id="selectParentSiteLink"
 		label="<%= true %>"
-		linkCssClass="btn"
+		linkCssClass="btn btn-default"
 		message="select"
 		url="javascript:;"
 	/>

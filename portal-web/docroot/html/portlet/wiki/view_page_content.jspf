@@ -62,7 +62,7 @@ try {
 catch (WikiFormatException wfe) {
 %>
 
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
 	</div>
 
@@ -78,7 +78,7 @@ catch (Exception e) {
 	_log.error("Error formatting the wiki page " + wikiPage.getPageId() + " with the format " + wikiPage.getFormat(), e);
 %>
 
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="an-error-occurred-while-formatting-the-wiki-page" />
 	</div>
 

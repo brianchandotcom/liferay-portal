@@ -29,7 +29,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 
 		<%
 		String label = "message-boards-home";
@@ -95,8 +95,8 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 			<portlet:param name="struts_action" value="/message_boards/search" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
+		<aui:nav-bar-search>
+			<div class="col-xs-12 form-search">
 				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

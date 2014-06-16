@@ -22,6 +22,6 @@ PasswordPolicySearch searchContainer = (PasswordPolicySearch)request.getAttribut
 PasswordPolicyDisplayTerms displayTerms = (PasswordPolicyDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<div class="form-search">
+<div class="col-xs-12 form-search">
 	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 </div>

@@ -87,9 +87,9 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 </aui:script>
 
 <aui:script use="aui-base">
-	var CSS_EDITOR_WIDTH = 'span8';
+	var CSS_EDITOR_WIDTH = 'col-md-8';
 
-	var CSS_EDITOR_WIDTH_EXPANDED = 'span12';
+	var CSS_EDITOR_WIDTH_EXPANDED = 'col-md-12';
 
 	Liferay.on(
 		'toggle:stateChange',

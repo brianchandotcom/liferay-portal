@@ -14,7 +14,7 @@
  */
 --%>
 
-<ul class="lfr-tree unstyled">
+<ul class="lfr-tree list-unstyled">
 	<li class="tree-item">
 		<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 

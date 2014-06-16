@@ -24,7 +24,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 %>
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
-	<div class="site-pages-variation-options span5">
+	<div class="col-md-5 site-pages-variation-options">
 		<div class="variations-options">
 			<liferay-util:buffer var="taglibMessage">
 				<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" />

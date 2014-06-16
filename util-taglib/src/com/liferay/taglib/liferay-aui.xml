@@ -552,7 +552,7 @@
 				<name>helpTextCssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-				<defaultValue>add-on</defaultValue>
+				<defaultValue>input-group-addon</defaultValue>
 			</attribute>
 			<attribute>
 				<name>id</name>
@@ -992,12 +992,6 @@
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>fluid</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
 				<name>id</name>

@@ -26,7 +26,7 @@ for (int i = 0; i < allSections.length; i++) {
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel cssClass="panel-page-category unstyled" defaultState='<%= i == 0 ? "open" : "closed" %>' extended="<%= true %>" id="<%= sectionId %>" title="<%= section %>">
+			<liferay-ui:panel cssClass="list-unstyled panel-page-category" defaultState='<%= i == 0 ? "open" : "closed" %>' extended="<%= true %>" id="<%= sectionId %>" title="<%= section %>">
 				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 			</liferay-ui:panel>
 		</c:when>

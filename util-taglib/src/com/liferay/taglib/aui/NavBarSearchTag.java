@@ -44,7 +44,7 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 		if (navBarTag != null) {
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-			sb.append("<a class=\"btn btn-navbar");
+			sb.append("<a class=\"btn navbar-btn navbar-toggle");
 
 			if (_hasSearchResults()) {
 				sb.append(" hide");

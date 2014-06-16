@@ -121,7 +121,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			}
 			%>
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
 
 				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

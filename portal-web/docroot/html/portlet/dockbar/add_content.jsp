@@ -32,63 +32,59 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 </portlet:resourceURL>
 
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
-	<div class="row-fluid">
-		<div class="btn-toolbar">
-			<aui:input cssClass="search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
+	<div class="btn-toolbar">
+		<aui:input cssClass="search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
 
-			<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems" title="number-of-items-to-display">
+		<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems" title="number-of-items-to-display">
 
-				<%
-				for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-					if (curDelta > SearchContainer.MAX_DELTA) {
-						continue;
-					}
-				%>
-
-					<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
-
-				<%
+			<%
+			for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+				if (curDelta > SearchContainer.MAX_DELTA) {
+					continue;
 				}
-				%>
+			%>
 
-			</aui:select>
-		</div>
+				<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
 
-		<aui:nav-bar>
-			<aui:nav collapsible="<%= false %>" cssClass="display-style-buttons-container">
-				<aui:nav-item cssClass="display-style-buttons-container">
-					<liferay-ui:app-view-display-style
-						displayStyle="<%= displayStyle %>"
-						displayStyles="<%= _DISPLAY_VIEWS %>"
-						eventName='<%= "AddContent:changeDisplayStyle" %>'
-					/>
-				</aui:nav-item>
-			</aui:nav>
+			<%
+			}
+			%>
 
-			<span class="add-content-button">
+		</aui:select>
+	</div>
 
-				<%
-				long groupId = scopeGroupId;
+	<aui:nav-bar>
+		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+			<liferay-ui:app-view-display-style
+				displayStyle="<%= displayStyle %>"
+				displayStyles="<%= _DISPLAY_VIEWS %>"
+				eventName='<%= "AddContent:changeDisplayStyle" %>'
+			/>
+		</aui:nav>
 
-				long[] groupIds = new long[] {scopeGroupId};
+		<span class="add-content-button">
 
-				boolean defaultAssetPublisher = false;
+			<%
+			long groupId = scopeGroupId;
 
-				PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
+			long[] groupIds = new long[] {scopeGroupId};
 
-				redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
-				redirectURL.setWindowState(LiferayWindowState.POP_UP);
+			boolean defaultAssetPublisher = false;
 
-				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, scopeGroupId, AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()), new long[0], new long[0], new String[0], redirectURL.toString());
-				%>
+			PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
-				<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-			</span>
-		</aui:nav-bar>
+			redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
+			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
-		<div id="<portlet:namespace />entriesContainer">
-			<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
-		</div>
+			Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, scopeGroupId, AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()), new long[0], new long[0], new String[0], redirectURL.toString());
+			%>
+
+			<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
+		</span>
+	</aui:nav-bar>
+
+	<div id="<portlet:namespace />entriesContainer">
+		<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
 	</div>
 </aui:form>
 

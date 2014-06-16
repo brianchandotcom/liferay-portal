@@ -234,7 +234,7 @@ else {
 		<liferay-ui:section>
 			<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 				<aui:nav-bar>
-					<aui:nav id="publishConfigurationButtons">
+					<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
 						<aui:nav-item
 							data-value="custom"
 							iconCssClass="icon-puzzle"

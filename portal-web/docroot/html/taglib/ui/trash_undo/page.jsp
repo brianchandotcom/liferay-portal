@@ -158,7 +158,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					</c:otherwise>
 				</c:choose>
 
-				<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= restoreNamespace %>undo"><liferay-ui:message key="undo" /></a>
+				<a class="btn btn-primary btn-sm trash-undo-link" href="javascript:;" id="<%= restoreNamespace %>undo"><liferay-ui:message key="undo" /></a>
 
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 

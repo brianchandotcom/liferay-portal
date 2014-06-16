@@ -95,115 +95,113 @@ else {
 	<aui:model-context model="<%= Layout.class %>" />
 
 	<aui:fieldset>
-		<div class="row-fluid">
-			<div class="span12">
-				<aui:input id="addLayoutName" name="name" />
+		<div class="col-md-12">
+			<aui:input id="addLayoutName" name="name" />
 
-				<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
+			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 
-				<aui:fieldset cssClass="template-selector" label="type">
-					<aui:nav cssClass="nav-list" id="templateList">
-						<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
-							<aui:nav-item cssClass="lfr-page-template" data-search='<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "empty-page")) %>'>
-								<div class="active lfr-page-template-title toggler-header toggler-header-expanded" data-type="portlet">
-									<aui:input checked="<%= true %>" id="addLayoutSelectedPageTemplateBlank" label="empty-page" name="selectedPageTemplate" type="radio" />
+			<aui:fieldset cssClass="template-selector" label="type">
+				<aui:nav cssClass="list-group" id="templateList">
+					<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
+						<aui:nav-item cssClass="lfr-page-template" data-search='<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "empty-page")) %>'>
+							<div class="active lfr-page-template-title toggler-header toggler-header-expanded" data-type="portlet">
+								<aui:input checked="<%= true %>" id="addLayoutSelectedPageTemplateBlank" label="empty-page" name="selectedPageTemplate" type="radio" />
 
-									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "empty-page-description" ) %></small>
-									</div>
+								<div class="lfr-page-template-description">
+									<small><%= LanguageUtil.get(pageContext, "empty-page-description" ) %></small>
 								</div>
+							</div>
 
-								<div class="lfr-page-template-options toggler-content toggler-content-expanded">
+							<div class="lfr-page-template-options toggler-content toggler-content-expanded">
 
-									<%
-									String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-									String layoutTemplateIdPrefix = "addLayout";
+								<%
+								String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+								String layoutTemplateIdPrefix = "addLayout";
 
-									Theme selTheme = layout.getTheme();
+								Theme selTheme = layout.getTheme();
 
-									List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-									%>
+								List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+								%>
 
-									<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
+								<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
+							</div>
+						</aui:nav-item>
+					</c:if>
+
+					<%
+					List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+					for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+						String name = HtmlUtil.escape(layoutPrototype.getName(locale));
+					%>
+
+						<aui:nav-item cssClass="lfr-page-template" data-search="<%= name %>">
+							<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>">
+								<aui:input id='<%= "addLayoutSelectedPageTemplate" + layoutPrototype.getUuid() %>' label="<%= name %>" name="selectedPageTemplate" type="radio" />
+
+								<div class="lfr-page-template-description">
+									<small><%= HtmlUtil.escape(layoutPrototype.getDescription(locale)) %></small>
 								</div>
-							</aui:nav-item>
-						</c:if>
+							</div>
 
-						<%
-						List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+							<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+								<aui:input id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" />
+							</div>
+						</aui:nav-item>
 
-						for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-							String name = HtmlUtil.escape(layoutPrototype.getName(locale));
-						%>
+					<%
+					}
+					%>
 
-							<aui:nav-item cssClass="lfr-page-template" data-search="<%= name %>">
-								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>">
-									<aui:input id='<%= "addLayoutSelectedPageTemplate" + layoutPrototype.getUuid() %>' label="<%= name %>" name="selectedPageTemplate" type="radio" />
+					<%
+					liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
 
-									<div class="lfr-page-template-description">
-										<small><%= HtmlUtil.escape(layoutPrototype.getDescription(locale)) %></small>
-									</div>
-								</div>
+					int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
 
-								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-									<aui:input id='<%= "addLayoutLayoutPrototypeLinkEnabled" + layoutPrototype.getUuid() %>' label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" />
-								</div>
-							</aui:nav-item>
-
-						<%
+					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+						if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {
+							continue;
 						}
-						%>
+					%>
 
-						<%
-						liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
+						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
+							<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
+								<aui:input disabled="<%= (layoutsCount == 0) && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" id='<%= "addLayoutSelectedPageTemplate" + PropsValues.LAYOUT_TYPES[i] %>' label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
 
-						int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
-
-						for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-							if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {
-								continue;
-							}
-						%>
-
-							<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
-								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
-									<aui:input disabled="<%= (layoutsCount == 0) && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" id='<%= "addLayoutSelectedPageTemplate" + PropsValues.LAYOUT_TYPES[i] %>' label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
-
-									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
-									</div>
+								<div class="lfr-page-template-description">
+									<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
 								</div>
+							</div>
 
-								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-									<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
+							<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+								<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
+							</div>
+						</aui:nav-item>
+
+					<%
+					}
+					%>
+
+					<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
+						<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
+							<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
+								<aui:input id="addLayoutSelectedPageTemplateCopyOfPage" label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
+
+								<div class="lfr-page-template-description">
+									<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
 								</div>
-							</aui:nav-item>
+							</div>
 
-						<%
-						}
-						%>
-
-						<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
-							<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
-								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
-									<aui:input id="addLayoutSelectedPageTemplateCopyOfPage" label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
-
-									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
-									</div>
-								</div>
-
-								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-									<liferay-util:include page="/html/portal/layout/edit/portlet_applications.jsp">
-										<liferay-util:param name="copyLayoutIdPrefix" value="addLayout" />
-									</liferay-util:include>
-								</div>
-							</aui:nav-item>
-						</c:if>
-					</aui:nav>
-				</aui:fieldset>
-			</div>
-		<div>
+							<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+								<liferay-util:include page="/html/portal/layout/edit/portlet_applications.jsp">
+									<liferay-util:param name="copyLayoutIdPrefix" value="addLayout" />
+								</liferay-util:include>
+							</div>
+						</aui:nav-item>
+					</c:if>
+				</aui:nav>
+			</aui:fieldset>
+		</div>
 	</aui:fieldset>
 
 	<aui:button-row cssClass="lfr-add-page-toolbar">

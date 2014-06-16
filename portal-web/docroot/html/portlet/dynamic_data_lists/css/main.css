@@ -11,11 +11,11 @@
 		}
 	}
 
-	.control-group.geolocation-field .button-holder .btn {
+	.form-group.geolocation-field .button-holder .btn {
 		margin-top: 0;
 	}
 }
 
-.portlet-dynamic-data-lists .control-group.field-wrapper .btn {
+.portlet-dynamic-data-lists .form-group.field-wrapper .btn {
 	margin-top: -7px;
 }

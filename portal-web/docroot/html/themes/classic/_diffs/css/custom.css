@@ -60,7 +60,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 			span, a {
 				@include ellipsis;
 
-				max-width: 300px;
+				@include respond-to(desktop) {
+					max-width: 300px;
+				}
 			}
 		}
 	}
@@ -112,21 +114,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 						}
 					}
 				}
-
-				> li {
-					> a {
-						margin: 0 5px 0 0;
-
-						&:focus, &:hover {
-							background-color: #2FA4F5;
-						}
-					}
-				}
 			}
 		}
 
-		&.navbar-static-top .collapse .nav-account-controls {
-			position: relative;
+		.container, .container-fluid { 
+			> .nav.nav-add-controls ul.dropdown-menu > li > a {
+				&:focus, &:hover {
+					color: #FFF;
+				}
+			}
 		}
 
 		.info-button {
@@ -147,29 +143,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.staging-bar {
-			.staging-toggle {
-				color: #FFF;
-
-				li a {
-					color: #FFF;
-					font-weight: 300;
-					text-decoration: none;
-				}
-
-				.btn-link {
-					color: #FFF;
-					font-size: 12px;
-				}
-			}
-		}
-
-		.navbar-inner .container .nav-collapse > .nav.nav-add-controls ul.dropdown-menu > li > a {
-			&:focus, &:hover {
-				color: #FFF;
-			}
-		}
-
 		.nav > li.staging-toggle {
 			&.active a, > a {
 				color: #FFF;
@@ -177,6 +150,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			> a {
 				padding: 2px 20px;
+			}
+		}
+
+		.page-customization-bar .btn {
+			border-color: transparent;
+
+			&:focus, &:hover {
+				background: transparent;
+				text-decoration: underline;
 			}
 		}
 
@@ -211,14 +193,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
-		}
 
-		.page-customization-bar .btn {
-			border-color: transparent;
+			.staging-toggle {
+				color: #FFF;
 
-			&:focus, &:hover {
-				background: transparent;
-				text-decoration: underline;
+				li a {
+					color: #FFF;
+					font-weight: 300;
+					text-decoration: none;
+				}
+
+				.btn-link {
+					color: #FFF;
+					font-size: 12px;
+				}
 			}
 		}
 	}
@@ -234,8 +222,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 2px 20px;
 		}
 
-		.navbar-inner {
-			.container .nav-collapse > .nav {
+		.container, .container-fluid {
+			> .nav {
 				&.nav-account-controls {
 					background-color: $dockbarGradientEnd;
 					border-top: 1px solid #00AEFF;
@@ -294,44 +282,43 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
+		}
 
-			.page-customization-bar {
-				background-color: #6DA4E4;
-				background-color: rgba(109, 168, 228, 0.9);
-				line-height: 20px;
-			}
+		.page-customization-bar {
+			background-color: #6DA4E4;
+			background-color: rgba(109, 168, 228, 0.9);
+			line-height: 20px;
+		}
 
-			.page-customization-bar-container {
-				top: -1px;
-			}
+		.page-customization-bar-container {
+			top: -1px;
+		}
 
-			.staging-bar {
-				margin: 6px 0;
-			}
+		.staging-bar {
+			margin: 6px 0;
 		}
 	}
 
 	/* ---------- Main navigation ---------- */
 
 	#navigation {
+		background-color: #555;
+		border-width: 0;
+		min-height: 0;
+
 		.add-page-editor {
 			input {
 				margin-top: 0;
 			}
 		}
 
-		.brand {
-			margin-left: 0;
-			padding: 0;
-			padding-right: 20px;
-
-			img {
-				height: 40px;
-				width: auto;
-			}
-		}
-
 		.nav {
+			@include respond-to(desktop) {
+				background: #555;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+
 			li {
 				&.dropdown {
 					> .dropdown-toggle {
@@ -344,7 +331,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				&.open {
+				&.hover, &.open {
 					> a {
 						background-color: #A3A3A3;
 						color: #FFF;
@@ -361,12 +348,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			> li > a {
-				padding: 4px 15px 5px;
-
-				@include respond-to(phone, tablet) {
-					&:focus, &:hover {
-						background-color: #2FA4F5;
-					}
+				@include respond-to(desktop) {
+					padding: 8px 15px;
 				}
 			}
 
@@ -390,14 +373,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.navbar-inner {
-			background: #555;
-			border-width: 0;
-			min-height: 36px;
-
-			li a {
-				color: #FFF;
-			}
+		li a {
+			color: #FFF;
 		}
 	}
 
@@ -405,11 +382,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.delete-tab {
 			background: #555;
 			border: 2px solid #FFF;
+
+			@include box-sizing(content-box);
+
 			color: #FFF;
-			font-size: 16px;
-			padding: 4px;
-			right: -10px;
-			top: 0;
+			font-size: 14px;
+			height: auto;
+			line-height: normal;
+			padding: 0 6px 3px;
+			right: -9px;
+			top: -1px;
 			z-index: 300;
 		}
 
@@ -431,6 +413,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.drag-handle {
 			background-color: rgba(255, 255, 255, 0.75);
+
+			@include box-sizing(content-box);
+
 			color: #009AE5;
 		}
 	}
@@ -521,7 +506,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Set password reminder portlet ---------- */
 
 	.update-reminder-query {
-		.control-group {
+		.form-group {
 			max-width: 350px;
 		}
 
@@ -553,7 +538,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-staging-bar {
-		.row-fluid .layout-revision-info {
+		.row .layout-revision-info {
 			.layout-revision-version {
 				label {
 					color: #B6DDF5;
@@ -625,6 +610,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Extras ---------- */
 
 	#navigation {
+		&.navbar {
+			@include border-radius(0);
+		}
+
 		.nav {
 			li {
 				&.open {
@@ -644,15 +633,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 				@include box-shadow(none);
 				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
-			}
-		}
-
-		.navbar-inner {
-			@include border-radius(0);
-			@include box-shadow(none);
-
-			li a {
-				@include text-shadow(none);
 			}
 		}
 	}
@@ -675,15 +655,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 		}
-
-		.navbar-inner {
-			background-color: $dockbarGradientStart;
-
-			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-		}
 	}
 
-	.dockbar-split .dockbar .navbar-inner .nav > li {
+	.dockbar-split .dockbar .nav > li {
 		background-color: $dockbarGradientStart;
 
 		@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
@@ -693,14 +667,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			@include background-image(none);
 		}
+
+		&.staging-toggle {
+			background-color: transparent;
+			@include background-image(none);
+		}
 	}
 
 	.dockbar .staging-bar .staging-toggle > a {
 		@include border-radius(3px);
-	}
-
-	.update-reminder-query .reminder-query-answer {
-		@include box-sizing(border-box);
 	}
 
 	.modify-pages .delete-tab {
@@ -761,12 +736,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(3px 3px 0 0);
 	}
 
-	.dockbar .staging-bar .staging-toggle > a {
-		@include border-radius(3px);
-	}
-
 	.dockbar-split .dockbar {
-		.navbar-inner {
+		.container, .container-fluid {
 			@include box-shadow(none);
 			@include text-shadow(none);
 
@@ -775,22 +746,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 			}
+		}
 
-			.nav {
-				li.dropdown.open {
-					> .dropdown-toggle {
-						background-color: $dockbarOpenGradientStart;
+		.nav {
+			li.dropdown.open {
+				> .dropdown-toggle {
+					background-color: $dockbarOpenGradientStart;
 
-						@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-						@include box-shadow(none);
-					}
+					@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+					@include box-shadow(none);
 				}
+			}
 
-				li.dropdown.active {
-					> .staging-link.dropdown-toggle {
-						background-color: #55B8EC;
-						background-image: none;
-					}
+			li.dropdown.active {
+				> .staging-link.dropdown-toggle {
+					background-color: #55B8EC;
+					background-image: none;
 				}
 			}
 		}
@@ -812,7 +783,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- IE8 ---------- */
 
 	&.ie8 {
-		.dockbar-split .dockbar .navbar-inner .info-button a {
+		.dockbar-split .dockbar .info-button a {
 			margin-top: -2px;
 		}
 	}

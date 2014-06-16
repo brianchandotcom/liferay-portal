@@ -24,7 +24,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
 %>
 
-<aui:nav searchContainer="<%= searchContainer %>">
+<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 
 	<%
 	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);

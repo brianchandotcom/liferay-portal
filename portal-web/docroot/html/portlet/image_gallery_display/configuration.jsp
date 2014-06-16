@@ -79,7 +79,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryDisplayFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
 				<aui:field-wrapper label="root-folder">
-					<div class="control-group">
+					<div class="form-group">
 						<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
 						<aui:button name="openFolderSelectorButton" value="select" />

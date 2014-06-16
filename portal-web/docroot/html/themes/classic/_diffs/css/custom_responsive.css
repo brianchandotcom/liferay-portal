@@ -23,20 +23,24 @@
 			}
 		}
 
-		#navigation.open .navbar-inner {
+		#navigation.open {
 			background: #009AE5;
 		}
 
-		.dockbar .navbar-inner .container .nav-collapse .nav-add-controls ul.dropdown-menu {
-			background: transparent;
-			padding: 0;
-
-			> li > a {
-				background: transparent;
-				padding: 9px 15px;
-
-				&.toggle-controls-link {
+		.dockbar {
+			.container, .container-fluid {
+				.nav-add-controls ul.dropdown-menu {
 					background: transparent;
+					padding: 0;
+
+					> li > a {
+						background: transparent;
+						padding: 9px 15px;
+
+						&.toggle-controls-link {
+							background: transparent;
+						}
+					}
 				}
 			}
 		}
@@ -52,133 +56,131 @@
 				padding: 2px 0;
 			}
 
-			.navbar-inner {
-				width: auto;
+			.container, .container-fluid {
+				.site-navigation-btn {
+					display: none;
 
-				.container {
-					.site-navigation-btn.open {
+					&.open {
 						background-color: #F5AF45;
 					}
+				}
 
-					.btn-navbar {
+				.navbar-btn {
+					background: transparent;
+					border-width: 0;
+					font-size: 24px;
+
+					&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
+						background-color: #5BBAE8;
+					}
+				}
+
+				> .nav {
+					background: transparent;
+					border-width: 0;
+
+					.nav-item-icon {
+						font-size: 26px;
+					}
+
+					&.nav-add-controls ul.dropdown-menu {
 						background: transparent;
-						border-width: 0;
-						font-size: 24px;
+						border-top-width: 0;
+						padding: 0;
 
-						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
-							background-color: #5BBAE8;
+						> li > a {
+							background: transparent;
+							color: #FFF;
+							text-align: left;
+
+							&:focus, &:hover {
+								background-color: #5BBAE8;
+							}
+
+							&.toggle-controls-link {
+								background: transparent;
+
+								.nav-item-icon {
+									color: #FFF;
+								}
+							}
+
+							.nav-item-label {
+								background: transparent;
+							}
 						}
 					}
 
-					.nav-collapse {
-						> .nav {
-							background: transparent;
-							border-width: 0;
-
-							.nav-item-icon {
-								font-size: 26px;
+					> li {
+						&.dropdown {
+							&.active > .dropdown-toggle {
+								color: #FFF;
 							}
 
-							&.nav-add-controls ul.dropdown-menu {
-								background: transparent;
-								border-top-width: 0;
-								padding: 0;
+							&.open > .dropdown-toggle {
+								background: #2FA4F5;
+								color: #FFF;
+							}
 
-								> li > a {
-									background: transparent;
-									color: #FFF;
-									text-align: left;
+							.dropdown-menu {
+								li a {
+									font-size: 16px;
+									line-height: 27px;
+									margin: 0;
 
-									&:focus, &:hover {
-										background-color: #5BBAE8;
-									}
-
-									&.toggle-controls-link {
-										background: transparent;
-
-										.nav-item-icon {
-											color: #FFF;
-										}
+									.nav-item-icon {
+										font-size: 22px;
+										margin-top: 0;
+										vertical-align: middle;
 									}
 
 									.nav-item-label {
-										background: transparent;
+										vertical-align: middle;
 									}
-								}
-							}
-
-							> li {
-								&.dropdown {
-									&.active > .dropdown-toggle {
-										color: #FFF;
-									}
-
-									&.open > .dropdown-toggle {
-										background: #2FA4F5;
-										color: #FFF;
-									}
-
-									.dropdown-menu {
-										li a {
-											font-size: 16px;
-											line-height: 27px;
-											margin: 0;
-
-											.nav-item-icon {
-												font-size: 22px;
-												margin-top: 0;
-												vertical-align: middle;
-											}
-
-											.nav-item-label {
-												vertical-align: middle;
-											}
-										}
-									}
-								}
-
-								&.info-items {
-									background-color: transparent;
-								}
-
-								&.staging-toggle {
-									> a {
-										background-color: #2496E5;
-										padding-bottom: 0;
-										padding-top: 0;
-
-										&:hover {
-											background-color: #2FA4F5;
-										}
-									}
-
-									span.nav-item-label {
-										padding: 5px 10px;
-									}
-								}
-
-								> a {
-									color: #FFF;
-									font-size: 16px;
-									line-height: 20px;
-									padding: 12px 0;
-
-									&:focus, &:hover {
-										background-color: #5BBAE8;
-									}
-								}
-
-								&.sign-in > a {
-									padding: 15px;
 								}
 							}
 						}
-					}
 
-					.dockbar-user-notifications .user-notifications-count {
-						margin: 0 auto;
-						max-width: 10px;
+						&.info-items {
+							background-color: transparent;
+						}
+
+						&.staging-toggle {
+							> a {
+								background-color: #2496E5;
+								padding-bottom: 0;
+								padding-top: 0;
+
+								&:hover {
+									background-color: #2FA4F5;
+								}
+							}
+
+							span.nav-item-label {
+								padding: 5px 10px;
+							}
+						}
+
+						> a {
+							color: #FFF;
+							font-size: 16px;
+							line-height: 20px;
+							padding: 12px 10px;
+
+							&:focus, &:hover {
+								background-color: #5BBAE8;
+							}
+						}
+
+						&.sign-in > a {
+							padding: 15px;
+						}
 					}
+				}
+
+				.dockbar-user-notifications .user-notifications-count {
+					margin: 0 auto;
+					max-width: 10px;
 				}
 			}
 		}
@@ -199,10 +201,6 @@
 			.staging-variation-selector {
 				margin-right: 0;
 			}
-		}
-
-		.signed-out #_145_navAddControlsNavbarBtn {
-			display: none;
 		}
 
 		.staging-toggle .variations-options a {

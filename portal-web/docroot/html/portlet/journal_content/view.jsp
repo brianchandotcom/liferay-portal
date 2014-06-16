@@ -43,7 +43,7 @@ boolean expired = true;
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
 				</div>
 			</c:otherwise>
@@ -62,7 +62,7 @@ boolean expired = true;
 				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 				%>
 
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-web-content-entry" />
 				</div>
 			</c:when>
@@ -299,7 +299,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 %>
 
 <c:if test="<%= showIconsActions && !print && hasViewPermission %>">
-	<div class="lfr-meta-actions icons-container">
+	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
 
 			<%

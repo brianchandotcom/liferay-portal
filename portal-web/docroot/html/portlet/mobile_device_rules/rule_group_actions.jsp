@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />

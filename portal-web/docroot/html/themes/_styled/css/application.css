@@ -219,6 +219,10 @@
 
 /* ---------- Tabs ---------- */
 
+.lfr-nav.nav-tabs {
+	margin-bottom: 20px;
+}
+
 .tab-active strong {
 	font-weight: normal;
 }
@@ -401,6 +405,25 @@
 	background-color: #5B677D;
 	color: #FFF;
 	text-shadow: -1px -1px #2C2F34;
+}
+
+/* ---------- Modals ---------- */
+
+.aui {
+	.modal {
+		display: block;
+		margin: 0;
+		overflow: hidden;
+		position: fixed;
+	}
+
+	.modal-body {
+		overflow: auto;
+	}
+
+	.modal-hidden {
+		display: none;
+	}
 }
 
 /* ---------- Loading mask ---------- */

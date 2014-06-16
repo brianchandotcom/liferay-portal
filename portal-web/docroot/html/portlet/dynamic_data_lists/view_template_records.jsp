@@ -29,7 +29,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable %>">
 		<aui:nav-bar>
-			<aui:nav>
+			<aui:nav cssClass="navbar-nav">
 				<portlet:renderURL var="addRecordURL">
 					<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

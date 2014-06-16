@@ -127,7 +127,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 			</c:choose>
 		</td>
 		<td class="lfr-top">
-			<div class="thread-top float-container">
+			<div class="float-container thread-top">
 				<div class="subject">
 					<c:choose>
 						<c:when test="<%= showPermanentLink %>">
@@ -210,7 +210,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					%>
 
 					<c:if test="<%= showAnswerFlag || hasReplyPermission %>">
-						<ul class="edit-controls unstyled">
+						<ul class="edit-controls list-unstyled">
 							<li class="<%= showAnswerFlag ? "" : "hide" %>" id="<portlet:namespace />addAnswerFlag_<%= message.getMessageId() %>">
 
 								<%
@@ -416,7 +416,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					/>
 				</div>
 
-				<ul class="edit-controls unstyled">
+				<ul class="edit-controls list-unstyled">
 					<li>
 
 						<%

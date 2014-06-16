@@ -8,12 +8,12 @@
 		@include ellipsis;
 
 		margin: 0.1em;
+		padding-bottom: 5px;
 	}
 
 	.header-back-to a {
 		float: left;
-		padding: 0.5em;
-		padding-left: 0;
+		padding: 0 0.5em 0 0;
 	}
 }
 

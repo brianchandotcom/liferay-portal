@@ -123,7 +123,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 											iconCssClass="icon-search"
 											id="selectStructure"
 											label="<%= true %>"
-											linkCssClass="btn"
+											linkCssClass="btn btn-default"
 											message="select"
 											url="javascript:;"
 										/>
@@ -158,7 +158,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 										iconCssClass="icon-search"
 										id="selectTemplate"
 										label="<%= true %>"
-										linkCssClass="btn"
+										linkCssClass="btn btn-default"
 										message="select"
 										url="javascript:;"
 									/>

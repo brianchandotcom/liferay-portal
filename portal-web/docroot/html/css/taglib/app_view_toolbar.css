@@ -25,23 +25,6 @@
 		background-position: 0 0;
 	}
 
-	.navbar {
-		.navbar-search {
-			@include respond-to(phone, tablet) {
-				margin-left: 5px;
-			}
-		}
-
-		.nav-display-style-buttons {
-			margin-left: 15px;
-
-			.display-style-buttons-container .dropdown-toggle .caret {
-				border-bottom-color: #333;
-				border-top-color: #333;
-			}
-		}
-	}
-
 	.state-active {
 		.icon-display-descriptive {
 			background-position: -32px 100%;
@@ -49,36 +32,6 @@
 
 		.icon-display-icon {
 			background-position: -16px 100%;
-		}
-	}
-
-	@include respond-to(phone, tablet) {
-		.navbar-inner .nav-display-style-buttons {
-			margin: 0;
-
-			.display-style-buttons-container {
-				margin-top: 0;
-
-				.btn-group {
-					margin: 0;
-				}
-
-				.btn {
-					display: inline-block;
-					font-size: 17.5px;
-					margin: 5px;
-					padding: 7px 10px;
-					width: auto;
-
-					> i {
-						display: inline-block;
-					}
-				}
-
-				.toolbar {
-					margin-top: 0;
-				}
-			}
 		}
 	}
 
@@ -97,6 +50,46 @@
 			@include respond-to(phone, tablet) {
 				top: 17px;
 			}
+		}
+	}
+}
+
+.navbar {
+	.nav-display-style-buttons {
+		float: right;
+		margin: 8px 0 8px 15px;
+
+		@include respond-to(phone) {
+			float: none;
+			margin: 7.5px -15px;
+		}
+
+		.display-style-buttons {
+			> .dropdown {
+				@include respond-to(phone) {
+					> .dropdown-menu {
+						background-color: transparent;
+						border-width: 0;
+
+						@include box-shadow(none);
+
+						display: block;
+						float: none;
+						margin-top: 0;
+						position: static;
+						width: auto;
+					}
+
+					> .dropdown-toggle {
+						display: none;
+					}
+				}
+			}
+		}
+
+		.display-style-buttons-container .dropdown-toggle .caret {
+			border-bottom-color: #333;
+			border-top-color: #333;
 		}
 	}
 }

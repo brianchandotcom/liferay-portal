@@ -75,13 +75,13 @@
 
 .dockbar {
 	@include respond-to(phone, tablet) {
-		.navbar-inner .btn-navbar {
+		.navbar-btn {
 			@include box-shadow(none);
 			@include text-shadow(none);
 		}
 	}
 
-	.navbar-inner .nav li.staging-toggle {
+	.nav li.staging-toggle {
 		&.active > a {
 			@include box-shadow(none);
 		}
@@ -100,20 +100,22 @@
 	}
 }
 
-.dockbar .navbar-inner {
-	.container .nav-collapse > .nav {
-		@include respond-to(phone, tablet) {
-			&.nav-account-controls .info-link-container .info-link {
-				@include border-radius(3px);
+.dockbar {
+	.container, .container-fluid {
+		> .nav {
+			@include respond-to(phone, tablet) {
+				&.nav-account-controls .info-link-container .info-link {
+					@include border-radius(3px);
+				}
 			}
-		}
 
-		> li {
-			> a, .info-button > a {
-				@include text-shadow(none);
+			> li {
+				> a, .info-button > a {
+					@include text-shadow(none);
 
-				@include respond-to(phone) {
-					@include border-radius(4px);
+					@include respond-to(phone, tablet) {
+						@include border-radius(4px);
+					}
 				}
 			}
 		}
@@ -124,31 +126,33 @@
 	}
 }
 
-.dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
-	&.nav-add-controls {
-		> li {
-			a {
-				@include border-radius(4px);
+.dockbar-split .dockbar {
+	.container, .container-fluid {
+		> .nav {
+			&.nav-add-controls {
+				> li {
+					a {
+						@include respond-to(desktop) {
+							@include border-radius(4px);
+						}
 
-				.nav-item-label {
-					@include border-radius(30px);
+						.nav-item-label {
+							@include border-radius(30px);
+						}
+					}
+
+					&.open a {
+						@include respond-to(desktop) {
+							@include border-radius(4px);
+						}
+					}
+
+					> ul {
+						@include box-shadow(none);
+					}
 				}
 			}
-
-			&.open a {
-				@include border-radius(4px);
-			}
-
-			> ul {
-				@include box-shadow(none);
-			}
 		}
-	}
-}
-
-@include respond-to(phone, tablet) {
-	.form-search .input-append input[type="text"].search-query {
-		@include border-radius(14px);
 	}
 }
 
@@ -328,10 +332,6 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 .lfr-action-label {
 	@include border-radius(2px);
-}
-
-.lfr-api-service-search .field-input {
-	@include box-sizing(border-box);
 }
 
 @include keyframes(progress-bar-stripes) {

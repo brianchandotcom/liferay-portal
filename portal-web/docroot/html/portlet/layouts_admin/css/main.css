@@ -26,10 +26,6 @@
 		text-align: center;
 		text-decoration: none;
 
-		&:hover label, &:hover {
-
-		}
-
 		&:hover {
 			&, & label {
 				color: #369;
@@ -384,7 +380,7 @@
 		display: inline;
 	}
 
-	ul.unstyled ul {
+	ul.list-unstyled ul {
 		list-style: none;
 	}
 }
@@ -399,7 +395,7 @@
 			margin-bottom: 1em;
 
 			legend {
-				border: 0;
+				border-width: 0;
 				display: block;
 				font-size: 1em;
 				font-weight: normal;

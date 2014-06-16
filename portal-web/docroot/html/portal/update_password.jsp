@@ -32,7 +32,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 <c:choose>
 	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<liferay-ui:message key="this-account-has-been-locked" />
 		</div>
 	</c:when>
@@ -55,7 +55,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 				UserPasswordException upe = (UserPasswordException)SessionErrors.get(request, UserPasswordException.class.getName());
 				%>
 
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_ALREADY_USED %>">
 						<liferay-ui:message key="that-password-has-already-been-used-please-enter-in-a-different-password" />
 					</c:if>

@@ -86,7 +86,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 	%>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "apiService" + jsonWebServiceClassName + "Panel" %>' persistState="<%= true %>" title="<%= panelTitle %>">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JSONWebServiceActionMapping jsonWebServiceActionMapping : jsonWebServiceMappings) {

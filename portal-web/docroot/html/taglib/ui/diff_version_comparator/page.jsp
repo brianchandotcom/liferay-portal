@@ -135,7 +135,7 @@ if (Validator.isNotNull(languageId)) {
 						<div class="search-panels-bar">
 							<i class="search-panel-icon"></i>
 
-							<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+							<aui:input cssClass="col-md-12 search-panels-input search-query" label="" name="searchPanel" type="text" />
 						</div>
 					</div>
 				</c:if>

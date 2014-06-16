@@ -242,7 +242,7 @@ if (workflowEnabled) {
 							cssClass="modify-link select-file-entry-type"
 							iconCssClass="icon-search"
 							label="<%= true %>"
-							linkCssClass="btn"
+							linkCssClass="btn btn-default"
 							message="select-document-type"
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
@@ -356,7 +356,7 @@ if (workflowEnabled) {
 
 					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
-					workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
+					workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, 'workflowDefinition' + fileEntryTypeId);
 
 					documentTypesChanged = true;
 

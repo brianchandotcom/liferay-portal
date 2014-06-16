@@ -29,17 +29,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <aui:nav-bar>
-	<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
-		<aui:nav-item>
-			<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
-				<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
-					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-				</c:if>
-			</span>
-		</aui:nav-item>
+	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+		<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
+			<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+		</c:if>
 	</aui:nav>
 
-	<aui:nav id="toolbarContainer">
+	<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
@@ -104,8 +100,8 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	</aui:nav>
 
 	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
+		<aui:nav-bar-search>
+			<div class="col-xs-12 form-search">
 				<liferay-portlet:resourceURL varImpl="searchURL">
 					<portlet:param name="struts_action" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

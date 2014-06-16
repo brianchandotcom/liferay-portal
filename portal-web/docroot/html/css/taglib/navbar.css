@@ -1,46 +1,57 @@
 @import "compass";
 @import "mixins";
 
-.navbar .container {
-	.nav {
-		z-index: 1;
-	}
-
-	.nav-collapse .navbar-search-advanced {
-		float: none;
-		margin: 0;
-		padding: 0;
-
-		.input-append {
-			float: right;
-			margin: 8px 0;
-
-			@include respond-to(phone, tablet) {
-				float: none;
-				margin: 10px 0;
-			}
+.navbar {
+	.navbar-collapse {
+		&:after, &:before {
+			display: inline;
 		}
 	}
 
-	.search-panel {
-		margin-bottom: 0;
+	.navbar-search {
+		background-color: #F3F3F3;
+		border-top-width: 0;
+		margin-left: -15px;
+		position: absolute;
+		top: 0;
+		width: 100%;
 
-		.control-group {
-			margin: 0 16px;
+		@media (min-width: 768px) {
+			background-color: transparent;
+			border-top-width: 1px;
+			margin-left: 0;
+			position: static;
+			top: auto;
+			width: auto;
+		}
+
+		.form-search {
+			margin: 9px 0;
+
+			@media (min-width: 768px) {
+				float: right;
+				margin: 8px 0;
+				max-width: 275px;
+			}
+
+			.input-group {
+				width: 100%;
+
+				@media (min-width: 768px) {
+					width: auto;
+				}
+			}
 		}
 	}
 }
 
 @include respond-to(phone, tablet) {
 	.navbar {
-		.container {
-			position: relative;
-
-			.btn-navbar {
+		.container, .container-fluid {
+			.navbar-btn {
 				color: #000;
-				display: inline-block;
 				margin-bottom: 5px;
-				width: auto;
+				width: 45px;
 
 				> .icon-bar {
 					&:first-child {
@@ -53,31 +64,12 @@
 				}
 			}
 
-			.nav-collapse {
-				display: none;
-
+			.navbar-collapse {
 				&.open {
+					border-width: 0;
 					display: block;
 					height: auto;
 					overflow: visible;
-				}
-
-				.btn {
-					padding: 11px 19px;
-				}
-			}
-
-			.navbar-search {
-				margin: 0;
-				padding: 5px;
-
-				.form-search {
-					margin: 0;
-
-					.input-append {
-						display: block;
-						padding-right: 0;
-					}
 				}
 			}
 		}

@@ -56,7 +56,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-			sb.append("<a class=\"btn btn-navbar");
+			sb.append("<a class=\"btn navbar-btn navbar-toggle");
 
 			String cssClass = getCssClass();
 

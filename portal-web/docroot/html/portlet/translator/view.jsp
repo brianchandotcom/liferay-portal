@@ -37,7 +37,7 @@ if (translation == null) {
 
 <c:choose>
 	<c:when test="<%= translation == null %>">
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<liferay-ui:message key="please-configure-valid-default-languages" />
 		</div>
 	</c:when>

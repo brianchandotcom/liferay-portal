@@ -25,7 +25,7 @@
 		}
 	}
 
-	.row-fluid .layout-revision-info {
+	.row .layout-revision-info {
 		float: right;
 		line-height: 16px;
 		padding-left: 5px;
@@ -97,7 +97,7 @@
 		}
 	}
 
-	.layout-revision-details.alert-error {
+	.layout-revision-details.alert-danger {
 		float: right;
 		margin: 10px 5px 0;
 		padding: 0 5px;

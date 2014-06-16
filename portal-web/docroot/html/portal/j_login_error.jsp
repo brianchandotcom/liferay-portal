@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<div class="alert alert-error">
+<div class="alert alert-danger">
 	<liferay-ui:message key="jaas-is-not-configured-properly" />
 </div>

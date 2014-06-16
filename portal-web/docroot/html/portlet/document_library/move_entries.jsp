@@ -113,7 +113,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (Folder folder : validMoveFolders) {
@@ -144,7 +144,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (Folder folder : invalidMoveFolders) {
@@ -188,7 +188,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
@@ -219,7 +219,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
@@ -265,7 +265,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (DLFileShortcut fileShortcut : validShortcutEntries) {
@@ -291,7 +291,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (DLFileShortcut fileShortcut : invalidShortcutEntries) {
@@ -334,7 +334,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		}
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="new-folder" name="folderName" type="resource" value="<%= folderName %>" />
 
 			<aui:button name="selectFolderButton" value="select" />

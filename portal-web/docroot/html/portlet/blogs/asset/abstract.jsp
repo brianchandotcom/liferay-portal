@@ -24,7 +24,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 <c:if test="<%= entry.isSmallImage() %>">
 	<div class="asset-small-image">
-		<img alt="" class="asset-small-image img-polaroid" src="<%= HtmlUtil.escape(entry.getEntryImageURL(themeDisplay)) %>" width="150" />
+		<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(entry.getEntryImageURL(themeDisplay)) %>" width="150" />
 	</div>
 </c:if>
 

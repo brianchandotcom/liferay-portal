@@ -35,7 +35,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		<legend><liferay-ui:message key="current-theme" /></legend>
 
 		<div>
-			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-polaroid theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 
 			<div class="theme-details">
 				<c:choose>
@@ -107,7 +107,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 				<c:if test="<%= !colorSchemes.isEmpty() %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelColorsPanel" %>' persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
 						<aui:fieldset cssCclass="color-schemes">
-							<div class="lfr-theme-list unstyled">
+							<div class="lfr-theme-list list-unstyled">
 
 								<%
 								for (int i = 0; i < colorSchemes.size(); i++) {
@@ -214,7 +214,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						iconCssClass="icon-inbox"
 						id="installMore"
 						label="<%= true %>"
-						linkCssClass="btn"
+						linkCssClass="btn btn-default"
 						message="install-more"
 						url='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>'
 					/>
@@ -222,7 +222,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			</legend>
 
 			<c:if test="<%= themes.size() > 1 %>">
-				<ul class="lfr-theme-list unstyled">
+				<ul class="lfr-theme-list list-unstyled">
 
 					<%
 					for (int i = 0; i < themes.size(); i++) {

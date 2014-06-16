@@ -100,9 +100,9 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 </c:choose>
 
 <div class="container-fluid">
-	<div class="lfr-app-column-view manage-view row-fluid">
+	<div class="lfr-app-column-view manage-view row">
 		<c:if test="<%= !group.isLayoutPrototype() %>">
-			<div class="span3">
+			<div class="col-md-3">
 				<c:if test="<%= stagingGroup != null %>">
 
 					<%
@@ -136,7 +136,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					<c:choose>
 						<c:when test="<%= layoutSetBranches.size() > 1 %>">
 							<aui:nav-bar>
-								<aui:nav>
+								<aui:nav cssClass="navbar-nav">
 									<aui:nav-item dropdown="<%= true %>" label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>">
 
 										<%
@@ -176,7 +176,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			</div>
 		</c:if>
 
-		<div class='<%= !group.isLayoutPrototype() ? "span9" : "span12" %>'>
+		<div class='<%= !group.isLayoutPrototype() ? "col-md-9" : "col-md-12" %>'>
 			<div id="<portlet:namespace />layoutsContainer">
 				<c:choose>
 					<c:when test="<%= selPlid > 0 %>">

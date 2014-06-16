@@ -85,13 +85,13 @@ if (ddmStructureId > 0) {
 
 		<aui:input name="description" />
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource"  value="<%= ddmStructureName %>" />
 
 			<liferay-ui:icon
 				iconCssClass="icon-search"
 				label="<%= true %>"
-				linkCssClass="btn"
+				linkCssClass="btn btn-default"
 				message="select"
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 			/>

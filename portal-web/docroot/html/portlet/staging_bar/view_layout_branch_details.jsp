@@ -23,7 +23,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.js
 String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
 %>
 
-<div class="page-variations-options span5">
+<div class="col-md-5 page-variations-options">
 
 	<%
 	List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutRevision.getLayoutSetBranchId(), LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));

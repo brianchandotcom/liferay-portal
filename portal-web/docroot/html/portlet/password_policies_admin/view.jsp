@@ -46,7 +46,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 	%>
 
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
 				<portlet:renderURL var="viewPasswordPoliciesURL">
 					<portlet:param name="struts_action" value="/password_policies_admin/view" />
@@ -62,7 +62,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</aui:nav>
 
 		<c:if test="<%= !passwordPolicyEnabled %>">
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/password_policies_admin/password_policy_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/html/portlet/password_policies_admin/password_policy_search.jsp" searchContainer="<%= searchContainer %>" />
 		</c:if>
 	</aui:nav-bar>
 

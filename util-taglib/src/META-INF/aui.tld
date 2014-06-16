@@ -2055,12 +2055,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>fluid</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

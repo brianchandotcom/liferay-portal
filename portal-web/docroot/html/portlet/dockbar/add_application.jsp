@@ -32,10 +32,10 @@ refererURL.setParameter("updateLayout", "true");
 		<span class="alert-success message"><liferay-ui:icon iconCssClass="icon-ok-sign" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" /></span>
 	</span>
 
-	<div class="row-fluid" id="<portlet:namespace />applicationList">
+	<div id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="btn-toolbar search-panel">
-				<aui:input cssClass="search-query span12" label="" name="searchApplication" type="text" />
+				<aui:input cssClass="col-md-12 search-query" label="" name="searchApplication" type="text" />
 			</div>
 		</c:if>
 
@@ -64,7 +64,7 @@ refererURL.setParameter("updateLayout", "true");
 
 				<div class="lfr-add-content">
 					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-component lfr-content-category panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
-						<aui:nav collapsible="<%= false %>" cssClass="nav-list">
+						<aui:nav collapsible="<%= false %>">
 
 							<%
 							for (Portlet portlet : portlets) {
@@ -150,7 +150,7 @@ refererURL.setParameter("updateLayout", "true");
 		</liferay-ui:panel-container>
 
 		<c:if test="<%= layout.isTypePortlet() %>">
-			<ul class="lfr-add-apps-legend nav-list unstyled">
+			<ul class="lfr-add-apps-legend list-unstyled">
 				<li>
 					<aui:icon image="stop" label="can-be-added-once" />
 				</li>

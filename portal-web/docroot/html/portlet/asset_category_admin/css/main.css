@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .portlet-asset-category-admin {
 	.form-search {
@@ -9,15 +10,19 @@
 			padding-right: 0;
 			width: 200px;
 		}
-
 	}
 
-	.control-group {
+	.form-group {
 		float: left;
 		margin-bottom: 0;
 
 		.categories-admin-select-search {
-			width: auto;
+			margin: 9px 0;
+
+			@include respond-to(desktop) {
+				margin: 8px 0;
+				width: auto;
+			}
 		}
 	}
 

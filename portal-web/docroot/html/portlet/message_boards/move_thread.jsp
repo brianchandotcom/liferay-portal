@@ -61,7 +61,7 @@ boolean splitThread = false;
 	%>
 
 	<aui:fieldset>
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %>' />
 
 			<aui:button name="selectCategoryButton" value="select" />

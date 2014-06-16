@@ -90,7 +90,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				}
 				%>
 
-				<div class="control-group">
+				<div class="form-group">
 					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />
 
 					<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />

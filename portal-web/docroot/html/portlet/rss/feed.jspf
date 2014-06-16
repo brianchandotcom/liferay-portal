@@ -83,7 +83,7 @@ catch (Exception e) {
 			</c:if>
 
 			<c:if test="<%= (publishedDate != null) && showFeedPublishedDate %>">
-				<div class="feed-published-date feed-date">
+				<div class="feed-date feed-published-date">
 					<aui:a cssClass="icon-calendar" href="<%= feedLink %>" target="_new"><%= dateFormatDateTime.format(publishedDate) %></aui:a>
 				</div>
 			</c:if>
@@ -221,7 +221,7 @@ catch (Exception e) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<%= LanguageUtil.format(pageContext, "cannot-be-found", HtmlUtil.escape(urls[i]), false) %>
 		</div>
 	</c:otherwise>

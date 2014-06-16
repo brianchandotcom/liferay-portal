@@ -2,8 +2,10 @@
 @import "mixins";
 
 .taglib-form-navigator {
-	ul.form-navigator.well {
-		float: right;
+	ul.form-navigator.list-group {
+		@include respond-to(desktop) {
+			float: right;
+		}
 	}
 
 	.error-notice, .modified-notice {
@@ -88,8 +90,8 @@
 	.form-navigator-content {
 		overflow: visible;
 
-		&[class*="span"] {
-			margin-left: 0;
+		&[class*="col-"] {
+			padding-left: 0;
 		}
 
 		.form-section {
@@ -98,6 +100,11 @@
 			&.active {
 				display: block;
 			}
+		}
+
+		legend {
+			overflow: auto;
+			padding-bottom: 2px;
 		}
 	}
 

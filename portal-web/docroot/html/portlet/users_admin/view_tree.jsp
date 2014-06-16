@@ -93,8 +93,8 @@ if (organization != null) {
 	<aui:nav-bar>
 		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
+		<aui:nav-bar-search>
+			<div class="col-xs-12 form-search">
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
 			</div>
 		</aui:nav-bar-search>

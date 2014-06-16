@@ -51,7 +51,7 @@ try {
 					renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 					%>
 
-					<div class="alert alert-error">
+					<div class="alert alert-danger">
 						<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-dynamic-data-list-record-set" />
 					</div>
 				</c:otherwise>
@@ -76,7 +76,7 @@ try {
 catch (NoSuchRecordSetException nsrse) {
 %>
 
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<%= LanguageUtil.get(pageContext, "the-selected-list-no-longer-exists") %>
 	</div>
 
@@ -92,7 +92,7 @@ boolean showEditFormTemplateIcon = (formDDMTemplateId != 0) && DDMTemplatePermis
 %>
 
 <c:if test="<%= themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (showAddListIcon || showAddTemplateIcon || showEditDisplayTemplateIcon || showEditFormTemplateIcon || hasConfigurationPermission ) %>">
-	<div class="lfr-meta-actions icons-container">
+	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
 			<c:if test="<%= showAddTemplateIcon %>">
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="addFormTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

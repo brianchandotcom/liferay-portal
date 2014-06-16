@@ -67,8 +67,8 @@
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" name="fm" onSubmit="event.preventDefault();">
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-						<div class="row-fluid">
-							<aui:fieldset cssClass="span6" label="portal">
+						<div class="row">
+							<aui:fieldset cssClass="col-md-6" label="portal">
 								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 								<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
@@ -94,7 +94,7 @@
 								<aui:input name="addSampleData" type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 
-							<aui:fieldset cssClass="column-last span6" label="administrator-user">
+							<aui:fieldset cssClass="col-md-6 column-last" label="administrator-user">
 								<%@ include file="/html/portal/setup_wizard_user_name.jspf" %>
 
 								<aui:input label="email" name="adminEmailAddress" value="<%= emailAddress %>">
@@ -104,8 +104,8 @@
 							</aui:fieldset>
 						</div>
 
-						<div class="row-fluid">
-							<aui:fieldset cssClass="span12" label="database">
+						<div class="row">
+							<aui:fieldset cssClass="col-md-12" label="database">
 								<aui:input name="defaultDatabase" type="hidden" value="<%= defaultDatabase %>" />
 
 								<div id="defaultDatabaseOptions">

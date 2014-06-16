@@ -54,7 +54,7 @@ AUI.add(
 
 				IFRAME_SUFFIX: '_iframe_',
 
-				TITLE_TEMPLATE: '<h3 />',
+				TITLE_TEMPLATE: '<h3 class="modal-title" />',
 
 				_winResizeHandler: null,
 

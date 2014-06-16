@@ -42,7 +42,7 @@ String portletURLString = portletURL.toString();
 	%>
 
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
 				<portlet:renderURL var="viewRolesURL">
 					<portlet:param name="struts_action" value="/roles_admin/view" />
@@ -76,7 +76,7 @@ String portletURLString = portletURL.toString();
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
+		<aui:nav-bar-search file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
 	</aui:nav-bar>
 
 	<%

@@ -46,7 +46,7 @@ portletURL.setParameter("eventName", eventName);
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:nav searchContainer="<%= ruleGroupSearch %>">
+				<aui:nav cssClass="navbar-nav" searchContainer="<%= ruleGroupSearch %>">
 					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
 				</aui:nav>
 			</c:if>

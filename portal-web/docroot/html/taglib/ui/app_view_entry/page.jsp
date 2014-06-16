@@ -143,7 +143,7 @@ if (showLinkTitle) {
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
-							<img alt="" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
+							<img alt="" class="img-thumbnail" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 						</c:when>
 						<c:when test="<%= Validator.isNotNull(iconCssClass) %>">
 							<i class="<%= iconCssClass %>" style="<%= thumbnailStyle %>"></i>
@@ -380,7 +380,7 @@ if (showLinkTitle) {
 			/>
 
 			<c:if test="<%= locked %>">
-				<i class="pull-right icon-lock"></i>
+				<i class="icon-lock pull-right"></i>
 			</c:if>
 
 			<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">

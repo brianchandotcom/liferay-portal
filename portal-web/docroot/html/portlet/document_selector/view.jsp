@@ -61,7 +61,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 	Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 	%>
 
-	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
+	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
 
 		<%
 		String refererPortletName = ParamUtil.getString(request, "refererPortletName");
@@ -101,7 +101,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 	%>
 
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<aui:nav-item
 				dropdown="<%= true %>"
 				iconCssClass="icon-plus"

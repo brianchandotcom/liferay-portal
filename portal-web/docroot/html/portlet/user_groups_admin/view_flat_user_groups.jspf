@@ -26,7 +26,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 	<aui:input name="deleteUserGroupIds" type="hidden" />
 
 	<aui:nav-bar>
-		<aui:nav searchContainer="<%= userGroupSearch %>">
+		<aui:nav cssClass="navbar-nav" searchContainer="<%= userGroupSearch %>">
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 				<portlet:renderURL var="viewUserGroupsURL">
 					<portlet:param name="struts_action" value="/user_groups_admin/view" />

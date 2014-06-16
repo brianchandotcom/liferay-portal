@@ -26,11 +26,11 @@ if (Validator.isNotNull(scriptContent)) {
 
 <liferay-ui:panel-container extended="<%= false %>" id="templateScriptContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
-		<div class="control-group lfr-template-editor-container">
+		<div class="form-group lfr-template-editor-container">
 			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
-						<input class="field search-query span12" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
+						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
 					</div>
 
 					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">

@@ -30,67 +30,33 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	#wrapper {
-		padding: 0;
+		padding: 0 15px;
 	}
 
 	.container-fluid.panel-manage-frontpage {
 		padding: 0;
 	}
 
-	.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
-		padding: 0 3em;
-
-		.panel-page-application {
-			margin: 0;
-		}
-	}
-
-	.panel-manage-frontpage {
-		.control-panel-bar-secondary {
-			margin-bottom: 1px;
-			margin-left: 20px;
-		}
-	}
-
 	.control-panel-home-actions-category .btn {
 		margin-bottom: 0.5em;
+	}
+
+	.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+		padding: 0 3em;
+	}
+
+	.panel-manage-apps .panel-page-application {
+		padding: 0 10px;
 	}
 
 	.taglib-portal-message {
 		margin-bottom: 0;
 	}
 
-	/* ---------- Control panel secondary nav ---------- */
+	/* ---------- Control Panel Secondary Nav ---------- */
 
 	.control-panel-bar-secondary {
-		margin-left: 10px;
-		padding-top: 1.1em;
-
-		&.nav-pills {
-			li {
-				margin-right: 20px;
-
-				a {
-					font-size: 15px;
-					font-weight: normal;
-					margin: 0;
-					padding: 10px 10px 11px;
-
-					&:hover {
-						background: #E5F5FC;
-					}
-				}
-			}
-
-			> .active > a {
-				background: #009AE5;
-				color: #FFF;
-
-				&:hover {
-					background: #009AE5;
-				}
-			}
-		}
+		padding: 15px 10px;
 	}
 
 	/* ---------- Control panel home ---------- */
@@ -140,10 +106,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin-bottom: 5px;
 		}
 
-		.control-panel-bar-secondary {
-			margin-bottom: 5px;
-		}
-
 		.control-panel-home-actions {
 			margin-top: 100px;
 
@@ -162,6 +124,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			display: block;
 			font-size: 24px;
 			font-weight: 100;
+			line-height: 1.5;
 			margin-bottom: 30px;
 			padding-left: 47px;
 		}
@@ -193,28 +156,40 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 5px 15px;
 		}
 
-		.navbar-inner {
-			background-color: $dockbarGradientEnd;
-			color: #FFF;
-			padding-left: 0;
-			padding-right: 0;
+		.navbar-brand {
+			height: auto;
+			letter-spacing: 1px;
+			padding: 20px 5px;
+			white-space: nowrap;
 
-			.brand {
-				letter-spacing: 1px;
+			&, h1, a {
+				color: #FFF;
+				font-weight: 100;
+				text-shadow: none;
 
-				&, h1, a {
-					color: #FFF;
-					font-weight: 100;
-					text-shadow: none;
-
-					@include respond-to(phone, tablet) {
-						letter-spacing: 0;
-					}
+				@include respond-to(phone, tablet) {
+					letter-spacing: 0;
 				}
+			}
+
+			@include respond-to(desktop) {
+				padding: 10px 15px;
+			}
+
+			@include respond-to(phone, tablet) {
+				h1 {
+					position: relative;
+				}
+			}
+
+			.control-panel-site-selector {
+				font-size: inherit;
+				margin-bottom: 0;
+				margin-top: 0;
+				position: static;
+				vertical-align: baseline;
 
 				h1 {
-					@include box-sizing(border-box);
-
 					display: inline-block;
 					font-size: inherit;
 					line-height: 1;
@@ -222,247 +197,255 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				@include respond-to(phone, tablet) {
-					h1 {
-						position: relative;
-					}
-				}
-
-				.control-panel-site-selector {
-					font-size: inherit;
-					margin-bottom: 0;
-					margin-top: 0;
+					font-weight: 200;
 					position: static;
-					vertical-align: baseline;
-
-					@include respond-to(phone, tablet) {
-						font-weight: 200;
-						position: static;
-					}
-
-					a {
-						text-decoration: none;
-
-						@include respond-to(phone) {
-							.lfr-icon-menu-arrow {
-								display: none;
-							}
-						}
-
-						.lfr-icon-menu-icon {
-							display: none;
-
-							@include respond-to(phone) {
-								display: inline-block;
-								position: absolute;
-							}
-						}
-
-						.lfr-icon-menu-text {
-							@include respond-to(phone, tablet) {
-								font-weight: 200;
-								line-height: 22px;
-							}
-
-							&:hover, &:focus {
-								text-decoration: underline;
-							}
-						}
-					}
-
-					.caret {
-						border-top-color: #FFF;
-						margin-top: -4px;
-					}
 				}
-
-				.control-panel-back-link {
-					margin: 0 15px;
-
-					@include respond-to(phone, tablet) {
-						margin: 0 8px;
-					}
-
-					&:hover, &:focus {
-						text-decoration: none;
-					}
-				}
-			}
-
-			.container {
-				.nav-account-controls {
-					@include justify-content(flex-end);
-
-					> li.open > .dropdown-toggle {
-						background-color: $dockbarOpenGradientEnd;
-						margin: 0;
-						padding: 5px 15px;
-
-						@include respond-to(phone, tablet) {
-							padding: 12px 0;
-						}
-					}
-				}
-
-				.nav-collapse {
-					@include respond-to(phone, tablet) {
-						float: right;
-					}
-
-					> .nav {
-						li.dropdown ul.dropdown-menu {
-							margin-top: 0;
-						}
-
-						&.nav-navigation ul.dropdown-menu > li {
-							margin-right: 5px;
-
-							> a {
-								line-height: 31px;
-								margin: 3px 0;
-								padding: 2px 15px;
-
-								&:focus, &:hover {
-									color: #FFF;
-								}
-							}
-
-							@include respond-to(phone, tablet) {
-								display: block;
-
-								&, > a {
-									margin: 0;
-								}
-
-								> a {
-									padding: 8px 15px;
-								}
-							}
-						}
-					}
-				}
-
-				.nav-navigation {
-					letter-spacing: 1px;
-
-					> li {
-						@include respond-to(phone, tablet) {
-							&.open ul.dropdown-menu {
-								display: block;
-							}
-						}
-					}
-
-					ul.dropdown-menu {
-						@include respond-to(phone, tablet) {
-							background: #009AE5;
-							display: none;
-							position: absolute;
-						}
-
-						> li {
-							&.active > a {
-								background: #0066B3;
-								color: #FFF;
-
-								@include border-radius(4px);
-
-								@include respond-to(phone, tablet) {
-									@include border-radius(0);
-								}
-							}
-
-							> a {
-								margin: 3px 0;
-								padding: 2px 15px;
-
-								@include respond-to(phone, tablet) {
-									font-size: 16px;
-									line-height: 32px;
-									margin: 0;
-									padding: 9px 15px;
-								}
-							}
-
-							a:hover {
-								background: #0993DD;
-							}
-						}
-
-						li {
-							margin-right: 5px;
-
-							@include respond-to(phone, tablet) {
-								margin-right: 0;
-							}
-
-							/* ---------- Menu icons ---------- */
-
-							&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
-								[class^="icon-"], [class*=" icon-"] {
-									&:before {
-										content: '';
-									}
-								}
-							}
-
-							.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
-								background: none no-repeat 50%;
-								height: 21px;
-								vertical-align: top;
-								width: 24px;
-							}
-
-							.icon-cog, .icon-globe, .icon-th, .icon-user {
-								height: 26px;
-								width: 29px;
-							}
-
-							.icon-arrow-left {
-								background-image: url(../images/custom/dockbar_back.png);
-								margin-top: 4px;
-							}
-
-							.icon-cog {
-								background-image: url(../images/custom/dockbar_configuration.png);
-							}
-
-							.icon-globe {
-								background-image: url(../images/custom/dockbar_sites.png);
-							}
-
-							.icon-list {
-								background-image: url(../images/custom/dockbar_home.png);
-								height: 24px;
-								margin-top: 3px;
-							}
-
-							.icon-th {
-								background-image: url(../images/custom/dockbar_apps.png);
-							}
-
-							.icon-user {
-								background-image: url(../images/custom/dockbar_users.png);
-								width: 40px;
-							}
-						}
-					}
-				}
-			}
-
-			.site-administration-menu li {
-				list-style: none;
 
 				a {
-					display: block;
-					padding: 3px 5px 3px 40px;
+					text-decoration: none;
 
-					&:hover {
-						text-decoration: none;
+					@include respond-to(phone) {
+						.lfr-icon-menu-arrow {
+							display: none;
+						}
 					}
 
-					i {
-						font-size: 0.8em;
+					.lfr-icon-menu-icon {
+						display: none;
+
+						@include respond-to(phone) {
+							display: inline-block;
+							position: absolute;
+						}
 					}
+
+					.lfr-icon-menu-text {
+						@include respond-to(phone, tablet) {
+							font-weight: 200;
+							line-height: 22px;
+						}
+
+						&:hover, &:focus {
+							text-decoration: underline;
+						}
+					}
+				}
+
+				.caret {
+					border-top-color: #FFF;
+					margin-top: -4px;
+				}
+			}
+
+			.control-panel-back-link {
+				margin: 0 15px;
+
+				@include respond-to(phone, tablet) {
+					margin: 0 8px;
+				}
+
+				&:hover, &:focus {
+					text-decoration: none;
+				}
+			}
+		}
+
+		.container, .container-fluid {
+			padding-left: 5px;
+			padding-right: 5px;
+
+			.nav-account-controls {
+				float: right;
+
+				@include justify-content(flex-end);
+
+				> li.open > .dropdown-toggle {
+					background-color: $dockbarOpenGradientEnd;
+					margin: 0;
+					padding: 5px 15px;
+
+					@include respond-to(phone, tablet) {
+						padding: 12px 10px;
+					}
+				}
+			}
+
+			> .nav {
+				li.dropdown ul.dropdown-menu {
+					margin-top: 0;
+				}
+
+				&.nav-account-controls {
+					float: right;
+				}
+
+				&.nav-navigation ul.dropdown-menu > li {
+					margin-right: 5px;
+
+					> a {
+						line-height: 31px;
+						margin: 3px 0;
+						padding: 2px 15px;
+
+						&:focus, &:hover {
+							color: #FFF;
+						}
+					}
+
+					@include respond-to(phone, tablet) {
+						display: block;
+
+						&, > a {
+							margin: 0;
+						}
+
+						> a {
+							padding: 8px 15px;
+						}
+					}
+				}
+			}
+
+			.nav-navigation {
+				float: right;
+				letter-spacing: 1px;
+
+				@include respond-to(desktop) {
+					float: left;
+				}
+
+				> li {
+					@include respond-to(phone, tablet) {
+						&.open ul.dropdown-menu {
+							display: block;
+						}
+					}
+				}
+
+				ul.dropdown-menu {
+					@include respond-to(phone, tablet) {
+						background: #009AE5;
+						display: none;
+						position: absolute;
+					}
+
+					> li {
+						&.active > a {
+							background: #0066B3;
+							color: #FFF;
+
+							@include border-radius(4px);
+
+							@include respond-to(phone, tablet) {
+								@include border-radius(0);
+							}
+						}
+
+						> a {
+							margin: 3px 0;
+							padding: 2px 15px;
+
+							@include respond-to(phone, tablet) {
+								font-size: 16px;
+								line-height: 32px;
+								margin: 0;
+								padding: 9px 15px;
+							}
+						}
+
+						a:hover {
+							background: #0993DD;
+						}
+					}
+
+					li {
+						margin-right: 5px;
+
+						@include respond-to(phone, tablet) {
+							margin-right: 0;
+						}
+
+						/* ---------- Menu icons ---------- */
+
+						&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
+							[class^="icon-"], [class*=" icon-"] {
+								&:before {
+									content: '';
+								}
+							}
+						}
+
+						.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
+							background: none no-repeat 50%;
+							height: 21px;
+							vertical-align: top;
+							width: 24px;
+						}
+
+						.icon-cog, .icon-globe, .icon-th, .icon-user {
+							height: 26px;
+							width: 29px;
+						}
+
+						.icon-arrow-left {
+							background-image: url(../images/custom/dockbar_back.png);
+							margin-top: 4px;
+						}
+
+						.icon-cog {
+							background-image: url(../images/custom/dockbar_configuration.png);
+						}
+
+						.icon-globe {
+							background-image: url(../images/custom/dockbar_sites.png);
+						}
+
+						.icon-list {
+							background-image: url(../images/custom/dockbar_home.png);
+							height: 24px;
+							margin-top: 3px;
+						}
+
+						.icon-th {
+							background-image: url(../images/custom/dockbar_apps.png);
+						}
+
+						.icon-user {
+							background-image: url(../images/custom/dockbar_users.png);
+							width: 40px;
+						}
+					}
+				}
+			}
+		}
+
+		.site-administration-menu li {
+			list-style: none;
+
+			a {
+				display: block;
+				padding: 3px 5px 3px 40px;
+
+				&:hover {
+					text-decoration: none;
+				}
+
+				i {
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+
+	/* -------- App View Navigation Entry --------- */
+
+	.navigation-pane .app-view-navigation-entry {
+		.overlay.entry-action {
+			a.btn {
+				padding: 11px 14px;
+
+				@include respond-to(desktop) {
+					padding: 14px 10px;
 				}
 			}
 		}
@@ -494,21 +477,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		top: 20px;
 	}
 
-	.nav-list {
-		li > a {
-			&:focus, &:hover {
-				background: #E5F5FC;
-				color: #009AE5;
-			}
-		}
-
-		> .active > a {
-			&, &:focus, &:hover {
-				background: #60BFEF;
-			}
-		}
-	}
-
 	.lfr-control-panel-help-content.alert {
 		border-width: 1px 0;
 		margin-bottom: 1em;
@@ -530,6 +498,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.panel-page-menu {
+		padding-left: 0;
 		position: relative;
 
 		.minimize-panels a {
@@ -539,7 +508,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			font-size: 20px;
 			height: 17px;
 			position: absolute;
-			right: -18px;
+			right: 0;
 			text-align: center;
 			text-decoration: none;
 			top: 7px;
@@ -562,11 +531,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 			border-right: 1px solid #D3D3D3;
 			padding: 15px 0 0;
 
-			.accordion {
+			.panel-body {
+				padding: 5px 0;
+			}
+
+			.panel-group {
 				border-right-width: 0;
 				margin-bottom: 0;
 
-				.accordion-group .category-portlets {
+				.panel.panel-default .category-portlets {
 					list-style: none;
 					margin: 0;
 
@@ -593,6 +566,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 						}
 					}
+				}
+
+				.panel:first-of-type .toggler-header {
+					border-top-width: 1px;
+				}
+
+				.toggler-content-expanded {
+					border: solid #D3D3D3;
+					border-width: 0 0 1px;
+				}
+
+				.toggler-header {
+					border: solid #D3D3D3;
+					border-width: 0 0 1px;
 				}
 			}
 		}
@@ -622,7 +609,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.search-panels-bar {
-				.control-group {
+				.form-group {
 					margin: 0;
 
 					.search-panels-input {
@@ -658,28 +645,32 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.panels-minimized {
-		.panel-page-menu {
-			width: 50px;
+		.panel-group .panel {
+			overflow: visible;
+		}
 
-			.accordion-group {
+		.panel-page-menu {
+			width: auto;
+
+			.panel.panel-default {
 				&.open {
 					.toggler-content {
 						border: 1px solid #DDD;
-						left: 48px;
+						left: 100%;
 						margin-top: 0 !important;
-
-						.accordion-inner {
-							border-top-width: 0;
-						}
 					}
 
 					.toggler-header {
 						background-color: #DDD;
+
+						.panel-toggle {
+							background: none no-repeat right;
+						}
 					}
 				}
 			}
 
-			.accordion-toggle {
+			.panel-toggle {
 				position: relative;
 				text-align: center;
 
@@ -694,7 +685,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.control-panel-tools {
 				cursor: pointer;
-				padding: 12px 0;
+				padding: 12px 0 13px;
 
 				&:hover {
 					background-color: #DDD;
@@ -708,42 +699,43 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.portlet-borderless-container {
 				padding: 0;
 
-				.accordion {
+				.panel-group {
 					border-bottom-width: 0;
 
-					.toggler-header .accordion-toggle {
-						background: none no-repeat right;
-					}
-
-					.accordion-group {
+					.panel.panel-default {
 						background: #FFF;
 						border: solid #D1D1D1;
 						border-width: 0;
 						margin-bottom: 0;
 						position: relative;
 
-						&:first-child {
-							border-top-width: 1px;
-						}
-
 						&:last-child {
 							.toggler-header-collapsed {
 								border-bottom-width: 1px;
 							}
 						}
+
+						.toggler-header {
+							border-width: 0 0 0 1px;
+							padding: 14px;
+
+							@include respond-to(desktop) {
+								border-width: 1px 0 0 0;
+							}
+
+							.panel-toggle {
+								background: none no-repeat right;
+							}
+						}
 					}
 
-					.accordion-heading {
+					.panel-heading {
 						border-bottom: 1px solid #D1D1D1;
 						border-top-width: 0;
 
 						&:hover {
 							background-color: #DDD;
 						}
-					}
-
-					.toggler-header {
-						padding: 12px 10px;
 					}
 				}
 			}
@@ -764,7 +756,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.toggler-content {
 				left: -250px;
 				position: absolute;
-				top: -1px;
+				top: 0;
 				width: 225px;
 				z-index: 1;
 			}
@@ -774,17 +766,25 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.span9.panel-page-body {
+		.col-md-9.panel-page-body {
 			width: 90%;
 		}
 	}
 
-	/* ---------- Single site admin ---------- */
+	/* ---------- Single Site Admin ---------- */
+
+	.manage-layout-set-branches-link {
+		width: 100%;
+
+		@include respond-to(desktop) {
+			width: auto;
+		}
+	}
 
 	.panel-manage-frontpage {
 		#controlPanelSiteHeading {
 			border-bottom: 1px solid #CFCFCF;
-			padding: 17px 20px 5px;
+			padding: 17px 35px 5px;
 			position: relative;
 			z-index: 10;
 
@@ -863,17 +863,24 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
+		.control-panel-bar-secondary {
+			padding: 15px 25px;
+		}
+
 		.form-navigator.well {
 			background: #FCFCFC;
 			border: 1px solid #D1D1D1;
 			border-width: 0 0 0 1px;
-			padding-top: 0;
+			padding: 0;
 
-			.nav-header {
-				background: #F3F3F3;
-				font-size: 14px;
-				font-weight: 200;
-				text-transform: none;
+			.button-holder {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+
+			li a {
+				padding-bottom: 3px;
+				padding-top: 3px;
 			}
 		}
 	}
@@ -904,11 +911,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Vocabularies select box in sites categories ---------- */
 
 	.portlet-asset-category-admin {
-		.categories-admin-select-search {
-			margin: 0 10px 0 0;
-		}
-
-		.control-group {
+		.form-group {
 			margin-bottom: 0;
 		}
 	}
@@ -979,11 +982,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			width: 1px;
 		}
 
-		.accordion .accordion-group {
+		.panel-group .panel.panel-default {
 			@include border-radius(0);
 			@include box-shadow(-3px 0 2px -2px #F5F5F5);
 
-			.accordion-heading {
+			.panel-heading {
 				&.toggler-header-collapsed, &.toggler-header-expanded {
 					@include border-radius(0);
 				}
@@ -999,8 +1002,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(0);
 	}
 
-	.control-panel-bar-secondary.nav-pills li a {
-		@include border-radius(4px);
+	.control-panel-bar-secondary {
+		.nav-pills li a {
+			@include border-radius(4px);
+		}
 	}
 
 	.alert {
@@ -1010,49 +1015,34 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Extras dockbar ---------- */
 
 	.dockbar {
-		.navbar-inner {
-			background-color: $dockbarGradientStart;
+		ul.nav-account-controls {
+			li.open > .dropdown-toggle {
+				background-color: $dockbarGradientStart;
 
-			@include background-image(linear-gradient(top, $dockbarGradientStart, $dockbarGradientEnd));
-			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+				@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+				@include box-shadow(none);
+				@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
+			}
+		}
 
-			ul.nav-account-controls {
-				li.open > .dropdown-toggle {
-					background-color: $dockbarGradientStart;
-
-					@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-					@include box-shadow(none);
-					@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
-				}
-
-				> li:hover {
-					background-color: #2FA4F5;
-				}
+		ul.nav-navigation {
+			ul.dropdown-menu > li.active > a {
+				@include box-shadow(inset 0 3px 8px rgba(0, 0, 0, 0.125));
 			}
 
-			ul.nav-navigation {
-				ul.dropdown-menu > li.active > a {
-					@include box-shadow(inset 0 3px 8px rgba(0, 0, 0, 0.125));
+			> li {
+				@include respond-to(phone, tablet) {
+					&.open > a {
+						@include box-shadow(none);
+					}
 				}
 
-				> li {
-					@include respond-to(phone, tablet) {
-						&.open > a {
-							@include box-shadow(none);
-						}
-					}
-
-					a:hover {
+				a:hover {
+					@include respond-to(desktop) {
 						@include border-radius(4px);
 					}
 				}
 			}
-		}
-	}
-
-	.nav-list {
-		> .active > a {
-			@include text-shadow(none);
 		}
 	}
 
@@ -1074,32 +1064,28 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Media queries ---------- */
 
 	@include respond-to(phone, tablet) {
-		.portlet-title {
-			display: inline-block;
-			width: 85%;
-		}
+		&.ie9 {
+			.dockbar {
+				.container, .container-fluid {
+					font-size: 0;
+					text-align: right;
 
-		.portlet-journal {
-			.journal-article-header-edit {
-				border-top-width: 1px;
+					.navbar-brand {
+						max-width: 45%;
+						width: auto;
+					}
+
+					.nav-account-controls, .nav-navigation {
+						display: inline-block;
+						float: none;
+
+						.dropdown {
+							text-align: left;
+						}
+					}
+				}
 			}
 		}
-
-		.nav-list .nav-header {
-			margin-left: 0;
-			margin-right: 0;
-		}
-
-		.taglib-form-navigator .nav.form-navigator.well {
-			border-top-width: 0;
-			margin-top: 0;
-			padding: 0;
-		}
-	}
-
-	@include respond-to(phone) {
-
-		/* ---------- Panel page menu ---------- */
 
 		.panel-page-menu {
 			.minimize-panels a {
@@ -1108,14 +1094,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.portlet-borderless-container {
-				&, .accordion .accordion-group {
+				&, .panel-group .panel.panel-default {
 					@include box-shadow(inset 1px 0 #DDD);
 				}
 			}
 		}
 
 		.panels-minimized {
-			.panel-page-body.span9 {
+			.col-md-9.panel-page-body {
 				width: 100%;
 
 				&:before {
@@ -1152,20 +1138,21 @@ $dockbarOpenGradientStart: #0EA6F9;
 					z-index: 399;
 
 					&:after {
+						background-color: transparent;
 						background-image: none;
 					}
 
-					.accordion {
+					.panel-group {
 						border-width: 0;
 						float: left;
 						width: 80%;
 
-						.toggler-header .accordion-toggle {
+						.toggler-header .panel-toggle {
 							background-position: center;
 							right: auto;
 						}
 
-						.accordion-group {
+						.panel.panel-default {
 							@include box-shadow(none);
 
 							float: left;
@@ -1184,6 +1171,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 							&.open {
 								.toggler-content {
+									@include box-sizing(content-box);
+
 									left: -1px;
 									margin-top: 0 !important;
 									position: absolute;
@@ -1192,10 +1181,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 						}
 
-						.accordion-heading {
+						.panel-heading {
 							border-bottom-width: 0;
 							border-left-width: 1px;
 						}
+					}
+				}
+
+				.portlet-boundary {
+					padding: 0 10px;
+
+					@include respond-to(desktop) {
+						padding: 0;
 					}
 				}
 
@@ -1215,15 +1212,34 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
-			padding: 0;
+		.portlet-title {
+			display: inline-block;
+			width: 85%;
 		}
 
-		.span6 {
+		.portlet-journal {
+			.journal-article-header-edit {
+				border-top-width: 1px;
+			}
+		}
+
+		.taglib-form-navigator .nav.form-navigator.well {
+			border-top-width: 0;
+			margin-top: 0;
+			padding: 0;
+		}
+	}
+
+	@include respond-to(phone) {
+		.col-md-6 {
 			&.article-structure, &.article-template {
 				float: left;
 				width: 45%;
 			}
+		}
+
+		.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+			padding: 0;
 		}
 	}
 }

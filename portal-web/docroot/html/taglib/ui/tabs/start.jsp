@@ -105,7 +105,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 		<c:otherwise>
 			<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
 
-			<ul class="nav nav-<%= type %>">
+			<ul class="lfr-nav nav nav-<%= type %>">
 		</c:otherwise>
 	</c:choose>
 

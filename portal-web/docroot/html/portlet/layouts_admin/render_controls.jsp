@@ -61,7 +61,7 @@ for (int i = 0; i < controls.length; i++) {
 				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlName %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) %>" />
 
 				<c:if test="<%= children != null %>">
-					<ul class="unstyled" id="<portlet:namespace /><%= controlName %>Controls">
+					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">
 
 						<%
 						request.setAttribute("render_controls.jsp-controls", children);

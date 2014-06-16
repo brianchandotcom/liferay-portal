@@ -35,7 +35,7 @@ portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 %>
 
-<div class="alert alert-error hide" id="<portlet:namespace />message">
+<div class="alert alert-danger hide" id="<portlet:namespace />message">
 	<span class="error-message"><%= LanguageUtil.get(pageContext, "the-field-value-is-invalid") %></span>
 </div>
 

@@ -21,21 +21,21 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 %>
 
 <div class="taglib-search-toggle">
-	<div class="form-search">
-		<div class="input-append" id="<%= id %>simple">
-			<div class="advanced-search">
-				<input class="search-query span9" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
+	<div class="col-xs-12 form-search">
+		<div class="advanced-search input-group" id="<%= id %>simple">
+			<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
 
-				<button class="btn" type="submit">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit">
 					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
 				</button>
-
-				<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
-					<i class="icon-search"></i>
-					<i class="caret"></i>
-				</a>
-			</div>
+			</span>
 		</div>
+
+		<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
+			<i class="icon-search"></i>
+			<i class="caret"></i>
+		</a>
 	</div>
 </div>
 
@@ -46,7 +46,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 		<aui:button cssClass="close pull-right" name="closeAdvancedSearch" value="&times;" />
 
 		<div class="taglib-search-toggle-advanced-content" id="<%= id %>advancedContent">
-			<div class="control-group control-group-inline">
+			<div class="form-group form-group-inline">
 				<aui:select cssClass="input-medium" label="match" name="<%= displayTerms.AND_OPERATOR %>" wrapperCssClass="match-fields">
 					<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />
 					<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="0" />

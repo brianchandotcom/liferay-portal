@@ -16,9 +16,9 @@
 
 <%@ include file="/html/taglib/ui/panel/init.jsp" %>
 
-<div class="accordion-group <%= cssClass %>" id="<%= id %>">
-	<div class="accordion-heading <%= headerCssClass %>" data-persist-id="<%= persistState ? id : StringPool.BLANK %>">
-		<div class="accordion-toggle">
+<div class="panel panel-default <%= cssClass %>" id="<%= id %>">
+	<div class="panel-heading <%= headerCssClass %>" data-persist-id="<%= persistState ? id : StringPool.BLANK %>">
+		<div class="panel-toggle">
 			<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 				<i class="<%= iconCssClass %>"></i>
 			</c:if>
@@ -33,4 +33,4 @@
 		</div>
 	</div>
 	<div class="<%= contentCssClass %>" id="<%= id %>Content">
-		<div class="accordion-inner">
+		<div class="panel-body">

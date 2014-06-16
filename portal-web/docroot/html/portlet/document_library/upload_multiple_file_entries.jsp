@@ -224,7 +224,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		</aui:row>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<liferay-ui:message key="you-do-not-have-the-required-permissions-to-access-this-application" />
 		</div>
 	</c:otherwise>

@@ -82,7 +82,7 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 				if (!FileAvailabilityUtil.isAvailable(
 						pageContext.getServletContext(), getStartPage())) {
 
-					jspWriter.write("<ul class=\"taglib-icon-list unstyled\">");
+					jspWriter.write("<ul class=\"taglib-icon-list list-unstyled\">");
 				}
 				else {
 					PortalIncludeUtil.include(pageContext, _startPage);

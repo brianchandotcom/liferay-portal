@@ -34,7 +34,7 @@
 	}
 
 	.lfr-asset-panels .lfr-panel.lfr-extended {
-		border-bottom: none;
+		border-bottom-width: 0;
 	}
 
 	.document-container .search-info {
@@ -100,7 +100,7 @@
 			}
 		}
 
-		.unstyled {
+		.list-unstyled {
 			margin: 0;
 		}
 	}
@@ -189,7 +189,7 @@
 	}
 
 	.lfr-app-column-view {
-		border: none;
+		border-width: 0;
 
 		.sync-notification {
 			border-top-width: 1px;
@@ -383,7 +383,7 @@
 		&:after {
 			clear: both;
 			content: '';
-			display:block;
+			display: block;
 			height: 0;
 		}
 
@@ -436,7 +436,7 @@
 				border-right-width: 0;
 				display: block;
 				float: none;
-				padding: 2px 0 2px 0px;
+				padding: 2px 0 2px 0;
 			}
 
 			.lfr-asset-ratings {

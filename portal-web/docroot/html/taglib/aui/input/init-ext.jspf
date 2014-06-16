@@ -53,18 +53,16 @@ if (choiceField && Validator.isNull(inlineLabel)) {
 
 String addOnCssClass = StringPool.BLANK;
 
-if (helpTextCssClass.equals("add-on")) {
-	if (Validator.isNotNull(prefix)) {
-		addOnCssClass = addOnCssClass.concat("input-prepend ");
-	}
-
-	if (Validator.isNotNull(suffix)) {
-		addOnCssClass = addOnCssClass.concat("input-append");
-	}
+if (helpTextCssClass.equals("input-group-addon")) {
+	addOnCssClass = addOnCssClass.concat("input-group");
 }
 
 String controlGroupCssClass = AUIUtil.buildControlGroupCss(inlineField, inlineLabel, wrapperCssClass, baseType);
 String baseTypeCssClass = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);
 String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
 String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel);
+
+if (baseType.equals("email") || baseType.equals("password") || baseType.equals("text") || baseType.equals("textarea")) {
+	fieldCssClass += " form-control";
+}
 %>

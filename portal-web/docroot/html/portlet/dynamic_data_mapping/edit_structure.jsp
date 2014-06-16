@@ -187,7 +187,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
-					<div class="input-append">
+					<div class="input-group">
 						<aui:input label="" name="parentStructureName" type="resource" value="<%= parentStructureName %>" />
 
 						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />

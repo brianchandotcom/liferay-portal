@@ -18,7 +18,7 @@
 
 <aui:form name="fm">
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
 				<aui:nav-item id="addVocabularyButton" label="add-vocabulary" />
 			</c:if>
@@ -45,12 +45,16 @@
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right">
-			<aui:select cssClass="categories-admin-select-search" label="" name="categoriesAdminSelectSearch">
-				<aui:option label="categories" />
-				<aui:option label="vocabularies" selected="<%= true %>" />
-			</aui:select>
+			<div class="col-xs-4">
+				<aui:select cssClass="categories-admin-select-search form-control" label="" name="categoriesAdminSelectSearch">
+					<aui:option label="categories" />
+					<aui:option label="vocabularies" selected="<%= true %>" />
+				</aui:select>
+			</div>
 
-			<liferay-ui:input-search cssClass="form-search" id="categoriesAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
+			<div class="col-xs-8 form-search">
+				<liferay-ui:input-search id="categoriesAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
+			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
@@ -62,9 +66,9 @@
 
 			<h3 class="vocabularies-header"><%= LanguageUtil.get(pageContext, "vocabularies") %></h3>
 
-					<div class="unstyled vocabulary-message"></div>
+					<div class="list-unstyled vocabulary-message"></div>
 
-					<div class="unstyled vocabulary-list"></div>
+					<div class="list-unstyled vocabulary-list"></div>
 
 			<div class="vocabularies-pagination"></div>
 		</aui:col>

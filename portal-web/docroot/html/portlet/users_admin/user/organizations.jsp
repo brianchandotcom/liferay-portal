@@ -93,7 +93,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		iconCssClass="icon-search"
 		id="selectOrganizationLink"
 		label="<%= true %>"
-		linkCssClass="btn"
+		linkCssClass="btn btn-default"
 		message="select"
 		method="get"
 		url="javascript:;"

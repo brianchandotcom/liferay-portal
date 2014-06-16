@@ -55,11 +55,11 @@ else {
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(viewURL) %>">
 				<a href="<%= viewURL %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-polaroid" src="<%= HtmlUtil.escapeAttribute(src) %>" width="150" />
+					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(src) %>" width="150" />
 				</a>
 			</c:when>
 			<c:otherwise>
-				<img alt="" class="asset-small-image img-polaroid" src="<%= HtmlUtil.escape(src) %>" width="150" />
+				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(src) %>" width="150" />
 			</c:otherwise>
 		</c:choose>
 	</div>

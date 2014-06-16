@@ -135,7 +135,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 				</liferay-ui:app-view-toolbar>
 			</c:if>
 
-			<div class="alert alert-error hide" id="<portlet:namespace />openMSOfficeError"></div>
+			<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
@@ -157,7 +157,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="alert alert-error">
+						<div class="alert alert-danger">
 							<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 						</div>
 					</c:otherwise>

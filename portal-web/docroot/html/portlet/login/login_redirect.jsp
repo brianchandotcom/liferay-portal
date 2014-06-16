@@ -130,7 +130,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 			var messageContainer = A.one('#<portlet:namespace />login-status-messages');
 
-			messageContainer.removeClass('alert-error').removeClass('alert-success');
+			messageContainer.removeClass('alert-danger').removeClass('alert-success');
 
 			messageContainer.addClass('alert alert-' + type);
 

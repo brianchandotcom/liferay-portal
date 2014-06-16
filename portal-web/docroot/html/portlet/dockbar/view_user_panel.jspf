@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:nav collapsible="<%= true %>" cssClass='<%= portalMessageUseAnimation ? "nav-account-controls" : "nav-account-controls nav-account-controls-notice" %>' icon="user" id="navAccountControls">
+<aui:nav collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-account-controls navbar-nav" : "nav-account-controls nav-account-controls-notice navbar-nav" %>' icon="user" id="navAccountControls">
 	<c:if test="<%= userSetupComplete %>">
 		<%@ include file="/html/portlet/dockbar/view_page_customization_bar.jspf" %>
 

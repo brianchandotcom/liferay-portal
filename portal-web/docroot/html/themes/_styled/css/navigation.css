@@ -83,7 +83,7 @@
 			@include respond-to(phone, tablet) {
 				margin: 0 5px;
 
-				.input-append {
+				.input-group {
 					margin: 6px 0 7px;
 					width: 100%;
 				}
@@ -93,8 +93,6 @@
 				}
 
 				.add-page-editor-input {
-					@include box-sizing(border-box);
-
 					width: 70%;
 					z-index: 1;
 				}
@@ -125,6 +123,25 @@
 .nav {
 	li .toolbar {
 		margin-top: 5px;
+	}
+}
+
+/* ---------- General Navigation ---------- */
+
+.nav.list-group .list-group-item {
+	padding: 0;
+}
+
+.nav.list-group .list-group-item.nav-header {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
+	padding: 11px 14px;
+
+	@include respond-to(desktop) {
+		padding: 14px 10px;
 	}
 }
 

@@ -2,7 +2,14 @@ Liferay.Util.portletTitleEdit = function() {
 };
 
 if (!themeDisplay.isStatePopUp()) {
-	AUI().ready('aui-live-search-deprecated', 'aui-overlay-context-panel-deprecated', 'event-mouseenter', 'liferay-message', 'liferay-store', 'node-focusmanager', 'transition',
+	AUI().ready(
+		'aui-live-search-deprecated',
+		'aui-overlay-context-panel-deprecated',
+		'event-mouseenter',
+		'liferay-message',
+		'liferay-store',
+		'node-focusmanager',
+		'transition',
 		function(A) {
 			var body = A.getBody();
 
@@ -142,21 +149,8 @@ if (!themeDisplay.isStatePopUp()) {
 
 					var liveSearch = new A.LiveSearch(
 						{
-							input: searchPanelInput,
-							nodes: SELECTOR_SEARCH_NODES,
-
 							data: function(node) {
 								return node.text();
-							},
-
-							on: {
-								search: function(event) {
-									if (trim(liveSearch.get('searchValue'))) {
-										body.addClass(CSS_SEARCH_PANEL_ACTIVE);
-
-										instance._searchActive = true;
-									}
-								}
 							},
 
 							after: {
@@ -169,6 +163,19 @@ if (!themeDisplay.isStatePopUp()) {
 										body.removeClass(CSS_SEARCH_PANEL_ACTIVE);
 
 										instance._searchActive = false;
+									}
+								}
+							},
+
+							input: searchPanelInput,
+							nodes: SELECTOR_SEARCH_NODES,
+
+							on: {
+								search: function(event) {
+									if (trim(liveSearch.get('searchValue'))) {
+										body.addClass(CSS_SEARCH_PANEL_ACTIVE);
+
+										instance._searchActive = true;
 									}
 								}
 							}
@@ -213,7 +220,7 @@ if (!themeDisplay.isStatePopUp()) {
 				_panelHolderHandleClick: function(event) {
 					var currentTarget = event.currentTarget;
 
-					var accordionGroup = currentTarget.ancestor('.accordion-group');
+					var accordionGroup = currentTarget.ancestor();
 
 					accordionGroup.toggleClass('open');
 

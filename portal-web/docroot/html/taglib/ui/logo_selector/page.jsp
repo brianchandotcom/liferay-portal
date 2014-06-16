@@ -53,13 +53,13 @@ else {
 <div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
 	<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
 		<a class='lfr-change-logo <%= showBackground ? "show-background" : StringPool.BLANK %>' href="javascript:;">
-			<img alt="<liferay-ui:message key="current-image" />" class="img-polaroid avatar" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
+			<img alt="<liferay-ui:message key="current-image" />" class="avatar img-thumbnail" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
 		</a>
 
 		<div class="portrait-icons">
 			<div class="btn-group">
-				<aui:button cssClass="btn edit-logo modify-link" icon="icon-picture" value="change" />
-				<aui:button cssClass="btn delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" icon="icon-remove" value="delete" />
+				<aui:button cssClass="btn btn-default edit-logo modify-link" icon="icon-picture" value="change" />
+				<aui:button cssClass="btn btn-default delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" icon="icon-remove" value="delete" />
 			</div>
 
 			<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />

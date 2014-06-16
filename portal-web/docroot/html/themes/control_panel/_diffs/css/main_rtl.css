@@ -1,11 +1,11 @@
 .aui {
 	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
-		.accordion .accordion-group {
-			.toggler-header .accordion-toggle {
+		.panel-group .panel.panel-default {
+			.toggler-header .panel-toggle {
 				background-position: 0 -20px;
 			}
 
-			.toggler-header-collapsed .accordion-toggle {
+			.toggler-header-collapsed .panel-toggle {
 				background-position: 0 0;
 			}
 		}

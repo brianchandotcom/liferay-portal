@@ -112,7 +112,7 @@ String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
 		</c:when>
 		<c:otherwise>
 			<aui:nav-bar>
-				<aui:nav>
+				<aui:nav cssClass="navbar-nav">
 					<aui:nav-item dropdown="<%= true %>" label="staging">
 						<aui:nav-item cssClass="<%= cssClass %>" label="<%= extended ? message : StringPool.BLANK %>">
 							<%@ include file="/html/taglib/staging/menu/staging_actions.jspf" %>

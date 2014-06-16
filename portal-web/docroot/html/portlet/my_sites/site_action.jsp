@@ -24,7 +24,7 @@ Group group = (Group)row.getObject();
 String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 %>
 
-<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon='<%= tabs1.equals("my-sites") %>' triggerCssClass="btn">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon='<%= tabs1.equals("my-sites") %>' triggerCssClass="btn btn-default">
 	<c:choose>
 		<c:when test='<%= tabs1.equals("my-sites") %>'>
 			<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">

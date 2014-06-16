@@ -23,10 +23,10 @@ if (Validator.isNotNull(name)) {
 	name = namespace + name;
 }
 
-String controlGroupCss = "control-group";
+String controlGroupCss = "form-group";
 
 if (inlineField) {
-	controlGroupCss = controlGroupCss.concat(" control-group-inline");
+	controlGroupCss = controlGroupCss.concat(" form-group-inline");
 }
 
 if (Validator.isNotNull(inlineLabel)) {

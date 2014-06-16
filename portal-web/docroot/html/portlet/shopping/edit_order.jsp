@@ -81,8 +81,8 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 		</table>
 	</div>
 
-	<div class="row-fluid">
-		<div class="span6">
+	<div class="row">
+		<div class="col-md-6">
 			<div class="well">
 				<h4><liferay-ui:message key="billing-address" /></h4>
 
@@ -90,7 +90,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 			</div>
 		</div>
 
-		<div class="span6">
+		<div class="col-md-6">
 			<div class="well">
 				<h4><liferay-ui:message key="shipping-address" /></h4>
 

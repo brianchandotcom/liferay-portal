@@ -14,7 +14,7 @@
  */
 --%>
 
-<ul class="lfr-tree unstyled">
+<ul class="lfr-tree list-unstyled">
 	<li class="tree-item">
 		<aui:input checked="<%= true %>" id="publishingEventNow" label="now" name="schedule" type="radio" value="<%= false %>" />
 

@@ -17,13 +17,11 @@
 
 		.btn {
 			font-size: 17.5px;
-			padding: 11px 19px;
 
 			.caret {
 				border-left-width: 5px;
 				border-right-width: 5px;
 				border-top-width: 5px;
-				margin-top: 9px;
 			}
 
 			[class^="icon-"], [class*=" icon-"] {
@@ -31,15 +29,13 @@
 			}
 
 			@include respond-to(phone) {
-				@include box-sizing(border-box);
-
 				display: block;
 				margin-top: 5px;
 				width: 100%;
 			}
 		}
 
-		.form-search .input-append .btn {
+		.form-search .input-group .btn {
 			display: inline-block;
 			padding: 5px 19px 6px;
 

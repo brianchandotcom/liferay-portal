@@ -1,7 +1,7 @@
 @import "compass";
 @import "mixins";
 
-.control-group-inline {
+.form-group-inline {
 	display: inline-block;
 }
 
@@ -9,10 +9,10 @@
 	margin: 20px 0;
 }
 
-.form-search .input-append {
+.form-search .input-group {
 	position: relative;
 
-	.advanced-search {
+	&.advanced-search {
 		.search-query {
 			padding-left: 40px;
 			z-index: 0;
@@ -37,14 +37,16 @@
 	}
 
 	@include respond-to(phone, tablet) {
-		&, input.search-query {
-			width: 100%;
-		}
+		width: 100%;
 
 		.btn {
 			clip: rect(0, 0, 0, 0);
 			left: -9999px;
 			position: absolute;
+		}
+
+		input.search-query {
+			width: 100%;
 		}
 	}
 }
@@ -52,19 +54,19 @@
 .input-flex-add-on {
 	width: 100%;
 
-	&.input-append {
+	&.input-group {
 		input[type="text"] {
 			margin-bottom: 0;
 			margin-left: -1px;
 		}
 	}
 
-	&.input-prepend {
+	&.input-group {
 		input[type="text"] {
 			margin-bottom: 0;
 		}
 
-		.add-on {
+		.input-group-addon {
 			height: auto;
 			text-align: left;
 			white-space: normal;
@@ -78,7 +80,7 @@
 		margin-top: -1px;
 	}
 
-	.add-on {
+	.input-group-addon {
 		float: left;
 		margin-top: -1px;
 	}
@@ -90,7 +92,7 @@
 }
 
 .lfr-ddm-container {
-	.control-group label {
+	.form-group label {
 		margin-left: 0;
 	}
 
@@ -166,8 +168,6 @@
 	}
 
 	textarea.input-xxlarge {
-		@include box-sizing(border-box);
-
 		width: 100%;
 	}
 }
@@ -176,7 +176,7 @@
 	.aui {
 		#{$form_text_fields},
 		select,
-		.input-prepend .add-on,
+		.input-group .input-group-addon,
 		.navbar-search .search-query {
 			font-size: 18px;
 			height: auto;

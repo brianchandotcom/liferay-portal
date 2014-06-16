@@ -29,17 +29,13 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
 	<aui:nav-bar>
-		<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
-			<aui:nav-item>
-				<span class="display-style-buttons-container pull-left" id="<portlet:namespace />displayStyleButtonsContainer">
-					<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
-						<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
-					</c:if>
-				</span>
-			</aui:nav-item>
+		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+			<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
+				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+			</c:if>
 		</aui:nav>
 
-		<aui:nav id="toolbarContainer">
+		<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 				<%

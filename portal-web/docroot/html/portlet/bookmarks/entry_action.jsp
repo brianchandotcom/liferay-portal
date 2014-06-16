@@ -22,6 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 BookmarksEntry entry = null;
 
 String cssClass = StringPool.BLANK;
+String listGroupItemCssClass = StringPool.BLANK;
 
 boolean view = false;
 
@@ -40,7 +41,8 @@ if (row != null) {
 else {
 	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
 
-	cssClass = "nav nav-list unstyled well";
+	cssClass = "list-group nav";
+	listGroupItemCssClass = "list-group-item";
 
 	view = true;
 }
@@ -56,6 +58,7 @@ else {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass="<%= listGroupItemCssClass %>"
 			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
@@ -72,6 +75,7 @@ else {
 		/>
 
 		<liferay-ui:icon
+			cssClass="<%= listGroupItemCssClass %>"
 			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
@@ -91,6 +95,7 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="<%= listGroupItemCssClass %>"
 					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
@@ -105,6 +110,7 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="<%= listGroupItemCssClass %>"
 					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeURL %>"
@@ -127,6 +133,7 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			cssClass="<%= listGroupItemCssClass %>"
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>

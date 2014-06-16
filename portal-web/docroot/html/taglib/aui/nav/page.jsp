@@ -18,10 +18,10 @@
 
 <c:if test="<%= Validator.isContent(bodyContentString) %>">
 	<c:if test="<%= collapsible %>">
-		<div class="collapse nav-collapse" id="<%= id %>NavbarCollapse">
+		<div class="collapse navbar-collapse" id="<%= id %>NavbarCollapse">
 	</c:if>
 
-	<ul aria-label="<%= Validator.isNull(ariaLabel) ? HtmlUtil.escapeAttribute(portletDisplay.getTitle()) : ariaLabel %>" class="nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+	<ul aria-label="<%= Validator.isNull(ariaLabel) ? HtmlUtil.escapeAttribute(portletDisplay.getTitle()) : ariaLabel %>" class="lfr-nav nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<%= bodyContentString %>
 	</ul>
 

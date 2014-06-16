@@ -37,7 +37,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	</div>
 
 	<c:if test="<%= SessionErrors.contains(request, UserReminderQueryException.class.getName()) %>">
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<liferay-ui:message key="reminder-query-and-answer-cannot-be-empty" />
 		</div>
 	</c:if>

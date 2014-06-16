@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:nav>
+<aui:nav cssClass="navbar-nav">
 	<c:choose>
 		<c:when test="<%= addPortletURLs.size() == 1 %>">
 

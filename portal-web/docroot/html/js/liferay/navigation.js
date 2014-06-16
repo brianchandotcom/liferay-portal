@@ -12,7 +12,7 @@ AUI.add(
 
 		var STR_LAYOUT_ID = 'layoutId';
 
-		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-append"></div></div>';
+		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-group"></div></div>';
 
 		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
 
@@ -541,7 +541,7 @@ AUI.add(
 					}
 				);
 
-				var toolbarBoundingBox = editorContainer.one('.input-append');
+				var toolbarBoundingBox = editorContainer.one('.input-group');
 
 				var toolbar = new A.Toolbar(
 					{

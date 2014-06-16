@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +46,14 @@ public class ThemeDisplayTestUtil {
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 		themeDisplay.setCompany(company);
-		themeDisplay.setLayout(TestPropsValues.getLayout());
-		themeDisplay.setPlid(TestPropsValues.getPlid());
+
+		long plid = TestPropsValues.getPlid();
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		themeDisplay.setLayout(layout);
+
+		themeDisplay.setPlid(plid);
 
 		HttpServletRequest request = new MockHttpServletRequest();
 
@@ -56,10 +64,10 @@ public class ThemeDisplayTestUtil {
 
 		themeDisplay.setRequest(request);
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSecure(false);
 		themeDisplay.setServerPort(8080);
-		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setSiteGroupId(layout.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setWidget(false);
 

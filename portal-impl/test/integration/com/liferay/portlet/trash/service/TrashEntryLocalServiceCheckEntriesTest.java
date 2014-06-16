@@ -149,7 +149,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		setTrashEnableForGroup(group, false);
 		TrashEntryLocalServiceUtil.checkEntries();
 		Assert.assertEquals(
-			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
@@ -264,7 +264,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		// Note that this should be empty
 
 		Assert.assertEquals(
-			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	protected void clearTrashEntries(List<TrashEntry> list)

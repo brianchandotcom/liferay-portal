@@ -179,10 +179,12 @@ refererURL.setParameter("updateLayout", "true");
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-add-application,liferay-dockbar-portlet-dd">
+<aui:script use="liferay-dockbar-add-application">
+	var Dockbar = Liferay.Dockbar;
+
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');
 
-	var addApplication = new Liferay.Dockbar.AddApplication(
+	var addApplication = new Dockbar.AddApplication(
 		{
 			focusItem: searchApplication,
 			inputNode: searchApplication,
@@ -193,22 +195,24 @@ refererURL.setParameter("updateLayout", "true");
 		}
 	);
 
-	addApplication.plug(
-		Liferay.Dockbar.PortletDragDrop,
-		{
-			on: {
-				dragEnd: function(event) {
-					addApplication.addPortlet(
-						event.portletNode,
-						{
-							item: event.appendNode
-						}
-					);
-				}
-			},
-			srcNode: '#<portlet:namespace />applicationList'
-		}
-	);
+	if (Dockbar.PortletDragDrop) {
+		addApplication.plug(
+			Dockbar.PortletDragDrop,
+			{
+				on: {
+					dragEnd: function(event) {
+						addApplication.addPortlet(
+							event.portletNode,
+							{
+								item: event.appendNode
+							}
+						);
+					}
+				},
+				srcNode: '#<portlet:namespace />applicationList'
+			}
+		);
+	}
 
 	Liferay.component('<portlet:namespace />addApplication', addApplication);
 </aui:script>

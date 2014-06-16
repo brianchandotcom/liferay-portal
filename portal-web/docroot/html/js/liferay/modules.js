@@ -335,6 +335,13 @@
 						]
 					},
 					'liferay-dockbar-portlet-dd': {
+						condition: {
+							name: 'liferay-dockbar-portlet-dd',
+							test: function(A) {
+								return !A.UA.mobile;
+							},
+							trigger: ['liferay-dockbar-add-application', 'liferay-dockbar-add-content']
+						},
 						path: 'dockbar_portlet_dd.js',
 						requires: [
 							'aui-base',

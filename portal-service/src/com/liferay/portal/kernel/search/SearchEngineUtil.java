@@ -495,6 +495,12 @@ public class SearchEngineUtil {
 		indexWriter.indexSpellCheckerDictionary(searchContext);
 	}
 
+	public synchronized static void initialize(long companyId) {
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.initialize(companyId);
+		}
+	}
+
 	public static boolean isIndexReadOnly() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SearchEngineUtil.class, "indexReadOnly");
@@ -828,12 +834,6 @@ public class SearchEngineUtil {
 		}
 
 		_searchPermissionChecker.updatePermissionFields(name, primKey);
-	}
-
-	public synchronized static void initialize(long companyId) {
-		for (SearchEngine searchEngine : _searchEngines.values()) {
-			searchEngine.initialize(companyId);
-		}
 	}
 
 	public void setExcludedEntryClassNames(

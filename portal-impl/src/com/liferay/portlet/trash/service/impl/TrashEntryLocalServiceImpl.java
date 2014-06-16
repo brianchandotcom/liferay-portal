@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.trash.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -35,14 +38,17 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
+import com.liferay.portlet.trash.service.persistence.TrashEntryFinderUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Provides the local service for accessing, adding, checking, and deleting
@@ -51,6 +57,17 @@ import java.util.List;
  * @author Zsolt Berentey
  */
 public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.propagation(Propagation.REQUIRES_NEW);
+		builder.rollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		_requiresNewTransactionAttribute = builder.build();
+	}
 
 	/**
 	 * Moves an entry to trash.
@@ -129,42 +146,98 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void checkEntries() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			groupLocalService.getActionableDynamicQuery();
+		Callable<Long> callable = new Callable<Long>() {
 
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			@Override
+			public Long call() throws Exception {
+				List<Object[]> list =
+					TrashEntryFinderUtil.findTrashEntryWithGroup(
+						_lastEntryId, 0, _READ_COUNT);
 
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					Group group = (Group)object;
-
-					if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
-						return;
+				if (list.size() <= 0) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("No more trashEntry items to be scanned");
 					}
+
+					return -1L;
+				}
+
+				long maxCleanCount = PropsValues.TRASH_ENTRIES_MAX_CLEAN_COUNT;
+
+				_cleanCycleCounter++;
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"New read trashEntry clean cycle no: " +
+						_cleanCycleCounter);
+				}
+
+				for (Object[] objects : list) {
+					TrashEntry entry = (TrashEntry)objects[0];
+
+					Group group = (Group)objects[1];
 
 					Date date = getMaxAge(group);
 
-					List<TrashEntry> entries =
-						trashEntryPersistence.findByG_LtCD(
-							group.getGroupId(), date);
+					_lastEntryId = entry.getEntryId();
 
-					for (TrashEntry entry : entries) {
+					if (entry.getCreateDate().before(date) ||
+						!TrashUtil.isTrashEnabled(group)) {
+
 						TrashHandler trashHandler =
 							TrashHandlerRegistryUtil.getTrashHandler(
 								entry.getClassName());
 
 						trashHandler.deleteTrashEntry(entry.getClassPK());
+
+						if (_log.isTraceEnabled()) {
+							_log.trace(
+								String.format(
+									"%s / %d cleaned", entry.getClassName(),
+									entry.getClassPK()));
+						}
+
+						_counter++;
+
+						if ((_counter >= maxCleanCount) &&
+							(maxCleanCount != -1)) {
+
+							if (_log.isDebugEnabled()) {
+								_log.debug("Maximum clean count reached");
+							}
+
+							return -1L;
+						}
 					}
 				}
 
-			});
-		actionableDynamicQuery.setTransactionAttribute(
-			BaseActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_ATTRIBUTE);
+				return _lastEntryId;
+			}
 
-		actionableDynamicQuery.performActions();
+			private int _cleanCycleCounter = 0;
+			private long _counter = 0L;
+			private long _lastEntryId = 0L;
+		};
+
+		try {
+			long lastEntryId = 0;
+
+			while (lastEntryId != -1) {
+				lastEntryId = TransactionInvokerUtil.invoke(
+					_transactionAttribute, callable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
+		}
 	}
 
 	/**
@@ -416,5 +489,15 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		return calendar.getTime();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TrashEntryLocalServiceImpl.class);
+
+	private static int _READ_COUNT = 10000;
+
+	private static TransactionAttribute _requiresNewTransactionAttribute;
+
+	private TransactionAttribute _transactionAttribute =
+		_requiresNewTransactionAttribute;
 
 }

@@ -10,6 +10,12 @@
 	<short-name>liferay-staging</short-name>
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
+		<name>defineStagingObjects</name>
+		<tag-class>com.liferay.taglib.staging.DefineStagingObjectsTag</tag-class>
+		<tei-class>com.liferay.taglib.staging.DefineStagingObjectsTei</tei-class>
+		<body-content>empty</body-content>
+	</tag>
+	<tag>
 		<name>menu</name>
 		<tag-class>com.liferay.taglib.staging.MenuTag</tag-class>
 		<body-content>JSP</body-content>

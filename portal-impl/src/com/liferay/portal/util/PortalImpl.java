@@ -8221,7 +8221,7 @@ public class PortalImpl implements Portal {
 			_log.warn(
 				"Portal is not configured to use domain " + domain +
 					". If this domain is valid, please configure " +
-					PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS + " property");
+						PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS + " property");
 		}
 
 		try {

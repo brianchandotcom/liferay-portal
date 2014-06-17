@@ -1123,7 +1123,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		entry =  startWorkflowInstance(userId, entry, serviceContext);
+		entry = startWorkflowInstance(userId, entry, serviceContext);
 
 		// Asset
 

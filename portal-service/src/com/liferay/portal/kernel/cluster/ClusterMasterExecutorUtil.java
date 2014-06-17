@@ -28,7 +28,6 @@ import java.util.concurrent.Future;
 public class ClusterMasterExecutorUtil {
 
 	public static <T> Future<T> executeOnMaster(MethodHandler methodHandler) {
-
 		ClusterMasterExecutor clusterMasterExecutor =
 			getClusterMasterExecutor();
 

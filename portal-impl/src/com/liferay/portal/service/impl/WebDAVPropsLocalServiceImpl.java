@@ -30,7 +30,6 @@ public class WebDAVPropsLocalServiceImpl
 
 	@Override
 	public void deleteWebDAVProps(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		try {

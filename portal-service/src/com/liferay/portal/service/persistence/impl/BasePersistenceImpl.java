@@ -88,7 +88,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery) {
-
 		return countWithDynamicQuery(
 			dynamicQuery, ProjectionFactoryUtil.rowCount());
 	}
@@ -137,7 +136,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(DynamicQuery dynamicQuery) {
-
 		Session session = null;
 
 		try {
@@ -393,13 +391,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Deprecated
 	@Override
 	public T update(T model, boolean merge, ServiceContext serviceContext) {
-
 		return update(model, serviceContext);
 	}
 
 	@Override
 	public T update(T model, ServiceContext serviceContext) {
-
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

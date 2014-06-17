@@ -57,7 +57,6 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 	}
 
 	private void executeQueuedBackgroundTasks(String taskExecutorClassName) {
-
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchFirstBackgroundTask(
 				taskExecutorClassName, BackgroundTaskConstants.STATUS_QUEUED);

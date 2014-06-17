@@ -37,7 +37,6 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public void deleteStatsUser(BlogsStatsUser statsUsers) {
-
 		blogsStatsUserPersistence.remove(statsUsers);
 	}
 
@@ -87,7 +86,6 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public int getCompanyStatsUsersCount(long companyId) {
-
 		return blogsStatsUserPersistence.countByC_NotE(companyId, 0);
 	}
 
@@ -138,7 +136,6 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public int getOrganizationStatsUsersCount(long organizationId) {
-
 		return blogsStatsUserFinder.countByOrganizationId(organizationId);
 	}
 

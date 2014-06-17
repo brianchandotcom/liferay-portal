@@ -63,7 +63,6 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public void deleteArticleImage(JournalArticleImage articleImage) {
-
 		try {
 			imageLocalService.deleteImage(articleImage.getArticleImageId());
 		}
@@ -99,7 +98,6 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public void deleteImages(long groupId, String articleId, double version) {
-
 		for (JournalArticleImage articleImage :
 				journalArticleImagePersistence.findByG_A_V(
 					groupId, articleId, version)) {
@@ -156,7 +154,6 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public List<JournalArticleImage> getArticleImages(long groupId) {
-
 		return journalArticleImagePersistence.findByGroupId(groupId);
 	}
 

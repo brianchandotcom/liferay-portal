@@ -66,7 +66,6 @@ public class SocialActivityCounterFinderImpl
 
 	@Override
 	public int countU_ByG_N(long groupId, String[] names) {
-
 		Session session = null;
 
 		try {

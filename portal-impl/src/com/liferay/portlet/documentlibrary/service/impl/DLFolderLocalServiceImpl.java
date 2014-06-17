@@ -446,7 +446,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public long getFolderId(long companyId, long folderId) {
-
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			// Ensure folder exists and belongs to the proper company
@@ -463,7 +462,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public List<Long> getFolderIds(long groupId, long parentFolderId) {
-
 		List<Long> folderIds = new ArrayList<Long>();
 
 		folderIds.add(parentFolderId);
@@ -475,7 +473,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFolder> getFolders(long groupId, long parentFolderId) {
-
 		return getFolders(groupId, parentFolderId, true);
 	}
 
@@ -652,7 +649,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public int getMountFoldersCount(long groupId, long parentFolderId) {
-
 		return dlFolderPersistence.countByG_M_P_H(
 			groupId, true, parentFolderId, false);
 	}
@@ -679,7 +675,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasFolderLock(long userId, long folderId) {
-
 		return lockLocalService.hasLock(
 			userId, DLFolder.class.getName(), folderId);
 	}
@@ -1097,7 +1092,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId) {
-
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
@@ -1128,7 +1122,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected long getParentFolderId(long groupId, long parentFolderId) {
-
 		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
 				parentFolderId);

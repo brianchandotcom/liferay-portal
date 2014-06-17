@@ -31,7 +31,6 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey) {
-
 		return _tableMapper.addTableMapping(rightPrimaryKey, leftPrimaryKey);
 	}
 
@@ -45,13 +44,11 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
-
 		return _tableMapper.deleteRightPrimaryKeyTableMappings(leftPrimaryKey);
 	}
 
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
-
 		return _tableMapper.deleteLeftPrimaryKeyTableMappings(rightPrimaryKey);
 	}
 
@@ -77,7 +74,6 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey) {
-
 		return _tableMapper.getRightPrimaryKeys(rightPrimaryKey);
 	}
 
@@ -95,7 +91,6 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getRightPrimaryKeys(long leftPrimaryKey) {
-
 		return _tableMapper.getLeftPrimaryKeys(leftPrimaryKey);
 	}
 

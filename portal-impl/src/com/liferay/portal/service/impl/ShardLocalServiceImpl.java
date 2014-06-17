@@ -27,7 +27,6 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 
 	@Override
 	public Shard addShard(String className, long classPK, String name) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		if (Validator.isNull(name)) {

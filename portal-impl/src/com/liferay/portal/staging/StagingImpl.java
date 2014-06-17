@@ -972,7 +972,6 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public long getRecentLayoutSetBranchId(User user, long layoutSetId) {
-
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
 		return GetterUtil.getLong(
@@ -1971,7 +1970,6 @@ public class StagingImpl implements Staging {
 	}
 
 	protected PortalPreferences getPortalPreferences(User user) {
-
 		boolean signedIn = !user.isDefaultUser();
 
 		PortalPreferences portalPreferences =

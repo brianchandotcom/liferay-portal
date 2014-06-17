@@ -474,7 +474,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds) {
-
 		passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, User.class.getName(), userIds);
 	}
@@ -1577,7 +1576,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void clearOrganizationUsers(long organizationId) {
-
 		organizationPersistence.clearUsers(organizationId);
 
 		PermissionCacheUtil.clearCache();
@@ -1978,7 +1976,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByEmailAddress(long companyId, String emailAddress) {
-
 		emailAddress = getLogin(emailAddress);
 
 		return userPersistence.fetchByC_EA(companyId, emailAddress);
@@ -1994,7 +1991,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByFacebookId(long companyId, long facebookId) {
-
 		return userPersistence.fetchByC_FID(companyId, facebookId);
 	}
 
@@ -2020,7 +2016,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByOpenId(long companyId, String openId) {
-
 		return userPersistence.fetchByC_O(companyId, openId);
 	}
 
@@ -2046,7 +2041,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByScreenName(long companyId, String screenName) {
-
 		screenName = getLogin(screenName);
 
 		return userPersistence.fetchByC_SN(companyId, screenName);
@@ -2072,7 +2066,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<User> getCompanyUsers(long companyId, int start, int end) {
-
 		return userPersistence.findByCompanyId(companyId, start, end);
 	}
 
@@ -2186,7 +2179,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<User> getNoAnnouncementsDeliveries(String type) {
-
 		return userFinder.findByNoAnnouncementsDeliveries(type);
 	}
 
@@ -2219,7 +2211,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public long[] getOrganizationUserIds(long organizationId) {
-
 		return organizationPersistence.getUserPrimaryKeys(organizationId);
 	}
 
@@ -2881,7 +2872,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean hasPasswordPolicyUser(long passwordPolicyId, long userId) {
-
 		return passwordPolicyRelLocalService.hasPasswordPolicyRel(
 			passwordPolicyId, User.class.getName(), userId);
 	}

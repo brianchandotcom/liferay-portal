@@ -76,7 +76,6 @@ public class PortletItemLocalServiceImpl
 
 	@Override
 	public List<PortletItem> getPortletItems(long groupId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return portletItemPersistence.findByG_C(groupId, classNameId);

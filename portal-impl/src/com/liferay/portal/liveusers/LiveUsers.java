@@ -66,7 +66,6 @@ public class LiveUsers {
 	}
 
 	public static Map<Long, Map<Long, Set<String>>> getLocalClusterUsers() {
-
 		return _instance._getLocalClusterUsers();
 	}
 
@@ -105,7 +104,6 @@ public class LiveUsers {
 	}
 
 	public static void removeClusterNode(String clusterNodeId) {
-
 		_instance._removeClusterNode(clusterNodeId);
 	}
 
@@ -244,7 +242,6 @@ public class LiveUsers {
 	}
 
 	private Map<Long, Map<Long, Set<String>>> _getLocalClusterUsers() {
-
 		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
 
 		if (clusterNode == null) {
@@ -333,7 +330,6 @@ public class LiveUsers {
 	}
 
 	private void _removeClusterNode(String clusterNodeId) {
-
 		if (Validator.isNull(clusterNodeId)) {
 			return;
 		}

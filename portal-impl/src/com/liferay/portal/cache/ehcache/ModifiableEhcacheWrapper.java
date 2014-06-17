@@ -509,7 +509,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	@Override
 	public void registerCacheExtension(CacheExtension cacheExtension) {
-
 		_ehcache.registerCacheExtension(cacheExtension);
 	}
 
@@ -520,7 +519,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	@Override
 	public void registerCacheWriter(CacheWriter cacheWriter) {
-
 		_ehcache.registerCacheWriter(cacheWriter);
 	}
 

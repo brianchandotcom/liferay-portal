@@ -44,7 +44,6 @@ public class ClusterGroupLocalServiceImpl
 
 	@Override
 	public ClusterGroup addWholeClusterGroup(String name) {
-
 		long clusterGroupId = counterLocalService.increment();
 
 		ClusterGroup clusterGroup = clusterGroupPersistence.create(

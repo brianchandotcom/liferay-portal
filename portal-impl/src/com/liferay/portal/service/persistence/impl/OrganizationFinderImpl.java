@@ -120,7 +120,6 @@ public class OrganizationFinderImpl
 
 	@Override
 	public int countByO_U(long organizationId, long userId) {
-
 		LinkedHashMap<String, Object> params1 =
 			new LinkedHashMap<String, Object>();
 

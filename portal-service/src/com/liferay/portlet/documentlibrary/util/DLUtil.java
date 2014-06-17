@@ -198,7 +198,6 @@ public class DLUtil {
 	}
 
 	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
-
 		return getDL().getFileEntryTypeSubscriptionClassPKs(userId);
 	}
 

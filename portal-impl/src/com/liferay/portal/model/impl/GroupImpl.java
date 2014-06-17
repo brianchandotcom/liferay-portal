@@ -152,7 +152,6 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public int getChildrenWithLayoutsCount(boolean site) {
-
 		return GroupLocalServiceUtil.getLayoutsGroupsCount(
 			getCompanyId(), getGroupId(), site);
 	}

@@ -103,7 +103,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 	@Override
 	public void deleteWebsites(long companyId, String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<Website> websites = websitePersistence.findByC_C_C(

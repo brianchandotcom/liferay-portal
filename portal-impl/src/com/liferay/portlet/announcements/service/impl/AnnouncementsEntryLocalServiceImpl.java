@@ -277,7 +277,6 @@ public class AnnouncementsEntryLocalServiceImpl
 
 	@Override
 	public int getEntriesCount(long classNameId, long classPK, boolean alert) {
-
 		return announcementsEntryPersistence.countByC_C_A(
 			classNameId, classPK, alert);
 	}

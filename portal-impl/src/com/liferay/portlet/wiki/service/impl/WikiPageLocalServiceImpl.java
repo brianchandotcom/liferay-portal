@@ -809,14 +809,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public WikiPage fetchPage(long nodeId, String title) {
-
 		return wikiPagePersistence.fetchByN_T_H_First(
 			nodeId, title, true, null);
 	}
 
 	@Override
 	public WikiPage fetchPage(long nodeId, String title, double version) {
-
 		WikiPage page = null;
 
 		if (version == 0) {
@@ -1172,7 +1170,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public List<WikiPage> getPages(long nodeId, int start, int end) {
-
 		return getPages(
 			nodeId, start, end, new PageCreateDateComparator(false));
 	}
@@ -1249,7 +1246,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public int getPagesCount(long nodeId, boolean head, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return wikiPagePersistence.countByN_H_NotS(
 				nodeId, head, WorkflowConstants.STATUS_IN_TRASH);
@@ -1266,7 +1262,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public int getPagesCount(long userId, long nodeId, int status) {
-
 		if (userId > 0) {
 			return wikiPagePersistence.countByU_N_S(userId, nodeId, status);
 		}
@@ -1282,7 +1277,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public int getPagesCount(long nodeId, String title, boolean head) {
-
 		return wikiPagePersistence.countByN_T_H(nodeId, title, head);
 	}
 
@@ -1344,7 +1338,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public int getRecentChangesCount(long groupId, long nodeId) {
-
 		Calendar cal = CalendarFactoryUtil.getCalendar();
 
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
@@ -1364,7 +1357,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasDraftPage(long nodeId, String title) {
-
 		int count = wikiPagePersistence.countByN_T_S(
 			nodeId, title, WorkflowConstants.STATUS_DRAFT);
 
@@ -2492,7 +2484,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected boolean isUsedTitle(long nodeId, String title) {
-
 		if (getPagesCount(nodeId, title, true) > 0) {
 			return true;
 		}

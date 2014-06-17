@@ -779,7 +779,6 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	protected Field getMultiListField(long ddmStructureId) {
-
 		Field field =  new Field();
 
 		field.setDDMStructureId(ddmStructureId);

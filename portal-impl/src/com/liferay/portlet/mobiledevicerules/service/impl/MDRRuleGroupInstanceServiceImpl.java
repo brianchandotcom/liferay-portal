@@ -90,7 +90,6 @@ public class MDRRuleGroupInstanceServiceImpl
 
 	@Override
 	public int getRuleGroupInstancesCount(String className, long classPK) {
-
 		long groupId = getGroupId(className, classPK);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
@@ -116,7 +115,6 @@ public class MDRRuleGroupInstanceServiceImpl
 	}
 
 	protected long getGroupId(String className, long classPK) {
-
 		long groupId = 0;
 
 		if (className.equals(Layout.class.getName())) {

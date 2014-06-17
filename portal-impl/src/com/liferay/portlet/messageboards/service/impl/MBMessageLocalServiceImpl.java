@@ -849,7 +849,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getCompanyMessagesCount(long companyId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByCompanyId(companyId);
 		}
@@ -968,7 +967,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mbDiscussionPersistence.findByClassNameId(classNameId);
@@ -1029,7 +1027,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getGroupMessagesCount(long groupId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByGroupId(groupId);
 		}
@@ -1040,7 +1037,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getGroupMessagesCount(long groupId, long userId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByG_U(groupId, userId);
 		}
@@ -1175,7 +1171,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBMessage> getThreadMessages(long threadId, int status) {
-
 		return getThreadMessages(
 			threadId, status, new MessageThreadComparator());
 	}
@@ -1210,7 +1205,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getThreadMessagesCount(long threadId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByThreadId(threadId);
 		}
@@ -1789,7 +1783,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public void updateUserName(long userId, String userName) {
-
 		List<MBMessage> messages = mbMessagePersistence.findByUserId(userId);
 
 		for (MBMessage message : messages) {
@@ -2256,7 +2249,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void updatePriorities(long threadId, double priority) {
-
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
 			threadId);
 

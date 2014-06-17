@@ -97,13 +97,11 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<BookmarksFolder> getFolders(long groupId) {
-
 		return bookmarksFolderPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId) {
-
 		return bookmarksFolderPersistence.filterFindByG_P_S(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
@@ -133,7 +131,6 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public List<Object> getFoldersAndEntries(long groupId, long folderId) {
-
 		return getFoldersAndEntries(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
@@ -161,7 +158,6 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersAndEntriesCount(long groupId, long folderId) {
-
 		return getFoldersAndEntriesCount(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
@@ -178,14 +174,12 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId) {
-
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return bookmarksFolderPersistence.filterCountByG_P_NotS(
 				groupId, parentFolderId, WorkflowConstants.STATUS_IN_TRASH);

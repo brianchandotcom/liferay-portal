@@ -36,7 +36,6 @@ import java.util.List;
 public class FileEntryUtil {
 
 	public static FileEntry fetchByPrimaryKey(long fileEntryId) {
-
 		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByPrimaryKey(
 			fileEntryId);
 
@@ -61,7 +60,6 @@ public class FileEntryUtil {
 	}
 
 	public static FileEntry fetchByUUID_R(String uuid, long repositoryId) {
-
 		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByUUID_G(
 			uuid, repositoryId);
 
@@ -77,7 +75,6 @@ public class FileEntryUtil {
 	 */
 	@Deprecated
 	public static List<FileEntry> findByR_F(long repositoryId, long folderId) {
-
 		List<DLFileEntry> dlFileEntries = DLFileEntryUtil.findByG_F(
 			repositoryId, folderId);
 

@@ -252,14 +252,12 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Override
 	public int getEntriesCount(long groupId, long folderId) {
-
 		return getEntriesCount(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getEntriesCount(long groupId, long folderId, int status) {
-
 		return bookmarksEntryPersistence.countByG_F_S(
 			groupId, folderId, status);
 	}
@@ -271,7 +269,6 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Override
 	public int getFoldersEntriesCount(long groupId, List<Long> folderIds) {
-
 		return bookmarksEntryPersistence.countByG_F_S(
 			groupId,
 			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])),
@@ -313,7 +310,6 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Override
 	public int getGroupEntriesCount(long groupId, long userId) {
-
 		if (userId <= 0) {
 			return getGroupEntriesCount(groupId);
 		}
@@ -410,7 +406,6 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Override
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry) {
-
 		entry.setVisits(entry.getVisits() + 1);
 
 		bookmarksEntryPersistence.update(entry);
@@ -652,7 +647,6 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected long getFolder(BookmarksEntry entry, long folderId) {
-
 		if ((entry.getFolderId() != folderId) &&
 			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 

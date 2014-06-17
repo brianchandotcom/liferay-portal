@@ -113,7 +113,6 @@ public class DDMTemplateFinderImpl
 
 	@Override
 	public int countByG_SC(long groupId, long structureClassNameId) {
-
 		long[] groupIds = new long[] {groupId};
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
@@ -295,7 +294,6 @@ public class DDMTemplateFinderImpl
 
 	@Override
 	public int filterCountByG_SC(long groupId, long structureClassNameId) {
-
 		long[] groupIds = new long[] {groupId};
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
@@ -305,7 +303,6 @@ public class DDMTemplateFinderImpl
 
 	@Override
 	public int filterCountByG_SC(long[] groupIds, long structureClassNameId) {
-
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		return doCountByG_C_SC(

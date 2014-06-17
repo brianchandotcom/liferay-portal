@@ -72,7 +72,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static boolean getBoolean(String name, boolean defaultValue) {
-
 		try {
 			return PrefsPropsUtil.getBoolean(name, defaultValue);
 		}
@@ -83,7 +82,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static String getContent(long companyId, String name) {
-
 		try {
 			return PrefsPropsUtil.getContent(companyId, name);
 		}
@@ -110,7 +108,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static double getDouble(long companyId, String name) {
-
 		try {
 			return PrefsPropsUtil.getDouble(companyId, name);
 		}
@@ -157,7 +154,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static double getDouble(String name, double defaultValue) {
-
 		try {
 			return PrefsPropsUtil.getDouble(name, defaultValue);
 		}
@@ -168,7 +164,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static int getInteger(long companyId, String name) {
-
 		try {
 			return PrefsPropsUtil.getInteger(companyId, name);
 		}
@@ -225,7 +220,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static long getLong(long companyId, String name) {
-
 		try {
 			return PrefsPropsUtil.getLong(companyId, name);
 		}
@@ -346,7 +340,6 @@ public class SilentPrefsPropsUtil {
 	}
 
 	public static short getShort(String name, short defaultValue) {
-
 		try {
 			return PrefsPropsUtil.getShort(name, defaultValue);
 		}

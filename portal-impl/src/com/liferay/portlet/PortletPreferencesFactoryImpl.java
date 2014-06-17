@@ -135,7 +135,6 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences fromDefaultXML(String xml) {
-
 		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
 		return new PortletPreferencesImpl(xml, preferencesMap);
@@ -203,7 +202,6 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortalPreferences getPortalPreferences(HttpServletRequest request) {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -509,7 +507,6 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest) {
-
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
 		return getPortletSetup(portletRequest, portletId);
@@ -764,7 +761,6 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	protected Map<String, Preference> toPreferencesMap(String xml) {
-
 		if (Validator.isNull(xml)) {
 			return Collections.emptyMap();
 		}

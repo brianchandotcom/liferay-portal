@@ -241,7 +241,6 @@ public class PollerRequestHandlerImpl
 	}
 
 	protected JSONObject createPollerResponseHeader(PollerHeader pollerHeader) {
-
 		if (pollerHeader == null) {
 			return null;
 		}

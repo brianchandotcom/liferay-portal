@@ -472,7 +472,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public List<CalEvent> getCompanyEvents(long companyId, int start, int end) {
-
 		return calEventPersistence.findByCompanyId(companyId, start, end);
 	}
 
@@ -488,13 +487,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public List<CalEvent> getEvents(long groupId, Calendar cal) {
-
 		return getEvents(groupId, cal, new String[0]);
 	}
 
 	@Override
 	public List<CalEvent> getEvents(long groupId, Calendar cal, String type) {
-
 		return getEvents(groupId, cal, new String[] {type});
 	}
 
@@ -581,13 +578,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public int getEventsCount(long groupId, String type) {
-
 		return getEventsCount(groupId, new String[] {type});
 	}
 
 	@Override
 	public int getEventsCount(long groupId, String[] types) {
-
 		if ((types != null) && (types.length > 0) &&
 			((types.length > 1) || Validator.isNotNull(types[0]))) {
 
@@ -605,7 +600,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public List<CalEvent> getRepeatingEvents(long groupId) {
-
 		return getRepeatingEvents(groupId, null, null);
 	}
 
@@ -687,19 +681,16 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasEvents(long groupId, Calendar cal) {
-
 		return hasEvents(groupId, cal, new String[0]);
 	}
 
 	@Override
 	public boolean hasEvents(long groupId, Calendar cal, String type) {
-
 		return hasEvents(groupId, cal, new String[] {type});
 	}
 
 	@Override
 	public boolean hasEvents(long groupId, Calendar cal, String[] types) {
-
 		List<CalEvent> events = getEvents(groupId, cal, types);
 
 		if (events.isEmpty()) {

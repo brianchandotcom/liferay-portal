@@ -203,7 +203,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	protected Settings getCompanySettings(long companyId, String settingsId) {
-
 		return new PortletPreferencesSettings(
 			getCompanyPortletPreferences(companyId, settingsId),
 			getPortalPreferencesSettings(companyId, settingsId));

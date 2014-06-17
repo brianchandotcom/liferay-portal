@@ -129,7 +129,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 	@Override
 	public List<Team> getUserTeams(long userId, long groupId) {
-
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 

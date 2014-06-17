@@ -347,7 +347,6 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private long[] _getExpandoRowIds(long ddmStructureId) {
-
 		List<Long> expandoRowIds = new ArrayList<Long>();
 
 		List<DDMStorageLink> ddmStorageLinks =

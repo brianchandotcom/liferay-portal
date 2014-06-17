@@ -26,7 +26,6 @@ import javax.portlet.PortletPreferences;
 public class PrefsPropsUtil {
 
 	public static boolean getBoolean(long companyId, String name) {
-
 		return getPrefsProps().getBoolean(companyId, name);
 	}
 
@@ -55,12 +54,10 @@ public class PrefsPropsUtil {
 	}
 
 	public static boolean getBoolean(String name, boolean defaultValue) {
-
 		return getPrefsProps().getBoolean(name, defaultValue);
 	}
 
 	public static String getContent(long companyId, String name) {
-
 		return getPrefsProps().getContent(companyId, name);
 	}
 
@@ -75,7 +72,6 @@ public class PrefsPropsUtil {
 	}
 
 	public static double getDouble(long companyId, String name) {
-
 		return getPrefsProps().getDouble(companyId, name);
 	}
 
@@ -174,7 +170,6 @@ public class PrefsPropsUtil {
 	}
 
 	public static PortletPreferences getPreferences(boolean readOnly) {
-
 		return getPrefsProps().getPreferences(readOnly);
 	}
 

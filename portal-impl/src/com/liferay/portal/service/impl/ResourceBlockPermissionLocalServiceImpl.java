@@ -65,7 +65,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public void deleteResourceBlockPermissions(long resourceBlockId) {
-
 		resourceBlockPermissionPersistence.removeByResourceBlockId(
 			resourceBlockId);
 	}

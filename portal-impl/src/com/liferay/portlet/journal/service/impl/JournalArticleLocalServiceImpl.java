@@ -1246,7 +1246,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void deleteLayoutArticleReferences(long groupId, String layoutUuid) {
-
 		List<JournalArticle> articles = journalArticlePersistence.findByG_L(
 			groupId, layoutUuid);
 
@@ -1396,7 +1395,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestIndexableArticle(long resourcePrimKey) {
-
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		int[] statuses = new int[] {
@@ -1973,7 +1971,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId) {
-
 		return journalArticlePersistence.findByGroupId(groupId);
 	}
 
@@ -1998,7 +1995,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, int start, int end) {
-
 		return journalArticlePersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -2041,7 +2037,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, long folderId) {
-
 		return journalArticlePersistence.findByG_F(groupId, folderId);
 	}
 
@@ -2124,7 +2119,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, String articleId) {
-
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
@@ -2153,7 +2147,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId) {
-
 		return journalArticlePersistence.findBySmallImageId(smallImageId);
 	}
 
@@ -2177,20 +2170,17 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getArticlesCount(long groupId, long folderId) {
-
 		return journalArticlePersistence.countByG_F(groupId, folderId);
 	}
 
 	@Override
 	public int getArticlesCount(long groupId, long folderId, int status) {
-
 		return journalArticlePersistence.countByG_F_ST(
 			groupId, folderId, status);
 	}
 
 	@Override
 	public int getArticlesCount(long groupId, String articleId) {
-
 		return journalArticlePersistence.countByG_A(groupId, articleId);
 	}
 
@@ -2319,7 +2309,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getCompanyArticlesCount(long companyId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return journalArticlePersistence.countByCompanyId(companyId);
 		}
@@ -2683,7 +2672,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getNotInTrashArticlesCount(long groupId, long folderId) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY);
 
@@ -2714,7 +2702,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle getPreviousApprovedArticle(JournalArticle article) {
-
 		List<JournalArticle> approvedArticles =
 			journalArticlePersistence.findByG_A_ST(
 				article.getGroupId(), article.getArticleId(),
@@ -2803,7 +2790,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey) {
-
 		return journalArticlePersistence.countByG_S(groupId, ddmStructureKey);
 	}
 
@@ -2866,7 +2852,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey) {
-
 		return journalArticlePersistence.countByG_T(groupId, ddmTemplateKey);
 	}
 
@@ -2914,7 +2899,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public boolean hasArticle(long groupId, String articleId) {
-
 		try {
 			getArticle(groupId, articleId);
 
@@ -3868,7 +3852,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, List<Long> folderIds, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return journalArticleFinder.countByG_F(
@@ -3877,7 +3860,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
-
 		List<Long> folderIds = new ArrayList<Long>();
 
 		folderIds.add(folderId);

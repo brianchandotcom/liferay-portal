@@ -67,7 +67,6 @@ public class TranslatorUtil {
 	}
 
 	public static Map<String, String> getLanguageIdsMap(Locale locale) {
-
 		Map<String, String> languageIdsMap = new HashMap<String, String>();
 
 		String[] languageIds = PrefsPropsUtil.getStringArray(

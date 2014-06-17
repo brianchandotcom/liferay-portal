@@ -118,7 +118,6 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	protected List<DLFileVersion> getDLFileVersions(DLFileEntry dlFileEntry) {
-
 		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
 

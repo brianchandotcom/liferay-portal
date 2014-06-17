@@ -103,7 +103,6 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public List<RatingsEntry> getEntries(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.findByC_C(classNameId, classPK);
@@ -120,7 +119,6 @@ public class RatingsEntryLocalServiceImpl
 
 	@Override
 	public int getEntriesCount(String className, long classPK, double score) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.countByC_C_S(

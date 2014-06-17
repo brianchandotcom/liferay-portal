@@ -347,7 +347,6 @@ public class MBUtil {
 	}
 
 	public static Set<Long> getCategorySubscriptionClassPKs(long userId) {
-
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, MBCategory.class.getName());
@@ -737,7 +736,6 @@ public class MBUtil {
 	}
 
 	public static Set<Long> getThreadSubscriptionClassPKs(long userId) {
-
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, MBThread.class.getName());
@@ -1132,7 +1130,6 @@ public class MBUtil {
 	}
 
 	private static int _getMessageCount(MBCategory category) {
-
 		return MBMessageLocalServiceUtil.getCategoryMessagesCount(
 			category.getGroupId(), category.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);

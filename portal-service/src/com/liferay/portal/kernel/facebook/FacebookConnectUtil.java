@@ -33,7 +33,6 @@ public class FacebookConnectUtil {
 	}
 
 	public static String getAccessTokenURL(long companyId) {
-
 		return getFacebookConnect().getAccessTokenURL(companyId);
 	}
 
@@ -79,7 +78,6 @@ public class FacebookConnectUtil {
 	}
 
 	public static boolean isVerifiedAccountRequired(long companyId) {
-
 		return getFacebookConnect().isVerifiedAccountRequired(companyId);
 	}
 

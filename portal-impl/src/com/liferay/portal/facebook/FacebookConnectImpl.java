@@ -46,7 +46,6 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 	@Override
 	public String getAccessToken(long companyId, String redirect, String code) {
-
 		String url = HttpUtil.addParameter(
 			getAccessTokenURL(companyId), "client_id", getAppId(companyId));
 
@@ -202,7 +201,6 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 	@Override
 	public boolean isVerifiedAccountRequired(long companyId) {
-
 		return PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED,
 			PropsValues.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED);

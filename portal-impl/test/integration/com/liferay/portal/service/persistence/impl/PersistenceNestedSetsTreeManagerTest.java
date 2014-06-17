@@ -674,7 +674,6 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void synchronizeAssetCategories(AssetCategory assetCategory) {
-
 		synchronizeAssetCategories(assetCategory, false);
 	}
 

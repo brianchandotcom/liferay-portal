@@ -163,7 +163,6 @@ public class MDRRuleGroupLocalServiceImpl
 
 	@Override
 	public MDRRuleGroup fetchRuleGroup(long ruleGroupId) {
-
 		return mdrRuleGroupPersistence.fetchByPrimaryKey(ruleGroupId);
 	}
 
@@ -174,13 +173,11 @@ public class MDRRuleGroupLocalServiceImpl
 
 	@Override
 	public List<MDRRuleGroup> getRuleGroups(long groupId) {
-
 		return mdrRuleGroupPersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<MDRRuleGroup> getRuleGroups(long groupId, int start, int end) {
-
 		return mdrRuleGroupPersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -276,7 +273,6 @@ public class MDRRuleGroupLocalServiceImpl
 	@Deprecated
 	@Override
 	public int searchCount(long groupId, String name, boolean andOperator) {
-
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 

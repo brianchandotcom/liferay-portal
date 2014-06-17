@@ -685,7 +685,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, long folderId) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY);
 
@@ -875,14 +874,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public int getArticlesCount(long groupId, long folderId) {
-
 		return getArticlesCount(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
 	public int getArticlesCount(long groupId, long folderId, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		List<Long> folderIds = new ArrayList<Long>();
@@ -903,7 +900,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public int getArticlesCountByArticleId(long groupId, String articleId) {
-
 		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
 	}
 
@@ -988,7 +984,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public int getFoldersAndArticlesCount(long groupId, List<Long> folderIds) {
-
 		return journalArticlePersistence.filterCountByG_F(
 			groupId,
 			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])));

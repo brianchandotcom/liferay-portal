@@ -93,14 +93,12 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	public static SystemEventHierarchyEntry push(Class<?> clazz) {
-
 		return push(
 			PortalUtil.getClassNameId(clazz), 0,
 			SystemEventConstants.ACTION_SKIP);
 	}
 
 	public static SystemEventHierarchyEntry push(Class<?> clazz, long classPK) {
-
 		return push(
 			PortalUtil.getClassNameId(clazz), classPK,
 			SystemEventConstants.ACTION_SKIP);
@@ -113,7 +111,6 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	public static SystemEventHierarchyEntry push(int action) {
-
 		return push(0, 0, action);
 	}
 
@@ -157,7 +154,6 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	public static SystemEventHierarchyEntry push(String className) {
-
 		return push(className, 0, SystemEventConstants.ACTION_SKIP);
 	}
 

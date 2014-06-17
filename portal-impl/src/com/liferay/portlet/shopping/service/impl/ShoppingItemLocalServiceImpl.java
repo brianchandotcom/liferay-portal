@@ -318,7 +318,6 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds) {
-
 		return shoppingItemFinder.countByG_C(groupId, categoryIds);
 	}
 
@@ -385,7 +384,6 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public List<ShoppingItem> getItems(long groupId, long categoryId) {
-
 		return shoppingItemPersistence.findByG_C(groupId, categoryId);
 	}
 
@@ -400,7 +398,6 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public int getItemsCount(long groupId, long categoryId) {
-
 		return shoppingItemPersistence.countByG_C(groupId, categoryId);
 	}
 
@@ -453,7 +450,6 @@ public class ShoppingItemLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, long[] categoryIds, String keywords) {
-
 		return shoppingItemFinder.countByKeywords(
 			groupId, categoryIds, keywords);
 	}
@@ -755,7 +751,6 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	protected long getCategory(ShoppingItem item, long categoryId) {
-
 		if ((item.getCategoryId() != categoryId) &&
 			(categoryId !=
 				ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {

@@ -53,7 +53,6 @@ public class AuthSettingsUtil {
 	}
 
 	public static boolean isLDAPAuthEnabled(long companyId) {
-
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
 				PropsValues.LDAP_AUTH_ENABLED)) {
@@ -78,7 +77,6 @@ public class AuthSettingsUtil {
 	}
 
 	public static boolean isSiteMinderEnabled(long companyId) {
-
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.SITEMINDER_AUTH_ENABLED,
 				PropsValues.SITEMINDER_AUTH_ENABLED)) {

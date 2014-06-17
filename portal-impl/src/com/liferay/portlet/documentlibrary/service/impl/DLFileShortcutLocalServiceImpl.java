@@ -242,7 +242,6 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void disableFileShortcuts(long toFileEntryId) {
-
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
 
@@ -416,7 +415,6 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	protected long getFolderId(long companyId, long folderId) {
-
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			// Ensure folder exists and belongs to the proper company

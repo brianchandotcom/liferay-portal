@@ -214,7 +214,6 @@ public class JournalFeedLocalServiceImpl
 
 	@Override
 	public JournalFeed fetchFeed(long groupId, String feedId) {
-
 		return journalFeedPersistence.fetchByG_F(groupId, feedId);
 	}
 
@@ -242,7 +241,6 @@ public class JournalFeedLocalServiceImpl
 
 	@Override
 	public List<JournalFeed> getFeeds(long groupId, int start, int end) {
-
 		return journalFeedPersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -273,7 +271,6 @@ public class JournalFeedLocalServiceImpl
 
 	@Override
 	public int searchCount(long companyId, long groupId, String keywords) {
-
 		return journalFeedFinder.countByKeywords(companyId, groupId, keywords);
 	}
 

@@ -316,7 +316,6 @@ public class PortletAction extends Action {
 	}
 
 	protected boolean isDisplaySuccessMessage(PortletRequest portletRequest) {
-
 		if (!SessionErrors.isEmpty(portletRequest)) {
 			return false;
 		}

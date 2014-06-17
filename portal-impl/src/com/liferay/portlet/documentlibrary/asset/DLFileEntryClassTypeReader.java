@@ -75,7 +75,6 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 	}
 
 	protected ClassType getBasicDocumentClassType(Locale locale) {
-
 		DLFileEntryType basicDocumentDLFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);

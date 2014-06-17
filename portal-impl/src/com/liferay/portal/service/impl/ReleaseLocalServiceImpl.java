@@ -44,7 +44,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 	@Override
 	public Release addRelease(String servletContextName, int buildNumber) {
-
 		Release release = null;
 
 		if (servletContextName.equals(
@@ -101,7 +100,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 	@Override
 	public Release fetchRelease(String servletContextName) {
-
 		if (Validator.isNull(servletContextName)) {
 			throw new IllegalArgumentException("Servlet context name is null");
 		}
@@ -210,7 +208,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery() {
-
 		DB db = DBFactoryUtil.getDB();
 
 		int count = testSupportsStringCaseSensitiveQuery(

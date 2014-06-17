@@ -245,7 +245,6 @@ public class SocialRelationLocalServiceImpl
 	 */
 	@Override
 	public int getInverseRelationsCount(long userId, int type) {
-
 		return socialRelationPersistence.countByU2_T(userId, type);
 	}
 
@@ -353,7 +352,6 @@ public class SocialRelationLocalServiceImpl
 	 */
 	@Override
 	public int getRelationsCount(long userId1, long userId2) {
-
 		return socialRelationPersistence.countByU1_U2(userId1, userId2);
 	}
 
@@ -371,7 +369,6 @@ public class SocialRelationLocalServiceImpl
 	 */
 	@Override
 	public boolean hasRelation(long userId1, long userId2, int type) {
-
 		SocialRelation relation = socialRelationPersistence.fetchByU1_U2_T(
 			userId1, userId2, type);
 
@@ -403,7 +400,6 @@ public class SocialRelationLocalServiceImpl
 	 */
 	@Override
 	public boolean isRelatable(long userId1, long userId2, int type) {
-
 		if (userId1 == userId2) {
 			return false;
 		}

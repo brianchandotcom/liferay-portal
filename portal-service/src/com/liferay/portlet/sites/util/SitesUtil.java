@@ -206,7 +206,6 @@ public class SitesUtil {
 	}
 
 	public static boolean isContentSharingWithChildrenEnabled(Group group) {
-
 		return getSites().isContentSharingWithChildrenEnabled(group);
 	}
 
@@ -289,7 +288,6 @@ public class SitesUtil {
 	}
 
 	public static void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet) {
-
 		getSites().removeMergeFailFriendlyURLLayouts(layoutSet);
 	}
 

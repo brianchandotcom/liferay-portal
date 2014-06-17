@@ -266,7 +266,6 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-
 		String[] fileNames = _store.getFileNames(companyId, repositoryId);
 
 		String[] decodedFileNames = new String[fileNames.length];

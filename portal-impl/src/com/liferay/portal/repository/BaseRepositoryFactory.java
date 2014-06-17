@@ -153,7 +153,6 @@ public abstract class BaseRepositoryFactory<T> {
 	}
 
 	protected T createLiferayRepository(long repositoryId) {
-
 		long dlFolderId = 0;
 		long groupId = 0;
 
@@ -274,7 +273,6 @@ public abstract class BaseRepositoryFactory<T> {
 	protected abstract Repository getRepository(long repositoryId);
 
 	protected long getRepositoryClassNameId(long repositoryId) {
-
 		Repository repository = _repositoryLocalService.fetchRepository(
 			repositoryId);
 

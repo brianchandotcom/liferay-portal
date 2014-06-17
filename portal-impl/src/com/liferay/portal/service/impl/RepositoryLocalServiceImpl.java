@@ -154,7 +154,6 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public Repository deleteRepository(long repositoryId) {
-
 		Repository repository = repositoryPersistence.fetchByPrimaryKey(
 			repositoryId);
 
@@ -170,7 +169,6 @@ public class RepositoryLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public Repository deleteRepository(Repository repository) {
-
 		expandoValueLocalService.deleteValues(
 			Repository.class.getName(), repository.getRepositoryId());
 
@@ -191,7 +189,6 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public Repository fetchRepository(long groupId, String portletId) {
-
 		return fetchRepository(groupId, portletId, portletId);
 	}
 

@@ -59,7 +59,6 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 	@Override
 	public void testAddClassName_Rollback(String classNameValue) {
-
 		addClassName(classNameValue);
 
 		throw new SystemException();
@@ -67,7 +66,6 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 	@Override
 	public void testAddClassName_Success(String classNameValue) {
-
 		addClassName(classNameValue);
 	}
 

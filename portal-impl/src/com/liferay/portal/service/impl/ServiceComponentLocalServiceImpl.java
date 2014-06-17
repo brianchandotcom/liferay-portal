@@ -437,7 +437,6 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	protected void removeOldServiceComponents(String buildNamespace) {
-
 		int serviceComponentsCount =
 			serviceComponentPersistence.countByBuildNamespace(buildNamespace);
 

@@ -156,7 +156,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteLinks(long entryId1, long entryId2) {
-
 		List<AssetLink> links = assetLinkPersistence.findByE_E(
 			entryId1, entryId2);
 
@@ -210,7 +209,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getDirectLinks(long entryId, int typeId) {
-
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
 
@@ -271,7 +269,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long entryId, int typeId) {
-
 		List<AssetLink> e1Links = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
 		List<AssetLink> e2Links = assetLinkPersistence.findByE2_T(
@@ -302,7 +299,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getReverseLinks(long entryId, int typeId) {
-
 		return assetLinkPersistence.findByE2_T(entryId, typeId);
 	}
 

@@ -224,7 +224,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max) {
-
 		return getGroupEntries(groupId, status, 0, max);
 	}
 
@@ -258,7 +257,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_NotS(
 				groupId, WorkflowConstants.STATUS_IN_TRASH);

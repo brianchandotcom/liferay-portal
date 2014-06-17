@@ -33,7 +33,6 @@ public class CyrusVirtualUtil {
 	}
 
 	public static List<CyrusVirtual> findByUserId(long userId) {
-
 		return getPersistence().findByUserId(userId);
 	}
 

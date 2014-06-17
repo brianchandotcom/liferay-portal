@@ -108,7 +108,6 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public List<WikiNode> getNodes(long groupId, int start, int end) {
-
 		return getNodes(groupId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 

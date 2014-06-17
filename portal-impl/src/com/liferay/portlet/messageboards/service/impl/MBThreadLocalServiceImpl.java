@@ -445,7 +445,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupThreadsCount(long groupId, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return getGroupThreadsCount(groupId, queryDefinition);
@@ -492,7 +491,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupThreadsCount(long groupId, long userId, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return getGroupThreadsCount(groupId, userId, false, queryDefinition);
@@ -611,7 +609,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbThreadPersistence.countByG_C(groupId, categoryId);
 		}

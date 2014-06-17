@@ -115,7 +115,6 @@ public class JournalContentSearchLocalServiceImpl
 
 	@Override
 	public void deleteArticleContentSearches(long groupId, String articleId) {
-
 		List<JournalContentSearch> contentSearches =
 			journalContentSearchPersistence.findByG_A(groupId, articleId);
 
@@ -151,7 +150,6 @@ public class JournalContentSearchLocalServiceImpl
 
 	@Override
 	public List<JournalContentSearch> getArticleContentSearches() {
-
 		return journalContentSearchPersistence.findAll();
 	}
 

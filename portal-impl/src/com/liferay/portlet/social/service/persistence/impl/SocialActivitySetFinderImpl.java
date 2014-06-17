@@ -99,7 +99,6 @@ public class SocialActivitySetFinderImpl
 
 	@Override
 	public int countByRelationType(long userId, int type) {
-
 		Session session = null;
 
 		try {
@@ -279,7 +278,6 @@ public class SocialActivitySetFinderImpl
 
 	@Override
 	public List<SocialActivitySet> findByUser(long userId, int start, int end) {
-
 		Session session = null;
 
 		try {

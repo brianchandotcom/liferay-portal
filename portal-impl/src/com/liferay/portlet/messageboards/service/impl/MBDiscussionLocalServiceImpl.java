@@ -75,13 +75,11 @@ public class MBDiscussionLocalServiceImpl
 
 	@Override
 	public MBDiscussion fetchDiscussion(long discussionId) {
-
 		return mbDiscussionPersistence.fetchByPrimaryKey(discussionId);
 	}
 
 	@Override
 	public MBDiscussion fetchDiscussion(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mbDiscussionPersistence.fetchByC_C(classNameId, classPK);

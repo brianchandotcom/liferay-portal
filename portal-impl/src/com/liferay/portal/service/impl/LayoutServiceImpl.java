@@ -866,7 +866,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-
 		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
 	}
 

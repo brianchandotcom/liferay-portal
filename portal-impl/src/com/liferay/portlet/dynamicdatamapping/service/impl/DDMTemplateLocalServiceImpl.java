@@ -646,7 +646,6 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public List<DDMTemplate> getTemplates(long groupId, long classNameId) {
-
 		return ddmTemplatePersistence.findByG_C(groupId, classNameId);
 	}
 
@@ -744,7 +743,6 @@ public class DDMTemplateLocalServiceImpl
 
 	@Override
 	public List<DDMTemplate> getTemplatesByClassPK(long groupId, long classPK) {
-
 		return ddmTemplatePersistence.findByG_CPK(groupId, classPK);
 	}
 
@@ -771,7 +769,6 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public int getTemplatesByClassPKCount(long groupId, long classPK) {
-
 		return ddmTemplatePersistence.countByG_CPK(groupId, classPK);
 	}
 
@@ -845,7 +842,6 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public int getTemplatesCount(long groupId, long classNameId) {
-
 		return ddmTemplatePersistence.countByG_C(groupId, classNameId);
 	}
 
@@ -861,7 +857,6 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public int getTemplatesCount(long groupId, long classNameId, long classPK) {
-
 		return ddmTemplatePersistence.countByG_C_C(
 			groupId, classNameId, classPK);
 	}
@@ -1356,7 +1351,6 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected File getSmallImageFile(DDMTemplate template) {
-
 		File smallImageFile = null;
 
 		if (template.isSmallImage() &&

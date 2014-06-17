@@ -31,7 +31,6 @@ public class ImportExportPermissionConversionFilter
 
 	@Override
 	public boolean accept(Role role, ResourcePermission resourcePermission) {
-
 		int scope = resourcePermission.getScope();
 
 		if ((scope == ResourceConstants.SCOPE_COMPANY) ||

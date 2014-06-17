@@ -80,7 +80,6 @@ public class AssetTagPropertyServiceImpl
 	 */
 	@Override
 	public List<AssetTagProperty> getTagProperties(long tagId) {
-
 		return assetTagPropertyLocalService.getTagProperties(tagId);
 	}
 

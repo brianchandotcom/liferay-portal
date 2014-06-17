@@ -12,24 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service;
+package com.liferay.portlet.blogs.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionBaseModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionRootContainerModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Sergio González
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -39,43 +40,34 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class MBSubscriptionBaseModelTest
-	extends BaseSubscriptionBaseModelTestCase {
+public class BlogsSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+	public void testSubscriptionRootContainerModelWhenInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
 	}
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
-		return message.getMessageId();
+		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
 
-		return category.getCategoryId();
-	}
-
-	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		MBMessageLocalServiceUtil.subscribeMessage(
-			TestPropsValues.getUserId(), baseModelId);
-	}
-
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
-
-		message = MBTestUtil.updateMessage(message, true);
-
-		return message.getMessageId();
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
 	}
 
 }

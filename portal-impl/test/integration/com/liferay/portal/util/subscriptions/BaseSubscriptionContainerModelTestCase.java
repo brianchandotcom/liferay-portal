@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.subscriptions;
 
 import com.liferay.portal.util.test.MailServiceTestUtil;
 
@@ -22,17 +22,17 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseSubscriptionRootContainerModelTestCase
+public abstract class BaseSubscriptionContainerModelTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenInContainerModel()
+	public void testSubscriptionContainerModelWhenInContainerModel()
 		throws Exception {
-
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(containerModelId);
 
 		addBaseModel(containerModelId);
 
@@ -40,24 +40,27 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenInRootContainerModel()
+	public void testSubscriptionContainerModelWhenInRootContainerModel()
 		throws Exception {
-
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
-	@Test
-	public void testSubscriptionRootContainerModelWhenInSubcontainerModel()
-		throws Exception {
-
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(containerModelId);
+
+		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionContainerModelWhenInSubcontainerModel()
+		throws Exception {
+
+		long containerModelId = addContainerModel(
+			PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(containerModelId);
 
 		long subcontainerModelId = addContainerModel(containerModelId);
 

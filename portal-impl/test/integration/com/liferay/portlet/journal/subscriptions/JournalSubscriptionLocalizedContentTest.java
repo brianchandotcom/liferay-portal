@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.journal.service;
+package com.liferay.portlet.journal.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionRootContainerModelTestCase;
-import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import org.junit.runner.RunWith;
@@ -39,8 +39,8 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class JournalSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class JournalSubscriptionLocalizedContentTest
+	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
@@ -51,20 +51,21 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString());
-
-		return folder.getFolderId();
-	}
-
-	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.JOURNAL;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailArticleAddedBody";
 	}
 
 }

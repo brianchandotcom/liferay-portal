@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service;
+package com.liferay.portlet.bookmarks.subscriptions;
 
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -20,16 +20,19 @@ import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
+import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -43,33 +46,36 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class MBSubscriptionLocalizedContentTest
+public class BookmarksSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return message.getMessageId();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		MBCategoryLocalServiceUtil.subscribeCategory(
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.MESSAGE_BOARDS;
+		return PortletKeys.BOOKMARKS;
 	}
 
 	@Override
 	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailMessageAddedBody";
+		return "emailEntryAddedBody";
 	}
 
 	@Override
@@ -77,7 +83,7 @@ public class MBSubscriptionLocalizedContentTest
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), MBConstants.SERVICE_NAME);
+			group.getGroupId(), BookmarksConstants.SERVICE_NAME);
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

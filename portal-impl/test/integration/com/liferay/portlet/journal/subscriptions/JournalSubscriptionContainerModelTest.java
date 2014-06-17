@@ -12,23 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.journal.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
+ * @author Zsolt Berentey
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -38,21 +40,22 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionContainerModelTest
+public class JournalSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			group.getGroupId(), group.getGroupId(), containerModelId, true);
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), containerModelId);
 
-		return fileEntry.getFileEntryId();
+		return article.getResourcePrimKey();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), containerModelId);
+		JournalFolder folder = JournalTestUtil.addFolder(
+			group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString());
 
 		return folder.getFolderId();
 	}
@@ -61,7 +64,7 @@ public class DLSubscriptionContainerModelTest
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
+		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 

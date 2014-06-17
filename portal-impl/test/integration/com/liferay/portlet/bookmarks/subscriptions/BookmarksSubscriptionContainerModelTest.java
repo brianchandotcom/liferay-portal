@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service;
+package com.liferay.portlet.bookmarks.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -37,30 +41,36 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class MBSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class BookmarksSubscriptionContainerModelTest
+	extends BaseSubscriptionContainerModelTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return message.getMessageId();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		MBCategory category = MBTestUtil.addCategory(
-			group.getGroupId(), containerModelId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return category.getCategoryId();
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			containerModelId, RandomTestUtil.randomString(), serviceContext);
+
+		return folder.getFolderId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		MBCategoryLocalServiceUtil.subscribeCategory(
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 

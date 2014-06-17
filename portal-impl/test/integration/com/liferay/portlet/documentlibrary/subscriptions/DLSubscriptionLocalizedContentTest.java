@@ -12,17 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.documentlibrary.subscriptions;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.runner.RunWith;
@@ -38,8 +45,8 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class DLSubscriptionLocalizedContentTest
+	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
@@ -50,19 +57,50 @@ public class DLSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), containerModelId);
-
-		return folder.getFolderId();
-	}
-
-	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		DLAppLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.DOCUMENT_LIBRARY;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailFileEntryAddedBody";
+	}
+
+	@Override
+	protected void setAddBaseModelSubscriptionBodyPreferences()
+		throws Exception {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			group.getGroupId(), DLConstants.SERVICE_NAME);
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String germanSubscriptionBodyPreferencesKey =
+			LocalizationUtil.getPreferencesKey(
+				getSubscriptionBodyPreferenceName(),
+				LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
+
+		modifiableSettings.setValue(
+			germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
+
+		String spanishSubscriptionBodyPreferencesKey =
+			LocalizationUtil.getPreferencesKey(
+				getSubscriptionBodyPreferenceName(),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		modifiableSettings.setValue(
+			spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
+
+		modifiableSettings.store();
 	}
 
 }

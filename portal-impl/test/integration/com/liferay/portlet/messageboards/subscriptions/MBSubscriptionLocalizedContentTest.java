@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.messageboards.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -25,16 +24,17 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBConstants;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -44,33 +44,33 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionLocalizedContentTest
+public class MBSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			group.getGroupId(), group.getGroupId(), containerModelId, true);
+		MBMessage message = MBTestUtil.addMessage(
+			group.getGroupId(), containerModelId, true);
 
-		return fileEntry.getFileEntryId();
+		return message.getMessageId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
+		MBCategoryLocalServiceUtil.subscribeCategory(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return PortletKeys.MESSAGE_BOARDS;
 	}
 
 	@Override
 	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailFileEntryAddedBody";
+		return "emailMessageAddedBody";
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class DLSubscriptionLocalizedContentTest
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), DLConstants.SERVICE_NAME);
+			group.getGroupId(), MBConstants.SERVICE_NAME);
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

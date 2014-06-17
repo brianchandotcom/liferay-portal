@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.service;
+package com.liferay.portlet.messageboards.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionBaseModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.util.test.WikiTestUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class WikiSubscriptionBaseModelTest
+public class MBSubscriptionBaseModelTest
 	extends BaseSubscriptionBaseModelTestCase {
 
 	@Ignore
@@ -51,33 +51,32 @@ public class WikiSubscriptionBaseModelTest
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
+		MBMessage message = MBTestUtil.addMessage(
 			group.getGroupId(), containerModelId, true);
 
-		return page.getResourcePrimKey();
+		return message.getMessageId();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
+		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
 
-		return node.getNodeId();
+		return category.getCategoryId();
 	}
 
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
-
-		WikiPageLocalServiceUtil.subscribePage(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
+		MBMessageLocalServiceUtil.subscribeMessage(
+			TestPropsValues.getUserId(), baseModelId);
 	}
 
 	@Override
 	protected long updateEntry(long baseModelId) throws Exception {
-		WikiPage page = WikiTestUtil.updatePage(
-			WikiPageLocalServiceUtil.getPage(baseModelId, true));
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		return page.getResourcePrimKey();
+		message = MBTestUtil.updateMessage(message, true);
+
+		return message.getMessageId();
 	}
 
 }

@@ -441,6 +441,7 @@ if (type.equals("String")) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
+								contentsLanguageId="<%= languageId %>"
 								cssClass="<%= cssClass %>"
 								editorImpl="ckeditor"
 								initMethod='<%= fieldParam + \"InitEditor\" %>'

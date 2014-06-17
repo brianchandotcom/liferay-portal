@@ -104,6 +104,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 	<c:choose>
 		<c:when test='<%= type.equals("editor") %>'>
 			<liferay-ui:input-editor
+				contentsLanguageId="<%= languageId %>"
 				cssClass='<%= \"language-value \" + cssClass %>'
 				editorImpl="ckeditor"
 				initMethod='<%= randomNamespace + \"InitEditor\" %>'

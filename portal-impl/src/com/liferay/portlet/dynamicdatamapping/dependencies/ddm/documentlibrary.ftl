@@ -8,6 +8,8 @@
 
 <#assign fileEntryTitle = "">
 
+<#assign folderId = "">
+
 <#if (fieldRawValue != "")>
 	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 
@@ -15,6 +17,8 @@
 
 	<#if (fileEntry != "")>
 		<#assign fileEntryTitle = fileEntry.getTitle()>
+
+		<#assign folderId = fileEntry.getFolderId()>
 	</#if>
 </#if>
 
@@ -90,6 +94,7 @@
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
 				portletURL.setParameter('refererPortletName', '${themeDisplay.getPortletDisplay().getId()}');
 				portletURL.setParameter('struts_action', '/document_selector/view');
+				portletURL.setParameter('folderId', '${folderId}');
 				portletURL.setPortletId('200');
 				portletURL.setWindowState('pop_up');
 

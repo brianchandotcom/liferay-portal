@@ -128,6 +128,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -6633,7 +6634,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void updateUrlTitles(
-		long groupId, String articleId, String urlTitle) {
+			long groupId, String articleId, String urlTitle)
+		throws PortalException {
+
+		JournalArticle firstArticle = journalArticlePersistence.findByG_A_First(
+			groupId, articleId, new ArticleVersionComparator(false));
+
+		if (firstArticle.getUrlTitle().equals(urlTitle)) {
+			return;
+		}
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 			groupId, articleId);

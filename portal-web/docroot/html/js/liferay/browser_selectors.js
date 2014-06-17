@@ -115,7 +115,10 @@ YUI.add(
 			}
 		}
 
-		UAX.touch = ('ontouchstart' in DOC);
+		var touch = UA.touchEnabled;
+
+		UAX.touch = touch;
+		UAX.touchMobile = touch && !!UA.mobile;
 
 		A.mix(UA, UAX);
 

@@ -23,14 +23,6 @@
 				('onpopstate' in WIN || A.UA.gecko >= 2));
 	};
 
-	var testTouch = function(A) {
-		return A.UA.touch;
-	};
-
-	var testTouchMobile = function(A) {
-		return testTouch(A) && A.UA.mobile;
-	};
-
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -70,8 +62,8 @@
 							'liferay-app-view-move-touch': {
 								condition: {
 									name: 'liferay-app-view-move-touch',
-									test: testTouch,
-									trigger: 'liferay-app-view-move'
+									trigger: 'liferay-app-view-move',
+									ua: 'touch'
 								}
 							}
 						},
@@ -453,8 +445,8 @@
 							'liferay-input-move-boxes-touch': {
 								condition: {
 									name: 'liferay-input-move-boxes-touch',
-									test: testTouchMobile,
-									trigger: 'liferay-input-move-boxes'
+									trigger: 'liferay-input-move-boxes',
+									ua: 'touchMobile'
 								}
 							}
 						},
@@ -571,8 +563,8 @@
 							'liferay-navigation-touch': {
 								condition: {
 									name: 'liferay-navigation-touch',
-									test: testTouch,
-									trigger: 'liferay-navigation'
+									trigger: 'liferay-navigation',
+									ua: 'touch'
 								}
 							}
 						},
@@ -587,8 +579,8 @@
 							'liferay-navigation-interaction-touch': {
 								condition: {
 									name: 'liferay-navigation-interaction-touch',
-									test: testTouch,
-									trigger: 'liferay-navigation-interaction'
+									trigger: 'liferay-navigation-interaction',
+									ua: 'touch'
 								}
 							}
 						},

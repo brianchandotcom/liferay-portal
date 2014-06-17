@@ -916,6 +916,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
+		_fitOnSingleLineExceptions = getExclusions(
+			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getExclusions(
 			"hibernate.sql.query.excludes");
 		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
@@ -1550,6 +1552,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (readParameterTypes) {
 				parameterTypes = addParameterTypes(trimmedLine, parameterTypes);
 
+				String strippedLine = stripLine(
+					trimmedLine, CharPool.LESS_THAN, CharPool.GREATER_THAN);
+
+				if (strippedLine.contains(StringPool.COMMA) &&
+					!trimmedLine.endsWith(StringPool.COMMA) &&
+					!trimmedLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+					!trimmedLine.endsWith(StringPool.CLOSE_PARENTHESIS) &&
+					!trimmedLine.endsWith(StringPool.SEMICOLON)) {
+
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
 				if (trimmedLine.contains(StringPool.CLOSE_PARENTHESIS)) {
 					readParameterTypes = false;
 				}
@@ -1922,9 +1937,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					combinedLines = getCombinedLines(
-						trimmedLine, previousLine, lineLeadingTabCount,
-						previousLineLeadingTabCount);
+					if (!isExcluded(
+							_fitOnSingleLineExceptions, fileName, lineCount)) {
+
+						combinedLines = getCombinedLines(
+							trimmedLine, previousLine, lineLeadingTabCount,
+							previousLineLeadingTabCount);
+					}
 				}
 			}
 
@@ -2946,6 +2965,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
+	private List<String> _fitOnSingleLineExceptions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");

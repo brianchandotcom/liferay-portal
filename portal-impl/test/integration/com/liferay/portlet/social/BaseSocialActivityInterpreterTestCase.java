@@ -15,7 +15,6 @@
 package com.liferay.portlet.social;
 
 import com.liferay.portal.events.ServicePreAction;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -56,8 +55,6 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		group = GroupTestUtil.addGroup();
 
 		HttpServletRequest request = new MockHttpServletRequest();

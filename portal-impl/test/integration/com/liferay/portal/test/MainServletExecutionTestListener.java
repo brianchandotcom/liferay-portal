@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
@@ -37,11 +38,14 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -71,10 +75,12 @@ public class MainServletExecutionTestListener
 
 	@Override
 	public void runAfterTest(TestContext testContext) {
-		Map<Class<?>, List<Field>> deleteAfterTestRunFields =
-			new HashMap<Class<?>, List<Field>>();
+		Map<Class<?>, FieldsBag> deleteAfterTestRunFieldBags =
+			new HashMap<Class<?>, FieldsBag>();
 
 		Class<?> testClass = testContext.getClazz();
+
+		Object instance = testContext.getInstance();
 
 		while (testClass != null) {
 			for (Field field : testClass.getDeclaredFields()) {
@@ -87,38 +93,77 @@ public class MainServletExecutionTestListener
 
 				Class<?> fieldClass = field.getType();
 
-				if (!PersistedModel.class.isAssignableFrom(fieldClass)) {
-					throw new IllegalArgumentException(
-						"Unable to annotate field " + field +
-							" because it is not of type " +
-								PersistedModel.class);
+				if (PersistedModel.class.isAssignableFrom(fieldClass)) {
+					addField(deleteAfterTestRunFieldBags, fieldClass, field);
+
+					continue;
 				}
 
-				List<Field> fields = deleteAfterTestRunFields.get(fieldClass);
+				if (fieldClass.isArray()) {
+					if (!PersistedModel.class.isAssignableFrom(
+							fieldClass.getComponentType())) {
 
-				if (fields == null) {
-					fields = new ArrayList<Field>();
+						throw new IllegalArgumentException(
+							"Unable to annotate field " + field +
+								" because it is not an array of type " +
+									PersistedModel.class);
+					}
 
-					deleteAfterTestRunFields.put(fieldClass, fields);
+					addField(
+						deleteAfterTestRunFieldBags,
+						fieldClass.getComponentType(), field);
+
+					continue;
 				}
 
-				field.setAccessible(true);
+				if (Collection.class.isAssignableFrom(fieldClass)) {
+					try {
+						field.setAccessible(true);
 
-				fields.add(field);
+						Collection<?> collection = (Collection<?>)field.get(
+							instance);
+
+						if ((collection == null) || collection.isEmpty()) {
+							continue;
+						}
+
+						Class<?> collectionType = detectedCollectionType(
+							collection);
+
+						if (collectionType == null) {
+							throw new IllegalArgumentException(
+								"Unable to annotate field " + field +
+									" because it is not a Collection " +
+										"of type " + PersistedModel.class);
+						}
+
+						addField(
+							deleteAfterTestRunFieldBags, collectionType, field);
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to detect Collection element type", e);
+					}
+
+					continue;
+				}
+
+				throw new IllegalArgumentException(
+					"Unable to annotate field " + field +
+						" because it is not type of " + PersistedModel.class +
+							", either an array or collect of it");
 			}
 
 			testClass = testClass.getSuperclass();
 		}
 
-		Object instance = testContext.getInstance();
+		Set<Map.Entry<Class<?>, FieldsBag>> set =
+			deleteAfterTestRunFieldBags.entrySet();
 
-		Set<Map.Entry<Class<?>, List<Field>>> set =
-			deleteAfterTestRunFields.entrySet();
-
-		Iterator<Map.Entry<Class<?>, List<Field>>> iterator = set.iterator();
+		Iterator<Map.Entry<Class<?>, FieldsBag>> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
-			Map.Entry<Class<?>, List<Field>> entry = iterator.next();
+			Map.Entry<Class<?>, FieldsBag> entry = iterator.next();
 
 			Class<?> clazz = entry.getKey();
 
@@ -128,59 +173,17 @@ public class MainServletExecutionTestListener
 
 			iterator.remove();
 
-			PersistedModelLocalService persistedModelLocalService =
-				PersistedModelLocalServiceRegistryUtil.
-					getPersistedModelLocalService(clazz.getName());
-
-			for (Field field : entry.getValue()) {
-				try {
-					PersistedModel persistedModel = (PersistedModel)field.get(
-						instance);
-
-					if (persistedModel == null) {
-						continue;
-					}
-
-					persistedModelLocalService.deletePersistedModel(
-						persistedModel);
-
-					field.set(instance, null);
-				}
-				catch (Exception e) {
-					_log.error("Unable to delete", e);
-				}
-			}
+			removeField(entry.getValue(), instance);
 		}
 
 		for (Class<?> clazz : _orderedClasses) {
-			List<Field> fields = deleteAfterTestRunFields.remove(clazz);
+			FieldsBag fieldsBag = deleteAfterTestRunFieldBags.remove(clazz);
 
-			if (fields == null) {
+			if (fieldsBag == null) {
 				continue;
 			}
 
-			PersistedModelLocalService persistedModelLocalService =
-				PersistedModelLocalServiceRegistryUtil.
-					getPersistedModelLocalService(clazz.getName());
-
-			for (Field field : fields) {
-				try {
-					PersistedModel persistedModel = (PersistedModel)field.get(
-						instance);
-
-					if (persistedModel == null) {
-						continue;
-					}
-
-					persistedModelLocalService.deletePersistedModel(
-						persistedModel);
-
-					field.set(instance, null);
-				}
-				catch (Exception e) {
-					_log.error("Unable to delete", e);
-				}
-			}
+			removeField(fieldsBag, instance);
 		}
 	}
 
@@ -212,13 +215,138 @@ public class MainServletExecutionTestListener
 		}
 	}
 
+	protected void addField(
+		Map<Class<?>, FieldsBag> deleteAfterTestRunFieldBags, Class<?> clazz,
+		Field field) {
+
+		FieldsBag fieldsBag = deleteAfterTestRunFieldBags.get(clazz);
+
+		if (fieldsBag == null) {
+			fieldsBag = new FieldsBag(clazz);
+
+			deleteAfterTestRunFieldBags.put(clazz, fieldsBag);
+		}
+
+		field.setAccessible(true);
+
+		fieldsBag.addField(field);
+	}
+
+	protected Class<? extends PersistedModel> detectedCollectionType(
+		Collection<?> collection) {
+
+		Class<? extends PersistedModel> collectionType = null;
+
+		for (Object obj : collection) {
+			Queue<Class<?>> types = new LinkedList<Class<?>>();
+
+			types.add(obj.getClass());
+
+			Class<?> type = null;
+
+			while ((type = types.poll()) != null) {
+				if (ArrayUtil.contains(
+						type.getInterfaces(), PersistedModel.class)) {
+
+					if (collectionType == null) {
+						collectionType = (Class<? extends PersistedModel>)type;
+					}
+					else if (collectionType != type) {
+						return null;
+					}
+
+					break;
+				}
+
+				types.add(type.getSuperclass());
+				types.addAll(Arrays.asList(type.getInterfaces()));
+			}
+		}
+
+		return collectionType;
+	}
+
 	protected String getResourceBasePath() {
 		File file = new File("portal-web/docroot");
 
 		return "file:" + file.getAbsolutePath();
 	}
 
+	protected void removeField(FieldsBag fieldsBag, Object instance) {
+		try {
+			Class<?> fieldClass = fieldsBag.getFieldClass();
+
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(fieldClass.getName());
+
+			for (Field field : fieldsBag.getFields()) {
+				Object obj = field.get(instance);
+
+				if (obj == null) {
+					continue;
+				}
+
+				Class<?> objClass = obj.getClass();
+
+				if (objClass.isArray()) {
+					for (PersistedModel persistedModel :
+							(PersistedModel[])obj) {
+
+						if (persistedModel == null) {
+							continue;
+						}
+
+						persistedModelLocalService.deletePersistedModel(
+							persistedModel);
+					}
+				}
+				else if (Collection.class.isAssignableFrom(objClass)) {
+					Collection<? extends PersistedModel> collection =
+						(Collection<? extends PersistedModel>)obj;
+
+					for (PersistedModel persistedModel : collection) {
+						persistedModelLocalService.deletePersistedModel(
+							persistedModel);
+					}
+				}
+				else {
+					persistedModelLocalService.deletePersistedModel(
+						(PersistedModel)obj);
+				}
+
+				field.set(instance, null);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to delete", e);
+		}
+	}
+
 	protected static MainServlet mainServlet;
+
+	protected static class FieldsBag {
+
+		public FieldsBag(Class<?> fieldClass) {
+			_fieldClass = fieldClass;
+		}
+
+		public void addField(Field field) {
+			_fields.add(field);
+		}
+
+		public List<Field> getFields() {
+			return _fields;
+		}
+
+		public Class<?> getFieldClass() {
+			return _fieldClass;
+		}
+
+		private Class<?> _fieldClass;
+		private List<Field> _fields = new ArrayList<Field>();
+
+	}
 
 	protected class AutoDeployMockServletContext extends MockServletContext {
 

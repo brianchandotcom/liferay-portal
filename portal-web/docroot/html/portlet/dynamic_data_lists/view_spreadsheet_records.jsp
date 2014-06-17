@@ -156,6 +156,12 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 				}
 			],
 			recordsetId: <%= recordSet.getRecordSetId() %>,
+			strings: {
+				asc: '<liferay-ui:message key="ascending" />',
+				desc: '<liferay-ui:message key="descending" />',
+				reverseSortBy: '<liferay-ui:message arguments="{column}" key="reverse-sort-by-x" />',
+				sortBy: '<liferay-ui:message arguments="{column}" key="sort-by-x" />'
+			},
 			structure: structure,
 			width: '100%'
 		}

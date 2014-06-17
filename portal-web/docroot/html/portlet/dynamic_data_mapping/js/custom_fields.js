@@ -43,7 +43,7 @@ AUI.add(
 
 			node.setStyle(STR_BLANK);
 
-			A.Array.each(
+			AArray.each(
 				styles,
 				function(item, index) {
 					var rule = item.split(':');
@@ -350,7 +350,7 @@ AUI.add(
 			LinkToPageCellEditor
 		];
 
-		A.Array.each(
+		AArray.each(
 			customCellEditors,
 			function(item, index) {
 				Liferay.FormBuilder.CUSTOM_CELL_EDITORS[item.NAME] = item;
@@ -506,7 +506,7 @@ AUI.add(
 
 						var model = DDMDateField.superclass.getPropertyModel.apply(instance, arguments);
 
-						A.Array.each(
+						AArray.each(
 							model,
 							function(item, index, collection) {
 								var attributeName = item.attributeName;
@@ -575,7 +575,7 @@ AUI.add(
 
 						var model = DDMDocumentLibraryField.superclass.getPropertyModel.apply(instance, arguments);
 
-						A.Array.each(
+						AArray.each(
 							model,
 							function(item, index) {
 								var attributeName = item.attributeName;
@@ -896,7 +896,7 @@ AUI.add(
 			DDMHTMLTextField
 		];
 
-		A.Array.each(
+		AArray.each(
 			plugins,
 			function(item, index) {
 				FormBuilderTypes[item.NAME] = item;

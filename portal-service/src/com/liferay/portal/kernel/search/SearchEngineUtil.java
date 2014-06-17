@@ -145,7 +145,7 @@ public class SearchEngineUtil {
 
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
-		_searchEngines.put(searchEngineId, searchEngine);
+		setSearchEngine(searchEngineId, searchEngine);
 	}
 
 	/**
@@ -496,6 +496,12 @@ public class SearchEngineUtil {
 	}
 
 	public synchronized static void initialize(long companyId) {
+		if (_companyIds.contains(companyId)) {
+			return;
+		}
+
+		_companyIds.add(companyId);
+
 		for (SearchEngine searchEngine : _searchEngines.values()) {
 			searchEngine.initialize(companyId);
 		}
@@ -700,6 +706,10 @@ public class SearchEngineUtil {
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
 		_searchEngines.put(searchEngineId, searchEngine);
+
+		for (Long companyId : _companyIds) {
+			searchEngine.initialize(companyId);
+		}
 	}
 
 	public static String spellCheckKeywords(SearchContext searchContext)
@@ -836,38 +846,7 @@ public class SearchEngineUtil {
 		_searchPermissionChecker.updatePermissionFields(name, primKey);
 	}
 
-	public void setExcludedEntryClassNames(
-		List<String> excludedEntryClassNames) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "excludedEntryClassNames");
-
-		_excludedEntryClassNames.addAll(excludedEntryClassNames);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #setSearchEngine(String,
-	 *             SearchEngine)}
-	 */
-	@Deprecated
-	public void setSearchEngine(SearchEngine searchEngine) {
-		String searchEngineId = getDefaultSearchEngineId();
-
-		PortalRuntimePermission.checkSearchEngine(searchEngineId);
-
-		_searchEngines.put(searchEngineId, searchEngine);
-	}
-
-	public void setSearchPermissionChecker(
-		SearchPermissionChecker searchPermissionChecker) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "searchPermissionChecker");
-
-		_searchPermissionChecker = searchPermissionChecker;
-	}
-
-	private SearchEngineUtil() {
+	public void afterPropertiesSet() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -896,6 +875,37 @@ public class SearchEngineUtil {
 		}
 	}
 
+	public void setExcludedEntryClassNames(
+		List<String> excludedEntryClassNames) {
+
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(), "excludedEntryClassNames");
+
+		_excludedEntryClassNames.addAll(excludedEntryClassNames);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #setSearchEngine(String,
+	 *             SearchEngine)}
+	 */
+	@Deprecated
+	public void setSearchEngine(SearchEngine searchEngine) {
+		String searchEngineId = getDefaultSearchEngineId();
+
+		PortalRuntimePermission.checkSearchEngine(searchEngineId);
+
+		setSearchEngine(searchEngineId, searchEngine);
+	}
+
+	public void setSearchPermissionChecker(
+		SearchPermissionChecker searchPermissionChecker) {
+
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(), "searchPermissionChecker");
+
+		_searchPermissionChecker = searchPermissionChecker;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
 
 	private static String _defaultSearchEngineId;
@@ -904,6 +914,7 @@ public class SearchEngineUtil {
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 	private static Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<String, SearchEngine>();
+	private static Set<Long> _companyIds = new HashSet<Long>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
 	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>

@@ -300,6 +300,19 @@ public class SearchEngineUtil {
 		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
 
 		if (searchEngine == null) {
+			if (SYSTEM_ENGINE_ID.equals(searchEngineId)) {
+				waitForSystemSearchEngine();
+
+				searchEngine = _searchEngines.get(SYSTEM_ENGINE_ID);
+
+				if (searchEngine == null) {
+					throw new IllegalStateException(
+						"No " + SYSTEM_ENGINE_ID + " was found.");
+				}
+
+				return searchEngine;
+			}
+
 			if (getDefaultSearchEngineId().equals(searchEngineId)) {
 				throw new IllegalStateException(
 					"There is no default search engine configured with ID " +
@@ -858,35 +871,6 @@ public class SearchEngineUtil {
 		_searchPermissionChecker.updatePermissionFields(name, primKey);
 	}
 
-	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			SearchEngineConfigurator.class,
-			new SearchEngineConfiguratorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Waiting for search engine registration");
-			}
-
-			if (_serviceTracker.isEmpty()) {
-				_serviceTracker.waitForService(30000);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Registered search engine");
-			}
-		}
-		catch (InterruptedException ie) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Interrupted search engine registration", ie);
-			}
-		}
-	}
-
 	public void setExcludedEntryClassNames(
 		List<String> excludedEntryClassNames) {
 
@@ -916,6 +900,35 @@ public class SearchEngineUtil {
 			getClass(), "searchPermissionChecker");
 
 		_searchPermissionChecker = searchPermissionChecker;
+	}
+
+	private static void waitForSystemSearchEngine() {
+		try {
+			int count = 1000;
+
+			while (!_searchEngines.containsKey(SYSTEM_ENGINE_ID) &&
+				   (--count > 0)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Waiting for a " + SYSTEM_ENGINE_ID);
+				}
+
+				Thread.sleep(500);
+			}
+		}
+		catch (InterruptedException e) {
+			_log.error(e, e);
+		}
+	}
+
+	private SearchEngineUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			SearchEngineConfigurator.class,
+			new SearchEngineConfiguratorServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);

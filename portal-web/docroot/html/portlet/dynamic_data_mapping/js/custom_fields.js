@@ -1,14 +1,22 @@
 AUI.add(
 	'liferay-portlet-dynamic-data-mapping-custom-fields',
 	function(A) {
+		var AArray = A.Array;
+
 		var FormBuilderTextField = A.FormBuilderTextField;
 		var FormBuilderTypes = A.FormBuilder.types;
+
+		var Lang = A.Lang;
 
 		var booleanParse = A.DataType.Boolean.parse;
 		var camelize = Liferay.Util.camelize;
 		var trim = A.Lang.trim;
 
 		var STR_BLANK = '';
+
+		var STR_DASH = '-';
+
+		var STR_SPACE = ' ';
 
 		var TPL_BUTTON = '<div class="field-labels-inline">' +
 							'<input type="button" value="' + A.Escape.html(Liferay.Language.get('select')) + '" />' +
@@ -35,7 +43,7 @@ AUI.add(
 
 			node.setStyle(STR_BLANK);
 
-			A.Array.each(
+			AArray.each(
 				styles,
 				function(item, index) {
 					var rule = item.split(':');
@@ -49,6 +57,305 @@ AUI.add(
 				}
 			);
 		};
+
+		var DLFileEntryCellEditor = A.Component.create(
+			{
+				EXTENDS: A.BaseCellEditor,
+
+				NAME: 'document-library-file-entry-cell-editor',
+
+				prototype: {
+					ELEMENT_TEMPLATE: '<input type="hidden" />',
+
+					getElementsValue: function() {
+						var instance = this;
+
+						return instance.get('value');
+					},
+
+					_defInitToolbarFn: function() {
+						var instance = this;
+
+						DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
+
+						instance.toolbar.add(
+							{
+								label: Liferay.Language.get('choose'),
+								on: {
+									click: A.bind('_onClickChoose', instance)
+								}
+							},
+							1
+						);
+
+						instance.toolbar.add(
+							{
+								label: Liferay.Language.get('clear'),
+								on: {
+									click: A.bind('_onClickClear', instance)
+								}
+							},
+							2
+						);
+					},
+
+					_onClickChoose: function() {
+						var instance = this;
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+						portletURL.setParameter('eventName', 'selectDocumentLibrary');
+						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+						portletURL.setParameter('refererPortletName', '167');
+						portletURL.setParameter('struts_action', '/document_selector/view');
+						portletURL.setPortletId('200');
+						portletURL.setWindowState('pop_up');
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: 'selectDocumentLibrary',
+								id: 'selectDocumentLibrary',
+								title: Liferay.Language.get('javax.portlet.title.20'),
+								uri: portletURL.toString()
+							},
+							function(event) {
+								instance._selectFileEntry(event.url, event.uuid, event.groupid, event.title, event.version);
+							}
+						);
+					},
+
+					_onClickClear: function() {
+						var instance = this;
+
+						instance.set('value', STR_BLANK);
+					},
+
+					_selectFileEntry: function(url, uuid, groupId, title, version) {
+						var instance = this;
+
+						instance.set(
+							'value',
+							JSON.stringify(
+								{
+									groupId: groupId,
+									title: title,
+									uuid: uuid,
+									version: version
+								}
+							)
+						);
+					},
+
+					_syncFileLabel: function(title, url) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var linkNode = contentBox.one('a');
+
+						if (!linkNode) {
+							linkNode = A.Node.create('<a></a>');
+
+							contentBox.prepend(linkNode);
+						}
+
+						linkNode.setAttribute('href', url);
+						linkNode.setContent(Liferay.Util.escapeHTML(title));
+					},
+
+					_uiSetValue: function(val) {
+						var instance = this;
+
+						if (val) {
+							Liferay.FormBuilder.Util.getFileEntry(
+								val,
+								function(fileEntry) {
+									var url = Liferay.FormBuilder.Util.getFileEntryURL(fileEntry);
+
+									instance._syncFileLabel(fileEntry.title, url);
+								}
+							);
+						}
+						else {
+							instance._syncFileLabel(STR_BLANK, STR_BLANK);
+
+							val = STR_BLANK;
+						}
+
+						instance.elements.val(val);
+					}
+				}
+			}
+		);
+
+		var LinkToPageCellEditor = A.Component.create(
+			{
+				EXTENDS: A.DropDownCellEditor,
+
+				NAME: 'link-to-page-cell-editor',
+
+				prototype: {
+					OPT_GROUP_TEMPLATE: '<optgroup label="{label}">{options}</optgroup>',
+
+					renderUI: function(val) {
+						var instance = this;
+
+						var options = {};
+
+						LinkToPageCellEditor.superclass.renderUI.apply(instance, arguments);
+
+						A.io.request(
+							themeDisplay.getPathMain() + '/layouts_admin/get_layouts',
+							{
+								after: {
+									success: function() {
+										var	response = A.JSON.parse(this.get('responseData'));
+
+										if (response && response.layouts) {
+											instance._createOptionElements(response.layouts, options, STR_BLANK);
+
+											instance.set('options', options);
+										}
+									}
+								},
+								data: {
+									cmd: 'getAll',
+									expandParentLayouts: true,
+									groupId: themeDisplay.getScopeGroupId(),
+									p_auth: Liferay.authToken,
+									paginate: false
+								}
+							}
+						);
+					},
+
+					_createOptionElements: function(layouts, options, prefix) {
+						var instance = this;
+
+						AArray.each(
+							layouts,
+							function(item, index) {
+								options[prefix + item.name] = {
+									groupId: item.groupId,
+									layoutId: item.layoutId,
+									name: item.name,
+									privateLayout: item.privateLayout
+								};
+
+								if (item.hasChildren) {
+									instance._createOptionElements(
+										item.children.layouts,
+										options,
+										prefix + STR_DASH + STR_SPACE
+									);
+								}
+							}
+						);
+					},
+
+					_createOptions: function(val) {
+						var instance = this;
+
+						var privateOptions = [];
+						var publicOptions = [];
+
+						A.each(
+							val,
+							function(item, index) {
+								var values = {
+									id: A.guid(),
+									label: index,
+									value: Liferay.Util.escapeHTML(JSON.stringify(item))
+								};
+
+								var optionsArray = publicOptions;
+
+								if (item.privateLayout) {
+									optionsArray = privateOptions;
+								}
+
+								optionsArray.push(
+									Lang.sub(instance.OPTION_TEMPLATE, values)
+								);
+							}
+						);
+
+						var optGroupTemplate = instance.OPT_GROUP_TEMPLATE;
+
+						var publicOptGroup = Lang.sub(
+							optGroupTemplate,
+							{
+								label: Liferay.Language.get('public-pages'),
+								options: publicOptions.join(STR_BLANK)
+							}
+						);
+
+						var privateOptGroup = Lang.sub(
+							optGroupTemplate,
+							{
+								label: Liferay.Language.get('private-pages'),
+								options: privateOptions.join(STR_BLANK)
+							}
+						);
+
+						var elements = instance.elements;
+
+						elements.setContent(publicOptGroup + privateOptGroup);
+
+						instance.options = elements.all('option');
+					},
+
+					_uiSetValue: function(val) {
+						var instance = this;
+
+						var options = instance.options;
+
+						if (options && options.size()) {
+							options.set('selected', false);
+
+							if (Lang.isValue(val)) {
+								var selLayout = Liferay.FormBuilder.Util.parseJSON(val);
+
+								options.each(
+									function(item, index) {
+										var curLayout = Liferay.FormBuilder.Util.parseJSON(item.attr('value'));
+
+										if ((curLayout.groupId === selLayout.groupId) &&
+											(curLayout.layoutId === selLayout.layoutId) &&
+											(curLayout.privateLayout === selLayout.privateLayout)) {
+
+											item.set('selected', true);
+										}
+									}
+								);
+							}
+						}
+
+						return val;
+					}
+				}
+			}
+		);
+
+		Liferay.FormBuilder.CUSTOM_CELL_EDITORS = {};
+
+		var customCellEditors = [
+			DLFileEntryCellEditor,
+			LinkToPageCellEditor
+		];
+
+		AArray.each(
+			customCellEditors,
+			function(item, index) {
+				Liferay.FormBuilder.CUSTOM_CELL_EDITORS[item.NAME] = item;
+			}
+		);
 
 		var LiferayFormBuilderField = function() {
 		};
@@ -199,7 +506,7 @@ AUI.add(
 
 						var model = DDMDateField.superclass.getPropertyModel.apply(instance, arguments);
 
-						A.Array.each(
+						AArray.each(
 							model,
 							function(item, index, collection) {
 								var attributeName = item.attributeName;
@@ -268,11 +575,10 @@ AUI.add(
 
 						var model = DDMDocumentLibraryField.superclass.getPropertyModel.apply(instance, arguments);
 
-						A.Array.each(
+						AArray.each(
 							model,
 							function(item, index) {
 								var attributeName = item.attributeName;
-								var DLFileEntryCellEditor = Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'];
 
 								if (attributeName === 'predefinedValue') {
 									item.editor = new DLFileEntryCellEditor();
@@ -590,7 +896,7 @@ AUI.add(
 			DDMHTMLTextField
 		];
 
-		A.Array.each(
+		AArray.each(
 			plugins,
 			function(item, index) {
 				FormBuilderTypes[item.NAME] = item;

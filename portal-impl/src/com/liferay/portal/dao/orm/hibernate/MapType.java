@@ -14,7 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -92,7 +93,7 @@ public class MapType implements CompositeUserType, Serializable {
 			(String)StandardBasicTypes.STRING.nullSafeGet(
 				rs, names, session, owner);
 
-		return JSONFactoryUtil.deserialize(serializedValue);
+		return _jsonFactory.deserialize(serializedValue);
 	}
 
 	@Override
@@ -101,10 +102,10 @@ public class MapType implements CompositeUserType, Serializable {
 			SessionImplementor session)
 		throws SQLException {
 
-		String serializedValue = JSONFactoryUtil.serialize(target);
+		String serializedTarget = _jsonFactory.serialize(target);
 
 		StandardBasicTypes.STRING.nullSafeSet(
-			ps, serializedValue, index, session);
+			ps, serializedTarget, index, session);
 	}
 
 	@Override
@@ -123,5 +124,7 @@ public class MapType implements CompositeUserType, Serializable {
 	@Override
 	public void setPropertyValue(Object component, int property, Object value) {
 	}
+
+	private static JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

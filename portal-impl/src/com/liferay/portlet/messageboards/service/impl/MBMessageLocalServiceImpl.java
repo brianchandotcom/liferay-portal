@@ -421,16 +421,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
+		long groupId = serviceContext.getScopeGroupId();
+
+		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+				categoryId);
+
+			groupId = category.getGroupId();
+		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
 		return addMessage(
-			userId, userName, category.getGroupId(), categoryId, 0, 0, subject,
-			body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
-			0.0, false, serviceContext);
+			userId, userName, groupId, categoryId, 0, 0, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
 	}
 
 	@Override

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TASK_IFRAME</td>
+	<td>//iframe[contains(@id,'tasksportlet_Dialog_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TASK_DESCRIPTION</td>
 	<td>//h3[@class='header-title']</td>
 	<td></td>
@@ -65,22 +70,17 @@
 </tr>
 <tr>
 	<td>TASK_RESOLVE_BUTTON</td>
-	<td>//input[@value='Resolve']</td>
+	<td>//button[contains(.,'Resolve')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_EDIT_BUTTON</td>
-	<td>//input[@value='Edit']</td>
+	<td>//button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_DELETE_BUTTON</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASK_CLOSE_BUTTON</td>
-	<td>//input[@value='Close']</td>
+	<td>//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

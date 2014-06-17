@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TASK_IFRAME</td>
+	<td>//iframe[contains(@id,'tasksportlet_Dialog_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

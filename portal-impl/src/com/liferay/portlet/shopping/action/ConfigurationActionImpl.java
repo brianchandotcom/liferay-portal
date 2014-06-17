@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
@@ -44,23 +43,12 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmail(actionRequest, "emailOrderShipping");
 		validateEmailFrom(actionRequest);
 
-		updateCcTypes(actionRequest);
-		updateInsuranceCalculation(actionRequest);
 		updatePayment(actionRequest);
-		updateShippingCalculation(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void updateCcTypes(ActionRequest actionRequest) {
-		String ccTypes = ParamUtil.getString(actionRequest, "ccTypes");
-
-		setPreference(actionRequest, "ccTypes", StringUtil.split(ccTypes));
-	}
-
-	protected void updateInsuranceCalculation(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateInsuranceCalculation(ActionRequest actionRequest) {
 		String[] insurance = new String[5];
 
 		for (int i = 0; i < insurance.length; i++) {
@@ -71,7 +59,15 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		setPreference(actionRequest, "insurance", insurance);
 	}
 
-	protected void updatePayment(ActionRequest actionRequest) throws Exception {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
+
+		updateInsuranceCalculation(actionRequest);
+		updateShippingCalculation(actionRequest);
+	}
+
+	protected void updatePayment(ActionRequest actionRequest) {
 		String taxRatePercent = ParamUtil.getString(actionRequest, "taxRate");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -91,9 +87,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 	}
 
-	protected void updateShippingCalculation(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateShippingCalculation(ActionRequest actionRequest) {
 		String[] shipping = new String[5];
 
 		for (int i = 0; i < shipping.length; i++) {

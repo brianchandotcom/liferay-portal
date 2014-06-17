@@ -239,3 +239,41 @@ You should always use DDMForm to update the DDM Structure content. You can retri
 
 #### Why was this change made?
 This change gives users the flexibility to modify the structure content without to worry about the DDM Structure internal content representation of data.
+
+---------------------------------------
+
+### Some portlet instances setup may be ignored because they were never meant to be per instance
+- **Date:** 2014-Jun-06
+- **JIRA Ticket:** LPS-43134
+
+#### What changed?
+A few portlets allowed providing a separate setup per portlet instance (in the
+same page or in different pages). However for some of the setup fields, it
+didn't make sense to provide different values per instance and that was creating
+confusion among users. To fix this, those fields have been removed from the
+portlet instance set up and have been moved to Site Administration.
+
+The upgrade process will take care of making the necessary database changes,
+however if several portlet instances had different configurations only one will 
+be preserved. Check the log generated in the console by the migration process
+to get accurate information on which configuration was chosen.
+
+For instance: if you have configured three bookmarks portlets where the mail 
+configuration is the same you won't have any problem. But in case the three 
+configurations are different, you will have to choose which one to use.
+
+We think this case is rare and a problematic configuration (i.e. highly
+unrecommended) so we don't expect this change to have a relevant negative
+impact.
+
+#### Who is affected?
+Users who have configured more than one portlet of the same type which stores
+configuration at layout level with different settings.
+
+#### How should I update my code?
+The upgrade process will choose one of your configurations and will store it at
+the service level. You will have to review it then and modify it if needed.
+
+#### Why was this change made?
+To unify the configuration of portlets and services and make its management
+easier.

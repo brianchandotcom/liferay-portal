@@ -35,6 +35,14 @@ import java.util.Map;
  */
 public class DLPortletInstanceSettings {
 
+	public static final String[] ALL_KEYS = {
+		"rootFolderId", "displayViews", "entriesPerPage", "entryColumns",
+		"fileEntriesPerPage", "fileEntryColumns", "folderColumns",
+		"foldersPerPage", "mimeTypes", "enableCommentRatings", "enableRatings",
+		"enableRelatedAssets", "showActions", "showFolderMenu",
+		"showFoldersSearch", "showSubfolders", "showTabs"
+	};
+
 	public static DLPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {

@@ -17,7 +17,6 @@ package com.liferay.portlet.bookmarks.action;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -42,24 +41,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmailFrom(actionRequest);
 		validateRootFolder(actionRequest);
 
-		updateEntryColumns(actionRequest);
-		updateFolderColumns(actionRequest);
-
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void updateEntryColumns(ActionRequest actionRequest) {
-		String entryColumns = getParameter(actionRequest, "entryColumns");
-
-		setPreference(
-			actionRequest, "entryColumns", StringUtil.split(entryColumns));
-	}
-
-	protected void updateFolderColumns(ActionRequest actionRequest) {
-		String folderColumns = getParameter(actionRequest, "folderColumns");
-
-		setPreference(
-			actionRequest, "folderColumns", StringUtil.split(folderColumns));
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)

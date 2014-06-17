@@ -30,7 +30,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="ccTypes" type="hidden" />
+	<aui:input name="preferences--ccTypes--" type="hidden" />
 
 	<liferay-ui:tabs
 		names="payment-settings,shipping-calculation,insurance-calculation,email-from,confirmation-email,shipping-email"
@@ -252,7 +252,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />ccTypes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_cc_types);
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--ccTypes--'].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_cc_types);
 
 			<portlet:namespace />saveEmails();
 

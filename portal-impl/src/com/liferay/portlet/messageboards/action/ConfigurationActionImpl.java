@@ -53,9 +53,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmail(actionRequest, "emailMessageUpdated");
 		validateEmailFrom(actionRequest);
 
-		updateThreadPriorities(actionRequest);
-		updateUserRanks(actionRequest);
-
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
@@ -70,9 +67,15 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		return true;
 	}
 
-	protected void updateThreadPriorities(ActionRequest actionRequest)
-		throws Exception {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
 
+		updateThreadPriorities(actionRequest);
+		updateUserRanks(actionRequest);
+	}
+
+	protected void updateThreadPriorities(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -110,9 +113,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 	}
 
-	protected void updateUserRanks(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateUserRanks(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

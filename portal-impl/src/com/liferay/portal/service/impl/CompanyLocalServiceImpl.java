@@ -376,6 +376,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			contactPersistence.update(defaultContact);
 		}
 
+		// Search engine
+		SearchEngineUtil.initialize(companyId);
+
 		// System roles
 
 		roleLocalService.checkSystemRoles(companyId);

@@ -28,4 +28,13 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 		LuceneHelperUtil.startup(companyId);
 	}
 
+	@Override
+	public void removeCompany(long companyId) {
+		super.removeCompany(companyId);
+
+		LuceneHelperUtil.delete(companyId);
+
+		LuceneHelperUtil.shutdown(companyId);
+	}
+
 }

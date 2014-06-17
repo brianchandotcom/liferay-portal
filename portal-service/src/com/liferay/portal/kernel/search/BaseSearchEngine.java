@@ -170,6 +170,10 @@ public class BaseSearchEngine implements SearchEngine {
 		return _luceneBased;
 	}
 
+	@Override
+	public void removeCompany(long companyId) {
+	}
+
 	public void setBooleanClauseFactory(
 		BooleanClauseFactory booleanClauseFactory) {
 

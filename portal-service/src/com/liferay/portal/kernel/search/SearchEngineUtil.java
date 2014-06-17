@@ -145,7 +145,7 @@ public class SearchEngineUtil {
 
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
-		_searchEngines.put(searchEngineId, searchEngine);
+		setSearchEngine(searchEngineId, searchEngine);
 	}
 
 	/**
@@ -251,6 +251,18 @@ public class SearchEngineUtil {
 		indexWriter.deletePortletDocuments(searchContext, portletId);
 	}
 
+	public synchronized static void removeCompany(long companyId) {
+		if (!_companyIds.contains(companyId)) {
+			return;
+		}
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.removeCompany(companyId);
+		}
+
+		_companyIds.remove(companyId);
+	}
+
 	public static String getDefaultSearchEngineId() {
 		if (_defaultSearchEngineId == null) {
 			return SYSTEM_ENGINE_ID;
@@ -288,6 +300,19 @@ public class SearchEngineUtil {
 		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
 
 		if (searchEngine == null) {
+			if (SYSTEM_ENGINE_ID.equals(searchEngineId)) {
+				waitForSystemSearchEngine();
+
+				searchEngine = _searchEngines.get(SYSTEM_ENGINE_ID);
+
+				if (searchEngine == null) {
+					throw new IllegalStateException(
+						"No " + SYSTEM_ENGINE_ID + " was found.");
+				}
+
+				return searchEngine;
+			}
+
 			if (getDefaultSearchEngineId().equals(searchEngineId)) {
 				throw new IllegalStateException(
 					"There is no default search engine configured with ID " +
@@ -496,6 +521,12 @@ public class SearchEngineUtil {
 	}
 
 	public synchronized static void initialize(long companyId) {
+		if (_companyIds.contains(companyId)) {
+			return;
+		}
+
+		_companyIds.add(companyId);
+
 		for (SearchEngine searchEngine : _searchEngines.values()) {
 			searchEngine.initialize(companyId);
 		}
@@ -700,6 +731,10 @@ public class SearchEngineUtil {
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
 		_searchEngines.put(searchEngineId, searchEngine);
+
+		for (Long companyId : _companyIds) {
+			searchEngine.initialize(companyId);
+		}
 	}
 
 	public static String spellCheckKeywords(SearchContext searchContext)
@@ -855,7 +890,7 @@ public class SearchEngineUtil {
 
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
-		_searchEngines.put(searchEngineId, searchEngine);
+		setSearchEngine(searchEngineId, searchEngine);
 	}
 
 	public void setSearchPermissionChecker(
@@ -867,6 +902,25 @@ public class SearchEngineUtil {
 		_searchPermissionChecker = searchPermissionChecker;
 	}
 
+	private static void waitForSystemSearchEngine() {
+		try {
+			int count = 1000;
+
+			while (!_searchEngines.containsKey(SYSTEM_ENGINE_ID) &&
+				   (--count > 0)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Waiting for a " + SYSTEM_ENGINE_ID);
+				}
+
+				Thread.sleep(500);
+			}
+		}
+		catch (InterruptedException e) {
+			_log.error(e, e);
+		}
+	}
+
 	private SearchEngineUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -875,25 +929,6 @@ public class SearchEngineUtil {
 			new SearchEngineConfiguratorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Waiting for search engine registration");
-			}
-
-			if (_serviceTracker.isEmpty()) {
-				_serviceTracker.waitForService(30000);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Registered search engine");
-			}
-		}
-		catch (InterruptedException ie) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Interrupted search engine registration", ie);
-			}
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
@@ -904,6 +939,7 @@ public class SearchEngineUtil {
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 	private static Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<String, SearchEngine>();
+	private static Set<Long> _companyIds = new HashSet<Long>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
 	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>

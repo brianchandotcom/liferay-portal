@@ -42,7 +42,7 @@
 		<property name="configFileName" value="/META-INF/elasticsearch-embedded.yml" />
 		<property name="indexFactory" ref="com.liferay.portal.search.elasticsearch.index.IndexFactory" />
 	</bean>
-	<bean class="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" id="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager">
+	<bean class="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" id="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" init-method="afterPropertiesSet">
 		<property name="elasticsearchConnection" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection" />
 	</bean>
 	<bean class="com.liferay.portal.search.elasticsearch.index.CompanyIndexFactory" id="com.liferay.portal.search.elasticsearch.index.IndexFactory">

@@ -21,6 +21,13 @@ import org.elasticsearch.client.Client;
  */
 public class ElasticsearchConnectionManager {
 
+	public void afterPropertiesSet() {
+		ElasticsearchConnection elasticsearchConnection =
+			getElasticsearchConnection();
+
+		elasticsearchConnection.initialize();
+	}
+
 	public Client getClient() {
 		if (_elasticsearchConnection == null) {
 			throw new IllegalStateException(

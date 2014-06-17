@@ -14,11 +14,15 @@
 
 package com.liferay.portal.search.elasticsearch;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 
@@ -28,8 +32,36 @@ import org.elasticsearch.client.Client;
 public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	@Override
-	public void initialize(long searchEngineId) {
-		super.initialize(searchEngineId);
+	public void initialize(long companyId) {
+		super.initialize(companyId);
+
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnectionManager.getElasticsearchConnection();
+
+		ClusterHealthResponse clusterHealthResponse =
+			elasticsearchConnection.getClusterHealthResponse();
+
+		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
+			throw new IllegalStateException(
+				"Elasticsearch cluster not initialized: " +
+					clusterHealthResponse);
+		}
+
+		Client client = elasticsearchConnection.getClient();
+
+		AdminClient adminClient = client.admin();
+
+		try {
+			_indexFactory.createIndices(adminClient, companyId);
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	@Override
+	public void removeCompany(long companyId) {
+		super.removeCompany(companyId);
 
 		ElasticsearchConnection elasticsearchConnection =
 			_elasticsearchConnectionManager.getElasticsearchConnection();
@@ -39,10 +71,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		AdminClient adminClient = client.admin();
 
 		try {
-			_indexFactory.createIndices(adminClient, searchEngineId);
+			_indexFactory.deleteIndices(adminClient, companyId);
 		}
 		catch (Exception e) {
-			throw new IllegalStateException(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to delete index for " + companyId, e);
+			}
 		}
 	}
 
@@ -55,6 +89,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ElasticsearchSearchEngine.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;

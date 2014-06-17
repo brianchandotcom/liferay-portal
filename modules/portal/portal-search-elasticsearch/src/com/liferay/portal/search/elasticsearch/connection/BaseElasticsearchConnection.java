@@ -17,8 +17,15 @@ package com.liferay.portal.search.elasticsearch.connection;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
+import java.util.concurrent.Future;
+
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.unit.TimeValue;
 
 /**
  * @author Michael C. Han
@@ -36,6 +43,29 @@ public abstract class BaseElasticsearchConnection
 	@Override
 	public Client getClient() {
 		return _client;
+	}
+
+	public ClusterHealthResponse getClusterHealthResponse() {
+		AdminClient adminClient = _client.admin();
+
+		ClusterAdminClient clusterAdminClient = adminClient.cluster();
+
+		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
+			clusterAdminClient.prepareHealth();
+
+		clusterHealthRequestBuilder.setTimeout(TimeValue.timeValueSeconds(30));
+		clusterHealthRequestBuilder.setWaitForGreenStatus();
+		clusterHealthRequestBuilder.setWaitForNodes(">1");
+
+		Future<ClusterHealthResponse> future =
+			clusterHealthRequestBuilder.execute();
+
+		try {
+			return future.get();
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	public String getClusterName() {

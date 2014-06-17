@@ -44,4 +44,6 @@ public interface SearchEngine {
 
 	public boolean isLuceneBased();
 
+	public void removeCompany(long companyId);
+
 }

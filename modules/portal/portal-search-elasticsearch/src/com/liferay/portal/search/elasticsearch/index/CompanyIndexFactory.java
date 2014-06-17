@@ -25,6 +25,8 @@ import java.util.concurrent.Future;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.client.AdminClient;
@@ -42,16 +44,7 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
-		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
-			indicesAdminClient.prepareExists(String.valueOf(companyId));
-
-		Future<IndicesExistsResponse> indicesExistsRequestFuture =
-			indicesExistsRequestBuilder.execute();
-
-		IndicesExistsResponse indicesExistsResponse =
-			indicesExistsRequestFuture.get();
-
-		if (indicesExistsResponse.isExists()) {
+		if (hasIndex(indicesAdminClient, companyId)) {
 			return;
 		}
 
@@ -67,10 +60,10 @@ public class CompanyIndexFactory implements IndexFactory {
 			createIndexRequestBuilder.addMapping(entry.getKey(), typeMapping);
 		}
 
-		Future<CreateIndexResponse> createIndexFuture =
+		Future<CreateIndexResponse> future =
 			createIndexRequestBuilder.execute();
 
-		CreateIndexResponse createIndexResponse = createIndexFuture.get();
+		CreateIndexResponse createIndexResponse = future.get();
 
 		if (_log.isInfoEnabled()) {
 			StringOutputStream stringOutputStream = new StringOutputStream();
@@ -82,8 +75,51 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 	}
 
+	@Override
+	public void deleteIndices(AdminClient adminClient, long companyId)
+		throws Exception {
+
+		IndicesAdminClient indicesAdminClient = adminClient.indices();
+
+		if (!hasIndex(indicesAdminClient, companyId)) {
+			return;
+		}
+
+		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
+			indicesAdminClient.prepareDelete(String.valueOf(companyId));
+
+		Future<DeleteIndexResponse> future =
+			deleteIndexRequestBuilder.execute();
+
+		if (_log.isInfoEnabled()) {
+			DeleteIndexResponse deleteIndexResponse = future.get();
+
+			StringOutputStream stringOutputStream = new StringOutputStream();
+
+			deleteIndexResponse.writeTo(
+				new OutputStreamStreamOutput(stringOutputStream));
+
+			_log.info(stringOutputStream);
+		}
+	}
+
 	public void setTypeMappings(Map<String, String> typeMappings) {
 		_typeMappings = typeMappings;
+	}
+
+	protected boolean hasIndex(
+			IndicesAdminClient indicesAdminClient, long companyId)
+		throws Exception {
+
+		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
+			indicesAdminClient.prepareExists(String.valueOf(companyId));
+
+		Future<IndicesExistsResponse> future =
+			indicesExistsRequestBuilder.execute();
+
+		IndicesExistsResponse indicesExistsResponse = future.get();
+
+		return indicesExistsResponse.isExists();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);

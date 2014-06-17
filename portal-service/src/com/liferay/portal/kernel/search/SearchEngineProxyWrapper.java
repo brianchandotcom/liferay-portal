@@ -31,6 +31,11 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	@Override
+	public void removeCompany(long companyId) {
+		_searchEngine.removeCompany(companyId);
+	}
+
+	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		return _searchEngine.getBooleanClauseFactory();
 	}

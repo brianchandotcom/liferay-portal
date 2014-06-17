@@ -22,64 +22,11 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 
-import java.util.concurrent.Future;
-
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.ClusterAdminClient;
-import org.elasticsearch.common.unit.TimeValue;
-
 /**
  * @author Michael C. Han
  */
 public class ElasticsearchEngineConfigurator
 	extends AbstractSearchEngineConfigurator {
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnectionManager.getElasticsearchConnection();
-
-		elasticsearchConnection.initialize();
-
-		Client client = elasticsearchConnection.getClient();
-
-		AdminClient adminClient = client.admin();
-
-		ClusterAdminClient clusterAdminClient = adminClient.cluster();
-
-		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
-			clusterAdminClient.prepareHealth();
-
-		clusterHealthRequestBuilder.setTimeout(TimeValue.timeValueSeconds(30));
-		clusterHealthRequestBuilder.setWaitForGreenStatus();
-		clusterHealthRequestBuilder.setWaitForNodes(">1");
-
-		Future<ClusterHealthResponse> future =
-			clusterHealthRequestBuilder.execute();
-
-		ClusterHealthResponse clusterHealthResponse = null;
-
-		try {
-			clusterHealthResponse = future.get();
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-
-		ClusterHealthStatus clusterHealthStatus =
-			clusterHealthResponse.getStatus();
-
-		if (clusterHealthStatus == ClusterHealthStatus.RED) {
-			throw new IllegalStateException(
-				"Unable to initialize Elasticsearch cluster");
-		}
-	}
 
 	@Override
 	public void destroy() {

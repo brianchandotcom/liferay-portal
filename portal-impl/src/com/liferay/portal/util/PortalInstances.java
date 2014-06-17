@@ -33,7 +33,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -425,10 +424,6 @@ public class PortalInstances {
 
 			PrincipalThreadLocal.setName(principalName);
 
-			// Search engine
-
-			SearchEngineUtil.initialize(companyId);
-
 			// Initialize display
 
 			if (_log.isDebugEnabled()) {
@@ -573,9 +568,7 @@ public class PortalInstances {
 
 		_getWebIds();
 
-		LuceneHelperUtil.delete(companyId);
-
-		LuceneHelperUtil.shutdown(companyId);
+		SearchEngineUtil.removeCompany(companyId);
 
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
 	}

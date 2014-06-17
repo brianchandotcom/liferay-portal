@@ -319,20 +319,23 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		deleteDocument(article.getCompanyId(), article.getId());
 
-		if (article.isApproved()) {
-			JournalArticle currentlyPublishedInDBButNotInIndexes =
-				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-					article.getResourcePrimKey());
-
-			if ((currentlyPublishedInDBButNotInIndexes != null) &&
-				(article.getVersion() >
-					currentlyPublishedInDBButNotInIndexes.getVersion())) {
-
-				SearchEngineUtil.updateDocument(
-					getSearchEngineId(), article.getCompanyId(), getDocument(
-						currentlyPublishedInDBButNotInIndexes));
-			}
+		if (!article.isApproved()) {
+			return;
 		}
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				article.getResourcePrimKey());
+
+		if ((latestIndexableArticle == null) ||
+			(latestIndexableArticle.getVersion() > article.getVersion())) {
+
+			return;
+		}
+
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), article.getCompanyId(),
+			getDocument(latestIndexableArticle));
 	}
 
 	@Override

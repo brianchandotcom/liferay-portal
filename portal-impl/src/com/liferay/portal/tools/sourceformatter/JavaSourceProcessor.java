@@ -901,6 +901,108 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixLeadingTabs(
+		String content, String line, int expectedTabCount) {
+
+		int leadingTabCount = getLeadingTabCount(line);
+
+		String newLine = line;
+
+		while (leadingTabCount != expectedTabCount) {
+			if (leadingTabCount > expectedTabCount) {
+				newLine = StringUtil.replaceFirst(
+					newLine, StringPool.TAB, StringPool.BLANK);
+
+				leadingTabCount--;
+			}
+			else {
+				newLine = StringPool.TAB + newLine;
+
+				leadingTabCount++;
+			}
+		}
+
+		return StringUtil.replace(content, line, newLine);
+	}
+
+	protected String fixTabs(String content, Set<JavaTerm> javaTerms) {
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
+				continue;
+			}
+
+			String javaTermContent = "\n" + javaTerm.getContent();
+
+			Matcher matcher = _methodNameAndParametersPattern.matcher(
+				javaTermContent);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String methodNameAndParameters = matcher.group();
+
+			String[] lines = StringUtil.splitLines(methodNameAndParameters);
+
+			if (lines.length == 1) {
+				continue;
+			}
+
+			boolean throwsException = methodNameAndParameters.contains(
+				StringPool.TAB + "throws ");
+
+			String newMethodNameAndParameters = methodNameAndParameters;
+
+			int expectedTabCount = -1;
+
+			for (int i = 0; i < lines.length; i++) {
+				String line = lines[i];
+
+				if (line.contains(StringPool.TAB + "throws ")) {
+					newMethodNameAndParameters = fixLeadingTabs(
+						newMethodNameAndParameters, line, 2);
+
+					break;
+				}
+
+				if (expectedTabCount == -1) {
+					if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+						expectedTabCount =
+							Math.max(getLeadingTabCount(line), 1) + 1;
+
+						if (throwsException && (expectedTabCount == 2)) {
+							expectedTabCount += 1;
+						}
+					}
+				}
+				else {
+					String previousLine = lines[i - 1];
+
+					if (previousLine.endsWith(StringPool.COMMA) ||
+						previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+						newMethodNameAndParameters = fixLeadingTabs(
+							newMethodNameAndParameters, line, expectedTabCount);
+					}
+					else {
+						newMethodNameAndParameters = fixLeadingTabs(
+							newMethodNameAndParameters, line,
+							getLeadingTabCount(previousLine) + 1);
+					}
+				}
+			}
+
+			content = StringUtil.replace(
+				content, methodNameAndParameters, newMethodNameAndParameters);
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
 		Collection<String> fileNames = null;
@@ -2075,6 +2177,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			newContent = sortJavaTerms(fileName, content, javaTerms);
+
+			newContent = fixTabs(newContent, javaTerms);
 		}
 
 		if (content.equals(newContent)) {
@@ -2979,6 +3083,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _methodNameAndParametersPattern = Pattern.compile(
+		"\n\t(private |protected |public )(.|\n)*?(\\{|;)\n");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(

@@ -202,6 +202,19 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C() {
+		try {
+			_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+			_persistence.countByG_C_C(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByC_W_W() {
 		try {
 			_persistence.countByC_W_W(RandomTestUtil.nextLong(),

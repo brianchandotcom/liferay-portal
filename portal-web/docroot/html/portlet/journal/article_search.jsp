@@ -117,7 +117,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 				<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_ANY) %>" value="<%= WorkflowConstants.STATUS_ANY %>" />
 				<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT) %>" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
 
-				<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) %>">
+				<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0 %>">
 					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_PENDING) %>" value="<%= WorkflowConstants.STATUS_PENDING %>" />
 					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DENIED) %>" value="<%= WorkflowConstants.STATUS_DENIED %>" />
 				</c:if>

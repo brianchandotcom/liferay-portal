@@ -3237,6 +3237,11 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="C_W_W" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="workflowDefinitionName" />

@@ -102,9 +102,7 @@ import com.liferay.portal.sanitizer.SanitizerImpl;
 import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.AuthToken;
-import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
-import com.liferay.portal.security.auth.AuthTokenWrapper;
 import com.liferay.portal.security.auth.AuthVerifier;
 import com.liferay.portal.security.auth.AuthVerifierConfiguration;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
@@ -168,6 +166,9 @@ import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 import java.io.InputStream;
@@ -186,6 +187,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
@@ -200,6 +202,8 @@ import org.springframework.aop.framework.AdvisedSupport;
  * @author Wesley Gong
  * @author Ryan Park
  * @author Mika Koivisto
+ * @author Peter Fellwock
+ * @author Raymond Augé
  */
 public class HookHotDeployListener
 	extends BaseHotDeployListener implements PropsKeys {
@@ -411,6 +415,9 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
+
 		PropsUtil.removeProperties(portalProperties);
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
@@ -446,10 +453,15 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
-			AuthTokenWrapper authTokenWrapper =
-				(AuthTokenWrapper)AuthTokenUtil.getAuthToken();
+			String authTokenClassName = portalProperties.getProperty(
+				PropsKeys.AUTH_TOKEN_IMPL);
 
-			authTokenWrapper.setAuthToken(null);
+			ServiceRegistration<?> serviceRegistration =
+				serviceRegistrations.remove(authTokenClassName);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.CAPTCHA_ENGINE_IMPL)) {
@@ -989,6 +1001,21 @@ public class HookHotDeployListener
 		}
 
 		return new File(filePath);
+	}
+
+	protected Map<Object, ServiceRegistration<?>> getServiceRegistrations(
+		String servletContextName) {
+
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.get(servletContextName);
+
+		if (serviceRegistrations == null) {
+			serviceRegistrations = _getMap();
+
+			_serviceRegistrations.put(servletContextName, serviceRegistrations);
+		}
+
+		return serviceRegistrations;
 	}
 
 	protected void initAuthenticators(
@@ -1681,6 +1708,11 @@ public class HookHotDeployListener
 			Properties portalProperties, Properties unfilteredPortalProperties)
 		throws Exception {
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
+
 		PropsUtil.addProperties(portalProperties);
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
@@ -1737,10 +1769,10 @@ public class HookHotDeployListener
 			AuthToken authToken = (AuthToken)newInstance(
 				portletClassLoader, AuthToken.class, authTokenClassName);
 
-			AuthTokenWrapper authTokenWrapper =
-				(AuthTokenWrapper)AuthTokenUtil.getAuthToken();
+			ServiceRegistration<AuthToken> serviceRegistration =
+				registry.registerService(authTokenClassName, authToken);
 
-			authTokenWrapper.setAuthToken(authToken);
+			serviceRegistrations.put(authTokenClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.CAPTCHA_ENGINE_IMPL)) {
@@ -2735,6 +2767,10 @@ public class HookHotDeployListener
 			release.getReleaseId(), buildNumber, null, true);
 	}
 
+	private static <S,T> Map<S, T> _getMap() {
+		return new ConcurrentHashMap<S, T>();
+	}
+
 	private static final String[] _PROPS_KEYS_EVENTS = {
 		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
 		LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
@@ -2885,6 +2921,8 @@ public class HookHotDeployListener
 	private Map<String, SanitizerContainer> _sanitizerContainerMap =
 		new HashMap<String, SanitizerContainer>();
 	private ServicesContainer _servicesContainer = new ServicesContainer();
+	private Map<String, Map<Object, ServiceRegistration<?>>>
+		_serviceRegistrations = _getMap();
 	private Set<String> _servletContextNames = new HashSet<String>();
 	private Map<String, ServletFiltersContainer> _servletFiltersContainerMap =
 		new HashMap<String, ServletFiltersContainer>();

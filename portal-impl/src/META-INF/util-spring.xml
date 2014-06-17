@@ -604,17 +604,14 @@
 			<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil">
-		<property name="authToken">
-			<bean class="com.liferay.portal.security.auth.AuthTokenImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" class="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
 	<bean id="com.liferay.portal.security.ldap.AttributesTransformerFactory" class="com.liferay.portal.security.ldap.AttributesTransformerFactory" />
 	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
 		<property name="organizationMembershipPolicyFactory">

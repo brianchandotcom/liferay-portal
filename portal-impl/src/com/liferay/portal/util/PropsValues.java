@@ -186,8 +186,6 @@ public class PropsValues {
 
 	public static String[] AUTH_TOKEN_IGNORE_PORTLETS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
 
-	public static final String AUTH_TOKEN_IMPL = PropsUtil.get(PropsKeys.AUTH_TOKEN_IMPL);
-
 	public static final int AUTH_TOKEN_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.AUTH_TOKEN_LENGTH));
 
 	public static final String AUTH_TOKEN_SHARED_SECRET = PropsUtil.get(PropsKeys.AUTH_TOKEN_SHARED_SECRET);

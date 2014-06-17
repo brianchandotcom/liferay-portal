@@ -15,12 +15,16 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Amos Fong
+ * @author Peter Fellwock
+ * @author Raymond Augé
  */
 public class AuthTokenUtil {
 
@@ -32,45 +36,104 @@ public class AuthTokenUtil {
 	public static void check(HttpServletRequest request)
 		throws PortalException {
 
-		getAuthToken().check(request);
+		_instance._check(request);
 	}
 
 	public static void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
 
-		getAuthToken().checkCSRFToken(request, origin);
-	}
-
-	public static AuthToken getAuthToken() {
-		PortalRuntimePermission.checkGetBeanProperty(AuthTokenUtil.class);
-
-		return _authToken;
+		_instance._checkCSRFToken(request, origin);
 	}
 
 	public static String getToken(HttpServletRequest request) {
-		return getAuthToken().getToken(request);
+		return _instance._getToken(request);
 	}
 
 	public static String getToken(
 		HttpServletRequest request, long plid, String portletId) {
 
-		return getAuthToken().getToken(request, plid, portletId);
+		return _instance._getToken(request, plid, portletId);
 	}
 
 	public static boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {
 
-		return getAuthToken().isValidPortletInvocationToken(
+		return _instance._isValidPortletInvocationToken(
 			request, plid, portletId, strutsAction, tokenValue);
 	}
 
-	public void setAuthToken(AuthToken authToken) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private AuthTokenUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_authToken = authToken;
+		_serviceTracker = registry.trackServices(AuthToken.class.getName());
+
+		_serviceTracker.open();
 	}
 
-	private static AuthToken _authToken;
+	@SuppressWarnings("deprecation")
+	private void _check(HttpServletRequest request)
+		throws PortalException {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.check(request);
+	}
+
+	private void _checkCSRFToken(HttpServletRequest request, String origin)
+		throws PrincipalException {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.checkCSRFToken(request, origin);
+	}
+
+	private String _getToken(HttpServletRequest request) {
+		if (_serviceTracker.isEmpty()) {
+			return null;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		return authToken.getToken(request);
+	}
+
+	private String _getToken(
+		HttpServletRequest request, long plid, String portletId) {
+
+		if (_serviceTracker.isEmpty()) {
+			return null;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		return authToken.getToken(request, plid, portletId);
+	}
+
+	private boolean _isValidPortletInvocationToken(
+		HttpServletRequest request, long plid, String portletId,
+		String strutsAction, String tokenValue) {
+
+		if (_serviceTracker.isEmpty()) {
+			return false;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		return authToken.isValidPortletInvocationToken(
+			request, plid, portletId, strutsAction, tokenValue);
+	}
+
+	private static AuthTokenUtil _instance = new AuthTokenUtil();
+
+	private ServiceTracker<?, AuthToken> _serviceTracker;
 
 }

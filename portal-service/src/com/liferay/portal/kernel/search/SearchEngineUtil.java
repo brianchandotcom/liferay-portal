@@ -251,6 +251,18 @@ public class SearchEngineUtil {
 		indexWriter.deletePortletDocuments(searchContext, portletId);
 	}
 
+	public synchronized static void removeCompany(long companyId) {
+		if (!_companyIds.contains(companyId)) {
+			return;
+		}
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.removeCompany(companyId);
+		}
+
+		_companyIds.remove(companyId);
+	}
+
 	public static String getDefaultSearchEngineId() {
 		if (_defaultSearchEngineId == null) {
 			return SYSTEM_ENGINE_ID;

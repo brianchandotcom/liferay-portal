@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
@@ -57,6 +59,27 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 	}
 
+	@Override
+	public void removeCompany(long companyId) {
+		super.removeCompany(companyId);
+
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnectionManager.getElasticsearchConnection();
+
+		Client client = elasticsearchConnection.getClient();
+
+		AdminClient adminClient = client.admin();
+
+		try {
+			_indexFactory.deleteIndices(adminClient, companyId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to delete index for " + companyId, e);
+			}
+		}
+	}
+
 	public void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
@@ -66,6 +89,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ElasticsearchSearchEngine.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;

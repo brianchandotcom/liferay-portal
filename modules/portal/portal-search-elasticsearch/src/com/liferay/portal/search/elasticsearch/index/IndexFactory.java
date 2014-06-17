@@ -24,4 +24,7 @@ public interface IndexFactory {
 	public void createIndices(AdminClient adminClient, long companyId)
 		throws Exception;
 
+	public void deleteIndices(AdminClient adminClient, long companyId)
+		throws Exception;
+
 }

@@ -164,7 +164,13 @@ AUI.add(
 										modalUtil.Window._name = id;
 									}
 
-									modal.iframe.node.focus();
+									var iframeNode = modal.iframe.node;
+
+									iframeNode.focus();
+
+									if (A.UA.ios) {
+										iframeNode.attr('scrolling', 'no');
+									}
 								}
 							}
 						)

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -59,34 +58,17 @@ public class TestPropsValues {
 	public static final String USER_PASSWORD = TestPropsUtil.get(
 		"user.password");
 
-	public static Company getCompany() throws PortalException {
-		if (_company == null) {
-			_company = CompanyLocalServiceUtil.getCompanyByWebId(
-				TestPropsValues.COMPANY_WEB_ID);
-		}
-
-		return _company;
-	}
-
 	public static long getCompanyId() throws PortalException {
 		if (_companyId > 0) {
 			return _companyId;
 		}
 
-		Company company = getCompany();
+		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+			TestPropsValues.COMPANY_WEB_ID);
 
 		_companyId = company.getCompanyId();
 
 		return _companyId;
-	}
-
-	public static Group getGroup() throws PortalException {
-		if (_group == null) {
-			_group = GroupLocalServiceUtil.getGroup(
-				getCompanyId(), GroupConstants.GUEST);
-		}
-
-		return _group;
 	}
 
 	public static long getGroupId() throws PortalException {
@@ -94,26 +76,19 @@ public class TestPropsValues {
 			return _groupId;
 		}
 
-		Group group = getGroup();
+		Group group = GroupLocalServiceUtil.getGroup(
+			getCompanyId(), GroupConstants.GUEST);
 
 		_groupId = group.getGroupId();
 
 		return _groupId;
 	}
 
-	public static Layout getLayout() throws PortalException {
-		if (_layout == null) {
-			_layout = LayoutLocalServiceUtil.getLayout(getPlid());
-		}
-
-		return _layout;
-	}
-
-	public static long getPlid() throws PortalException {
+	public static long getPlid() throws Exception {
 		return getPlid(getGroupId());
 	}
 
-	public static long getPlid(long groupId) {
+	public static long getPlid(long groupId) throws Exception {
 		if (_plid > 0) {
 			return _plid;
 		}
@@ -155,11 +130,8 @@ public class TestPropsValues {
 
 	private static Log _log = LogFactoryUtil.getLog(TestPropsValues.class);
 
-	private static Company _company;
 	private static long _companyId;
-	private static Group _group;
 	private static long _groupId;
-	private static Layout _layout;
 	private static long _plid;
 	private static User _user;
 	private static long _userId;

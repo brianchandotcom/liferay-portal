@@ -39,10 +39,6 @@ public interface WebKeys {
 
 	public static final String CLP_MESSAGE_LISTENERS = "CLP_MESSAGE_LISTENERS";
 
-	public static final String COMPANY = "COMPANY";
-
-	public static final String COMPANY_ID = "COMPANY_ID";
-
 	public static final String CTX = "CTX";
 
 	public static final String CTX_PATH = "CTX_PATH";

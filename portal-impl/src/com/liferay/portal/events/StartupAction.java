@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
-import com.liferay.portal.kernel.nio.intraband.cache.PortalCacheDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.proxy.IntrabandProxyDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
@@ -108,8 +108,9 @@ public class StartupAction extends SimpleAction {
 			new MessageDatagramReceiveHandler(messageBus));
 
 		intraband.registerDatagramReceiveHandler(
-			SystemDataType.PORTAL_CACHE.getValue(),
-			new PortalCacheDatagramReceiveHandler());
+			SystemDataType.PROXY.getValue(),
+			new IntrabandProxyDatagramReceiveHandler());
+
 		intraband.registerDatagramReceiveHandler(
 			SystemDataType.RPC.getValue(), new RPCDatagramReceiveHandler());
 

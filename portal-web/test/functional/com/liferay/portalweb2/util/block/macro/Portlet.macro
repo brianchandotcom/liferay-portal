@@ -212,6 +212,12 @@
 				</then>
 			</elseif>
 			<elseif>
+				<equals arg1="${portletOption}" arg2="Preferences" />
+				<then>
+					<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_PREFERENCES" value1="Preferences" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${portletOption}" arg2="Export / Import" />
 				<then>
 					<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />

@@ -49,6 +49,40 @@
 		</execute>
 	</command>
 
+	<command name="AddWikiPageToNode" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#addCP">
+			<var name="wikiNodeDescription" value="Wiki Node Description" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#addCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="WikiPage#viewCP">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+	</command>
+
 	<command name="CompareVersionsWikiPage" priority="5">
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageContent" value="Wiki Page Content" />

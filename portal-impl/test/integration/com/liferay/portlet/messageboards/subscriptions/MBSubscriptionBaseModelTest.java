@@ -59,7 +59,8 @@ public class MBSubscriptionBaseModelTest
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
+		MBCategory category = MBTestUtil.addCategory(
+			group.getGroupId(), containerModelId);
 
 		return category.getCategoryId();
 	}

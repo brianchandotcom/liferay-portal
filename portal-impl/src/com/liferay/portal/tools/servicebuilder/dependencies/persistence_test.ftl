@@ -57,6 +57,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,6 +230,8 @@ public class ${entity.name}PersistenceTest {
 					 new${column.methodName}Blob
 				<#elseif column.type == "String">
 					RandomTestUtil.randomString()
+				<#elseif column.type == "Map">
+					new HashMap()
 				</#if>
 
 				);
@@ -963,7 +966,9 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Date">
 					RandomTestUtil.nextDate()
 				<#elseif column.type == "String">
-					RandomTestUtil.randomString()
+	                RandomTestUtil.randomString()
+				<#elseif column.type == "Map">
+					new HashMap()
 				</#if>
 
 				);
@@ -1208,7 +1213,9 @@ public class ${entity.name}PersistenceTest {
 						<#elseif column.type == "Date">
 							RandomTestUtil.nextDate()
 						<#elseif column.type == "String">
-							RandomTestUtil.randomString()
+	                        RandomTestUtil.randomString()
+						<#elseif column.type == "Map">
+							new HashMap();
 						</#if>
 
 						);

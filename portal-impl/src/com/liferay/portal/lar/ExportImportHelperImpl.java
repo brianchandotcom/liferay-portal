@@ -2133,7 +2133,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			_log.debug("Import all portlet data " + importPortletDataAll);
 		}
 
-		if (!importPortletData || (portletDataElement == null)) {
+		if (!importPortletData) {
 			return false;
 		}
 
@@ -2147,7 +2147,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandler == null) {
+		if ((portletDataHandler == null) ||
+			((portletDataElement == null) &&
+			 !portletDataHandler.isDisplayPortlet())) {
+
 			return false;
 		}
 

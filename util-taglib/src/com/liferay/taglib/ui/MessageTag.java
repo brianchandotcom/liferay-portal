@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,6 +54,14 @@ public class MessageTag extends TagSupport {
 				else if (_unicode) {
 					value = UnicodeLanguageUtil.get(pageContext, _key);
 				}
+				else if (_escape) {
+					value = HtmlUtil.escape(
+						LanguageUtil.get(pageContext, _key));
+				}
+				else if (_escapeAttribute) {
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(pageContext, _key));
+				}
 				else {
 					value = LanguageUtil.get(pageContext, _key);
 				}
@@ -80,6 +89,8 @@ public class MessageTag extends TagSupport {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_arguments = null;
+				_escape = false;
+				_escapeAttribute = false;
 				_key = null;
 				_localizeKey = true;
 				_translateArguments = true;
@@ -105,6 +116,14 @@ public class MessageTag extends TagSupport {
 		}
 	}
 
+	public void setEscape(boolean escape) {
+		_escape = escape;
+	}
+
+	public void setEscapeAttribute(boolean escapeAttribute) {
+		_escapeAttribute = escapeAttribute;
+	}
+
 	public void setKey(String key) {
 		_key = key;
 	}
@@ -122,6 +141,8 @@ public class MessageTag extends TagSupport {
 	}
 
 	private Object[] _arguments;
+	private boolean _escape;
+	private boolean _escapeAttribute;
 	private String _key;
 	private boolean _localizeKey = true;
 	private boolean _translateArguments = true;

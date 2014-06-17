@@ -42,7 +42,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -92,13 +92,13 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			group.getGroupId(), parentFolder.getFolderId(),
 			"Test DLAppService.txt");
 
-		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
+		_users = new User[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = UserTestUtil.addUser(
 				"DLAppServiceTest" + (i + 1), group.getGroupId());
 
-			_userIds[i] = user.getUserId();
+			_users[i] = user;
 		}
 	}
 
@@ -110,10 +110,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		super.tearDown();
-
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			UserLocalServiceUtil.deleteUser(_userIds[i]);
-		}
 	}
 
 	@Test
@@ -133,17 +129,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntriesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_users.length];
 
-		_fileEntryIds = new long[_userIds.length];
+		_fileEntryIds = new long[_users.length];
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < doAsUserThreads.length; j++) {
 				if (i == 0) {
-					doAsUserThreads[j] = new AddFileEntryThread(_userIds[j], j);
+					doAsUserThreads[j] = new AddFileEntryThread(
+						_users[j].getUserId(), j);
 				}
 				else {
-					doAsUserThreads[j] = new GetFileEntryThread(_userIds[j], j);
+					doAsUserThreads[j] = new GetFileEntryThread(
+						_users[j].getUserId(), j);
 				}
 			}
 
@@ -164,7 +162,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			}
 
 			String message =
-				"Only " + successCount + " out of " + _userIds.length;
+				"Only " + successCount + " out of " + _users.length;
 
 			if (i == 0) {
 				message += " threads added file entries successfully";
@@ -173,7 +171,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				message += " threads retrieved file entries successfully";
 			}
 
-			Assert.assertTrue(message, successCount == _userIds.length);
+			Assert.assertTrue(message, successCount == _users.length);
 		}
 	}
 
@@ -613,7 +611,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
-	private long[] _userIds;
+
+	@DeleteAfterTestRun
+	private User[] _users;
 
 	private class AddFileEntryThread extends DoAsUserThread {
 

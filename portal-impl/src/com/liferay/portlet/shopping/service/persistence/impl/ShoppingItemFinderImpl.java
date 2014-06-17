@@ -45,13 +45,11 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public int countByG_C(long groupId, List<Long> categoryIds) {
-
 		return doCountByG_C(groupId, categoryIds, false);
 	}
 
 	@Override
 	public int countByFeatured(long groupId, long[] categoryIds) {
-
 		Session session = null;
 
 		try {
@@ -188,7 +186,6 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public int countBySale(long groupId, long[] categoryIds) {
-
 		Session session = null;
 
 		try {
@@ -254,7 +251,6 @@ public class ShoppingItemFinderImpl
 
 	@Override
 	public int filterCountByG_C(long groupId, List<Long> categoryIds) {
-
 		return doCountByG_C(groupId, categoryIds, true);
 	}
 

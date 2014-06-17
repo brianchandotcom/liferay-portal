@@ -35,7 +35,7 @@ public class AssetCategoryUtil {
 	public static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	public static long[] filterCategoryIds(
-			long vocabularyId, long[] categoryIds) {
+		long vocabularyId, long[] categoryIds) {
 
 		List<Long> filteredCategoryIds = new ArrayList<Long>();
 
@@ -57,8 +57,8 @@ public class AssetCategoryUtil {
 	}
 
 	public static String[] getCategoryIdsTitles(
-			String categoryIds, String categoryNames, long vocabularyId,
-			ThemeDisplay themeDisplay) {
+		String categoryIds, String categoryNames, long vocabularyId,
+		ThemeDisplay themeDisplay) {
 
 		if (Validator.isNotNull(categoryIds)) {
 			long[] categoryIdsArray = GetterUtil.getLongValues(

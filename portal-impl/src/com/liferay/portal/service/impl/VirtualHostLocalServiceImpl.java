@@ -28,13 +28,11 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId) {
-
 		return virtualHostPersistence.fetchByC_L(companyId, layoutSetId);
 	}
 
 	@Override
 	public VirtualHost fetchVirtualHost(String hostname) {
-
 		return virtualHostPersistence.fetchByHostname(hostname);
 	}
 

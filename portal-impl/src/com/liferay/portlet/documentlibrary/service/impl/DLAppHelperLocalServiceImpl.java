@@ -434,7 +434,6 @@ public class DLAppHelperLocalServiceImpl
 	@Deprecated
 	@Override
 	public int getFileShortcutsCount(long groupId, long folderId, int status) {
-
 		return getFileShortcutsCount(groupId, folderId, true, status);
 	}
 
@@ -851,7 +850,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void registerDLSyncEventCallback(String event, Folder folder) {
-
 		if (isStagingGroup(folder.getGroupId()) ||
 			!(folder instanceof LiferayFolder)) {
 

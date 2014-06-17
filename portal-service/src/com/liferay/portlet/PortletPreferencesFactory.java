@@ -46,8 +46,8 @@ public interface PortletPreferencesFactory {
 	public PortalPreferences fromXML(long ownerId, int ownerType, String xml);
 
 	public PortletPreferences fromXML(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml);
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
@@ -116,8 +116,8 @@ public interface PortletPreferencesFactory {
 		Layout layout, String portletId, String defaultPreferences);
 
 	public PortletPreferences getPortletSetup(
-			long scopeGroupId, Layout layout, String portletId,
-			String defaultPreferences);
+		long scopeGroupId, Layout layout, String portletId,
+		String defaultPreferences);
 
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
 		throws PortalException;
@@ -127,8 +127,8 @@ public interface PortletPreferencesFactory {
 		throws PortalException;
 
 	public Map<Long, PortletPreferences> getPortletSetupMap(
-			long companyId, long groupId, long ownerId, int ownerType,
-			String portletId, boolean privateLayout);
+		long companyId, long groupId, long ownerId, int ownerType,
+		String portletId, boolean privateLayout);
 
 	public PortletPreferences getPreferences(HttpServletRequest request);
 

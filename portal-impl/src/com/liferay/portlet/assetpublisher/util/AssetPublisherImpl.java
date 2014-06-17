@@ -1407,7 +1407,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	private void _checkAssetEntries(
 			com.liferay.portal.model.PortletPreferences
-			portletPreferencesModel)
+				portletPreferencesModel)
 		throws PortalException {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(

@@ -146,7 +146,6 @@ public class SCFrameworkVersionLocalServiceImpl
 
 	@Override
 	public void deleteFrameworkVersion(SCFrameworkVersion frameworkVersion) {
-
 		scFrameworkVersionPersistence.remove(frameworkVersion);
 	}
 
@@ -197,7 +196,6 @@ public class SCFrameworkVersionLocalServiceImpl
 
 	@Override
 	public int getFrameworkVersionsCount(long groupId, boolean active) {
-
 		return scFrameworkVersionPersistence.countByG_A(groupId, active);
 	}
 

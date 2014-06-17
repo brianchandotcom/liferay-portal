@@ -85,13 +85,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasLock(long userId, String className, long key) {
-
 		return hasLock(userId, className, String.valueOf(key));
 	}
 
 	@Override
 	public boolean hasLock(long userId, String className, String key) {
-
 		Lock lock = fetchLock(className, key);
 
 		if ((lock != null) && (lock.getUserId() == userId)) {
@@ -109,7 +107,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public boolean isLocked(String className, String key) {
-
 		Lock lock = fetchLock(className, key);
 
 		if (lock == null) {
@@ -186,7 +183,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(String className, String key, String owner) {
-
 		return lock(className, key, null, owner);
 	}
 
@@ -331,7 +327,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(String className, String key, String owner) {
-
 		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
 
 		if (lock == null) {
@@ -379,7 +374,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	protected Lock fetchLock(String className, String key) {
-
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 
 		if (lock != null) {

@@ -237,7 +237,6 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId) {
-
 		return dlFileEntryTypePersistence.fetchByPrimaryKey(fileEntryTypeId);
 	}
 
@@ -285,7 +284,6 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
-
 		return dlFileEntryTypePersistence.findByGroupId(groupIds);
 	}
 
@@ -342,7 +340,6 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public void unsetFolderFileEntryTypes(long folderId) {
-
 		List<DLFileEntryType> dlFileEntryTypes =
 			dlFolderPersistence.getDLFileEntryTypes(folderId);
 

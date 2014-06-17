@@ -36,7 +36,6 @@ public class LockFinderImpl
 
 	@Override
 	public Lock fetchByC_K(String className, String key, LockMode lockMode) {
-
 		if (lockMode == null) {
 			return LockUtil.fetchByC_K(className, key);
 		}

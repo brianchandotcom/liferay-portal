@@ -120,7 +120,6 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 	@Override
 	public void deleteLayoutFriendlyURL(long plid, String languageId) {
-
 		LayoutFriendlyURL layoutFriendlyURL =
 			layoutFriendlyURLPersistence.fetchByP_L(plid, languageId);
 
@@ -229,7 +228,6 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 	@Override
 	public List<LayoutFriendlyURL> getLayoutFriendlyURLs(long plid) {
-
 		return layoutFriendlyURLPersistence.findByPlid(plid);
 	}
 

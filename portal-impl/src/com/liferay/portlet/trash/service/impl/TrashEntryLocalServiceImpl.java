@@ -129,7 +129,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void checkEntries() throws PortalException {
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			groupLocalService.getActionableDynamicQuery();
 
@@ -207,7 +206,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public TrashEntry deleteEntry(TrashEntry trashEntry) {
-
 		if (trashEntry != null) {
 			trashVersionPersistence.removeByEntryId(trashEntry.getEntryId());
 
@@ -240,7 +238,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	@Override
 	public TrashEntry fetchEntry(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashEntryPersistence.fetchByC_C(classNameId, classPK);
@@ -268,7 +265,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<TrashEntry> getEntries(long groupId, int start, int end) {
-
 		return trashEntryPersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -293,7 +289,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public List<TrashEntry> getEntries(long groupId, String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashEntryPersistence.findByG_C(groupId, classNameId);

@@ -198,12 +198,10 @@ public class CounterFinderImpl
 	}
 
 	protected CounterRegister createCounterRegister(String name) {
-
 		return createCounterRegister(name, -1);
 	}
 
 	protected CounterRegister createCounterRegister(String name, long size) {
-
 		long rangeMin = -1;
 		int rangeSize = getRangeSize(name);
 
@@ -258,7 +256,6 @@ public class CounterFinderImpl
 	}
 
 	protected CounterRegister getCounterRegister(String name) {
-
 		CounterRegister counterRegister = _counterRegisterMap.get(name);
 
 		if (counterRegister != null) {
@@ -312,7 +309,6 @@ public class CounterFinderImpl
 	}
 
 	private long _competeIncrement(CounterRegister counterRegister, int size) {
-
 		CounterHolder counterHolder = counterRegister.getCounterHolder();
 
 		// Try to use the fast path

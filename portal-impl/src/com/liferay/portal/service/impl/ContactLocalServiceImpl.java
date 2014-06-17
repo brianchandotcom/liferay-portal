@@ -147,7 +147,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 	@Override
 	public int getContactsCount(long classNameId, long classPK) {
-
 		return contactPersistence.countByC_C(classNameId, classPK);
 	}
 

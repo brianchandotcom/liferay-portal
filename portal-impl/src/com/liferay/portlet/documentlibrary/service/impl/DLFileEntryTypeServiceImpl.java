@@ -96,7 +96,6 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 
 	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
-
 		return dlFileEntryTypePersistence.filterFindByGroupId(groupIds);
 	}
 

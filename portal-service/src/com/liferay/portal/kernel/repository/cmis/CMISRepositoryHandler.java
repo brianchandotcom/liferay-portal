@@ -249,7 +249,6 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	@Override
 	public int getFoldersAndFileEntriesCount(long folderId) {
-
 		return _baseCmisRepository.getFoldersAndFileEntriesCount(folderId);
 	}
 

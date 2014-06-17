@@ -154,7 +154,6 @@ public class StoreWrapper implements Store {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-
 		return _store.getFileNames(companyId, repositoryId);
 	}
 

@@ -352,7 +352,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId) {
-
 		return getFileEntriesCount(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED);
 	}

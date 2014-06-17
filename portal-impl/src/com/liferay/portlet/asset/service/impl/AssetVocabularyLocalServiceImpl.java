@@ -252,13 +252,11 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId) {
-
 		return assetVocabularyPersistence.findByCompanyId(companyId);
 	}
 
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds) {
-
 		return getGroupsVocabularies(groupIds, null);
 	}
 
@@ -322,13 +320,11 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds) {
-
 		return assetVocabularyPersistence.findByGroupId(groupIds);
 	}
 
 	@Override
 	public int getGroupVocabulariesCount(long[] groupIds) {
-
 		return assetVocabularyPersistence.countByGroupId(groupIds);
 	}
 
@@ -443,7 +439,6 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	protected boolean hasVocabulary(long groupId, String name) {
-
 		if (assetVocabularyPersistence.countByG_N(groupId, name) == 0) {
 			return false;
 		}

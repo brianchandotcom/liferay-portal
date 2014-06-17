@@ -529,7 +529,6 @@ public class ShoppingUtil {
 	}
 
 	public static double calculateTotal(ShoppingOrder order) {
-
 		List<ShoppingOrderItem> orderItems =
 			ShoppingOrderItemLocalServiceUtil.getOrderItems(order.getOrderId());
 

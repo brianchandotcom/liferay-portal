@@ -27,7 +27,6 @@ public class WikiPageResourceLocalServiceImpl
 
 	@Override
 	public WikiPageResource addPageResource(long nodeId, String title) {
-
 		long pageResourcePrimKey = counterLocalService.increment();
 
 		WikiPageResource pageResource = wikiPageResourcePersistence.create(
@@ -50,13 +49,11 @@ public class WikiPageResourceLocalServiceImpl
 
 	@Override
 	public WikiPageResource fetchPageResource(long nodeId, String title) {
-
 		return wikiPageResourcePersistence.fetchByN_T(nodeId, title);
 	}
 
 	@Override
 	public WikiPageResource fetchPageResource(String uuid) {
-
 		return wikiPageResourcePersistence.fetchByUuid_First(uuid, null);
 	}
 
@@ -77,7 +74,6 @@ public class WikiPageResourceLocalServiceImpl
 
 	@Override
 	public long getPageResourcePrimKey(long nodeId, String title) {
-
 		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
 			nodeId, title);
 

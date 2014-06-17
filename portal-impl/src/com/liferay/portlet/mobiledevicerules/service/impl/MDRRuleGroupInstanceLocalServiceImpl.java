@@ -95,7 +95,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteGroupRuleGroupInstances(long groupId) {
-
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByGroupId(groupId);
 
@@ -107,7 +106,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId) {
-
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
 				ruleGroupInstanceId);
@@ -135,7 +133,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteRuleGroupInstances(long ruleGroupId) {
-
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);
 
@@ -184,7 +181,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId) {
-
 		return mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);
 	}
 
@@ -218,13 +214,11 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public int getRuleGroupInstancesCount(long ruleGroupId) {
-
 		return mdrRuleGroupInstancePersistence.countByRuleGroupId(ruleGroupId);
 	}
 
 	@Override
 	public int getRuleGroupInstancesCount(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.countByC_C(classNameId, classPK);

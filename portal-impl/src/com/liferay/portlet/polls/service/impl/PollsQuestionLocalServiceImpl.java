@@ -215,13 +215,11 @@ public class PollsQuestionLocalServiceImpl
 
 	@Override
 	public List<PollsQuestion> getQuestions(long groupId) {
-
 		return pollsQuestionPersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<PollsQuestion> getQuestions(long groupId, int start, int end) {
-
 		return pollsQuestionPersistence.findByGroupId(groupId, start, end);
 	}
 

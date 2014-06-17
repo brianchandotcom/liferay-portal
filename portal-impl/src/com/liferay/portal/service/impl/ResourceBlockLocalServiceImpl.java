@@ -213,7 +213,6 @@ public class ResourceBlockLocalServiceImpl
 
 	@Override
 	public ResourceBlock deleteResourceBlock(ResourceBlock resourceBlock) {
-
 		resourceBlockPermissionLocalService.deleteResourceBlockPermissions(
 			resourceBlock.getPrimaryKey());
 
@@ -248,7 +247,6 @@ public class ResourceBlockLocalServiceImpl
 
 	@Override
 	public List<String> getActionIds(String name, long actionIdsLong) {
-
 		List<ResourceAction> resourceActions =
 			resourceActionLocalService.getResourceActions(name);
 
@@ -418,7 +416,6 @@ public class ResourceBlockLocalServiceImpl
 		isolation = Isolation.READ_COMMITTED,
 		propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(long resourceBlockId) {
-
 		Session session = resourceBlockPersistence.openSession();
 
 		while (true) {
@@ -1033,7 +1030,6 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	protected void updatePermissionsHash(ResourceBlock resourceBlock) {
-
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			resourceBlockPermissionLocalService.
 			getResourceBlockPermissionsContainer(resourceBlock.getPrimaryKey());

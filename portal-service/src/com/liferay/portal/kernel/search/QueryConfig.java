@@ -225,9 +225,10 @@ public class QueryConfig implements Serializable {
 
 	public void setQuerySuggestionScoresThreshold(
 		int querySuggestionScoresThreshold) {
-			_attributes.put(
-				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD,
-				querySuggestionScoresThreshold);
+
+		_attributes.put(
+			PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD,
+			querySuggestionScoresThreshold);
 	}
 
 	public void setQuerySuggestionsMax(int querySuggestionMax) {

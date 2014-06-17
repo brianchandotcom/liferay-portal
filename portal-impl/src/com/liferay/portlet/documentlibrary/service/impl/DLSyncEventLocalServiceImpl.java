@@ -33,7 +33,6 @@ public class DLSyncEventLocalServiceImpl
 
 	@Override
 	public DLSyncEvent addDLSyncEvent(String event, String type, long typePK) {
-
 		DLSyncEvent dlSyncEvent = dlSyncEventPersistence.fetchByTypePK(typePK);
 
 		if (dlSyncEvent == null) {
@@ -58,7 +57,6 @@ public class DLSyncEventLocalServiceImpl
 
 	@Override
 	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime) {
-
 		return dlSyncEventPersistence.findByModifiedTime(modifiedTime);
 	}
 

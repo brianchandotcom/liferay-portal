@@ -779,7 +779,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getGroupUsersActivitiesCount(long groupId) {
-
 		return socialActivityFinder.countByGroupUsers(groupId);
 	}
 
@@ -834,7 +833,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getOrganizationActivitiesCount(long organizationId) {
-
 		return socialActivityFinder.countByOrganizationId(organizationId);
 	}
 
@@ -874,7 +872,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId) {
-
 		return socialActivityFinder.countByOrganizationUsers(organizationId);
 	}
 
@@ -956,7 +953,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getRelationActivitiesCount(long userId, int type) {
-
 		return socialActivityFinder.countByRelationType(userId, type);
 	}
 
@@ -1031,7 +1027,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserGroupsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserGroups(userId);
 	}
 
@@ -1071,7 +1066,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserGroupsAndOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserGroupsAndOrganizations(userId);
 	}
 
@@ -1110,12 +1104,10 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserOrganizations(userId);
 	}
 
 	protected boolean isLogActivity(SocialActivity activity) {
-
 		if (activity.getType() == SocialActivityConstants.TYPE_DELETE) {
 			if (activity.getParentClassPK() == 0) {
 				return true;

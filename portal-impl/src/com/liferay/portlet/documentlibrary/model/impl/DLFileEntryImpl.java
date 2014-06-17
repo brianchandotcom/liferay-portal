@@ -174,7 +174,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public List<DLFileVersion> getFileVersions(int status) {
-
 		return DLFileVersionLocalServiceUtil.getFileVersions(
 			getFileEntryId(), status);
 	}

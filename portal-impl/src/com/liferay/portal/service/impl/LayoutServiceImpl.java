@@ -857,8 +857,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public LayoutReference[] getLayoutReferences(
-			long companyId, String portletId, String preferencesKey,
-			String preferencesValue) {
+		long companyId, String portletId, String preferencesKey,
+		String preferencesValue) {
 
 		return layoutLocalService.getLayouts(
 			companyId, portletId, preferencesKey, preferencesValue);
@@ -866,7 +866,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-
 		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
 	}
 

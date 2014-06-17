@@ -380,7 +380,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getGroupUsersActivitiesCount(long groupId) {
-
 		return socialActivityLocalService.getGroupUsersActivitiesCount(groupId);
 	}
 
@@ -451,7 +450,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getOrganizationActivitiesCount(long organizationId) {
-
 		return socialActivityLocalService.getOrganizationActivitiesCount(
 			organizationId);
 	}
@@ -498,7 +496,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId) {
-
 		return socialActivityLocalService.getOrganizationUsersActivitiesCount(
 			organizationId);
 	}
@@ -594,7 +591,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getRelationActivitiesCount(long userId, int type) {
-
 		return socialActivityLocalService.getRelationActivitiesCount(
 			userId, type);
 	}
@@ -684,7 +680,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getUserGroupsActivitiesCount(long userId) {
-
 		return socialActivityLocalService.getUserGroupsActivitiesCount(userId);
 	}
 
@@ -730,7 +725,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getUserGroupsAndOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityLocalService.
 			getUserGroupsAndOrganizationsActivitiesCount(userId);
 	}
@@ -777,7 +771,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityLocalService.getUserOrganizationsActivitiesCount(
 			userId);
 	}

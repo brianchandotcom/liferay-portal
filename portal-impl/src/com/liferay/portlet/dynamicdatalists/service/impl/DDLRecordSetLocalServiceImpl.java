@@ -198,13 +198,11 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public DDLRecordSet fetchRecordSet(long recordSetId) {
-
 		return ddlRecordSetPersistence.fetchByPrimaryKey(recordSetId);
 	}
 
 	@Override
 	public DDLRecordSet fetchRecordSet(long groupId, String recordSetKey) {
-
 		return ddlRecordSetPersistence.fetchByG_R(groupId, recordSetKey);
 	}
 
@@ -222,7 +220,6 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Override
 	public List<DDLRecordSet> getRecordSets(long groupId) {
-
 		return ddlRecordSetPersistence.findByGroupId(groupId);
 	}
 

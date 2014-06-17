@@ -151,8 +151,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileVersion(
-			long fileVersionId, String extension, String title, String
-			description, String extraSettings)
+			long fileVersionId, String extension, String title,
+			String description, String extraSettings)
 		throws Exception {
 
 		Connection con = null;

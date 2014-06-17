@@ -188,7 +188,6 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static int getPortletFileEntriesCount(long groupId, long folderId) {
-
 		return getPortletFileRepository().getPortletFileEntriesCount(
 			groupId, folderId);
 	}

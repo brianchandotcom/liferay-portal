@@ -262,19 +262,16 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@Override
 	public WikiNode fetchNode(long groupId, String name) {
-
 		return wikiNodePersistence.fetchByG_N(groupId, name);
 	}
 
 	@Override
 	public WikiNode fetchNodeByUuidAndGroupId(String uuid, long groupId) {
-
 		return wikiNodePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	@Override
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end) {
-
 		return wikiNodePersistence.findByC_S(
 			companyId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
@@ -294,7 +291,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@Override
 	public int getCompanyNodesCount(long companyId, int status) {
-
 		return wikiNodePersistence.countByC_S(companyId, status);
 	}
 
@@ -530,7 +526,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	protected WikiImporter getWikiImporter(String importer) {
-
 		WikiImporter wikiImporter = _wikiImporters.get(importer);
 
 		if (wikiImporter == null) {

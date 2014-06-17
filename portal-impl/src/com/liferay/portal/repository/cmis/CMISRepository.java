@@ -740,7 +740,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public int getFoldersAndFileEntriesCount(long folderId) {
-
 		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
 
 		return foldersAndFileEntries.size();
@@ -777,7 +776,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status) {
-
 		int count = 0;
 
 		for (long folderId : folderIds) {
@@ -869,7 +867,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public void getSubfolderIds(List<Long> folderIds, long folderId) {
-
 		try {
 			List<Folder> subfolders = getFolders(
 				folderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -886,7 +883,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public List<Long> getSubfolderIds(long folderId, boolean recurse) {
-
 		try {
 			List<Long> subfolderIds = new ArrayList<Long>();
 
@@ -1490,7 +1486,6 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void cacheFoldersAndFileEntries(long folderId) {
-
 		try {
 			Map<Long, List<Object>> foldersAndFileEntriesCache =
 				_foldersAndFileEntriesCache.get();
@@ -1575,7 +1570,6 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void deleteMappedFileEntry(Document document) {
-
 		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
 		}
@@ -1600,7 +1594,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void deleteMappedFolder(
-			org.apache.chemistry.opencmis.client.api.Folder cmisFolder) {
+		org.apache.chemistry.opencmis.client.api.Folder cmisFolder) {
 
 		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;
@@ -1939,7 +1933,6 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected List<FileEntry> getFileEntries(long folderId) {
-
 		cacheFoldersAndFileEntries(folderId);
 
 		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
@@ -2007,7 +2000,6 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected List<Object> getFoldersAndFileEntries(long folderId) {
-
 		cacheFoldersAndFileEntries(folderId);
 
 		Map<Long, List<Object>> foldersAndFileEntriesCache =

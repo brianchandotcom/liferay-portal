@@ -196,7 +196,6 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public int getGroupThreadsCount(long groupId, long userId, int status) {
-
 		return getGroupThreadsCount(groupId, userId, status, false);
 	}
 
@@ -261,7 +260,6 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbThreadFinder.filterCountByG_C(groupId, categoryId);
 		}

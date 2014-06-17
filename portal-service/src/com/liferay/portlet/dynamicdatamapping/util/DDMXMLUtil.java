@@ -59,7 +59,6 @@ public class DDMXMLUtil {
 	}
 
 	public static String getXML(Document document, Fields fields) {
-
 		return getDDMXML().getXML(document, fields);
 	}
 

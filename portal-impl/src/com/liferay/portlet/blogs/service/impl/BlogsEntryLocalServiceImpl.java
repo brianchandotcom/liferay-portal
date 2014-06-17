@@ -648,7 +648,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return getGroupEntriesCount(groupId, queryDefinition);

@@ -98,7 +98,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey) {
-
 		if (containsTableMapping(leftPrimaryKey, rightPrimaryKey, false)) {
 			return false;
 		}
@@ -155,7 +154,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
-
 		return deleteTableMappings(
 			leftBasePersistence, rightBasePersistence, leftToRightPortalCache,
 			rightToLeftPortalCache, getRightPrimaryKeysSqlQuery,
@@ -164,7 +162,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
-
 		return deleteTableMappings(
 			rightBasePersistence, leftBasePersistence, rightToLeftPortalCache,
 			leftToRightPortalCache, getLeftPrimaryKeysSqlQuery,
@@ -246,7 +243,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey) {
-
 		return getPrimaryKeys(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
 			true);
@@ -268,7 +264,6 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public long[] getRightPrimaryKeys(long leftPrimaryKey) {
-
 		return getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			true);
@@ -408,9 +403,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	protected static long[] getPrimaryKeys(
-			PortalCache<Long, long[]> portalCache,
-			MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
-			boolean updateCache) {
+		PortalCache<Long, long[]> portalCache,
+		MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
+		boolean updateCache) {
 
 		long[] primaryKeys = portalCache.get(masterPrimaryKey);
 
@@ -441,7 +436,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	protected boolean containsTableMapping(
-			long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
+		long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
 
 		long[] rightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,

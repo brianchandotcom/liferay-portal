@@ -86,7 +86,6 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext) {
-
 		long groupId = serviceContext.getScopeGroupId();
 
 		MBBan ban = mbBanPersistence.fetchByG_B(groupId, banUserId);
@@ -150,7 +149,6 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	public List<MBBan> getBans(long groupId, int start, int end) {
-
 		return mbBanPersistence.findByGroupId(groupId, start, end);
 	}
 

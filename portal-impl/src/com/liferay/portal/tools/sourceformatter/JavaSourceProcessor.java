@@ -901,6 +901,143 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixLeadingTabs(
+		String content, String line, int expectedTabCount) {
+
+		int leadingTabCount = getLeadingTabCount(line);
+
+		String newLine = line;
+
+		while (leadingTabCount != expectedTabCount) {
+			if (leadingTabCount > expectedTabCount) {
+				newLine = StringUtil.replaceFirst(
+					newLine, StringPool.TAB, StringPool.BLANK);
+
+				leadingTabCount--;
+			}
+			else {
+				newLine = StringPool.TAB + newLine;
+
+				leadingTabCount++;
+			}
+		}
+
+		return StringUtil.replace(content, line, newLine);
+	}
+
+	protected String fixTabsAndIncorrectEmptyLines(
+		String content, Set<JavaTerm> javaTerms) {
+
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
+				continue;
+			}
+
+			String javaTermContent = "\n" + javaTerm.getContent();
+
+			Matcher matcher = _methodNameAndParametersPattern.matcher(
+				javaTermContent);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String methodNameAndParameters = matcher.group();
+
+			String[] lines = StringUtil.splitLines(methodNameAndParameters);
+
+			if (lines.length == 1) {
+				if (methodNameAndParameters.endsWith("{\n") &&
+					javaTermContent.contains(methodNameAndParameters + "\n") &&
+					!javaTermContent.contains(
+						methodNameAndParameters + "\n" + StringPool.TAB +
+							StringPool.TAB + "/*") &&
+					!javaTermContent.contains(
+						methodNameAndParameters + "\n" + StringPool.TAB +
+							StringPool.TAB + "// ")) {
+
+					String trimmedJavaTermContent = StringUtil.trimTrailing(
+						javaTermContent);
+
+					if (!trimmedJavaTermContent.endsWith(
+							"\n\n" + StringPool.TAB +
+								StringPool.CLOSE_CURLY_BRACE)) {
+
+						content = StringUtil.replace(
+							content, methodNameAndParameters + "\n",
+							methodNameAndParameters);
+					}
+				}
+
+				continue;
+			}
+
+			if (methodNameAndParameters.endsWith("{\n") &&
+				!javaTermContent.contains(methodNameAndParameters + "\n") &&
+				!javaTermContent.contains(
+					methodNameAndParameters + StringPool.TAB +
+						StringPool.CLOSE_CURLY_BRACE)) {
+
+				content = StringUtil.replace(
+					content, methodNameAndParameters,
+					methodNameAndParameters + "\n");
+			}
+
+			boolean throwsException = methodNameAndParameters.contains(
+				StringPool.TAB + "throws ");
+
+			String newMethodNameAndParameters = methodNameAndParameters;
+
+			int expectedTabCount = -1;
+
+			for (int i = 0; i < lines.length; i++) {
+				String line = lines[i];
+
+				if (line.contains(StringPool.TAB + "throws ")) {
+					newMethodNameAndParameters = fixLeadingTabs(
+						newMethodNameAndParameters, line, 2);
+
+					break;
+				}
+
+				if (expectedTabCount == -1) {
+					if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+						expectedTabCount =
+							Math.max(getLeadingTabCount(line), 1) + 1;
+
+						if (throwsException && (expectedTabCount == 2)) {
+							expectedTabCount += 1;
+						}
+					}
+				}
+				else {
+					String previousLine = lines[i - 1];
+
+					if (previousLine.endsWith(StringPool.COMMA) ||
+						previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+						newMethodNameAndParameters = fixLeadingTabs(
+							newMethodNameAndParameters, line, expectedTabCount);
+					}
+					else {
+						newMethodNameAndParameters = fixLeadingTabs(
+							newMethodNameAndParameters, line,
+							getLeadingTabCount(previousLine) + 1);
+					}
+				}
+			}
+
+			content = StringUtil.replace(
+				content, methodNameAndParameters, newMethodNameAndParameters);
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
 		Collection<String> fileNames = null;
@@ -916,6 +1053,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
+		_fitOnSingleLineExceptions = getExclusions(
+			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getExclusions(
 			"hibernate.sql.query.excludes");
 		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
@@ -1550,6 +1689,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (readParameterTypes) {
 				parameterTypes = addParameterTypes(trimmedLine, parameterTypes);
 
+				String strippedLine = stripLine(
+					trimmedLine, CharPool.LESS_THAN, CharPool.GREATER_THAN);
+
+				if (strippedLine.contains(StringPool.COMMA) &&
+					!trimmedLine.endsWith(StringPool.COMMA) &&
+					!trimmedLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+					!trimmedLine.endsWith(StringPool.CLOSE_PARENTHESIS) &&
+					!trimmedLine.endsWith(StringPool.SEMICOLON)) {
+
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
 				if (trimmedLine.contains(StringPool.CLOSE_PARENTHESIS)) {
 					readParameterTypes = false;
 				}
@@ -1922,9 +2074,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					combinedLines = getCombinedLines(
-						trimmedLine, previousLine, lineLeadingTabCount,
-						previousLineLeadingTabCount);
+					if (!isExcluded(
+							_fitOnSingleLineExceptions, fileName, lineCount)) {
+
+						combinedLines = getCombinedLines(
+							trimmedLine, previousLine, lineLeadingTabCount,
+							previousLineLeadingTabCount);
+					}
 				}
 			}
 
@@ -2056,6 +2212,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			newContent = sortJavaTerms(fileName, content, javaTerms);
+
+			newContent = fixTabsAndIncorrectEmptyLines(newContent, javaTerms);
 		}
 
 		if (content.equals(newContent)) {
@@ -2385,6 +2543,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		else if (line.startsWith(StringPool.TAB + "public static ")) {
 			if (line.startsWith(StringPool.TAB + "public static class ") ||
 				line.startsWith(StringPool.TAB + "public static enum") ||
+				line.startsWith(
+					StringPool.TAB + "public static final class ") ||
 				line.startsWith(StringPool.TAB + "public static interface")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
@@ -2435,18 +2595,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
-		else if (line.startsWith(StringPool.TAB + "protected static final ")) {
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+		else if (line.startsWith(StringPool.TAB + "protected static final ") &&
+				 (line.contains(StringPool.EQUAL) ||
+				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
 
-				return new Tuple(
-					getVariableName(line),
-					TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
-			}
+			return new Tuple(
+				getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static ")) {
 			if (line.startsWith(StringPool.TAB + "protected static class ") ||
 				line.startsWith(StringPool.TAB + "protected static enum ") ||
+				line.startsWith(
+					StringPool.TAB + "protected static final class ") ||
 				line.startsWith(
 					StringPool.TAB + "protected static interface ")) {
 
@@ -2497,17 +2657,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
 		}
-		else if (line.startsWith(StringPool.TAB + "private static final ")) {
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+		else if (line.startsWith(StringPool.TAB + "private static final ") &&
+				 (line.contains(StringPool.EQUAL) ||
+				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
 
-				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
-			}
+			return new Tuple(
+				getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "private static ")) {
 			if (line.startsWith(StringPool.TAB + "private static class ") ||
 				line.startsWith(StringPool.TAB + "private static enum ") ||
+				line.startsWith(
+					StringPool.TAB + "private static final class ") ||
 				line.startsWith(StringPool.TAB + "private static interface ")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
@@ -2946,6 +3107,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
+	private List<String> _fitOnSingleLineExceptions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
@@ -2956,6 +3118,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _methodNameAndParametersPattern = Pattern.compile(
+		"\n\t(private |protected |public )(.|\n)*?(\\{|;)\n");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(

@@ -106,7 +106,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	@Override
 	public void deleteContents(long companyId, long repositoryId, String path) {
-
 		dlContentPersistence.removeByC_R_P(companyId, repositoryId, path);
 	}
 
@@ -151,7 +150,6 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	@Override
 	public List<DLContent> getContents(long companyId, long repositoryId) {
-
 		return dlContentPersistence.findByC_R(companyId, repositoryId);
 	}
 

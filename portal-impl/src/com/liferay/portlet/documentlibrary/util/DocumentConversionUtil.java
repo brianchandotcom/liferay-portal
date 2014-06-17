@@ -372,7 +372,6 @@ public class DocumentConversionUtil {
 	}
 
 	private void _validate(String targetExtension, String id) {
-
 		if (!Validator.isFileExtension(targetExtension)) {
 			throw new SystemException("Invalid extension: " + targetExtension);
 		}

@@ -551,7 +551,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addRoleGroups(long roleId, long[] groupIds) {
-
 		rolePersistence.addGroups(roleId, groupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -565,7 +564,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addUserGroups(long userId, long[] groupIds) {
-
 		userPersistence.addGroups(userId, groupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -1048,7 +1046,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public Group fetchFriendlyURLGroup(long companyId, String friendlyURL) {
-
 		if (Validator.isNull(friendlyURL)) {
 			return null;
 		}
@@ -1070,7 +1067,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public Group fetchGroup(long companyId, String name) {
-
 		Group group = _systemGroupsMap.get(
 			StringUtil.toHexString(companyId).concat(name));
 
@@ -1137,7 +1133,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Group> getCompanyGroups(long companyId, int start, int end) {
-
 		return groupPersistence.findByCompanyId(companyId, start, end);
 	}
 
@@ -1854,7 +1849,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Group> getUserGroupsRelatedGroups(List<UserGroup> userGroups) {
-
 		List<Group> userGroupGroups = new ArrayList<Group>();
 
 		for (int i = 0; i < userGroups.size(); i++) {
@@ -2017,7 +2011,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean hasUserGroup(long userId, long groupId) {
-
 		return hasUserGroup(userId, groupId, true);
 	}
 
@@ -2035,7 +2028,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean hasUserGroup(long userId, long groupId, boolean inherit) {
-
 		if (groupFinder.countByG_U(groupId, userId, inherit) > 0) {
 			return true;
 		}
@@ -2055,7 +2047,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public Group loadFetchGroup(long companyId, String name) {
-
 		return groupPersistence.fetchByC_N(companyId, name);
 	}
 
@@ -3172,7 +3163,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void setRoleGroups(long roleId, long[] groupIds) {
-
 		rolePersistence.setGroups(roleId, groupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -3186,7 +3176,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetRoleGroups(long roleId, long[] groupIds) {
-
 		rolePersistence.removeGroups(roleId, groupIds);
 
 		PermissionCacheUtil.clearCache();
@@ -3200,7 +3189,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetUserGroups(long userId, long[] groupIds) {
-
 		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
 
 		userPersistence.removeGroups(userId, groupIds);
@@ -4037,7 +4025,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected List<PortletDataHandler> getPortletDataHandlers(Group group) {
-
 		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId());
 
@@ -4063,7 +4050,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected String[] getSearchNames(long companyId, String name) {
-
 		if (Validator.isNull(name)) {
 			return new String[] {null};
 		}

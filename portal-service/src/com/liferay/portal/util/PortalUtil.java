@@ -942,7 +942,6 @@ public class PortalUtil {
 	}
 
 	public static Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
-
 		return getPortal().getFirstMyAccountPortlet(themeDisplay);
 	}
 
@@ -1931,7 +1930,6 @@ public class PortalUtil {
 	}
 
 	public static String getUserEmailAddress(long userId) {
-
 		return getPortal().getUserEmailAddress(userId);
 	}
 
@@ -2184,7 +2182,6 @@ public class PortalUtil {
 	}
 
 	public static boolean isLoginRedirectRequired(HttpServletRequest request) {
-
 		return getPortal().isLoginRedirectRequired(request);
 	}
 

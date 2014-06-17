@@ -229,13 +229,11 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Override
 	public List<BookmarksFolder> getFolders(long groupId) {
-
 		return bookmarksFolderPersistence.findByGroupId(groupId);
 	}
 
 	@Override
 	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId) {
-
 		return bookmarksFolderPersistence.findByG_P(groupId, parentFolderId);
 	}
 
@@ -258,7 +256,6 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndEntries(long groupId, long folderId) {
-
 		return getFoldersAndEntries(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
@@ -296,14 +293,12 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId) {
-
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId, int status) {
-
 		return bookmarksFolderPersistence.countByG_P_S(
 			groupId, parentFolderId, status);
 	}
@@ -660,7 +655,6 @@ public class BookmarksFolderLocalServiceImpl
 	}
 
 	protected long getParentFolderId(long groupId, long parentFolderId) {
-
 		if (parentFolderId !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 

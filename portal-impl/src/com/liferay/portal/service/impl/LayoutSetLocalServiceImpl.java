@@ -137,7 +137,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
 	public LayoutSet fetchLayoutSet(String virtualHostname) {
-
 		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(

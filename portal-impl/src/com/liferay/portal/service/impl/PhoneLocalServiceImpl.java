@@ -109,7 +109,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	@Override
 	public void deletePhones(long companyId, String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<Phone> phones = phonePersistence.findByC_C_C(

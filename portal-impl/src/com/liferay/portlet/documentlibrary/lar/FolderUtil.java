@@ -43,7 +43,6 @@ public class FolderUtil {
 	}
 
 	public static Folder fetchByUUID_R(String uuid, long repositoryId) {
-
 		DLFolder dlFolder = DLFolderUtil.fetchByUUID_G(uuid, repositoryId);
 
 		if (dlFolder == null) {
@@ -79,7 +78,6 @@ public class FolderUtil {
 	 */
 	@Deprecated
 	public static List<Folder> findByRepositoryId(long repositoryId) {
-
 		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
 
 		return RepositoryModelUtil.toFolders(dlFolders);

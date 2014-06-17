@@ -322,7 +322,6 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	@ThreadLocalCachable
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
-
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
@@ -335,7 +334,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getCategories(String className, long classPK) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getCategories(classNameId, classPK);
@@ -355,7 +353,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public long[] getCategoryIds(String className, long classPK) {
-
 		return getCategoryIds(getCategories(className, classPK));
 	}
 
@@ -366,19 +363,16 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public String[] getCategoryNames(long classNameId, long classPK) {
-
 		return getCategoryNames(getCategories(classNameId, classPK));
 	}
 
 	@Override
 	public String[] getCategoryNames(String className, long classPK) {
-
 		return getCategoryNames(getCategories(className, classPK));
 	}
 
 	@Override
 	public List<AssetCategory> getChildCategories(long parentCategoryId) {
-
 		return assetCategoryPersistence.findByParentCategoryId(
 			parentCategoryId);
 	}
@@ -393,20 +387,17 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public int getChildCategoriesCount(long parentCategoryId) {
-
 		return assetCategoryPersistence.countByParentCategoryId(
 			parentCategoryId);
 	}
 
 	@Override
 	public List<AssetCategory> getEntryCategories(long entryId) {
-
 		return assetEntryPersistence.getAssetCategories(entryId);
 	}
 
 	@Override
 	public List<Long> getSubcategoryIds(long parentCategoryId) {
-
 		AssetCategory parentAssetCategory =
 			assetCategoryPersistence.fetchByPrimaryKey(parentCategoryId);
 
@@ -438,7 +429,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public int getVocabularyCategoriesCount(long vocabularyId) {
-
 		return assetCategoryPersistence.countByVocabularyId(vocabularyId);
 	}
 
@@ -453,7 +443,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public int getVocabularyRootCategoriesCount(long vocabularyId) {
-
 		return assetCategoryPersistence.countByP_V(
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId);
 	}
@@ -523,7 +512,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public void rebuildTree(long groupId, boolean force) {
-
 		assetCategoryPersistence.rebuildTree(groupId, force);
 	}
 

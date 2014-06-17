@@ -579,7 +579,6 @@ public class AssetUtil {
 	}
 
 	public static String getAssetKeywords(String className, long classPK) {
-
 		List<AssetTag> tags = AssetTagLocalServiceUtil.getTags(
 			className, classPK);
 		List<AssetCategory> categories =

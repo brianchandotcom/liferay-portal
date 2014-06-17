@@ -34,7 +34,7 @@ public class OrganizationMembershipPolicyFactoryUtil {
 
 	public void setOrganizationMembershipPolicyFactory(
 		OrganizationMembershipPolicyFactory
-		organizationMembershipPolicyFactory) {
+			organizationMembershipPolicyFactory) {
 
 		_organizationMembershipPolicyFactory =
 			organizationMembershipPolicyFactory;

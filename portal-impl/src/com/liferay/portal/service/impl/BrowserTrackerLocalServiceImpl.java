@@ -38,7 +38,6 @@ public class BrowserTrackerLocalServiceImpl
 
 	@Override
 	public BrowserTracker getBrowserTracker(long userId, long browserKey) {
-
 		BrowserTracker browserTracker = browserTrackerPersistence.fetchByUserId(
 			userId);
 
@@ -52,7 +51,6 @@ public class BrowserTrackerLocalServiceImpl
 
 	@Override
 	public BrowserTracker updateBrowserTracker(long userId, long browserKey) {
-
 		BrowserTracker browserTracker = browserTrackerPersistence.fetchByUserId(
 			userId);
 

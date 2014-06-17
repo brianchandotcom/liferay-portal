@@ -505,7 +505,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public Company fetchCompanyByVirtualHost(String virtualHostname) {
-
 		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
@@ -542,7 +541,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public List<Company> getCompanies(boolean system, int start, int end) {
-
 		return companyPersistence.findBySystem(system, start, end);
 	}
 
@@ -689,7 +687,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public void removePreferences(long companyId, String[] keys) {
-
 		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
 			companyId);
 

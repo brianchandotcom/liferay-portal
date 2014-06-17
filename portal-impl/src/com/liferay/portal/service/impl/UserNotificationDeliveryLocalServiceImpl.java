@@ -54,7 +54,6 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 	@Override
 	public void deleteUserNotificationDeliveries(long userId) {
-
 		userNotificationDeliveryPersistence.removeByUserId(userId);
 	}
 

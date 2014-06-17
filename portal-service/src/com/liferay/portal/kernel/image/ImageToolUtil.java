@@ -154,12 +154,10 @@ public class ImageToolUtil {
 	}
 
 	public static Image getImage(File file) throws IOException {
-
 		return getImageTool().getImage(file);
 	}
 
 	public static Image getImage(InputStream is) throws IOException {
-
 		return getImageTool().getImage(is);
 	}
 

@@ -255,7 +255,6 @@ public class LayoutPrototypeLocalServiceImpl
 
 	@Override
 	public int searchCount(long companyId, Boolean active) {
-
 		if (active != null) {
 			return layoutPrototypePersistence.countByC_A(companyId, active);
 		}

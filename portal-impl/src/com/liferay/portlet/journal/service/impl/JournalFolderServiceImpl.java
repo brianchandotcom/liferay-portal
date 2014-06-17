@@ -101,7 +101,6 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public List<JournalFolder> getFolders(long groupId, long parentFolderId) {
-
 		return getFolders(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
@@ -180,7 +179,6 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersAndArticlesCount(long groupId, long folderId) {
-
 		return getFoldersAndArticlesCount(
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
@@ -195,14 +193,12 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId) {
-
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return journalFolderPersistence.filterCountByG_P_NotS(
 				groupId, parentFolderId, WorkflowConstants.STATUS_IN_TRASH);

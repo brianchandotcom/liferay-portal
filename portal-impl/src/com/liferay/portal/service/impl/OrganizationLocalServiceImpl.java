@@ -501,7 +501,6 @@ public class OrganizationLocalServiceImpl
 
 	@Override
 	public Organization fetchOrganization(long companyId, String name) {
-
 		return organizationPersistence.fetchByC_N(companyId, name);
 	}
 
@@ -573,7 +572,6 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public long getOrganizationId(long companyId, String name) {
-
 		Organization organization = organizationPersistence.fetchByC_N(
 			companyId, name);
 
@@ -797,7 +795,6 @@ public class OrganizationLocalServiceImpl
 	 */
 	@Override
 	public int getSuborganizationsCount(long companyId, long organizationId) {
-
 		return organizationPersistence.countByC_P(companyId, organizationId);
 	}
 
@@ -2072,7 +2069,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	protected boolean isOrganizationGroup(long organizationId, long groupId) {
-
 		if ((organizationId ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) &&
 			(groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID)) {

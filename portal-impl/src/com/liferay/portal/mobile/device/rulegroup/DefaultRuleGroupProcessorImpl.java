@@ -43,7 +43,6 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 	@Override
 	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay) {
-
 		Layout layout = themeDisplay.getLayout();
 
 		MDRRuleGroupInstance mdrRuleGroupInstance = evaluateRuleGroupInstances(

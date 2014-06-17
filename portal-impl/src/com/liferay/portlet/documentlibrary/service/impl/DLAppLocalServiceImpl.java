@@ -421,7 +421,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-
 		dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
 	}
 
@@ -597,7 +596,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<DLFileRank> getFileRanks(long repositoryId, long userId) {
-
 		return dlFileRankLocalService.getFileRanks(repositoryId, userId);
 	}
 

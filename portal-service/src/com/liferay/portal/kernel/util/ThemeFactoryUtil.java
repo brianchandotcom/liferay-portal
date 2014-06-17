@@ -23,22 +23,18 @@ import com.liferay.portal.model.Theme;
 public class ThemeFactoryUtil {
 
 	public static Theme getDefaultRegularTheme(long companyId) {
-
 		return getThemeFactory().getDefaultRegularTheme(companyId);
 	}
 
 	public static String getDefaultRegularThemeId(long companyId) {
-
 		return getThemeFactory().getDefaultRegularThemeId(companyId);
 	}
 
 	public static Theme getDefaultWapTheme(long companyId) {
-
 		return getThemeFactory().getDefaultWapTheme(companyId);
 	}
 
 	public static String getDefaultWapThemeId(long companyId) {
-
 		return getThemeFactory().getDefaultWapThemeId(companyId);
 	}
 

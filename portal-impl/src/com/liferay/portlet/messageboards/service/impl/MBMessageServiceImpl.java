@@ -391,7 +391,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public int getGroupMessagesCount(long groupId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.filterCountByGroupId(groupId);
 		}

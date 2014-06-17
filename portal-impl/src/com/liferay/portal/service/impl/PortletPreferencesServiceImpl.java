@@ -140,8 +140,8 @@ public class PortletPreferencesServiceImpl
 	}
 
 	protected void copyPreferences(
-			javax.portlet.PortletPreferences sourcePreferences,
-			javax.portlet.PortletPreferences targetPreferences) {
+		javax.portlet.PortletPreferences sourcePreferences,
+		javax.portlet.PortletPreferences targetPreferences) {
 
 		try {
 			Map<String, String[]> targetPreferencesMap =

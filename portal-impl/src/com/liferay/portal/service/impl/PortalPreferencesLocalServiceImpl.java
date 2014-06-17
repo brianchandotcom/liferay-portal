@@ -97,7 +97,6 @@ public class PortalPreferencesLocalServiceImpl
 
 	@Override
 	public PortletPreferences getPreferences(long ownerId, int ownerType) {
-
 		return getPreferences(ownerId, ownerType, null);
 	}
 
@@ -163,8 +162,8 @@ public class PortalPreferencesLocalServiceImpl
 
 	@Override
 	public PortalPreferences updatePreferences(
-			long ownerId, int ownerType,
-			com.liferay.portlet.PortalPreferences portalPreferences) {
+		long ownerId, int ownerType,
+		com.liferay.portlet.PortalPreferences portalPreferences) {
 
 		String xml = PortletPreferencesFactoryUtil.toXML(portalPreferences);
 

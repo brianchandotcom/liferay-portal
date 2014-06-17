@@ -1865,7 +1865,7 @@ public class JournalUtil {
 	}
 
 	private static void _removeOldContent(
-			Stack<String> path, Element contentElement, Document xsdDocument) {
+		Stack<String> path, Element contentElement, Document xsdDocument) {
 
 		String elementPath = "";
 
@@ -1884,8 +1884,8 @@ public class JournalUtil {
 	}
 
 	private static void _removeOldContent(
-			Stack<String> path, Element contentElement, Document xsdDocument,
-			String elementPath) {
+		Stack<String> path, Element contentElement, Document xsdDocument,
+		String elementPath) {
 
 		String name = contentElement.attributeValue("name");
 

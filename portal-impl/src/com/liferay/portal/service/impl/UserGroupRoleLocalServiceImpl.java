@@ -84,7 +84,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole) {
-
 		userGroupRolePersistence.remove(userGroupRole);
 
 		PermissionCacheUtil.clearCache();
@@ -112,7 +111,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupRoles(long userId, long[] groupIds) {
-
 		for (long groupId : groupIds) {
 			userGroupRolePersistence.removeByU_G(userId, groupId);
 		}
@@ -122,7 +120,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupRoles(long[] userIds, long groupId) {
-
 		for (long userId : userIds) {
 			userGroupRolePersistence.removeByU_G(userId, groupId);
 		}
@@ -172,7 +169,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupRolesByGroupId(long groupId) {
-
 		userGroupRolePersistence.removeByGroupId(groupId);
 
 		PermissionCacheUtil.clearCache();
@@ -180,7 +176,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupRolesByRoleId(long roleId) {
-
 		userGroupRolePersistence.removeByRoleId(roleId);
 
 		PermissionCacheUtil.clearCache();
@@ -188,7 +183,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public void deleteUserGroupRolesByUserId(long userId) {
-
 		userGroupRolePersistence.removeByUserId(userId);
 
 		PermissionCacheUtil.clearCache();
@@ -196,19 +190,16 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public List<UserGroupRole> getUserGroupRoles(long userId) {
-
 		return userGroupRolePersistence.findByUserId(userId);
 	}
 
 	@Override
 	public List<UserGroupRole> getUserGroupRoles(long userId, long groupId) {
-
 		return userGroupRolePersistence.findByU_G(userId, groupId);
 	}
 
 	@Override
 	public List<UserGroupRole> getUserGroupRolesByGroup(long groupId) {
-
 		return userGroupRolePersistence.findByGroupId(groupId);
 	}
 
@@ -229,7 +220,6 @@ public class UserGroupRoleLocalServiceImpl
 
 	@Override
 	public boolean hasUserGroupRole(long userId, long groupId, long roleId) {
-
 		return hasUserGroupRole(userId, groupId, roleId, false);
 	}
 

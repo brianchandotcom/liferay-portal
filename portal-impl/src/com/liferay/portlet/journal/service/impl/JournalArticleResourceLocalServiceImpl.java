@@ -59,7 +59,6 @@ public class JournalArticleResourceLocalServiceImpl
 
 	@Override
 	public long getArticleResourcePrimKey(long groupId, String articleId) {
-
 		return getArticleResourcePrimKey(null, groupId, articleId);
 	}
 
@@ -100,7 +99,6 @@ public class JournalArticleResourceLocalServiceImpl
 
 	@Override
 	public List<JournalArticleResource> getArticleResources(long groupId) {
-
 		return journalArticleResourcePersistence.findByGroupId(groupId);
 	}
 

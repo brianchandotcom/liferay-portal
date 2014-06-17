@@ -30,7 +30,6 @@ import java.io.InputStream;
 public class LuceneClusterUtil {
 
 	public static void loadIndexesFromCluster(long companyId) {
-
 		LuceneHelperUtil.loadIndexesFromCluster(companyId);
 	}
 

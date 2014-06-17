@@ -57,7 +57,6 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public void deleteStorageLink(DDMStorageLink storageLink) {
-
 		ddmStorageLinkPersistence.remove(storageLink);
 	}
 
@@ -71,7 +70,6 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public void deleteStructureStorageLinks(long structureId) {
-
 		List<DDMStorageLink> storageLinks =
 			ddmStorageLinkPersistence.findByStructureId(structureId);
 
@@ -96,13 +94,11 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public List<DDMStorageLink> getStructureStorageLinks(long structureId) {
-
 		return ddmStorageLinkPersistence.findByStructureId(structureId);
 	}
 
 	@Override
 	public int getStructureStorageLinksCount(long structureId) {
-
 		return ddmStorageLinkPersistence.countByStructureId(structureId);
 	}
 

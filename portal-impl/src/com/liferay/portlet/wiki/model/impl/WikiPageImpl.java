@@ -103,7 +103,6 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end) {
-
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -188,7 +187,6 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries() {
-
 		return getDeletedAttachmentsFileEntries(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}

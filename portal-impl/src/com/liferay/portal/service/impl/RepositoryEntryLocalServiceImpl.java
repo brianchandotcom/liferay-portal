@@ -62,7 +62,6 @@ public class RepositoryEntryLocalServiceImpl
 
 	@Override
 	public List<RepositoryEntry> getRepositoryEntries(long repositoryId) {
-
 		return repositoryEntryPersistence.findByRepositoryId(repositoryId);
 	}
 

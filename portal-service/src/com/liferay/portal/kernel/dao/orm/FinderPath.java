@@ -75,7 +75,6 @@ public class FinderPath {
 	}
 
 	public Serializable encodeCacheKey(Object[] arguments) {
-
 		StringBundler sb = null;
 
 		if (ShardUtil.isEnabled()) {
@@ -99,7 +98,6 @@ public class FinderPath {
 	}
 
 	public Serializable encodeLocalCacheKey(Object[] arguments) {
-
 		StringBundler sb = null;
 
 		if (ShardUtil.isEnabled()) {

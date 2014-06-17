@@ -37,7 +37,6 @@ public class UserGroupGroupRoleFinderImpl
 
 	@Override
 	public List<UserGroupGroupRole> findByUserGroupsUsers(long userId) {
-
 		Session session = null;
 
 		try {

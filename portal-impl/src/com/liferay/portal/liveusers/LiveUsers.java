@@ -66,7 +66,6 @@ public class LiveUsers {
 	}
 
 	public static Map<Long, Map<Long, Set<String>>> getLocalClusterUsers() {
-
 		return _instance._getLocalClusterUsers();
 	}
 
@@ -105,7 +104,6 @@ public class LiveUsers {
 	}
 
 	public static void removeClusterNode(String clusterNodeId) {
-
 		_instance._removeClusterNode(clusterNodeId);
 	}
 
@@ -128,8 +126,8 @@ public class LiveUsers {
 	}
 
 	private void _addClusterNode(
-			String clusterNodeId,
-			Map<Long, Map<Long, Set<String>>> clusterUsers) {
+		String clusterNodeId,
+		Map<Long, Map<Long, Set<String>>> clusterUsers) {
 
 		if (Validator.isNull(clusterNodeId)) {
 			return;
@@ -244,7 +242,6 @@ public class LiveUsers {
 	}
 
 	private Map<Long, Map<Long, Set<String>>> _getLocalClusterUsers() {
-
 		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
 
 		if (clusterNode == null) {
@@ -333,7 +330,6 @@ public class LiveUsers {
 	}
 
 	private void _removeClusterNode(String clusterNodeId) {
-
 		if (Validator.isNull(clusterNodeId)) {
 			return;
 		}
@@ -522,7 +518,7 @@ public class LiveUsers {
 	}
 
 	private Map<Long, Set<Long>> _updateGroupStatus(
-			long companyId, long userId, boolean signedIn) {
+		long companyId, long userId, boolean signedIn) {
 
 		Map<Long, Set<Long>> liveUsers = _getLiveUsers(companyId);
 

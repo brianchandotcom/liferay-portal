@@ -114,7 +114,6 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
 	@Override
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end) {
-
 		return pollsVotePersistence.findByChoiceId(choiceId, start, end);
 	}
 

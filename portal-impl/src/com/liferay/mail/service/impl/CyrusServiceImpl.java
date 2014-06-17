@@ -31,7 +31,6 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	@Override
 	public void addUser(long userId, String emailAddress, String password) {
-
 		CyrusUser cyrusUser = new CyrusUser(userId, password);
 
 		CyrusUserUtil.update(cyrusUser);
@@ -43,7 +42,6 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
-
 		CyrusVirtualUtil.removeByUserId(userId);
 	}
 
@@ -81,7 +79,6 @@ public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	@Override
 	public void updatePassword(long companyId, long userId, String password) {
-
 		CyrusUser cyrusUser = null;
 
 		try {

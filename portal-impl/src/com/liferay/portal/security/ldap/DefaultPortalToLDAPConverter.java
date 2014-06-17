@@ -410,7 +410,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	}
 
 	protected String getEncryptedPasswordForLDAP(User user) {
-
 		String password = user.getPasswordUnencrypted();
 
 		if (Validator.isNull(password)) {

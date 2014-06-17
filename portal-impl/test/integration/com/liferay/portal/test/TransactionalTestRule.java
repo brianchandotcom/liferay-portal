@@ -33,7 +33,6 @@ public class TransactionalTestRule implements TestRule {
 
 	@Override
 	public Statement apply(final Statement statement, Description description) {
-
 		return new Statement() {
 
 			@Override

@@ -253,13 +253,11 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public Set<String> getReminderQueryQuestions(Locale locale) {
-
 		return getReminderQueryQuestions(LanguageUtil.getLanguageId(locale));
 	}
 
 	@Override
 	public Set<String> getReminderQueryQuestions(String languageId) {
-
 		PortletPreferences preferences = getPreferences();
 
 		String[] questions = StringUtil.splitLines(

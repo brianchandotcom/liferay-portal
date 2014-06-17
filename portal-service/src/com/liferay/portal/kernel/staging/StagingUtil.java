@@ -308,7 +308,6 @@ public class StagingUtil {
 	}
 
 	public static long getRecentLayoutSetBranchId(User user, long layoutSetId) {
-
 		return getStaging().getRecentLayoutSetBranchId(user, layoutSetId);
 	}
 

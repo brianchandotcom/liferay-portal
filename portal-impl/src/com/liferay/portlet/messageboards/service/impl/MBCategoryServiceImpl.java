@@ -102,7 +102,6 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(long groupId, int status) {
-
 		return mbCategoryPersistence.filterFindByG_S(groupId, status);
 	}
 
@@ -180,7 +179,6 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
-
 		return mbCategoryPersistence.filterCountByG_P(
 			groupId, parentCategoryId);
 	}
@@ -214,7 +212,6 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-
 		return mbCategoryPersistence.filterCountByG_P(
 			groupId, parentCategoryIds);
 	}
@@ -259,7 +256,6 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public long[] getCategoryIds(long groupId, long categoryId) {
-
 		List<Long> categoryIds = new ArrayList<Long>();
 
 		categoryIds.add(categoryId);
@@ -311,7 +307,6 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public int getSubscribedCategoriesCount(long groupId, long userId) {
-
 		long[] categoryIds = getCategoryIds(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 

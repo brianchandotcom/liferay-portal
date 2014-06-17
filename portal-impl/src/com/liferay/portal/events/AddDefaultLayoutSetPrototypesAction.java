@@ -97,8 +97,8 @@ public class AddDefaultLayoutSetPrototypesAction
 	}
 
 	protected void addPrivateSite(
-			long companyId, long defaultUserId, List<LayoutSetPrototype>
-			layoutSetPrototypes)
+			long companyId, long defaultUserId,
+			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
@@ -224,8 +224,8 @@ public class AddDefaultLayoutSetPrototypesAction
 	}
 
 	protected void addPublicSite(
-			long companyId, long defaultUserId, List<LayoutSetPrototype>
-			layoutSetPrototypes)
+			long companyId, long defaultUserId,
+			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(

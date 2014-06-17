@@ -260,7 +260,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public JournalFolder fetchFolder(long groupId, String name) {
-
 		return journalFolderPersistence.fetchByG_N(groupId, name);
 	}
 
@@ -288,7 +287,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public List<JournalFolder> getFolders(long groupId, long parentFolderId) {
-
 		return getFolders(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
@@ -320,7 +318,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndArticles(long groupId, long folderId) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY);
 
@@ -378,7 +375,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public int getFoldersAndArticlesCount(long groupId, long folderId) {
-
 		return journalFolderFinder.countF_A_ByG_F(
 			groupId, folderId,
 			new QueryDefinition(WorkflowConstants.STATUS_ANY));
@@ -394,14 +390,12 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId) {
-
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId, int status) {
-
 		return journalFolderPersistence.countByG_P_S(
 			groupId, parentFolderId, status);
 	}
@@ -1036,7 +1030,6 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	protected long getParentFolderId(long groupId, long parentFolderId) {
-
 		if (parentFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder parentFolder =
 				journalFolderPersistence.fetchByPrimaryKey(parentFolderId);

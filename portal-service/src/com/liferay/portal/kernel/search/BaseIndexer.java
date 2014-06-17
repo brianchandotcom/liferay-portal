@@ -576,7 +576,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addAssetFields(
-			Document document, String className, long classPK) {
+		Document document, String className, long classPK) {
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -1460,14 +1460,14 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected Document getBaseModelDocument(
-			String portletId, BaseModel<?> baseModel) {
+		String portletId, BaseModel<?> baseModel) {
 
 		return getBaseModelDocument(portletId, baseModel, baseModel);
 	}
 
 	protected Document getBaseModelDocument(
-			String portletId, BaseModel<?> baseModel,
-			BaseModel<?> workflowedBaseModel) {
+		String portletId, BaseModel<?> baseModel,
+		BaseModel<?> workflowedBaseModel) {
 
 		Document document = newDocument();
 

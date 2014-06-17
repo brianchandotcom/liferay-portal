@@ -54,7 +54,6 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public int countByOrganizationId(long organizationId) {
-
 		List<Long> organizationIds = new ArrayList<Long>();
 
 		organizationIds.add(organizationId);
@@ -64,7 +63,6 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public int countByOrganizationIds(List<Long> organizationIds) {
-
 		Session session = null;
 
 		try {

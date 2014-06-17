@@ -119,7 +119,6 @@ public class ResultRow {
 	}
 
 	public void addDate(int index, Date date, String href) {
-
 		DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
 		dateSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);

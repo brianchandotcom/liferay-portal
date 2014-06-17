@@ -164,7 +164,6 @@ public class PluginPackageUtil {
 	}
 
 	public static boolean isIgnored(PluginPackage pluginPackage) {
-
 		return _instance._isIgnored(pluginPackage);
 	}
 
@@ -177,7 +176,6 @@ public class PluginPackageUtil {
 	}
 
 	public static boolean isTrusted(String repositoryURL) {
-
 		return _instance._isTrusted(repositoryURL);
 	}
 
@@ -507,7 +505,6 @@ public class PluginPackageUtil {
 	}
 
 	private boolean _isIgnored(PluginPackage pluginPackage) {
-
 		String packageId = pluginPackage.getPackageId();
 
 		String[] pluginPackagesIgnored = PrefsPropsUtil.getStringArray(

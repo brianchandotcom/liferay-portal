@@ -159,8 +159,7 @@ public interface PrefsProps {
 		long companyId, String name, String delimiter);
 
 	public String[] getStringArray(
-			long companyId, String name, String delimiter,
-			String[] defaultValue);
+		long companyId, String name, String delimiter, String[] defaultValue);
 
 	public String[] getStringArray(
 		PortletPreferences preferences, long companyId, String name,

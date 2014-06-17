@@ -52,7 +52,6 @@ public class LayoutFinderImpl
 
 	@Override
 	public List<Layout> findByNoPermissions(long roleId) {
-
 		Session session = null;
 
 		try {
@@ -104,7 +103,6 @@ public class LayoutFinderImpl
 
 	@Override
 	public List<Layout> findByScopeGroup(long groupId, boolean privateLayout) {
-
 		Session session = null;
 
 		try {

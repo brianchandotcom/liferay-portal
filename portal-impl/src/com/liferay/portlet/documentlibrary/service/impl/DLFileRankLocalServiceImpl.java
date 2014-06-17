@@ -116,7 +116,6 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-
 		List<DLFileRank> dlFileRanks = dlFileRankPersistence.findByFileEntryId(
 			fileEntryId);
 
@@ -179,7 +178,6 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFileRank> getFileRanks(long groupId, long userId) {
-
 		return dlFileRankPersistence.findByG_U_A(
 			groupId, userId, true, 0, PropsValues.DL_FILE_RANK_MAX_SIZE,
 			new FileRankCreateDateComparator());
@@ -221,7 +219,6 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	}
 
 	protected void updateFileRanks(DLFolder dlFolder, boolean active) {
-
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
 			dlFolder.getGroupId(), dlFolder.getFolderId());
 

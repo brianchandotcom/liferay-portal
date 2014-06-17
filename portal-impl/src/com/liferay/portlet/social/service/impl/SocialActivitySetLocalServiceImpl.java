@@ -145,13 +145,11 @@ public class SocialActivitySetLocalServiceImpl
 
 	@Override
 	public int getRelationActivitySetsCount(long userId) {
-
 		return socialActivitySetFinder.countByRelation(userId);
 	}
 
 	@Override
 	public int getRelationActivitySetsCount(long userId, int type) {
-
 		return socialActivitySetFinder.countByRelationType(userId, type);
 	}
 
@@ -194,7 +192,6 @@ public class SocialActivitySetLocalServiceImpl
 
 	@Override
 	public int getUserGroupsActivitySetsCount(long userId) {
-
 		return socialActivitySetFinder.countByUserGroups(userId);
 	}
 
@@ -207,7 +204,6 @@ public class SocialActivitySetLocalServiceImpl
 
 	@Override
 	public int getUserViewableActivitySetsCount(long userId) {
-
 		return socialActivitySetFinder.countByUser(userId);
 	}
 

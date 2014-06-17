@@ -1798,7 +1798,6 @@ public class LayoutTypePortletImpl
 	}
 
 	protected void onRemoveFromLayout(String[] portletIds) {
-
 		List<String> portletIdList = new UniqueList<String>();
 
 		for (String portletId : portletIds) {

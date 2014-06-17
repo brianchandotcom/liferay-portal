@@ -29,7 +29,6 @@ public class CyrusServiceUtil {
 	}
 
 	public static void deleteEmailAddress(long companyId, long userId) {
-
 		getService().deleteEmailAddress(companyId, userId);
 	}
 

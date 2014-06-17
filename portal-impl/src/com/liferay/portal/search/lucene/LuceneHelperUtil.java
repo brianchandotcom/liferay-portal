@@ -395,7 +395,6 @@ public class LuceneHelperUtil {
 	}
 
 	public static void loadIndexesFromCluster(long companyId) {
-
 		getLuceneHelper().loadIndexesFromCluster(companyId);
 	}
 

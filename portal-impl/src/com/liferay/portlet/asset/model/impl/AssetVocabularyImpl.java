@@ -159,7 +159,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds) {
-
 		PredicateFilter<AssetCategory> predicateFilter =
 			new PredicateFilter<AssetCategory>() {
 

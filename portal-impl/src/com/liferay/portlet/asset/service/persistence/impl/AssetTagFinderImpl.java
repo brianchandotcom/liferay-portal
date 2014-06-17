@@ -70,25 +70,21 @@ public class AssetTagFinderImpl
 
 	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name) {
-
 		return doCountByG_C_N(groupId, classNameId, name, false);
 	}
 
 	@Override
 	public int countByG_N_P(long groupId, String name, String[] tagProperties) {
-
 		return doCountByG_N_P(groupId, name, tagProperties, false);
 	}
 
 	@Override
 	public int filterCountByG_N(long groupId, String name) {
-
 		return doCountByG_N(groupId, name, true);
 	}
 
 	@Override
 	public int filterCountByG_C_N(long groupId, long classNameId, String name) {
-
 		return doCountByG_C_N(groupId, classNameId, name, true);
 	}
 

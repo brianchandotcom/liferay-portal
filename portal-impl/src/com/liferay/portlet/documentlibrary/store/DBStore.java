@@ -212,7 +212,6 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-
 		List<DLContent> dlContents = DLContentLocalServiceUtil.getContents(
 			companyId, repositoryId);
 
@@ -229,7 +228,7 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName) {
+		long companyId, long repositoryId, String dirName) {
 
 		List<DLContent> dlContents =
 			DLContentLocalServiceUtil.getContentsByDirectory(

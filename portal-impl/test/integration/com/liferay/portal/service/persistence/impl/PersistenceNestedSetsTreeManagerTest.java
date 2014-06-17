@@ -624,8 +624,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	}
 
 	protected void assertGetAncestors(
-			AssetCategory assetCategory,
-			AssetCategory... ancestorAssetCategories) {
+		AssetCategory assetCategory, AssetCategory... ancestorAssetCategories) {
 
 		List<AssetCategory> expectedAssetCategories =
 			new ArrayList<AssetCategory>(

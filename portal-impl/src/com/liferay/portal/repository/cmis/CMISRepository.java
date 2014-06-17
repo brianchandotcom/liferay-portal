@@ -1600,7 +1600,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void deleteMappedFolder(
-			org.apache.chemistry.opencmis.client.api.Folder cmisFolder) {
+		org.apache.chemistry.opencmis.client.api.Folder cmisFolder) {
 
 		if (PropsValues.DL_REPOSITORY_CMIS_DELETE_DEPTH == _DELETE_NONE) {
 			return;

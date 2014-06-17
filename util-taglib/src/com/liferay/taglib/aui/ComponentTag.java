@@ -109,8 +109,8 @@ public class ComponentTag extends BaseComponentTag {
 	}
 
 	protected void processEventAttribute(
-			String key, String value, Map<String, String> afterEventOptions,
-			Map<String, String> onEventsOptions) {
+		String key, String value, Map<String, String> afterEventOptions,
+		Map<String, String> onEventsOptions) {
 
 		if (key.startsWith("after")) {
 			String eventName = StringUtils.uncapitalize(key.substring(5));

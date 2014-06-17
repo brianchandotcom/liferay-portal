@@ -408,9 +408,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	protected static long[] getPrimaryKeys(
-			PortalCache<Long, long[]> portalCache,
-			MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
-			boolean updateCache) {
+		PortalCache<Long, long[]> portalCache,
+		MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
+		boolean updateCache) {
 
 		long[] primaryKeys = portalCache.get(masterPrimaryKey);
 
@@ -441,7 +441,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	protected boolean containsTableMapping(
-			long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
+		long leftPrimaryKey, long rightPrimaryKey, boolean updateCache) {
 
 		long[] rightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,

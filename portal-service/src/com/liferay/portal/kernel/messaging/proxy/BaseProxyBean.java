@@ -40,7 +40,7 @@ public abstract class BaseProxyBean {
 
 	public void setSingleDestinationSynchronousMessageSender(
 		SingleDestinationSynchronousMessageSender
-		singleDestinationSynchronousMessageSender) {
+			singleDestinationSynchronousMessageSender) {
 
 		_singleDestinationSynchronousMessageSender =
 			singleDestinationSynchronousMessageSender;

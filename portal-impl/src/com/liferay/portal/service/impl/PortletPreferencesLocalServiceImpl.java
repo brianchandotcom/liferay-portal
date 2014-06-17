@@ -117,8 +117,8 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences fetchPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId) {
 
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
@@ -138,7 +138,7 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences fetchPreferences(
-			PortletPreferencesIds portletPreferencesIds) {
+		PortletPreferencesIds portletPreferencesIds) {
 
 		return fetchPreferences(
 			portletPreferencesIds.getCompanyId(),
@@ -151,7 +151,7 @@ public class PortletPreferencesLocalServiceImpl
 	@Override
 	@Skip
 	public javax.portlet.PortletPreferences getDefaultPreferences(
-			long companyId, String portletId) {
+		long companyId, String portletId) {
 
 		Portlet portlet = portletLocalService.getPortletById(
 			companyId, portletId);
@@ -253,8 +253,8 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId) {
 
 		return getPreferences(
 			companyId, ownerId, ownerType, plid, portletId, null);
@@ -262,8 +262,8 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String defaultPreferences) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences) {
 
 		return getPreferences(
 			companyId, ownerId, ownerType, plid, portletId, defaultPreferences,
@@ -272,7 +272,7 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(
-			PortletPreferencesIds portletPreferencesIds) {
+		PortletPreferencesIds portletPreferencesIds) {
 
 		return getPreferences(
 			portletPreferencesIds.getCompanyId(),
@@ -284,8 +284,8 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences getStrictPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId) {
 
 		return getPreferences(
 			companyId, ownerId, ownerType, plid, portletId, null,
@@ -294,7 +294,7 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public javax.portlet.PortletPreferences getStrictPreferences(
-			PortletPreferencesIds portletPreferencesIds) {
+		PortletPreferencesIds portletPreferencesIds) {
 
 		return getStrictPreferences(
 			portletPreferencesIds.getCompanyId(),
@@ -342,8 +342,8 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	protected javax.portlet.PortletPreferences doGetPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String defaultPreferences, boolean strict) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences, boolean strict) {
 
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
@@ -375,8 +375,8 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	protected javax.portlet.PortletPreferences getPreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String defaultPreferences, boolean strict) {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences, boolean strict) {
 
 		DB db = DBFactoryUtil.getDB();
 

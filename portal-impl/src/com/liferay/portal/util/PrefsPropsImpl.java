@@ -361,15 +361,14 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String[] getStringArray(
-			long companyId, String name, String delimiter) {
+		long companyId, String name, String delimiter) {
 
 		return PrefsPropsUtil.getStringArray(companyId, name, delimiter);
 	}
 
 	@Override
 	public String[] getStringArray(
-			long companyId, String name, String delimiter,
-			String[] defaultValue) {
+		long companyId, String name, String delimiter, String[] defaultValue) {
 
 		return PrefsPropsUtil.getStringArray(
 			companyId, name, delimiter, defaultValue);
@@ -401,7 +400,7 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String[] getStringArray(
-			String name, String delimiter, String[] defaultValue) {
+		String name, String delimiter, String[] defaultValue) {
 
 		return PrefsPropsUtil.getStringArray(name, delimiter, defaultValue);
 	}

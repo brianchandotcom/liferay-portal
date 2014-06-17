@@ -1467,8 +1467,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public LayoutReference[] getLayouts(
-			long companyId, String portletId, String preferencesKey,
-			String preferencesValue) {
+		long companyId, String portletId, String preferencesKey,
+		String preferencesValue) {
 
 		List<LayoutReference> layoutReferences = layoutFinder.findByC_P_P(
 			companyId, portletId, preferencesKey, preferencesValue);

@@ -30,8 +30,8 @@ import java.util.List;
 public class TreePathUtil {
 
 	public static void rebuildTree(
-			long companyId, long defaultParentPrimaryKey,
-			TreeModelFinder<?> treeModelFinder) {
+		long companyId, long defaultParentPrimaryKey,
+		TreeModelFinder<?> treeModelFinder) {
 
 		int size = GetterUtil.getInteger(
 			PropsUtil.get(

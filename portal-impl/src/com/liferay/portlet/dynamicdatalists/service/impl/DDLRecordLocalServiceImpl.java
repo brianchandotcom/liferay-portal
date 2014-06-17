@@ -296,7 +296,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Override
 	public Long[] getMinAndMaxCompanyRecordIds(
-			long companyId, int status, int scope) {
+		long companyId, int status, int scope) {
 
 		return ddlRecordFinder.findByC_S_S_MinAndMax(companyId, status, scope);
 	}

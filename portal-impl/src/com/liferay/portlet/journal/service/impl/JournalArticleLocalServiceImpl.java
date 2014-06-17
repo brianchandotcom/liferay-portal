@@ -6102,8 +6102,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected Date[] getDateInterval(
-			long groupId, String articleId, Date earliestDisplayDate,
-			Date latestExpirationDate) {
+		long groupId, String articleId, Date earliestDisplayDate,
+		Date latestExpirationDate) {
 
 		Date[] dateInterval = new Date[2];
 

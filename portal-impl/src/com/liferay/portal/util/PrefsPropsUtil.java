@@ -470,7 +470,7 @@ public class PrefsPropsUtil {
 	}
 
 	public static String[] getStringArray(
-			long companyId, String name, String delimiter) {
+		long companyId, String name, String delimiter) {
 
 		PortletPreferences preferences = getPreferences(companyId, true);
 
@@ -478,8 +478,7 @@ public class PrefsPropsUtil {
 	}
 
 	public static String[] getStringArray(
-			long companyId, String name, String delimiter,
-			String[] defaultValue) {
+		long companyId, String name, String delimiter, String[] defaultValue) {
 
 		PortletPreferences preferences = getPreferences(companyId, true);
 
@@ -520,7 +519,7 @@ public class PrefsPropsUtil {
 	}
 
 	public static String[] getStringArray(
-			String name, String delimiter, String[] defaultValue) {
+		String name, String delimiter, String[] defaultValue) {
 
 		PortletPreferences preferences = getPreferences(true);
 

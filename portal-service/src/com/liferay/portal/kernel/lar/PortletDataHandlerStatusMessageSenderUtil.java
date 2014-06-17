@@ -57,7 +57,7 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 
 	public void setPortletDataHandlerStatusMessageSender(
 		PortletDataHandlerStatusMessageSender
-		portletDataHandlerStatusMessageSender) {
+			portletDataHandlerStatusMessageSender) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

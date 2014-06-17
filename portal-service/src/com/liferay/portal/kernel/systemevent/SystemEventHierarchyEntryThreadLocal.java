@@ -107,7 +107,7 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	public static SystemEventHierarchyEntry push(
-			Class<?> clazz, long classPK, int action) {
+		Class<?> clazz, long classPK, int action) {
 
 		return push(PortalUtil.getClassNameId(clazz), classPK, action);
 	}

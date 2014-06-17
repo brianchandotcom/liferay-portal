@@ -868,7 +868,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	protected File exportICal4j(
-			net.fortuna.ical4j.model.Calendar cal, String fileName) {
+		net.fortuna.ical4j.model.Calendar cal, String fileName) {
 
 		OutputStream os = null;
 

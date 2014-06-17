@@ -137,6 +137,27 @@
 	padding-right: 10px;
 }
 
+.nav.list-group, .list-group {
+	li > a {
+		&:focus, &:hover {
+			background: #E5F5FC;
+			color: #009AE5;
+		}
+	}
+
+	> .active {
+		border-width: 1px 0 0 0;
+
+		> a {
+			&, &:focus, &:hover {
+				background: #60BFEF;
+				border: 1px solid #60BFEF;
+				color: #FFF;
+			}
+		}
+	}
+}
+
 .navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
 	padding: 11px 14px;
 

@@ -477,22 +477,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		top: 20px;
 	}
 
-	.list-group {
-		li > a {
-			&:focus, &:hover {
-				background: #E5F5FC;
-				color: #009AE5;
-			}
-		}
-
-		> .active > a {
-			&, &:focus, &:hover {
-				background: #60BFEF;
-				color: #FFF;
-			}
-		}
-	}
-
 	.lfr-control-panel-help-content.alert {
 		border-width: 1px 0;
 		margin-bottom: 1em;

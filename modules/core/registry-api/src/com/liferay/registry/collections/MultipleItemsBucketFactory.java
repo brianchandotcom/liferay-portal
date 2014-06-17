@@ -39,7 +39,6 @@ public class MultipleItemsBucketFactory<S>
 
 	@Override
 	public ServiceTrackerMapImpl.Bucket<S, List<S>> create() {
-
 		return new ListBucket();
 	}
 
@@ -49,7 +48,6 @@ public class MultipleItemsBucketFactory<S>
 		implements ServiceTrackerMapImpl.Bucket<S, List<S>> {
 
 		ListBucket() {
-
 			_serviceReferences = new TreeSet<ServiceReference<S>>(_comparator);
 			_services = new ArrayList<S>();
 		}

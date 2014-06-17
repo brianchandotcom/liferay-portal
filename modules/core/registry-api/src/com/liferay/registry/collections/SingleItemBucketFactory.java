@@ -92,7 +92,6 @@ public class SingleItemBucketFactory<S>
 		}
 
 		private S _service;
-
 		private PriorityQueue<ServiceReference<S>> _serviceReferences;
 
 	}

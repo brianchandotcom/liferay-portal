@@ -38,14 +38,10 @@ public class DefineObjectsTag extends TagSupport {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 
-		Group group = (Group)request.getAttribute(WebKeys.GROUP);
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-		try {
-			if (groupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(groupId);
-			}
-		}
-		catch (Exception e) {
+		if (group == null) {
+			group = (Group)request.getAttribute(WebKeys.GROUP);
 		}
 
 		if (group == null) {
@@ -62,16 +58,18 @@ public class DefineObjectsTag extends TagSupport {
 		Group liveGroup = group;
 		Group stagingGroup = group;
 
-		if (group.isStagingGroup() && !group.isStagedRemotely()) {
-			liveGroup = group.getLiveGroup();
+		if (!group.isStagedRemotely()) {
+			if (group.isStagingGroup()) {
+				liveGroup = group.getLiveGroup();
 
-			liveGroupId = liveGroup.getGroupId();
-		}
+				liveGroupId = liveGroup.getGroupId();
+			}
 
-		if (group.hasStagingGroup() && !group.isStagedRemotely()) {
-			stagingGroup = group.getStagingGroup();
+			if (group.hasStagingGroup()) {
+				stagingGroup = group.getStagingGroup();
 
-			stagingGroupId = stagingGroup.getGroupId();
+				stagingGroupId = stagingGroup.getGroupId();
+			}
 		}
 
 		pageContext.setAttribute("group", group);

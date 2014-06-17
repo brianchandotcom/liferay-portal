@@ -1,0 +1,279 @@
+<html>
+<head>
+<title>Kaleodesigner</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Kaleodesigner</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Kaleodesigner</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_TAB</td>
+	<td>//ul[@role='tablist']/li/a[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_KALEO_XML_TAB</td>
+	<td>//ul[@role='tablist']/li/a[contains(.,'Source (Kaleo XML)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NODES-->
+<tr>
+	<td>NODES_TAB</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Nodes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_NODE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_node}']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_NODE_UNSELECTABLE</td>
+	<td>//div[@class='tab-content']/div/ul/li[contains(@class,'unselectable') and @title='${key_node}']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_CONDITION</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Condition']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_END</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='End']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_FORK</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Fork']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_JOIN</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Join']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_JOIN_XOR</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Join XOR']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_START</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Start']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_STATE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='State']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_TASK</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Task']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS-->
+<tr>
+	<td>SETTINGS_TAB</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_ACTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_NOTIFICATIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Notifications')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_DESCRIPTION</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Description')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_NAME</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TYPE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_ASSIGNMENTS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Assignments')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS_CELL_EDITOR-->
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
+	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_ADD_SECTION</td>
+	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Add Section')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_ACTIONS_REMOVE</td>
+	<td>//a[@class='celleditor-view-menu-remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_NAME</td>
+	<td>//input[@name='name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_DESCRIPTION</td>
+	<td>//textarea[@name='Description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SCRIPT</td>
+	<td>//textarea[@name='script']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE</td>
+	<td>//select[@name='scriptLanguage']/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_EXECUTION_TYPE</td>
+	<td>//select[@name='exectutionType']/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_PRIORITY</td>
+	<td>//label[@name='priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_FORM-->
+<tr>
+	<td>VIEW_FORM_BUILDER</td>
+	<td>//div[@class='diagram-builder-canvas']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE</td>
+	<td>//div[contains(@data-nodeid,'${key_nodeNodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_LABEL</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_DELETE_ICON</td>
+	<td>//div[contains(@data-nodeid,'${key_nodeNodeLabel}')]/div[3]/div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_CONDITION</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'condition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_END</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'end')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_FORK</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'fork')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_JOIN</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'join')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_JOIN_XOR</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'join-xor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_START</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'start')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_STATE</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'state')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_TASK</td>
+	<td>//div[@class='diagram-node-label' and contains(.,'task')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCE_KALEO_XML-->
+<tr>
+	<td>SOURCE_KALEO_XML_CONTENT</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_editorWrapper')]/div)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

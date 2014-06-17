@@ -88,6 +88,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Team"
+			escapedModel="<%= true %>"
 			modelVar="team"
 		>
 

@@ -2148,7 +2148,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portlet.getPortletDataHandlerInstance();
 
 		if ((portletDataHandler == null) ||
-			(portletDataElement == null &&
+			((portletDataElement == null) &&
 			 !portletDataHandler.isDisplayPortlet())) {
 
 			return false;

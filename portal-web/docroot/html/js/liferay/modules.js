@@ -500,6 +500,32 @@
 							'resize'
 						]
 					},
+					'liferay-layouts-tree': {
+						path: 'layouts_tree.js',
+						requires: [
+							'aui-tree-view'
+						]
+					},
+					'liferay-layouts-tree-check-content-display-page': {
+						path: 'layouts_tree_check_content_display_page.js',
+						requires: [
+							'aui-base'
+						]
+					},
+					'liferay-layouts-tree-selectable': {
+						path: 'layouts_tree_selectable.js',
+						requires: [
+							'aui-base'
+						]
+					},
+					'liferay-layouts-tree-state': {
+						path: 'layouts_tree_state.js',
+						requires: [
+							'aui-base',
+							'aui-io-request',
+							'liferay-store'
+						]
+					},
 					'liferay-list-view': {
 						path: 'list_view.js',
 						requires: [

@@ -2404,6 +2404,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		else if (line.startsWith(StringPool.TAB + "public static ")) {
 			if (line.startsWith(StringPool.TAB + "public static class ") ||
 				line.startsWith(StringPool.TAB + "public static enum") ||
+				line.startsWith(
+					StringPool.TAB + "public static final class ") ||
 				line.startsWith(StringPool.TAB + "public static interface")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
@@ -2454,18 +2456,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
-		else if (line.startsWith(StringPool.TAB + "protected static final ")) {
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+		else if (line.startsWith(StringPool.TAB + "protected static final ") &&
+				 (line.contains(StringPool.EQUAL) ||
+				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
 
-				return new Tuple(
-					getVariableName(line),
-					TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
-			}
+			return new Tuple(
+				getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static ")) {
 			if (line.startsWith(StringPool.TAB + "protected static class ") ||
 				line.startsWith(StringPool.TAB + "protected static enum ") ||
+				line.startsWith(
+					StringPool.TAB + "protected static final class ") ||
 				line.startsWith(
 					StringPool.TAB + "protected static interface ")) {
 
@@ -2516,17 +2518,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
 		}
-		else if (line.startsWith(StringPool.TAB + "private static final ")) {
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
+		else if (line.startsWith(StringPool.TAB + "private static final ") &&
+				 (line.contains(StringPool.EQUAL) ||
+				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
 
-				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
-			}
+			return new Tuple(
+				getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "private static ")) {
 			if (line.startsWith(StringPool.TAB + "private static class ") ||
 				line.startsWith(StringPool.TAB + "private static enum ") ||
+				line.startsWith(
+					StringPool.TAB + "private static final class ") ||
 				line.startsWith(StringPool.TAB + "private static interface ")) {
 
 				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);

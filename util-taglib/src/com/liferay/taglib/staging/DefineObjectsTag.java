@@ -26,7 +26,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 /**
  * @author Levente Hudák
  */
-public class DefineStagingObjectsTag extends TagSupport {
+public class DefineObjectsTag extends TagSupport {
 
 	@Override
 	public int doStartTag() {

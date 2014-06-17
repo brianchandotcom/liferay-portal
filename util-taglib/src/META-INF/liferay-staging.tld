@@ -11,8 +11,8 @@
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
 		<name>defineStagingObjects</name>
-		<tag-class>com.liferay.taglib.staging.DefineStagingObjectsTag</tag-class>
-		<tei-class>com.liferay.taglib.staging.DefineStagingObjectsTei</tei-class>
+		<tag-class>com.liferay.taglib.staging.DefineObjectsTag</tag-class>
+		<tei-class>com.liferay.taglib.staging.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
 	</tag>
 	<tag>

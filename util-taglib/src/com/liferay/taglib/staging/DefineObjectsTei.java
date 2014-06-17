@@ -23,7 +23,7 @@ import javax.servlet.jsp.tagext.VariableInfo;
 /**
  * @author Levente Hudák
  */
-public class DefineStagingObjectsTei extends TagExtraInfo {
+public class DefineObjectsTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {

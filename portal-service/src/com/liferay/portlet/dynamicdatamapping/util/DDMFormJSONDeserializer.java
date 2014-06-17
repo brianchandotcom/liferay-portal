@@ -18,25 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
- * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
-public class DDMFormXSDDeserializerTest extends BaseDDMFormDeserializer {
+public interface DDMFormJSONDeserializer {
 
-	@Override
-	protected DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return DDMFormXSDDeserializerUtil.deserialize(serializedDDMForm);
-	}
-
-	@Override
-	protected String getDeserializerType() {
-		return "xsd";
-	}
-
-	@Override
-	protected String getTestFileExtension() {
-		return ".xml";
-	}
+	public DDMForm deserialize(String serializedDDMForm) throws PortalException;
 
 }

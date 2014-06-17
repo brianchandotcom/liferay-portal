@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -23,14 +22,10 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -38,12 +33,6 @@ import org.junit.Test;
  * @author Miguel Angelo Caldas Gallindo
  */
 public class DDMXMLImplTest extends BaseDDMTest {
-
-	@Before
-	@Override
-	public void setUp() {
-		super.setUp();
-	}
 
 	@Test
 	public void testUpdateContentDefaultLocale() throws Exception {
@@ -93,20 +82,11 @@ public class DDMXMLImplTest extends BaseDDMTest {
 		return checkElementLocale(rootElement, newLocaleId);
 	}
 
-	protected String readXML(String fileName) throws IOException {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
-	}
-
 	protected void updateContentDefaultLocale(
 			String fileName, boolean expectedResult)
 		throws Exception {
 
-		String xml = readXML(fileName);
+		String xml = read(fileName);
 
 		Document document = SAXReaderUtil.read(xml);
 

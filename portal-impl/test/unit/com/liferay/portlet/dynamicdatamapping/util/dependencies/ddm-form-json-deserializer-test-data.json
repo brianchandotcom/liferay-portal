@@ -1,0 +1,511 @@
+{
+	"defaultLanguageId": "en_US",
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"fields": [
+		{
+			"dataType": "boolean",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean",
+				"pt_BR": "Booleano"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Boolean2282",
+			"predefinedValue": {
+				"en_US": "false",
+				"pt_BR": "false"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "checkbox"
+		},
+		{
+			"dataType": "date",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Date",
+				"pt_BR": "Data"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Date2510",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-date"
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Decimal",
+				"pt_BR": "Decimal"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Decimal3479",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-decimal"
+		},
+		{
+			"dataType": "document-library",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Documents and Media",
+				"pt_BR": "Biblioteca de Documentos"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Documents_and_Media4036",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-documentlibrary"
+		},
+		{
+			"dataType": "geolocation",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Geolocation",
+				"pt_BR": "Geolocalizacao"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Geolocation4273",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-geolocation"
+		},
+		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "HTML",
+				"pt_BR": "HTML"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "HTML4512",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-text-html"
+		},
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Image",
+				"pt_BR": "Imagem"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Image4751",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-image"
+		},
+		{
+			"dataType": "integer",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Integer",
+				"pt_BR": "Inteiro"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Integer4987",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-integer",
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Link to Page",
+				"pt_BR": "Link para Pagina"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Link_to_Page5224",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-link-to-page"
+		}, {
+
+			"dataType": "number",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Number",
+				"pt_BR": "Numero"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Number5460",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-number"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Radio",
+				"pt_BR": "Radio"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Radio5699",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				},
+				{
+					"label": {
+						"en_US": "Option 3",
+						"pt_BR": "Opcao 3"
+					},
+					"value": "Value 3"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"Value 1\"]",
+				"pt_BR": "[\"Value 1\"]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "radio"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Select",
+				"pt_BR": "Select"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Select5979",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				},
+				{
+					"label": {
+						"en_US": "Option 3",
+						"pt_BR": "Opcao 3"
+					},
+					"value": "Value 3"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"\"]",
+				"pt_BR": "[\"\"]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "select"
+		},
+		{
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Separator",
+				"pt_BR": "Separador"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Separator6279",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"style": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-separator"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Text6513",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text Box",
+				"pt_BR": "Caixa de Texto"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Text_Box6748",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "textarea"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Text6980",
+			"nestedFields": [
+				{
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Separator",
+						"pt_BR": "Separador"
+					},
+					"localizable": true,
+					"multiple": false,
+					"name": "Separator7211",
+					"nestedFields": [
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Select",
+								"pt_BR": "Select"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "Select7450",
+							"options": [
+								{
+									"label": {
+										"en_US": "Option 1",
+										"pt_BR": "Opcao 1"
+									},
+									"value": "Value 1"
+								},
+								{
+									"label": {
+										"en_US": "Option 2",
+										"pt_BR": "Opcao 2",
+									},
+									"value": "Value 2"
+								},
+								{
+
+									"label": {
+										"en_US": "Option 3",
+										"pt_BR": "Opcao 3"
+									},
+									"value": "Value 3"
+								}
+							],
+							"predefinedValue": {
+								"en_US": "[\"\"]",
+								"pt_BR": "[\"\"]"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"tip": {
+								"en_US": "",
+								"pt_BR": ""
+							},
+							"type": "select"
+						}
+					],
+					"predefinedValue": {
+						"pt_BR": "",
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"style": {
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"tip": {
+						"en_US": "",
+						"pt_BR": ""
+					},
+					"type": "ddm-separator"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "text"
+		}
+	]
+}

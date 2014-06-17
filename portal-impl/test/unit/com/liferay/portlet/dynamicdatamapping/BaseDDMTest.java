@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -34,8 +35,13 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,10 +64,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
-		DDMFormXSDDeserializerUtil.class, DDMStructureLocalServiceUtil.class,
-		DDMTemplateLocalServiceUtil.class, HtmlUtil.class,
-		JSONFactoryUtil.class, LocaleUtil.class, LocalizationUtil.class,
-		PropsUtil.class, SAXReaderUtil.class
+		DDMFormJSONDeserializerUtil.class, DDMFormXSDDeserializerUtil.class,
+		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
+		HtmlUtil.class, JSONFactoryUtil.class, LocaleUtil.class,
+		LocalizationUtil.class, PropsUtil.class, SAXReaderUtil.class
 	})
 @RunWith(PowerMockRunner.class)
 public class BaseDDMTest extends PowerMockito {
@@ -70,6 +76,7 @@ public class BaseDDMTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
+		setUpDDMFormJSONDeserializer();
 		setUpDDMFormXSDDeserializer();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
@@ -183,6 +190,25 @@ public class BaseDDMTest extends PowerMockito {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	protected String read(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
+	protected void setUpDDMFormJSONDeserializer() {
+		spy(DDMFormJSONDeserializerUtil.class);
+
+		when(
+			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
+		).thenReturn(
+			new DDMFormJSONDeserializerImpl()
+		);
 	}
 
 	protected void setUpDDMFormXSDDeserializer() {

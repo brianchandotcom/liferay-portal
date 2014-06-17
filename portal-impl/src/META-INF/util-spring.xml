@@ -918,6 +918,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerUtil">
+		<property name="DDMFormJSONDeserializer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONSerializerUtil">
 		<property name="DDMFormJSONSerializer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONSerializerImpl" />

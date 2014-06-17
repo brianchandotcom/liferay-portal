@@ -26,8 +26,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,12 +40,6 @@ import org.junit.runner.RunWith;
 @Sync
 public class MBSubscriptionBaseModelTest
 	extends BaseSubscriptionBaseModelTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

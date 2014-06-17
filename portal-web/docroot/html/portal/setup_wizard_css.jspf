@@ -104,6 +104,11 @@
 	float: left;
 }
 
+.rtl #banner .logo {
+	margin-left: 20px;
+	margin-right: 0;
+}
+
 .ie6 #wrapper {
 	width: 600px;
 }

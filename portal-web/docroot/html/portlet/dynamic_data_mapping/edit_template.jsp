@@ -326,13 +326,13 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			var values = container.all('.lfr-ddm-small-image-value');
 
 			var selectSmallImageType = function(index) {
-				types.set('checked', false);
+				types.attr('checked', false);
 
-				types.item(index).set('checked', true);
+				types.item(index).attr('checked', true);
 
-				values.set('disabled', true);
+				values.attr('disabled', true);
 
-				values.item(index).set('disabled', false);
+				values.item(index).attr('disabled', false);
 			};
 
 			container.delegate(
@@ -357,19 +357,19 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 							var expanded = !instance.get('expanded');
 
-							A.one('#<portlet:namespace />smallImage').set('checked', expanded);
+							A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
 
 							if (expanded) {
 								types.each(
 									function(item, index) {
 										if (item.get('checked')) {
-											values.item(index).set('disabled', false);
+											values.item(index).attr('disabled', false);
 										}
 									}
 								);
 							}
 							else {
-								values.set('disabled', true);
+								values.attr('disabled', true);
 							}
 						}
 					}

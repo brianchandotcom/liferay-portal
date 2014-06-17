@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.Client;
 
 /**
@@ -26,6 +27,8 @@ public interface ElasticsearchConnection {
 	public void close();
 
 	public Client getClient();
+
+	public ClusterHealthResponse getClusterHealthResponse();
 
 	public void initialize();
 

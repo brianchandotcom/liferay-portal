@@ -50,6 +50,8 @@
 			@include respond-to(phone, tablet) {
 				top: 17px;
 			}
+
+			z-index: 1;
 		}
 	}
 }

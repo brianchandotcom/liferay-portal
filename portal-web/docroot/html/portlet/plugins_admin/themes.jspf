@@ -64,7 +64,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 			name="themes"
 		>
 			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-				<img alt="<%= LanguageUtil.get(locale, "thumbnail") %>" class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
+				<img alt="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(locale, "thumbnail")) %>" class="plugin-thumbnail" src="<%= curTheme.getStaticResourcePath() + HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" />
 			</aui:a>
 
 			<br />
@@ -73,7 +73,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 
 			<c:choose>
 				<c:when test="<%= pluginPackage == null %>">
-			   		<liferay-ui:message key="unknown" />
+					<liferay-ui:message key="unknown" />
 				</c:when>
 				<c:otherwise>
 					<%= HtmlUtil.escape(pluginPackage.getName()) %>

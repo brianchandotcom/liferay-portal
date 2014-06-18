@@ -46,12 +46,11 @@
 			left: 7px;
 			position: absolute;
 			top: 15px;
+			z-index: 1;
 
 			@include respond-to(phone, tablet) {
 				top: 17px;
 			}
-
-			z-index: 1;
 		}
 	}
 }

@@ -224,3 +224,33 @@ Some content (such as web content) needs the `PortletRequest` and
 `PortletResponse` parameters in order to be rendered.
 
 ---------------------------------------
+
+### aui:input taglib for type checkbox does not create a hidden input anymore
+- **Date:** 2014-Jun-16
+- **JIRA Ticket:** LPS-44228
+
+#### What changed?
+Whenever the aui:input taglib is used to generate an input of type checkbox, only an input tag will be generated, instead of the checkbox and hidden field it was generating before.
+For this reason, when a checkox is not checked, the parameter is not sent to the server (therefore, doing request.getParameter("checkboxName") will return null when the checkbox was unchecked).
+In order to help developers bypass this situation, we now send with the aui:form a parameter with a list of all the checkboxes that existed in the form called "checkboxNames".
+
+#### Who is affected?
+Anyone trying to grab the previously generated fields. Mostly affects JavaScript code trying to add some additional actions when clicking on the checkboxes.
+It will also affect java classes assuming that a checkbox would always send a parameter on form submit with a true/false value. Now, the parameter is only sent when the input is checked.
+
+#### How should I update my code?
+- In the frontend javascript code:
+ - Remove the `Checkbox` suffix when querying for the node in any of its forms; `A.one(...)`, `$(...)` ...
+ - Remove any action trying to set the value of the checkbox on the previously generated hidden field
+- In the backend java code:
+ - Use ParamUtil.getBoolean to recover a true/false value if the checkbox was checked or not checked
+ - Use PropertiesParamUtil.getProperties to recover true/false for a list of checkboxes
+ - Use the parameter called "checkboxNames" to obtain all the checkboxes from the aui:form
+ 
+
+#### Why was this change made?
+This change:
+- Makes generated forms more standard and interoperable since it falls back to the checkboxes default behaviour.
+- Allows the form to be submitted properly even when JavaScript is disabled.
+
+---------------------------------------

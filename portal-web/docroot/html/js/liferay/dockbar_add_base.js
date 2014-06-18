@@ -43,13 +43,13 @@ AUI.add(
 						setter: A.one
 					},
 
-					nodeSelector: {
-						validator: Lang.isString
-					},
-
 					nodes: {
 						getter: '_getNodes',
 						readOnly: true
+					},
+
+					nodeSelector: {
+						validator: Lang.isString
 					},
 
 					searchData: {
@@ -167,10 +167,8 @@ AUI.add(
 									if (referencePortlet) {
 										referencePortlet.placeBefore(placeHolder);
 									}
-									else {
-										if (dropColumn) {
-											dropColumn.append(placeHolder);
-										}
+									else if (dropColumn) {
+										dropColumn.append(placeHolder);
 									}
 								}
 							}

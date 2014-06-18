@@ -12,17 +12,17 @@ AUI.add(
 
 		var PortletDragDrop = A.Component.create(
 			{
-				EXTENDS: A.Plugin.Base,
-
-				NAME: NAME,
-
-				NS: NAME,
-
 				ATTRS: {
 					srcNode: {
 						setter: A.one
 					}
 				},
+
+				EXTENDS: A.Plugin.Base,
+
+				NAME: NAME,
+
+				NS: NAME,
 
 				prototype: {
 					initializer: function() {

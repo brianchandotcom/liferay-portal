@@ -1,4 +1,52 @@
 <definition>
+	<command name="addConnection">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMembers#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmRequestToConnect">
+			<var name="senderName" value="${adminName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
 	<command name="confirmMemberInvite">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -9,6 +57,47 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
+	<command name="confirmRequestToConnect">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+	</command>
+
+	<command name="disconnectFromConnection">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#click" locator-key1="DISCONNECT_BUTTON" value1="Disconnect" />
+		<execute action="SOMembers#assertNotVisible" locator-key1="DISCONNECT_BUTTON" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not connected to this user anymore." />
 	</command>
 
 	<command name="ignoreMemberInvite">
@@ -42,6 +131,26 @@
 
 		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+	</command>
+
+	<command name="requestToConnect">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#assertClick" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
+		<execute action="SOMembers#assertNotVisible" locator-key1="CONNECT_BUTTON" value1="Connect" />
 	</command>
 
 	<command name="viewConfirmMemberInvite">

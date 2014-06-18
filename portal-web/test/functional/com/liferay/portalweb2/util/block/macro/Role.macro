@@ -177,6 +177,45 @@
 		</execute>
 	</command>
 
+	<command name="editCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_EDIT" value1="Edit" />
+
+		<if>
+			<equals arg1="${localizeRoleName}" arg2="true" />
+			<then>
+				<execute macro="Role#localizeRoleNameCmd" />
+			</then>
+			<else>
+				<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleName}" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="roleDescription" />
+			<then>
+				<if>
+					<equals arg1="${localizeRoleDescription}" arg2="true" />
+					<then>
+						<execute macro="Role#localizeRoleDescriptionCmd" />
+					</then>
+					<else>
+						<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescription}" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<execute action="CPRolesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+	
 	<command name="editPermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
@@ -419,6 +458,158 @@
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
+	</command>
+
+	<command name="localizeRoleDescriptionCmd">
+		<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH" />
+		<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleName}" />
+
+		<if>
+			<equals arg1="${language}" arg2="Catalan (Spain)" />
+			<then>
+				<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN" />
+				<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+			</then>
+			<elseif>
+				<equals arg1="${language}" arg2="Chinese (China)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Finnish (Finland)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="French (France)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="German (Germany)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Hebrew (Israel)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Japanese (Japan)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Spanish (Spain)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH" />
+					<execute action="CPRolesEdit#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescriptionLocalized}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="localizeRoleNameCmd">
+		<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH" />
+		<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleName}" />
+
+		<if>
+			<equals arg1="${language}" arg2="Catalan (Spain)" />
+			<then>
+				<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_CATALAN" />
+				<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+			</then>
+			<elseif>
+				<equals arg1="${language}" arg2="Chinese (China)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_CHINESE" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Finnish (Finland)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_FINNISH" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="French (France)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_FRENCH" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="German (Germany)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_GERMAN" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Hebrew (Israel)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_HEBREW" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Japanese (Japan)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Spanish (Spain)" />
+				<then>
+					<execute action="CPRolesEdit#click" locator-key1="TITLE_FIELD_LOCALIZATION_FLAG_SPANISH" />
+					<execute action="CPRolesEdit#type" locator-key1="TITLE_FIELD" value1="${roleNameLocalized}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="removePermissionCP">

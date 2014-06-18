@@ -6,7 +6,7 @@
 
 .taglib-search-toggle-advanced-wrapper {
 	.taglib-search-toggle-advanced {
-		border: 1px solid #DDD;
+		border: 1px solid transparent;
 		margin-top: 0;
 		padding: 15px 15px 0;
 	}

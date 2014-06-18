@@ -181,7 +181,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 							<span class="lfr-translation-manager-selector nobr">
 								<span class="article-default-language lfr-token lfr-token-primary" id="<portlet:namespace />defaultLanguage">
-									<img alt="<liferay-ui:message key="default-language" />" src='<%= HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages() + "/language/" + defaultLanguageId + ".png") %>' />
+									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="default-language" />" src='<%= HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages() + "/language/" + defaultLanguageId + ".png") %>' />
 
 									<%= LocaleUtil.fromLanguageId(defaultLanguageId).getDisplayName(locale) %>
 								</span>

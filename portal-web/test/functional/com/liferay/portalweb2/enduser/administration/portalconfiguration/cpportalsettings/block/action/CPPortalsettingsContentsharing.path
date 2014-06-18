@@ -36,7 +36,7 @@
 <!--CONTENT_SHARING-->
 <tr>
 	<td>CONTENT_SHARING_CHECKBOX</td>
-	<td>//input[@id='_130_sites.content.sharing.through.administrators.enabledCheckbox']</td>
+	<td>//input[@id='_130_sites.content.sharing.through.administrators.enabled']</td>
 	<td></td>
 </tr>
 <tr>

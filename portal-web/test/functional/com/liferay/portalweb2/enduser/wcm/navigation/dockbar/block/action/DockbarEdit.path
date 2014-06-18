@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO</td>
-	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--Checkbox')]</td>
+	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--')]</td>
 	<td></td>
 </tr>
 </tbody>

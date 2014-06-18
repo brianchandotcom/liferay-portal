@@ -66,22 +66,22 @@
 <!--SETUP_DISPLAY_SETTINGS-->
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>//input[@id='_86_showActions']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>//input[@id='_86_showFolderMenu']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>//input[@id='_86_showTabs']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>//input[@id='_86_showFoldersSearch']</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>SETUP_FOLDERS_LISTING_SHOW_SUBFOLDERS_CHECKBOX</td>
-	<td>//input[@id='_86_showSubfoldersCheckbox']</td>
+	<td>//input[@id='_86_showSubfolders']</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,12 +129,12 @@
 <!--SETUP_RATINGS-->
 <tr>
 	<td>SETUP_RATINGS_ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_RATINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableCommentRatings']</td>
 	<td></td>
 </tr>
 </tbody>

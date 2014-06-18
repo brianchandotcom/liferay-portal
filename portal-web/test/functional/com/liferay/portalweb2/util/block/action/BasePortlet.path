@@ -203,7 +203,7 @@
 </tr>
 <tr>
 	<td>PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX</td>
-	<td>//input[@id='_113_use-custom-titleCheckbox']</td>
+	<td>//input[@id='_113_use-custom-title']</td>
 	<td></td>
 </tr>
 <tr>

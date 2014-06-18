@@ -150,22 +150,22 @@
 </tr>
 <tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
-	<td>//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']</td>
+	<td>//input[@id='_156_DELETE_MISSING_LAYOUTS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_LAYOUT_SET_SETTINGSCheckbox']</td>
+	<td>//input[@id='_156_LAYOUT_SET_SETTINGS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_THEME_REFERENCECheckbox']</td>
+	<td>//input[@id='_156_THEME_REFERENCE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_156_LOGOCheckbox']</td>
+	<td>//input[@id='_156_LOGO']</td>
 	<td></td>
 </tr>
 <tr>
@@ -301,7 +301,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_156_PERMISSIONSCheckbox']</td>
+	<td>//input[@id='_156_PERMISSIONS']</td>
 	<td></td>
 </tr>
 </tbody>

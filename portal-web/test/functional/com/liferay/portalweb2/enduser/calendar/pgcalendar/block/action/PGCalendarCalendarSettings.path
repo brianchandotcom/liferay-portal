@@ -50,17 +50,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_CALENDAR_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_defaultCalendarCheckbox']</td>
+	<td>//input[@id='_1_WAR_calendarportlet_defaultCalendar']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_enableCommentsCheckbox']</td>
+	<td>//input[@id='_1_WAR_calendarportlet_enableComments']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_enableRatingsCheckbox']</td>
+	<td>//input[@id='_1_WAR_calendarportlet_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>PRIVATE_PAGE_PROPAGATION_CHECKBOX</td>
-	<td>//input[@id='_165_privateLayoutSetPrototypeLinkEnabledCheckbox']</td>
+	<td>//input[@id='_165_privateLayoutSetPrototypeLinkEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLIC_PAGE_PROPAGATION_CHECKBOX</td>
-	<td>//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']</td>
+	<td>//input[@id='_165_publicLayoutSetPrototypeLinkEnabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[@id='_165_activeCheckbox']</td>
+	<td>//input[@id='_165_active']</td>
 	<td></td>
 </tr>
 <tr>

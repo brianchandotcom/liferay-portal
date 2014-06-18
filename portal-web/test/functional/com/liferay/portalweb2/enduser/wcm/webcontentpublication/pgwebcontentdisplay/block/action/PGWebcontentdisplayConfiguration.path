@@ -60,37 +60,37 @@
 </tr>
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
-	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>//input[@id='_86_showAvailableLocales']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td>//input[@id='_86_enablePrint']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>//input[@id='_86_enableRelatedAssets']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>//input[@id='_86_enableComments']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableCommentRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
-	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td>//input[@id='_86_enableViewCountIncrement']</td>
 	<td></td>
 </tr>
 <tr>

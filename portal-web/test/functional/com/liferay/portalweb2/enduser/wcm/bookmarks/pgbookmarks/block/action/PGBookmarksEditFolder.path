@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>MERGE_WITH_PARENT_FOLDER_CHECKBOX</td>
-	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
+	<td>//input[@id='_28_mergeWithParentFolder']</td>
 	<td></td>
 </tr>
 </tbody>

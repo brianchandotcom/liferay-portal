@@ -31,7 +31,7 @@
 <!--GENERAL-->
 <tr>
 	<td>GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX</td>
-	<td>//input[contains(@id,'allowAnonymousPostingCheckbox')]</td>
+	<td>//input[contains(@id,'allowAnonymousPosting')]</td>
 	<td></td>
 </tr>
 <tr>

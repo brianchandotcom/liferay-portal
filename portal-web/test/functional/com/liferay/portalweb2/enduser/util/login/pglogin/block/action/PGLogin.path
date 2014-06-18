@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>REMEMBER_ME_CHECKBOX</td>
-	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>//input[@id='_58_rememberMe']</td>
 	<td></td>
 </tr>
 <tr>

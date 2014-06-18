@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>ALL_VOCABULARIES_CHECKBOX</td>
-	<td>//input[@id='_147_checkAllVocabulariesCheckbox']</td>
+	<td>//input[@id='_147_checkAllVocabularies']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_CATEGORIES_CHECKBOX</td>
-	<td>//input[@id='_147_checkAllCategoriesCheckbox']</td>
+	<td>//input[@id='_147_checkAllCategories']</td>
 	<td></td>
 </tr>
 <tr>

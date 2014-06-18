@@ -106,7 +106,7 @@
 <!--CONTACTS_LIST-->
 <tr>
 	<td>CONTACTS_LIST_ALL_CHECKBOX</td>
-	<td>//input[contains(@id,'contactsportlet_checkAllCheckbox')]</td>
+	<td>//input[contains(@id,'contactsportlet_checkAll')]</td>
 	<td></td>
 </tr>
 <tr>

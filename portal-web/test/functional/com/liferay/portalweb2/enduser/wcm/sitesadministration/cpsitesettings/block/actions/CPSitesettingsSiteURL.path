@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_DOCUMENT_AND_MEDIA_DIRECTORY_INDEXING_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'directoryIndexingEnabledCheckbox')]</td>
+	<td>//input[contains(@id,'directoryIndexingEnabled')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SHOW_SECTIONS_TITLE_CHECKBOX</td>
-	<td>//input[@id='_86_showKBArticlesSectionsTitleCheckbox']</td>
+	<td>//input[@id='_86_showKBArticlesSectionsTitle']</td>
 	<td></td>
 </tr>
 <tr>

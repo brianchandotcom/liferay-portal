@@ -57,37 +57,37 @@
 <!--DISPLAY_SETTING_BASIC-->
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_SITE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayScopeFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayScopeFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_TYPE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetTypeFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayAssetTypeFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_TAGS_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetTagsFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayAssetTagsFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_CATEGORIES_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetCategoriesFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayAssetCategoriesFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_FOLDER_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayFolderFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayFolderFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayUserFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayUserFacet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTING_BASIC_DISPLAY_MODIFIED_RANGE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayModifiedRangeFacetCheckbox')]</td>
+	<td>//input[contains(@id,'displayModifiedRangeFacet')]</td>
 	<td></td>
 </tr>
 <tr>

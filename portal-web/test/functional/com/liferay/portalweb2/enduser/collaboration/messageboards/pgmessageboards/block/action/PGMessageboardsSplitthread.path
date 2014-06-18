@@ -67,12 +67,12 @@
 <!--ADD_EXPLANATION_POST-->
 <tr>
 	<td>ADD_EXPLANATION_POST_CHECKBOX</td>
-	<td>//label[contains(@for,'addExplanationPostCheckbox')]/input[@type='checkbox']</td>
+	<td>//label[contains(@for,'addExplanationPost')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_EXPLANATION_POST_LABEL</td>
-	<td>//label[contains(@for,'addExplanationPostCheckbox')]</td>
+	<td>//label[contains(@for,'addExplanationPost')]</td>
 	<td></td>
 </tr>
 <tr>

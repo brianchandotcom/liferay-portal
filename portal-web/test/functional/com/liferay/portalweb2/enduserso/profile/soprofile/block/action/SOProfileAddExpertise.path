@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CURRENT_CHECKBOX</td>
-	<td>//input[@id='_2_projectsEntryCurrent0Checkbox']</td>
+	<td>//input[@id='_2_projectsEntryCurrent0']</td>
 	<td></td>
 </tr>
 <tr>

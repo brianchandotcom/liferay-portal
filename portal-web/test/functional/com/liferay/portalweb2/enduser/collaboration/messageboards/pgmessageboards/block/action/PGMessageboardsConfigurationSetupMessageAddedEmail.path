@@ -31,7 +31,7 @@
 <!--MESSAGE_ADDED_EMAIL-->
 <tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_86_emailMessageAddedEnabledCheckbox']</td>
+	<td>//input[@id='_86_emailMessageAddedEnabled']</td>
 	<td></td>
 </tr>
 </tbody>

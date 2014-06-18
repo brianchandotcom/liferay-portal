@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SHOW_ADD_CONTENT_BUTTON_CHECKBOX</td>
-	<td>//input[@id='_86_showAddContentButtonCheckbox']</td>
+	<td>//input[@id='_86_showAddContentButton']</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,12 +70,12 @@
 </tr>
 <tr>
 	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE_CHECKBOX</td>
-	<td>//input[@id='_86_defaultAssetPublisherCheckbox']</td>
+	<td>//input[@id='_86_defaultAssetPublisher']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
-	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>//input[@id='_86_showAvailableLocales']</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,32 +86,32 @@
 <!--ENABLE_CONVERSION-->
 <tr>
 	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsdocCheckbox']</td>
+	<td>//input[@id='_86_extensionsdoc']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_ODT_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsodtCheckbox']</td>
+	<td>//input[@id='_86_extensionsodt']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_PDF_CHECKBOX</td>
-	<td>//input[@id='_86_extensionspdfCheckbox']</td>
+	<td>//input[@id='_86_extensionspdf']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_RTF_CHECKBOX</td>
-	<td>//input[@id='_86_extensionsrtfCheckbox']</td>
+	<td>//input[@id='_86_extensionsrtf']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_SXW_CHECKBOX</td>
-	<td>//input[@id='_86_extensionssxwCheckbox']</td>
+	<td>//input[@id='_86_extensionssxw']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_CONVERSION_TXT_CHECKBOX</td>
-	<td>//input[@id='_86_extensionstxtCheckbox']</td>
+	<td>//input[@id='_86_extensionstxt']</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,37 +121,37 @@
 </tr>
 <tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td>//input[@id='_86_enablePrint']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_FLAGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td>//input[@id='_86_enableFlags']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>//input[@id='_86_enableRelatedAssets']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>//input[@id='_86_enableComments']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableCommentRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
-	<td>//input[@id='_86_enableSocialBookmarksCheckbox']</td>
+	<td>//input[@id='_86_enableSocialBookmarks']</td>
 	<td></td>
 </tr>
 <tr>

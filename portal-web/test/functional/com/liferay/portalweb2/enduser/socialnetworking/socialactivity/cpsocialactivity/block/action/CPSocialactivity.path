@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_CHECKBOX</td>
-	<td>//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabledCheckbox']</td>
+	<td>//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_BOARDS_MESSAGE_CHECKBOX</td>
-	<td>//input[@id='_179_com.liferay.portlet.messageboards.model.MBMessage.enabledCheckbox']</td>
+	<td>//input[@id='_179_com.liferay.portlet.messageboards.model.MBMessage.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_CHECKBOX</td>
-	<td>//input[@id='_179_com.liferay.portlet.wiki.model.WikiPage.enabledCheckbox']</td>
+	<td>//input[@id='_179_com.liferay.portlet.wiki.model.WikiPage.enabled']</td>
 	<td></td>
 </tr>
 <tr>

@@ -98,7 +98,7 @@
 <!--EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION-->
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_admin.email.user.added.enabledCheckbox']</td>
+	<td>//input[@id='_130_admin.email.user.added.enabled']</td>
 	<td></td>
 </tr>
 <tr>

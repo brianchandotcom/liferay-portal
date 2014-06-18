@@ -123,12 +123,12 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_COPY_PARENT_CHECKBOX</td>
-	<td>//input[@id='_127_inheritFromParentLayoutIdCheckbox']</td>
+	<td>//input[@id='_127_inheritFromParentLayoutId']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PAGE_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_127_addLayoutHiddenCheckbox']</td>
+	<td>//input[@id='_127_addLayoutHidden']</td>
 	<td></td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>DETAILS_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_127_hiddenCheckbox']</td>
+	<td>//input[@id='_127_hidden']</td>
 	<td></td>
 </tr>
 <tr>

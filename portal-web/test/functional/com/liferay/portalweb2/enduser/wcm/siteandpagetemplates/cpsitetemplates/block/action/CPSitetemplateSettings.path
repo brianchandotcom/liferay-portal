@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[@id='_192_activeCheckbox']</td>
+	<td>//input[@id='_192_active']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX</td>
-	<td>//input[@id='_192_layoutsUpdateableCheckbox']</td>
+	<td>//input[@id='_192_layoutsUpdateable']</td>
 	<td></td>
 </tr>
 <tr>

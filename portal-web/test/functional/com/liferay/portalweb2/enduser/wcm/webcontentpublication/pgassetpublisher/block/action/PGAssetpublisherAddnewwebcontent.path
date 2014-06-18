@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>SEARCHABLE_CHECKBOX</td>
-	<td>//input[@id='_15_indexableCheckbox']</td>
+	<td>//input[@id='_15_indexable']</td>
 	<td></td>
 </tr>
 <tr>

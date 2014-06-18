@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ALL_TAGS_CHECKBOX</td>
-	<td>//input[@id='_99_checkAllTagsCheckbox']</td>
+	<td>//input[@id='_99_checkAllTags']</td>
 	<td></td>
 </tr>
 <tr>

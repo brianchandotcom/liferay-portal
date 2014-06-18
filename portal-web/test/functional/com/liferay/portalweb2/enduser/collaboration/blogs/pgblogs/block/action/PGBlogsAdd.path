@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>ALLOW_PINGBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowPingbacksCheckbox']</td>
+	<td>//input[@id='_33_allowPingbacks']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALLOWS_TRACKBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowTrackbacksCheckbox']</td>
+	<td>//input[@id='_33_allowTrackbacks']</td>
 	<td></td>
 </tr>
 <tr>
@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>ABSTRACT_USE_SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[@id='_33_smallImageCheckbox']</td>
+	<td>//input[@id='_33_smallImage']</td>
 	<td></td>
 </tr>
 <tr>

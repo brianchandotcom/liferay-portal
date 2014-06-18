@@ -264,17 +264,17 @@
 </tr>
 <tr>
 	<td>DETAILS_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_156_hiddenCheckbox']</td>
+	<td>//input[@id='_156_hidden']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX</td>
-	<td>//input[contains(@id,'UpdateableCheckbox')]</td>
+	<td>//input[contains(@id,'Updateable')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX</td>
-	<td>//input[contains(@id,'PrototypeLinkEnabledCheckbox')]</td>
+	<td>//input[contains(@id,'PrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

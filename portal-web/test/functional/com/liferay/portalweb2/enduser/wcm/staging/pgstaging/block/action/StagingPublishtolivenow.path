@@ -117,12 +117,12 @@
 </tr>
 <tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
-	<td>//input[@id='_88_DELETE_MISSING_LAYOUTSCheckbox']</td>
+	<td>//input[@id='_88_DELETE_MISSING_LAYOUTS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_88_LOGOCheckbox']</td>
+	<td>//input[@id='_88_LOGO']</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_88_PERMISSIONSCheckbox']</td>
+	<td>//input[@id='_88_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>

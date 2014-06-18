@@ -261,17 +261,17 @@
 </tr>
 <tr>
 	<td>FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_showOnlyLayoutAssetsCheckbox']</td>
+	<td>//input[@id='_86_showOnlyLayoutAssets']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_URL_TAGS_CHECKBOX</td>
-	<td>//input[@id='_86_mergeUrlTagsCheckbox']</td>
+	<td>//input[@id='_86_mergeUrlTags']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_LAYOUT_TAGS_CHECKBOX</td>
-	<td>//input[@id='_86_mergeLayoutTagsCheckbox']</td>
+	<td>//input[@id='_86_mergeLayoutTags']</td>
 	<td></td>
 </tr>
 <tr>

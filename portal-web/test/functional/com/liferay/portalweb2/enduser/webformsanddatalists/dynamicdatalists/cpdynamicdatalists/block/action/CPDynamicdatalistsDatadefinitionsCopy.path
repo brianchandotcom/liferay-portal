@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>COPY_FORM_TEMPLATES_CHECKBOX</td>
-	<td>//input[@id='_166_copyFormTemplatesCheckbox']</td>
+	<td>//input[@id='_166_copyFormTemplates']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COPY_DISPLAY_TEMPLATES_CHECKBOX</td>
-	<td>//input[@id='_166_copyDisplayTemplatesCheckbox']</td>
+	<td>//input[@id='_166_copyDisplayTemplates']</td>
 	<td></td>
 </tr>
 <tr>

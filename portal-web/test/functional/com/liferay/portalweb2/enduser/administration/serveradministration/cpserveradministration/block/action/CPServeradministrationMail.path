@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX</td>
-	<td>//input[contains(@id,'pop3SecureCheckbox')]</td>
+	<td>//input[contains(@id,'pop3Secure')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX</td>
-	<td>//input[contains(@id,'smtpSecureCheckbox')]</td>
+	<td>//input[contains(@id,'smtpSecure')]</td>
 	<td></td>
 </tr>
 <tr>

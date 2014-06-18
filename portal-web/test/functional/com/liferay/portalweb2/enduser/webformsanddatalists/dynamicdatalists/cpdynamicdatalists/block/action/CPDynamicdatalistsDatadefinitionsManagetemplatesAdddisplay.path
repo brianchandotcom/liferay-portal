@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>DETAILS_SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[@id='_166_smallImageCheckbox']</td>
+	<td>//input[@id='_166_smallImage']</td>
 	<td></td>
 </tr>
 <tr>

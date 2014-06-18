@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL</td>
-	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>//input[@id='_20_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>FOLDER_ENTRIES_DOCUMENT_CHECKBOX</td>
-	<td>//input[contains(@name,'_rowIdsFileEntryCheckbox')]</td>
+	<td>//input[contains(@name,'_rowIdsFileEntry')]</td>
 	<td>Select Document</td>
 </tr>
 <tr>

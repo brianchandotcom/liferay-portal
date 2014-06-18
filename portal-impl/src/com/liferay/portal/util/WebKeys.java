@@ -147,8 +147,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String GOOGLE_GADGET = "GOOGLE_GADGET";
 
-	public static final String GROUP = "GROUP";
-
 	public static final String HTTPS_INITIAL = "HTTPS_INITIAL";
 
 	public static final String I18N_LANGUAGE_ID = "I18N_LANGUAGE_ID";

@@ -43,13 +43,13 @@ AUI.add(
 						setter: A.one
 					},
 
-					nodeSelector: {
-						validator: Lang.isString
-					},
-
 					nodes: {
 						getter: '_getNodes',
 						readOnly: true
+					},
+
+					nodeSelector: {
+						validator: Lang.isString
 					},
 
 					searchData: {
@@ -141,8 +141,9 @@ AUI.add(
 							if (!portletMetaData.instanceable) {
 								instance._disablePortletEntry(portletId);
 							}
-							else if (Util.isPhone() || Util.isTablet()) {
-								instance._instanceablePortletFeedback(portletId);
+
+							if (Util.isPhone() || Util.isTablet()) {
+								instance._portletFeedback(portletId);
 							}
 
 							var beforePortletLoaded = null;
@@ -166,10 +167,8 @@ AUI.add(
 									if (referencePortlet) {
 										referencePortlet.placeBefore(placeHolder);
 									}
-									else {
-										if (dropColumn) {
-											dropColumn.append(placeHolder);
-										}
+									else if (dropColumn) {
+										dropColumn.append(placeHolder);
 									}
 								}
 							}
@@ -272,7 +271,7 @@ AUI.add(
 						return instance._searchData;
 					},
 
-					_instanceablePortletFeedback: function(portletId) {
+					_portletFeedback: function(portletId) {
 						var instance = this;
 
 						var addedMessagePortlet = instance.byId('portletName');

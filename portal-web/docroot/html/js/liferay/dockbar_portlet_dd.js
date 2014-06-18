@@ -12,17 +12,17 @@ AUI.add(
 
 		var PortletDragDrop = A.Component.create(
 			{
-				EXTENDS: A.Plugin.Base,
-
-				NAME: NAME,
-
-				NS: NAME,
-
 				ATTRS: {
 					srcNode: {
 						setter: A.one
 					}
 				},
+
+				EXTENDS: A.Plugin.Base,
+
+				NAME: NAME,
+
+				NS: NAME,
 
 				prototype: {
 					initializer: function() {
@@ -102,6 +102,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [ 'aui-base',	'dd', 'liferay-dockbar', 'liferay-layout', 'liferay-layout-column',	'liferay-layout-freeform', 'liferay-portlet-base' ]
+		requires: ['aui-base', 'dd', 'liferay-dockbar', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
 	}
 );

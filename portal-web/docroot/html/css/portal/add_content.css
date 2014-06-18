@@ -121,6 +121,7 @@
 		}
 
 		.lfr-content-item {
+			line-height: 32px;
 			padding-left: 15px;
 			position: relative;
 
@@ -144,7 +145,11 @@
 				top: 0;
 
 				@include respond-to(phone, tablet) {
+					border: 1px solid;
 					display: inline;
+					line-height: 25px;
+					margin: 2px 8px;
+					padding: 0 9px;
 				}
 			}
 
@@ -266,6 +271,8 @@
 
 			> .message {
 				display: inline-block;
+				font-size: 24px;
+				padding: 10px;
 				text-align: center;
 				width: 100%;
 

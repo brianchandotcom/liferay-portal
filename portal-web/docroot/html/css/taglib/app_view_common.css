@@ -1,7 +1,7 @@
 @import "mixins";
 
 .app-view-entry {
-	box-sizing: initial;
+	box-sizing: content-box;
 
 	.entry-thumbnail {
 		margin: 0;

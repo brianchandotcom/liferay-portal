@@ -44,9 +44,9 @@ AUI.add(
 					ratingsNode: defaultConfig,
 					remoteAddressNode: defaultConfig,
 					remoteDeletePortletDataNode: defaultConfig,
-					remotePortNode: defaultConfig,
-					remotePathContextNode: defaultConfig,
 					remoteGroupIdNode: defaultConfig,
+					remotePathContextNode: defaultConfig,
+					remotePortNode: defaultConfig,
 					secureConnectionNode: defaultConfig,
 					setupNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
@@ -263,6 +263,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -272,18 +273,17 @@ AUI.add(
 															configurationDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															configurationDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -314,12 +314,12 @@ AUI.add(
 									dialog: {
 										bodyContent: contentNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -329,18 +329,17 @@ AUI.add(
 															contentDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															contentDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -377,6 +376,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -386,18 +386,17 @@ AUI.add(
 															contentOptionsDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															contentOptionsDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -434,6 +433,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -443,18 +443,17 @@ AUI.add(
 															globalConfigurationDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															globalConfigurationDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -491,6 +490,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -500,18 +500,17 @@ AUI.add(
 															globalContentDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															globalContentDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -548,6 +547,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -559,18 +559,17 @@ AUI.add(
 															pagesDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															pagesDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -607,6 +606,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -679,18 +679,17 @@ AUI.add(
 															}
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															rangeDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -727,6 +726,7 @@ AUI.add(
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('ok'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
@@ -736,18 +736,17 @@ AUI.add(
 															remoteDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok'),
 													primary: true
 												},
 												{
+													label: Liferay.Language.get('cancel'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															remoteDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('cancel')
+													}
 												}
 											]
 										},
@@ -777,21 +776,21 @@ AUI.add(
 								{
 									dialog: {
 										bodyContent: scheduledPublishingEventsNode,
-										height: 300,
 										centered: true,
+										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
+													label: Liferay.Language.get('close'),
 													on: {
 														click: function(event) {
 															event.domEvent.preventDefault();
 
 															scheduledPublishingEventsDialog.hide();
 														}
-													},
-													label: Liferay.Language.get('close')
+													}
 												}
 											]
 										},
@@ -862,41 +861,41 @@ AUI.add(
 
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
-							portletURL.setParameter("cmd", cmdNode.val());
+							portletURL.setParameter('cmd', cmdNode.val());
 
 							if (instance._exportLAR) {
-								portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
-								portletURL.setParameter("tabs2", "new-export-process");
-								portletURL.setParameter("exportConfigurationButtons", "custom");
+								portletURL.setParameter('struts_action', '/group_pages/edit_export_configuration');
+								portletURL.setParameter('tabs2', 'new-export-process');
+								portletURL.setParameter('exportConfigurationButtons', 'custom');
 							}
 							else {
-								portletURL.setParameter("struts_action", "/layouts_admin/edit_publish_configuration");
-								portletURL.setParameter("tabs2", "new-publication-process");
-								portletURL.setParameter("publishConfigurationButtons", "custom");
+								portletURL.setParameter('struts_action', '/layouts_admin/edit_publish_configuration');
+								portletURL.setParameter('tabs2', 'new-publication-process');
+								portletURL.setParameter('publishConfigurationButtons', 'custom');
 							}
 
 							var groupIdNode = instance.byId('groupId');
 
 							if (groupIdNode) {
-								portletURL.setParameter("groupId", groupIdNode.val());
+								portletURL.setParameter('groupId', groupIdNode.val());
 							}
 
 							var liveGroupIdNode = instance.byId('liveGroupId');
 
 							if (liveGroupIdNode) {
-								portletURL.setParameter("liveGroupId", liveGroupIdNode.val());
+								portletURL.setParameter('liveGroupId', liveGroupIdNode.val());
 							}
 
 							var privateLayoutNode = instance.byId('privateLayout');
 
 							if (privateLayoutNode) {
-								portletURL.setParameter("privateLayout", privateLayoutNode.val());
+								portletURL.setParameter('privateLayout', privateLayoutNode.val());
 							}
 
 							var rootNodeNameNode = instance.byId('rootNodeName');
 
 							if (rootNodeNameNode) {
-								portletURL.setParameter("rootNodeName", rootNodeNameNode.val());
+								portletURL.setParameter('rootNodeName', rootNodeNameNode.val());
 							}
 
 							redirectNode.val(portletURL.toString());

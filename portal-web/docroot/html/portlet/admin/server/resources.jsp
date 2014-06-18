@@ -33,7 +33,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 	</portlet:resourceURL>
 
-	<img alt="<liferay-ui:message key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
+	<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
 
 	<portlet:resourceURL var="maxMemoryChartURL">
 		<portlet:param name="struts_action" value="/admin_server/view_chart" />
@@ -42,7 +42,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 	</portlet:resourceURL>
 
-	<img alt="<liferay-ui:message key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
+	<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
 </div>
 
 <br />

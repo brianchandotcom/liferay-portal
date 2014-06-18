@@ -21,6 +21,12 @@ import com.liferay.portal.model.Role;
  */
 public interface RolesAdmin {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getCssClassName(Role role);
+
+	public String getIconCssClass(Role role);
 
 }

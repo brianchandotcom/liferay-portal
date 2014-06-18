@@ -85,8 +85,13 @@ for (long defaultTeamId : defaultTeamIds) {
 
 		<liferay-ui:search-container-column-text
 			name="title"
-			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-		/>
+		>
+			<liferay-ui:icon
+				iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+				label="<%= true %>"
+				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>
 			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
@@ -265,7 +270,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 					var rowColumns = [];
 
-					rowColumns.push(A.Escape.html(event.roletitle));
+					rowColumns.push('<i class="' + event.iconcssclass + '"></i> ' + A.Escape.html(event.roletitle));
 
 					if (event.groupid) {
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');

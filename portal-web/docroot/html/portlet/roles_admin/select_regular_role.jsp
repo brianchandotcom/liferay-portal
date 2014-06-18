@@ -82,13 +82,15 @@ portletURL.setParameter("eventName", eventName);
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= Validator.isNull(p_u_i_d)|| RoleMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, role.getRoleId()) %>">
@@ -96,6 +98,7 @@ portletURL.setParameter("eventName", eventName);
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
 
+					data.put("iconcssclass", RolesAdminUtil.getIconCssClass(role));
 					data.put("roleid", role.getRoleId());
 					data.put("roletitle", role.getTitle(locale));
 					data.put("searchcontainername", "roles");

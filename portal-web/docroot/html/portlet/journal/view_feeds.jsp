@@ -81,6 +81,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.journal.model.JournalFeed"
+			keyProperty="feedId"
 			modelVar="feed"
 		>
 

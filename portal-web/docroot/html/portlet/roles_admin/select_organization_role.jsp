@@ -233,13 +233,15 @@ if (step == 1) {
 					keyProperty="roleId"
 					modelVar="role"
 				>
-					<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-
 					<liferay-ui:search-container-column-text
 						name="title"
-						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-					/>
+					>
+						<liferay-ui:icon
+							iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+							label="<%= true %>"
+							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
 						<c:if test="<%= Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId(), role.getRoleId()) %>">
@@ -247,6 +249,7 @@ if (step == 1) {
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
 
+							data.put("iconcssclass", RolesAdminUtil.getIconCssClass(role));
 							data.put("groupdescriptivename", organization.getGroup().getDescriptiveName(locale));
 							data.put("groupid", organization.getGroupId());
 							data.put("roleid", role.getRoleId());

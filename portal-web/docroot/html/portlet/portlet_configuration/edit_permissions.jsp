@@ -295,8 +295,6 @@ definePermissionsURL.setRefererPlid(plid);
 				keyProperty="roleId"
 				modelVar="role"
 			>
-				<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-				<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 				<%
 				String definePermissionsHREF = null;
@@ -313,8 +311,13 @@ definePermissionsURL.setRefererPlid(plid);
 				<liferay-ui:search-container-column-text
 					href="<%= definePermissionsHREF %>"
 					name="role"
-					value="<%= role.getTitle(locale) %>"
-				/>
+				>
+					<liferay-ui:icon
+						iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+						label="<%= true %>"
+						message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
 				<%
 

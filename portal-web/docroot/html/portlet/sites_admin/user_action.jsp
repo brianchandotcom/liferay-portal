@@ -27,7 +27,7 @@ boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationU
 boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 %>
 
-<liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />

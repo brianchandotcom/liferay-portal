@@ -46,82 +46,81 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroupId));
 	title='<%= LanguageUtil.get(pageContext, "edit-site-roles-for-user-group") + ": " + HtmlUtil.escape(userGroup.getName()) %>'
 />
 
-<%
-RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);
+<liferay-ui:search-container
+	rowChecker="<%= new UserGroupGroupRoleRoleChecker(renderResponse, userGroup, group) %>"
+	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+>
 
-searchContainer.setRowChecker(new UserGroupGroupRoleRoleChecker(renderResponse, userGroup, group));
-%>
+	<liferay-ui:search-form
+		page="/html/portlet/roles_admin/role_search.jsp"
+		searchContainer="<%= searchContainer %>"
+	/>
 
-<liferay-ui:search-form
-	page="/html/portlet/roles_admin/role_search.jsp"
-	searchContainer="<%= searchContainer %>"
-/>
+	<%
+	PortletURL updateRoleAssignmentsURL = renderResponse.createRenderURL();
 
-<%
-RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
+	updateRoleAssignmentsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
+	updateRoleAssignmentsURL.setParameter("tabs1", tabs1);
+	updateRoleAssignmentsURL.setParameter("tabs2", tabs2);
+	updateRoleAssignmentsURL.setParameter("cur", String.valueOf(cur));
+	updateRoleAssignmentsURL.setParameter("redirect", redirect);
+	updateRoleAssignmentsURL.setParameter("userGroupId", String.valueOf(userGroupId));
+	updateRoleAssignmentsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+	%>
 
-List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
+	<div class="separator"><!-- --></div>
 
-roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
+	<%
+	String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRole('" + updateRoleAssignmentsURL.toString() + "');";
+	%>
 
-int total = roles.size();
+	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-searchContainer.setTotal(total);
+	<liferay-ui:search-container-results>
 
-List<Role> results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
+		<%
+		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
 
-searchContainer.setResults(results);
+		List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 
-PortletURL updateRoleAssignmentsURL = renderResponse.createRenderURL();
+		roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
 
-updateRoleAssignmentsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
-updateRoleAssignmentsURL.setParameter("tabs1", tabs1);
-updateRoleAssignmentsURL.setParameter("tabs2", tabs2);
-updateRoleAssignmentsURL.setParameter("cur", String.valueOf(cur));
-updateRoleAssignmentsURL.setParameter("redirect", redirect);
-updateRoleAssignmentsURL.setParameter("userGroupId", String.valueOf(userGroupId));
-updateRoleAssignmentsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-%>
+		total = roles.size();
 
-<div class="separator"><!-- --></div>
+		searchContainer.setTotal(total);
 
-<%
-String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRole('" + updateRoleAssignmentsURL.toString() + "');";
-%>
+		results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
 
-<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+		searchContainer.setResults(results);
+		%>
 
-<%
-List resultRows = searchContainer.getResultRows();
+	</liferay-ui:search-container-results>
 
-for (int i = 0; i < results.size(); i++) {
-	Role role = results.get(i);
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Role"
+		keyProperty="roleId"
+		modelVar="role"
+	>
+		<liferay-ui:search-container-column-text
+			name="title"
+		>
+			<liferay-ui:icon
+				iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+				label="<%= true %>"
+				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
-	role = role.toEscapedModel();
+		<liferay-ui:search-container-column-text
+			name="type"
+			value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>"
+		/>
 
-	ResultRow row = new ResultRow(role, role.getRoleId(), i);
+		<liferay-ui:search-container-column-text
+			name="description"
+			value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+		/>
+	</liferay-ui:search-container-row>
 
-	// Name
-
-	row.addText(role.getTitle(locale));
-
-	// Type
-
-	row.addText(LanguageUtil.get(pageContext, role.getTypeLabel()));
-
-	// Description
-
-	row.addText(role.getDescription(locale));
-
-	// CSS
-
-	row.setClassName(RolesAdminUtil.getCssClassName(role));
-	row.setClassHoverName(RolesAdminUtil.getCssClassName(role));
-
-	// Add result row
-
-	resultRows.add(row);
-}
-%>
-
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator/>
+</liferay-ui:search-container>

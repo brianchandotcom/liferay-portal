@@ -68,13 +68,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		keyProperty="roleId"
 		modelVar="role"
 	>
-		<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-		<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
-
 		<liferay-ui:search-container-column-text
 			name="title"
-			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-		/>
+		>
+			<liferay-ui:icon
+				iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+				label="<%= true %>"
+				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
 			<liferay-ui:search-container-column-text>
@@ -114,7 +116,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_regular_role" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {
-						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid);
+						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
 					}
 				);
 			}
@@ -160,13 +162,16 @@ for (Group group : allGroups) {
 		List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(group.getGroupId());
 		%>
 
-		<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(groupRoles.get(0)) %>" />
-		<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(groupRoles.get(0)) %>" />
-
 		<liferay-ui:search-container-column-text
 			name="title"
 			value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-		/>
+		>
+			<liferay-ui:icon
+				iconCssClass="<%= RolesAdminUtil.getIconCssClass(groupRoles.get(0)) %>"
+				label="<%= true %>"
+				message="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			name="group"
@@ -200,13 +205,15 @@ for (Group group : allGroups) {
 			keyProperty="roleId"
 			modelVar="userGroupRole"
 		>
-			<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
-			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
-
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
-			/>
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="organization"
@@ -313,7 +320,7 @@ for (Group group : allGroups) {
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization_role" /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {
-						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid);
+						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
 					}
 				);
 			}
@@ -344,13 +351,15 @@ for (Group group : allGroups) {
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
-				<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
-				<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(userGroupRole.getRole()) %>" />
-
 				<liferay-ui:search-container-column-text
 					name="title"
-					value="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
-				/>
+				>
+					<liferay-ui:icon
+						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
+						label="<%= true %>"
+						message="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					name="site"
@@ -456,7 +465,7 @@ for (Group group : allGroups) {
 								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site_role" /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 							},
 							function(event) {
-								<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid);
+								<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
 							}
 						);
 					}
@@ -489,13 +498,15 @@ for (Group group : allGroups) {
 			keyProperty="roleId"
 			modelVar="userGroupGroupRole"
 		>
-			<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(userGroupGroupRole.getRole()) %>" />
-			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(userGroupGroupRole.getRole()) %>" />
-
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= HtmlUtil.escape(userGroupGroupRole.getRole().getTitle(locale)) %>"
-			/>
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupGroupRole.getRole()) %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(userGroupGroupRole.getRole().getTitle(locale)) %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="site"
@@ -533,7 +544,7 @@ for (Group group : allGroups) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectRole',
-		function(roleId, name, searchContainer, groupName, groupId) {
+		function(roleId, name, searchContainer, groupName, groupId, iconCssClass) {
 			var A = AUI();
 
 			var searchContainerName = '<portlet:namespace />' + searchContainer + 'SearchContainer';
@@ -542,7 +553,7 @@ for (Group group : allGroups) {
 
 			var rowColumns = [];
 
-			rowColumns.push(name);
+			rowColumns.push('<i class="' + iconCssClass + '"></i> ' + name);
 
 			if (groupName) {
 				rowColumns.push(groupName);

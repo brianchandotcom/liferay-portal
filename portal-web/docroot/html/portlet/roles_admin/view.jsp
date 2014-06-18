@@ -31,125 +31,126 @@ String portletURLString = portletURL.toString();
 <aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<%
-	String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+	<liferay-ui:search-container
+		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+	>
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
+					<portlet:renderURL var="viewRolesURL">
+						<portlet:param name="struts_action" value="/roles_admin/view" />
+					</portlet:renderURL>
 
-	RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);
-
-	List headerNames = searchContainer.getHeaderNames();
-
-	headerNames.add(StringPool.BLANK);
-	%>
-
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
-				<portlet:renderURL var="viewRolesURL">
-					<portlet:param name="struts_action" value="/roles_admin/view" />
-				</portlet:renderURL>
-
-				<liferay-portlet:renderURL varImpl="addRoleURL">
-					<portlet:param name="struts_action" value="/roles_admin/edit_role" />
-					<portlet:param name="redirect" value="<%= viewRolesURL %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:nav-item dropdown="<%= true %>" label="add" selected='<%= toolbarItem.equals("add") %>'>
+					<liferay-portlet:renderURL varImpl="addRoleURL">
+						<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+						<portlet:param name="redirect" value="<%= viewRolesURL %>" />
+					</liferay-portlet:renderURL>
 
 					<%
-					addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
+					String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 					%>
 
-					<aui:nav-item href="<%= addRoleURL.toString() %>" label="regular-role" />
+					<aui:nav-item dropdown="<%= true %>" label="add" selected='<%= toolbarItem.equals("add") %>'>
 
-					<%
-					addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-					%>
+						<%
+						addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
+						%>
 
-					<aui:nav-item href="<%= addRoleURL.toString() %>" label="site-role" />
+						<aui:nav-item href="<%= addRoleURL.toString() %>" label="regular-role" />
 
-					<%
-					addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-					%>
+						<%
+						addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
+						%>
 
-					<aui:nav-item href="<%= addRoleURL.toString() %>" label="organization-role" />
-				</aui:nav-item>
+						<aui:nav-item href="<%= addRoleURL.toString() %>" label="site-role" />
+
+						<%
+						addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+						%>
+
+						<aui:nav-item href="<%= addRoleURL.toString() %>" label="organization-role" />
+					</aui:nav-item>
+				</c:if>
+			</aui:nav>
+
+			<aui:nav-bar-search file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
+		</aui:nav-bar>
+
+		<liferay-ui:search-container-results>
+
+			<%
+			RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
+
+			total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj());
+
+			searchContainer.setTotal(total);
+
+			results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+			searchContainer.setResults(results);
+
+			portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
+			%>
+
+		</liferay-ui:search-container-results>
+
+		<aui:input name="rolesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.Role"
+			keyProperty="roleId"
+			modelVar="role"
+		>
+
+			<%
+			PortletURL rowURL = null;
+
+			if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
+				rowURL = renderResponse.createRenderURL();
+
+				rowURL.setParameter("struts_action", "/roles_admin/edit_role");
+				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
+				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="title"
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="type"
+				value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>"
+			/>
+
+			<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="subType"
+					value="<%= LanguageUtil.get(pageContext, role.getSubtype()) %>"
+				/>
 			</c:if>
-		</aui:nav>
 
-		<aui:nav-bar-search file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
-	</aui:nav-bar>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="description"
+				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+			/>
 
-	<%
-	RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/html/portlet/roles_admin/role_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	int total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj());
-
-	searchContainer.setTotal(total);
-
-	List results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-	searchContainer.setResults(results);
-
-	portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
-	%>
-
-	<aui:input name="rolesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-
-	<%
-	List resultRows = searchContainer.getResultRows();
-
-	for (int i = 0; i < results.size(); i++) {
-		Role role = (Role)results.get(i);
-
-		role = role.toEscapedModel();
-
-		ResultRow row = new ResultRow(role, role.getRoleId(), i);
-
-		PortletURL rowURL = null;
-
-		if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
-			rowURL = renderResponse.createRenderURL();
-
-			rowURL.setParameter("struts_action", "/roles_admin/edit_role");
-			rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
-			rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-		}
-
-		// Name
-
-		row.addText(role.getTitle(locale), rowURL);
-
-		// Type
-
-		row.addText(LanguageUtil.get(pageContext, role.getTypeLabel()), rowURL);
-
-		// Subtype
-
-		if ((PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) ||
-			(PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) ||
-			(PropsValues.ROLES_SITE_SUBTYPES.length > 0)) {
-
-			row.addText(LanguageUtil.get(pageContext, role.getSubtype()), rowURL);
-		}
-
-		// Description
-
-		row.addText(role.getDescription(locale), rowURL);
-
-		// Action
-
-		row.addJSP("/html/portlet/roles_admin/role_action.jsp", "entry-action");
-
-		// CSS
-
-		row.setClassName(RolesAdminUtil.getCssClassName(role));
-		row.setClassHoverName(RolesAdminUtil.getCssClassName(role));
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>

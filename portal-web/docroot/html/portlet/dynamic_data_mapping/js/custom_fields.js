@@ -109,6 +109,7 @@ AUI.add(
 						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('refererPortletName', '167');
 						portletURL.setParameter('struts_action', '/document_selector/view');
+						portletURL.setParameter('tabs1Names', 'documents');
 						portletURL.setPortletId('200');
 						portletURL.setWindowState('pop_up');
 
@@ -121,7 +122,7 @@ AUI.add(
 								},
 								eventName: 'selectDocumentLibrary',
 								id: 'selectDocumentLibrary',
-								title: Liferay.Language.get('javax.portlet.title.20'),
+								title: Liferay.Language.get('select-document'),
 								uri: portletURL.toString()
 							},
 							function(event) {

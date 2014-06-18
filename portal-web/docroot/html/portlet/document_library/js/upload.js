@@ -751,6 +751,56 @@ AUI.add(
 				return navigationOverlays;
 			},
 
+			_getUploader: function() {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				if (!uploader) {
+					uploader = new A.Uploader(
+						{
+							appendNewFiles: false,
+							fileFieldName: 'file',
+							multipleFiles: true,
+							simLimit: 1
+						}
+					);
+
+					var navigationOverlays = instance._getNavigationOverlays();
+
+					uploader.on(
+						'uploadstart',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'show');
+						}
+					);
+
+					uploader.after(
+						'alluploadscomplete',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'hide');
+
+							var emptyMessage = instance._getEmptyMessage();
+
+							if (emptyMessage && !emptyMessage.hasClass('hide')) {
+								emptyMessage.hide(true);
+							}
+						}
+					);
+
+					uploader.get('boundingBox').hide();
+
+					uploader.render();
+
+					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
+					uploader.after('fileselect', instance._onFileSelect, instance);
+
+					instance._uploader = uploader;
+				}
+
+				return uploader;
+			},
+
 			_getUploadResponse: function(responseData) {
 				var instance = this;
 
@@ -815,56 +865,6 @@ AUI.add(
 						folderId: folderId
 					}
 				);
-			},
-
-			_getUploader: function() {
-				var instance = this;
-
-				var uploader = instance._uploader;
-
-				if (!uploader) {
-					uploader = new A.Uploader(
-						{
-							appendNewFiles: false,
-							fileFieldName: 'file',
-							multipleFiles: true,
-							simLimit: 1
-						}
-					);
-
-					var navigationOverlays = instance._getNavigationOverlays();
-
-					uploader.on(
-						'uploadstart',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'show');
-						}
-					);
-
-					uploader.after(
-						'alluploadscomplete',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'hide');
-
-							var emptyMessage = instance._getEmptyMessage();
-
-							if (emptyMessage && !emptyMessage.hasClass('hide')) {
-								emptyMessage.hide(true);
-							}
-						}
-					);
-
-					uploader.get('boundingBox').hide();
-
-					uploader.render();
-
-					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
-					uploader.after('fileselect', instance._onFileSelect, instance);
-
-					instance._uploader = uploader;
-				}
-
-				return uploader;
 			},
 
 			_initDLUpload: function() {

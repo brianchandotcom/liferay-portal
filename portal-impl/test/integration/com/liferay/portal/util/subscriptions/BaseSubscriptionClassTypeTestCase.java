@@ -26,7 +26,9 @@ public abstract class BaseSubscriptionClassTypeTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionClassType() throws Exception {
+	public void testSubscriptionClassTypeWhenAddingBaseModel()
+		throws Exception {
+
 		long classTypeId = addClassType();
 
 		addSubscriptionClassType(classTypeId);
@@ -38,7 +40,25 @@ public abstract class BaseSubscriptionClassTypeTestCase
 	}
 
 	@Test
-	public void testSubscriptionDefaultClassType() throws Exception {
+	public void testSubscriptionClassTypeWhenUpdatingBaseModel()
+		throws Exception {
+
+		long classTypeId = addClassType();
+
+		long baseModelId = addBaseModelWithClassType(
+			PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
+
+		addSubscriptionClassType(classTypeId);
+
+		updateBaseModel(baseModelId);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionDefaultClassTypeWhenAddingBaseModel()
+		throws Exception {
+
 		Long classTypeId = getDefaultClassTypeId();
 
 		if (classTypeId != null) {
@@ -46,6 +66,24 @@ public abstract class BaseSubscriptionClassTypeTestCase
 
 			addBaseModelWithClassType(
 				PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
+
+			Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+		}
+	}
+
+	@Test
+	public void testSubscriptionDefaultClassTypeWhenUpdatingBaseModel()
+		throws Exception {
+
+		Long classTypeId = getDefaultClassTypeId();
+
+		if (classTypeId != null) {
+			long baseModelId = addBaseModelWithClassType(
+				PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
+
+			addSubscriptionClassType(classTypeId);
+
+			updateBaseModel(baseModelId);
 
 			Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 		}

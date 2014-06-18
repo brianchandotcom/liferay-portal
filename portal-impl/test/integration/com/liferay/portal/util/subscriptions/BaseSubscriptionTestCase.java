@@ -39,6 +39,9 @@ public abstract class BaseSubscriptionTestCase {
 		return 0;
 	};
 
+	protected void updateBaseModel(long baseModelId) throws Exception {
+	}
+
 	protected static final long PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 
 	@DeleteAfterTestRun

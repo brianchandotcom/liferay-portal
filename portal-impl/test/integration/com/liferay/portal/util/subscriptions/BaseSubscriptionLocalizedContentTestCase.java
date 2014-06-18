@@ -58,11 +58,14 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	}
 
 	@Test
-	public void testSubscriptionLocalizedContent() throws Exception {
+	public void testSubscriptionLocalizedContentWhenAddingBaseModel()
+		throws Exception {
+
 		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
 		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 
-		setAddBaseModelSubscriptionBodyPreferences();
+		setBaseModelSubscriptionBodyPreferences(
+			getSubscriptionAddedBodyPreferenceName());
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -84,6 +87,42 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		Assert.assertEquals(1, messages.size());
 	}
 
+	@Test
+	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
+		throws Exception {
+
+		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
+		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
+
+		setBaseModelSubscriptionBodyPreferences(
+			getSubscriptionUpdatedBodyPreferenceName());
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
+
+		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		updateBaseModel(baseModelId);
+
+		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
+			"Body", GERMAN_BODY);
+
+		Assert.assertEquals(1, messages.size());
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
+
+		baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		updateBaseModel(baseModelId);
+
+		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
+
+		Assert.assertEquals(1, messages.size());
+	}
+
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
 
@@ -93,10 +132,14 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		return StringPool.BLANK;
 	}
 
-	protected abstract String getSubscriptionBodyPreferenceName()
+	protected abstract String getSubscriptionAddedBodyPreferenceName()
 		throws Exception;
 
-	protected void setAddBaseModelSubscriptionBodyPreferences()
+	protected abstract String getSubscriptionUpdatedBodyPreferenceName()
+		throws Exception;
+
+	protected void setBaseModelSubscriptionBodyPreferences(
+			String bodyPreferenceName)
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
@@ -112,8 +155,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 			String subscriptionBodyPreferencesKey =
 				LocalizationUtil.getPreferencesKey(
-					getSubscriptionBodyPreferenceName(),
-					LocaleUtil.toLanguageId(locale));
+					bodyPreferenceName, LocaleUtil.toLanguageId(locale));
 
 			String content = localizedContent.getValue();
 

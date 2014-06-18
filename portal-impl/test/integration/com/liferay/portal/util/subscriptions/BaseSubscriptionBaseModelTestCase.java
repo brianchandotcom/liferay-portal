@@ -36,7 +36,7 @@ public abstract class BaseSubscriptionBaseModelTestCase
 
 		addSubscriptionBaseModel(baseModelId);
 
-		updateEntry(baseModelId);
+		updateBaseModel(baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -49,14 +49,12 @@ public abstract class BaseSubscriptionBaseModelTestCase
 
 		addSubscriptionBaseModel(baseModelId);
 
-		updateEntry(baseModelId);
+		updateBaseModel(baseModelId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	protected abstract void addSubscriptionBaseModel(long baseModelId)
 		throws Exception;
-
-	protected abstract long updateEntry(long baseModelId) throws Exception;
 
 }

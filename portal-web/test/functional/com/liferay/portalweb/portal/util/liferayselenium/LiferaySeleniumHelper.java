@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.AntCommands;
 import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -38,9 +39,7 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,43 +62,12 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String fileName, String target)
 		throws Exception {
 
-		Runtime runtime = Runtime.getRuntime();
+		AntCommands antCommands = new AntCommands(
+			liferaySelenium, fileName, target);
 
-		String command = null;
+		antCommands.start();
 
-		if (!OSDetector.isWindows()) {
-			String projectDirName = liferaySelenium.getProjectDirName();
-
-			projectDirName = StringUtil.replace(projectDirName, "\\", "//");
-
-			runtime.exec("/bin/bash cd " + projectDirName);
-
-			command = "/bin/bash ant -f " + fileName + " " + target;
-		}
-		else {
-			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDirName());
-
-			command = "cmd /c ant -f " + fileName + " " + target;
-		}
-
-		Process process = runtime.exec(command);
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			process.getInputStream());
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			System.out.println(line);
-
-			if (line.contains("BUILD FAILED") ||
-				line.contains("BUILD SUCCESSFUL")) {
-
-				break;
-			}
-		}
+		antCommands.join(120000);
 	}
 
 	public static void assertAlert(

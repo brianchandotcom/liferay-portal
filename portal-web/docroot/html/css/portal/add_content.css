@@ -109,6 +109,7 @@
 
 			img {
 				max-height: 128px;
+				max-width: 100%;
 			}
 		}
 

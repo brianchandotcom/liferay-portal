@@ -960,6 +960,8 @@ public class JournalConverterImpl implements JournalConverter {
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
 
+		element.add(metadataElement.detach());
+
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateJournalXSDDynamicElement(
 				dynamicElementElement, defaultLanguageId);

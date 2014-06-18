@@ -16,7 +16,14 @@ package com.liferay.portal.poller;
 
 import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.poller.PollerProcessor;
+import com.liferay.portal.nio.intraband.proxy.IntrabandProxyInstallationUtil;
+import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
+import com.liferay.portal.nio.intraband.proxy.StubHolder.StubCreator;
+import com.liferay.portal.nio.intraband.proxy.StubMap;
+import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -28,7 +35,7 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,12 +100,84 @@ public class PollerProcessorUtil {
 
 	private static PollerProcessorUtil _instance = new PollerProcessorUtil();
 
-	private Map<String, PollerProcessor> _pollerPorcessors =
-		new ConcurrentHashMap<String, PollerProcessor>();
+	private StubMap<PollerProcessor> _pollerPorcessors =
+		new StubMap<PollerProcessor>(
+			new StubCreator<PollerProcessor>() {
+
+				@Override
+				public PollerProcessor createStub(
+						String portletId, PollerProcessor pollerProcessor,
+						RegistrationReference registrationReference)
+					throws Exception {
+
+					Future<String[]> skeletonProxyMethodSignaturesFuture =
+						IntrabandProxyInstallationUtil.installSkeleton(
+							registrationReference, PollerProcessor.class,
+							new PollerProcessorTargetLocator());
+
+					String[] skeletonProxyMethodSignatures =
+						skeletonProxyMethodSignaturesFuture.get();
+
+					Class<? extends PollerProcessor>
+						stubPollerClass =
+							(Class<? extends PollerProcessor>)
+								IntrabandProxyUtil.getStubClass(
+									PollerProcessor.class,
+									PollerProcessor.class.getName());
+
+					IntrabandProxyInstallationUtil.checkProxyMethodSignatures(
+						skeletonProxyMethodSignatures,
+						IntrabandProxyUtil.getProxyMethodSignatures(
+							stubPollerClass));
+
+					return IntrabandProxyUtil.newStubInstance(
+						stubPollerClass, portletId, registrationReference,
+						new WarnLogExceptionHandler());
+				}
+
+				@Override
+				public PollerProcessor onCreationFailure(
+					String portletId, PollerProcessor pollerProcessor,
+					Exception e) {
+
+					return pollerProcessor;
+				}
+
+				@Override
+				public PollerProcessor onInvalidation(
+					String portletId, PollerProcessor pollerProcessor,
+					PollerProcessor stubPollerProcessor) {
+
+					_pollerPorcessors.removeStubHolder(
+						portletId, stubPollerProcessor);
+
+					return pollerProcessor;
+				}
+
+			});
+
 	private StringServiceRegistrationMap<PollerProcessor>
 		_serviceRegistrations =
 			new StringServiceRegistrationMap<PollerProcessor>();
 	private ServiceTracker<PollerProcessor, PollerProcessor> _serviceTracker;
+
+	private static class PollerProcessorTargetLocator implements TargetLocator {
+
+		@Override
+		public Object getTarget(String portletId) {
+			PollerProcessor pollerProcessor =
+				PollerProcessorUtil.getPollerProcessor(portletId);
+
+			if (pollerProcessor == null) {
+				throw new IllegalStateException(
+					"Unable to locate PollerProcessor for portlet : " +
+						portletId);
+			}
+
+			return pollerProcessor;
+		}
+
+	}
 
 	private class PollerProcessorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PollerProcessor, PollerProcessor> {

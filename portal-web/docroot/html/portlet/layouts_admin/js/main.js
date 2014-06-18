@@ -1010,7 +1010,7 @@ AUI.add(
 						);
 
 						if (selectedConfiguration.length === 0) {
-							instance.byId('PORTLET_CONFIGURATION_' + portletId).set('checked', false);
+							instance.byId('PORTLET_CONFIGURATION_' + portletId).attr('checked', false);
 
 							instance.byId('showChangeConfiguration_' + portletId).hide();
 						}
@@ -1038,7 +1038,7 @@ AUI.add(
 						);
 
 						if (selectedContent.length === 0) {
-							instance.byId('PORTLET_DATA_' + portletId).set('checked', false);
+							instance.byId('PORTLET_DATA_' + portletId).attr('checked', false);
 
 							instance.byId('showChangeContent_' + portletId).hide();
 						}

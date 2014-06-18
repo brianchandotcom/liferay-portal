@@ -22,6 +22,7 @@ import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
+import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;

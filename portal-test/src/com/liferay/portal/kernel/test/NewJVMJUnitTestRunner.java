@@ -100,6 +100,13 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 			arguments.add("-Djunit.code.coverage=true");
 		}
 
+		boolean junitCodeCoverageDump = Boolean.getBoolean(
+			"junit.code.coverage.dump");
+
+		if (junitCodeCoverageDump) {
+			arguments.add("-Djunit.code.coverage.dump=true");
+		}
+
 		boolean junitDebug = Boolean.getBoolean("junit.debug");
 
 		if (junitDebug) {

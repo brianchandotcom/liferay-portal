@@ -371,13 +371,23 @@
 				</then>
 			</if>
 
-			<parallel>
-				<daemons>
-					<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+			<if>
+				<equals arg1="${run.in.background}" arg2="true" />
+				<then>
+					<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 						<arg line="${app.server.start.executable.arg.line}" />
 					</exec>
-				</daemons>
-			</parallel>
+				</then>
+				<else>
+					<parallel>
+						<daemons>
+							<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+								<arg line="${app.server.start.executable.arg.line}" />
+							</exec>
+						</daemons>
+					</parallel>
+				</else>
+			</if>
 
 			<if>
 				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />

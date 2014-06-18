@@ -82,10 +82,10 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
-				"line break:", "line break:"
+				"line break:", "line break:", "line break:"
 			},
 			new Integer[] {
-				23, 27, 31, 38, 42, 45, 48, 52, 55, 60, 66, 70, 74, 77
+				23, 27, 31, 38, 42, 45, 48, 52, 55, 55, 60, 66, 70, 74, 77
 			});
 	}
 
@@ -93,8 +93,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",
-			new String[] {"tab:", "tab:", "tab:", "tab:"},
-			new Integer[] {23, 27, 33, 40});
+			new String[] {"tab:", "tab:", "tab:", "tab:", "tab:"},
+			new Integer[] {23, 27, 33, 40, 23});
 	}
 
 	@Test

@@ -147,6 +147,10 @@
 		&, &:focus, &:hover {
 			color: #FFF;
 		}
+
+		.lfr-icon-menu-arrow {
+			color: #333;
+		}
 	}
 
 	&.active-area, &.active-area.hover, &.active-area td {

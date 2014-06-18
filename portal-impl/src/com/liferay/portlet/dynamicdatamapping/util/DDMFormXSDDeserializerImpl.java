@@ -119,6 +119,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		setDDMFormFieldMultiple(dynamicElementElement, ddmFormField);
 		setDDMFormFieldNamespace(dynamicElementElement, ddmFormField);
 		setDDMFormFieldReadOnly(dynamicElementElement, ddmFormField);
+		setDDMFormFieldRepeatable(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRequired(dynamicElementElement, ddmFormField);
 
 		List<Element> metadataElements = dynamicElementElement.elements(
@@ -321,6 +322,15 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 			dynamicElementElement.attributeValue("readOnly"));
 
 		ddmFormField.setReadOnly(readOnly);
+	}
+
+	protected void setDDMFormFieldRepeatable(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		boolean repeatable = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("repeatable"), true);
+
+		ddmFormField.setRepeatable(repeatable);
 	}
 
 	protected void setDDMFormFieldRequired(

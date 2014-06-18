@@ -3,6 +3,8 @@
 
 .navbar {
 	.navbar-collapse {
+		max-height: none;
+
 		&:after, &:before {
 			display: inline;
 		}
@@ -11,17 +13,11 @@
 	.navbar-search {
 		background-color: #F3F3F3;
 		border-top-width: 0;
-		margin-left: -15px;
-		position: absolute;
-		top: 0;
 		width: 100%;
 
 		@media (min-width: 768px) {
 			background-color: transparent;
 			border-top-width: 1px;
-			margin-left: 0;
-			position: static;
-			top: auto;
 			width: auto;
 		}
 

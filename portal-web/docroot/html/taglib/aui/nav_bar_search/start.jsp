@@ -66,7 +66,7 @@
 							navbarCollapse.removeClass('open');
 
 							if (navbar) {
-								navbar.all('.btn-navbar, .nav').show();
+								navbar.all('.navbar-btn, .nav').show();
 							}
 
 							btnNavbar.focus();
@@ -89,7 +89,7 @@
 					navbarCollapse.toggleClass('open', navbarWillOpen);
 
 					if (navbar && (Util.isPhone() || Util.isTablet())) {
-						navbar.all('.btn-navbar, .nav').hide();
+						navbar.all('.navbar-btn, .nav').hide();
 					}
 
 					if (navbarWillOpen) {

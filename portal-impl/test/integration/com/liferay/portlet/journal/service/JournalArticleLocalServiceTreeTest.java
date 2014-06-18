@@ -40,13 +40,6 @@ import org.testng.Assert;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JournalArticleLocalServiceTreeTest {
 
-	@After
-	public void tearDown() throws Exception {
-		for (int i = _articles.size() - 1; i >= 0; i--) {
-			JournalArticleLocalServiceUtil.deleteArticle(_articles.get(i));
-		}
-	}
-
 	@Test
 	public void testRebuildTree() throws Exception {
 		createTree();
@@ -85,6 +78,7 @@ public class JournalArticleLocalServiceTreeTest {
 		_articles.add(articleAA);
 	}
 
+	@DeleteAfterTestRun
 	private List<JournalArticle> _articles = new ArrayList<JournalArticle>();
 
 	@DeleteAfterTestRun

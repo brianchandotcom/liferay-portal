@@ -147,7 +147,8 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 		MBCategory category = (MBCategory)parentBaseModel;
 
 		return MBTestUtil.addMessage(
-			category.getCategoryId(), keywords, approved, serviceContext);
+			category.getGroupId(), category.getCategoryId(), keywords, approved,
+			serviceContext);
 	}
 
 	@Override

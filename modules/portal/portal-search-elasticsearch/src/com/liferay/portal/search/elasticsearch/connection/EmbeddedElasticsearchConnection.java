@@ -48,8 +48,6 @@ public class EmbeddedElasticsearchConnection
 		nodeBuilder.settings(builder);
 
 		nodeBuilder.clusterName(getClusterName());
-		nodeBuilder.client(false);
-		nodeBuilder.data(true);
 
 		_node = nodeBuilder.node();
 

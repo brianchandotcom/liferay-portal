@@ -32,7 +32,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSOBlogsEntries" priority="4">
+	<command known-issues="SOS-2322" name="AddSOBlogsEntries" priority="4">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryContent3" value="Blogs Entry3 Content" />
@@ -1501,7 +1501,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOBlogsEntriesUsersSelectionMethodRecentBlogs" priority="3">
+	<command known-issues="SOS-2322" name="ViewSOBlogsEntriesUsersSelectionMethodRecentBlogs" priority="3">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle1" value="Blogs Entry1 Title" />
@@ -1734,7 +1734,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOBlogsEntryAsGuest" priority="4">
+	<command known-issues="SOS-2322" name="ViewSOBlogsEntryAsGuest" priority="4">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle1" value="Blogs Entry1 Title" />

@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SiteDemo" priority="5">
+	<command known-issues="SOS-2322" name="SiteDemo" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -983,7 +983,7 @@
 		<execute action="SOSiteHome#assertTextNotPresent" value1="${siteEventTitle3}" />
 	</command>
 
-	<command name="SiteXSSDemo" priority="5">
+	<command known-issues="SOS-2322" name="SiteXSSDemo" priority="5">
 		<var name="adminFirstName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminLastName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminListName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;, &lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />

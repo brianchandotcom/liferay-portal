@@ -128,19 +128,10 @@
 
 /* ---------- General navigation ---------- */
 
-.nav.list-group .list-group-item {
-	padding: 0;
-}
-
-.nav.list-group .list-group-item.nav-header {
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-.nav.list-group, .list-group {
+.nav.list-group {
 	li > a {
 		&:focus, &:hover {
-			background: #E5F5FC;
+			background-color: #E5F5FC;
 			color: #009AE5;
 		}
 	}
@@ -150,10 +141,19 @@
 
 		> a {
 			&, &:focus, &:hover {
-				background: #60BFEF;
+				background-color: #60BFEF;
 				border: 1px solid #60BFEF;
 				color: #FFF;
 			}
+		}
+	}
+
+	.list-group-item {
+		padding: 0;
+
+		&.nav-header {
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 	}
 }

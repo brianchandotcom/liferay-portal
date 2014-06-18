@@ -55,7 +55,7 @@ public class CommentsSubscriptionTest {
 	}
 
 	@Test
-	public void testSubscriptionDiscussionMessageWhenAddingMessage()
+	public void testSubscriptionDiscussionMessageWhenAddingDiscussionMessage()
 		throws Exception {
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
@@ -68,7 +68,7 @@ public class CommentsSubscriptionTest {
 	}
 
 	@Test
-	public void testSubscriptionDiscussionMessageWhenUpdatingMessage()
+	public void testSubscriptionDiscussionMessageWhenUpdatingDiscussionMessage()
 		throws Exception {
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);

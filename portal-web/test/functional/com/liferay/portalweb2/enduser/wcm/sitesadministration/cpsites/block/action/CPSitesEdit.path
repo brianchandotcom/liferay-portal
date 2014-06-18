@@ -104,17 +104,17 @@
 </tr>
 <tr>
 	<td>STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
-	<td>//input[@id='_165_branchingPublicCheckbox']</td>
+	<td>//input[@id='_165_branchingPublic']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
-	<td>//input[@id='_165_branchingPrivateCheckbox']</td>
+	<td>//input[@id='_165_branchingPrivate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_CONTENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_contentName}')]/input[2]</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

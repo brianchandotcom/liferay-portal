@@ -97,11 +97,11 @@ if (showLinkTitle) {
 					</c:choose>
 
 					<c:if test="<%= shortcut %>">
-						<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
 					</c:if>
 
 					<c:if test="<%= locked %>">
-						<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
 					</c:if>
 
 					<c:if test="<%= !folder && ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">
@@ -151,11 +151,11 @@ if (showLinkTitle) {
 					</c:choose>
 
 					<c:if test="<%= shortcut %>">
-						<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
 					</c:if>
 
 					<c:if test="<%= locked %>">
-						<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
 					</c:if>
 
 					<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">

@@ -5,8 +5,6 @@
 
 cluster.name: LiferayElasticSearch
 
-cluster.routing.allocation.enable: all
-
 http.enabled: true
 
 index.number_of_shards: 1
@@ -34,6 +32,10 @@ monitor.jvm.gc.young.debug: 400ms
 monitor.jvm.gc.old.warn: 10s
 monitor.jvm.gc.old.info: 5s
 monitor.jvm.gc.old.debug: 2s
+
+node.client: false
+node.data: true
+node.local: true
 
 path.data: ${liferay.home}/data/elasticsearch
 path.logs: ${liferay.home}/logs

@@ -102,13 +102,6 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${addToSOPage}" arg2="true" />
-			<then>
-				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
-			</then>
-		</if>
-
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />

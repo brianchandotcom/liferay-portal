@@ -703,7 +703,7 @@
 		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
 		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
 		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
-		<execute action="SOMembers#click" locator-key1="INVITE_BUTTON" value1="Mitglieder in diese Site einladen." />
+		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Mitglieder in diese Site einladen." />
 
 		<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
 		<execute action="SOMembersInvite#assertSelectedLabel" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
@@ -732,6 +732,12 @@
 		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Connections" />
 		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Following" />
 		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Following" />
+		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site" />
+
+		<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
+		<execute action="SOMembersInvite#assertSelectedLabel" locator-key1="INVITE_TO_ROLE_SELECT" value1="Site Administrator" />
+		<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="Site Owner" />
+		<execute action="SOMembersInvite#assertSelectedLabel" locator-key1="INVITE_TO_ROLE_SELECT" value1="Site Owner" />
 	</command>
 
 	<tear-down>

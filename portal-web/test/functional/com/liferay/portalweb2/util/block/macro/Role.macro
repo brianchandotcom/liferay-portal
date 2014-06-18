@@ -215,7 +215,7 @@
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
-	
+
 	<command name="editPermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 

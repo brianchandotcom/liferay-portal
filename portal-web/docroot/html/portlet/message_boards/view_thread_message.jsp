@@ -320,7 +320,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							%>
 
 									<div>
-										<img alt="<liferay-ui:message key="attachment" />" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
 									</div>
 
 									<br />

@@ -17,94 +17,6 @@
 <%@ include file="/html/taglib/ui/icon/init.jsp" %>
 
 <%
-if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
-	SpriteImage spriteImage = null;
-	String spriteFileName = null;
-	String spriteFileURL = null;
-
-	String imageFileName = StringUtil.replace(src, "common/../", "");
-
-	if (imageFileName.contains(Http.PROTOCOL_DELIMITER)) {
-		String portalURL = PortalUtil.getPortalURL(request);
-
-		if (imageFileName.startsWith(portalURL)) {
-			imageFileName = imageFileName.substring(portalURL.length());
-		}
-		else {
-			URL imageURL = new URL(imageFileName);
-
-			imageFileName = imageURL.getPath();
-		}
-	}
-
-	String contextPath = theme.getContextPath();
-
-	String imagesPath = contextPath.concat(theme.getImagesPath());
-
-	if (imageFileName.startsWith(imagesPath)) {
-		spriteImage = theme.getSpriteImage(imageFileName);
-
-		if (spriteImage != null) {
-			spriteFileName = spriteImage.getSpriteFileName();
-
-			if (BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 7)) {
-				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
-			}
-
-			String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-			spriteFileURL = cdnBaseURL.concat(spriteFileName);
-		}
-	}
-
-	if (spriteImage == null) {
-		Portlet portlet = (Portlet)request.getAttribute("liferay-portlet:icon_portlet:portlet");
-
-		if (portlet == null) {
-			portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
-		}
-
-		if (portlet != null) {
-			PortletApp portletApp = portlet.getPortletApp();
-
-			spriteImage = portletApp.getSpriteImage(imageFileName);
-
-			if (spriteImage != null) {
-				spriteFileName = spriteImage.getSpriteFileName();
-
-				if (BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 7)) {
-					spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
-				}
-
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				spriteFileURL = cdnBaseURL.concat(spriteFileName);
-			}
-		}
-	}
-
-	if (spriteImage != null) {
-		String themeImagesPath = themeDisplay.getPathThemeImages();
-
-		src = themeImagesPath.concat("/spacer.png");
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(details);
-		sb.append(" style=\"background-image: url('");
-		sb.append(spriteFileURL);
-		sb.append("'); background-position: 50% -");
-		sb.append(spriteImage.getOffset());
-		sb.append("px; background-repeat: no-repeat; height: ");
-		sb.append(spriteImage.getHeight());
-		sb.append("px; width: ");
-		sb.append(spriteImage.getWidth());
-		sb.append("px;\"");
-
-		details = sb.toString();
-	}
-}
-
 boolean urlIsNotNull = Validator.isNotNull(url);
 %>
 
@@ -149,7 +61,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>
@@ -163,7 +75,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>
@@ -181,7 +93,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		>
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
+					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>
@@ -192,10 +104,6 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</span>
 	</c:otherwise>
 </c:choose>
-
-<%
-boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
-%>
 
 <c:if test="<%= Validator.isNotNull(srcHover) || forcePost || useDialog %>">
 	<aui:script use="liferay-icon">

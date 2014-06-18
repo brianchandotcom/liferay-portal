@@ -131,10 +131,10 @@ ${languageUtil.get(locale, key)}</#macro>
 >
 ${languageUtil.format(locale, key, arguments)}</#macro>
 
-<#macro quick_acess
+<#macro quick_access
 	content_id
 >
-	${theme.quick_acess(content_id)}
+	${theme.quickAccess(content_id)}
 </#macro>
 
 <#macro silently

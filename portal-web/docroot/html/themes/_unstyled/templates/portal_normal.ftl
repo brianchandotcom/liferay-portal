@@ -14,7 +14,7 @@
 
 <body class="${css_class}">
 
-<@liferay.quick_access contentId="#main-content" />
+<@liferay.quick_access content_id="#main-content" />
 
 ${theme.include(body_top_include)}
 

@@ -42,6 +42,32 @@
 		</execute>
 	</set-up>
 
+	<command name="AddConnection" priority="5">
+		<execute macro="SOMembers#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMembers#disconnectFromConnection">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
 	<command name="ConfirmMemberInviteSite" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -616,6 +642,96 @@
 
 		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
 		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
+	</command>
+
+	<command known-issues="LPS-44528" name="ViewRolesDropdownLocalizationGerman" priority="5">
+		<var name="language1" value="German (Germany)" />
+		<var name="language2" value="English (United States)" />
+		<var name="portletName" value="Language" />
+		<var name="roleName1" value="Site Owner" />
+		<var name="roleName2" value="Site Administrator" />
+		<var name="roleNameLocalized1" value="Site Owner German" />
+		<var name="roleNameLocalized2" value="Site Administrator German" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#editCP">
+			<var name="language" value="${language1}" />
+			<var name="localizeRoleName" value="true" />
+			<var name="roleName" value="${roleName1}" />
+			<var name="roleNameLocalized" value="${roleNameLocalized1}" />
+		</execute>
+
+		<execute macro="Role#editCP">
+			<var name="language" value="${language1}" />
+			<var name="localizeRoleName" value="true" />
+			<var name="roleName" value="${roleName2}" />
+			<var name="roleNameLocalized" value="${roleNameLocalized2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="${language1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Mitglieder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Alles" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Administratoren" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Administratoren" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Verbindungen" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Folge ich" />
+		<execute action="SOMembers#click" locator-key1="INVITE_BUTTON" value1="Mitglieder in diese Site einladen." />
+
+		<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
+		<execute action="SOMembersInvite#assertSelectedLabel" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized1}" />
+		<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
+		<execute action="SOMembersInvite#assertSelectedLabel" locator-key1="INVITE_TO_ROLE_SELECT" value1="${roleNameLocalized2}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Mitglieder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="${language2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="All" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Administrators" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Connections" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Connections" />
+		<execute action="SOMembers#select" locator-key1="ROLE_FILTER_DROPDOWN" value1="Following" />
+		<execute action="SOMembers#assertSelectedLabel" locator-key1="ROLE_FILTER_DROPDOWN" value1="Following" />
 	</command>
 
 	<tear-down>

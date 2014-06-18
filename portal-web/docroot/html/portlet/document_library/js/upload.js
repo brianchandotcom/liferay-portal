@@ -162,6 +162,8 @@ AUI.add(
 				if (instance._tooltipDelegate) {
 					instance._tooltipDelegate.destroy();
 				}
+
+				(new A.EventHandle(instance._eventHandles)).detach();
 			},
 
 			_addFilesToQueueBottom: function(files) {
@@ -188,9 +190,9 @@ AUI.add(
 
 				A.getWin()._node.onbeforeunload = A.bind('_confirmUnload', instance);
 
-				Liferay.on(instance.ns('dataRequest'), instance._onDataRequest, instance);
+				var onDataRequestHandle = Liferay.on(instance.ns('dataRequest'), instance._onDataRequest, instance);
 
-				Liferay.after(
+				var afterDataRequestHandle = Liferay.after(
 					'liferay-app-view-folders:dataRequest',
 					function(event) {
 						var requestParams = event.requestParams;
@@ -214,7 +216,7 @@ AUI.add(
 					dd.addInvalid(STR_DOT + CSS_UPLOAD_ERROR);
 				}
 
-				docElement.on(
+				var onDragOverHandle = docElement.on(
 					'dragover',
 					function(event) {
 						var dataTransfer = event._event.dataTransfer;
@@ -239,7 +241,7 @@ AUI.add(
 					}
 				);
 
-				docElement.delegate(
+				var onDropHandle = docElement.delegate(
 					'drop',
 					function(event) {
 						var dataTransfer = event._event.dataTransfer;
@@ -268,7 +270,7 @@ AUI.add(
 					'body, .document-container, .overlaymask, .progressbar, [data-folder="true"]'
 				);
 
-				entriesContainer.delegate(
+				var entriesDragDelegateHandle = entriesContainer.delegate(
 					['dragleave', 'dragover'],
 					function(event) {
 						var dataTransfer = event._event.dataTransfer;
@@ -284,13 +286,22 @@ AUI.add(
 					SELECTOR_DATA_FOLDER
 				);
 
-				entriesContainer.delegate(
+				var entriesClickDelegateHandle = entriesContainer.delegate(
 					'click',
 					function(event) {
 						event.preventDefault();
 					},
 					STR_DOT + CSS_UPLOAD_ERROR + STR_SPACE + SELECTOR_ENTRY_LINK
 				);
+
+				instance._eventHandles = [
+					onDataRequestHandle,
+					afterDataRequestHandle,
+					onDragOverHandle,
+					onDropHandle,
+					entriesDragDelegateHandle,
+					entriesClickDelegateHandle
+				];
 			},
 
 			_attachSubscriptions: function(data) {
@@ -740,6 +751,56 @@ AUI.add(
 				return navigationOverlays;
 			},
 
+			_getUploader: function() {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				if (!uploader) {
+					uploader = new A.Uploader(
+						{
+							appendNewFiles: false,
+							fileFieldName: 'file',
+							multipleFiles: true,
+							simLimit: 1
+						}
+					);
+
+					var navigationOverlays = instance._getNavigationOverlays();
+
+					uploader.on(
+						'uploadstart',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'show');
+						}
+					);
+
+					uploader.after(
+						'alluploadscomplete',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'hide');
+
+							var emptyMessage = instance._getEmptyMessage();
+
+							if (emptyMessage && !emptyMessage.hasClass('hide')) {
+								emptyMessage.hide(true);
+							}
+						}
+					);
+
+					uploader.get('boundingBox').hide();
+
+					uploader.render();
+
+					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
+					uploader.after('fileselect', instance._onFileSelect, instance);
+
+					instance._uploader = uploader;
+				}
+
+				return uploader;
+			},
+
 			_getUploadResponse: function(responseData) {
 				var instance = this;
 
@@ -804,56 +865,6 @@ AUI.add(
 						folderId: folderId
 					}
 				);
-			},
-
-			_getUploader: function() {
-				var instance = this;
-
-				var uploader = instance._uploader;
-
-				if (!uploader) {
-					uploader = new A.Uploader(
-						{
-							appendNewFiles: false,
-							fileFieldName: 'file',
-							multipleFiles: true,
-							simLimit: 1
-						}
-					);
-
-					var navigationOverlays = instance._getNavigationOverlays();
-
-					uploader.on(
-						'uploadstart',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'show');
-						}
-					);
-
-					uploader.after(
-						'alluploadscomplete',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'hide');
-
-							var emptyMessage = instance._getEmptyMessage();
-
-							if (emptyMessage && !emptyMessage.hasClass('hide')) {
-								emptyMessage.hide(true);
-							}
-						}
-					);
-
-					uploader.get('boundingBox').hide();
-
-					uploader.render();
-
-					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
-					uploader.after('fileselect', instance._onFileSelect, instance);
-
-					instance._uploader = uploader;
-				}
-
-				return uploader;
 			},
 
 			_initDLUpload: function() {

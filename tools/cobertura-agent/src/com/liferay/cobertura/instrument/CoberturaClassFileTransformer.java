@@ -158,7 +158,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					"net/sourceforge/cobertura/coveragedata/TouchCollector")) {
 
 				ClassWriter classWriter = new ClassWriter(
-					ClassWriter.COMPUTE_MAXS);
+					ClassWriter.COMPUTE_FRAMES);
 
 				ClassVisitor classVisitor = new TouchCollectorClassVisitor(
 					classWriter);

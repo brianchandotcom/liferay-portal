@@ -21,8 +21,8 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
+import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.MailServiceTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
@@ -49,7 +49,7 @@ public class CommentsSubscriptionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = TestPropsValues.getGroup();
+		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addOmniAdmin();
 	}

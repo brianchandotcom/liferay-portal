@@ -130,7 +130,7 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 
 			mergeText = A.Lang.sub(mergeText, [mergeTagNames, A.Lang.trim(tag.html())]);
 
-	        if (confirm(mergeText)) {
+			if (confirm(mergeText)) {
 				document.<portlet:namespace />fm.<portlet:namespace />mergeTagIds.value = mergeTagIds;
 
 				submitForm(form, form.attr('action'));

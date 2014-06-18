@@ -24,7 +24,7 @@
 			padding: 5px;
 
 			.icon-remove-sign {
-	        	cursor: pointer;
+				cursor: pointer;
 			}
 		}
 	}
@@ -65,8 +65,8 @@
 
 	.target-tag-container {
 		.target-tag {
-			color: #FFF;
 			background-color: #009AE5;
+			color: #FFF;
 		}
 
 		.target-tag-msg {

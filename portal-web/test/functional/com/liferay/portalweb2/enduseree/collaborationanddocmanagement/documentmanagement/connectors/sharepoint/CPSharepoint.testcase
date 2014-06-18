@@ -1,0 +1,61 @@
+<definition component-name="portal-document-management">
+	<property name="custom.properties" value="session.store.password=true$${line.separator}company.security.auth.type=screenName" />
+	<property name="hook.plugins.includes" value="sharepoint-hook" />
+	<property name="testray.main.component.name" value="Documents Management" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG">
+			<var name="authenticationMethod" value="By Screen Name" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#editDetailsViaMyAccount">
+			<var name="userScreenNameEdit" value="administrator" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#editPasswordViaMyAccount">
+			<var name="currentPassword" value="test" />
+			<var name="newPassword" value="password" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="By Screen Name" />
+			<var name="password" value="password" />
+			<var name="userScreenName" value="administrator" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="DMRepository#tearDownCP" />
+	</tear-down>
+
+	<command name="AddRepository" priority="5">
+		<var name="dmDocumentTitle" value="DM Document Title" />
+		<var name="dmRepositoryName" value="Test Sharepoint Repository" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#addCP">
+			<var name="dmRepositoryLibraryName" value="Documents" />
+			<var name="dmRepositoryName" value="${dmRepositoryName}" />
+			<var name="dmRepositorySiteURL" value="http://cloud-10-0-13-47" />
+			<var name="dmRepositoryType" value="Sharepoint" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="${dmRepositoryName}" />
+		</execute>
+	</command>
+</definition>

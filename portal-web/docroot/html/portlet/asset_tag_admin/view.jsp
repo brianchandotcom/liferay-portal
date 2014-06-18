@@ -166,7 +166,7 @@
 		function() {
 			if (A.all('input[name=<portlet:namespace />rowIds]:checked').size() > 1) {
 				<portlet:renderURL var="mergeURL">
-					<portlet:param name="struts_action" value="/asset_tag_admin/merge" />
+					<portlet:param name="struts_action" value="/asset_tag_admin/merge_tag" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 

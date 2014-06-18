@@ -27,7 +27,7 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 />
 
 <portlet:actionURL var="mergeURL">
-	<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
+	<portlet:param name="struts_action" value="/asset_tag_admin/merge_tag" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MERGE %>" />
 </portlet:actionURL>

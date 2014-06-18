@@ -236,8 +236,8 @@
 		<put name="portlet_content" value="/portlet/asset_tag_admin/error.jsp" />
 	</definition>
 
-	<definition name="portlet.asset_tag_admin.merge" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/merge.jsp" />
+	<definition name="portlet.asset_tag_admin.merge_tag" extends="portlet.asset_tag_admin">
+		<put name="portlet_content" value="/portlet/asset_tag_admin/merge_tag.jsp" />
 	</definition>
 
 	<definition name="portlet.asset_tag_admin.view" extends="portlet.asset_tag_admin">

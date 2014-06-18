@@ -24,7 +24,7 @@
 			</then>
 		</if>
 
-		<for list="Application Display Templates,Blogs,Bookmarks,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
+		<for list="Application Display Templates,Blogs,Bookmarks,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Shopping,Web Content,Wiki" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
 			<execute action="CPSitesEdit#check" locator-key1="STAGING_CONTENT_CHECKBOX" />

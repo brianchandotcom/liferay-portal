@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.portalweb.portal.util;
 
 import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -36,7 +38,7 @@ public class AntCommands extends Thread {
 	public void run() {
 		try {
 			Runtime runtime = Runtime.getRuntime();
-			String command = null;
+			StringBundler sb = new StringBundler();
 
 			if (!OSDetector.isWindows()) {
 				String projectDirName = _liferaySelenium.getProjectDirName();
@@ -45,20 +47,24 @@ public class AntCommands extends Thread {
 
 				runtime.exec("/bin/bash cd " + projectDirName);
 
-				command =
-					"/bin/bash ant -f " + _fileName + " " + _target +
-						" -Drun.in.background=true";
+				sb.append("/bin/bash ant -f ");
+				sb.append(_fileName);
+				sb.append(" ");
+				sb.append(_target);
+				sb.append(" -Drun.in.background=true");
 			}
 			else {
 				runtime.exec(
 					"cmd /c cd " + _liferaySelenium.getProjectDirName());
 
-				command =
-					"cmd /c ant -f " + _fileName + " " + _target +
-						" -Drun.in.background=true";
+				sb.append("cmd /c ant -f ");
+				sb.append(_fileName);
+				sb.append(" ");
+				sb.append(_target);
+				sb.append(" -Drun.in.background=true");
 			}
 
-			Process process = runtime.exec(command);
+			Process process = runtime.exec(sb.toString());
 
 			InputStreamReader inputStreamReader = new InputStreamReader(
 				process.getInputStream());

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.AntCommands;
 import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -61,11 +62,12 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String fileName, String target)
 		throws Exception {
 
-		AntCommands command = new AntCommands(
+		AntCommands antCommands = new AntCommands(
 			liferaySelenium, fileName, target);
 
-		command.start();
-		command.join(120000);
+		antCommands.start();
+
+		antCommands.join(120000);
 	}
 
 	public static void assertAlert(

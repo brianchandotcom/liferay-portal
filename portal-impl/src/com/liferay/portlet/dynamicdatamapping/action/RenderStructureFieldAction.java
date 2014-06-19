@@ -24,8 +24,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -47,11 +45,6 @@ public class RenderStructureFieldAction extends Action {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			JspFactory jspFactory = JspFactory.getDefaultFactory();
-
-			PageContext pageContext = jspFactory.getPageContext(
-				getServlet(), request, response, null, true, 0, true);
-
 			long classNameId = ParamUtil.getLong(request, "classNameId");
 			long classPK = ParamUtil.getLong(request, "classPK");
 			String fieldName = ParamUtil.getString(request, "fieldName");
@@ -63,7 +56,7 @@ public class RenderStructureFieldAction extends Action {
 			request.setAttribute("aui:form:portletNamespace", portletNamespace);
 
 			String fieldHTML = DDMXSDUtil.getFieldHTMLByName(
-				pageContext, classNameId, classPK, fieldName, null,
+				request, response, classNameId, classPK, fieldName, null,
 				portletNamespace, namespace, null, readOnly,
 				themeDisplay.getLocale());
 

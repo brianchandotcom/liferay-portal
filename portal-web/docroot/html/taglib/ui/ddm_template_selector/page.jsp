@@ -137,7 +137,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 				var displayStyleGroupId = selectedOption.attr('data-displaystylegroupid');
 
 				if (displayStyleGroupId) {
-					displayStyleGroupIdInput.set('value', displayStyleGroupId);
+					displayStyleGroupIdInput.attr('value', displayStyleGroupId);
 				}
 			}
 		}

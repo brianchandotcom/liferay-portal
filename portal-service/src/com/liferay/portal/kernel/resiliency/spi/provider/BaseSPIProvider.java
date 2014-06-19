@@ -66,7 +66,7 @@ public abstract class BaseSPIProvider implements SPIProvider {
 
 		try {
 			Future<SPI> cancelHandlerFuture = ProcessExecutor.execute(
-				spiConfiguration.getJavaExecutable(), classPath,
+				spiConfiguration.getJavaExecutable(), classPath, classPath,
 				spiConfiguration.getJVMArguments(), remoteSPI);
 
 			SPI spi = synchronousQueue.poll(

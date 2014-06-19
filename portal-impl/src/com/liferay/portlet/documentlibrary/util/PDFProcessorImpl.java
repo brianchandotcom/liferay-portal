@@ -587,6 +587,7 @@ public class PDFProcessorImpl
 					generatePreview, generateThumbnail);
 
 			Future<String> future = ProcessExecutor.execute(
+				ClassPathUtil.getGlobalClassPath(),
 				ClassPathUtil.getPortalClassPath(), processCallable);
 
 			String processIdentity = String.valueOf(

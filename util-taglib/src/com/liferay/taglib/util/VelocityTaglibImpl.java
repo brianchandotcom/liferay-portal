@@ -449,6 +449,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
+	public PageContext getPageContext() {
+		return _pageContext;
+	}
+
+	@Override
 	public PngImageTag getPngImageTag() throws Exception {
 		PngImageTag pngImageTag = new PngImageTag();
 

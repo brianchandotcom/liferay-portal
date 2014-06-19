@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib;
+package com.liferay.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BodyContentWrapper;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -88,6 +88,10 @@ public class BaseBodyTagSupport extends TagSupport {
 		}
 
 		return new StringBundler(bodyContentString);
+	}
+
+	public HttpServletRequest getRequest() {
+		return (HttpServletRequest)pageContext.getRequest();
 	}
 
 	@Override

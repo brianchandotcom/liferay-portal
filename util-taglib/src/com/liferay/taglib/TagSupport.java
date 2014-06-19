@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib;
+package com.liferay.taglib;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;

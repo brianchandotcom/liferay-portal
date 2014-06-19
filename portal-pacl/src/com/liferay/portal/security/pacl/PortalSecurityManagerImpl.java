@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermis
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -388,7 +387,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(DoPrivilegedHandler.class);
 		initClass(DynamicQueryFactoryImpl.class);
 		initClass(EqualityWeakReference.class);
-		initClass(FileAvailabilityUtil.class);
 		initClass(FinalizeManager.class);
 		initClass(FreeMarkerTemplate.class);
 		initClass(GeneratingPACLPolicy.class);

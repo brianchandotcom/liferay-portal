@@ -15,9 +15,9 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.FileAvailabilityUtil;
 
 import javax.servlet.jsp.JspWriter;
 

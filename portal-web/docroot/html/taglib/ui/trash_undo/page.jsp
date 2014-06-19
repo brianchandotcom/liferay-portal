@@ -110,7 +110,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 						if (ArrayUtil.isNotEmpty(classNames)) {
 							className = classNames[0];
 
-							type = ResourceActionsUtil.getModelResource(pageContext, className);
+							type = ResourceActionsUtil.getModelResource(request, className);
 						}
 
 						String[] titles = data.get("deleteEntryTitle");

@@ -142,7 +142,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					%>
 
 						<th <%= (action.equals(ActionKeys.VIEW)) ? "class=\"hide\"" : "" %>>
-							<%= ResourceActionsUtil.getAction(pageContext, action) %>
+							<%= ResourceActionsUtil.getAction(request, action) %>
 						</th>
 
 					<%

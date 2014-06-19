@@ -25,7 +25,7 @@ boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:c
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), className, classPK);
 
-String modelResourceName = ResourceActionsUtil.getModelResource(pageContext, className);
+String modelResourceName = ResourceActionsUtil.getModelResource(request, className);
 
 List<String> attributeNames = ListUtil.remove(Collections.list(expandoBridge.getAttributeNames()), ListUtil.fromString(ignoreAttributeNames, StringPool.COMMA));
 %>

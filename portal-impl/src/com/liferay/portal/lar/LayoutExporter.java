@@ -405,23 +405,12 @@ public class LayoutExporter {
 
 		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
 
-		LayoutSetPrototype layoutSetPrototype = null;
-
-		if (!Validator.isNull(layoutSetPrototypeUuid) ) {
-			layoutSetPrototype =
+		if (Validator.isNotNull(layoutSetPrototypeUuid) ) {
+			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototypeUuid, companyId);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					group.getClassPK());
 
-			layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
-		}
-
-		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			layoutsElement.addAttribute(
 				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
 

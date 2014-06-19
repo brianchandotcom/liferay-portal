@@ -64,7 +64,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, fileEntries) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, fileEntries) %>
 	</c:when>
 	<c:otherwise>
 

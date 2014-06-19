@@ -74,7 +74,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<c:choose>
 					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -138,7 +138,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			<c:choose>
 				<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
-					<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
+					<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 				</c:when>
 				<c:otherwise>
 					<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -187,7 +187,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<c:choose>
 					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -227,7 +227,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 <c:if test="<%= total == 0 %>">
 	<c:choose>
 		<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
-			<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
+			<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !hasAddPortletURLs && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">

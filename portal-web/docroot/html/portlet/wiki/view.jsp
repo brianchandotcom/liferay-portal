@@ -178,7 +178,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		contextObjects.put("formattedContent", formattedContent);
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, entries, contextObjects) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, entries, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 

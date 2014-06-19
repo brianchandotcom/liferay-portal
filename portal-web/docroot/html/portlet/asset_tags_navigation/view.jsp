@@ -40,7 +40,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		contextObjects.put("scopeGroupId", new Long(scopeGroupId));
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetTags, contextObjects) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, assetTags, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:asset-tags-navigation

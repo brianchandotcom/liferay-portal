@@ -53,6 +53,8 @@ import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
+import java.io.IOException;
+
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -72,7 +74,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eduardo Garcia
@@ -278,18 +279,20 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries)
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries)
 		throws Exception {
 
 		Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 		return renderDDMTemplate(
-			pageContext, ddmTemplateId, entries, contextObjects);
+			request, response, ddmTemplateId, entries, contextObjects);
 	}
 
 	@Override
 	public String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries,
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception {
 
@@ -301,9 +304,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			contextObjects.put(
 				PortletDisplayTemplateConstants.ENTRY, entries.get(0));
 		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
@@ -378,10 +378,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		// Taglibs
 
 		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
-			_addTaglibSupportFTL(contextObjects, pageContext);
+			_addTaglibSupportFTL(contextObjects, request, response);
 		}
 		else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
-			_addTaglibSupportVM(contextObjects, pageContext);
+			_addTaglibSupportVM(contextObjects, request, response);
 		}
 
 		contextObjects.putAll(_getPortletPreferences(renderRequest));
@@ -420,10 +420,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	private void _addTaglibSupportFTL(
-			Map<String, Object> contextObjects, PageContext pageContext)
+			Map<String, Object> contextObjects, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
-		ServletContext servletContext = pageContext.getServletContext();
+		ServletContext servletContext = request.getServletContext();
 
 		// FreeMarker servlet application
 
@@ -438,11 +439,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			servletContextHashModel);
 
 		// FreeMarker servlet request
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
 
 		HttpRequestHashModel requestHashModel = new HttpRequestHashModel(
 			request, response, ObjectWrapper.DEFAULT_WRAPPER);
@@ -462,11 +458,12 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	private void _addTaglibSupportVM(
-		Map<String, Object> contextObjects, PageContext pageContext) {
+		Map<String, Object> contextObjects, HttpServletRequest request,
+		HttpServletResponse response) {
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.TAGLIB_LIFERAY,
-			_getVelocityTaglib(pageContext));
+			_getVelocityTaglib(request, response));
 	}
 
 	private Map<String, Object> _getPortletPreferences(
@@ -500,22 +497,24 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return contextObjects;
 	}
 
-	private VelocityTaglib _getVelocityTaglib(PageContext pageContext) {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+	private VelocityTaglib _getVelocityTaglib(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
 
 		ServletContext servletContext = session.getServletContext();
 
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
+		try {
+			VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
+				servletContext, request,
+				new PipingServletResponse(response, response.getWriter()),
+				null);
 
-		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			servletContext, request,
-			new PipingServletResponse(response, pageContext.getOut()), null);
-
-		return velocityTaglib;
+			return velocityTaglib;
+		}
+		catch (IOException ioe) {
+			throw new IllegalStateException(ioe);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

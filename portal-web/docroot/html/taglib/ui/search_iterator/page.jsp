@@ -222,7 +222,7 @@ List<String> primaryKeys = new ArrayList<String>();
 		boolean allRowsIsChecked = true;
 
 		for (int i = 0; i < resultRows.size(); i++) {
-			ResultRow row = (ResultRow)resultRows.get(i);
+			com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)resultRows.get(i);
 
 			primaryKeys.add(HtmlUtil.escape(row.getPrimaryKey()));
 
@@ -261,7 +261,7 @@ List<String> primaryKeys = new ArrayList<String>();
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {
-				SearchEntry entry = (SearchEntry)entries.get(j);
+				com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(j);
 
 				String normalizedHeaderName = null;
 

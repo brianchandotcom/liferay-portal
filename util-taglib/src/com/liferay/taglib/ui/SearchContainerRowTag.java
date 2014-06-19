@@ -303,7 +303,8 @@ public class SearchContainerRowTag<R>
 			}
 		}
 
-		_resultRow = new ResultRow(rowId, model, primaryKey, _rowIndex, _bold);
+		_resultRow = new com.liferay.taglib.search.ResultRow(
+			rowId, model, primaryKey, _rowIndex, _bold);
 
 		pageContext.setAttribute(_indexVar, _rowIndex);
 		pageContext.setAttribute(_modelVar, model);

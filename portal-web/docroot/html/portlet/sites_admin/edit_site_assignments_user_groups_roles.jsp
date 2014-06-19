@@ -43,7 +43,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroupId));
 	backURL="<%= redirect %>"
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(pageContext, "edit-site-roles-for-user-group") + ": " + HtmlUtil.escape(userGroup.getName()) %>'
+	title='<%= LanguageUtil.get(request, "edit-site-roles-for-user-group") + ": " + HtmlUtil.escape(userGroup.getName()) %>'
 />
 
 <liferay-ui:search-container
@@ -113,7 +113,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroupId));
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>"
+			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

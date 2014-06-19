@@ -76,11 +76,11 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
 	<div class="hide lfr-fallback" id="<portlet:namespace />fallback">
 		<aui:fieldset label="upload-files">
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 1" %>' name="file1" type="file" />
+			<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file" />
 
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 2" %>' name="file2" type="file" />
+			<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file" />
 
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 3" %>' name="file3" type="file" />
+			<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file" />
 		</aui:fieldset>
 
 		<aui:button-row>
@@ -106,7 +106,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 			if ((A.Array.indexOf(validExtensions, '*') == -1) &&
 				(A.Array.indexOf(validExtensions, extension) == -1)) {
 
-				alert('<%= UnicodeLanguageUtil.get(pageContext, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>');
+				alert('<%= UnicodeLanguageUtil.get(request, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>');
 
 				fileField.val('');
 			}
@@ -237,7 +237,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 								if (item.added) {
 									cssClass = 'file-saved';
 
-									childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(pageContext, "successfully-saved") %></span>';
+									childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
 								}
 								else {
 									cssClass = 'upload-error';

@@ -103,12 +103,12 @@ else {
 			<aui:fieldset cssClass="template-selector" label="type">
 				<aui:nav cssClass="list-group" id="templateList">
 					<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
-						<aui:nav-item cssClass="lfr-page-template" data-search='<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "empty-page")) %>'>
+						<aui:nav-item cssClass="lfr-page-template" data-search='<%= HtmlUtil.escape(LanguageUtil.get(request, "empty-page")) %>'>
 							<div class="active lfr-page-template-title toggler-header toggler-header-expanded" data-type="portlet">
 								<aui:input checked="<%= true %>" id="addLayoutSelectedPageTemplateBlank" label="empty-page" name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(pageContext, "empty-page-description" ) %></small>
+									<small><%= LanguageUtil.get(request, "empty-page-description" ) %></small>
 								</div>
 							</div>
 
@@ -164,12 +164,12 @@ else {
 						}
 					%>
 
-						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
+						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(request, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
 							<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
 								<aui:input disabled="<%= (layoutsCount == 0) && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" id='<%= "addLayoutSelectedPageTemplate" + PropsValues.LAYOUT_TYPES[i] %>' label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
+									<small><%= LanguageUtil.get(request, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
 								</div>
 							</div>
 
@@ -188,7 +188,7 @@ else {
 								<aui:input id="addLayoutSelectedPageTemplateCopyOfPage" label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
+									<small><%= LanguageUtil.get(request, "copy-of-a-page-description" ) %></small>
 								</div>
 							</div>
 

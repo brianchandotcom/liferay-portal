@@ -163,7 +163,7 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 									</li>
 								</ul>
 
-								<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
+								<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 
 								<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 									<li>
@@ -173,10 +173,10 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 											String last = MapUtil.getString(parameterMap, "last");
 											%>
 
-											<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' selected='<%= last.equals("12") %>' value="12" />
-											<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' selected='<%= last.equals("24") %>' value="24" />
-											<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48", false) %>' selected='<%= last.equals("48") %>' value="48" />
-											<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' selected='<%= last.equals("168") %>' value="168" />
+											<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' selected='<%= last.equals("12") %>' value="12" />
+											<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' selected='<%= last.equals("24") %>' value="24" />
+											<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' selected='<%= last.equals("48") %>' value="48" />
+											<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' selected='<%= last.equals("168") %>' value="168" />
 										</aui:select>
 									</li>
 								</ul>
@@ -194,7 +194,7 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 				<liferay-ui:icon
 					iconCssClass="icon-calendar"
 					label="<%= true %>"
-					message='<%= LanguageUtil.get(pageContext, "date-range") + selectedLabelsHTML %>'
+					message='<%= LanguageUtil.get(request, "date-range") + selectedLabelsHTML %>'
 				/>
 			</li>
 
@@ -232,7 +232,7 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 							<li class="tree-item">
 								<liferay-util:buffer var="badgeHTML">
 									<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
-									<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
+									<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 								</liferay-util:buffer>
 
 								<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" />
@@ -353,7 +353,7 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 								<c:if test="<%= modelDeletionCount != 0 %>">
 
 									<%
-									String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+									String deletionsLabel = LanguageUtil.get(request, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
 									%>
 
 									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, true) %>" data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, true) %>" />

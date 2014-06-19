@@ -82,7 +82,7 @@ int weekNumber = 1;
 		%>
 
 			<th class="table-header">
-				<%= LanguageUtil.get(pageContext, CalendarUtil.DAYS_ABBREVIATION[daysIndex]) %>
+				<%= LanguageUtil.get(request, CalendarUtil.DAYS_ABBREVIATION[daysIndex]) %>
 			</th>
 
 		<%

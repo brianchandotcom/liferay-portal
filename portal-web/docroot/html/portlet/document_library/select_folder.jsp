@@ -24,7 +24,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConst
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
 
 long repositoryId = scopeGroupId;
-String folderName = LanguageUtil.get(pageContext, "home");
+String folderName = LanguageUtil.get(request, "home");
 
 if (folder != null) {
 	repositoryId = folder.getRepositoryId();

@@ -35,7 +35,7 @@ if (wikiPage != null) {
 if (type.equals("all_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_all_pages");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-pages"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
 }
 else if (type.equals("categorized_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_categorized_pages");
@@ -44,7 +44,7 @@ else if (type.equals("categorized_pages")) {
 else if (type.equals("draft_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "draft-pages"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "draft-pages"), portletURL.toString());
 }
 else if (type.equals("history")) {
 	PortletURL viewPageHistoryURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -57,7 +57,7 @@ else if (type.equals("history")) {
 
 	viewPageHistoryURL.setParameter("struts_action", "/wiki/view_page_activities");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "history"), viewPageHistoryURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), viewPageHistoryURL.toString());
 }
 else if (type.equals("incoming_links")) {
 	if (wikiPage != null) {
@@ -68,12 +68,12 @@ else if (type.equals("incoming_links")) {
 
 	portletURL.setParameter("struts_action", "/wiki/view_page_incoming_links");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "incoming-links"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "incoming-links"), portletURL.toString());
 }
 else if (type.equals("orphan_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "orphan-pages"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "orphan-pages"), portletURL.toString());
 }
 else if (type.equals("outgoing_links")) {
 	if (wikiPage != null) {
@@ -84,12 +84,12 @@ else if (type.equals("outgoing_links")) {
 
 	portletURL.setParameter("struts_action", "/wiki/view_page_outgoing_links");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "outgoing-links"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "outgoing-links"), portletURL.toString());
 }
 else if (type.equals("recent_changes")) {
 	portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "recent-changes"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recent-changes"), portletURL.toString());
 }
 else if (type.equals("tagged_pages")) {
 	portletURL.setParameter("struts_action", "/wiki/view_tagged_pages");
@@ -314,7 +314,7 @@ for (int i = 0; i < results.size(); i++) {
 		String revision = String.valueOf(curWikiPage.getVersion());
 
 		if (curWikiPage.isMinorEdit()) {
-			revision += " (" + LanguageUtil.get(pageContext, "minor-edit") + ")";
+			revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
 		}
 
 		row.addText(revision, rowURL);

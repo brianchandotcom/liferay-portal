@@ -83,7 +83,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 				<div class="entry-metadata">
 
 					<c:if test="<%= !repositoryAccess %>">
-						<span title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+						<span title="<%= LanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 					</c:if>
 
 					<span class="entry-title">
@@ -161,7 +161,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 			<liferay-ui:search-container-column-text
 				href="<%= repositoryAccess ? rowURL : null %>"
 				name="<%= folderColumn %>"
-				value='<%= LanguageUtil.get(pageContext, isLocked ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, isLocked ? "yes" : "no") %>'
 			/>
 		</c:when>
 		<c:when test='<%= folderColumn.equals("num-of-documents") %>'>

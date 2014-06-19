@@ -26,7 +26,7 @@
 			String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
 
 			if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-				signedInAs = "<a class=\"signed-in\" href=\"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "my-account")) + "', uri: '" + HtmlUtil.escapeJS(myAccountURL) + "'});\">" + signedInAs + "</a>";
+				signedInAs = "<a class=\"signed-in\" href=\"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "my-account")) + "', uri: '" + HtmlUtil.escapeJS(myAccountURL) + "'});\">" + signedInAs + "</a>";
 			}
 			else {
 				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
@@ -36,7 +36,7 @@
 		}
 		%>
 
-		<%= LanguageUtil.format(pageContext, "you-are-signed-in-as-x", signedInAs, false) %>
+		<%= LanguageUtil.format(request, "you-are-signed-in-as-x", signedInAs, false) %>
 	</c:when>
 	<c:otherwise>
 
@@ -72,19 +72,19 @@
 					<div class="alert alert-success">
 						<c:choose>
 							<c:when test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
-								<%= LanguageUtil.get(pageContext, "thank-you-for-creating-an-account") %>
+								<%= LanguageUtil.get(request, "thank-you-for-creating-an-account") %>
 
 								<c:if test="<%= company.isStrangersVerify() %>">
-									<%= LanguageUtil.format(pageContext, "your-email-verification-code-has-been-sent-to-x", userEmailAddress, false) %>
+									<%= LanguageUtil.format(request, "your-email-verification-code-has-been-sent-to-x", userEmailAddress, false) %>
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-your-password-is-x", userPassword, false) %>
+								<%= LanguageUtil.format(request, "thank-you-for-creating-an-account.-your-password-is-x", userPassword, false) %>
 							</c:otherwise>
 						</c:choose>
 
 						<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
-							<%= LanguageUtil.format(pageContext, "your-password-has-been-sent-to-x", userEmailAddress, false) %>
+							<%= LanguageUtil.format(request, "your-password-has-been-sent-to-x", userEmailAddress, false) %>
 						</c:if>
 					</div>
 				</c:when>
@@ -95,7 +95,7 @@
 					%>
 
 					<div class="alert alert-success">
-						<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", userEmailAddress, false) %>
+						<%= LanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", userEmailAddress, false) %>
 					</div>
 				</c:when>
 			</c:choose>

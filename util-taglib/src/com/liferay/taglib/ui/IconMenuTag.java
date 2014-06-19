@@ -321,7 +321,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					String message = _message;
 
 					if (_localizeMessage) {
-						message = LanguageUtil.get(pageContext, _message);
+						message = LanguageUtil.get(request, _message);
 					}
 
 					jspWriter.write("\" href=\"javascript:;\" id=\"");

@@ -97,7 +97,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			Liferay.Util.openWindow(
 				{
 					id: '<portlet:namespace />openFeedsView',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
+					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
 					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
 				}
 			);
@@ -109,7 +109,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
 
 	function <portlet:namespace />deleteEntries() {
-		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
@@ -137,7 +137,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
 				showManageTemplates: true,
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			}
 		);
 	}
@@ -156,7 +156,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				showAncestorScopes: true,
 				showHeader: false,
 				struts_action: '/dynamic_data_mapping/view_template',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>'
 			}
 		);
 	}

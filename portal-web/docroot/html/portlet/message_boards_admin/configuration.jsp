@@ -64,7 +64,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 					%>
 
 						<c:if test="<%= MBUtil.isValidMessageFormat(MBMessageConstants.FORMATS[i]) %>">
-							<aui:option label='<%= LanguageUtil.get(pageContext,"message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
+							<aui:option label='<%= LanguageUtil.get(request,"message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
 						</c:if>
 
 					<%
@@ -80,10 +80,10 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 				<aui:input name="preferences--threadAsQuestionByDefault--" type="checkbox" value="<%= threadAsQuestionByDefault %>" />
 
 				<aui:select label="show-recent-posts-from-last" name="preferences--recentPostsDateOffset--" value="<%= recentPostsDateOffset %>">
-					<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' value="1" />
-					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' value="7" />
-					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "30", false) %>' value="30" />
-					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "365", false) %>' value="365" />
+					<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="1" />
+					<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="7" />
+					<aui:option label='<%= LanguageUtil.format(request, "x-days", "30", false) %>' value="30" />
+					<aui:option label='<%= LanguageUtil.format(request, "x-days", "365", false) %>' value="365" />
 				</aui:select>
 			</aui:fieldset>
 		</liferay-ui:section>

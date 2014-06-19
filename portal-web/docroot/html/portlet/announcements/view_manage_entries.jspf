@@ -102,7 +102,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 			// Type
 
-			row.addText(LanguageUtil.get(pageContext, entry.getType()), rowURL);
+			row.addText(LanguageUtil.get(request, entry.getType()), rowURL);
 
 			// Modified date
 

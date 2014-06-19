@@ -222,10 +222,10 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 		// Availability
 
 		if (ShoppingUtil.isInStock(item, itemFields, fieldsArray, count)) {
-			row.addText("<div class=\"alert alert-success\">".concat(LanguageUtil.get(pageContext, "in-stock")).concat("</div>"), rowURL);
+			row.addText("<div class=\"alert alert-success\">".concat(LanguageUtil.get(request, "in-stock")).concat("</div>"), rowURL);
 		}
 		else {
-			row.addText("<div class=\"alert alert-danger\">".concat(LanguageUtil.get(pageContext, "out-of-stock")).concat("</div>"), rowURL);
+			row.addText("<div class=\"alert alert-danger\">".concat(LanguageUtil.get(request, "out-of-stock")).concat("</div>"), rowURL);
 		}
 
 		// Quantity

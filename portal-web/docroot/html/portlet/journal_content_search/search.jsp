@@ -25,7 +25,7 @@
 		</style>
 
 		<%
-		String defaultKeywords = LanguageUtil.get(pageContext, "search") + StringPool.TRIPLE_PERIOD;
+		String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD;
 
 		String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 		%>
@@ -52,7 +52,7 @@
 			headerNames.add("name");
 			headerNames.add("content");
 
-			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
+			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
 
 			try {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);

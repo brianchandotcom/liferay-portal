@@ -26,7 +26,7 @@ boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("l
 	<div class="alert alert-success">
 		<c:choose>
 			<c:when test="<%= translateMessage %>">
-				<%= LanguageUtil.get(pageContext, message) %>
+				<%= LanguageUtil.get(request, message) %>
 			</c:when>
 			<c:otherwise>
 				<%= message %>

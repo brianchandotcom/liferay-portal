@@ -30,6 +30,6 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 
 <liferay-ui:error-marker key="errorSection" value="layout" />
 
-<h5><%= LanguageUtil.get(pageContext, "layout-template") %></h5>
+<h5><%= LanguageUtil.get(request, "layout-template") %></h5>
 
 <%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>

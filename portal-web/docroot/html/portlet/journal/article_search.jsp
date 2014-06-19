@@ -96,7 +96,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 						String label = HtmlUtil.escape(curScopeLayout.getName(locale));
 
 						if (curScopeLayout.equals(layout)) {
-							label = LanguageUtil.get(pageContext, "current-page") + " (" + label + ")";
+							label = LanguageUtil.get(request, "current-page") + " (" + label + ")";
 						}
 						%>
 

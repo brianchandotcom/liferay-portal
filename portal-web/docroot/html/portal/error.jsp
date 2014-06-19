@@ -72,8 +72,8 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 
 <c:if test="<%= SessionErrors.contains(request, UserActiveException.class.getName()) %>">
 	<div class="alert alert-danger">
-		<%= LanguageUtil.format(pageContext, "your-account-with-login-x-is-not-active", new LanguageWrapper[] {new LanguageWrapper("", HtmlUtil.escape(user.getFullName()), ""), new LanguageWrapper("<strong><em>", HtmlUtil.escape(userLogin), "</em></strong>")}, false) %><br /><br />
+		<%= LanguageUtil.format(request, "your-account-with-login-x-is-not-active", new LanguageWrapper[] {new LanguageWrapper("", HtmlUtil.escape(user.getFullName()), ""), new LanguageWrapper("<strong><em>", HtmlUtil.escape(userLogin), "</em></strong>")}, false) %><br /><br />
 	</div>
 
-	<%= LanguageUtil.format(pageContext, "if-you-are-not-x-logout-and-try-again", HtmlUtil.escape(user.getFullName()), false) %>
+	<%= LanguageUtil.format(request, "if-you-are-not-x-logout-and-try-again", HtmlUtil.escape(user.getFullName()), false) %>
 </c:if>

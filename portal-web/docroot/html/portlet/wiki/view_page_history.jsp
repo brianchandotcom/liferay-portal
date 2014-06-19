@@ -31,5 +31,5 @@
 </liferay-util:include>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "versions"), null);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "versions"), null);
 %>

@@ -32,7 +32,7 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(thread.getLastPostByUserId
 	<div class="portrait">
 		<c:choose>
 			<c:when test="<%= message.isAnonymous() || (userDisplay == null) %>">
-				<img alt="<%= LanguageUtil.get(pageContext, "generic-portrait") %>" class="avatar" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK) %>" width="60" /></a>
+				<img alt="<%= LanguageUtil.get(request, "generic-portrait") %>" class="avatar" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK) %>" width="60" /></a>
 			</c:when>
 			<c:otherwise>
 				<a href="<%= userDisplay.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar" src="<%= userDisplay.getPortraitURL(themeDisplay) %>" width="60" /></a>
@@ -62,7 +62,7 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(thread.getLastPostByUserId
 		<liferay-ui:icon
 			iconCssClass="icon-time"
 			label="<%= true %>"
-			message='<%= LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, lastPostAgo, true), false) %>'
+			message='<%= LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, lastPostAgo, true), false) %>'
 		/>
 	</div>
 </div>

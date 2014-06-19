@@ -32,7 +32,7 @@ if (assetTagNames.length == 0) {
 
 <c:if test="<%= assetTagNames.length > 0 %>">
 	<span class="taglib-asset-tags-summary">
-		<%= Validator.isNotNull(message) ? (LanguageUtil.get(pageContext, message) + ": ") : "" %>
+		<%= Validator.isNotNull(message) ? (LanguageUtil.get(request, message) + ": ") : "" %>
 
 		<c:choose>
 			<c:when test="<%= portletURL != null %>">

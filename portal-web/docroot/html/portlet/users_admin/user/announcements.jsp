@@ -55,7 +55,7 @@ else {
 	>
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, delivery.getType()) %>"
+			value="<%= LanguageUtil.get(request, delivery.getType()) %>"
 		/>
 		<liferay-ui:search-container-column-jsp
 			name="email"

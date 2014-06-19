@@ -151,7 +151,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 			var showActionsInput = A.one('#<portlet:namespace />showActions');
 
 			if (showActionsInput.val() === 'false') {
-				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(pageContext, "action") %></option>';
+				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>';
 
 				currentFileEntryColumns.append(actionHTML);
 				currentFolderColumns.append(actionHTML);

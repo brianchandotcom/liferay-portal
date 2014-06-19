@@ -39,7 +39,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.to
 
 portletURL.setParameter("struts_action", "/wiki/view_page_attachments");
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "attachments"), portletURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments"), portletURL.toString());
 %>
 
 <c:if test="<%= !viewTrashAttachments %>">
@@ -101,7 +101,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 					cssClass="trash-attachments"
 					iconCssClass="icon-trash"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount, false) %>'
+					message='<%= LanguageUtil.format(request, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount, false) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

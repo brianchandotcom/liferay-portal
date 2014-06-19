@@ -96,18 +96,18 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 	</c:when>
 	<c:otherwise>
 		<head>
-			<title>Http Status <%= code %> - <%= LanguageUtil.get(pageContext, "http-status-code[" + code + "]") %></title>
+			<title>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></title>
 		</head>
 
 		<body>
-			<h1>Http Status <%= code %> - <%= LanguageUtil.get(pageContext, "http-status-code[" + code + "]") %></h1>
+			<h1>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></h1>
 
 			<p>
-				<%= LanguageUtil.get(pageContext, "message") %>: <%= msg %>
+				<%= LanguageUtil.get(request, "message") %>: <%= msg %>
 			</p>
 
 			<p>
-				<%= LanguageUtil.get(pageContext, "resource") %>: <%= uri %>
+				<%= LanguageUtil.get(request, "resource") %>: <%= uri %>
 			</p>
 		</body>
 	</c:otherwise>

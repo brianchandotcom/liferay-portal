@@ -36,7 +36,7 @@ serverURL.setParameter("tabs3", tabs3);
 <liferay-ui:message key="uptime" />:
 
 <c:if test="<%= days > 0 %>">
-	<%= days %> <%= LanguageUtil.get(pageContext, ((days > 1) ? "days" : "day")) %>,
+	<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
 </c:if>
 
 <%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>

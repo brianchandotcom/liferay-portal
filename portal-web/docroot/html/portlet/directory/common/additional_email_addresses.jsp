@@ -39,7 +39,7 @@ if (classPK > 0) {
 			<li class="<%= (emailAddress.isPrimary() && !emailAddresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
 				<a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a>
 
-				<%= LanguageUtil.get(pageContext, emailAddress.getType().getName()) %>
+				<%= LanguageUtil.get(request, emailAddress.getType().getName()) %>
 			</li>
 
 		<%

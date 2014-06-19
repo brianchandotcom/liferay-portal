@@ -212,30 +212,30 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 
 <aui:script>
 	var lengthArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(pageContext, "meter") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(pageContext, "millimeter") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(pageContext, "centimeter") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(pageContext, "kilometer") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(pageContext, "foot") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(pageContext, "inch") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(pageContext, "yard") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(pageContext, "mile") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(pageContext, "cubit") %>'),
-		new Option(9, '<%= UnicodeLanguageUtil.get(pageContext, "talent") %>'),
-		new Option(10, '<%= UnicodeLanguageUtil.get(pageContext, "handbreath") %>')
+		new Option(0, '<%= UnicodeLanguageUtil.get(request, "meter") %>'),
+		new Option(1, '<%= UnicodeLanguageUtil.get(request, "millimeter") %>'),
+		new Option(2, '<%= UnicodeLanguageUtil.get(request, "centimeter") %>'),
+		new Option(3, '<%= UnicodeLanguageUtil.get(request, "kilometer") %>'),
+		new Option(4, '<%= UnicodeLanguageUtil.get(request, "foot") %>'),
+		new Option(5, '<%= UnicodeLanguageUtil.get(request, "inch") %>'),
+		new Option(6, '<%= UnicodeLanguageUtil.get(request, "yard") %>'),
+		new Option(7, '<%= UnicodeLanguageUtil.get(request, "mile") %>'),
+		new Option(8, '<%= UnicodeLanguageUtil.get(request, "cubit") %>'),
+		new Option(9, '<%= UnicodeLanguageUtil.get(request, "talent") %>'),
+		new Option(10, '<%= UnicodeLanguageUtil.get(request, "handbreath") %>')
 	];
 
 	var areaArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(pageContext, "square-kilometer") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(pageContext, "square-meter") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(pageContext, "square-centimeter") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(pageContext, "square-millimeter") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(pageContext, "square-foot") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(pageContext, "square-inch") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(pageContext, "square-yard") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(pageContext, "square-mile") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(pageContext, "hectare") %>'),
-		new Option(9, '<%= UnicodeLanguageUtil.get(pageContext, "acre") %>')
+		new Option(0, '<%= UnicodeLanguageUtil.get(request, "square-kilometer") %>'),
+		new Option(1, '<%= UnicodeLanguageUtil.get(request, "square-meter") %>'),
+		new Option(2, '<%= UnicodeLanguageUtil.get(request, "square-centimeter") %>'),
+		new Option(3, '<%= UnicodeLanguageUtil.get(request, "square-millimeter") %>'),
+		new Option(4, '<%= UnicodeLanguageUtil.get(request, "square-foot") %>'),
+		new Option(5, '<%= UnicodeLanguageUtil.get(request, "square-inch") %>'),
+		new Option(6, '<%= UnicodeLanguageUtil.get(request, "square-yard") %>'),
+		new Option(7, '<%= UnicodeLanguageUtil.get(request, "square-mile") %>'),
+		new Option(8, '<%= UnicodeLanguageUtil.get(request, "hectare") %>'),
+		new Option(9, '<%= UnicodeLanguageUtil.get(request, "acre") %>')
 	];
 
 	var volumeArray = [
@@ -255,15 +255,15 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 	];
 
 	var massArray = [
-		new Option(0, '<%= UnicodeLanguageUtil.get(pageContext, "kilogram") %>'),
-		new Option(1, '<%= UnicodeLanguageUtil.get(pageContext, "pound") %>'),
-		new Option(2, '<%= UnicodeLanguageUtil.get(pageContext, "ton") %>'),
-		new Option(3, '<%= UnicodeLanguageUtil.get(pageContext, "talent") %>'),
-		new Option(4, '<%= UnicodeLanguageUtil.get(pageContext, "mina") %>'),
-		new Option(5, '<%= UnicodeLanguageUtil.get(pageContext, "shekel") %>'),
-		new Option(6, '<%= UnicodeLanguageUtil.get(pageContext, "pim") %>'),
-		new Option(7, '<%= UnicodeLanguageUtil.get(pageContext, "beka") %>'),
-		new Option(8, '<%= UnicodeLanguageUtil.get(pageContext, "gerah") %>')
+		new Option(0, '<%= UnicodeLanguageUtil.get(request, "kilogram") %>'),
+		new Option(1, '<%= UnicodeLanguageUtil.get(request, "pound") %>'),
+		new Option(2, '<%= UnicodeLanguageUtil.get(request, "ton") %>'),
+		new Option(3, '<%= UnicodeLanguageUtil.get(request, "talent") %>'),
+		new Option(4, '<%= UnicodeLanguageUtil.get(request, "mina") %>'),
+		new Option(5, '<%= UnicodeLanguageUtil.get(request, "shekel") %>'),
+		new Option(6, '<%= UnicodeLanguageUtil.get(request, "pim") %>'),
+		new Option(7, '<%= UnicodeLanguageUtil.get(request, "beka") %>'),
+		new Option(8, '<%= UnicodeLanguageUtil.get(request, "gerah") %>')
 	];
 
 	var temperatureArray = [

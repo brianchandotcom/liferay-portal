@@ -31,7 +31,7 @@ if (folder != null) {
 	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 	}
 }
 else {
@@ -39,11 +39,11 @@ else {
 		BookmarksUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 
 		if (!layout.isTypeControlPanel()) {
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-subfolder"), currentURL);
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-subfolder"), currentURL);
 		}
 	}
 	else if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 	}
 }
 %>
@@ -65,7 +65,7 @@ else {
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(pageContext, "edit-x", folder.getName(), false) %>'
+		title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(request, "edit-x", folder.getName(), false) %>'
 	/>
 
 	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
@@ -76,7 +76,7 @@ else {
 		<c:if test="<%= folder != null %>">
 
 			<%
-			String parentFolderName = LanguageUtil.get(pageContext, "home");
+			String parentFolderName = LanguageUtil.get(request, "home");
 
 			try {
 				BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);

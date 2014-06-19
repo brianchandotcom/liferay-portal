@@ -174,13 +174,13 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					align="left"
 					href="<%= curURL %>"
 					selected="<%= selected %>"
-					title="<%= LanguageUtil.get(pageContext, names[i]) %>"
+					title="<%= LanguageUtil.get(request, names[i]) %>"
 				/>
 			</c:when>
 			<c:otherwise>
 				<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
 					<a href="<%= Validator.isNotNull(curURL) ? curURL : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
-						<%= LanguageUtil.get(pageContext, names[i]) %>
+						<%= LanguageUtil.get(request, names[i]) %>
 					</a>
 				</li>
 			</c:otherwise>
@@ -197,12 +197,12 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					align="left"
 					href="<%= backURL %>"
 					selected="<%= false %>"
-					title='<%= Validator.isNotNull(backLabel) ? HtmlUtil.escapeAttribute(backLabel) : "&laquo;" + LanguageUtil.get(pageContext, "back") %>'
+					title='<%= Validator.isNotNull(backLabel) ? HtmlUtil.escapeAttribute(backLabel) : "&laquo;" + LanguageUtil.get(request, "back") %>'
 				/>
 			</c:when>
 			<c:otherwise>
 				<li>
-					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(pageContext, "back") %></a>
+					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(request, "back") %></a>
 				</li>
 			</c:otherwise>
 		</c:choose>

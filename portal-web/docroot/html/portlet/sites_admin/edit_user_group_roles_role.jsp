@@ -26,7 +26,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 %>
 
 <div>
-	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"1", "2"}, false) %>
+	<%= LanguageUtil.format(request, "step-x-of-x", new String[] {"1", "2"}, false) %>
 
 	<liferay-ui:message key="choose-a-role" />
 </div>
@@ -85,7 +85,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Type
 
-	row.addText(LanguageUtil.get(pageContext, curRole.getTypeLabel()), rowURL);
+	row.addText(LanguageUtil.get(request, curRole.getTypeLabel()), rowURL);
 
 	// Description
 

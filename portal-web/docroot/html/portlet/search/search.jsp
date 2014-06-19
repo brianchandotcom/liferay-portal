@@ -244,12 +244,12 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 </aui:script>
 
 <%
-String pageSubtitle = LanguageUtil.get(pageContext, "search-results");
-String pageDescription = LanguageUtil.get(pageContext, "search-results");
-String pageKeywords = LanguageUtil.get(pageContext, "search");
+String pageSubtitle = LanguageUtil.get(request, "search-results");
+String pageDescription = LanguageUtil.get(request, "search-results");
+String pageKeywords = LanguageUtil.get(request, "search");
 
 if (!portletTitles.isEmpty()) {
-	pageDescription = LanguageUtil.get(pageContext, "searched") + StringPool.SPACE + StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE);
+	pageDescription = LanguageUtil.get(request, "searched") + StringPool.SPACE + StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE);
 }
 
 if (Validator.isNotNull(keywords)) {

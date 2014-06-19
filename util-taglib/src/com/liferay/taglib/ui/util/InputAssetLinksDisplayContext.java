@@ -271,9 +271,11 @@ public class InputAssetLinksDisplayContext {
 		String typeName = assetRendererFactory.getTypeName(
 			_themeDisplay.getLocale());
 
+		HttpServletRequest request =
+			(HttpServletRequest)_pageContext.getRequest();
+
 		selectorEntryData.put(
-			"title", LanguageUtil.format(
-				_pageContext , "select-x", typeName, false));
+			"title", LanguageUtil.format(request, "select-x", typeName, false));
 
 		selectorEntryData.put("type", assetRendererFactory.getClassName());
 
@@ -393,9 +395,12 @@ public class InputAssetLinksDisplayContext {
 
 		selectorEntryData.put("href", portletURL.toString());
 
+		HttpServletRequest request =
+			(HttpServletRequest)_pageContext.getRequest();
+
 		selectorEntryData.put(
 			"title", LanguageUtil.format(
-				_pageContext, "select-x", classType.getName(), false));
+				request, "select-x", classType.getName(), false));
 		selectorEntryData.put("type", classType.getName());
 
 		return selectorEntryData;

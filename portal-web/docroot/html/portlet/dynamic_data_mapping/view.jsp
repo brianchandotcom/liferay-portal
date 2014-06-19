@@ -129,7 +129,7 @@ portletURL.setParameter("tabs1", tabs1);
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="storage-type"
-					value="<%= LanguageUtil.get(pageContext, structure.getStorageType()) %>"
+					value="<%= LanguageUtil.get(request, structure.getStorageType()) %>"
 				/>
 			</c:if>
 
@@ -176,7 +176,7 @@ portletURL.setParameter("tabs1", tabs1);
 			{
 				id: '<portlet:namespace />copyStructure',
 				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.format(pageContext, "copy-x", ddmDisplay.getStructureName(locale), false) %>',
+				title: '<%= UnicodeLanguageUtil.format(request, "copy-x", ddmDisplay.getStructureName(locale), false) %>',
 				uri: uri
 			}
 		);
@@ -186,7 +186,7 @@ portletURL.setParameter("tabs1", tabs1);
 		window,
 		'<portlet:namespace />deleteStructures',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 				document.<portlet:namespace />fm.method = 'post';
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />deleteStructureIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

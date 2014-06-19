@@ -36,5 +36,5 @@
 		);
 	};
 
-	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<%= UnicodeLanguageUtil.get(pageContext, "please-fill-out-all-required-fields") %>';
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<%= UnicodeLanguageUtil.get(request, "please-fill-out-all-required-fields") %>';
 </aui:script>

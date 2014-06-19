@@ -79,7 +79,7 @@ searchContainer.setResults(results);
 		// Last post date
 
 		if (node.getLastPostDate() == null) {
-			row.addText(LanguageUtil.get(pageContext, "never"), rowURL);
+			row.addText(LanguageUtil.get(request, "never"), rowURL);
 		}
 		else {
 			row.addText(dateFormatDateTime.format(node.getLastPostDate()), rowURL);

@@ -32,7 +32,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 
 	List<SocialActivityCounter> activityCounters = null;
 
-	String title = LanguageUtil.get(pageContext, "site-statistics") + StringPool.SPACE;
+	String title = LanguageUtil.get(request, "site-statistics") + StringPool.SPACE;
 
 	int dataSize = 0;
 	int displayHeight = 80;
@@ -45,7 +45,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 			assetTags = AssetTagLocalServiceUtil.getSocialActivityCounterOffsetTags(scopeGroupId, displayActivityCounterName, -12, 0);
 		}
 
-		title = title + LanguageUtil.format(pageContext, "tag-cloud-for-x", LanguageUtil.get(pageContext, "group.statistics.title." + displayActivityCounterName), false);
+		title = title + LanguageUtil.format(request, "tag-cloud-for-x", LanguageUtil.get(request, "group.statistics.title." + displayActivityCounterName), false);
 
 		dataSize = assetTags.size();
 	}
@@ -71,7 +71,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 
 		dataSize = activityCounters.size();
 
-		title = title + LanguageUtil.get(pageContext, "group.statistics.title." + displayActivityCounterName);
+		title = title + LanguageUtil.get(request, "group.statistics.title." + displayActivityCounterName);
 	}
 
 	if (dataSize == 0) {

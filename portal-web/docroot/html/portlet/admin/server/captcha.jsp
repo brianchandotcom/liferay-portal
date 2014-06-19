@@ -20,7 +20,7 @@
 <liferay-ui:error key="reCaptchaPublicKey" message="the-recaptcha-public-key-is-not-valid" />
 
 <aui:fieldset>
-	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "recaptcha-help", "https://www.google.com/recaptcha/admin/create", false) %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
+	<aui:input helpMessage='<%= LanguageUtil.format(request, "recaptcha-help", "https://www.google.com/recaptcha/admin/create", false) %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="recaptcha-public-key" name="reCaptchaPublicKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" />
 

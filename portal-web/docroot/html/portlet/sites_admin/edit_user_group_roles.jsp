@@ -56,7 +56,7 @@ else if (group != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 }
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-user-group-roles"), portletURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-user-group-roles"), portletURL.toString());
 
 if (role != null) {
 	portletURL.setParameter("roleId", String.valueOf(roleId));
@@ -84,7 +84,7 @@ request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 	backURL="<%= redirect %>"
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(pageContext, "add-site-roles-to") + ": " + LanguageUtil.get(pageContext, "user-groups") %>'
+	title='<%= LanguageUtil.get(request, "add-site-roles-to") + ": " + LanguageUtil.get(request, "user-groups") %>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

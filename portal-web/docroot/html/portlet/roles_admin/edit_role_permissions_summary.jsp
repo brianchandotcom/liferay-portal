@@ -63,7 +63,7 @@ for (int i = 0; i < permissions.size(); i++) {
 	String curModelName = null;
 	String curModelLabel = null;
 	String actionId = permission.getActionId();
-	String actionLabel = _getActionLabel(pageContext, themeDisplay, resource.getName(), actionId);
+	String actionLabel = _getActionLabel(request, themeDisplay, resource.getName(), actionId);
 
 	if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), resource.getName())) {
 		curPortletName = resource.getName();
@@ -72,7 +72,7 @@ for (int i = 0; i < permissions.size(); i++) {
 	}
 	else {
 		curModelName = resource.getName();
-		curModelLabel = ResourceActionsUtil.getModelResource(pageContext, curModelName);
+		curModelLabel = ResourceActionsUtil.getModelResource(request, curModelName);
 
 		List portletResources = ResourceActionsUtil.getModelPortletResources(curModelName);
 
@@ -209,7 +209,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(sb.toString());
 
 	if (scope == ResourceConstants.SCOPE_COMPANY) {
-		row.addText(LanguageUtil.get(pageContext, _isShowScope(role, curResource, curPortletName)? "all-sites" : StringPool.BLANK));
+		row.addText(LanguageUtil.get(request, _isShowScope(role, curResource, curPortletName)? "all-sites" : StringPool.BLANK));
 	}
 	else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
 	}

@@ -102,7 +102,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 					var TPL_TAB_VIEW = '<div id="<portlet:namespace />{pagesTabViewId}"></div>' +
 						'<div class="alert alert-block selected-page-message" id="<portlet:namespace />selectedPageMessage">' +
-							'<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>' +
+							'<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>' +
 						'</div>';
 
 					var dialog;
@@ -198,7 +198,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 													on: {
 														click: setDisplayPage
 													},
-													label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
+													label: '<%= UnicodeLanguageUtil.get(request, "ok") %>'
 												},
 												{
 													on: {
@@ -206,12 +206,12 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 															dialog.hide();
 														}
 													},
-													label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
+													label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>'
 												}
 											]
 										}
 									},
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "choose-a-display-page") %>'
+									title: '<%= UnicodeLanguageUtil.get(request, "choose-a-display-page") %>'
 								}
 							);
 
@@ -226,7 +226,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(pageContext, "public-pages") %>',
+										label: '<%= UnicodeLanguageUtil.get(request, "public-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
@@ -241,7 +241,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>',
+										label: '<%= UnicodeLanguageUtil.get(request, "private-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
@@ -390,7 +390,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 								treeContainer.purge(true);
 							}
 
-							displayPageMessage('<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>', 'alert');
+							displayPageMessage('<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>', 'alert');
 						}
 						else {
 							loadPages();
@@ -500,7 +500,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 					var setSelectedPage = function(lastSelectedNode) {
 						var disabled = true;
 
-						var messageText = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>';
+						var messageText = '<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>';
 						var messageType = 'alert';
 
 						if (lastSelectedNode) {
@@ -517,7 +517,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 								messageType = 'info';
 							}
 							else if (text) {
-								messageText = Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-is-not-a-content-display-page") %>', ['"' + text + '"']);
+								messageText = Lang.sub('<%= UnicodeLanguageUtil.get(request, "x-is-not-a-content-display-page") %>', ['"' + text + '"']);
 							}
 						}
 
@@ -535,7 +535,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 									</c:if>
 
 									icon: 'icon-search',
-									label: '<%= UnicodeLanguageUtil.get(pageContext, "select") %>',
+									label: '<%= UnicodeLanguageUtil.get(request, "select") %>',
 									on: {
 										click: onSelectDisplayPage
 									}
@@ -594,7 +594,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			%>
 
 			<c:if test="<%= Validator.isNotNull(urlViewInContext) %>">
-				<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(pageContext, "view-content-in-x", defaultDisplayLayout.getName(locale), false) %></a>
+				<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(request, "view-content-in-x", defaultDisplayLayout.getName(locale), false) %></a>
 			</c:if>
 		</c:if>
 	</c:otherwise>

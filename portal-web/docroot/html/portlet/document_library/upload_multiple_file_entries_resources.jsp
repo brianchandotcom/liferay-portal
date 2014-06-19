@@ -209,10 +209,10 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 
 											if (selectedFilesCount > 1) {
 												if (selectedFilesCount == totalFilesCount) {
-													selectedFilesText = '<%= UnicodeLanguageUtil.get(pageContext, "all-files-selected") %>';
+													selectedFilesText = '<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
 												}
 												else {
-													selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-files-selected") %>', [selectedFilesCount]);
+													selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>', [selectedFilesCount]);
 												}
 											}
 

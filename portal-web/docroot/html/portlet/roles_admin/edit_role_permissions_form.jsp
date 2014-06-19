@@ -36,7 +36,7 @@ if (Validator.isNotNull(portletResource)) {
 	String portletId = portlet.getPortletId();
 
 	if (portletId.equals(PortletKeys.PORTAL)) {
-		portletResourceLabel = LanguageUtil.get(pageContext, "general-permissions");
+		portletResourceLabel = LanguageUtil.get(request, "general-permissions");
 	}
 	else {
 		portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
@@ -95,7 +95,7 @@ if (Validator.isNotNull(portletResource)) {
 			for (int i = 0; i < modelResources.size(); i++) {
 				String curModelResource = (String)modelResources.get(i);
 
-				String curModelResourceName = ResourceActionsUtil.getModelResource(pageContext, curModelResource);
+				String curModelResourceName = ResourceActionsUtil.getModelResource(request, curModelResource);
 			%>
 
 				<h5 id="<%= _getResourceHtmlId(curModelResource) %>"><%= curModelResourceName %></h5>
@@ -158,7 +158,7 @@ if (Validator.isNotNull(portletResource)) {
 
 				relatedPortletResources.add(curPortlet.getPortletId());
 
-				row.addText(PortalUtil.getPortletLongTitle(curPortlet, application, locale) + ": " + _getActionLabel(pageContext, themeDisplay, resource, actionId));
+				row.addText(PortalUtil.getPortletLongTitle(curPortlet, application, locale) + ": " + _getActionLabel(request, themeDisplay, resource, actionId));
 
 				row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");
 
@@ -188,7 +188,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "define-permissions"), definePermissionsURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-permissions"), definePermissionsURL.toString());
 
 if (Validator.isNotNull(portletResource)) {
 	PortletURL resourceURL = liferayPortletResponse.createRenderURL();

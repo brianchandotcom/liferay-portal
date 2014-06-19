@@ -149,7 +149,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 												<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
 											</c:when>
 											<c:otherwise>
-												<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(pageContext, "none") %>
+												<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
 											</c:otherwise>
 										</c:choose>
 									</span>
@@ -213,7 +213,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 										cssClass="add-translations-menu"
 										direction="down"
 										icon="../aui/plus"
-										message='<%= LanguageUtil.get(pageContext, "add-translation") %>'
+										message='<%= LanguageUtil.get(request, "add-translation") %>'
 										showArrow="<%= true %>"
 										showWhenSingleIcon="<%= true %>"
 									>
@@ -264,7 +264,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									<img alt="" src='<%= HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages() + "/language/" + toLanguageId + ".png") %>' />
 								</liferay-util:buffer>
 
-								<%= LanguageUtil.format(pageContext, "translating-web-content-to-x", languageLabel, false) %>
+								<%= LanguageUtil.format(request, "translating-web-content-to-x", languageLabel, false) %>
 
 								<aui:input name="toLanguageId" type="hidden" value="<%= toLanguageId %>" />
 							</c:when>

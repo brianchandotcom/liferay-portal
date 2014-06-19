@@ -36,7 +36,7 @@ for (int i = 0; i < controls.length; i++) {
 
 				PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)controls[i];
 
-				String controlLabel = LanguageUtil.get(pageContext, control.getControlLabel());
+				String controlLabel = LanguageUtil.get(request, control.getControlLabel());
 
 				String className = controls[i].getClassName();
 
@@ -76,7 +76,7 @@ for (int i = 0; i < controls.length; i++) {
 				</c:if>
 			</c:when>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerChoice %>">
-				<aui:field-wrapper label='<%= "&#9632" + LanguageUtil.get(pageContext, controls[i].getControlLabel()) %>'>
+				<aui:field-wrapper label='<%= "&#9632" + LanguageUtil.get(request, controls[i].getControlLabel()) %>'>
 
 					<%
 					PortletDataHandlerChoice control = (PortletDataHandlerChoice)controls[i];
@@ -88,7 +88,7 @@ for (int i = 0; i < controls.length; i++) {
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						String controlName = LanguageUtil.get(pageContext, choice);
+						String controlName = LanguageUtil.get(request, choice);
 
 						data.put("name", controlName);
 					%>

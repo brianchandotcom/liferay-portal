@@ -62,7 +62,7 @@
 
 	for (String folderColumn : visibleNodeNames) {
 		if (currentVisibleNodes.contains(folderColumn)) {
-			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
+			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 		}
 	}
 
@@ -74,7 +74,7 @@
 
 	for (String folderColumn : currentVisibleNodes) {
 		if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
-			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
+			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 		}
 	}
 
@@ -85,7 +85,7 @@
 	for (String folderColumn : hiddenNodes) {
 		if (currentVisibleNodes.contains(folderColumn)) {
 			if (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0) {
-				rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
+				rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 			}
 		}
 	}

@@ -182,7 +182,7 @@ public class IconTag extends IncludeTag {
 			String message = getProcessedMessage();
 
 			if (_localizeMessage) {
-				message = LanguageUtil.get(pageContext, message);
+				message = LanguageUtil.get(request, message);
 			}
 
 			data.put("title", HtmlUtil.stripHtml(message));
@@ -198,7 +198,7 @@ public class IconTag extends IncludeTag {
 		String details = null;
 
 		if (_alt != null) {
-			details = " alt=\"" + LanguageUtil.get(pageContext, _alt) + "\"";
+			details = " alt=\"" + LanguageUtil.get(request, _alt) + "\"";
 		}
 		else if (_label) {
 			details = " alt=\"\"";
@@ -207,19 +207,18 @@ public class IconTag extends IncludeTag {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(" alt=\"");
-			sb.append(LanguageUtil.get(pageContext, getProcessedMessage()));
+			sb.append(LanguageUtil.get(request, getProcessedMessage()));
 			sb.append("\"");
 
 			if (_toolTip) {
 				sb.append(" onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
 				sb.append(
-					UnicodeLanguageUtil.get(
-						pageContext, getProcessedMessage()));
+					UnicodeLanguageUtil.get(request, getProcessedMessage()));
 				sb.append("')\"");
 			}
 			else {
 				sb.append(" title=\"");
-				sb.append(LanguageUtil.get(pageContext, getProcessedMessage()));
+				sb.append(LanguageUtil.get(request, getProcessedMessage()));
 				sb.append("\"");
 			}
 

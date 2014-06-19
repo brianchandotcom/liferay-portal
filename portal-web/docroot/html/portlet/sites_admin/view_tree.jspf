@@ -49,7 +49,7 @@ if (group != null) {
 
 	<%
 	long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-	String parentGroupName = LanguageUtil.get(pageContext, "sites-home");
+	String parentGroupName = LanguageUtil.get(request, "sites-home");
 
 	if (!group.isRoot()) {
 		Group parentGroup = group.getParentGroup();

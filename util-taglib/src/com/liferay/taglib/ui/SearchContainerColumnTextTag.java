@@ -71,7 +71,7 @@ public class SearchContainerColumnTextTag<R>
 			}
 
 			if (_translate) {
-				_value = LanguageUtil.get(pageContext, _value);
+				_value = LanguageUtil.get(request, _value);
 			}
 
 			if (index <= -1) {

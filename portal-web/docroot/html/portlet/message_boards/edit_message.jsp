@@ -50,7 +50,7 @@ if (threadId > 0) {
 			}
 		}
 
-		parentAuthor = curParentMessage.isAnonymous() ? LanguageUtil.get(pageContext, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(curParentMessage));
+		parentAuthor = curParentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(curParentMessage));
 	}
 	catch (Exception e) {
 	}
@@ -83,21 +83,21 @@ if (curParentMessage != null) {
 	MBUtil.addPortletBreadcrumbEntries(curParentMessage, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "reply"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "reply"), currentURL);
 	}
 }
 else if (message != null) {
 	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 	}
 }
 else {
 	MBUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-message"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-message"), currentURL);
 	}
 }
 %>
@@ -109,7 +109,7 @@ else {
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (message == null) %>"
-	title='<%= (curParentMessage != null) ? LanguageUtil.format(pageContext, "reply-to-x", curParentMessage.getSubject(), false) : (message == null) ? "add-message" : LanguageUtil.format(pageContext, "edit-x", message.getSubject(), false) %>'
+	title='<%= (curParentMessage != null) ? LanguageUtil.format(request, "reply-to-x", curParentMessage.getSubject(), false) : (message == null) ? "add-message" : LanguageUtil.format(request, "edit-x", message.getSubject(), false) %>'
 />
 
 <c:if test="<%= preview %>">
@@ -472,7 +472,7 @@ else {
 
 		<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
 			<div class="alert alert-info">
-				<%= LanguageUtil.format(pageContext, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
+				<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
 			</div>
 		</c:if>
 

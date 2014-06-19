@@ -105,7 +105,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		<c:if test="<%= editable %>">
 			<c:if test="<%= !colorSchemes.isEmpty() || !configurableSettings.isEmpty() %>">
 				<c:if test="<%= !colorSchemes.isEmpty() %>">
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelColorsPanel" %>' persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelColorsPanel" %>' persistState="<%= true %>" title='<%= LanguageUtil.format(request, "color-schemes-x", colorSchemes.size()) %>'>
 						<aui:fieldset cssCclass="color-schemes">
 							<div class="lfr-theme-list list-unstyled">
 
@@ -198,7 +198,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		<div class="float-container lfr-available-themes" id="<%= device %>availableThemes">
 			<legend>
 				<span class="header-title">
-					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1), false) %>
+					<%= LanguageUtil.format(request, "available-themes-x", (themes.size() - 1), false) %>
 				</span>
 
 				<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">

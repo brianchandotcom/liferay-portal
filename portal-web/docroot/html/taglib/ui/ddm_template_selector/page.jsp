@@ -83,7 +83,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 	iconCssClass="<%= icon %>"
 	id="selectDDMTemplate"
 	label="<%= true %>"
-	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
+	message='<%= LanguageUtil.format(request, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
 	url="javascript:;"
 />
 
@@ -110,7 +110,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 						groupId: <%= ddmTemplateGroupId %>,
 						refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATES %>',
 						struts_action: '/dynamic_data_mapping/view_template',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>'
+						title: '<%= UnicodeLanguageUtil.get(request, "application-display-templates") %>'
 					},
 					function(event) {
 						if (!event.newVal) {

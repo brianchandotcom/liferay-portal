@@ -129,7 +129,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 
 				<%
 				PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(question.getTitle(locale)), viewQuestionURL.toString());
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "results"), currentURL);
+				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "results"), currentURL);
 				%>
 
 			</c:otherwise>

@@ -131,7 +131,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(pageContext, "my-profile");
+										siteName = LanguageUtil.get(request, "my-profile");
 									}
 									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();
@@ -146,7 +146,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 										sb.append(HtmlUtil.escape(siteName));
 										sb.append(StringPool.SPACE);
 										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(pageContext, "staging"));
+										sb.append(LanguageUtil.get(request, "staging"));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 
 										siteName = sb.toString();
@@ -192,7 +192,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(pageContext, "my-dashboard");
+										siteName = LanguageUtil.get(request, "my-dashboard");
 									}
 									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();
@@ -207,7 +207,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 										sb.append(siteName);
 										sb.append(StringPool.SPACE);
 										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(pageContext, "staging"));
+										sb.append(LanguageUtil.get(request, "staging"));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 
 										siteName = sb.toString();

@@ -54,7 +54,7 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="definition"
-			value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())) %>"
+			value="<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -72,7 +72,7 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="status"
-			value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getState())) %>"
+			value="<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getState())) %>"
 		/>
 
 		<%
@@ -88,13 +88,13 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= (workflowLog == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+			value='<%= (workflowLog == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="end-date"
-			value='<%= (workflowInstance.getEndDate() == null ) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>'
+			value='<%= (workflowInstance.getEndDate() == null ) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>'
 		/>
 
 		<c:if test='<%= !allInstances && !tabs2.equals("completed") %>'>

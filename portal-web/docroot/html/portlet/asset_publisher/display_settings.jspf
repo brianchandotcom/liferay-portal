@@ -83,11 +83,11 @@
 	</c:if>
 
 	<%
-	String helpMessage1 = "<em>" + LanguageUtil.format(pageContext, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
-	String helpMessage2 = "<em>" + LanguageUtil.format(pageContext, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
+	String helpMessage1 = "<em>" + LanguageUtil.format(request, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
+	String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
 	%>
 
-	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
+	<aui:input helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
 
@@ -163,7 +163,7 @@
 		for (int i = 0; i < metadataFields.length; i++) {
 			String folderColumn = metadataFields[i];
 
-			leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+			leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 		}
 
 		// Right list
@@ -176,7 +176,7 @@
 
 		for (String folderColumn : allMetadataFields) {
 			if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
-				rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+				rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 			}
 		}
 

@@ -394,7 +394,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 						dialog: {
 							destroyOnHide: true
 						},
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "ldap") %>'
+						title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>'
 					}
 				);
 
@@ -619,5 +619,5 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, (ldapServerId == 0) ? LanguageUtil.get(pageContext, "add-ldap-server") : ldapServerName, currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, (ldapServerId == 0) ? LanguageUtil.get(request, "add-ldap-server") : ldapServerName, currentURL);
 %>

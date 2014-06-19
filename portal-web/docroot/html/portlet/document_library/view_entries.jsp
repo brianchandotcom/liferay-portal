@@ -29,7 +29,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
-String dlFileEntryTypeName = LanguageUtil.get(pageContext, "basic-document");
+String dlFileEntryTypeName = LanguageUtil.get(request, "basic-document");
 
 int status = WorkflowConstants.STATUS_APPROVED;
 

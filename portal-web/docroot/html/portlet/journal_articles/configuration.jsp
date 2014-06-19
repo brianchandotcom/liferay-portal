@@ -46,7 +46,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 						String groupDescriptiveName = HtmlUtil.escape(group.getDescriptiveName(locale));
 
 						if (group.isUser()) {
-							groupDescriptiveName = LanguageUtil.get(pageContext, "my-site");
+							groupDescriptiveName = LanguageUtil.get(request, "my-site");
 						}
 					%>
 
@@ -82,7 +82,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 					ddmStructureDescription = HtmlUtil.escape(ddmStructure.getDescription(locale));
 				}
 				else {
-					ddmStructureName = LanguageUtil.get(pageContext, "any");
+					ddmStructureName = LanguageUtil.get(request, "any");
 				}
 
 				if (Validator.isNotNull(ddmStructureDescription)) {
@@ -160,7 +160,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			},
 			function(event) {
 				var A = AUI();
@@ -180,7 +180,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 			document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = '';
 
-			A.one('#<portlet:namespace />structure').val('<%= UnicodeLanguageUtil.get(pageContext, "any") %>');
+			A.one('#<portlet:namespace />structure').val('<%= UnicodeLanguageUtil.get(request, "any") %>');
 		},
 		['aui-base']
 	);

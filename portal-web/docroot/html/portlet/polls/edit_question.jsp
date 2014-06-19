@@ -182,9 +182,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 <%
 if (question != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, question.getTitle(locale), null);
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-poll"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-poll"), currentURL);
 }
 %>

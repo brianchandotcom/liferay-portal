@@ -42,7 +42,7 @@ else {
 	String description = typeSettingsProperties.getProperty("description");
 
 	if (Validator.isNull(description)) {
-		description = LanguageUtil.get(pageContext, "please-select-a-tool-from-the-left-menu");
+		description = LanguageUtil.get(request, "please-select-a-tool-from-the-left-menu");
 	}
 %>
 

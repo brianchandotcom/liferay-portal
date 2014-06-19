@@ -34,7 +34,7 @@ if (category != null) {
 	categoryName = category.getName();
 }
 else {
-	categoryName = LanguageUtil.get(pageContext, "message-boards-home");
+	categoryName = LanguageUtil.get(request, "message-boards-home");
 }
 %>
 

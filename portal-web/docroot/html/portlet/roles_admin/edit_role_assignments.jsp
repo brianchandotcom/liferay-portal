@@ -128,9 +128,9 @@ assignMembersURL.setParameter("struts_action", "/roles_admin/edit_role_assignmen
 assignMembersURL.setParameter("redirect", redirect);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), assignMembersURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), assignMembersURL.toString());
 
 assignMembersURL.setParameter("tabs2", tabs2);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, tabs2), assignMembersURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), assignMembersURL.toString());
 %>

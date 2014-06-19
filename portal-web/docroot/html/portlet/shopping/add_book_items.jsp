@@ -53,7 +53,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 
 <aui:script>
 	function <portlet:namespace />saveBookItem() {
-		alert('<%= UnicodeLanguageUtil.get(pageContext, "please-be-patient") %>');
+		alert('<%= UnicodeLanguageUtil.get(request, "please-be-patient") %>');
 
 		submitForm(this);
 	}

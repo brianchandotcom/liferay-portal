@@ -59,7 +59,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				href="<%= rowHREF %>"
 				index="<%= j %>"
 				name="<%= fileEntryColumn %>"
-				value='<%= LanguageUtil.get(pageContext, fileEntry.isCheckedOut() ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, fileEntry.isCheckedOut() ? "yes" : "no") %>'
 			/>
 		</c:when>
 		<c:when test='<%= fileEntryColumn.equals("name") %>'>

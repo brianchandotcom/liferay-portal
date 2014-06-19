@@ -171,7 +171,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				showManageTemplates: false,
 				showToolbar: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			},
 			function(event) {
 				var A = AUI();
@@ -217,9 +217,9 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 <%
 if (fileEntryType == null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-document-type"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-document-type"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit-document-type"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit-document-type"), currentURL);
 }
 %>

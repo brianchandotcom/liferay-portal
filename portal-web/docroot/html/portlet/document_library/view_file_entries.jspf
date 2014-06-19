@@ -150,7 +150,7 @@
 		window,
 		'<portlet:namespace />deleteEntries',
 		function() {
-			if (<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) %> || confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this-entry") %>')) {
+			if (<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entry") %>')) {
 				document.<portlet:namespace />fm.method = 'post';
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />fileEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsFileEntry');

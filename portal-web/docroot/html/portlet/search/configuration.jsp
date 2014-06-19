@@ -64,7 +64,7 @@
 		<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
 
 		<div class="options-container <%= !collatedSpellCheckResultEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
 			</liferay-ui:toggle-area>
 		</div>
@@ -72,7 +72,7 @@
 		<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" label="display-related-queries" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
 
 		<div class="options-container <%= !querySuggestionsEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !querySuggestionsEnabled %>" label="maximum-number-of-related-queries" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
 
 				<aui:input disabled="<%= !querySuggestionsEnabled %>" helpMessage="query-suggestions-display-threshold-help" label="threshold-for-displaying-related-queries" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= querySuggestionsDisplayThreshold %>" />
@@ -82,7 +82,7 @@
 		<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" label="add-new-related-queries-based-on-successful-queries" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
 
 		<div class="options-container <%= !queryIndexingEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />queryIndexingOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />
 			</liferay-ui:toggle-area>
 		</div>

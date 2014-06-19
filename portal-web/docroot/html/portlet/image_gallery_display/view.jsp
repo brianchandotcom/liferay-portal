@@ -172,7 +172,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 								<div class="lfr-asset-metadata">
 									<div class="icon-calendar lfr-asset-icon">
-										<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
+										<%= LanguageUtil.format(request, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
 									</div>
 
 									<%
@@ -212,11 +212,11 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 								<liferay-ui:icon
 									cssClass="lfr-asset-avatar"
 									image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
-									message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "home") %>'
+									message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>'
 								/>
 
 								<div class="lfr-asset-name">
-									<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "home") %></h4>
+									<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 								</div>
 							</div>
 
@@ -275,9 +275,9 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 				</aui:row>
 
 				<%
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, topLink), currentURL);
+				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);
 
-				PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, topLink), request);
+				PortalUtil.setPageSubtitle(LanguageUtil.get(request, topLink), request);
 				%>
 
 			</c:when>

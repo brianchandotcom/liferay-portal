@@ -55,7 +55,7 @@ public class IconExportImportTag extends IconTag {
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
-		sb.append(LanguageUtil.get(pageContext, "export-import"));
+		sb.append(LanguageUtil.get(request, "export-import"));
 		sb.append("'); return false;");
 
 		setOnClick(sb.toString());

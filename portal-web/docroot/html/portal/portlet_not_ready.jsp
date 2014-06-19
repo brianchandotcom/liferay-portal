@@ -22,10 +22,10 @@
 String portletTitle = HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse));
 
 if (portletTitle == null) {
-	portletTitle = LanguageUtil.get(pageContext, "portlet");
+	portletTitle = LanguageUtil.get(request, "portlet");
 }
 %>
 
 <div class="alert alert-danger">
-	<%= LanguageUtil.format(pageContext, "is-not-ready", portletTitle, false) %>
+	<%= LanguageUtil.format(request, "is-not-ready", portletTitle, false) %>
 </div>

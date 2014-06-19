@@ -55,7 +55,7 @@ public class IconConfigurationTag extends IconTag {
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
-		sb.append(LanguageUtil.get(pageContext, "configuration"));
+		sb.append(LanguageUtil.get(request, "configuration"));
 		sb.append("'); return false;");
 
 		setOnClick(sb.toString());

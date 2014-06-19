@@ -79,7 +79,7 @@
 
 								String siteName = HtmlUtil.escape(StringUtil.shorten(refererGroup.getDescriptiveName(locale), 35));
 
-								String buttonLabel = LanguageUtil.format(pageContext, "manage-x", siteName, false);
+								String buttonLabel = LanguageUtil.format(request, "manage-x", siteName, false);
 
 								PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
 						%>

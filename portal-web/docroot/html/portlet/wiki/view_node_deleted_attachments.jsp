@@ -33,7 +33,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, node.getName(), portletURL.toStrin
 
 portletURL.setParameter("struts_action", "/wiki/view_node_deleted_attachments");
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "attachments-recycle-bin"), portletURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments-recycle-bin"), portletURL.toString());
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 

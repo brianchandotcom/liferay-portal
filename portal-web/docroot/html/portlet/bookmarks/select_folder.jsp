@@ -23,7 +23,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", BookmarksFold
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
 
-String folderName = LanguageUtil.get(pageContext, "home");
+String folderName = LanguageUtil.get(request, "home");
 
 if (folder != null) {
 	folderName = folder.getName();

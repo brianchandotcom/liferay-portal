@@ -51,7 +51,7 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setLabel(String label) {
-		_label = LanguageUtil.get(pageContext, label);
+		_label = LanguageUtil.get(getRequest(), label);
 	}
 
 	public void setOnClick(String onClick) {

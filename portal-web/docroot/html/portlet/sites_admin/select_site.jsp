@@ -165,7 +165,7 @@ portletURL.setParameter("target", target);
 
 			<liferay-ui:search-container-column-text
 				name="type"
-				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+				value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text>
@@ -177,7 +177,7 @@ portletURL.setParameter("target", target);
 					data.put("groupdescriptivename", group.getDescriptiveName(locale));
 					data.put("groupid", group.getGroupId());
 					data.put("grouptarget", target);
-					data.put("grouptype", LanguageUtil.get(pageContext, group.getTypeLabel()));
+					data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 
 					boolean disabled = false;
 

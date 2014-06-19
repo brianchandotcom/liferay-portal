@@ -55,7 +55,7 @@ public class SearchContainerColumnButtonTag<R>
 			buttonSearchEntry.setColspan(getColspan());
 			buttonSearchEntry.setCssClass(getCssClass());
 			buttonSearchEntry.setHref((String)getHref());
-			buttonSearchEntry.setName(LanguageUtil.get(pageContext, getName()));
+			buttonSearchEntry.setName(LanguageUtil.get(request, getName()));
 			buttonSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, buttonSearchEntry);

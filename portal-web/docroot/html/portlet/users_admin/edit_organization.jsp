@@ -63,13 +63,13 @@ else if (parentOrganizationId > 0) {
 String headerTitle = null;
 
 if (organization != null) {
-	headerTitle = LanguageUtil.format(pageContext, "edit-x", organization.getName(), false);
+	headerTitle = LanguageUtil.format(request, "edit-x", organization.getName(), false);
 }
 else if (Validator.isNotNull(type)) {
-	headerTitle = LanguageUtil.format(pageContext, "add-x", type, false);
+	headerTitle = LanguageUtil.format(request, "add-x", type, false);
 }
 else {
-	headerTitle = LanguageUtil.get(pageContext, "add-organization");
+	headerTitle = LanguageUtil.get(request, "add-organization");
 }
 %>
 

@@ -78,7 +78,7 @@ if (workflowEnabled) {
 		<c:if test="<%= !rootFolder %>">
 
 			<%
-			String parentFolderName = LanguageUtil.get(pageContext, "home");
+			String parentFolderName = LanguageUtil.get(request, "home");
 
 			try {
 				if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -313,7 +313,7 @@ if (workflowEnabled) {
 				},
 				eventName: '<portlet:namespace />selectFileEntryType',
 				id: '<portlet:namespace />fileEntryTypeSelector',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "document-types") %>',
+				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/select_restricted_file_entry_type" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>'
 			},
 			function(event) {
@@ -323,7 +323,7 @@ if (workflowEnabled) {
 	}
 
 	function <portlet:namespace />savePage() {
-		var message = '<%= UnicodeLanguageUtil.get(pageContext, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
+		var message = '<%= UnicodeLanguageUtil.get(request, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
 
 		var submit = true;
 
@@ -432,11 +432,11 @@ if (workflowEnabled) {
 if (!rootFolder && (folder == null)) {
 	DLUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 else {
 	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 %>

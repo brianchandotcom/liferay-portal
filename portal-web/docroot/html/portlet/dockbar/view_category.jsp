@@ -25,7 +25,7 @@ int portletCategoryIndex = GetterUtil.getInteger((String)request.getAttribute(We
 
 String oldCategoryPath = (String)request.getAttribute(WebKeys.PORTLET_CATEGORY_PATH);
 
-String newCategoryPath = LanguageUtil.get(pageContext, portletCategory.getName());
+String newCategoryPath = LanguageUtil.get(request, portletCategory.getName());
 
 Pattern pattern = Pattern.compile(".*");
 
@@ -75,7 +75,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 
 if (!categories.isEmpty() || !portlets.isEmpty()) {
 	String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
-	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName());
+	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName());
 %>
 
 	<div class="lfr-add-content">

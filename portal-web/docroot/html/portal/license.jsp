@@ -617,7 +617,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 				for (Map.Entry<String, String> entry : orderProducts.entrySet()) {
 					String key = entry.getKey();
 
-					String licensesLeft = LanguageUtil.get(pageContext, entry.getValue());
+					String licensesLeft = LanguageUtil.get(request, entry.getValue());
 				%>
 
 					<c:choose>

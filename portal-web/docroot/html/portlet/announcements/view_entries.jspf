@@ -121,7 +121,7 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 				}
 
 				if (control) {
-					control.html('<%= UnicodeLanguageUtil.get(pageContext, "show") %>');
+					control.html('<%= UnicodeLanguageUtil.get(request, "show") %>');
 				}
 			}
 			else {
@@ -132,7 +132,7 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 				}
 
 				if (control) {
-					control.html('<%= UnicodeLanguageUtil.get(pageContext, "hide") %>');
+					control.html('<%= UnicodeLanguageUtil.get(request, "hide") %>');
 				}
 			}
 		},

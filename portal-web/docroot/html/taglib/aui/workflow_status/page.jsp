@@ -49,7 +49,7 @@
 
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowStatus)));
+				sb.append(LanguageUtil.get(request, HtmlUtil.escape(workflowStatus)));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				additionalText = sb.toString();

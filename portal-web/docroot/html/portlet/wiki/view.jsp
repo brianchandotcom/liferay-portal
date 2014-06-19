@@ -238,7 +238,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 			%>
 
 			<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-				(<%= LanguageUtil.format(pageContext, "redirected-from-x", originalPage.getTitle(), false) %>)
+				(<%= LanguageUtil.format(request, "redirected-from-x", originalPage.getTitle(), false) %>)
 			</div>
 		</c:if>
 
@@ -325,7 +325,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 					<liferay-ui:icon
 						iconCssClass="icon-paperclip"
 						label="<%= true %>"
-						message='<%= attachmentsFileEntriesCount + " " + LanguageUtil.get(pageContext, (attachmentsFileEntriesCount == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
+						message='<%= attachmentsFileEntriesCount + " " + LanguageUtil.get(request, (attachmentsFileEntriesCount == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
 					/>
 				</div>
 

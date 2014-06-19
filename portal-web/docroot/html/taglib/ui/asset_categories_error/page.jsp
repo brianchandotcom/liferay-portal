@@ -32,10 +32,10 @@
 
 	<c:choose>
 		<c:when test="<%= ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY %>">
-			<liferay-ui:message key='<%= LanguageUtil.format(pageContext, "please-select-at-least-one-category-for-x", vocabularyTitle, false) %>' />
+			<liferay-ui:message key='<%= LanguageUtil.format(request, "please-select-at-least-one-category-for-x", vocabularyTitle, false) %>' />
 		</c:when>
 		<c:when test="<%= ace.getType() == AssetCategoryException.TOO_MANY_CATEGORIES %>">
-			<liferay-ui:message key='<%= LanguageUtil.format(pageContext, "you-cannot-select-more-than-one-category-for-x", vocabularyTitle, false) %>' />
+			<liferay-ui:message key='<%= LanguageUtil.format(request, "you-cannot-select-more-than-one-category-for-x", vocabularyTitle, false) %>' />
 		</c:when>
 	</c:choose>
 </liferay-ui:error>

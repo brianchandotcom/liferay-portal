@@ -99,7 +99,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			<%= organization.getName() %>
 
 			<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
-				<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-site-belongs-to-x-which-is-an-organization-of-type-x", new String[] {organization.getName(), LanguageUtil.get(pageContext, organization.getType())}, false) + StringPool.SPACE + LanguageUtil.format(pageContext, "all-users-of-x-are-automatically-members-of-the-site", organization.getName(), false) %>' />
+				<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-site-belongs-to-x-which-is-an-organization-of-type-x", new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())}, false) + StringPool.SPACE + LanguageUtil.format(request, "all-users-of-x-are-automatically-members-of-the-site", organization.getName(), false) %>' />
 			</c:if>
 		</liferay-ui:search-container-column-text>
 
@@ -111,7 +111,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		<liferay-ui:search-container-column-text
 			name="type"
 			orderable="<%= true %>"
-			value="<%= LanguageUtil.get(pageContext, organization.getType()) %>"
+			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -172,7 +172,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-organizations" : "x-organization", total, false) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-organizations" : "x-organization", total, false) %>'>
 				<span class="form-search">
 					<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_organizations" %>' />
 				</span>

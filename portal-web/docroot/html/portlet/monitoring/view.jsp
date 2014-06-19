@@ -82,13 +82,13 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="user-id"
-					value='<%= ((user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(pageContext, "not-available")) %>'
+					value='<%= ((user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available")) %>'
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="screen-name"
-					value='<%= ((user2 != null) ? user2.getScreenName() : LanguageUtil.get(pageContext, "not-available")) %>'
+					value='<%= ((user2 != null) ? user2.getScreenName() : LanguageUtil.get(request, "not-available")) %>'
 				/>
 
 				<liferay-ui:search-container-column-date
@@ -109,9 +109,9 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 		</liferay-ui:search-container>
 	</c:when>
 	<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
-		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.LIVE_USERS_ENABLED, false) %>
+		<%= LanguageUtil.format(request, "display-of-live-session-data-is-disabled", PropsKeys.LIVE_USERS_ENABLED, false) %>
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.SESSION_TRACKER_MEMORY_ENABLED, false) %>
+		<%= LanguageUtil.format(request, "display-of-live-session-data-is-disabled", PropsKeys.SESSION_TRACKER_MEMORY_ENABLED, false) %>
 	</c:otherwise>
 </c:choose>

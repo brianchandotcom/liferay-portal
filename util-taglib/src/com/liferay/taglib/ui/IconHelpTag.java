@@ -61,7 +61,7 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write("id=\"");
 		jspWriter.write(id);
 		jspWriter.write("\" >");
-		jspWriter.write(LanguageUtil.get(pageContext, getMessage()));
+		jspWriter.write(LanguageUtil.get(request, getMessage()));
 		jspWriter.write("</span></span>");
 
 		return EVAL_PAGE;

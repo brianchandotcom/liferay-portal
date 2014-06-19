@@ -94,10 +94,10 @@ if (Validator.isNotNull(className)) {
 					instanceVar: '<%= namespace + randomNamespace %>',
 					labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 					maxEntries: <%= maxEntries %>,
-					moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
+					moreResultsLabel: '<%= UnicodeLanguageUtil.get(request, "load-more-results") %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale), false) %>',
+					title: '<%= UnicodeLanguageUtil.format(request, "select-x", vocabulary.getTitle(locale), false) %>',
 					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}
@@ -131,7 +131,7 @@ else {
 				hiddenInput: '#<%= namespace + hiddenInput %>',
 				instanceVar: '<%= namespace + randomNamespace %>',
 				maxEntries: <%= maxEntries %>,
-				moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
+				moreResultsLabel: '<%= UnicodeLanguageUtil.get(request, "load-more-results") %>',
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 				vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'

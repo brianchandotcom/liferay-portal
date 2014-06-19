@@ -101,7 +101,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 
 		<liferay-ui:search-container-column-text
 			name="active"
-			value='<%= LanguageUtil.get(pageContext, (portlet.isActive() ? "yes" : "no")) %>'
+			value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
 		/>
 
 		<c:if test="<%= showReindexButton %>">

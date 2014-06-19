@@ -33,7 +33,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 	<liferay-ui:icon
 		iconCssClass="icon-plus"
-		message='<%= LanguageUtil.format(pageContext, "add-new-x", "file") %>'
+		message='<%= LanguageUtil.format(request, "add-new-x", "file") %>'
 		url="<%= editURL %>"
 	/>
 

@@ -32,9 +32,9 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 <div align="right">
 	<liferay-ui:toggle
 		defaultShowContent="<%= false %>"
-		hideMessage='<%= LanguageUtil.get(pageContext, "hide-syntax-help") + " &raquo;" %>'
+		hideMessage='<%= LanguageUtil.get(request, "hide-syntax-help") + " &raquo;" %>'
 		id="<%= toggleId %>"
-		showMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "show-syntax-help") %>'
+		showMessage='<%= "&laquo; " + LanguageUtil.get(request, "show-syntax-help") %>'
 	/>
 </div>
 

@@ -61,7 +61,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, organization.getType()) %>"
+			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
 		<%

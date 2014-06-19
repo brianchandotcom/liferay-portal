@@ -136,5 +136,5 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
 %>

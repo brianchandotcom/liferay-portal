@@ -39,7 +39,7 @@
 					String restoreClassName = restoreClassNames.get(i);
 
 					if (Validator.isNotNull(restoreClassName)) {
-						type = ResourceActionsUtil.getModelResource(pageContext, restoreClassName);
+						type = ResourceActionsUtil.getModelResource(request, restoreClassName);
 					}
 				%>
 

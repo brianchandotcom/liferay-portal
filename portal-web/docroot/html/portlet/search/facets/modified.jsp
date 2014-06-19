@@ -28,7 +28,7 @@ String modifiedLabel = StringPool.BLANK;
 int index = 0;
 
 if (fieldParamSelection.equals("0")) {
-	modifiedLabel = LanguageUtil.get(pageContext, "any-time");
+	modifiedLabel = LanguageUtil.get(request, "any-time");
 }
 
 Calendar localeCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -63,7 +63,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				index = (i + 1);
 
 				if (fieldParamSelection.equals(String.valueOf(index))) {
-					modifiedLabel = LanguageUtil.get(pageContext, label);
+					modifiedLabel = LanguageUtil.get(request, label);
 				}
 			%>
 
@@ -96,7 +96,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				TermCollector termCollector = null;
 
 				if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-					modifiedLabel = LanguageUtil.get(pageContext, "custom-range");
+					modifiedLabel = LanguageUtil.get(request, "custom-range");
 
 					termCollector = facetCollector.getTermCollector(fieldParam);
 				}
@@ -145,7 +145,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			String fromDateLabel = HtmlUtil.escape(fieldParamFrom);
 			String toDateLabel = HtmlUtil.escape(fieldParamTo);
 
-			tokenLabel = UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"}, false);
+			tokenLabel = UnicodeLanguageUtil.format(request, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"}, false);
 		}
 		%>
 
@@ -232,8 +232,8 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
-			<portlet:namespace />dateFormat: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-date-format") %>',
-			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-invalid-date-range") %>'
+			<portlet:namespace />dateFormat: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-date-format") %>',
+			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
 		},
 		true
 	);

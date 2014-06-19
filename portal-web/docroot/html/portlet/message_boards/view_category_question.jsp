@@ -42,7 +42,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 	%>
 
 	<c:if test="<%= categoriesCount > 0 %>">
-		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, (category != null) ? "subcategories" : "categories") %>'>
+		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, (category != null) ? "subcategories" : "categories") %>'>
 			<liferay-ui:search-container
 				curParam="cur1"
 				deltaConfigurable="<%= false %>"
@@ -133,15 +133,15 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 			<span class="question-details">
 				<span class="votes">
-					<span class="count"><%= String.valueOf(ratingScore) %></span> <span><%= LanguageUtil.get(pageContext, "votes") %></span>
+					<span class="count"><%= String.valueOf(ratingScore) %></span> <span><%= LanguageUtil.get(request, "votes") %></span>
 				</span>
 
 				<span class="status <%= (answers != 0) ? "answered" : " unanswered" %> ">
-					<span class="count"><%= answers %></span> <span><%= LanguageUtil.get(pageContext, (answers != 1) ? "answers" : "answer") %></span>
+					<span class="count"><%= answers %></span> <span><%= LanguageUtil.get(request, (answers != 1) ? "answers" : "answer") %></span>
 				</span>
 
 				<span class="views">
-					<span class="count"><%= thread.getViewCount() %></span> <span><%= LanguageUtil.get(pageContext, "views") %></span>
+					<span class="count"><%= thread.getViewCount() %></span> <span><%= LanguageUtil.get(request, "views") %></span>
 				</span>
 			</span>
 		</liferay-ui:search-container-column-text>

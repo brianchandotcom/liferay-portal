@@ -232,7 +232,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 		%>
 
 			if (document.<portlet:namespace />fm['<portlet:namespace />fieldName<%= HtmlUtil.escapeJS(fieldName) %>'].value == '') {
-				alert('<%= UnicodeLanguageUtil.get(pageContext, "please-select-all-options") %>');
+				alert('<%= UnicodeLanguageUtil.get(request, "please-select-all-options") %>');
 
 				return;
 			}

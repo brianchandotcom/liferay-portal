@@ -477,7 +477,7 @@ else {
 		window,
 		'<portlet:namespace />publishPages',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
 				var A = AUI();
 
 				var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');

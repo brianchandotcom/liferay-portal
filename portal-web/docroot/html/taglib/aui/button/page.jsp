@@ -64,7 +64,7 @@
 	<i class="<%= icon %>"></i>
 </c:if>
 
-<%= LanguageUtil.get(pageContext, value) %>
+<%= LanguageUtil.get(request, value) %>
 
 <c:if test='<%= Validator.isNotNull(icon) && iconAlign.equals("right") %>'>
 	<i class="<%= icon %>"></i>

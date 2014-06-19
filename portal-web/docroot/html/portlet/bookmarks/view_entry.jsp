@@ -99,7 +99,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 
 		<div class="lfr-asset-metadata">
 			<div class="icon-user lfr-asset-icon">
-				<%= LanguageUtil.format(pageContext, "created-by-x", HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), themeDisplay.getScopeGroupName())), false) %>
+				<%= LanguageUtil.format(request, "created-by-x", HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), themeDisplay.getScopeGroupName())), false) %>
 			</div>
 
 			<div class="icon-calendar lfr-asset-icon">

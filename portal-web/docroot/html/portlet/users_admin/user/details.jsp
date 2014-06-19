@@ -68,7 +68,7 @@ if (selContact != null) {
 			for (int i = 0; i < fields.size(); i++) {
 				String field = fields.get(i);
 
-				sb.append(LanguageUtil.get(pageContext, TextFormatter.format(field, TextFormatter.K)));
+				sb.append(LanguageUtil.get(request, TextFormatter.format(field, TextFormatter.K)));
 
 				if ((i + 1) < fields.size()) {
 					sb.append(StringPool.COMMA_AND_SPACE);

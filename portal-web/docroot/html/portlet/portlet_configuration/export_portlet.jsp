@@ -142,9 +142,9 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								<li class="tree-item">
 									<div class="hide" id="<portlet:namespace />range">
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">
-											<aui:input data-name='<%= LanguageUtil.get(pageContext, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+											<aui:input data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
-											<aui:input data-name='<%= LanguageUtil.get(pageContext, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
+											<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 
 											<%
 											Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -227,15 +227,15 @@ portletURL.setParameter("tabs3", "current-and-previous");
 												</li>
 											</ul>
 
-											<aui:input id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
+											<aui:input id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
 
 											<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 												<li>
 													<aui:select cssClass="relative-range" label="" name="last">
-														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' value="12" />
-														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' value="24" />
-														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48", false) %>' value="48" />
-														<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' value="168" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' value="12" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="24" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' value="48" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="168" />
 													</aui:select>
 												</li>
 											</ul>
@@ -265,10 +265,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 												<liferay-util:buffer var="badgeHTML">
 													<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
-													<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
+													<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 												</liferay-util:buffer>
 
-												<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+												<aui:input label='<%= LanguageUtil.get(request, "content") + badgeHTML %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 												<%
 												PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
@@ -367,7 +367,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															<c:if test="<%= modelDeletionCount != 0 %>">
 
 																<%
-																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+																String deletionsLabel = LanguageUtil.get(request, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
 																%>
 
 																<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />

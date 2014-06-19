@@ -43,7 +43,7 @@ Group group = (Group)request.getAttribute(WebKeys.GROUP);
 		backURL="<%= redirect %>"
 		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
-		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
+		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "manage-memberships") %>'
 	/>
 </c:if>
 

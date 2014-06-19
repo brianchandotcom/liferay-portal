@@ -36,7 +36,7 @@ if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys
 <liferay-ui:search-container-column-text
 	href="<%= rowHREF %>"
 	name="scope"
-	value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
+	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 />
 
 <liferay-ui:search-container-column-text

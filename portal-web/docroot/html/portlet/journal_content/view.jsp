@@ -44,7 +44,7 @@ boolean expired = true;
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-danger">
-					<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
+					<%= LanguageUtil.get(request, "the-selected-web-content-no-longer-exists") %>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -125,7 +125,7 @@ boolean expired = true;
 												<liferay-ui:icon
 													iconCssClass="icon-print"
 													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle())}, false) %>'
+													message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle())}, false) %>'
 													url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
 												/>
 											</div>
@@ -161,7 +161,7 @@ boolean expired = true;
 												<liferay-ui:icon
 													image='<%= "../file_system/small/" + HtmlUtil.escapeAttribute(extension) %>'
 													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
+													message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
 													method="get"
 													url="<%= exportArticleURL.toString() %>"
 												/>
@@ -229,7 +229,7 @@ boolean expired = true;
 								%>
 
 									<div class="alert alert-block">
-										<%= LanguageUtil.format(pageContext, "x-is-expired", HtmlUtil.escape(title)) %>
+										<%= LanguageUtil.format(request, "x-is-expired", HtmlUtil.escape(title)) %>
 									</div>
 
 								<%
@@ -250,13 +250,13 @@ boolean expired = true;
 
 											<div class="alert alert-block">
 												<a href="<%= editURL %>">
-													<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
+													<%= LanguageUtil.format(request, "x-is-not-approved", HtmlUtil.escape(title)) %>
 												</a>
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="alert alert-block">
-												<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
+												<%= LanguageUtil.format(request, "x-is-not-approved", HtmlUtil.escape(title)) %>
 											</div>
 										</c:otherwise>
 									</c:choose>

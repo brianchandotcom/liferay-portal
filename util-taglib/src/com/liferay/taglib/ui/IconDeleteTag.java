@@ -95,12 +95,12 @@ public class IconDeleteTag extends IconTag {
 			sb.append("javascript:if (confirm('");
 
 			if (Validator.isNotNull(_confirmation)) {
-				sb.append(UnicodeLanguageUtil.get(pageContext, _confirmation));
+				sb.append(UnicodeLanguageUtil.get(request, _confirmation));
 			}
 			else {
 				String confirmation = "are-you-sure-you-want-to-delete-this";
 
-				sb.append(UnicodeLanguageUtil.get(pageContext, confirmation));
+				sb.append(UnicodeLanguageUtil.get(request, confirmation));
 			}
 
 			sb.append("')) { ");

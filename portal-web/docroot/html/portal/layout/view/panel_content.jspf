@@ -57,7 +57,7 @@ else {
 %>
 
 	<div class="portlet-msg-info">
-		<%= LanguageUtil.get(pageContext, "please-select-a-tool-from-the-left-menu") %>
+		<%= LanguageUtil.get(request, "please-select-a-tool-from-the-left-menu") %>
 	</div>
 
 <%

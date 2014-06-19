@@ -79,7 +79,7 @@ String openSsoLastNameAttr = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 					dialog: {
 						destroyOnHide: true
 					},
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "open-sso") %>'
+					title: '<%= UnicodeLanguageUtil.get(request, "open-sso") %>'
 				}
 			);
 

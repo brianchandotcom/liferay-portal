@@ -78,7 +78,7 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="shard"
-				value="<%= LanguageUtil.get(pageContext, curCompany.getShardName()) %>"
+				value="<%= LanguageUtil.get(request, curCompany.getShardName()) %>"
 			/>
 		</c:if>
 
@@ -95,13 +95,13 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="max-num-of-users"
-			value='<%= (maxUsers > 0) ? String.valueOf(maxUsers) : LanguageUtil.get(pageContext, "unlimited") %>'
+			value='<%= (maxUsers > 0) ? String.valueOf(maxUsers) : LanguageUtil.get(request, "unlimited") %>'
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="active"
-			value='<%= LanguageUtil.get(pageContext, curCompany.isActive() ? "yes" : "no") %>'
+			value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

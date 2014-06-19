@@ -52,11 +52,11 @@ String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(requ
 					newestOnTop: false,
 					plugins: [A.Plugin.ConsoleFilters],
 					strings: {
-						clear: '<%= UnicodeLanguageUtil.get(pageContext, "clear") %>',
-						collapse: '<%= UnicodeLanguageUtil.get(pageContext, "collapse") %>',
-						expand: '<%= UnicodeLanguageUtil.get(pageContext, "expand") %>',
-						pause: '<%= UnicodeLanguageUtil.get(pageContext, "pause") %>',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "console") %>'
+						clear: '<%= UnicodeLanguageUtil.get(request, "clear") %>',
+						collapse: '<%= UnicodeLanguageUtil.get(request, "collapse") %>',
+						expand: '<%= UnicodeLanguageUtil.get(request, "expand") %>',
+						pause: '<%= UnicodeLanguageUtil.get(request, "pause") %>',
+						title: '<%= UnicodeLanguageUtil.get(request, "console") %>'
 					},
 					style: 'block',
 					width: '100%'

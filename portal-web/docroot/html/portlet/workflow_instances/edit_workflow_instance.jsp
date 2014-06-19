@@ -37,7 +37,7 @@ if (assetRenderer != null) {
 	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }
 
-String headerTitle = LanguageUtil.get(pageContext, workflowInstance.getWorkflowDefinitionName());
+String headerTitle = LanguageUtil.get(request, workflowInstance.getWorkflowDefinitionName());
 
 if (assetEntry != null) {
 	headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + assetRenderer.getTitle(locale));
@@ -74,18 +74,18 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
 		<aui:row>
 			<aui:col width="<%= 60 %>">
-				<aui:input name="state" type="resource" value="<%= LanguageUtil.get(pageContext, workflowInstance.getState()) %>" />
+				<aui:input name="state" type="resource" value="<%= LanguageUtil.get(request, workflowInstance.getState()) %>" />
 			</aui:col>
 
 			<aui:col width="<%= 33 %>">
-				<aui:input name="endDate" type="resource" value='<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>' />
+				<aui:input name="endDate" type="resource" value='<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>' />
 			</aui:col>
 		</aui:row>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
 
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(pageContext, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
+				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(request, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -176,12 +176,12 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 							<liferay-ui:search-container-column-text
 								name="due-date"
-								value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+								value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
 							/>
 
 							<liferay-ui:search-container-column-text
 								name="completed"
-								value='<%= workflowTask.isCompleted() ? LanguageUtil.get(pageContext, "yes") : LanguageUtil.get(pageContext, "no") %>'
+								value='<%= workflowTask.isCompleted() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 							/>
 
 							<liferay-ui:search-container-column-jsp

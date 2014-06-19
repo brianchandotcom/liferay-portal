@@ -59,11 +59,11 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 
 				<liferay-ui:search-container-column-text
 					name="branch"
-					value="<%= LanguageUtil.get(pageContext, curLayoutSetBranch.getName()) %>"
+					value="<%= LanguageUtil.get(request, curLayoutSetBranch.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" data-layoutSetBranchMessage="<%= HtmlUtil.escapeAttribute(LanguageUtil.format(pageContext, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName(), false)) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#">
+					<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" data-layoutSetBranchMessage="<%= HtmlUtil.escapeAttribute(LanguageUtil.format(request, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName(), false)) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#">
 						<liferay-ui:message key="select" />
 					</a>
 				</liferay-ui:search-container-column-text>

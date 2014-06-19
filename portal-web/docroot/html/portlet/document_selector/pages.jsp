@@ -134,7 +134,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	var setSelectedPage = function(event) {
 		var disabled = true;
 
-		var messageText = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>';
+		var messageText = '<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>';
 
 		var messageType = 'alert';
 

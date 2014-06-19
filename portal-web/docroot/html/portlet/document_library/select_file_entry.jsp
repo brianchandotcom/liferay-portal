@@ -164,7 +164,7 @@ if (folder != null) {
 
 			<liferay-ui:search-container-column-text
 				name="locked"
-				value='<%= LanguageUtil.get(pageContext, curFile.isCheckedOut() ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, curFile.isCheckedOut() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text>

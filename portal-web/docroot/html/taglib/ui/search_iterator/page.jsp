@@ -60,7 +60,7 @@ List<String> primaryKeys = new ArrayList<String>();
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 	<div class="alert alert-info">
-		<%= LanguageUtil.get(pageContext, emptyResultsMessage) %>
+		<%= LanguageUtil.get(request, emptyResultsMessage) %>
 	</div>
 </c:if>
 
@@ -177,7 +177,7 @@ List<String> primaryKeys = new ArrayList<String>();
 							String headerNameValue = null;
 
 							if ((rowChecker == null) || (i > 0)) {
-								headerNameValue = LanguageUtil.get(pageContext, HtmlUtil.escape(headerName));
+								headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
 							}
 							else {
 								headerNameValue = headerName;
@@ -213,7 +213,7 @@ List<String> primaryKeys = new ArrayList<String>();
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td class="table-cell">
-					<%= LanguageUtil.get(pageContext, emptyResultsMessage) %>
+					<%= LanguageUtil.get(request, emptyResultsMessage) %>
 				</td>
 			</tr>
 		</c:if>

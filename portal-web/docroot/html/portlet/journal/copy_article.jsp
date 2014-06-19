@@ -49,7 +49,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 		<c:choose>
 			<c:when test="<%= PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID %>">
-				<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(pageContext, "autogenerate-id") %>' />
+				<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
 
 				<aui:input name="newArticleId" type="hidden" />
 				<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />

@@ -148,17 +148,17 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								<c:otherwise>
 
 									<%
-									String lockExpirationTime = StringUtil.toLowerCase(LanguageUtil.getTimeDescription(pageContext, DLFileEntryConstants.LOCK_EXPIRATION_TIME));
+									String lockExpirationTime = StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, DLFileEntryConstants.LOCK_EXPIRATION_TIME));
 									%>
 
-									<%= LanguageUtil.format(pageContext, "you-now-have-a-lock-on-this-document", lockExpirationTime, false) %>
+									<%= LanguageUtil.format(request, "you-now-have-a-lock-on-this-document", lockExpirationTime, false) %>
 								</c:otherwise>
 							</c:choose>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="alert alert-danger">
-							<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
+							<%= LanguageUtil.format(request, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -208,7 +208,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							}
 							%>
 
-							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
+							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(request, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
 						<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
@@ -315,7 +315,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								<liferay-ui:icon
 									iconCssClass="icon-download"
 									label="<%= true %>"
-									message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								/>
 							</c:if>
@@ -364,10 +364,10 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								String webDavHelpMessage = null;
 
 								if (BrowserSnifferUtil.isWindows(request)) {
-									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
+									webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
 								}
 								else {
-									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+									webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
 								}
 								%>
 
@@ -699,7 +699,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-download',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "download") %>',
 					on: {
 						click: function(event) {
 							location.href = '<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
@@ -713,7 +713,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			fileEntryButtonGroup.push(
 				{
 					icon: 'icon-file-alt',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "open-in-ms-office") %>',
 					on: {
 						click: function(event) {
 							<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
@@ -734,7 +734,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 					</portlet:renderURL>
 
 					icon: 'icon-edit',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "edit") %>',
 					on: {
 						click: function(event) {
 							location.href = '<%= editURL.toString() %>';
@@ -755,7 +755,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 					</portlet:renderURL>
 
 					icon: 'icon-move',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "move") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "move") %>',
 					on: {
 						click: function(event) {
 							location.href = '<%= moveURL.toString() %>';
@@ -770,7 +770,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 				{
 
 					icon: 'icon-unlock',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "checkout[document]") %>',
 					on: {
 						click: function(event) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
@@ -786,7 +786,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 				{
 
 					icon: 'icon-undo',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "cancel-checkout[document]") %>',
 					on: {
 						click: function(event) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
@@ -802,7 +802,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 				{
 
 					icon: 'icon-lock',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "checkin") %>',
 					on: {
 						click: function(event) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
@@ -825,12 +825,12 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 					/>
 
 					icon: 'icon-lock',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "permissions") %>',
 					on: {
 						click: function(event) {
 							Liferay.Util.openWindow(
 								{
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+									title: '<%= UnicodeLanguageUtil.get(request, "permissions") %>',
 									uri: '<%= permissionsURL.toString() %>'
 								}
 							);
@@ -849,7 +849,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 					</portlet:renderURL>
 
 					icon: 'icon-trash',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "move-to-the-recycle-bin") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "move-to-the-recycle-bin") %>',
 					on: {
 						click: function(event) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.MOVE_TO_TRASH %>';
@@ -870,10 +870,10 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 					</portlet:renderURL>
 
 					icon: 'icon-remove',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
+					label: '<%= UnicodeLanguageUtil.get(request, "delete") %>',
 					on: {
 						click: function(event) {
-							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+							if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 								document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
 								submitForm(document.<portlet:namespace />fm);

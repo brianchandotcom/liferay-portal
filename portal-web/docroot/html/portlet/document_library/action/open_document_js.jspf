@@ -26,7 +26,7 @@
 				null,
 				function(exception) {
 					var errorMessage = A.Lang.sub(
-						'<%= UnicodeLanguageUtil.get(pageContext, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
+						'<%= UnicodeLanguageUtil.get(request, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
 						[exception.message]
 					);
 

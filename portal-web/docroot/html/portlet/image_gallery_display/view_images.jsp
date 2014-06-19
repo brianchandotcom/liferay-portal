@@ -29,7 +29,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 <c:choose>
 	<c:when test="<%= results.isEmpty() %>">
 		<div class="alert alert-info">
-			<%= LanguageUtil.get(pageContext, "there-are-no-media-files-in-this-folder") %>
+			<%= LanguageUtil.get(request, "there-are-no-media-files-in-this-folder") %>
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -187,7 +187,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 						%>
 
 							<div class="image-icon">
-								<span class="error image-thumbnail" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+								<span class="error image-thumbnail" title="<%= LanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 									<img alt="<liferay-ui:message key="error" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
 									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
@@ -302,7 +302,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 				</c:if>
 			},
 			delay: 5000,
-			infoTemplate: '<%= LanguageUtil.format(pageContext, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
+			infoTemplate: '<%= LanguageUtil.format(request, "image-x-of-x", new String[] {"{current}", "{total}"}, false) %>',
 			links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
 			maxHeight: maxHeight,
 			maxWidth: maxWidth,

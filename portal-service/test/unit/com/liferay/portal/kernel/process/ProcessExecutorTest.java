@@ -58,6 +58,7 @@ import java.net.SocketException;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -87,7 +88,16 @@ public class ProcessExecutorTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(ProcessLauncher.class);
+				assertClasses.addAll(
+					Arrays.asList(ProcessLauncher.class.getDeclaredClasses()));
+			}
+
+		};
 
 	@Before
 	public void setUp() throws Exception {
@@ -532,6 +542,11 @@ public class ProcessExecutorTest {
 		thread.join();
 
 		Assert.assertSame(executorService, atomicReference.get());
+	}
+
+	@Test
+	public void testConstructor() {
+		new ProcessLauncher();
 	}
 
 	@Test

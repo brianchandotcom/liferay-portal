@@ -35,7 +35,7 @@
 			.form-group-inline {
 				display: inline;
 
-				.search-query, .form-control {
+				.search-query {
 					margin-bottom: 0;
 				}
 

@@ -17,7 +17,7 @@
 				"pt_BR": "false"
 			},
 			"readOnly": false,
-			"repeatable": false,
+			"repeatable": true,
 			"required": false,
 			"tip": {
 				"en_US": "",

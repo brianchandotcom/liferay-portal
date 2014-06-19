@@ -568,13 +568,13 @@ else {
 						removeExisting.hide();
 						undoFile.show();
 
-						existingPath.set('value', '');
+						existingPath.attr('value', '');
 					}
 					else {
 						removeExisting.show();
 						undoFile.hide();
 
-						existingPath.set('value', undoPath.get('value'));
+						existingPath.attr('value', undoPath.get('value'));
 					}
 				},
 				['aui-base']

@@ -15,7 +15,7 @@
 	> .form-steps {
 		position: relative;
 
-		> ul.form-navigator.well {
+		> ul.form-navigator.list-group {
 			border-width: 0;
 			clear: both;
 			float: none;
@@ -29,6 +29,7 @@
 			}
 
 			.tab {
+				border-width: 0;
 				display: inline-block;
 				overflow: visible;
 				position: relative;
@@ -55,6 +56,7 @@
 				}
 
 				.tab-label {
+					border-width: 0;
 					display: block;
 					margin: 0 5px 0 -5px;
 					outline: 0;
@@ -121,7 +123,7 @@
 /* Skin */
 
 .taglib-form-navigator {
-	> .form-steps > ul.form-navigator.well {
+	> .form-steps > ul.form-navigator.list-group {
 		background: transparent;
 
 		.tab {

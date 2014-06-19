@@ -16,6 +16,7 @@ package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
 import com.liferay.portal.kernel.template.Template;
@@ -82,6 +83,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -1219,8 +1221,13 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		_servletContext = servletContext;
 		_request = request;
 		_response = response;
-		_pageContext = pageContext;
 		_template = template;
+
+		JspFactory jspFactory = JspFactory.getDefaultFactory();
+
+		_pageContext = jspFactory.getPageContext(
+			new JSPSupportServlet(_servletContext), _request, _response, null,
+			false, 0, false);
 
 		return this;
 	}

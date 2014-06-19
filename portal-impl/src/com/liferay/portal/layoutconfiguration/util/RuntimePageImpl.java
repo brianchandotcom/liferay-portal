@@ -307,9 +307,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
 
 		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(pageContext);
+			new CustomizationSettingsProcessor(request, response);
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -930,37 +931,16 @@ public class DDMXSDImpl implements DDMXSD {
 
 		// Portal JSP tag library factory
 
+		ServletContext servletContext = request.getServletContext();
+
 		TemplateHashModel portalTaglib =
-			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
-				pageContext.getServletContext());
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(servletContext);
 
 		template.put("PortalJspTagLibs", portalTaglib);
 
 		// FreeMarker JSP tag library support
 
-		final Servlet servlet = (Servlet)pageContext.getPage();
-
-		GenericServlet genericServlet = null;
-
-		if (servlet instanceof GenericServlet) {
-			genericServlet = (GenericServlet)servlet;
-		}
-		else {
-			genericServlet = new GenericServlet() {
-
-				@Override
-				public void service(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse)
-					throws IOException, ServletException {
-
-					servlet.service(servletRequest, servletResponse);
-				}
-
-			};
-
-			genericServlet.init(pageContext.getServletConfig());
-		}
+		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(

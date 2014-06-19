@@ -17,6 +17,7 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -43,16 +44,11 @@ import freemarker.ext.servlet.ServletContextHashModel;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
-import java.io.IOException;
 import java.io.Writer;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
@@ -304,29 +300,7 @@ public class ThemeUtil {
 
 		// FreeMarker JSP tag library support
 
-		final Servlet servlet = (Servlet)pageContext.getPage();
-
-		GenericServlet genericServlet = null;
-
-		if (servlet instanceof GenericServlet) {
-			genericServlet = (GenericServlet)servlet;
-		}
-		else {
-			genericServlet = new GenericServlet() {
-
-				@Override
-				public void service(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse)
-					throws IOException, ServletException {
-
-					servlet.service(servletRequest, servletResponse);
-				}
-
-			};
-
-			genericServlet.init(pageContext.getServletConfig());
-		}
+		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(

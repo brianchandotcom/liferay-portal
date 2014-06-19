@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -68,7 +68,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.GenericServlet;
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -424,20 +423,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Map<String, Object> contextObjects, PageContext pageContext)
 		throws Exception {
 
+		ServletContext servletContext = pageContext.getServletContext();
+
 		// FreeMarker servlet application
 
-		final Servlet servlet = (Servlet)pageContext.getPage();
-
-		GenericServlet genericServlet = null;
-
-		if (servlet instanceof GenericServlet) {
-			genericServlet = (GenericServlet)servlet;
-		}
-		else {
-			genericServlet = new GenericServletWrapper(servlet);
-
-			genericServlet.init(pageContext.getServletConfig());
-		}
+		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(
@@ -464,8 +454,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		// Taglib Liferay hash
 
 		TemplateHashModel taglibLiferayHash =
-			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
-				pageContext.getServletContext());
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(servletContext);
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.TAGLIB_LIFERAY_HASH,

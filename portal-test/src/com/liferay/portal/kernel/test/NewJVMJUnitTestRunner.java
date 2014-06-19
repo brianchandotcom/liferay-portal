@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessLauncher;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -58,9 +59,9 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 	protected static void attachProcess(String message) {
 		if (!Boolean.getBoolean("attached")) {
-			ProcessExecutor.ProcessContext.attach(
+			ProcessLauncher.ProcessContext.attach(
 				message, 1000,
-				new ProcessExecutor.ShutdownHook() {
+				new ProcessLauncher.ShutdownHook() {
 
 					@Override
 					public boolean shutdown(

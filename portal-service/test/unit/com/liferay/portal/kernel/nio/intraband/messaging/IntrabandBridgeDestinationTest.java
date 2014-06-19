@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
-import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessLauncher;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
@@ -299,7 +299,7 @@ public class IntrabandBridgeDestinationTest {
 		// Is SPI, without child SPI, downcast
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessExecutor.ProcessContext.getAttributes();
+			ProcessLauncher.ProcessContext.getAttributes();
 
 		MockSPI mockSPI1 = _createMockSPI("SPIProvider", "SPI1");
 

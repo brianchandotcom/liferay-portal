@@ -14,12 +14,12 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.dao.search.ButtonSearchEntry;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.taglib.search.ButtonSearchEntry;
 
 import java.util.List;
 

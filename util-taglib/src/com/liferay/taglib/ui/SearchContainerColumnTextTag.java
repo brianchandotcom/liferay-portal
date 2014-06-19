@@ -17,11 +17,11 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
-import com.liferay.portal.kernel.dao.search.TextSearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.search.TextSearchEntry;
 
 import java.util.List;
 import java.util.Map;

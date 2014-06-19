@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_asset_tad_admin_edit_tag") + StringPool.UNDERLINE;
+String redirect = ParamUtil.getString(renderRequest, "redirect");
 
 AssetTag tag = (AssetTag)request.getAttribute(WebKeys.ASSET_TAG);
 
@@ -63,11 +63,16 @@ else {
 }
 %>
 
+<liferay-ui:header
+	title='<%= (tag != null) ? tag.getName() : "edit-tag" %>'
+/>
+
 <portlet:actionURL var="editTagURL">
 	<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editTagURL %>" cssClass="update-tag-form" method="get" name='<%= randomNamespace + "fm" %>'>
+<aui:form action="<%= editTagURL %>" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= tag == null ? Constants.ADD : Constants.UPDATE %>" />
 
 	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
@@ -124,25 +129,7 @@ else {
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<c:if test="<%= tag != null %>">
-						<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.DELETE) %>">
-							<aui:button id="deleteTagButton" value="delete" />
-						</c:if>
-
-						<c:if test="<%= PropsValues.ASSET_TAG_PERMISSIONS_ENABLED && AssetTagPermission.contains(permissionChecker, tag, ActionKeys.PERMISSIONS) %>">
-							<liferay-security:permissionsURL
-								modelResource="<%= AssetTag.class.getName() %>"
-								modelResourceDescription="<%= tag.getName() %>"
-								resourcePrimKey="<%= String.valueOf(tag.getTagId()) %>"
-								var="permissionsURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
-
-							<aui:button data-url="<%= permissionsURL %>" id="updateTagPermissions" value="permissions" />
-						</c:if>
-					</c:if>
-
-					<aui:button cssClass="close-panel" type="cancel" value="close" />
+					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</div>

@@ -14,13 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
-page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
-page import="com.liferay.portlet.asset.model.impl.AssetTagPropertyImpl" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
-page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %>
+<liferay-ui:error-header />
 
-<%@ include file="/html/portlet/asset_tag_admin/init-ext.jsp" %>
+<liferay-ui:error exception="<%= NoSuchTagException.class %>" message="the-asset-tag-could-not-be-found" />
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

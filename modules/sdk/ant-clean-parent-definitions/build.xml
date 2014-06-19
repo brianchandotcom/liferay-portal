@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.ant.clean.parent.definitions/lib" />
+	<property name="plugin.full.version" value="1.0.0" />
+	<property name="plugin.name" value="com.liferay.ant.clean.parent.definitions" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="deploy">
+		<deploy
+			module.dir="${basedir}"
+		/>
+
+		<copy file="${plugin.file}" tofile="../../../lib/development/${plugin.name}.jar" />
+	</target>
+</project>

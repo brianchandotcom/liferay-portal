@@ -130,7 +130,7 @@ public abstract class BaseDDMFormDeserializer extends BaseDDMTest {
 		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
 
 		Assert.assertEquals("checkbox", ddmFormField.getType());
-		Assert.assertFalse(ddmFormField.isRepeatable());
+		Assert.assertTrue(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
 	}
 

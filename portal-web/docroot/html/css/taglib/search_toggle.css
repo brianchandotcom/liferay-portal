@@ -1,20 +1,37 @@
-.taglib-search-toggle .toggle-advanced {
-	margin-left: 10px;
-	position: absolute;
-	top: 8px;
+@import "mixins";
+
+.taglib-search-toggle {
+	.form-search {
+		position: relative;
+
+		.input-group-btn {
+			position: absolute;
+
+			@include respond-to(desktop) {
+				position: static;
+			}
+		}
+	}
+
+	.toggle-advanced {
+		margin-left: 10px;
+		position: absolute;
+		top: 8px;
+	}
 }
 
 .taglib-search-toggle-advanced-wrapper {
 	.taglib-search-toggle-advanced {
-		border: 1px solid transparent;
+		border: solid transparent;
+		border-width: 0 1px 1px;
 		margin-top: 0;
 		padding: 15px 15px 0;
 	}
 
 	.toggler-content-wrapper {
 		clear: both;
-		padding: 5px 15px 0;
-		width: 100%;
+		padding: 0;
+		width: auto;
 	}
 
 	.btn.close {

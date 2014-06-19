@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="NOTIFICATION_CONTENT">
+			<execute function="Click#partialTextClickAtAndWait" />
+		</case>
+	</command>
+</definition>

@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert-success')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGDocumentsandmedia</td>
 	<td></td>
 </tr>
 <tr>
@@ -239,6 +239,17 @@
 <tr>
 	<td>LIFERAY_SYNC_LINK</td>
 	<td>link=Access these files offline using Liferay Sync.</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBSCRIBE-->
+<tr>
+	<td>SUBSCRIBE_LINK</td>
+	<td>//div[@class='subscribe-action']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>

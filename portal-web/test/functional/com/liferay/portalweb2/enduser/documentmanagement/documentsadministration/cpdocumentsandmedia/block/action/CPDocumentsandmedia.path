@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL_ROWS_CHECKBOX</td>
-	<td>//input[@id='_199_allRowIds']</td>
+	<td>//input[contains(@id,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

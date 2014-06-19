@@ -379,7 +379,7 @@
 
 		<setup-sdk />
 
-		<ant-execute
+		<ant-without-task-definitions
 			ant.dir="${project.dir}/modules"
 			ant.target="clean"
 		/>
@@ -390,7 +390,7 @@
 	<target name="compile">
 		<setup-sdk />
 
-		<ant-execute
+		<ant-without-task-definitions
 			ant.dir="${project.dir}/modules/core/registry-api"
 			ant.target="compile"
 		/>
@@ -830,7 +830,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			</then>
 		</if>
 
-		<ant-execute
+		<ant-without-task-definitions
 			ant.dir="${project.dir}/modules"
 			ant.target="deploy"
 		/>

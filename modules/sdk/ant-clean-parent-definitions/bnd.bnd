@@ -1,0 +1,3 @@
+Bundle-Version: ${plugin.full.version}
+Export-Package: com.liferay.ant.clean.parent.definitions
+Include-Resource: classes

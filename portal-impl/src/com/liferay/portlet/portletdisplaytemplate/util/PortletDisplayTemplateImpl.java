@@ -513,8 +513,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
-			new PipingServletResponse(response, pageContext.getOut()),
-			pageContext, null);
+			new PipingServletResponse(response, pageContext.getOut()), null);
 
 		return velocityTaglib;
 	}

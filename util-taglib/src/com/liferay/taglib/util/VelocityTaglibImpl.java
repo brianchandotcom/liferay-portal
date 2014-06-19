@@ -97,10 +97,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	public VelocityTaglibImpl(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, PageContext pageContext,
-		Template template) {
+		HttpServletResponse response, Template template) {
 
-		init(servletContext, request, response, pageContext, template);
+		init(servletContext, request, response, template);
 	}
 
 	@Override
@@ -1215,8 +1214,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	protected VelocityTaglibImpl init(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, PageContext pageContext,
-		Template template) {
+		HttpServletResponse response, Template template) {
 
 		_servletContext = servletContext;
 		_request = request;

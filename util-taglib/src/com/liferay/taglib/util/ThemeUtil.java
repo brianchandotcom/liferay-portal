@@ -277,7 +277,7 @@ public class ThemeUtil {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
-			new PipingServletResponse(response, writer), pageContext, template);
+			new PipingServletResponse(response, writer), template);
 
 		template.put(TemplateConstants.WRITER, writer);
 		template.put("taglibLiferay", velocityTaglib);
@@ -474,7 +474,7 @@ public class ThemeUtil {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
-			new PipingServletResponse(response, writer), pageContext, template);
+			new PipingServletResponse(response, writer), template);
 
 		template.put(TemplateConstants.WRITER, writer);
 		template.put("taglibLiferay", velocityTaglib);

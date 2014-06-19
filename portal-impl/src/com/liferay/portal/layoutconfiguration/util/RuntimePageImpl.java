@@ -367,8 +367,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			pageContext.getServletContext(), request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext, template);
+			new PipingServletResponse(response, unsyncStringWriter), template);
 
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);

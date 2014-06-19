@@ -46,7 +46,7 @@ if (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet 
 	StringBundler sb = null;
 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
-		sb = RuntimePageUtil.getProcessedTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
+		sb = RuntimePageUtil.getProcessedTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, content));
 	}
 
 	if (sb != null) {

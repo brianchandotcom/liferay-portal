@@ -67,6 +67,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -158,7 +159,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		String value = LanguageUtil.get(pageContext, key, null);
 
 		if ((value == null) || value.equals(key)) {
-			value = PortletResourceBundles.getString(pageContext, key);
+			value = PortletResourceBundles.getString(
+				(HttpServletRequest)pageContext.getRequest(), key);
 		}
 
 		if (value == null) {
@@ -254,7 +256,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		String value = LanguageUtil.get(pageContext, key, null);
 
 		if ((value == null) || value.equals(key)) {
-			value = PortletResourceBundles.getString(pageContext, key);
+			value = PortletResourceBundles.getString(
+				(HttpServletRequest)pageContext.getRequest(), key);
 		}
 
 		if (value == null) {

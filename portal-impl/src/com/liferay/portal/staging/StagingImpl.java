@@ -1336,6 +1336,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -1923,6 +1924,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());

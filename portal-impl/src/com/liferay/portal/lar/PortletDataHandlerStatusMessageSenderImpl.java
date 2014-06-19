@@ -16,14 +16,18 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.lar.ManifestSummary;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,17 +36,16 @@ import java.util.Map;
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #sendStatusMessage(String,
+	 *             String[], ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary) {
 
-		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			return;
-		}
-
-		Message message = createMessage(messageType, manifestSummary);
-
-		_singleDestinationMessageSender.send(message);
+		sendStatusMessage(messageType, (String[])null, manifestSummary);
 	}
 
 	@Override
@@ -56,6 +59,38 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		Message message = createMessage(messageType, manifestSummary);
 
 		message.put("portletId", portletId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		if (portlet != null) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			long modelAdditionsByPortlet =
+				portletDataHandler.getExportModelCount(manifestSummary);
+
+			if (modelAdditionsByPortlet < 0) {
+				modelAdditionsByPortlet = 0;
+			}
+
+			message.put("modelAdditionsByPortlet", modelAdditionsByPortlet);
+		}
+
+		_singleDestinationMessageSender.send(message);
+	}
+
+	@Override
+	public void sendStatusMessage(
+		String messageType, String[] portletIds,
+		ManifestSummary manifestSummary) {
+
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Message message = createMessage(messageType, manifestSummary);
+
+		message.put("portletIds", portletIds);
 
 		_singleDestinationMessageSender.send(message);
 	}
@@ -106,12 +141,16 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		Map<String, LongWrapper> modelAdditionCounters =
 			manifestSummary.getModelAdditionCounters();
 
-		message.put("modelAdditionCounters", modelAdditionCounters);
+		message.put(
+			"modelAdditionCounters",
+			new HashMap<String, LongWrapper>(modelAdditionCounters));
 
 		Map<String, LongWrapper> modelDeletionCounters =
 			manifestSummary.getModelDeletionCounters();
 
-		message.put("modelDeletionCounters", modelDeletionCounters);
+		message.put(
+			"modelDeletionCounters",
+			new HashMap<String, LongWrapper>(modelDeletionCounters));
 
 		return message;
 	}

@@ -14,14 +14,17 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
@@ -385,6 +388,15 @@ public class LayoutExporter {
 				continue;
 			}
 
+			// Calculate the amount of exported data
+
+			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+				PortletDataHandler portletDataHandler =
+					portlet.getPortletDataHandlerInstance();
+
+				portletDataHandler.prepareManifestSummary(portletDataContext);
+			}
+
 			String key = PortletPermissionUtil.getPrimaryKey(0, portletId);
 
 			if (portletIds.get(key) == null) {
@@ -422,6 +434,17 @@ public class LayoutExporter {
 		for (Layout layout : layouts) {
 			exportLayout(
 				portletDataContext, portlets, layoutIds, portletIds, layout);
+		}
+
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"layout", ArrayUtil.toStringArray(portletIds.keySet()),
+				manifestSummary);
+
+			manifestSummary.resetCounters();
 		}
 
 		Element portletsElement = rootElement.addElement("portlets");

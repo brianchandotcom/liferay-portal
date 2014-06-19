@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.search;
+package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -44,8 +44,10 @@ public class DateSearchEntry extends TextSearchEntry {
 		if (_date != null) {
 			Object[] localeAndTimeZone = getLocaleAndTimeZone(pageContext);
 
+			Locale locale = (Locale)localeAndTimeZone[0];
+
 			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-				(Locale)localeAndTimeZone[0], (TimeZone)localeAndTimeZone[1]);
+				locale, (TimeZone)localeAndTimeZone[1]);
 
 			StringBundler sb = new StringBundler(5);
 
@@ -57,18 +59,18 @@ public class DateSearchEntry extends TextSearchEntry {
 			if (_date.before(new Date())) {
 				sb.append(
 					LanguageUtil.format(
-						pageContext, "x-ago",
+						locale, "x-ago",
 						LanguageUtil.getTimeDescription(
-							pageContext,
+							locale,
 							System.currentTimeMillis() - _date.getTime(), true),
 						false));
 			}
 			else {
 				sb.append(
 					LanguageUtil.format(
-						pageContext, "within-x",
+						locale, "within-x",
 						LanguageUtil.getTimeDescription(
-							pageContext,
+							locale,
 							_date.getTime() - System.currentTimeMillis(), true),
 						false));
 			}

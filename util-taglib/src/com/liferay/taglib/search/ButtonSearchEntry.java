@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.search;
+package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 
@@ -33,7 +33,13 @@ public class ButtonSearchEntry extends TextSearchEntry {
 	}
 
 	@Override
-	public void print(PageContext pageContext) throws Exception {
+	public void print(Object object) throws Exception {
+		if (!(object instanceof PageContext)) {
+			return;
+		}
+
+		PageContext pageContext = (PageContext)object;
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<input type=\"button\" ");

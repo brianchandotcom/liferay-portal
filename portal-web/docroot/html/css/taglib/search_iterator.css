@@ -12,6 +12,13 @@
 	}
 }
 
+.taglib-search-toggle ~ .lfr-search-container {
+	clear: left;
+	float: left;
+	padding: 0 15px;
+	width: 100%;
+}
+
 .touch .lfr-search-container {
 	@include experimental(overflow-scrolling, touch);
 

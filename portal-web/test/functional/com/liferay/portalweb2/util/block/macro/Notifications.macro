@@ -1,7 +1,24 @@
 <definition>
+	<command name="gotoContent">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+
+		<var name="key_contentBody" value="${contentBody}" />
+
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_CONTENT" value1="${contentBody}" />
+	</command>
+
 	<command name="gotoPortletPG">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="VIEW_ALL_NOTIFICATIONS" value1="View All Notifications" />
+	</command>
+
+	<command name="viewNewContent">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+
+		<var name="key_contentBody" value="${contentBody}" />
+
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewCount">

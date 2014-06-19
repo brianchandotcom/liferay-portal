@@ -1014,10 +1014,10 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
-		-webkit-overflow-scrolling: touch;
 		height: 100%;
 		position: fixed;
 		width: 100%;
+		-webkit-overflow-scrolling: touch;
 
 		@include respond-to(phone, tablet) {
 			height: auto;
@@ -1034,10 +1034,10 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		#wrapper {
-			-webkit-overflow-scrolling: touch;
 			height: 100%;
 			overflow: auto;
 			width: 100%;
+			-webkit-overflow-scrolling: touch;
 		}
 	}
 

@@ -319,7 +319,7 @@ public class MBAttachmentsTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		_message = MBTestUtil.addMessage(
-			_category.getCategoryId(), serviceContext);
+			_category.getGroupId(), _category.getCategoryId(), serviceContext);
 	}
 
 	protected void addMessageAttachment() throws Exception {

@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.bookmarks.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
+import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -44,33 +46,36 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionLocalizedContentTest
+public class BookmarksSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			group.getGroupId(), group.getGroupId(), containerModelId, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return fileEntry.getFileEntryId();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return PortletKeys.BOOKMARKS;
 	}
 
 	@Override
 	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailFileEntryAddedBody";
+		return "emailEntryAddedBody";
 	}
 
 	@Override
@@ -78,7 +83,7 @@ public class DLSubscriptionLocalizedContentTest
 		throws Exception {
 
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), DLConstants.SERVICE_NAME);
+			group.getGroupId(), BookmarksConstants.SERVICE_NAME);
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

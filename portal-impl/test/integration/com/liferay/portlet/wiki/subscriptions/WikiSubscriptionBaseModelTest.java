@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service;
+package com.liferay.portlet.wiki.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,34 +41,44 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class WikiSubscriptionBaseModelTest
+	extends BaseSubscriptionBaseModelTestCase {
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		WikiPage page = WikiTestUtil.addPage(
+			group.getGroupId(), containerModelId, true);
 
-		return entry.getEntryId();
+		return page.getResourcePrimKey();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
+	protected long addContainerModel(long containerModelId) throws Exception {
+		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+		return node.getNodeId();
+	}
+
+	@Override
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+
+		WikiPageLocalServiceUtil.subscribePage(
+			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
+	}
+
+	@Override
+	protected long updateEntry(long baseModelId) throws Exception {
+		WikiPage page = WikiTestUtil.updatePage(
+			WikiPageLocalServiceUtil.getPage(baseModelId, true));
+
+		return page.getResourcePrimKey();
 	}
 
 }

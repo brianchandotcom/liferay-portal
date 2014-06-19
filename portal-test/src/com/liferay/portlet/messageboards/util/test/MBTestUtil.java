@@ -161,7 +161,7 @@ public class MBTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addMessage(
-			categoryId, StringPool.BLANK, approved, serviceContext);
+			groupId, categoryId, StringPool.BLANK, approved, serviceContext);
 	}
 
 	public static MBMessage addMessage(
@@ -189,14 +189,15 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
-			long categoryId, ServiceContext serviceContext)
+			long groupId, long categoryId, ServiceContext serviceContext)
 		throws Exception {
 
-		return addMessage(categoryId, StringPool.BLANK, false, serviceContext);
+		return addMessage(
+			groupId, categoryId, StringPool.BLANK, false, serviceContext);
 	}
 
 	public static MBMessage addMessage(
-			long categoryId, String keywords, boolean approved,
+			long groupId, long categoryId, String keywords, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -209,7 +210,7 @@ public class MBTestUtil {
 		}
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			serviceContext.getUserId(), RandomTestUtil.randomString(),
+			serviceContext.getUserId(), RandomTestUtil.randomString(), groupId,
 			categoryId, subject, body, serviceContext);
 
 		if (!approved) {

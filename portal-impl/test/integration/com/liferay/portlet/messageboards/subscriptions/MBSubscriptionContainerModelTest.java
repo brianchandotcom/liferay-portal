@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.messageboards.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
  */
 @ExecutionTestListeners(
@@ -38,30 +38,30 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionContainerModelTest
+public class MBSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			group.getGroupId(), group.getGroupId(), containerModelId, true);
+		MBMessage message = MBTestUtil.addMessage(
+			group.getGroupId(), containerModelId, true);
 
-		return fileEntry.getFileEntryId();
+		return message.getMessageId();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
+		MBCategory category = MBTestUtil.addCategory(
 			group.getGroupId(), containerModelId);
 
-		return folder.getFolderId();
+		return category.getCategoryId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
+		MBCategoryLocalServiceUtil.subscribeCategory(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 

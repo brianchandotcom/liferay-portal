@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.service;
+package com.liferay.portlet.bookmarks.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.service.ServiceContext;
@@ -20,12 +20,13 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionBaseModelTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionRootContainerModelTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
@@ -40,8 +41,8 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BookmarksSubscriptionBaseModelTest
-	extends BaseSubscriptionBaseModelTestCase {
+public class BookmarksSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
@@ -66,19 +67,11 @@ public class BookmarksSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		BookmarksEntryLocalServiceUtil.subscribeEntry(
-			TestPropsValues.getUserId(), baseModelId);
-	}
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
 
-	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			baseModelId);
-
-		entry = BookmarksTestUtil.updateEntry(entry);
-
-		return entry.getEntryId();
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 }

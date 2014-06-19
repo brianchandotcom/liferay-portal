@@ -144,8 +144,8 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		MBCategory category = (MBCategory)parentBaseModel;
 
 		MBMessage message = MBTestUtil.addMessage(
-			category.getCategoryId(), getSearchKeywords(), approved,
-			serviceContext);
+			category.getGroupId(), category.getCategoryId(),
+			getSearchKeywords(), approved, serviceContext);
 
 		return message.getThread();
 	}

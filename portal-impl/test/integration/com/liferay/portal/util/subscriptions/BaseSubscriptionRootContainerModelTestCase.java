@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.util.subscriptions;
 
 import com.liferay.portal.util.test.MailServiceTestUtil;
 
@@ -22,17 +22,17 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseSubscriptionContainerModelTestCase
+public abstract class BaseSubscriptionRootContainerModelTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionContainerModelWhenInContainerModel()
+	public void testSubscriptionRootContainerModelWhenInContainerModel()
 		throws Exception {
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addSubscriptionContainerModel(containerModelId);
 
 		addBaseModel(containerModelId);
 
@@ -40,27 +40,24 @@ public abstract class BaseSubscriptionContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenInRootContainerModel()
+	public void testSubscriptionRootContainerModelWhenInRootContainerModel()
 		throws Exception {
 
-		long containerModelId = addContainerModel(
-			PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addSubscriptionContainerModel(containerModelId);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
-	public void testSubscriptionContainerModelWhenInSubcontainerModel()
+	public void testSubscriptionRootContainerModelWhenInSubcontainerModel()
 		throws Exception {
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
-		addSubscriptionContainerModel(containerModelId);
 
 		long subcontainerModelId = addContainerModel(containerModelId);
 

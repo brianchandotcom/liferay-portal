@@ -50,5 +50,5 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 <form action="<%= HtmlUtil.escape(portletURL.toString()) %>" class="form" method="post" name="<%= namespace %>fm" onSubmit="submitForm(this); return false;">
 
 <div class="form-search">
-	<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search id='<%= namespace + "keywords_" + StringUtil.randomId() %>' name='<%= namespace + "keywords" %>' placeholder='<%= LanguageUtil.get(locale, "keywords") %>' useNamespace="<%= false %>" />
 </div>

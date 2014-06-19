@@ -510,6 +510,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="ant-without-task-definitions">
+		<attribute default="build.xml" name="ant.build.file" />
+		<attribute name="ant.dir" />
+		<attribute name="ant.target" />
+
+		<sequential>
+			<ant dir="@{ant.dir}" antfile="@{ant.build.file}" target="@{ant.target}" inheritall="false">
+				<property name="clean.parent.definitions" value="true" />
+			</ant>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="app-server-properties-reset">
 		<sequential>
 			<delete file="app.server.${user.name}.properties" />

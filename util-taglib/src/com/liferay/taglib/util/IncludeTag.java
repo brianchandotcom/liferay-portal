@@ -214,7 +214,7 @@ public class IncludeTag extends AttributesTagSupport {
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
 		ThemeUtil.include(
-			servletContext, request, response, pageContext, page, theme);
+			servletContext, request, response, page, theme);
 	}
 
 	protected String getCustomPage(

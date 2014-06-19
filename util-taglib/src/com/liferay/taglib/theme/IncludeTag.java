@@ -33,7 +33,7 @@ public class IncludeTag extends com.liferay.taglib.util.IncludeTag {
 
 			ThemeUtil.include(
 				servletContext, request, new PipingServletResponse(pageContext),
-				pageContext, getPage(), theme);
+				getPage(), theme);
 
 			return EVAL_PAGE;
 		}

@@ -28,7 +28,6 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,20 +44,13 @@ public class ResourceLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
+		_users = new User[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = UserTestUtil.addUser(
 				"ResourceLocalServiceTest" + (i + 1), _group.getGroupId());
 
-			_userIds[i] = user.getUserId();
-		}
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			UserLocalServiceUtil.deleteUser(_userIds[i]);
+			_users[i] = user;
 		}
 	}
 
@@ -68,7 +60,7 @@ public class ResourceLocalServiceTest {
 			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
-			doAsUserThreads[i] = new AddResources(_userIds[i]);
+			doAsUserThreads[i] = new AddResources(_users[i].getUserId());
 		}
 
 		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
@@ -96,7 +88,8 @@ public class ResourceLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private long[] _userIds;
+	@DeleteAfterTestRun
+	private User[] _users;
 
 	private class AddResources extends DoAsUserThread {
 

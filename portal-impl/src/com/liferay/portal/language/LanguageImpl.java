@@ -73,7 +73,6 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -155,32 +154,32 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		HttpServletRequest request, String pattern, LanguageWrapper argument) {
 
-		return format(
-			pageContext, pattern, new LanguageWrapper[] {argument}, true);
+		return format(request, pattern, new LanguageWrapper[] {argument}, true);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
 		boolean translateArguments) {
 
 		return format(
-			pageContext, pattern, new LanguageWrapper[] {argument},
+			request, pattern, new LanguageWrapper[] {argument},
 			translateArguments);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
+		HttpServletRequest request, String pattern,
+		LanguageWrapper[] arguments) {
 
-		return format(pageContext, pattern, arguments, true);
+		return format(request, pattern, arguments, true);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
@@ -190,7 +189,7 @@ public class LanguageImpl implements Language, Serializable {
 		String value = null;
 
 		try {
-			pattern = get(pageContext, pattern);
+			pattern = get(request, pattern);
 
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
@@ -201,7 +200,7 @@ public class LanguageImpl implements Language, Serializable {
 					if (translateArguments) {
 						formattedArguments[i] =
 							arguments[i].getBefore() +
-							get(pageContext, arguments[i].getText()) +
+							get(request, arguments[i].getText()) +
 							arguments[i].getAfter();
 					}
 					else {
@@ -229,30 +228,30 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object argument) {
+		HttpServletRequest request, String pattern, Object argument) {
 
-		return format(pageContext, pattern, new Object[] {argument}, true);
+		return format(request, pattern, new Object[] {argument}, true);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object argument,
+		HttpServletRequest request, String pattern, Object argument,
 		boolean translateArguments) {
 
 		return format(
-			pageContext, pattern, new Object[] {argument}, translateArguments);
+			request, pattern, new Object[] {argument}, translateArguments);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
+		HttpServletRequest request, String pattern, Object[] arguments) {
 
-		return format(pageContext, pattern, arguments, true);
+		return format(request, pattern, arguments, true);
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments,
+		HttpServletRequest request, String pattern, Object[] arguments,
 		boolean translateArguments) {
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
@@ -262,7 +261,7 @@ public class LanguageImpl implements Language, Serializable {
 		String value = null;
 
 		try {
-			pattern = get(pageContext, pattern);
+			pattern = get(request, pattern);
 
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
@@ -272,7 +271,7 @@ public class LanguageImpl implements Language, Serializable {
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
 						formattedArguments[i] = get(
-							pageContext, arguments[i].toString());
+							request, arguments[i].toString());
 					}
 					else {
 						formattedArguments[i] = arguments[i];
@@ -401,20 +400,17 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public String get(PageContext pageContext, String key) {
-		return get(pageContext, key, key);
+	public String get(HttpServletRequest request, String key) {
+		return get(request, key, key);
 	}
 
 	@Override
 	public String get(
-		PageContext pageContext, String key, String defaultValue) {
+		HttpServletRequest request, String key, String defaultValue) {
 
-		if ((pageContext == null) || (key == null)) {
+		if ((request == null) || (key == null)) {
 			return defaultValue;
 		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
 
 		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
@@ -596,14 +592,14 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String getTimeDescription(
-		PageContext pageContext, long milliseconds) {
+		HttpServletRequest request, long milliseconds) {
 
-		return getTimeDescription(pageContext, milliseconds, false);
+		return getTimeDescription(request, milliseconds, false);
 	}
 
 	@Override
 	public String getTimeDescription(
-		PageContext pageContext, long milliseconds, boolean approximate) {
+		HttpServletRequest request, long milliseconds, boolean approximate) {
 
 		String description = Time.getDescription(milliseconds, approximate);
 
@@ -616,7 +612,7 @@ public class LanguageImpl implements Language, Serializable {
 
 			value = x.concat(StringPool.SPACE).concat(
 				get(
-					pageContext,
+					request,
 					StringUtil.toLowerCase(
 						description.substring(pos + 1, description.length()))));
 		}
@@ -631,9 +627,9 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String getTimeDescription(
-		PageContext pageContext, Long milliseconds) {
+		HttpServletRequest request, Long milliseconds) {
 
-		return getTimeDescription(pageContext, milliseconds.longValue());
+		return getTimeDescription(request, milliseconds.longValue());
 	}
 
 	@Override

@@ -372,7 +372,7 @@
 			</if>
 
 			<if>
-				<equals arg1="${run.in.background}" arg2="true" />
+				<equals arg1="${run.selenium.ant.command}" arg2="true" />
 				<then>
 					<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 						<arg line="${app.server.start.executable.arg.line}" />

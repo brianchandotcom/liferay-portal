@@ -990,7 +990,19 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.pause("1000");
 
-		_screen.type(value);
+		if (value.contains("<br />")) {
+			int a = 0;
+			int b = value.lastIndexOf("<");
+			int c = value.lastIndexOf(">");
+
+			String value1 = value.substring(c + 1);
+			String value2 = value.substring(a, b);
+
+			_screen.type(value1 + Key.ENTER + value2);
+		}
+		else {
+			_screen.type(value);
+		}
 	}
 
 	public static void sikuliUploadCommonFile(

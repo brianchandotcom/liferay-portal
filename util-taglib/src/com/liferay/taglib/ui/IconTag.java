@@ -368,6 +368,21 @@ public class IconTag extends IncludeTag {
 			_data = new HashMap<String, Object>(1);
 		}
 
+		if (Validator.isNull(_method)) {
+			if (_url == null) {
+				_url = StringPool.BLANK;
+			}
+
+			int pos = _url.indexOf("p_p_lifecycle=0");
+
+			if (pos != -1) {
+				_method = "get";
+			}
+			else {
+				_method = "post";
+			}
+		}
+
 		boolean forcePost = false;
 
 		if (_method.equals("post") &&
@@ -426,21 +441,6 @@ public class IconTag extends IncludeTag {
 			}
 
 			_data.put("title", HtmlUtil.stripHtml(message));
-		}
-
-		if (Validator.isNull(_method)) {
-			if (_url == null) {
-				_url = StringPool.BLANK;
-			}
-
-			int pos = _url.indexOf("p_p_lifecycle=0");
-
-			if (pos != -1) {
-				_method = "get";
-			}
-			else {
-				_method = "post";
-			}
 		}
 
 		String onClick = StringPool.BLANK;

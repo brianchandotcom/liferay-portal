@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<liferay-staging:defineStagingObjects />
+<liferay-staging:defineObjects />
 
 <%
 String cssClass = "staging-icon-menu " + GetterUtil.getString((String) request.getAttribute("liferay-staging:menu:cssClass"));

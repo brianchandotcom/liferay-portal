@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<liferay-staging:defineStagingObjects />
+<liferay-staging:defineObjects />
 
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);

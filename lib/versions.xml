@@ -292,6 +292,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/java-client.jar</file-name>
+		<version>1.1.0</version>
+		<project-name>Appium</project-name>
+		<project-url>http://appium.io/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/jasper.jar</file-name>
 		<version>7.0.42</version>
 		<project-name>Tomcat</project-name>

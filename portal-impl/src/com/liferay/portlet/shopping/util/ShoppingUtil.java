@@ -74,7 +74,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -545,8 +545,8 @@ public class ShoppingUtil {
 	}
 
 	public static String getBreadcrumbs(
-			long categoryId, PageContext pageContext,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			long categoryId, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		ShoppingCategory category = null;
@@ -557,13 +557,12 @@ public class ShoppingUtil {
 		catch (Exception e) {
 		}
 
-		return getBreadcrumbs(
-			category, pageContext, renderRequest, renderResponse);
+		return getBreadcrumbs(category, renderRequest, renderResponse);
 	}
 
 	public static String getBreadcrumbs(
-			ShoppingCategory category, PageContext pageContext,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ShoppingCategory category, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		PortletURL categoriesURL = renderResponse.createRenderURL();
@@ -581,9 +580,12 @@ public class ShoppingUtil {
 			//categoriesURL.setWindowState(WindowState.MAXIMIZED);
 		}
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
 		String categoriesLink =
 			"<a href=\"" + categoriesURL.toString() + "\">" +
-				LanguageUtil.get(pageContext, "categories") + "</a>";
+				LanguageUtil.get(request, "categories") + "</a>";
 
 		if (category == null) {
 			return "<span class=\"first last\">" + categoriesLink + "</span>";
@@ -960,7 +962,7 @@ public class ShoppingUtil {
 	}
 
 	public static String getPpPaymentStatus(
-		ShoppingOrder order, PageContext pageContext) {
+		ShoppingOrder order, HttpServletRequest request) {
 
 		String ppPaymentStatus = order.getPpPaymentStatus();
 
@@ -971,7 +973,7 @@ public class ShoppingUtil {
 			ppPaymentStatus = StringUtil.toLowerCase(ppPaymentStatus);
 		}
 
-		return LanguageUtil.get(pageContext, HtmlUtil.escape(ppPaymentStatus));
+		return LanguageUtil.get(request, HtmlUtil.escape(ppPaymentStatus));
 	}
 
 	public static String getPpPaymentStatus(String ppPaymentStatus) {

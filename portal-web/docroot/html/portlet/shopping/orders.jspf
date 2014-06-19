@@ -90,7 +90,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Status
 
-		row.addText(ShoppingUtil.getPpPaymentStatus(order, pageContext), rowURL);
+		row.addText(ShoppingUtil.getPpPaymentStatus(order, request), rowURL);
 
 		// Customer
 

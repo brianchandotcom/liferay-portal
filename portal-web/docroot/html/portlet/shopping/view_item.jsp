@@ -55,7 +55,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 	/>
 
 	<div class="breadcrumbs">
-		<%= ShoppingUtil.getBreadcrumbs(item.getCategoryId(), pageContext, renderRequest, renderResponse) %>
+		<%= ShoppingUtil.getBreadcrumbs(item.getCategoryId(), renderRequest, renderResponse) %>
 	</div>
 
 	<table border="0" cellpadding="0" cellspacing="0">

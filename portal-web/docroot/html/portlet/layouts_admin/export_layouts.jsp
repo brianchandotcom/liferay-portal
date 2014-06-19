@@ -59,8 +59,6 @@ else {
 	}
 }
 
-privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
 String rootNodeName = StringPool.BLANK;
 
 if (privateLayout) {

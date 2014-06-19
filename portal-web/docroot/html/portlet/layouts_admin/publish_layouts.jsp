@@ -112,8 +112,6 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
-
 treeId = treeId + privateLayout + layoutSetBranchId;
 
 long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
@@ -489,6 +487,7 @@ else {
 		<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

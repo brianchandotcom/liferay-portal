@@ -68,6 +68,7 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<liferay-portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+	<liferay-portlet:param name="privateLayout" value="<%= privateLayout %>" />
 </liferay-portlet:renderURL>
 
 <c:if test="<%= stagingGroup != null %>">

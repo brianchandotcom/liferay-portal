@@ -144,7 +144,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 							<c:choose>
 								<c:when test='<%= !displayStyle.equals("list") %>' >
 									<div class="add-content-thumbnail <%= displayStyle.equals("descriptive") ? "col-md-4" : StringPool.BLANK %>">
-										<img alt="<liferay-ui:message key="thumbnail" />" src="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>" />
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" src="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>" />
 									</div>
 
 									<div class="add-content-details <%= displayStyle.equals("descriptive") ? "col-md-8" : StringPool.BLANK %>">

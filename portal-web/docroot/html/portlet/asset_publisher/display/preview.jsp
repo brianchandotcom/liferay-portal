@@ -78,6 +78,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	data.put("class-pk", assetEntry.getClassPK());
 	data.put("instanceable", Boolean.TRUE);
 	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+	data.put("title", HtmlUtil.escape(assetRenderer.getTitle(themeDisplay.getLocale())));
 	%>
 
 	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">

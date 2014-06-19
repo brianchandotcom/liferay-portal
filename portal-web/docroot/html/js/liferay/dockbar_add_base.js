@@ -143,7 +143,7 @@ AUI.add(
 							}
 
 							if (Util.isPhone() || Util.isTablet()) {
-								instance._portletFeedback(portletId);
+								instance._portletFeedback(portletId, portlet);
 							}
 
 							var beforePortletLoaded = null;
@@ -271,23 +271,25 @@ AUI.add(
 						return instance._searchData;
 					},
 
-					_portletFeedback: function(portletId) {
+					_portletFeedback: function(portletId, portlet) {
 						var instance = this;
 
 						var addedMessagePortlet = instance.byId('portletName');
 
-						var portletNameNode = A.one('[data-portlet-id=' + portletId + ']');
+						var portletNameNode = portlet.ancestor('[data-portlet-id=' + portletId + ']', true);
 
-						var portletName = portletNameNode.attr('data-title');
+						if (portletNameNode) {
+							var portletName = portletNameNode.attr('data-title');
 
-						addedMessagePortlet.setHTML(portletName);
+							addedMessagePortlet.setHTML(portletName);
 
-						instance._addedMessage.show(
-							true,
-							function() {
-								instance._hideAddedMessageTask();
-							}
-						);
+							instance._addedMessage.show(
+								true,
+								function() {
+									instance._hideAddedMessageTask();
+								}
+							);
+						}
 					},
 
 					_showTab: function(event) {

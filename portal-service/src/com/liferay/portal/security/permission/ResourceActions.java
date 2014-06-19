@@ -29,7 +29,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -74,15 +74,15 @@ public interface ResourceActions {
 
 	public String getAction(Locale locale, String action);
 
-	public String getAction(PageContext pageContext, String action);
+	public String getAction(HttpServletRequest request, String action);
 
 	public String getActionNamePrefix();
 
 	public List<String> getActionsNames(
-		PageContext pageContext, List<String> actions);
+		HttpServletRequest request, List<String> actions);
 
 	public List<String> getActionsNames(
-		PageContext pageContext, String name, long actionIds);
+		HttpServletRequest request, String name, long actionIds);
 
 	public List<String> getModelNames();
 
@@ -90,7 +90,7 @@ public interface ResourceActions {
 
 	public String getModelResource(Locale locale, String name);
 
-	public String getModelResource(PageContext pageContext, String name);
+	public String getModelResource(HttpServletRequest request, String name);
 
 	public List<String> getModelResourceActions(String name);
 

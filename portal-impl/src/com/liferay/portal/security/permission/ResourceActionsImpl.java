@@ -68,7 +68,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -153,14 +152,13 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
-	public String getAction(PageContext pageContext, String action) {
+	public String getAction(HttpServletRequest request, String action) {
 		String key = getActionNamePrefix() + action;
 
-		String value = LanguageUtil.get(pageContext, key, null);
+		String value = LanguageUtil.get(request, key, null);
 
 		if ((value == null) || value.equals(key)) {
-			value = PortletResourceBundles.getString(
-				(HttpServletRequest)pageContext.getRequest(), key);
+			value = PortletResourceBundles.getString(request, key);
 		}
 
 		if (value == null) {
@@ -177,12 +175,12 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getActionsNames(
-		PageContext pageContext, List<String> actions) {
+		HttpServletRequest request, List<String> actions) {
 
 		List<String> actionNames = new UniqueList<String>();
 
 		for (String action : actions) {
-			actionNames.add(getAction(pageContext, action));
+			actionNames.add(getAction(request, action));
 		}
 
 		return actionNames;
@@ -190,7 +188,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getActionsNames(
-		PageContext pageContext, String name, long actionIds) {
+		HttpServletRequest request, String name, long actionIds) {
 
 		try {
 			List<ResourceAction> resourceActions =
@@ -206,7 +204,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				}
 			}
 
-			return getActionsNames(pageContext, actions);
+			return getActionsNames(request, actions);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -250,14 +248,13 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
-	public String getModelResource(PageContext pageContext, String name) {
+	public String getModelResource(HttpServletRequest request, String name) {
 		String key = getModelResourceNamePrefix() + name;
 
-		String value = LanguageUtil.get(pageContext, key, null);
+		String value = LanguageUtil.get(request, key, null);
 
 		if ((value == null) || value.equals(key)) {
-			value = PortletResourceBundles.getString(
-				(HttpServletRequest)pageContext.getRequest(), key);
+			value = PortletResourceBundles.getString(request, key);
 		}
 
 		if (value == null) {

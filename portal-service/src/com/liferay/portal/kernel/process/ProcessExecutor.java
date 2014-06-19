@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,25 +54,27 @@ import java.util.concurrent.TimeoutException;
 public class ProcessExecutor {
 
 	public static <T extends Serializable> Future<T> execute(
-			String classPath, List<String> arguments,
-			ProcessCallable<? extends Serializable> processCallable)
-		throws ProcessException {
-
-		return execute("java", classPath, arguments, processCallable);
-	}
-
-	public static <T extends Serializable> Future<T> execute(
-			String classPath,
+			String bootstrapClassPath, String classPath, List<String> arguments,
 			ProcessCallable<? extends Serializable> processCallable)
 		throws ProcessException {
 
 		return execute(
-			"java", classPath, Collections.<String>emptyList(),
-			processCallable);
+			"java", bootstrapClassPath, classPath, arguments, processCallable);
 	}
 
 	public static <T extends Serializable> Future<T> execute(
-			String java, String classPath, List<String> arguments,
+			String bootstrapClassPath, String classPath,
+			ProcessCallable<? extends Serializable> processCallable)
+		throws ProcessException {
+
+		return execute(
+			"java", bootstrapClassPath, classPath,
+			Collections.<String>emptyList(), processCallable);
+	}
+
+	public static <T extends Serializable> Future<T> execute(
+			String java, String bootstrapClassPath, String classPath,
+			List<String> arguments,
 			ProcessCallable<? extends Serializable> processCallable)
 		throws ProcessException {
 
@@ -80,7 +83,7 @@ public class ProcessExecutor {
 
 			commands.add(java);
 			commands.add("-cp");
-			commands.add(classPath);
+			commands.add(bootstrapClassPath);
 			commands.addAll(arguments);
 			commands.add(ProcessLauncher.class.getName());
 
@@ -88,8 +91,14 @@ public class ProcessExecutor {
 
 			Process process = processBuilder.start();
 
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			DataOutputStream dataOutputStream = new DataOutputStream(
 				process.getOutputStream());
+
+			dataOutputStream.writeUTF(processCallable.toString());
+			dataOutputStream.writeUTF(classPath);
+
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				dataOutputStream);
 
 			try {
 				objectOutputStream.writeObject(processCallable);

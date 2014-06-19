@@ -16,8 +16,10 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.DataInputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +27,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
+
+import java.net.URLClassLoader;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -71,22 +75,36 @@ public class ProcessLauncher {
 
 		System.setErr(errPrintStream);
 
-		try {
-			ObjectInputStream objectInputStream = new ObjectInputStream(
-				System.in);
+		Thread currentThread = Thread.currentThread();
 
-			ProcessCallable<?> processCallable =
-				(ProcessCallable<?>)objectInputStream.readObject();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			DataInputStream dataInputStream = new DataInputStream(System.in);
+
+			String processCallableName = dataInputStream.readUTF();
 
 			String logPrefixString =
-				StringPool.OPEN_BRACKET.concat(
-					processCallable.toString()).concat(
-						StringPool.CLOSE_BRACKET);
+				StringPool.OPEN_BRACKET.concat(processCallableName).concat(
+					StringPool.CLOSE_BRACKET);
 
 			byte[] logPrefix = logPrefixString.getBytes(StringPool.UTF8);
 
 			outProcessOutputStream.setLogPrefix(logPrefix);
 			errProcessOutputStream.setLogPrefix(logPrefix);
+
+			String classPath = dataInputStream.readUTF();
+
+			ClassLoader classLoader = new URLClassLoader(
+				ClassPathUtil.getClassPathURLs(classPath));
+
+			currentThread.setContextClassLoader(classLoader);
+
+			ObjectInputStream objectInputStream =
+				new ClassLoaderObjectInputStream(dataInputStream, classLoader);
+
+			ProcessCallable<?> processCallable =
+				(ProcessCallable<?>)objectInputStream.readObject();
 
 			Serializable result = processCallable.call();
 
@@ -104,6 +122,9 @@ public class ProcessLauncher {
 				new ExceptionProcessCallable(pe));
 
 			errProcessOutputStream.flush();
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

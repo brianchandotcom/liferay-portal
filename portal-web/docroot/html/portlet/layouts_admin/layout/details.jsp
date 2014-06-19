@@ -216,7 +216,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 				item.toggle(visible);
 
-				item.all('input, select, textarea').set('disabled', disabled);
+				item.all('input, select, textarea').attr('disabled', disabled);
 			}
 		);
 

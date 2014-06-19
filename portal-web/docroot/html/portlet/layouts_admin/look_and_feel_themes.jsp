@@ -257,7 +257,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		var lookAndFeelForm = A.one('#<%= device %>LookAndFeel');
 
 		var toggleDisabled = function(disabled) {
-			colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').set('disabled', disabled);
+			colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').attr('disabled', disabled);
 		};
 
 		if (colorSchemePanel) {
@@ -289,7 +289,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 				var colorSchemeInput = A.one(id);
 
 				if (!colorSchemeInput.get('disabled')) {
-					colorSchemeInput.set('checked', true);
+					colorSchemeInput.attr('checked', true);
 				}
 			},
 			['aui-base']
@@ -301,12 +301,12 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			function(themeId, colorSchemesDisabled) {
 				var A = AUI();
 
-				A.one('#<portlet:namespace /><%= device %>' + themeId).set('checked', true);
+				A.one('#<portlet:namespace /><%= device %>' + themeId).attr('checked', true);
 
 				var colorSchemePanel = A.one('#<%= device %>layoutsAdminLookAndFeelColorsPanel');
 
 				if (colorSchemePanel) {
-					colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').set('disabled', colorSchemesDisabled);
+					colorSchemePanel.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').attr('disabled', colorSchemesDisabled);
 				}
 			},
 			['aui-base']

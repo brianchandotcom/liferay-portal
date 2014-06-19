@@ -21,7 +21,7 @@
 <%
 String[] symbols = portletPreferences.getValues("symbols", new String[0]);
 
-Map<String, String> allSymbols = CurrencyUtil.getAllSymbols(pageContext);
+Map<String, String> allSymbols = CurrencyUtil.getAllSymbols(request);
 %>
 
 <%@ include file="/html/portlet/currency_converter/init-ext.jsp" %>

@@ -245,7 +245,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_DROP_DOWN</td>
-	<td>//div[@id='wikiCommentsPanelContainer']//div[@class='accordion-toggle']</td>
+	<td>//div[@id='wikiCommentsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

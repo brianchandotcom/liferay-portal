@@ -365,7 +365,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_TRACKBACK_URL</td>
-	<td>//div[@class='accordion-inner' and contains(.,'Trackback URL')]//input[@type='text']</td>
+	<td>//div[@class='panel-inner' and contains(.,'Trackback URL')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

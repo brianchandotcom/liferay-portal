@@ -21,7 +21,7 @@
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_TOGGLE</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Categorization')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Categorization')]</td>
 	<td></td>
 </tr>
 <tr>

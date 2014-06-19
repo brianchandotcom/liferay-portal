@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>ALERT_MESSAGE</td>
-	<td>//div[contains(@class,'alert alert-error')]</td>
+	<td>//div[contains(@class,'alert-danger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALERT_MESSAGE_2</td>
-	<td>xpath=(//div[contains(@class,'alert alert-error')])[2]</td>
+	<td>xpath=(//div[contains(@class,'alert-danger')])[2]</td>
 	<td></td>
 </tr>
 <tr>

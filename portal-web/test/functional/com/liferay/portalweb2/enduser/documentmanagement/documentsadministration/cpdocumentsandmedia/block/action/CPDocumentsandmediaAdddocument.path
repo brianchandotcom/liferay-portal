@@ -174,7 +174,7 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAGS_REMOVE_ICON_GENERIC</td>
-	<td>//div[@class='control-group' and label[contains(.,'Tags')]]//span[@class='textboxlistentry-remove']/i</td>
+	<td>//div[@class='form-group' and label[contains(.,'Tags')]]//span[@class='textboxlistentry-remove']/i</td>
 	<td></td>
 </tr>
 <tr>

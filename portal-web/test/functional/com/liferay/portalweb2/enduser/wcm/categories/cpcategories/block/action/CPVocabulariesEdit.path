@@ -81,7 +81,7 @@
 <!--ASSOCIATED_ASSET_TYPES-->
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_DROP_DOWN</td>
-	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
+	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

@@ -40,22 +40,22 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_COLLAPSED</td>
-	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to Me')]</td>
+	<td>//div[@class='panel-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to Me')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_EXPANDED</td>
-	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to Me')]</td>
+	<td>//div[@class='panel-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to Me')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_COLLAPSED</td>
-	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to My Roles')]</td>
+	<td>//div[@class='panel-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to My Roles')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_EXPANDED</td>
-	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to My Roles')]</td>
+	<td>//div[@class='panel-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to My Roles')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -260,12 +260,12 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW_ACTIVITY</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Activities')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Activities')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_ACTIVITY_ENTRY</td>
-	<td>//div[@class='accordion-inner']/div/div[contains(.,'${key_workflowActivityComment}')]</td>
+	<td>//div[@class='panel-inner']/div/div[contains(.,'${key_workflowActivityComment}')]</td>
 	<td></td>
 </tr>
 <!--COMPLETED_TABLE-->

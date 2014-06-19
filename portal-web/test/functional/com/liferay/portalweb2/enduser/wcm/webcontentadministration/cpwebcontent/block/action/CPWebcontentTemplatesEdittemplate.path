@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>DETAILS</td>
-	<td>//div[@class='accordion-toggle']</td>
+	<td>//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

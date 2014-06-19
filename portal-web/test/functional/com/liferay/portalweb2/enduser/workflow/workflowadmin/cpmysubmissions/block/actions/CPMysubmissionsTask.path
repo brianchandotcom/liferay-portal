@@ -62,7 +62,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[contains(@class,'accordion-group') and contains(@class,'lfr-panel') and contains(@class,'lfr-panel-extended')]/div/div[@class='accordion-toggle' and contains(.,'Preview')]</td>
+	<td>//div[contains(@class,'panel-group') and contains(@class,'lfr-panel') and contains(@class,'lfr-panel-extended')]/div/div[@class='panel-toggle' and contains(.,'Preview')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//div[@class='accordion-inner']</td>
+	<td>//div[@class='panel-inner']</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 <!--TASKS-->
 <tr>
 	<td>TASKS</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Tasks')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Tasks')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 <!--ACTIVITIES-->
 <tr>
 	<td>ACTIVITIES</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Activities')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Activities')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Comments')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>

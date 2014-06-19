@@ -20,7 +20,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="ActivitiesDemo1" priority="5">
+	<command known-issues="SOS-2322" name="ActivitiesDemo1" priority="5">
 		<var name="bookmarksEntryDescription1" value="Bookmarks Entry1 Description" />
 		<var name="bookmarksEntryDescription2" value="Bookmarks Entry2 Description" />
 		<var name="bookmarksEntryDescription3" value="Bookmarks Entry3 Description" />
@@ -520,7 +520,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit3}" />
 	</command>
 
-	<command name="ActivitiesDemo2" priority="5">
+	<command known-issues="SOS-2322" name="ActivitiesDemo2" priority="5">
 		<var name="bookmarksEntryDescription1" value="Bookmarks Entry1 Description" />
 		<var name="bookmarksEntryDescription2" value="Bookmarks Entry2 Description" />
 		<var name="bookmarksEntryDescription3" value="Bookmarks Entry3 Description" />

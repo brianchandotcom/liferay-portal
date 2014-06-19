@@ -19,6 +19,66 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//span[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECTION_REQUESTED_MESSAGE</td>
+	<td>//span[contains(@class,'disabled')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLLOWING_MESSAGE</td>
+	<td>//span[contains(@class,'following')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOCKED_MESSAGE</td>
+	<td>//span[contains(@class,'block')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_FILTER_DROPDOWN</td>
+	<td>//select[contains(@class,'contact-group-filter-select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_BUTTON</td>
+	<td>//button[contains(@id,'addConnection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLLOW_BUTTON</td>
+	<td>//button[contains(@id,'follow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOCK_BUTTON</td>
+	<td>//button[contains(@id,'block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BUTTON</td>
+	<td>//button[contains(@id,'sendMessage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_BUTTON</td>
+	<td>//button[contains(@id,'removeConnection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNFOLLOW_BUTTON</td>
+	<td>//button[contains(@id,'unfollow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNBLOCK_BUTTON</td>
+	<td>//button[contains(@id,'unblock')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVITE_BUTTON</td>
 	<td>//a[@class='invite-members']</td>
 	<td></td>

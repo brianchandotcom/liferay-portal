@@ -2583,7 +2583,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEditedSiteActivities" priority="5">
+	<command known-issues="SOS-2322" name="ViewEditedSiteActivities" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryDescriptionEdit" value="Bookmarks Entry Description Edit" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
@@ -3211,6 +3211,547 @@
 		</execute>
 	</command>
 
+	<command name="ViewMoveCategoryThreadToCategoryActivities" priority="4">
+		<var name="categoryName1" value="MB Category 1 Name" />
+		<var name="categoryName2" value="MB Category 2 Name" />
+		<var name="pageName" value="Forums" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody1" value="MB Category 1 Thread 1 Message Body" />
+		<var name="threadCount" value="1" />
+		<var name="threadSubject1" value="MB Category 1 Thread 1 Message Subject" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName1}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#movePG">
+			<var name="categoryName1" value="${categoryName1}" />
+			<var name="categoryName2" value="${categoryName2}" />
+			<var name="roleName" value="Guest" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post in ${categoryName2}." />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+	</command>
+
+	<command name="ViewMoveCategoryThreadToHomeActivities" priority="4">
+		<var name="categoryName" value="MB Category Name" />
+		<var name="pageName" value="Forums" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadCount" value="1" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#moveToHomePG">
+			<var name="categoryName1" value="${categoryName}" />
+			<var name="roleName" value="Guest" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post." />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+	</command>
+
+	<command name="ViewMoveFolderDocumentToFolderActivities" priority="4">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentSize" value="22k" />
+		<var name="dmDocumentSizeSO" value="21.5k" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+		<var name="dmFolder1Description" value="DM Folder1 Description" />
+		<var name="dmFolder1Name" value="DM Folder1 Name" />
+		<var name="dmFolder2Description" value="DM Folder2 Description" />
+		<var name="dmFolder2Name" value="DM Folder2 Name" />
+		<var name="pageName" value="Documents" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolder1Description}" />
+			<var name="dmFolderName" value="${dmFolder1Name}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolder2Description}" />
+			<var name="dmFolderName" value="${dmFolder2Name}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolder1Name}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="DMDocument#moveToFolderPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderName" value="${dmFolder2Name}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="Uploaded a new document in the ${dmFolder2Name} folder." />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="userName" value="Test" />
+		</execute>
+	</command>
+
+	<command name="ViewMoveFolderDocumentToHomeActivities" priority="4">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentSize" value="22k" />
+		<var name="dmDocumentSizeSO" value="21.5k" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="pageName" value="Documents" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="DMDocument#moveToHomePG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="Uploaded a new document." />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="userName" value="Test" />
+		</execute>
+	</command>
+
+	<command name="ViewMoveSOWikiFrontPageChildPageToParentPageActivities" priority="4">
+		<var name="pageName" value="Wiki" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiFrontPageTitle" value="FrontPage" />
+		<var name="wikiPage2Content" value="Wiki Parent Page 2 Content" />
+		<var name="wikiPage2Title" value="Wiki Parent Page 2 Title" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiPage2Content}" />
+			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#moveWikiPagePG">
+			<var name="newParentPageTitle" value="${wikiPage2Title}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Updated a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="02" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPage2Content}" />
+			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="03" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Updated a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="04" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#moveWikiPagePG">
+			<var name="newParentPageTitle" value="${wikiFrontPageTitle}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Made 2 updates to a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="02" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPage2Content}" />
+			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="03" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Updated a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="04" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<command name="ViewMoveSOWikiPageToParentPageActivities" priority="4">
+		<var name="pageName" value="Wiki" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+		<var name="wikiParentPageContent" value="Wiki Parent Page Content" />
+		<var name="wikiParentPageTitle" value="Wiki Parent Page Title" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiParentPageContent}" />
+			<var name="wikiPageTitle" value="${wikiParentPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#moveWikiPagePG">
+			<var name="newParentPageTitle" value="${wikiParentPageTitle}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Updated a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="02" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiParentPageContent}" />
+			<var name="wikiPageTitle" value="${wikiParentPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="03" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#moveWikiPagePG">
+			<var name="newParentPageTitle" value="None" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Made 2 updates to a wiki page in the Main wiki." />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="02" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiParentPageContent}" />
+			<var name="wikiPageTitle" value="${wikiParentPageTitle}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="03" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
 	<command known-issues="SOS-2179" name="ViewPrivateRestrictedSiteActivitiesProfileByNonMember" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
@@ -3441,7 +3982,723 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command name="ViewReplyActivities" priority="5">
+	<command known-issues="SOS-2322" name="ViewRemoveBlogsEntryViewPermissionsActivities" priority="4">
+		<var name="entryContent1" value="Blogs Entry1 Content" />
+		<var name="entryContent2" value="Blogs Entry2 Content" />
+		<var name="entryTitle1" value="Blogs Entry1 Title" />
+		<var name="entryTitle2" value="Blogs Entry2 Title" />
+		<var name="pageName" value="Blogs" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#removeViewPermissionsPG">
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewBlogsActivityEntry">
+			<var name="action" value="Wrote a new blog entry." />
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle2}" />
+	</command>
+
+	<command known-issues="SOS-2314" name="ViewRemoveCalendarViewPermissionsActivities" priority="4">
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
+	</command>
+
+	<command known-issues="LPS-45435" name="ViewRemoveDocumentViewPermissionsActivities" priority="4">
+		<var name="dmDocumentDescription1" value="DM Folder Document 1 Description" />
+		<var name="dmDocumentDescription2" value="DM Folder Document 2 Description" />
+		<var name="dmDocumentFile1" value="Document_1.doc" />
+		<var name="dmDocumentFile2" value="Document_2.doc" />
+		<var name="dmDocumentTitle1" value="DM Folder Document 1 Title" />
+		<var name="dmDocumentTitle2" value="DM Folder Document 2 Title" />
+		<var name="dmDocumentUploader" value="Test Test" />
+		<var name="dmDocumentVersionNumber" value="1.0" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="pageName" value="Documents" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#removeDocumentViewPermissionsPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="Uploaded a new document in ${dmFolderName} folder." />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize1}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="userName" value="Test" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentSize2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentSizeSO2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+	</command>
+
+	<command known-issues="LPS-45435" name="ViewRemoveFolderViewPermissionsActivities" priority="4">
+		<var name="dmDocumentDescription1" value="DM Folder Document 1 Description" />
+		<var name="dmDocumentDescription2" value="DM Folder Document 2 Description" />
+		<var name="dmDocumentFile1" value="Document_1.doc" />
+		<var name="dmDocumentFile2" value="Document_2.doc" />
+		<var name="dmDocumentTitle1" value="DM Folder Document 1 Title" />
+		<var name="dmDocumentTitle2" value="DM Folder Document 2 Title" />
+		<var name="dmDocumentUploader" value="Test Test" />
+		<var name="dmDocumentVersionNumber" value="1.0" />
+		<var name="dmFolderDescription1" value="DM Folder 1 Description" />
+		<var name="dmFolderDescription2" value="DM Folder 2 Description" />
+		<var name="dmFolderName1" value="DM Folder 1 Name" />
+		<var name="dmFolderName2" value="DM Folder 2 Name" />
+		<var name="pageName" value="Documents" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription1}" />
+			<var name="dmFolderName" value="${dmFolderName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName1}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription2}" />
+			<var name="dmFolderName" value="${dmFolderName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName2}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#removeFolderViewPermissionsPG">
+			<var name="dmFolderName" value="${dmFolderName2}" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="Uploaded a new document in ${dmFolderName1} folder." />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize1}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="userName" value="Test" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentSize2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentSizeSO2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle2}" />
+	</command>
+
+	<command known-issues="LPS-45435" name="ViewRemoveMBCategorViewPermissionActivities" priority="4">
+		<var name="categoryName1" value="MB Category 1 Name" />
+		<var name="categoryName2" value="MB Category 2 Name" />
+		<var name="pageName" value="Forums" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody1" value="MB Category 1 Thread 1 Message Body" />
+		<var name="threadBody2" value="MB Category 2 Thread 2 Message Body" />
+		<var name="threadCount" value="1" />
+		<var name="threadSubject1" value="MB Category 1 Thread 1 Message Subject" />
+		<var name="threadSubject2" value="MB Category 2 Thread 2 Message Subject" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName1}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName2}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody2}" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#removeViewPermissionsPG">
+			<var name="categoryName" value="${categoryName2}" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post in ${categoryName1}." />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+	</command>
+
+	<command known-issues="LPS-45435" name="ViewRemoveMBThreadViewPermissionActivities" priority="4">
+		<var name="categoryName" value="MB Category 1 Name" />
+		<var name="pageName" value="Forums" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody1" value="MB Category 1 Thread 1 Message Body" />
+		<var name="threadBody2" value="MB Category 2 Thread 2 Message Body" />
+		<var name="threadCount" value="1" />
+		<var name="threadSubject1" value="MB Category 1 Thread 1 Message Subject" />
+		<var name="threadSubject2" value="MB Category 2 Thread 2 Message Subject" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody2}" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#removeViewPermissionsPG">
+			<var name="roleName" value="Guest" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post in ${categoryName}." />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+	</command>
+
+	<command known-issues="LPS-45435" name="ViewRemoveWikiFrontPageChildPageViewPermissionActivities" priority="4">
+		<var name="pageName" value="Wiki" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiChildPageContent1" value="Wiki FrontPage Child Page1 Content" />
+		<var name="wikiChildPageContent2" value="Wiki FrontPage Child Page2 Content" />
+		<var name="wikiChildPageContent3" value="Wiki FrontPage Child Page3 Content" />
+		<var name="wikiChildPageTitle1" value="Wiki FrontPage Child Page1 Title" />
+		<var name="wikiChildPageTitle2" value="Wiki FrontPage Child Page2 Title" />
+		<var name="wikiChildPageTitle3" value="Wiki FrontPage Child Page3 Title" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent1}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle1}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent2}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle2}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent3}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle3}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#removeViewPermissionPG">
+			<var name="roleName" value="Guest" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Created a new wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle1}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="Updated a wiki page in the Main wiki." />
+			<var name="firstRevision" value="true" />
+			<var name="row" value="02" />
+			<var name="userName" value="${adminFirstName}" />
+			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageContent2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageContent3}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageTitle3}" />
+	</command>
+
+	<command known-issues="SOS-2322" name="ViewReplyActivities" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="entryComment" value="Blogs Entry Content Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -4062,7 +5319,7 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TIME_STAMP" value1="1 minute ago." />
 	</command>
 
-	<command name="ViewSiteActivitiesDashboard" priority="5">
+	<command known-issues="SOS-2322" name="ViewSiteActivitiesDashboard" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -4134,7 +5391,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteActivitiesProfile" priority="5">
+	<command known-issues="SOS-2322" name="ViewSiteActivitiesProfile" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
@@ -4325,7 +5582,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteActivitiesSites" priority="5">
+	<command known-issues="SOS-2322" name="ViewSiteActivitiesSites" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />

@@ -30,7 +30,12 @@
 </tr>
 <tr>
 	<td>CHOOSE_THIS_CATEGORY_BUTTON</td>
+	<td>//button[contains(.,'Choose This Category')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIES_LINK</td>
+	<td>//a[contains(.,'Categories')]</td>
 	<td></td>
 </tr>
 <tr>

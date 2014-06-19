@@ -200,8 +200,10 @@
 
 		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
 
+		<execute action="SOTasksAdd#selectFrame" locator-key1="ADD_TASK_IFRAME" />
 		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
 		<execute action="SOTasksAdd#assertTextNotEquals" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
+		<execute action="SOTasksAdd#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="AddTaskAssignedToMe" priority="5">
@@ -350,6 +352,7 @@
 
 		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
 
+		<execute action="SOTasksAdd#selectFrame" locator-key1="ADD_TASK_IFRAME" />
 		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
 		<execute action="SOTasksAdd#select" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${adminName}" />
 		<execute action="SOTasksAdd#type" locator-key1="TASK_TAG_FIELD" value1="&lt;tag1&gt;" />
@@ -366,6 +369,7 @@
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${adminName}" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_TAG" value1="tag1" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="&lt;tag1&gt;" />
+		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="AddTasksAssignedToMe" priority="4">
@@ -598,7 +602,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTaskAssignedToMe" priority="5">
+	<command known-issues="SOS-2325" name="DeleteTaskAssignedToMe" priority="5">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">

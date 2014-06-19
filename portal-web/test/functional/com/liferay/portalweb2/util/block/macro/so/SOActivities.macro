@@ -1296,7 +1296,10 @@
 
 		<if>
 			<not>
-				<contains string="${action}" substring="Commented" />
+				<or>
+					<contains string="${action}" substring="Commented" />
+					<contains string="${action}" substring="Created" />
+				</or>
 			</not>
 			<then>
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_CHANGES" value1="View Changes" />

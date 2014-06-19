@@ -369,6 +369,55 @@
 		<execute action="PGMessageboardsMovethread#assertClick" locator-key1="MOVE_THREAD_BUTTON" value1="Move Thread" />
 	</command>
 
+	<command name="moveToHomePG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<if>
+			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
+			<then>
+				<var name="key_categoryDescription" value="${categoryDescription}" />
+
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
+			</then>
+			<else>
+				<var name="key_categoryName" value="${categoryName}" />
+
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsCategory#assertClick" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
+		<execute action="PGMessageboardsCategory#assertClick" locator-key1="THREAD_MENULIST_MOVE" value1="Move" />
+
+		<execute action="PGMessageboardsMovethread#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+
+		<execute action="PGMessageboardsMovethreadSelectcategory#selectFrame" locator-key1="SELECT_CATEGORY_IFRAME" />
+
+		<if>
+			<condition action="PGMessageboardsMovethreadSelectcategory#isElementPresent" locator-key1="CATEGORIES_LINK" />
+			<then>
+				<execute action="PGMessageboardsMovethreadSelectcategory#assertClick" locator-key1="CATEGORIES_LINK" value1="Categories" />
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsMovethreadSelectcategory#assertClick" locator-key1="CHOOSE_THIS_CATEGORY_BUTTON" value1="Choose This Category" />
+
+		<if>
+			<equals arg1="${explanationPost}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+				<execute action="PGMessageboardsMovethread#assertElementPresent" locator-key1="CATEGORY_FIELD" />
+				<execute action="PGMessageboardsMovethread#check" locator-key1="ADD_EXPLANATION_POST_CHECKBOX" />
+				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
+				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
+		<execute action="PGMessageboardsMovethread#assertElementPresent" locator-key1="CATEGORY_FIELD" />
+		<execute action="PGMessageboardsMovethread#assertClick" locator-key1="MOVE_THREAD_BUTTON" value1="Move Thread" />
+	</command>
+
 	<command name="moveToRecycleBinCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -425,7 +474,7 @@
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${entryTitle}" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${threadSubject}" />
 		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

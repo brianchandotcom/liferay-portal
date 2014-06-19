@@ -17,8 +17,14 @@ package com.liferay.cobertura.instrument;
 import com.liferay.portal.kernel.util.CharPool;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import java.lang.instrument.ClassFileTransformer;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 
 import java.security.ProtectionDomain;
 
@@ -147,7 +153,11 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					classReader.accept(classVisitor, 0);
 				}
 
-				return classWriter.toByteArray();
+				byte[] data = classWriter.toByteArray();
+
+				dumpIntrumentedClass(classLoader, className, data);
+
+				return data;
 			}
 
 			// Modify TouchCollector's static initialization block by
@@ -167,7 +177,11 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 				classReader.accept(classVisitor, 0);
 
-				return classWriter.toByteArray();
+				byte[] data = classWriter.toByteArray();
+
+				dumpIntrumentedClass(classLoader, className, data);
+
+				return data;
 			}
 		}
 		catch (Throwable t) {
@@ -177,6 +191,84 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		}
 
 		return null;
+	}
+
+	protected void dumpIntrumentedClass(
+			ClassLoader classLoader, String className, byte[] data)
+		throws IOException {
+
+		if (!Boolean.getBoolean("junit.code.coverage.dump")) {
+			return;
+		}
+
+		File logFile = new File(_dumpDir, "instrument.log");
+
+		File dumpDir = _dumpDir;
+
+		int index = className.lastIndexOf(CharPool.SLASH);
+
+		if (index != -1) {
+			dumpDir = new File(
+				dumpDir + "/" + classLoader.toString(),
+				className.substring(0, index));
+
+			className = className.substring(index + 1);
+		}
+
+		dumpDir.mkdirs();
+
+		File classFile = new File(dumpDir, className + ".class");
+
+		OutputStream outputStream = null;
+
+		try {
+			outputStream = new FileOutputStream(classFile);
+
+			outputStream.write(data);
+		}
+		finally {
+			if (outputStream != null) {
+				outputStream.close();
+			}
+		}
+
+		FileWriter fileWriter = null;
+
+		try {
+			fileWriter = new FileWriter(logFile, true);
+
+			fileWriter.write(
+				"Instrumented " + className + " sourced " + classLoader +
+					", dumped to " + classFile.getAbsolutePath() + "\n");
+		}
+		finally {
+			if (fileWriter != null) {
+				fileWriter.close();
+			}
+		}
+	}
+
+	private static final File _dumpDir;
+
+	static {
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		String name = runtimeMXBean.getName();
+
+		int index = name.indexOf(CharPool.AT);
+
+		String processId = null;
+
+		if (index == -1) {
+			processId = Long.toString(System.currentTimeMillis());
+		}
+		else {
+			processId = name.substring(0, index);
+		}
+
+		_dumpDir = new File(
+			System.getProperty("java.io.tmpdir"),
+			"cobertura-dump/" + processId);
 	}
 
 	private Pattern[] _excludePatterns;

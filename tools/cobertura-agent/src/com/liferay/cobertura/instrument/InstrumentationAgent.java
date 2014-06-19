@@ -170,6 +170,7 @@ public class InstrumentationAgent {
 		ProjectDataUtil.addShutdownHook(
 			new Runnable() {
 
+				@Override
 				public void run() {
 					File dataFile =
 						CoverageDataFileHandler.getDefaultDataFile();

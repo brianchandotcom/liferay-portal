@@ -51,7 +51,7 @@ public class AntCommands extends Thread {
 				sb.append(_fileName);
 				sb.append(" ");
 				sb.append(_target);
-				sb.append(" -Drun.in.background=true");
+				sb.append(" -Dtest.service.ant.commands=true");
 			}
 			else {
 				runtime.exec(
@@ -61,7 +61,7 @@ public class AntCommands extends Thread {
 				sb.append(_fileName);
 				sb.append(" ");
 				sb.append(_target);
-				sb.append(" -Drun.in.background=true");
+				sb.append(" -Dtest.service.ant.commands=true");
 			}
 
 			Process process = runtime.exec(sb.toString());

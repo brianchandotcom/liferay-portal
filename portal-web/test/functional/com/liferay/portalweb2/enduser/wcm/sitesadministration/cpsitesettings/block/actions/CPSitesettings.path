@@ -189,12 +189,12 @@
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
-	<td>//div[@class='control-group']/label[@for='_165_type']</td>
+	<td>//div[@class='form-group']/label[@for='_165_type']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
-	<td>//div[@class='control-group']/select[@id='_165_type']</td>
+	<td>//div[@class='form-group']/select[@id='_165_type']</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>PAGES_PUBLIC_PAGES_LABEL</td>
-	<td>//div[contains(@class,'accordion-toggle')]/span[contains(.,'Public Pages')]</td>
+	<td>//div[contains(@class,'panel-toggle')]/span[contains(.,'Public Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,7 +225,7 @@
 </tr>
 <tr>
 	<td>PAGES_PRIVATE_PAGES_LABEL</td>
-	<td>//div[contains(@class,'accordion-toggle')]/span[contains(.,'Private Pages')]</td>
+	<td>//div[contains(@class,'panel-toggle')]/span[contains(.,'Private Pages')]</td>
 	<td></td>
 </tr>
 <tr>

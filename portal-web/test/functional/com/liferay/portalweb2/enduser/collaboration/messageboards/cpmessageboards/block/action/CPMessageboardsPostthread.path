@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENTS_DROPDOWN</td>
-	<td>//div[@id='mbMessageAttachmentsPanel']/div/div[@class='accordion-toggle']</td>
+	<td>//div[@id='mbMessageAttachmentsPanel']/div/div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

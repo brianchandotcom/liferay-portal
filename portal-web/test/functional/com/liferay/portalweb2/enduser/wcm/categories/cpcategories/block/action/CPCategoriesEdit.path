@@ -41,12 +41,12 @@
 <!--PROPERTIES-->
 <tr>
 	<td>PROPERTIES_BAR</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Properties')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Properties')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROPERTIES_BAR_COLLAPSED</td>
-	<td>//div[contains(@class,'portlet-asset-categories-admin-dialog')]//div[(contains(@class,'accordion-heading') or contains(@class,'panel-heading')) and contains(@class,'toggler-header') and contains(@class,'toggler-header-collapsed')]</td>
+	<td>//div[contains(@class,'portlet-asset-categories-admin-dialog')]//div[contains(@class,'panel-heading')) and contains(@class,'toggler-header') and contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

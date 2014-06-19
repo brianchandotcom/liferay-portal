@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>REQUIRED_STRUCTURES_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert alert-error') and contains(.,'Required structures could not be deleted.')]</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Required structures could not be deleted.')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PORTLET_ERROR_MESSAGE</td>
-	<td>//div[@class='alert alert-error' and contains(.,'Your request failed to complete')]</td>
+	<td>//div[@class='alert alert-danger' and contains(.,'Your request failed to complete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>TITLE_ERROR_MESSAGE</td>
-	<td>//div[@class='alert alert-error' and contains(.,'Please enter a valid title')]</td>
+	<td>//div[@class='alert-danger' and contains(.,'Please enter a valid title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_TOGGLE</td>
-	<td>//div[@class='accordion-toggle' and contains(.,'Categorization')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Categorization')]</td>
 	<td></td>
 </tr>
 <tr>

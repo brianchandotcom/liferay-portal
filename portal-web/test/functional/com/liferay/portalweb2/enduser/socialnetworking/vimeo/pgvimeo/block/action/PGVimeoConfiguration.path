@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_OPTIONS</td>
-	<td>//div[contains(@class,'accordion-toggle')]/span[@class='title-text']</td>
+	<td>//div[contains(@class,'panel-toggle')]/span[@class='title-text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ENABLE_FULLSCREEN_OPTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_enableFullscreenCheckbox']</td>
+	<td>//input[@id='_86_enableFullscreen']</td>
 	<td></td>
 </tr>
 <tr>

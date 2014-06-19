@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[contains(@id,'activeCheckbox')]</td>
+	<td>//input[contains(@id,'active')]</td>
 	<td></td>
 </tr>
 <tr>

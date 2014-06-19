@@ -321,12 +321,12 @@
 <!--EDIT_DETAILS-->
 <tr>
 	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]/input[contains(@id,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]/input[contains(@id,'layoutPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

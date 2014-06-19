@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIBE_ME_CHECKBOX</td>
-	<td>//input[@id='_107_subscribeCheckbox']</td>
+	<td>//input[@id='_107_subscribe']</td>
 	<td></td>
 </tr>
 <tr>

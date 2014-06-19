@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
-	<td>//input[@id='_36_allRowIdsCheckbox']</td>
+	<td>//input[@id='_36_allRowIds']</td>
 	<td></td>
 </tr>
 <tr>

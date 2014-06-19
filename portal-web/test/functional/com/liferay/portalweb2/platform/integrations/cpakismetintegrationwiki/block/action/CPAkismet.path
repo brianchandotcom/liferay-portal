@@ -21,17 +21,17 @@
 </tr>
 <tr>
 	<td>ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_akismetportlet_messageBoardsEnabledCheckbox']</td>
+	<td>//input[@id='_1_WAR_akismetportlet_messageBoardsEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLED_FOR_DISCUSSIONS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_akismetportlet_discussionsEnabledCheckbox']</td>
+	<td>//input[@id='_1_WAR_akismetportlet_discussionsEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLED_FOR_WIKI_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_akismetportlet_wikiEnabledCheckbox']</td>
+	<td>//input[@id='_1_WAR_akismetportlet_wikiEnabled']</td>
 	<td></td>
 </tr>
 <tr>

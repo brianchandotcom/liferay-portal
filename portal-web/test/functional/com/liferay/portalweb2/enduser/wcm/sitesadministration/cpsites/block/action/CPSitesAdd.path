@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
-	<td>//input[@id='_165_manualMembershipCheckbox']</td>
+	<td>//input[@id='_165_manualMembership']</td>
 	<td></td>
 </tr>
 <tr>

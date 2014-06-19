@@ -51,7 +51,7 @@
 <!--ADD_EXPLANATION_POST-->
 <tr>
 	<td>ADD_EXPLANATION_POST_CHECKBOX</td>
-	<td>//input[contains(@id,'addExplanationPostCheckbox')]</td>
+	<td>//input[contains(@id,'addExplanationPost')]</td>
 	<td></td>
 </tr>
 <tr>

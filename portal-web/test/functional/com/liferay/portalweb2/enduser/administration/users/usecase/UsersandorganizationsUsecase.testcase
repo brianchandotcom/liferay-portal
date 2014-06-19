@@ -975,7 +975,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#check" locator-key1="SYNTAX_CHECKING_ENABLED_CHECKBOX" />
@@ -1021,7 +1021,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<var name="atLeastSixCharNumbersPermitted">
@@ -1068,7 +1068,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#click" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_NUMBERS_FIELD" value1="2" />

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[contains(@id,'_15_smallImageCheckbox')]</td>
+	<td>//input[contains(@id,'_15_smallImage')]</td>
 	<td></td>
 </tr>
 </tbody>

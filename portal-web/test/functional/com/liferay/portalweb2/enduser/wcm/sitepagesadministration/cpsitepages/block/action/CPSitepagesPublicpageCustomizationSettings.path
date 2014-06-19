@@ -29,10 +29,10 @@
 	<td></td>
 </tr>
 <!---->
-<!--CUSTOMATIZATION_SETTINGS-->
+<!--CUSTOMIZATION_SETTINGS-->
 <tr>
-	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO</td>
-	<td>//input[contains(@name,'TypeSettingsProperties--column-${key_columnId}-customizable--Checkbox')]</td>
+	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
+	<td>//input[contains(@name,'TypeSettingsProperties--column-${key_columnId}-customizable--')]</td>
 	<td></td>
 </tr>
 

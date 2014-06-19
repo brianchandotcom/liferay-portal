@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>SCHEDULE_EXPIRATION_DATE_NEVER_EXPIRE_CHECKBOX</td>
-	<td>//input[contains(@name,'15') and contains(@name,'neverExpireCheckbox')]</td>
+	<td>//input[contains(@name,'15') and contains(@name,'neverExpire')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>SCHEDULE_REVIEW_DATE_NEVER_REVIEW_CHECKBOX</td>
-	<td>//input[contains(@name,'15') and contains(@name,'neverReviewCheckbox')]</td>
+	<td>//input[contains(@name,'15') and contains(@name,'neverReview')]</td>
 	<td></td>
 </tr>
 </tbody>

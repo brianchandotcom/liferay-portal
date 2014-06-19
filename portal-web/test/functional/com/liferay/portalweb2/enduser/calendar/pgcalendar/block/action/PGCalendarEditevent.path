@@ -103,7 +103,7 @@
 <!--REPEAT-->
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
-	<td>//input[@id='_8_allDayCheckbox']</td>
+	<td>//input[@id='_8_allDay']</td>
 	<td></td>
 </tr>
 <tr>

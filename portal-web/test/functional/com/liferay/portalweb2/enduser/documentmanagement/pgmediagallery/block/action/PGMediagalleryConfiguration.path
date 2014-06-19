@@ -46,22 +46,22 @@
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>//input[@id='_86_showActions']</td>
 	<td>Show Actions</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>//input[@id='_86_showFolderMenu']</td>
 	<td>Show Folder Menu</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>//input[@id='_86_showTabs']</td>
 	<td>Show Navigation Links</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>//input[@id='_86_showFoldersSearch']</td>
 	<td>Show Search</td>
 </tr>
 <tr>
@@ -104,12 +104,12 @@
 <!--RATINGS-->
 <tr>
 	<td>RATINGS_ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableRatings']</td>
 	<td>Enable Ratings</td>
 </tr>
 <tr>
 	<td>RATINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableCommentRatings']</td>
 	<td>Enable Comment Ratings</td>
 </tr>
 </tbody>

@@ -68,7 +68,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>//input[@id='_15_allRowIds']</td>
 	<td></td>
 </tr>
 <tr>
@@ -316,7 +316,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticle']</td>
 	<td></td>
 </tr>
 <tr>
@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticle']</td>
 	<td></td>
 </tr>
 <tr>

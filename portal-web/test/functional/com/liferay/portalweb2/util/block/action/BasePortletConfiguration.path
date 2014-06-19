@@ -92,37 +92,37 @@
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td>//input[@id='_86_enablePrint']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td>//input[@id='_86_enableFlags']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>//input[@id='_86_enableRelatedAssets']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>//input[@id='_86_enableComments']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>//input[@id='_86_enableCommentRatings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
-	<td>//input[@id='_86_enableSocialBookmarksCheckbox']</td>
+	<td>//input[@id='_86_enableSocialBookmarks']</td>
 	<td></td>
 </tr>
 </tbody>

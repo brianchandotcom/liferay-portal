@@ -87,32 +87,32 @@
 <!--AUTHENTICATION_GENERAL-->
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.auto.loginCheckbox']</td>
+	<td>//input[@id='_130_company.security.auto.login']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.send.passwordCheckbox']</td>
+	<td>//input[@id='_130_company.security.send.password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL__ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.send.password.reset.linkCheckbox']</td>
+	<td>//input[@id='_130_company.security.send.password.reset.link']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangersCheckbox']</td>
+	<td>//input[@id='_130_company.security.strangers']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers.with.mxCheckbox']</td>
+	<td>//input[@id='_130_company.security.strangers.with.mx']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX</td>
-	<td>//input[@id='_130_company.security.strangers.verifyCheckbox']</td>
+	<td>//input[@id='_130_company.security.strangers.verify']</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,7 +128,7 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_cas.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_cas.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,27 +174,27 @@
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_ldap.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_REQUIRED_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.auth.requiredCheckbox']</td>
+	<td>//input[@id='_130_ldap.auth.required']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ldapImportEnabledCheckbox']</td>
+	<td>//input[@id='_130_ldapImportEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ldapExportEnabledCheckbox']</td>
+	<td>//input[@id='_130_ldapExportEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX</td>
-	<td>//input[@id='_130_ldap.password.policy.enabledCheckbox']</td>
+	<td>//input[@id='_130_ldap.password.policy.enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,12 +286,12 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_cas.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_cas.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_cas.import.from.ldapCheckbox']</td>
+	<td>//input[@id='_130_cas.import.from.ldap']</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,7 +367,7 @@
 <!--AUTHENTICATION_NTLM-->
 <tr>
 	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_ntlm.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_ntlm.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -428,7 +428,7 @@
 <!--AUTHENTICATION_OPEN_ID-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_open.id.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_open.id.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -439,12 +439,12 @@
 <!--AUTHENTICATION_OPEN_SSO-->
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_open.sso.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_open.sso.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_open.sso.ldap.import.enabledCheckbox']</td>
+	<td>//input[@id='_130_open.sso.ldap.import.enabled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -530,12 +530,12 @@
 <!--AUTHENTICATION_SITE_MINDER-->
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_130_siteminder.auth.enabledCheckbox']</td>
+	<td>//input[@id='_130_siteminder.auth.enabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[@id='_130_siteminder.import.from.ldapCheckbox']</td>
+	<td>//input[@id='_130_siteminder.import.from.ldap']</td>
 	<td></td>
 </tr>
 <tr>

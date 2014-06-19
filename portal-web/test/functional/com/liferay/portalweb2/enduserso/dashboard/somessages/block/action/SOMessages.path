@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_messageBody}')]//input[contains(@name,'ThreadCheckbox')]</td>
+	<td>//tr[contains(.,'${key_messageBody}')]//input[contains(@name,'Thread')]</td>
 	<td></td>
 </tr>
 <tr>

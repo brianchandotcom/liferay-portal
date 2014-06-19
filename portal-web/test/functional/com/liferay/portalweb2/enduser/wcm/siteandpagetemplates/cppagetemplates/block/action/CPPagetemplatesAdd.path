@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[@id='_146_activeCheckbox']</td>
+	<td>//input[@id='_146_active']</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
-	<td>//input[@id='_165_manualMembershipCheckbox']</td>
+	<td>//input[@id='_165_manualMembership']</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
-	<td>//input[@id='_165_membershipRestrictionCheckbox']</td>
+	<td>//input[@id='_165_membershipRestriction']</td>
 	<td></td>
 </tr>
 <tr>

@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[contains(@id,'showFoldersSearchCheckbox')]</td>
+	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[contains(@id,'enableRelatedAssetsCheckbox')]</td>
+	<td>//input[contains(@id,'enableRelatedAssets')]</td>
 	<td></td>
 </tr>
 <tr>

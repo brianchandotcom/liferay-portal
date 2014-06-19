@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_156_addLayoutHiddenCheckbox']</td>
+	<td>//input[@id='_156_addLayoutHidden']</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX</td>
-	<td>//li[contains(@data-search,'${key_pageType}')]//input[contains(@name,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td>//li[contains(@data-search,'${key_pageType}')]//input[contains(@name,'layoutPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

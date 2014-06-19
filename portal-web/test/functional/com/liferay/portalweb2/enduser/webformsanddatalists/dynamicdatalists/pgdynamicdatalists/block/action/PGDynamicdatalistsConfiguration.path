@@ -87,12 +87,12 @@
 </tr>
 <tr>
 	<td>TEMPLATES_EDITABLE_CHECKBOX</td>
-	<td>//input[@id='_86_editableCheckbox']</td>
+	<td>//input[@id='_86_editable']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATES_SPREADSHEET_VIEW_CHECKBOX</td>
-	<td>//input[@id='_86_spreadsheetCheckbox']</td>
+	<td>//input[@id='_86_spreadsheet']</td>
 	<td></td>
 </tr>
 <tr>

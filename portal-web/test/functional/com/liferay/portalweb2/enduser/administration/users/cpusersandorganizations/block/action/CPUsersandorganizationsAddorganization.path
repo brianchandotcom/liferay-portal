@@ -72,7 +72,7 @@
 <!--ORGANIZATION_SITE-->
 <tr>
 	<td>ORGANIZATION_SITE_CREATE_SITE_CHECKBOX</td>
-	<td>//input[@id='_125_siteCheckbox']</td>
+	<td>//input[@id='_125_site']</td>
 	<td></td>
 </tr>
 </tbody>

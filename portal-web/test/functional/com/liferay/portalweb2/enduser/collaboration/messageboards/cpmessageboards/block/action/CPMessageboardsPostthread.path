@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ANONYMOUS_CHECKBOX</td>
-	<td>//input[@id='_162_anonymousCheckbox']</td>
+	<td>//input[@id='_162_anonymous']</td>
 	<td></td>
 </tr>
 <tr>

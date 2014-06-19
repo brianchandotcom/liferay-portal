@@ -67,27 +67,27 @@
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX</td>
-	<td>//input[@id='_86_showFeedTitleCheckbox']</td>
+	<td>//input[@id='_86_showFeedTitle']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX</td>
-	<td>//input[@id='_86_showFeedPublishedDateCheckbox']</td>
+	<td>//input[@id='_86_showFeedPublishedDate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX</td>
-	<td>//input[@id='_86_showFeedDescriptionCheckbox']</td>
+	<td>//input[@id='_86_showFeedDescription']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX</td>
-	<td>//input[@id='_86_showFeedImageCheckbox']</td>
+	<td>//input[@id='_86_showFeedImage']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX</td>
-	<td>//input[@id='_86_showFeedItemAuthorCheckbox']</td>
+	<td>//input[@id='_86_showFeedItemAuthor']</td>
 	<td></td>
 </tr>
 <tr>

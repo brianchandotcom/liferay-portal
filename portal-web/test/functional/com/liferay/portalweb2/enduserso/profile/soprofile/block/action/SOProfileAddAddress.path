@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>MAILING_CHECKBOX</td>
-	<td>//input[contains(@id,'addressMailing0Checkbox')]</td>
+	<td>//input[contains(@id,'addressMailing0')]</td>
 	<td></td>
 </tr>
 <tr>

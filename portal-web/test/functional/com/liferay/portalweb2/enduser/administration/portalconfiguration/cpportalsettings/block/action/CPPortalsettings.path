@@ -118,7 +118,7 @@
 </tr>
 <tr>
 	<td>MAIN_CONFIGURATION_CDN_DYNAMIC_RESOURCES_ENABLE_CHECKBOX</td>
-	<td>//input[@id='_130_cdn.dynamic.resources.enabledCheckbox']</td>
+	<td>//input[@id='_130_cdn.dynamic.resources.enabled']</td>
 	<td></td>
 </tr>
 <tr>

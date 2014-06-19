@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX</td>
-	<td>//input[@id='_86_widgetShowAddAppLinkCheckbox']</td>
+	<td>//input[@id='_86_widgetShowAddAppLink']</td>
 	<td></td>
 </tr>
 <tr>

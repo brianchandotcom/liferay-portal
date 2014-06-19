@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
-	<td>//input[contains(@id,'calendarportlet_allDayCheckbox')]</td>
+	<td>//input[contains(@id,'calendarportlet_allDay')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 <!--REPEAT-->
 <tr>
 	<td>REPEAT_CHECKBOX</td>
-	<td>//input[contains(@id,'calendarportlet_repeatCheckbox')]</td>
+	<td>//input[contains(@id,'calendarportlet_repeat')]</td>
 	<td></td>
 </tr>
 <tr>

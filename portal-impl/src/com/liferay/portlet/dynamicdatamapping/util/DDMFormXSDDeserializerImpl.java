@@ -328,7 +328,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
 		boolean repeatable = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("repeatable"), true);
+			dynamicElementElement.attributeValue("repeatable"));
 
 		ddmFormField.setRepeatable(repeatable);
 	}

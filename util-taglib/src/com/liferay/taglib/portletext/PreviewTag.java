@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.RequestDispatcher;

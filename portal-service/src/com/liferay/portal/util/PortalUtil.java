@@ -77,7 +77,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -945,8 +944,8 @@ public class PortalUtil {
 		return getPortal().getFirstMyAccountPortlet(themeDisplay);
 	}
 
-	public static String getFirstPageLayoutTypes(PageContext pageContext) {
-		return getPortal().getFirstPageLayoutTypes(pageContext);
+	public static String getFirstPageLayoutTypes(HttpServletRequest request) {
+		return getPortal().getFirstPageLayoutTypes(request);
 	}
 
 	public static Portlet getFirstSiteAdministrationPortlet(

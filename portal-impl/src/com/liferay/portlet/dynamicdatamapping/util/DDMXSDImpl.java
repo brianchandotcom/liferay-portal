@@ -137,6 +137,8 @@ public class DDMXSDImpl implements DDMXSD {
 		String[] fieldsDisplayValues = getFieldsDisplayValues(
 			fieldDisplayValue);
 
+		int offset = 0;
+
 		boolean fieldDisplayable = ArrayUtil.contains(
 			fieldsDisplayValues, name);
 
@@ -147,7 +149,12 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String parentFieldName = (String)parentFieldStructure.get("name");
 
-			int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			offset = getFieldOffset(
+				fieldsDisplayValues, name, ddmFieldsCounter.get(name));
+
+			if (offset == fieldsDisplayValues.length) {
+				return StringPool.BLANK;
+			}
 
 			fieldRepetition = countFieldRepetition(
 				fieldsDisplayValues, parentFieldName, offset);
@@ -156,11 +163,14 @@ public class DDMXSDImpl implements DDMXSD {
 		StringBundler sb = new StringBundler(fieldRepetition);
 
 		while (fieldRepetition > 0) {
+			offset = getFieldOffset(
+				fieldsDisplayValues, name, ddmFieldsCounter.get(name));
+
 			String fieldNamespace = StringUtil.randomId();
 
 			if (fieldDisplayable) {
 				fieldNamespace = getFieldNamespace(
-					fieldDisplayValue, ddmFieldsCounter);
+					fieldDisplayValue, ddmFieldsCounter, offset);
 			}
 
 			fieldStructure.put("fieldNamespace", fieldNamespace);
@@ -169,7 +179,6 @@ public class DDMXSDImpl implements DDMXSD {
 
 			if (fieldDisplayable) {
 				ddmFieldsCounter.incrementKey(name);
-				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}
 
 			String childrenHTML = getHTML(
@@ -683,16 +692,33 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected String getFieldNamespace(
-		String fieldDisplayValue, DDMFieldsCounter ddmFieldsCounter) {
+		String fieldDisplayValue, DDMFieldsCounter ddmFieldsCounter,
+		int offset) {
 
 		String[] fieldsDisplayValues = StringUtil.split(fieldDisplayValue);
-
-		int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		String fieldsDisplayValue = fieldsDisplayValues[offset];
 
 		return StringUtil.extractLast(
 			fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+	}
+
+	protected int getFieldOffset(
+		String[] fieldsDisplayValues, String name, int index) {
+
+		int offset = 0;
+
+		for (; offset < fieldsDisplayValues.length; offset++) {
+			if (name.equals(fieldsDisplayValues[offset])) {
+				index--;
+
+				if (index < 0) {
+					break;
+				}
+			}
+		}
+
+		return offset;
 	}
 
 	protected Map<String, Map<String, Object>> getFieldsContext(

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,74 +64,74 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		HttpServletRequest request, String pattern, LanguageWrapper argument) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, argument));
+			LanguageUtil.format(request, pattern, argument));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
 		boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				pageContext, pattern, argument, translateArguments));
+				request, pattern, argument, translateArguments));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, arguments));
+			LanguageUtil.format(request, pattern, arguments));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				pageContext, pattern, arguments, translateArguments));
+				request, pattern, arguments, translateArguments));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object argument) {
+		HttpServletRequest request, String pattern, Object argument) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, argument));
+			LanguageUtil.format(request, pattern, argument));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object argument,
+		HttpServletRequest request, String pattern, Object argument,
 		boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				pageContext, pattern, argument, translateArguments));
+				request, pattern, argument, translateArguments));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
+		HttpServletRequest request, String pattern, Object[] arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(pageContext, pattern, arguments));
+			LanguageUtil.format(request, pattern, arguments));
 	}
 
 	@Override
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments,
+		HttpServletRequest request, String pattern, Object[] arguments,
 		boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				pageContext, pattern, arguments, translateArguments));
+				request, pattern, arguments, translateArguments));
 	}
 
 	@Override
@@ -182,16 +182,16 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	}
 
 	@Override
-	public String get(PageContext pageContext, String key) {
-		return UnicodeFormatter.toString(LanguageUtil.get(pageContext, key));
+	public String get(HttpServletRequest request, String key) {
+		return UnicodeFormatter.toString(LanguageUtil.get(request, key));
 	}
 
 	@Override
 	public String get(
-		PageContext pageContext, String key, String defaultValue) {
+		HttpServletRequest request, String key, String defaultValue) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.get(pageContext, key, defaultValue));
+			LanguageUtil.get(request, key, defaultValue));
 	}
 
 	@Override
@@ -209,18 +209,18 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String getTimeDescription(
-		PageContext pageContext, long milliseconds) {
+		HttpServletRequest request, long milliseconds) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.getTimeDescription(pageContext, milliseconds));
+			LanguageUtil.getTimeDescription(request, milliseconds));
 	}
 
 	@Override
 	public String getTimeDescription(
-		PageContext pageContext, Long milliseconds) {
+		HttpServletRequest request, Long milliseconds) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.getTimeDescription(pageContext, milliseconds));
+			LanguageUtil.getTimeDescription(request, milliseconds));
 	}
 
 }

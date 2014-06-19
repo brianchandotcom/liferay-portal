@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,6 +33,11 @@ import java.awt.event.InputEvent;
 
 import java.io.StringReader;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +68,8 @@ import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.sikuli.script.Screen;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -1178,23 +1186,25 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
-		WebElement webElement = getWebElement(locator);
+		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+			if (!webElement.isDisplayed()) {
+				scrollWebElementIntoView(webElement);
+			}
+
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+			WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+			Actions actions = new Actions(webDriver);
+
+			actions.moveToElement(webElement);
+
+			Action action = actions.build();
+
+			action.perform();
 		}
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
-		actions.moveToElement(webElement);
-
-		Action action = actions.build();
-
-		action.perform();
 	}
 
 	@Override
@@ -1266,7 +1276,53 @@ public class WebDriverToSeleniumBridge
 		String targetURL = "";
 
 		if (url.startsWith("/")) {
-			targetURL = TestPropsValues.PORTAL_URL + url;
+			if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+				try {
+					if (OSDetector.isWindows()) {
+						String ipAddress =
+							InetAddress.getLocalHost().toString();
+
+						String[] localHost = StringUtil.split(ipAddress, "/");
+
+						ipAddress = localHost[1];
+
+						String portalURL = "http://" + ipAddress + ":8080";
+
+						targetURL = portalURL + url;
+					}
+					else {
+						Enumeration<NetworkInterface> ifaces =
+							NetworkInterface.getNetworkInterfaces();
+
+						while (ifaces.hasMoreElements()) {
+							NetworkInterface iface = ifaces.nextElement();
+
+							Enumeration<InetAddress> addresses =
+								iface.getInetAddresses();
+
+							while (addresses.hasMoreElements()) {
+								InetAddress addr = addresses.nextElement();
+
+								if (addr instanceof Inet4Address &&
+									!addr.isLoopbackAddress()) {
+
+									String ipAddress = addr.toString();
+
+									String portalURL =
+										"http:/" + ipAddress + ":8080";
+
+									targetURL = portalURL + url;
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e) {
+			}
+			}
+			else {
+				targetURL = TestPropsValues.PORTAL_URL + url;
+			}
 		}
 		else {
 			targetURL = url;
@@ -1599,7 +1655,22 @@ public class WebDriverToSeleniumBridge
 	public void type(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 
-		if (webElement.isEnabled()) {
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			webElement.clear();
+
+			webElement.click();
+
+			try {
+				Thread.sleep(1000);
+			}
+			catch (Exception e) {
+			}
+
+			Screen _screen = new Screen();
+
+			_screen.type(value);
+		}
+		else if (webElement.isEnabled()) {
 			webElement.clear();
 
 			webElement.sendKeys(value);

@@ -66,20 +66,14 @@ public abstract class BaseWebDriverImpl
 
 		WebDriver.Options options = webDriver.manage();
 
-		WebDriver.Window window = options.window();
+		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			WebDriver.Window window = options.window();
 
-		int x = 1065;
-		int y = 1040;
+			int x = 1065;
+			int y = 1040;
 
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			String[] screenResolution = StringUtil.split(
-				TestPropsValues.MOBILE_DEVICE_RESOLUTION, "x");
-
-			x = GetterUtil.getInteger(screenResolution[0]);
-			y = GetterUtil.getInteger(screenResolution[1]);
+			window.setSize(new Dimension(x, y));
 		}
-
-		window.setSize(new Dimension(x, y));
 
 		webDriver.get(browserURL);
 	}

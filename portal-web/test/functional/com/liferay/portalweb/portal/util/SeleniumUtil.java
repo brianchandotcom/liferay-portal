@@ -14,9 +14,12 @@
 
 package com.liferay.portalweb.portal.util;
 
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portalweb.portal.util.liferayselenium.AppiumDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
@@ -28,6 +31,12 @@ import com.liferay.portalweb.portal.util.liferayselenium.SafariWebDriverImpl;
 import com.thoughtworks.selenium.Selenium;
 
 import java.io.File;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
+import java.util.Enumeration;
 
 import org.openqa.selenium.WebDriver;
 
@@ -82,6 +91,45 @@ public class SeleniumUtil extends TestPropsValues {
 			portalURL = "http://localhost:8180/console";
 		}
 
+		if (MOBILE_DEVICE_ENABLED) {
+			try {
+				if (OSDetector.isWindows()) {
+					String ipAddress = InetAddress.getLocalHost().toString();
+
+					String[] localHost = StringUtil.split(ipAddress, "/");
+
+					ipAddress = localHost[1];
+
+					portalURL = "http://" + ipAddress + ":8080";
+				}
+				else {
+					Enumeration<NetworkInterface> ifaces =
+						NetworkInterface.getNetworkInterfaces();
+
+					while (ifaces.hasMoreElements()) {
+						NetworkInterface iface = ifaces.nextElement();
+
+						Enumeration<InetAddress> addresses =
+							iface.getInetAddresses();
+
+						while (addresses.hasMoreElements()) {
+							InetAddress addr = addresses.nextElement();
+
+							if (addr instanceof Inet4Address &&
+								!addr.isLoopbackAddress()) {
+
+								String ipAddress = addr.toString();
+
+								portalURL = "http://" + ipAddress + ":8080";
+							}
+						}
+					}
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
 		if (SELENIUM_IMPLEMENTATION.equals(Selenium.class.getName())) {
 			LiferaySelenium liferaySelenium = new DefaultSeleniumImpl(
 				projectDir, portalURL);
@@ -98,8 +146,8 @@ public class SeleniumUtil extends TestPropsValues {
 			}
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
-			if (BROWSER_TYPE.equals("*chrome") ||
-				BROWSER_TYPE.equals("*firefox")) {
+			if ((BROWSER_TYPE.equals("*chrome") ||
+				 BROWSER_TYPE.equals("*firefox")) && !MOBILE_DEVICE_ENABLED) {
 
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
@@ -109,7 +157,9 @@ public class SeleniumUtil extends TestPropsValues {
 					_selenium = new FirefoxWebDriverImpl(projectDir, portalURL);
 				}
 			}
-			else if (BROWSER_TYPE.equals("*googlechrome")) {
+			else if (BROWSER_TYPE.equals("*googlechrome") &&
+					 !MOBILE_DEVICE_ENABLED) {
+
 				System.setProperty(
 					"webdriver.chrome.driver",
 					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
@@ -123,8 +173,9 @@ public class SeleniumUtil extends TestPropsValues {
 					_selenium = new ChromeWebDriverImpl(projectDir, portalURL);
 				}
 			}
-			else if (BROWSER_TYPE.equals("*iehta") ||
-					 BROWSER_TYPE.equals("*iexplore")) {
+			else if ((BROWSER_TYPE.equals("*iehta") ||
+					  BROWSER_TYPE.equals("*iexplore")) &&
+					 !MOBILE_DEVICE_ENABLED) {
 
 				System.setProperty(
 					"webdriver.ie.driver",
@@ -141,13 +192,22 @@ public class SeleniumUtil extends TestPropsValues {
 						projectDir, portalURL);
 				}
 			}
-			else if (BROWSER_TYPE.equals("*safari")) {
+			else if (BROWSER_TYPE.equals("*safari") && !MOBILE_DEVICE_ENABLED) {
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new SafariWebDriverImpl(projectDir, portalURL));
 				}
 				else {
 					_selenium = new SafariWebDriverImpl(projectDir, portalURL);
+				}
+			}
+			else if (MOBILE_DEVICE_ENABLED) {
+				if (SELENIUM_LOGGER_ENABLED) {
+					_selenium = _wrapWithLoggerHandler(
+						new AppiumDriverImpl(projectDir, portalURL));
+				}
+				else {
+					_selenium = new AppiumDriverImpl(projectDir, portalURL);
 				}
 			}
 			else {

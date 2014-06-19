@@ -224,6 +224,13 @@
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS" />
 	</command>
 
+	<command name="gotoManageSitePages">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_MANAGE_SITE_PAGES" value1="Manage Site Pages" />
+	</command>
+
 	<command name="removeMemberCP">
 		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
 		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />

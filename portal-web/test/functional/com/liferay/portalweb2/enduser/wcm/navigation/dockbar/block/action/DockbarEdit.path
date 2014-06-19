@@ -93,6 +93,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_FRIENDLY_URL_LOCALIZED</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='${key_friendlyUrlLocalized}']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_FRIENDLY_URL_SPANISH_SPAIN</td>
 	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='es_ES']/a</td>
 	<td></td>

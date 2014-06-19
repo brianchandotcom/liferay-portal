@@ -782,13 +782,9 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute macro="WebContent#gotoEditPG">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitleEdit}" />
 		<execute action="CPWebcontentEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContentEdit}" />
@@ -815,6 +811,27 @@
 		</if>
 	</command>
 
+	<command name="editDisplayPageCP">
+		<execute macro="WebContent#gotoEditPG">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_DISPLAY_PAGE" value1="Display Page" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="DISPLAY_PAGE_SELECT" value1="Select" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="CPWebcontentAddwebcontentDisplaypageConfiguration#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGE" value1="Public Pages" />
+		<execute action="CPWebcontentAddwebcontentDisplaypageConfiguration#assertClick" locator-key1="PUBLIC_PAGES_SELECTION" value1="${pageName}" />
+		<execute action="CPWebcontentAddwebcontentDisplaypageConfiguration#assertTextEquals" locator-key1="SELECTED_PAGE_INFO_MESSAGE" value1="Public Pages > ${pageName}" />
+		<execute action="CPWebcontentAddwebcontentDisplaypageConfiguration#assertClick" locator-key1="OK_BUTTON" value1="OK" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="DISPLAY_PAGE_SELECTION" value1="Public Pages > ${pageName}" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
@@ -832,7 +849,7 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_CONTENT" value1="Content" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGAssetpublisher#pause" locator1="5000" />
+		<execute action="PGAssetpublisher#pause" locator1="3000" />
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 	</command>
 
@@ -949,6 +966,16 @@
 	</command>
 
 	<command name="gotoEditCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoEditPG">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />

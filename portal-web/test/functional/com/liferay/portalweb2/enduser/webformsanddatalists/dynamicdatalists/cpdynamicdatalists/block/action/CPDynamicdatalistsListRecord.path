@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_1</td>
 	<td>//div[@class='lfr-ddm-container']/div[1]</td>
 	<td></td>

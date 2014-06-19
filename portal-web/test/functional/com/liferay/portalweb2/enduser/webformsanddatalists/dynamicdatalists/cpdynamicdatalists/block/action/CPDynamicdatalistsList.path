@@ -117,6 +117,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
+	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/span)</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECORD_TABLE_COLUMN_THREE_NAME</td>
 	<td>xpath=(//div[@id='_167_ocerSearchContainer']//thead/tr/th[3])</td>
 	<td></td>
@@ -128,7 +133,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div/a[@title='Actions'])[1]</td>
+	<td>//tr/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>

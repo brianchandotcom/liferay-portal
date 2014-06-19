@@ -169,6 +169,38 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
 	</command>
 
+	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoEdit" />
+
+		<execute macro="Page#addFriendlyUrlPG">
+			<var name="friendlyUrlLocalized" value="de_DE" />
+			<var name="localizedFriendlyURL" value="/german" />
+		</execute>
+
+		<execute macro="Page#deleteFriendlyURLPG" >
+			<var name="friendlyUrlLocalized" value="en_US" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
+		<execute action="Home#assertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
+
+		<execute macro="Page#viewPageFriendURLPG">
+			<var name="localizedFriendlyURL" value="/german" />
+			<var name="pageName" value="page-name" />
+		</execute>
+	</command>
+
 	<command name="LoadMoreResultsLinkAreMissingAtAllLevelsInTreeView" priority="3">
 		<property name="custom.properties" value="layout.manage.pages.initial.children=3" />
 		<var name="childPageNameList" value="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" />

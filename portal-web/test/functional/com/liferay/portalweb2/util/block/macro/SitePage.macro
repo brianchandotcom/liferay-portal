@@ -184,7 +184,14 @@
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 
 		<if>
-			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_ROOT_ARROW_PLUS" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW_PLUS" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 				<execute action="CPSitepages#click" locator-key1="TOOLBAR_DELETE" />
@@ -498,6 +505,20 @@
 					<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_6" value1="Child Page5 Name" />
 				</then>
 			</elseif>
+		</if>
+	</command>
+
+	<command name="viewNoDeletePagesAssociatedWithSiteTemplateCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK" />
+			<then>
+				<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+				<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+				<execute action="CPSitepages#assertElementNotPresent" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="BLOCK_MESSAGE" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
+			</then>
 		</if>
 	</command>
 

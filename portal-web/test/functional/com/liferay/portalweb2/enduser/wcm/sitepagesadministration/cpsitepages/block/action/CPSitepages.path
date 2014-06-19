@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOCK_MESSAGE</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-block'))])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
@@ -136,6 +141,16 @@
 	<td></td>
 </tr>
 <!--PAGE_TREE-->
+<tr>
+	<td>PAGE_TREE_ROOT_ARROW_PLUS</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div[contains(@class,'tree-collapse')]/i[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_ROOT_ARROW_MINUS</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div[contains(@class,'tree-expanded')]/i[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
 	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>

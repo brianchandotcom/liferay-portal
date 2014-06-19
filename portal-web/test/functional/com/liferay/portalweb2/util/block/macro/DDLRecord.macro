@@ -18,7 +18,7 @@
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPDynamicdatalistsList#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -26,7 +26,7 @@
 	</command>
 
 	<command name="deletePGViaDDLDisplay">
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -39,7 +39,7 @@
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
@@ -49,19 +49,19 @@
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute action="CPDynamicdatalistsListRecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
 	</command>
 
 	<command name="editPG">
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editPGViaRecordView">
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute action="PGDynamicdatalistsDisplayrecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
@@ -230,7 +230,15 @@
 	</command>
 
 	<command name="publishCP">
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<if>
+			<isset var="workflowDefinition" />
+			<then>
+				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+			</then>
+			<else>
+				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+			</else>
+		</if>
 
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -259,7 +267,7 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="Text" />
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordText}" />
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
 
 		<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${ddlRecordText}" />
@@ -402,6 +410,13 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
 		<if>
+			<isset var="workflowStatus" />
+			<then>
+				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="Pending" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
 				<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
@@ -416,8 +431,15 @@
 			</else>
 		</if>
 
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+
+		<if>
+			<isset var="workflowStatus" />
+			<then>
+				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Pending (${workflowStatus})" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Boolean" />
@@ -459,7 +481,7 @@
 				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
 				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 			</else>
 		</if>

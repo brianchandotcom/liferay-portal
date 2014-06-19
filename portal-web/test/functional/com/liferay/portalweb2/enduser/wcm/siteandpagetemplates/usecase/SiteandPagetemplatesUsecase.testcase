@@ -163,6 +163,35 @@
 		</execute>
 	</command>
 
+	<command name="SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates" priority="3">
+		<var name="pageNamelist" value="Home,Wiki" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="selectSiteTemplate" value="true" />
+			<var name="siteTemplateName" value="Community Site" />
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#gotoManageSitePages">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<for list="${pageNamelist}" param="sitePageName">
+			<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+				<var name="sitePageName" value="${sitePageName}" />
+				<var name="userGroupName" value="UG UserGroup Name" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="SitesDynamicTemplateInheritance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

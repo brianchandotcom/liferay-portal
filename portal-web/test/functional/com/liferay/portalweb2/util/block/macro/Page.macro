@@ -1,4 +1,11 @@
 <definition>
+	<command name="addFriendlyUrlPG">
+		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+
+		<execute action="DockbarEdit#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
+		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
+	</command>
+
 	<command name="addPageTypePanelPG">
 		<var name="key_componentName" value="${componentName}" />
 
@@ -92,6 +99,14 @@
 		<execute action="CPSitepages#selectFrameTop" />
 		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deleteFriendlyURLPG">
+		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+
+		<execute action="DockbarEdit#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
+		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1=" " />
+		<execute action="Dockbar#assertClick" locator-key1="EDIT_SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="deletePG">
@@ -282,6 +297,10 @@
 		<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_NAVIGATION" />
 	</command>
 
+	<command name="gotoEdit">
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+	</command>
+
 	<command name="gotoMyAccount">
 		<description message="Navigate to My Account > ${portletName}." />
 
@@ -291,7 +310,7 @@
 		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#assertClick" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+		<execute action="Myaccount#assertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
 	</command>
 
 	<command name="gotoMyDashboard">
@@ -522,6 +541,13 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
+	</command>
+
+	<command name="viewPageFriendURLPG">
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+
+		<execute action="DockbarEdit#assertTextNotPresent" locator-key1="DETAILS_FRIENDLYURL" value1="${pageName}" />
+		<execute action="DockbarEdit#assertTextEquals" locator-key1="DETAILS_FRIENDLYURL" value1="/2" />
 	</command>
 
 	<command name="viewPageLayoutColumn">

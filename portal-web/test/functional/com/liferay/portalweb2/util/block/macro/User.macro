@@ -967,6 +967,21 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editDetailsViaMyAccount">
+		<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_DETAILS" value1="Details" />
+
+		<if>
+			<isset var="userScreenNameEdit" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenNameEdit}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editDisplaySettingsCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
@@ -1060,6 +1075,16 @@
 				<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="That password is invalid. Please enter in a different password." />
 			</else>
 		</if>
+	</command>
+
+	<command name="editPasswordViaMyAccount">
+		<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+		<execute action="Myaccount#type" locator-key1="PASSWORD_CURRENT_PASSWORD_FIELD" value1="${currentPassword}" />
+		<execute action="Myaccount#type" locator-key1="PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
+		<execute action="Myaccount#type" locator-key1="PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
+		<execute action="Myaccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editUserDisplaySettingsCP">

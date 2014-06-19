@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar.exportimportconfiguration;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -110,6 +111,18 @@ public class ExportImportConfigurationHelper {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				portletRequest, groupId, type);
+
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+
+		if ((parameterMap != null) &&
+			(type ==
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL)) {
+
+				parameterMap.put(
+					PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
+					new String[]{Boolean.TRUE.toString()});
+		}
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(

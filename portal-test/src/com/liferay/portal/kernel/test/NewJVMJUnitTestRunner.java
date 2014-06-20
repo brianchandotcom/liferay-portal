@@ -288,7 +288,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 				processCallable, _testMethodKey);
 
 			Future<String> future = ProcessExecutor.execute(
-				_classPath, _arguments, processCallable);
+				_classPath, _classPath, _arguments, processCallable);
 
 			try {
 				future.get();

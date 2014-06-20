@@ -79,7 +79,7 @@ public class CounterLocalServiceTest {
 					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT);
 
 			Future<Long[]> futures = ProcessExecutor.execute(
-				classPath, jvmArguments, processCallable);
+				classPath, classPath, jvmArguments, processCallable);
 
 			futuresList.add(futures);
 		}

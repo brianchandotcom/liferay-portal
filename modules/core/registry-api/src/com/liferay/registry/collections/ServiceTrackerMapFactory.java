@@ -17,11 +17,30 @@ package com.liferay.registry.collections;
 import com.liferay.registry.ServiceReference;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class ServiceTrackerMapFactory {
+
+	public static <S> ServiceTrackerMap<String, List<S>>
+		createListMapFromProperty(Class<S> clazz, String property) {
+
+		return new ServiceTrackerMapImpl<>(
+			clazz,"("+property+"=*)", Mappers.<String>fromProperty(property),
+			new ListServiceTrackerBucketFactory<>(
+				Comparators.<S>fromProperty("service.ranking")));
+	}
+
+	public static <S> ServiceTrackerMap<String, S> createObjectMapFromProperty(
+		Class<S> clazz, String property) {
+
+		return new ServiceTrackerMapImpl<String, S, S>(
+			clazz, "("+property+"=*)", Mappers.<String>fromProperty(property),
+			new ObjectServiceTrackerBucketFactory<S>(
+				Comparators.<S>fromProperty("service.ranking")));
+	}
 
 	public static class Comparators {
 

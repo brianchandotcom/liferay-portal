@@ -17,6 +17,7 @@ package com.liferay.taglib.portletext;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -49,8 +50,8 @@ public class IconPortletTag extends IconTag {
 			return _PAGE;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
-			"themeDisplay");
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String message = null;
 		String src = null;

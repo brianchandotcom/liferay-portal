@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseNavTag;
@@ -51,8 +52,8 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 			setCollapsible(true);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
-				"themeDisplay");
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 

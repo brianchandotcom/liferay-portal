@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_CHECKBOX</td>
-	<td>//label[contains(.,'Enable propagation')]/input</td>
+	<td>//input[@id='_134_layoutSetPrototypeLinkEnabled']</td>
 	<td></td>
 </tr>
 <tr>

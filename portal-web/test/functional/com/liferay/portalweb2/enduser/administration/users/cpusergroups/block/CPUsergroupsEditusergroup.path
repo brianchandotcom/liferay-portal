@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX</td>
-	<td>//label[contains(.,'Enable propagation')]/input[2][contains(@id,'public')]</td>
+	<td>//input[@id='_127_publicLayoutSetPrototypeLinkEnabled']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_PRIVATE_PAGE_CHECKBOX</td>
-	<td>//label[contains(.,'Enable propagation')]/input[2][contains(@id,'private')]</td>
+	<td>//input[@id='_127_privateLayoutSetPrototypeLinkEnabled']</td>
 	<td></td>
 </tr>
 <tr>

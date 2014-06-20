@@ -411,7 +411,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Save')]</td>
+	<td>//div[contains(@class,'btn-toolbar-content')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

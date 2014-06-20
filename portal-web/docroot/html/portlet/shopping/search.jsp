@@ -108,7 +108,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		if (item.isSmallImage()) {
 			sb.append("<br />");
 			sb.append("<img alt=\"");
-			sb.append(item.getSku());
+			sb.append(HtmlUtil.escapeAttribute(item.getSku()));
 			sb.append("\" src=\"");
 
 			if (Validator.isNotNull(item.getSmallImageURL())) {

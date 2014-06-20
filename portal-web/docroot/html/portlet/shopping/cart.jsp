@@ -211,7 +211,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		if (item.isSmallImage()) {
 			sb.append("<br />");
 			sb.append("<img alt=\"");
-			sb.append(item.getSku());
+			sb.append(HtmlUtil.escapeAttribute(item.getSku()));
 			sb.append("\" src=\"");
 
 			if (Validator.isNotNull(item.getSmallImageURL())) {
@@ -505,7 +505,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	if (shoppingSettings.usePayPal()) {
 	%>
 
-		<img alt="<liferay-ui:message key="paypal" />" src="<%= themeDisplay.getPathThemeImages() %>/shopping/cc_paypal.png" />
+		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="paypal" />" src="<%= themeDisplay.getPathThemeImages() %>/shopping/cc_paypal.png" />
 
 		<br /><br />
 

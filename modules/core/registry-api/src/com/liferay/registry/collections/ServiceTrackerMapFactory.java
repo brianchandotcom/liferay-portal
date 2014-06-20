@@ -28,9 +28,9 @@ public class ServiceTrackerMapFactory {
 		Class<S> clazz, String filter,
 		ServiceReferenceMapper<K> serviceReferenceMapper) {
 
-		return new ServiceTrackerMapImpl<>(
+		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filter, serviceReferenceMapper,
-			new ListServiceTrackerBucketFactory<>(
+			new ListServiceTrackerBucketFactory<S>(
 				Comparators.<S>fromProperty("service.ranking")));
 	}
 
@@ -39,17 +39,17 @@ public class ServiceTrackerMapFactory {
 		ServiceReferenceMapper<K> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {
 
-		return new ServiceTrackerMapImpl<>(
+		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filter, serviceReferenceMapper,
-				new ListServiceTrackerBucketFactory<>(comparator));
+				new ListServiceTrackerBucketFactory<S>(comparator));
 	}
 
 	public static <S> ServiceTrackerMap<String, List<S>>
 		createListMapFromProperty(Class<S> clazz, String property) {
 
-		return new ServiceTrackerMapImpl<>(
+		return new ServiceTrackerMapImpl<String, S, List<S>>(
 			clazz,"("+property+"=*)", Mappers.<String>fromProperty(property),
-			new ListServiceTrackerBucketFactory<>(
+			new ListServiceTrackerBucketFactory<S>(
 				Comparators.<S>fromProperty("service.ranking")));
 	}
 

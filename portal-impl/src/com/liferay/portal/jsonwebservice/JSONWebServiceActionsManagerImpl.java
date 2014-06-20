@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BinarySearch;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -393,7 +391,7 @@ public class JSONWebServiceActionsManagerImpl
 		return unregisterJSONWebServiceActions(contextPath);
 	}
 
-	private int _countMatchedElements(
+	private int _countMatchedParameters(
 		String[] parameterNames, MethodParameter[] methodParameters) {
 
 		int matched = 0;
@@ -401,11 +399,12 @@ public class JSONWebServiceActionsManagerImpl
 		for (MethodParameter methodParameter : methodParameters) {
 			String methodParameterName = methodParameter.getName();
 
-			methodParameterName = CamelCaseUtil.normalizeCamelCase(
-				methodParameterName);
+			methodParameterName = methodParameterName.toLowerCase();
 
-			if (ArrayUtil.contains(parameterNames, methodParameterName)) {
-				matched++;
+			for (String parameterName : parameterNames) {
+				if (parameterName.equalsIgnoreCase(methodParameterName)) {
+					matched++;
+				}
 			}
 		}
 
@@ -485,7 +484,7 @@ public class JSONWebServiceActionsManagerImpl
 				continue;
 			}
 
-			int count = _countMatchedElements(
+			int count = _countMatchedParameters(
 				parameterNames, jsonWebServiceActionConfigMethodParameters);
 
 			if (count > max) {

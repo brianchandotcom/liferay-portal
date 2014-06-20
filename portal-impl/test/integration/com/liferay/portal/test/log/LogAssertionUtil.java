@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
-
-import com.liferay.portal.kernel.test.LogAssertionAppender;
-import com.liferay.portal.kernel.test.LogAssertionHandler;
+package com.liferay.portal.test.log;
 
 import java.util.logging.Handler;
 

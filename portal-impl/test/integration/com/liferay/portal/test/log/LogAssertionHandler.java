@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test;
+package com.liferay.portal.test.log;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

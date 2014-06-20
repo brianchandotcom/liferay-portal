@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test;
+package com.liferay.portal.test.log;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;

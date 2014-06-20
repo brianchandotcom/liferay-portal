@@ -59,6 +59,8 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public static final String STRUCTURE_ID = "structureId";
 
+	public static final String SUMMARY = "summary";
+
 	public static final String TEMPLATE_ID = "templateId";
 
 	public static final String TITLE = "title";

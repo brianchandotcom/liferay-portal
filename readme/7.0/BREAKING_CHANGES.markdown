@@ -270,3 +270,28 @@ This change:
 - Allows the form to be submitted properly even when JavaScript is disabled.
 
 ---------------------------------------
+### As a developer I'd like to be able to use util-taglib without needing to use the same javax.servlet.jsp impl as portal-service
+- **Date:** 2014-Jun-19
+- **JIRA Ticket:** LPS-47682
+
+#### What changed?
+Several API in portal-service.jar contained references to the javax.servlet.jsp package. This forced util-taglib which depended on many of those features to be bound to the same jsp impl.
+Due to this, several APIs had breaking changes:
+- LanguageUtil
+- UnicodeLanguageUtil
+- VelocityTaglibImpl
+- ThemeUtil
+- RuntimePageUtil
+- PortletDisplayTemplateUtil
+- DDMXSDUtil
+- PortletResourceBundles
+- ResourceActionsUtil
+- PortalUtil
+
+#### How should I update my code?
+Any invocations of the APIs listed above should replace parameter of PageContext by HttpServletRequest.
+
+#### Why was this change made?
+As stated previously, the use of the javax.servlet.jsp API in portal-service prevented the use of any other JSP impl within plugins (OSGi or otherwise). This limited what Liferay could change with respect to providing its own JSP implementation within OSGi.
+
+---------------------------------------

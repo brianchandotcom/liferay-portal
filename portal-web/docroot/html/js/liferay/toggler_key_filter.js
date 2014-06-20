@@ -33,13 +33,15 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._toggleEvent = instance.get('host').get('toggleEvent');
+
 						instance.beforeHostMethod('headerEventHandler', instance._headerEventHandler, instance);
 					},
 
 					_headerEventHandler: function(event) {
 						var instance = this;
 
-						var validAction = (event.type === 'click');
+						var validAction = (event.type === instance._toggleEvent);
 
 						if (!validAction) {
 							validAction = (AArray.indexOf(instance.get('filter'), event.keyCode) > -1);

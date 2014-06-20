@@ -51,6 +51,21 @@ public class BaseClusterTestCase {
 	}
 
 	@Aspect
+	public static class DisableAutodetectedAddressAdvice {
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"CLUSTER_LINK_AUTODETECT_ADDRESS)")
+		public Object disableAutodetectedAddress(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(new Object[] {""});
+		}
+
+	}
+
+	@Aspect
 	public static class DisableClusterLinkAdvice {
 
 		@Around(

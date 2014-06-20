@@ -235,8 +235,8 @@ public class DDMXSDImpl implements DDMXSD {
 		throws Exception {
 
 		return getHTML(
-			request, response, ddmStructure.getXsd(), fields, portletNamespace,
-			namespace, readOnly, locale);
+			request, response, ddmStructure.getDefinition(), fields,
+			portletNamespace, namespace, readOnly, locale);
 	}
 
 	@Override
@@ -358,7 +358,7 @@ public class DDMXSDImpl implements DDMXSD {
 		JSONArray jsonArray = null;
 
 		if (Validator.isNull(xsd)) {
-			jsonArray = getJSONArray(structure.getXsd());
+			jsonArray = getJSONArray(structure.getDefinition());
 		}
 		else {
 			jsonArray = getJSONArray(xsd);

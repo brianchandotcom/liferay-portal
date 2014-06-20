@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
@@ -284,7 +284,7 @@ public class DDMXMLImpl implements DDMXML {
 				_log.debug("Invalid XML content " + e.getMessage(), e);
 			}
 
-			throw new StructureXsdException();
+			throw new StructureDefinitionException();
 		}
 	}
 

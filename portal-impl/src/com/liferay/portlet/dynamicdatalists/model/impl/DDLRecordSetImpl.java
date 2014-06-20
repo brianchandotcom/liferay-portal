@@ -55,7 +55,7 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 
 				ddmStructure = (DDMStructure)ddmStructure.clone();
 
-				ddmStructure.setXsd(ddmTemplate.getScript());
+				ddmStructure.setDefinition(ddmTemplate.getScript());
 			}
 			catch (NoSuchTemplateException nste) {
 			}

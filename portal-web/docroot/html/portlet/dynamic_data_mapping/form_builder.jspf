@@ -132,14 +132,14 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		messageContainer.show();
 	};
 
-	var getContentXSD = function() {
+	var getContentDefinition = function() {
 		var content;
 
 		if (formEditor && !isViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
 		}
 		else {
-			content = formBuilder.getXSD();
+			content = formBuilder.getDefinition();
 		}
 
 		return content;
@@ -190,7 +190,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		getLoadingMask().toggle(true);
 
 		if (!Lang.isValue(content)) {
-			content = window.<portlet:namespace />getContentXSD();
+			content = window.<portlet:namespace />getContentDefinition();
 		}
 
 		content = xmlFormatter.minify(content);
@@ -232,7 +232,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 	var switchToSource = function() {
 		setEditorSize();
 
-		var content = formBuilder.getXSD();
+		var content = formBuilder.getDefinition();
 
 		content = getXMLFormatter().format(content);
 
@@ -309,12 +309,12 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	window.<portlet:namespace />formBuilder = formBuilder;
 
-	window.<portlet:namespace />getContentXSD = getContentXSD;
+	window.<portlet:namespace />getContentDefinition = getContentDefinition;
 
 	Liferay.on(
 		'<portlet:namespace />saveTemplate',
 		function(event) {
-			A.one('#<portlet:namespace />scriptContent').val(getContentXSD());
+			A.one('#<portlet:namespace />scriptContent').val(getContentDefinition());
 		}
 	);
 

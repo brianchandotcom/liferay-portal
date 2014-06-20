@@ -125,12 +125,12 @@
 <!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>
-	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
+	<td>//span[@class='form-search']//input[contains(@name,'_174_keywords_users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEARCH_BUTTON</td>
-	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
+	<td>//span[@class='form-search']//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]//a[contains(@title,'Actions')]</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

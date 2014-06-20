@@ -51,7 +51,7 @@
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB</td>
-	<td>//nav[@id='breadcrumbs']/ul</td>
+	<td>//nav[@id='breadcrumbs']/div[contains(@id,'breadcrumbs-defaultScreen')]/ul</td>
 	<td></td>
 </tr>
 <tr>

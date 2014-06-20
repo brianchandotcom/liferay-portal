@@ -222,12 +222,19 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return LocaleUtil.fromLanguageId(stringValue);
 		}
 		else if (parameterType.equals(Map.class)) {
-			String stringValue = value.toString();
+			Map<?, ?> map = null;
 
-			stringValue = stringValue.trim();
+			if (value instanceof Map) {
+				map = (Map)value;
+			}
+			else {
+				String stringValue = value.toString();
 
-			Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
-				stringValue, HashMap.class);
+				stringValue = stringValue.trim();
+
+				map = JSONFactoryUtil.looseDeserializeSafe(
+					stringValue, HashMap.class);
+			}
 
 			return _generifyMap(map, genericParameterTypes);
 		}
@@ -238,16 +245,31 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				parameterValue = _convertType(value, parameterType);
 			}
 			catch (Exception e) {
-				String stringValue = value.toString();
+				if (value instanceof Map) {
+					try {
+						parameterValue = _createDefaultParameterValue(
+							null, parameterType);
+					}
+					catch (Exception ex) {
+						throw new ClassCastException(e.getMessage());
+					}
 
-				stringValue = stringValue.trim();
+					BeanCopy beanCopy = BeanCopy.beans(value, parameterValue);
 
-				if (!stringValue.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-					throw new ClassCastException(e.getMessage());
+					beanCopy.copy();
 				}
+				else {
+					String stringValue = value.toString();
 
-				parameterValue = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, parameterType);
+					stringValue = stringValue.trim();
+
+					if (!stringValue.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+						throw new ClassCastException(e.getMessage());
+					}
+
+					parameterValue = JSONFactoryUtil.looseDeserializeSafe(
+						stringValue, parameterType);
+				}
 			}
 
 			return parameterValue;
@@ -258,7 +280,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			String parameterName, Class<?> parameterType)
 		throws Exception {
 
-		if (parameterName.equals("serviceContext") &&
+		if ((parameterName != null) && parameterName.equals("serviceContext") &&
 			parameterType.equals(ServiceContext.class)) {
 
 			return new ServiceContext();
@@ -390,17 +412,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			if (value != null) {
 				Class<?> parameterType = methodParameters[i].getType();
 
-				if (value.equals(Void.TYPE)) {
-					String parameterTypeName =
-						_jsonWebServiceActionParameters.getParameterTypeName(
-							parameterName);
+				String parameterTypeName =
+					_jsonWebServiceActionParameters.getParameterTypeName(
+						parameterName);
 
-					if (parameterTypeName != null) {
-						ClassLoader classLoader = actionClass.getClassLoader();
+				if (parameterTypeName != null) {
+					ClassLoader classLoader = actionClass.getClassLoader();
 
-						parameterType = classLoader.loadClass(
-							parameterTypeName);
-					}
+					parameterType = classLoader.loadClass(parameterTypeName);
 
 					if (!ReflectUtil.isSubclass(
 							parameterType, methodParameters[i].getType())) {
@@ -410,7 +429,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 								parameterType.getName() +
 									" for method argument " + i);
 					}
+				}
 
+				if (value.equals(Void.TYPE)) {
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}

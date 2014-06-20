@@ -241,6 +241,8 @@ public class JSONWebServiceActionParameters {
 
 		@Override
 		public Object put(String key, Object value) {
+			final int colonIndex = key.indexOf(CharPool.COLON);
+
 			if (key.startsWith(StringPool.DASH)) {
 				key = key.substring(1);
 
@@ -249,23 +251,47 @@ public class JSONWebServiceActionParameters {
 			else if (key.startsWith(StringPool.PLUS)) {
 				key = key.substring(1);
 
-				int pos = key.indexOf(CharPool.COLON);
+				String typeName = null;
 
-				if (pos != -1) {
-					value = key.substring(pos + 1);
+				if (colonIndex != -1) {
+					typeName = key.substring(colonIndex);
 
-					key = key.substring(0, pos);
+					key = key.substring(0, colonIndex - 1);
 				}
 
-				if (Validator.isNotNull(value)) {
+				if (typeName != null) {
 					if (_parameterTypes == null) {
-						_parameterTypes = new HashMap<String, String>();
+						_parameterTypes = new HashMap<>();
 					}
 
-					_parameterTypes.put(key, value.toString());
+					_parameterTypes.put(key, typeName);
 				}
 
-				value = Void.TYPE;
+				if (value instanceof String) {
+					if (Validator.isBlank((String)value)) {
+						value = Void.TYPE;
+					}
+				}
+				else if (value == null) {
+					value = Void.TYPE;
+				}
+			}
+			else if (colonIndex != -1) {
+				String typeName = key.substring(colonIndex + 1);
+
+				key = key.substring(0, colonIndex);
+
+				if (_parameterTypes == null) {
+					_parameterTypes = new HashMap<>();
+				}
+
+				_parameterTypes.put(key, typeName);
+
+				if (value instanceof String) {
+					if (Validator.isBlank((String)value)) {
+						value = Void.TYPE;
+					}
+				}
 			}
 
 			int pos = key.indexOf(CharPool.PERIOD);

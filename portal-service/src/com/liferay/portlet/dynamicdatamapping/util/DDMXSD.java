@@ -94,8 +94,7 @@ public interface DDMXSD {
 
 	public JSONArray getJSONArray(Element element) throws PortalException;
 
-	public JSONArray getJSONArray(String xml)
-		throws PortalException;
+	public JSONArray getJSONArray(String xml) throws PortalException;
 
 	public String getSimpleFieldHTML(
 			HttpServletRequest request, HttpServletResponse response,
@@ -110,7 +109,6 @@ public interface DDMXSD {
 			boolean readOnly, Locale locale)
 		throws Exception;
 
-	public String getXSD(long classNameId, long classPK)
-		throws PortalException;
+	public String getXSD(long classNameId, long classPK) throws PortalException;
 
 }

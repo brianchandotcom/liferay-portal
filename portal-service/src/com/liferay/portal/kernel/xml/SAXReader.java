@@ -76,8 +76,7 @@ public interface SAXReader {
 
 	public Document read(File file) throws DocumentException;
 
-	public Document read(File file, boolean validate)
-		throws DocumentException;
+	public Document read(File file, boolean validate) throws DocumentException;
 
 	public Document read(InputStream is) throws DocumentException;
 
@@ -91,8 +90,7 @@ public interface SAXReader {
 
 	public Document read(String xml) throws DocumentException;
 
-	public Document read(String xml, boolean validate)
-		throws DocumentException;
+	public Document read(String xml, boolean validate) throws DocumentException;
 
 	public Document read(String xml, XMLSchema xmlSchema)
 		throws DocumentException;

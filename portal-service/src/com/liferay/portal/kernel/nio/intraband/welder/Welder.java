@@ -27,7 +27,6 @@ public interface Welder extends Serializable {
 
 	public void destroy() throws IOException;
 
-	public RegistrationReference weld(Intraband intraband)
-		throws IOException;
+	public RegistrationReference weld(Intraband intraband) throws IOException;
 
 }

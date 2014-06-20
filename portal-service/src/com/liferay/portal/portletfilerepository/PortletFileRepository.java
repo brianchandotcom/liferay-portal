@@ -68,8 +68,7 @@ public interface PortletFileRepository {
 	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
-	public void deleteFolder(long folderId)
-		throws PortalException;
+	public void deleteFolder(long folderId) throws PortalException;
 
 	public void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException;
@@ -78,15 +77,13 @@ public interface PortletFileRepository {
 			long groupId, long folderId, int status)
 		throws PortalException;
 
-	public void deletePortletFileEntry(long fileEntryId)
-		throws PortalException;
+	public void deletePortletFileEntry(long fileEntryId) throws PortalException;
 
 	public void deletePortletFileEntry(
 			long groupId, long folderId, String fileName)
 		throws PortalException;
 
-	public void deletePortletFolder(long folderId)
-		throws PortalException;
+	public void deletePortletFolder(long folderId) throws PortalException;
 
 	public void deletePortletRepository(long groupId, String portletId)
 		throws PortalException;
@@ -134,8 +131,7 @@ public interface PortletFileRepository {
 		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
 		boolean absoluteURL);
 
-	public Folder getPortletFolder(long folderId)
-		throws PortalException;
+	public Folder getPortletFolder(long folderId) throws PortalException;
 
 	public Folder getPortletFolder(
 			long repositoryId, long parentFolderId, String folderName)

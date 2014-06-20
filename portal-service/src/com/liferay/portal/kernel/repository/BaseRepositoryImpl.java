@@ -300,8 +300,7 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
-	public abstract void initRepository()
-		throws PortalException;
+	public abstract void initRepository() throws PortalException;
 
 	@Override
 	public <T extends Capability> boolean isCapabilityProvided(

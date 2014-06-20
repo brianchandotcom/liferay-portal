@@ -68,8 +68,7 @@ public interface Trash {
 			String[] attachmentFileNames)
 		throws PortalException;
 
-	public List<TrashEntry> getEntries(Hits hits)
-		throws PortalException;
+	public List<TrashEntry> getEntries(Hits hits) throws PortalException;
 
 	public OrderByComparator getEntryOrderByComparator(
 		String orderByCol, String orderByType);
@@ -96,7 +95,6 @@ public interface Trash {
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException;
 
-	public boolean isTrashEnabled(long groupId)
-		throws PortalException;
+	public boolean isTrashEnabled(long groupId) throws PortalException;
 
 }

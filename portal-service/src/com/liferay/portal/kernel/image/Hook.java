@@ -24,14 +24,11 @@ import java.io.InputStream;
  */
 public interface Hook {
 
-	public void deleteImage(Image image)
-		throws PortalException;
+	public void deleteImage(Image image) throws PortalException;
 
-	public byte[] getImageAsBytes(Image image)
-		throws PortalException;
+	public byte[] getImageAsBytes(Image image) throws PortalException;
 
-	public InputStream getImageAsStream(Image image)
-		throws PortalException;
+	public InputStream getImageAsStream(Image image) throws PortalException;
 
 	public void updateImage(Image image, String type, byte[] bytes)
 		throws PortalException;

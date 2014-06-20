@@ -202,8 +202,7 @@ public abstract class BaseLocalServiceTreeTestCase {
 	protected abstract void deleteTreeModel(TreeModel treeModel)
 		throws Exception;
 
-	protected abstract TreeModel getTreeModel(long primaryKey)
-		throws Exception;
+	protected abstract TreeModel getTreeModel(long primaryKey) throws Exception;
 
 	protected abstract void rebuildTree() throws Exception;
 

@@ -26,14 +26,12 @@ public interface ClassType {
 	public ClassTypeField getClassTypeField(String fieldName)
 		throws PortalException;
 
-	public List<ClassTypeField> getClassTypeFields()
-		throws PortalException;
+	public List<ClassTypeField> getClassTypeFields() throws PortalException;
 
 	public List<ClassTypeField> getClassTypeFields(int start, int end)
 		throws PortalException;
 
-	public int getClassTypeFieldsCount()
-		throws PortalException;
+	public int getClassTypeFieldsCount() throws PortalException;
 
 	public long getClassTypeId();
 

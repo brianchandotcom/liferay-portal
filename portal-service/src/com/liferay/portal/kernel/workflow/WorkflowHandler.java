@@ -41,8 +41,7 @@ import javax.portlet.RenderResponse;
  */
 public interface WorkflowHandler<T> {
 
-	public AssetRenderer getAssetRenderer(long classPK)
-		throws PortalException;
+	public AssetRenderer getAssetRenderer(long classPK) throws PortalException;
 
 	public AssetRendererFactory getAssetRendererFactory();
 

@@ -318,8 +318,7 @@ public interface SiteMembershipPolicy {
 	 * @param  group the site to verify
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void verifyPolicy(Group group)
-		throws PortalException;
+	public void verifyPolicy(Group group) throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of the site, with respect

@@ -180,11 +180,9 @@ public interface Staging {
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap);
 
-	public Group getLiveGroup(long groupId)
-		throws PortalException;
+	public Group getLiveGroup(long groupId) throws PortalException;
 
-	public long getLiveGroupId(long groupId)
-		throws PortalException;
+	public long getLiveGroupId(long groupId) throws PortalException;
 
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
@@ -230,8 +228,7 @@ public interface Staging {
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 
-	public void lockGroup(long userId, long groupId)
-		throws PortalException;
+	public void lockGroup(long userId, long groupId) throws PortalException;
 
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)

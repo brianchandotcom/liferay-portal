@@ -179,8 +179,7 @@ public interface UserGroupMembershipPolicy {
 	 * @param  userGroup the user group to verify
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void verifyPolicy(UserGroup userGroup)
-		throws PortalException;
+	public void verifyPolicy(UserGroup userGroup) throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of the user group, with

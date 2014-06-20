@@ -334,8 +334,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		return _baseCmisRepository.getObjectPaths(objectId);
 	}
 
-	public abstract Session getSession()
-		throws PortalException;
+	public abstract Session getSession() throws PortalException;
 
 	@Override
 	public void getSubfolderIds(List<Long> folderIds, long folderId)

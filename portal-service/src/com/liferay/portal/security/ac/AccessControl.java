@@ -36,8 +36,7 @@ public interface AccessControl {
 
 	public void initContextUser(long userId) throws AuthException;
 
-	public AuthVerifierResult.State verifyRequest()
-		throws PortalException;
+	public AuthVerifierResult.State verifyRequest() throws PortalException;
 
 	public AccessControlled NULL_ACCESS_CONTROLLED = new AccessControlled() {
 

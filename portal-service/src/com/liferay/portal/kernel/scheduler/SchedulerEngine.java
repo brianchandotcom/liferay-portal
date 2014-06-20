@@ -97,8 +97,7 @@ public interface SchedulerEngine {
 		throws SchedulerException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
-	public List<SchedulerResponse> getScheduledJobs()
-		throws SchedulerException;
+	public List<SchedulerResponse> getScheduledJobs() throws SchedulerException;
 
 	@MessagingProxy(mode = ProxyMode.SYNC)
 	public List<SchedulerResponse> getScheduledJobs(String groupName)

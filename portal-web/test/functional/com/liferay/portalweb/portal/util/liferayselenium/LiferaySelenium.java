@@ -39,8 +39,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertElementPresent(String locator) throws Exception;
 
-	public void assertEmailBody(String index, String body)
-		throws Exception;
+	public void assertEmailBody(String index, String body) throws Exception;
 
 	public void assertEmailSubject(String index, String subject)
 		throws Exception;

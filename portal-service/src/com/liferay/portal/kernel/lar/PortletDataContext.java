@@ -163,8 +163,7 @@ public interface PortletDataContext extends Serializable {
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException;
 
-	public void addLocks(Class<?> clazz, String key)
-		throws PortalException;
+	public void addLocks(Class<?> clazz, String key) throws PortalException;
 
 	public void addLocks(String className, String key, Lock lock);
 
@@ -177,8 +176,7 @@ public interface PortletDataContext extends Serializable {
 	public void addPermissions(
 		String resourceName, long resourcePK, List<KeyValuePair> permissions);
 
-	public void addPortalPermissions()
-		throws PortalException;
+	public void addPortalPermissions() throws PortalException;
 
 	public void addPortletPermissions(String resourceName)
 		throws PortalException;
@@ -587,8 +585,7 @@ public interface PortletDataContext extends Serializable {
 			String resourceName, long resourcePK, long newResourcePK)
 		throws PortalException;
 
-	public void importPortalPermissions()
-		throws PortalException;
+	public void importPortalPermissions() throws PortalException;
 
 	public void importPortletPermissions(String resourceName)
 		throws PortalException;

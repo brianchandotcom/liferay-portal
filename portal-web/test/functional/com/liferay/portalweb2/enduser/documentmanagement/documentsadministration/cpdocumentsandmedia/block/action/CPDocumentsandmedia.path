@@ -13,7 +13,6 @@
 	<td></td>
 	<td>CPDocumentsandmedia</td>
 </tr>
-<!---->
 <tr>
 	<td>PORTLET_TITLE</td>
 	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>

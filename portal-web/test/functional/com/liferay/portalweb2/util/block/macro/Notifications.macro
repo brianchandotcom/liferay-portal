@@ -12,6 +12,10 @@
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="VIEW_ALL_NOTIFICATIONS" value1="View All Notifications" />
 	</command>
 
+	<command name="viewCount">
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+	</command>
+
 	<command name="viewNewContent">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 
@@ -19,9 +23,5 @@
 
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
-	</command>
-
-	<command name="viewCount">
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 	</command>
 </definition>

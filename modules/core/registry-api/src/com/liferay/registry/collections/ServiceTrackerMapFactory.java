@@ -14,6 +14,8 @@
 
 package com.liferay.registry.collections;
 
+import com.liferay.registry.ServiceReference;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -24,6 +26,24 @@ public class ServiceTrackerMapFactory {
 	}
 
 	public static class Mappers {
+
+		public static <T> ServiceReferenceMapper<T> fromProperty(
+			final String propertyName) {
+
+			return new ServiceReferenceMapper<T>() {
+
+				@Override
+				public void map(
+					ServiceReference<?> serviceReference, Emitter<T> emitter) {
+
+					T property = (T)serviceReference.getProperty(propertyName);
+
+					if (property != null) {
+						emitter.emit(property);
+					}
+				}
+			};
+		}
 
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -103,8 +104,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:curTags", _curTags);
 
 		if (_groupIds == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
-				"themeDisplay");
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			long[] groupIds = null;
 

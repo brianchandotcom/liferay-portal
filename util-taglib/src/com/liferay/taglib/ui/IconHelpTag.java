@@ -16,6 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.FileAvailabilityUtil;
 
@@ -39,8 +40,8 @@ public class IconHelpTag extends IconTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
-			"themeDisplay");
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		JspWriter jspWriter = pageContext.getOut();
 

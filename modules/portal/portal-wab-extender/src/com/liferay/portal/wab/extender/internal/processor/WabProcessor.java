@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -88,6 +89,10 @@ public class WabProcessor {
 			buildAutoDeploymentContext(webContextpath);
 
 		executeAutoDeployers(autoDeploymentContext);
+
+		PluginPackage pluginPackage = autoDeploymentContext.getPluginPackage();
+
+		_context = pluginPackage.getContext();
 
 		File deployDir = autoDeploymentContext.getDeployDir();
 
@@ -223,6 +228,7 @@ public class WabProcessor {
 
 	private BundleContext _bundleContext;
 	private ClassLoader _classLoader;
+	private String _context;
 	private File _file;
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;

@@ -145,6 +145,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_VOCABULARY_DEFAULT = "asset.vocabulary.default";
 
+	public static final String ASSERT_LOGS = "assert.logs";
+
 	public static final String AUDIT_MESSAGE_COM_LIFERAY_PORTAL_MODEL_LAYOUT_VIEW = "audit.message.com.liferay.portal.model.Layout.VIEW";
 
 	public static final String AUDIT_MESSAGE_SCHEDULER_JOB = "audit.message.scheduler.job";

@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.junit.runner.notification.RunNotifier;
+import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
@@ -47,6 +49,29 @@ public class LiferayIntegrationJUnitTestRunner
 		ResetDatabaseUtilDataSource.initialize();
 
 		InitUtil.initWithSpringAndModuleFramework();
+	}
+
+	@Override
+	protected Statement methodBlock(FrameworkMethod method) {
+		final Statement methodBlock = super.methodBlock(method);
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				if (PropsValues.ASSERT_LOGS) {
+					LogAssertionUtil.installLog4jAppender();
+
+					LogAssertionUtil.installJdk14Handler();
+				}
+
+				try {
+					methodBlock.evaluate();
+				}
+				finally {
+				}
+			}
+		};
 	}
 
 	@Override

@@ -16,7 +16,6 @@ package com.liferay.portal.test.log;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -26,19 +25,11 @@ import org.junit.Assert;
  */
 public class LogAssertionAppender extends AppenderSkeleton {
 
-	public LogAssertionAppender(Logger logger) {
-		_logger = logger;
-
-		_level = logger.getLevel();
-
-		logger.setLevel(Level.WARN);
-	}
+	public static final LogAssertionAppender INSTANCE =
+		new LogAssertionAppender();
 
 	@Override
 	public void close() {
-		_logger.setLevel(_level);
-
-		_logger.removeAppender(this);
 	}
 
 	@Override
@@ -48,17 +39,13 @@ public class LogAssertionAppender extends AppenderSkeleton {
 
 	@Override
 	protected void append(LoggingEvent loggingEvent) {
-		if (loggingEvent.getLevel().equals(Level.WARN) ||
-			loggingEvent.getLevel().equals(Level.ERROR) ||
-			loggingEvent.getLevel().equals(Level.FATAL)) {
+		Level level = loggingEvent.getLevel();
 
+		if (level.equals(Level.ERROR) || level.equals(Level.FATAL)) {
 			Assert.fail(
-				"Method failed due to logged error or warning: " +
-				loggingEvent.getMessage());
+				"Method failed due to logged error : " +
+					loggingEvent.getMessage());
 		}
 	}
-
-	private Level _level;
-	private Logger _logger;
 
 }

@@ -14,12 +14,9 @@
 
 package com.liferay.portal.test.log;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
 import org.junit.Assert;
 
@@ -28,50 +25,26 @@ import org.junit.Assert;
  */
 public class LogAssertionHandler extends Handler {
 
-	public LogAssertionHandler(Logger logger) {
-		_logger = logger;
-
-		_level = logger.getLevel();
-
-		logger.setLevel(Level.WARNING);
-	}
+	public static final LogAssertionHandler INSTANCE =
+		new LogAssertionHandler();
 
 	@Override
 	public void close() throws SecurityException {
-		_logRecords.clear();
-
-		_logger.setLevel(_level);
-
-		_logger.removeHandler(this);
 	}
 
 	@Override
 	public void flush() {
-		_logRecords.clear();
-	}
-
-	public List<LogRecord> getLogRecords() {
-		return _logRecords;
-	}
-
-	@Override
-	public boolean isLoggable(LogRecord logRecord) {
-		return false;
 	}
 
 	@Override
 	public void publish(LogRecord logRecord) {
-		if (logRecord.getLevel().equals(Level.WARNING) ||
-			logRecord.getLevel().equals(Level.SEVERE)) {
+		Level level = logRecord.getLevel();
 
+		if (level.equals(Level.SEVERE)) {
 			Assert.fail(
-				"Method failed due to logged error or warning: " +
-				logRecord.getMessage());
+				"Method failed due to logged error : " +
+					logRecord.getMessage());
 		}
 	}
-
-	private Level _level;
-	private Logger _logger;
-	private List<LogRecord> _logRecords = new CopyOnWriteArrayList<LogRecord>();
 
 }

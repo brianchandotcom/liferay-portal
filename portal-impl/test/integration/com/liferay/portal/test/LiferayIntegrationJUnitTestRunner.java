@@ -93,22 +93,19 @@ public class LiferayIntegrationJUnitTestRunner
 	protected Statement methodBlock(FrameworkMethod method) {
 		final Statement methodBlock = super.methodBlock(method);
 
+		if (!TestPropsValues.ASSERT_LOGS) {
+			return methodBlock;
+		}
+
 		return new Statement() {
 
 			@Override
 			public void evaluate() throws Throwable {
-				if (TestPropsValues.ASSERT_LOGS) {
-					LogAssertionUtil.installLog4jAppender();
+				LogAssertionUtil.enableLogAssertion();
 
-					LogAssertionUtil.installJdk14Handler();
-				}
-
-				try {
-					methodBlock.evaluate();
-				}
-				finally {
-				}
+				methodBlock.evaluate();
 			}
+
 		};
 	}
 

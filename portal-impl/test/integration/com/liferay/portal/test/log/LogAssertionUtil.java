@@ -14,51 +14,33 @@
 
 package com.liferay.portal.test.log;
 
-import java.util.logging.Handler;
+import com.liferay.portal.kernel.util.StringPool;
 
-import org.apache.log4j.Appender;
+import java.util.logging.Logger;
 
 /**
  * @author William Newbury
  */
 public class LogAssertionUtil {
 
-	public static void installJdk14Handler() {
-		java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(
-			"");
-
-		Handler[] handlers = jdkLogger.getHandlers();
-
-		Boolean needsInstalation = true;
-
-		for (Handler handler : handlers) {
-			if (handler instanceof LogAssertionHandler) {
-				needsInstalation = true;
-			}
-		}
-
-		if (needsInstalation) {
-			LogAssertionHandler logAssertionHandler = new LogAssertionHandler(
-				jdkLogger);
-
-			jdkLogger.addHandler(logAssertionHandler);
-		}
+	public static void enableLogAssertion() {
+		installJdk14Handler();
+		installLog4jAppender();
 	}
 
-	public static void installLog4jAppender() {
-		org.apache.log4j.Logger log4jLogger =
+	protected static void installJdk14Handler() {
+		Logger logger = Logger.getLogger(StringPool.BLANK);
+
+		logger.removeHandler(LogAssertionHandler.INSTANCE);
+		logger.addHandler(LogAssertionHandler.INSTANCE);
+	}
+
+	protected static void installLog4jAppender() {
+		org.apache.log4j.Logger logger =
 			org.apache.log4j.Logger.getRootLogger();
 
-		Appender appender = log4jLogger.getAppender("logAssertionAppender");
-
-		if (appender == null) {
-			LogAssertionAppender logAssertionAppender =
-				new LogAssertionAppender(log4jLogger);
-
-			logAssertionAppender.setName("logAssertionAppender");
-
-			log4jLogger.addAppender(logAssertionAppender);
-		}
+		logger.removeAppender(LogAssertionAppender.INSTANCE);
+		logger.addAppender(LogAssertionAppender.INSTANCE);
 	}
 
 }

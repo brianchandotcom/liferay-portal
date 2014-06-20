@@ -89,8 +89,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 						title: Liferay.Language.get('initial-publication'),
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
 							<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+							<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
 							<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 							<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />

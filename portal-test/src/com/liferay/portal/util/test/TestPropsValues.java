@@ -43,6 +43,9 @@ import java.util.List;
  */
 public class TestPropsValues {
 
+	public static final boolean ASSERT_LOGS = GetterUtil.getBoolean(
+		TestPropsUtil.get("assert.logs"));
+
 	public static final String COMPANY_WEB_ID;
 
 	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =

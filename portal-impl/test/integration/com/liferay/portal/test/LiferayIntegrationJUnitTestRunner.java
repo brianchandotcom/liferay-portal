@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.test.TestPropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -96,7 +96,7 @@ public class LiferayIntegrationJUnitTestRunner
 
 			@Override
 			public void evaluate() throws Throwable {
-				if (PropsValues.ASSERT_LOGS) {
+				if (TestPropsValues.ASSERT_LOGS) {
 					LogAssertionUtil.installLog4jAppender();
 
 					LogAssertionUtil.installJdk14Handler();

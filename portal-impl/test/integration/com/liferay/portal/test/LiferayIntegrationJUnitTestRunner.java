@@ -52,29 +52,6 @@ public class LiferayIntegrationJUnitTestRunner
 	}
 
 	@Override
-	protected Statement methodBlock(FrameworkMethod method) {
-		final Statement methodBlock = super.methodBlock(method);
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				if (PropsValues.ASSERT_LOGS) {
-					LogAssertionUtil.installLog4jAppender();
-
-					LogAssertionUtil.installJdk14Handler();
-				}
-
-				try {
-					methodBlock.evaluate();
-				}
-				finally {
-				}
-			}
-		};
-	}
-
-	@Override
 	protected Statement classBlock(RunNotifier notifier) {
 		final Statement classBlock = super.classBlock(notifier);
 
@@ -108,6 +85,29 @@ public class LiferayIntegrationJUnitTestRunner
 				}
 			}
 
+		};
+	}
+
+	@Override
+	protected Statement methodBlock(FrameworkMethod method) {
+		final Statement methodBlock = super.methodBlock(method);
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				if (PropsValues.ASSERT_LOGS) {
+					LogAssertionUtil.installLog4jAppender();
+
+					LogAssertionUtil.installJdk14Handler();
+				}
+
+				try {
+					methodBlock.evaluate();
+				}
+				finally {
+				}
+			}
 		};
 	}
 

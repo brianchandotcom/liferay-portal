@@ -20,12 +20,13 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
 import org.junit.Assert;
 
 /**
  * @author William Newbury
  */
-public class LogAssertionHandler extends Handler{
+public class LogAssertionHandler extends Handler {
 
 	public LogAssertionHandler(Logger logger) {
 		_logger = logger;
@@ -44,13 +45,13 @@ public class LogAssertionHandler extends Handler{
 		_logger.removeHandler(this);
 	}
 
-	public List<LogRecord> getLogRecords() {
-		return _logRecords;
-	}
-
 	@Override
 	public void flush() {
 		_logRecords.clear();
+	}
+
+	public List<LogRecord> getLogRecords() {
+		return _logRecords;
 	}
 
 	@Override
@@ -64,12 +65,13 @@ public class LogAssertionHandler extends Handler{
 			logRecord.getLevel().equals(Level.SEVERE)) {
 
 			Assert.fail(
-				"Method failed due to logged error or warning: "
-				+ logRecord.getMessage());
+				"Method failed due to logged error or warning: " +
+				logRecord.getMessage());
 		}
 	}
 
 	private Level _level;
 	private Logger _logger;
 	private List<LogRecord> _logRecords = new CopyOnWriteArrayList<LogRecord>();
+
 }

@@ -18,6 +18,7 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggingEvent;
+
 import org.junit.Assert;
 
 /**
@@ -52,8 +53,8 @@ public class LogAssertionAppender extends AppenderSkeleton {
 			loggingEvent.getLevel().equals(Level.FATAL)) {
 
 			Assert.fail(
-				"Method failed due to logged error or warning: "
-				+ loggingEvent.getMessage());
+				"Method failed due to logged error or warning: " +
+				loggingEvent.getMessage());
 		}
 	}
 

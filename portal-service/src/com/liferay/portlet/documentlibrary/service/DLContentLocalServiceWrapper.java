@@ -317,8 +317,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
 		return _dlContentLocalService.getContent(companyId, repositoryId, path);
 	}
 
@@ -326,8 +325,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path,
 		java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
 		return _dlContentLocalService.getContent(companyId, repositoryId, path,
 			version);
 	}

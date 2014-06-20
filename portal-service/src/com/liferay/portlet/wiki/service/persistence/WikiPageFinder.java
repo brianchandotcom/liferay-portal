@@ -43,8 +43,7 @@ public interface WikiPageFinder {
 
 	public com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
 		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByCreateDate(
 		long groupId, long nodeId, java.util.Date createDate, boolean before,

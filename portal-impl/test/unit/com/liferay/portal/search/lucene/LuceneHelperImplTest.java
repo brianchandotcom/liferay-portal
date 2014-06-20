@@ -685,9 +685,7 @@ public class LuceneHelperImplTest {
 		}
 
 		@Override
-		public FutureClusterResponses execute(ClusterRequest clusterRequest)
-			throws SystemException {
-
+		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
 			if (_throwException) {
 				throw new SystemException();
 			}
@@ -740,9 +738,8 @@ public class LuceneHelperImplTest {
 
 		@Override
 		public void execute(
-				ClusterRequest clusterRequest,
-				ClusterResponseCallback clusterResponseCallback)
-			throws SystemException {
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback) {
 
 			FutureClusterResponses futureClusterResponses = execute(
 				clusterRequest);
@@ -763,10 +760,9 @@ public class LuceneHelperImplTest {
 
 		@Override
 		public void execute(
-				ClusterRequest clusterRequest,
-				ClusterResponseCallback clusterResponseCallback, long timeout,
-				TimeUnit timeUnit)
-			throws SystemException {
+			ClusterRequest clusterRequest,
+			ClusterResponseCallback clusterResponseCallback, long timeout,
+			TimeUnit timeUnit) {
 
 			FutureClusterResponses futureClusterResponses = execute(
 				clusterRequest);

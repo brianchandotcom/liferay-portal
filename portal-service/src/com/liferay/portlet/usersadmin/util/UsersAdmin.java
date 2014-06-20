@@ -199,14 +199,12 @@ public interface UsersAdmin {
 	public List<UserGroupRole> getUserGroupRoles(PortletRequest portletRequest)
 		throws PortalException;
 
-	public List<UserGroup> getUserGroups(Hits hits)
-		throws PortalException;
+	public List<UserGroup> getUserGroups(Hits hits) throws PortalException;
 
 	public OrderByComparator getUserOrderByComparator(
 		String orderByCol, String orderByType);
 
-	public List<User> getUsers(Hits hits)
-		throws PortalException;
+	public List<User> getUsers(Hits hits) throws PortalException;
 
 	public List<Website> getWebsites(ActionRequest actionRequest);
 

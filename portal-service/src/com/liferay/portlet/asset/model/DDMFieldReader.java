@@ -24,7 +24,6 @@ public interface DDMFieldReader {
 
 	public Fields getFields() throws PortalException;
 
-	public Fields getFields(String ddmType)
-		throws PortalException;
+	public Fields getFields(String ddmType) throws PortalException;
 
 }

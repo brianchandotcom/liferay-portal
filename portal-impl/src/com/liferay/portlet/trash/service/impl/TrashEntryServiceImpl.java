@@ -18,7 +18,6 @@ import com.liferay.portal.TrashPermissionException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -186,9 +185,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @throws PrincipalException if a principal exception occurred
 	 */
 	@Override
-	public TrashEntryList getEntries(long groupId)
-		throws PrincipalException, SystemException {
-
+	public TrashEntryList getEntries(long groupId) throws PrincipalException {
 		return getEntries(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -208,7 +205,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	@Override
 	public TrashEntryList getEntries(
 			long groupId, int start, int end, OrderByComparator obc)
-		throws PrincipalException, SystemException {
+		throws PrincipalException {
 
 		TrashEntryList trashEntriesList = new TrashEntryList();
 

@@ -77,9 +77,7 @@ public class RoleFinderUtil {
 	}
 
 	public static com.liferay.portal.model.Role findByC_N(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.NoSuchRoleException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) throws com.liferay.portal.NoSuchRoleException {
 		return getFinder().findByC_N(companyId, name);
 	}
 

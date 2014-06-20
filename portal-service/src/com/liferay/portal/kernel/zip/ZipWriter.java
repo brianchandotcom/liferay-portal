@@ -31,8 +31,7 @@ public interface ZipWriter {
 
 	public void addEntry(String name, String s) throws IOException;
 
-	public void addEntry(String name, StringBuilder sb)
-		throws IOException;
+	public void addEntry(String name, StringBuilder sb) throws IOException;
 
 	public byte[] finish() throws IOException;
 

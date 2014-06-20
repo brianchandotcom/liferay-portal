@@ -51,26 +51,21 @@ public interface LocalRepository extends CapabilityProvider {
 
 	public void deleteAll() throws PortalException;
 
-	public void deleteFileEntry(long fileEntryId)
-		throws PortalException;
+	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
-	public void deleteFolder(long folderId)
-		throws PortalException;
+	public void deleteFolder(long folderId) throws PortalException;
 
-	public FileEntry getFileEntry(long fileEntryId)
-		throws PortalException;
+	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
 
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException;
 
-	public FileEntry getFileEntryByUuid(String uuid)
-		throws PortalException;
+	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;
 
-	public Folder getFolder(long folderId)
-		throws PortalException;
+	public Folder getFolder(long folderId) throws PortalException;
 
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException;

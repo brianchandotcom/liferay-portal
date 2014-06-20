@@ -300,8 +300,7 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
-	public abstract void initRepository()
-		throws PortalException;
+	public abstract void initRepository() throws PortalException;
 
 	@Override
 	public <T extends Capability> boolean isCapabilityProvided(
@@ -453,7 +452,7 @@ public abstract class BaseRepositoryImpl
 
 	protected void clearManualCheckInRequired(
 			long fileEntryId, ServiceContext serviceContext)
-		throws NoSuchRepositoryEntryException, SystemException {
+		throws NoSuchRepositoryEntryException {
 
 		boolean webDAVCheckInMode = GetterUtil.getBoolean(
 			serviceContext.getAttribute(DL.WEBDAV_CHECK_IN_MODE));
@@ -479,7 +478,7 @@ public abstract class BaseRepositoryImpl
 
 	protected void setManualCheckInRequired(
 			long fileEntryId, ServiceContext serviceContext)
-		throws NoSuchRepositoryEntryException, SystemException {
+		throws NoSuchRepositoryEntryException {
 
 		boolean manualCheckInRequired = GetterUtil.getBoolean(
 			serviceContext.getAttribute(DL.MANUAL_CHECK_IN_REQUIRED));

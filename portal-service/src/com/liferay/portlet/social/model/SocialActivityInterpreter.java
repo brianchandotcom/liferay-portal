@@ -38,7 +38,6 @@ public interface SocialActivityInterpreter {
 	public SocialActivityFeedEntry interpret(
 		SocialActivitySet activitySet, ServiceContext serviceContext);
 
-	public void updateActivitySet(long activityId)
-		throws PortalException;
+	public void updateActivitySet(long activityId) throws PortalException;
 
 }

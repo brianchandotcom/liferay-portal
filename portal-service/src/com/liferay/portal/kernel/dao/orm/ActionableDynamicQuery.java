@@ -71,8 +71,7 @@ public interface ActionableDynamicQuery {
 
 	public interface PerformActionMethod {
 
-		public void performAction(Object object)
-			throws PortalException;
+		public void performAction(Object object) throws PortalException;
 
 	}
 

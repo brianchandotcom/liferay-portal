@@ -594,7 +594,7 @@ public class ShoppingItemLocalServiceImpl
 
 	protected void doAddBookItems(
 			long userId, long groupId, long categoryId, String[] isbns)
-		throws IOException, PortalException, SystemException {
+		throws IOException, PortalException {
 
 		if (!AmazonRankingsUtil.isEnabled()) {
 			throw new AmazonException("Amazon integration is not enabled");

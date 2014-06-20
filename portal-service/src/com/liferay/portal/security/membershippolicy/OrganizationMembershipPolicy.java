@@ -330,8 +330,7 @@ public interface OrganizationMembershipPolicy {
 	 * @param  organization the organization to verify
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void verifyPolicy(Organization organization)
-		throws PortalException;
+	public void verifyPolicy(Organization organization) throws PortalException;
 
 	/**
 	 * Checks the integrity of the membership policy of the organization, with

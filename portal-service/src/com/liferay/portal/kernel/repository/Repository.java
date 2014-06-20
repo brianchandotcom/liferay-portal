@@ -54,8 +54,7 @@ public interface Repository extends CapabilityProvider {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public FileVersion cancelCheckOut(long fileEntryId)
-		throws PortalException;
+	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException;
 
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
@@ -88,8 +87,7 @@ public interface Repository extends CapabilityProvider {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteFileEntry(long fileEntryId)
-		throws PortalException;
+	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException;
@@ -97,8 +95,7 @@ public interface Repository extends CapabilityProvider {
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException;
 
-	public void deleteFolder(long folderId)
-		throws PortalException;
+	public void deleteFolder(long folderId) throws PortalException;
 
 	public void deleteFolder(long parentFolderId, String title)
 		throws PortalException;
@@ -128,8 +125,7 @@ public interface Repository extends CapabilityProvider {
 			long folderId, int status, String[] mimeTypes)
 		throws PortalException;
 
-	public int getFileEntriesCount(long folderId)
-		throws PortalException;
+	public int getFileEntriesCount(long folderId) throws PortalException;
 
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException;
@@ -137,20 +133,17 @@ public interface Repository extends CapabilityProvider {
 	public int getFileEntriesCount(long folderId, String[] mimeTypes)
 		throws PortalException;
 
-	public FileEntry getFileEntry(long fileEntryId)
-		throws PortalException;
+	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
 
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException;
 
-	public FileEntry getFileEntryByUuid(String uuid)
-		throws PortalException;
+	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;
 
-	public Folder getFolder(long folderId)
-		throws PortalException;
+	public Folder getFolder(long folderId) throws PortalException;
 
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException;
@@ -199,8 +192,7 @@ public interface Repository extends CapabilityProvider {
 			long parentFolderId, int start, int end, OrderByComparator obc)
 		throws PortalException;
 
-	public int getMountFoldersCount(long parentFolderId)
-		throws PortalException;
+	public int getMountFoldersCount(long parentFolderId) throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
@@ -232,8 +224,7 @@ public interface Repository extends CapabilityProvider {
 	 *             ServiceContext)}
 	 */
 	@Deprecated
-	public Lock lockFileEntry(long fileEntryId)
-		throws PortalException;
+	public Lock lockFileEntry(long fileEntryId) throws PortalException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
@@ -244,8 +235,7 @@ public interface Repository extends CapabilityProvider {
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException;
 
-	public Lock lockFolder(long folderId)
-		throws PortalException;
+	public Lock lockFolder(long folderId) throws PortalException;
 
 	public Lock lockFolder(
 			long folderId, String owner, boolean inheritable,

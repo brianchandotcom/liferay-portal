@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.antivirus;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import java.io.File;
 import java.io.InputStream;
 
@@ -26,13 +24,10 @@ public interface AntivirusScanner {
 
 	public boolean isActive();
 
-	public void scan(byte[] bytes)
-		throws AntivirusScannerException, SystemException;
+	public void scan(byte[] bytes) throws AntivirusScannerException;
 
-	public void scan(File file)
-		throws AntivirusScannerException, SystemException;
+	public void scan(File file) throws AntivirusScannerException;
 
-	public void scan(InputStream inputStream)
-		throws AntivirusScannerException, SystemException;
+	public void scan(InputStream inputStream) throws AntivirusScannerException;
 
 }

@@ -46,8 +46,7 @@ public interface ImageProcessor {
 	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception;
 
-	public long getPreviewFileSize(FileVersion fileVersion)
-		throws Exception;
+	public long getPreviewFileSize(FileVersion fileVersion) throws Exception;
 
 	public String getPreviewType(FileVersion fileVersion);
 

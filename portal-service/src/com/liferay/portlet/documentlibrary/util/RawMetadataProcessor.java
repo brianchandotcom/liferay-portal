@@ -65,8 +65,7 @@ public interface RawMetadataProcessor {
 	 *         extracted and persisted
 	 * @throws PortalException if an error occurred in the metadata extraction
 	 */
-	public void saveMetadata(FileVersion fileVersion)
-		throws PortalException;
+	public void saveMetadata(FileVersion fileVersion) throws PortalException;
 
 	/**
 	 * Launches extraction of raw metadata from the file version.

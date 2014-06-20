@@ -349,7 +349,7 @@ public class DLFileEntryFinderImpl
 
 	@Override
 	public DLFileEntry findByAnyImageId(long imageId)
-		throws NoSuchFileEntryException, SystemException {
+		throws NoSuchFileEntryException {
 
 		DLFileEntry dlFileEntry = fetchByAnyImageId(imageId);
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -48,7 +47,7 @@ public class DLValidatorUtil {
 	}
 
 	public static void validateFileExtension(String fileName)
-		throws FileExtensionException, SystemException {
+		throws FileExtensionException {
 
 		getDLValidator().validateFileExtension(fileName);
 	}
@@ -60,19 +59,19 @@ public class DLValidatorUtil {
 	}
 
 	public static void validateFileSize(String fileName, byte[] bytes)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		getDLValidator().validateFileSize(fileName, bytes);
 	}
 
 	public static void validateFileSize(String fileName, File file)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		getDLValidator().validateFileSize(fileName, file);
 	}
 
 	public static void validateFileSize(String fileName, InputStream is)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		getDLValidator().validateFileSize(fileName, is);
 	}

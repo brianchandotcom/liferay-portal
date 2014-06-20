@@ -2087,8 +2087,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				@Override
 				public List<Group> findTreeModels(
 						long previousId, long companyId, long parentPrimaryKey,
-						int size)
-					throws SystemException {
+						int size) {
 
 					return groupPersistence.findByG_C_P(
 						previousId, companyId, parentPrimaryKey,

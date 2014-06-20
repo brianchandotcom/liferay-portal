@@ -196,8 +196,7 @@ public interface JournalArticleFinder {
 
 	public com.liferay.portlet.journal.model.JournalArticle findByR_D(
 		long resourcePrimKey, java.util.Date displayDate)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleException;
+		throws com.liferay.portlet.journal.NoSuchArticleException;
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F(
 		long groupId, java.util.List<java.lang.Long> folderIds,

@@ -1452,7 +1452,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	protected void updateVirtualHostname(long companyId, String virtualHostname)
-		throws CompanyVirtualHostException, SystemException {
+		throws CompanyVirtualHostException {
 
 		if (Validator.isNotNull(virtualHostname)) {
 			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
@@ -1628,9 +1628,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	protected class DeleteOrganizationActionableDynamicQuery {
 
-		protected DeleteOrganizationActionableDynamicQuery()
-			throws SystemException {
-
+		protected DeleteOrganizationActionableDynamicQuery() {
 			_actionableDynamicQuery =
 				organizationLocalService.getActionableDynamicQuery();
 

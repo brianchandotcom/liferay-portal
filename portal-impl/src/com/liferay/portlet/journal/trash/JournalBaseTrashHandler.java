@@ -203,7 +203,6 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
-	protected abstract long getGroupId(long classPK)
-		throws PortalException;
+	protected abstract long getGroupId(long classPK) throws PortalException;
 
 }

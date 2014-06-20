@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -92,7 +91,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public void validateFileExtension(String fileName)
-		throws FileExtensionException, SystemException {
+		throws FileExtensionException {
 
 		boolean validFileExtension = false;
 
@@ -123,7 +122,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public void validateFileSize(String fileName, byte[] bytes)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		if ((bytes == null) ||
 			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
@@ -136,7 +135,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public void validateFileSize(String fileName, File file)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		if ((file == null) ||
 			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
@@ -149,7 +148,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public void validateFileSize(String fileName, InputStream is)
-		throws FileSizeException, SystemException {
+		throws FileSizeException {
 
 		try {
 			if ((is == null) ||

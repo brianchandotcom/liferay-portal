@@ -47,14 +47,12 @@ public abstract class BaseCmisRepository extends BaseRepositoryImpl {
 	public abstract boolean isCheckOutAllowable(String objectId)
 		throws PortalException;
 
-	public abstract boolean isSupportsMinorVersions()
-		throws PortalException;
+	public abstract boolean isSupportsMinorVersions() throws PortalException;
 
 	public abstract FileEntry toFileEntry(String objectId)
 		throws PortalException;
 
-	public abstract Folder toFolder(String objectId)
-		throws PortalException;
+	public abstract Folder toFolder(String objectId) throws PortalException;
 
 	public abstract FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,

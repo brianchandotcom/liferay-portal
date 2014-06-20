@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface MethodFactory {
 
-	public Method create(HttpServletRequest request)
-		throws WebDAVException;
+	public Method create(HttpServletRequest request) throws WebDAVException;
 
 }

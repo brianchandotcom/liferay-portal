@@ -128,8 +128,7 @@ public interface TrashEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException;
+		throws com.liferay.portal.security.auth.PrincipalException;
 
 	/**
 	* Returns a range of all the trash entries matching the group ID.
@@ -148,8 +147,7 @@ public interface TrashEntryService extends BaseService {
 	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException;
+		throws com.liferay.portal.security.auth.PrincipalException;
 
 	/**
 	* Moves the trash entry with the entity class name and primary key,

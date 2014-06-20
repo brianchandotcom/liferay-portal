@@ -189,8 +189,7 @@ public interface DL {
 
 	public String getThumbnailStyle() throws Exception;
 
-	public String getThumbnailStyle(boolean max, int margin)
-		throws Exception;
+	public String getThumbnailStyle(boolean max, int margin) throws Exception;
 
 	public String getTitleWithExtension(FileEntry fileEntry);
 

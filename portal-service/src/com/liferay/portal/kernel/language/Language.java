@@ -158,8 +158,7 @@ public interface Language {
 
 	public boolean isDuplicateLanguageCode(String languageCode);
 
-	public boolean isInheritLocales(long groupId)
-		throws PortalException;
+	public boolean isInheritLocales(long groupId) throws PortalException;
 
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content);

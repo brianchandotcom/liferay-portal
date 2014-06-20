@@ -1024,9 +1024,8 @@ public class OrganizationLocalServiceImpl
 
 				@Override
 				public List<Organization> findTreeModels(
-						long previousId, long companyId, long parentPrimaryKey,
-						int size)
-					throws SystemException {
+					long previousId, long companyId, long parentPrimaryKey,
+					int size) {
 
 					return organizationPersistence.findByO_C_P(
 						previousId, companyId, parentPrimaryKey,

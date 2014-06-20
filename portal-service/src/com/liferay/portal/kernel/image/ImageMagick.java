@@ -32,8 +32,7 @@ public interface ImageMagick {
 
 	public Properties getResourceLimitsProperties() throws Exception;
 
-	public String[] identify(List<String> arguments)
-		throws Exception;
+	public String[] identify(List<String> arguments) throws Exception;
 
 	public boolean isEnabled();
 

@@ -925,6 +925,47 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(content, line, newLine);
 	}
 
+	protected String fixSystemExceptions(String content) {
+		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+		String replacement = null;
+
+		String afterException = matcher.group(3);
+		String beforeException = matcher.group(2);
+
+		if (Validator.isNull(beforeException) &&
+			Validator.isNull(afterException)) {
+
+			replacement = matcher.group(4);
+
+			String beforeThrows = matcher.group(1);
+
+			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
+				replacement = beforeThrows + replacement;
+			}
+		}
+		else if (Validator.isNull(beforeException)) {
+			replacement = StringUtil.replaceFirst(
+				match, "SystemException, ", StringPool.BLANK);
+		}
+		else {
+			replacement = StringUtil.replaceFirst(
+				match, ", SystemException", StringPool.BLANK);
+		}
+
+		if (match.equals(replacement)) {
+			return content;
+		}
+
+		return fixSystemExceptions(
+			StringUtil.replaceFirst(content, match, replacement));
+	}
+
 	protected String fixTabsAndIncorrectEmptyLines(
 		String content, Set<JavaTerm> javaTerms) {
 
@@ -1085,6 +1126,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (isGenerated(content)) {
 			return null;
 		}
+
+		String newContent = format(file, fileName, absolutePath, content);
+
+		compareAndAutoFixContent(file, fileName, content, newContent);
+
+		return newContent;
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
 		String className = file.getName();
 
@@ -1347,26 +1399,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent, " static interface ", " interface ");
 
-		String oldContent = newContent;
+		// LPS-47055
 
-		while (true) {
-			newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-				oldContent, fileName);
+		newContent = fixSystemExceptions(newContent);
 
-			newContent = formatJava(fileName, absolutePath, newContent);
+		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+			newContent, fileName);
 
-			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
+		newContent = formatJava(fileName, absolutePath, newContent);
 
-			if (oldContent.equals(newContent)) {
-				break;
-			}
+		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
 
-			oldContent = newContent;
+		if (content.equals(newContent)) {
+			return newContent;
 		}
 
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
+		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatAnnotations(
@@ -2310,7 +2358,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if ((line.startsWith("extends ") ||
 				 line.startsWith("implements ") ||
 				 line.startsWith("throws")) &&
-				line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+				 line.endsWith(StringPool.SEMICOLON)) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return new Tuple(previousLine + StringPool.SPACE + line);
@@ -3126,6 +3175,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusions;
 	private List<String> _testAnnotationsExclusions;
+	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
+		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExclusions;
 
 }

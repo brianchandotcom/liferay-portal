@@ -141,8 +141,7 @@ public class DLFileEntryFinderUtil {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
 		return getFinder().findByAnyImageId(imageId);
 	}
 

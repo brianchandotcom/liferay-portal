@@ -209,7 +209,6 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
-	protected abstract long getGroupId(long classPK)
-		throws PortalException;
+	protected abstract long getGroupId(long classPK) throws PortalException;
 
 }

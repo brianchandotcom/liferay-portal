@@ -29,7 +29,6 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public void deleteComment(long commentId)
-		throws PortalException;
+	public void deleteComment(long commentId) throws PortalException;
 
 }

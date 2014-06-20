@@ -97,7 +97,7 @@ public class AssetTagFinderImpl
 
 	@Override
 	public AssetTag filterFindByG_N(long groupId, String name)
-		throws NoSuchTagException, SystemException {
+		throws NoSuchTagException {
 
 		return doFindByG_N(groupId, name, true);
 	}
@@ -121,7 +121,7 @@ public class AssetTagFinderImpl
 
 	@Override
 	public AssetTag findByG_N(long groupId, String name)
-		throws NoSuchTagException, SystemException {
+		throws NoSuchTagException {
 
 		return doFindByG_N(groupId, name, false);
 	}
@@ -345,7 +345,7 @@ public class AssetTagFinderImpl
 
 	protected AssetTag doFindByG_N(
 			long groupId, String name, boolean inlineSQLHelper)
-		throws NoSuchTagException, SystemException {
+		throws NoSuchTagException {
 
 		name = StringUtil.toLowerCase(name.trim());
 

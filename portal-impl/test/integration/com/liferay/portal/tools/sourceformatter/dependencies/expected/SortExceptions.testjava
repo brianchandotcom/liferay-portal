@@ -15,19 +15,18 @@
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Hugo Huijser
  */
 public class SortAnnotations {
 
-	public void method() throws PortalException, SystemException {
+	public void method() throws PortalException, RuntimeException {
 		if (true) {
 			throw new PortalException();
 		}
 		else {
-			throw new SystemException();
+			throw new RuntimeException();
 		}
 	}
 

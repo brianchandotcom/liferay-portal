@@ -75,8 +75,7 @@ public interface ImageTool {
 
 	public Image getDefaultUserMalePortrait();
 
-	public Image getImage(byte[] bytes)
-		throws IOException;
+	public Image getImage(byte[] bytes) throws IOException;
 
 	public Image getImage(File file) throws IOException;
 

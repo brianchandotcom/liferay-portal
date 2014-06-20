@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -306,8 +305,7 @@ public interface Portal {
 			Layout layout)
 		throws PortalException;
 
-	public long[] getAncestorSiteGroupIds(long groupId)
-		throws PortalException;
+	public long[] getAncestorSiteGroupIds(long groupId) throws PortalException;
 
 	/**
 	 * Returns the set of struts actions that should not be checked for an
@@ -441,8 +439,7 @@ public interface Portal {
 	 */
 	public String getCDNHost(boolean secure);
 
-	public String getCDNHost(HttpServletRequest request)
-		throws PortalException;
+	public String getCDNHost(HttpServletRequest request) throws PortalException;
 
 	/**
 	 * Returns the insecure (HTTP) content distribution network (CDN) host
@@ -524,8 +521,7 @@ public interface Portal {
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException;
 
-	public long getControlPanelPlid(long companyId)
-		throws PortalException;
+	public long getControlPanelPlid(long companyId) throws PortalException;
 
 	public long getControlPanelPlid(PortletRequest portletRequest)
 		throws PortalException;
@@ -741,8 +737,7 @@ public interface Portal {
 	public String[] getGuestPermissions(
 		PortletRequest portletRequest, String className);
 
-	public String getHomeURL(HttpServletRequest request)
-		throws PortalException;
+	public String getHomeURL(HttpServletRequest request) throws PortalException;
 
 	public String getHost(HttpServletRequest request);
 
@@ -882,8 +877,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
 	@Deprecated
-	public long getParentGroupId(long scopeGroupId)
-		throws PortalException;
+	public long getParentGroupId(long scopeGroupId) throws PortalException;
 
 	public String getPathContext();
 
@@ -997,7 +991,7 @@ public interface Portal {
 
 	public PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
-		throws PortletException, SystemException;
+		throws PortletException;
 
 	public String getPortletDescription(
 		Portlet portlet, ServletContext servletContext, Locale locale);
@@ -1134,11 +1128,9 @@ public interface Portal {
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	public Locale getSiteDefaultLocale(long groupId)
-		throws PortalException;
+	public Locale getSiteDefaultLocale(long groupId) throws PortalException;
 
-	public long getSiteGroupId(long groupId)
-		throws PortalException;
+	public long getSiteGroupId(long groupId) throws PortalException;
 
 	/**
 	 * Returns the URL of the login page for the current site if one is
@@ -1190,11 +1182,9 @@ public interface Portal {
 
 	public String getURLWithSessionId(String url, String sessionId);
 
-	public User getUser(HttpServletRequest request)
-		throws PortalException;
+	public User getUser(HttpServletRequest request) throws PortalException;
 
-	public User getUser(PortletRequest portletRequest)
-		throws PortalException;
+	public User getUser(PortletRequest portletRequest) throws PortalException;
 
 	public String getUserEmailAddress(long userId);
 

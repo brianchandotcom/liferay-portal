@@ -27,8 +27,7 @@ public interface OAuthFactory {
 	public OAuthRequest createOAuthRequest(Verb verb, String url)
 		throws OAuthException;
 
-	public Token createToken(String token, String secret)
-		throws OAuthException;
+	public Token createToken(String token, String secret) throws OAuthException;
 
 	public Verifier createVerifier(String verifier) throws OAuthException;
 

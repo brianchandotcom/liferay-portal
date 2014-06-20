@@ -1045,8 +1045,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getFullHierarchyDDMForm();
 	}
 

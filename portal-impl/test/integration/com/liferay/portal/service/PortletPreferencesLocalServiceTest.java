@@ -1519,9 +1519,8 @@ public class PortletPreferencesLocalServiceTest {
 
 		@Override
 		public javax.portlet.PortletPreferences getStrictPreferences(
-				long companyId, long ownerId, int ownerType, long plid,
-				String portletId)
-			throws SystemException {
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId) {
 
 			try {
 				return (javax.portlet.PortletPreferences)

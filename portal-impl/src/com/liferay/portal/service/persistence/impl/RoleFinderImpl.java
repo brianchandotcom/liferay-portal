@@ -357,7 +357,7 @@ public class RoleFinderImpl
 
 	@Override
 	public Role findByC_N(long companyId, String name)
-		throws NoSuchRoleException, SystemException {
+		throws NoSuchRoleException {
 
 		name = StringUtil.lowerCase(name);
 

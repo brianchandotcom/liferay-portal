@@ -348,6 +348,55 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="BLOCK_BUTTON" />
 	</command>
 
+	<command name="configureWhatsHappeningDisplayPG">
+		<if>
+			<condition action="SOProfile#isElementNotPresent" locator-key1="WHATS_HAPPENING" />
+			<then>
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+
+				<if>
+					<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<then>
+						<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+						<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+					</then>
+				</if>
+
+				<execute action="SOProfile#makeVisible" locator-key1="WHATS_HAPPENING_OPTIONS" />
+				<execute action="SOProfile#click" locator-key1="WHATS_HAPPENING_OPTIONS_LINK" />
+
+				<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+				<execute action="SOProfileWhatsHappeningConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+				<execute action="SOProfileWhatsHappeningConfiguration#check" locator-key1="DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
+				<execute action="SOProfileWhatsHappeningConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="SOProfileWhatsHappeningConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute action="SOProfileWhatsHappeningConfiguration#selectFrameTop" />
+				<execute action="SOProfileWhatsHappeningConfiguration#click" locator-key1="CLOSE_BUTTON" />
+
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<then>
+						<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+						<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+					</then>
+				</if>
+			</then>
+		</if>
+	</command>
+
 	<command name="disconnectFromConnection">
 		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="${filterType}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />

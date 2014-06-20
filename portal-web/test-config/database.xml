@@ -24,7 +24,7 @@
 			</drop-schema>
 			<use-schema>
 				<token>connect to lportal;</token>
-				<value>connect to ${database.schema} USER ${database.username} USING ${database.password};</value>
+				<value>connect to ${database.schema};</value>
 			</use-schema>
 		</sql-replacement>
 	</db2>

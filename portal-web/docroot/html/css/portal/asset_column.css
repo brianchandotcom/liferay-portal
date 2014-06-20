@@ -19,6 +19,7 @@
 
 	.lfr-asset-avatar img {
 		margin: 0 auto;
+		max-width: 100%;
 		padding-right: 2em;
 	}
 
@@ -47,7 +48,6 @@
 	.lfr-asset-date {
 		overflow: hidden;
 	}
-
 
 	.lfr-asset-downloads {
 		overflow: hidden;

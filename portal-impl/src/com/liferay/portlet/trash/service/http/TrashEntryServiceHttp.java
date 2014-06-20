@@ -161,8 +161,7 @@ public class TrashEntryServiceHttp {
 
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.security.auth.PrincipalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes4);
@@ -175,10 +174,6 @@ public class TrashEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				if (e instanceof com.liferay.portal.security.auth.PrincipalException) {
 					throw (com.liferay.portal.security.auth.PrincipalException)e;
 				}
@@ -198,8 +193,7 @@ public class TrashEntryServiceHttp {
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.security.auth.PrincipalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes5);
@@ -213,10 +207,6 @@ public class TrashEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				if (e instanceof com.liferay.portal.security.auth.PrincipalException) {
 					throw (com.liferay.portal.security.auth.PrincipalException)e;
 				}

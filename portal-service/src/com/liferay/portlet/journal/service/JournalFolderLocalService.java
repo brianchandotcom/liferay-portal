@@ -442,16 +442,14 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getInheritedWorkflowFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getNoAssetFolders();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getOverridedDDMStructuresFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,

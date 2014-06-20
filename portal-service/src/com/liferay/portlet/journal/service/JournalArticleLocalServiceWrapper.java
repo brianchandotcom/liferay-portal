@@ -1225,8 +1225,7 @@ public class JournalArticleLocalServiceWrapper
 		java.lang.String languageId, int page,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getArticleDisplay(article,
 			ddmTemplateKey, viewMode, languageId, page, portletRequestModel,
 			themeDisplay);

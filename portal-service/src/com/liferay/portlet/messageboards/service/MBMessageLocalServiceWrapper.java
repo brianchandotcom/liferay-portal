@@ -399,6 +399,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
 	long, long, String, String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long userId, java.lang.String userName, long categoryId,

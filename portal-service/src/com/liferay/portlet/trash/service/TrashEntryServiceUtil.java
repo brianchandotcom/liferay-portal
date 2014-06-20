@@ -132,8 +132,7 @@ public class TrashEntryServiceUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.security.auth.PrincipalException {
 		return getService().getEntries(groupId);
 	}
 
@@ -153,8 +152,7 @@ public class TrashEntryServiceUtil {
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.security.auth.PrincipalException {
 		return getService().getEntries(groupId, start, end, obc);
 	}
 

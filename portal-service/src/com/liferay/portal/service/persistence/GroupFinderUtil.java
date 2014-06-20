@@ -90,9 +90,7 @@ public class GroupFinderUtil {
 	}
 
 	public static com.liferay.portal.model.Group findByC_N(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.NoSuchGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) throws com.liferay.portal.NoSuchGroupException {
 		return getFinder().findByC_N(companyId, name);
 	}
 

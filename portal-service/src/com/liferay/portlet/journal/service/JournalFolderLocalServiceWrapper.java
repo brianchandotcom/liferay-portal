@@ -625,8 +625,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public long getInheritedWorkflowFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException {
+		throws com.liferay.portlet.journal.NoSuchFolderException {
 		return _journalFolderLocalService.getInheritedWorkflowFolderId(folderId);
 	}
 
@@ -637,8 +636,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public long getOverridedDDMStructuresFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException {
+		throws com.liferay.portlet.journal.NoSuchFolderException {
 		return _journalFolderLocalService.getOverridedDDMStructuresFolderId(folderId);
 	}
 

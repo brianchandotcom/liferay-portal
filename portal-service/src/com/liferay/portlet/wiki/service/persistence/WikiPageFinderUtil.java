@@ -64,8 +64,7 @@ public class WikiPageFinderUtil {
 
 	public static com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
 		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException {
+		throws com.liferay.portlet.wiki.NoSuchPageException {
 		return getFinder().findByResourcePrimKey(resourcePrimKey);
 	}
 

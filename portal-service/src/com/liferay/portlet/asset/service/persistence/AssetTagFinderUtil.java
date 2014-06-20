@@ -50,8 +50,7 @@ public class AssetTagFinderUtil {
 
 	public static com.liferay.portlet.asset.model.AssetTag filterFindByG_N(
 		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getFinder().filterFindByG_N(groupId, name);
 	}
 
@@ -74,8 +73,7 @@ public class AssetTagFinderUtil {
 
 	public static com.liferay.portlet.asset.model.AssetTag findByG_N(
 		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getFinder().findByG_N(groupId, name);
 	}
 

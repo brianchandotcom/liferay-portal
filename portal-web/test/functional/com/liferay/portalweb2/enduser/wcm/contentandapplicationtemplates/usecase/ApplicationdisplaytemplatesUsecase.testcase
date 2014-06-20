@@ -135,7 +135,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTCategoriesNavigation" priority="3">
+	<command known-issues="LIFERAYQA-9791" name="ADTCategoriesNavigation" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoContentCP">
@@ -470,7 +470,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTTagsNavigationPortlet" priority="3">
+	<command known-issues="LIFERAYQA-9791" name="ADTTagsNavigationPortlet" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

@@ -20,11 +20,16 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewJVMJUnitTestRunner;
 
 import java.util.logging.Level;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -246,5 +251,87 @@ public class ClusterRequestReceiverTest
 			}
 		}
 	}
+
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class,
+			SetJGroupsSingleThreadPoolAdvice.class
+		}
+	)
+	@Test
+	public void testInvoke6() throws Exception {
+		ClusterExecutorImpl clusterExecutorImpl1 = null;
+		ClusterExecutorImpl clusterExecutorImpl2 = null;
+
+		String value = "testValue";
+
+		try {
+			clusterExecutorImpl1 = getClusterExecutorImpl(false, false);
+			clusterExecutorImpl2 = getClusterExecutorImpl(false, false);
+
+			Address address = clusterExecutorImpl2.getLocalClusterNodeAddress();
+
+			MethodHandler methodHandler1 = new MethodHandler(
+				_testMethod4MethodKey, value);
+
+			ClusterRequest clusterRequest1 =
+				ClusterRequest.createUnicastRequest(methodHandler1, address);
+
+			FutureClusterResponses futureClusterResponses1 =
+				clusterExecutorImpl1.execute(clusterRequest1);
+
+			assertFutureClusterResponsesWithoutException(
+				futureClusterResponses1.get(), clusterRequest1.getUuid(), value,
+				address);
+
+			MethodHandler methodHandler2 = new MethodHandler(
+				_testMethod4MethodKey, StringPool.BLANK);
+
+			ClusterRequest clusterRequest2 =
+				ClusterRequest.createUnicastRequest(methodHandler2, address);
+
+			FutureClusterResponses futureClusterResponses2 =
+				clusterExecutorImpl1.execute(clusterRequest2);
+
+			assertFutureClusterResponsesWithoutException(
+				futureClusterResponses2.get(), clusterRequest2.getUuid(), null,
+				address);
+		}
+		finally {
+			if (clusterExecutorImpl1 != null) {
+				clusterExecutorImpl1.destroy();
+			}
+
+			if (clusterExecutorImpl2 != null) {
+				clusterExecutorImpl2.destroy();
+			}
+		}
+	}
+
+	@Aspect
+	public static class SetJGroupsSingleThreadPoolAdvice {
+
+		@Around(
+			"call(* com.liferay.portal.cluster.ClusterBase.createJChannel(..))")
+		public Object setSingleThreadInPool(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			Object[] args = proceedingJoinPoint.getArgs();
+
+			args[0] =
+				"UDP(thread_pool.min_threads=1;thread_pool.max_threads=1;" +
+					"oob_thread_pool.enabled=false;):PING:MERGE3:FD_SOCK:" +
+						"FD_ALL:VERIFY_SUSPECT:pbcast.NAKACK2:UNICAST:" +
+							"pbcast.STABLE:pbcast.GMS:UFC:MFC:FRAG2:RSVP";
+
+			return proceedingJoinPoint.proceed(args);
+		}
+
+	}
+
+	private static MethodKey _testMethod4MethodKey = new MethodKey(
+		TestBean.class, "testMethod4", String.class);
 
 }

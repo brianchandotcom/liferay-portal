@@ -429,7 +429,7 @@ if (organization != null) {
 			<c:if test="<%= organization != null %>">
 				<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 					<div class="lfr-asset-summary">
-						<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
+						<img alt="<%= HtmlUtil.escapeAttribute(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
 
 						<div class="lfr-asset-name">
 							<h4><%= HtmlUtil.escape(organization.getName()) %></h4>

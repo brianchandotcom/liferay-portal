@@ -66,7 +66,7 @@ else if (type.equals("assigned-to-my-roles")) {
 					User assigneeUser = UserLocalServiceUtil.getUser(workflowTask.getAssigneeUserId());
 					%>
 
-					<img alt="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" class="user-avatar" src="<%= assigneeUser.getPortraitURL(themeDisplay) %>" title="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" />
+					<img alt="<%= HtmlUtil.escapeAttribute(assigneeUser.getFullName()) %>" class="user-avatar" src="<%= assigneeUser.getPortraitURL(themeDisplay) %>" title="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" />
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</c:if>

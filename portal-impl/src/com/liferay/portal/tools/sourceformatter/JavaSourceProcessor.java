@@ -925,6 +925,47 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(content, line, newLine);
 	}
 
+	protected String fixSystemExceptions(String content) {
+		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+		String replacement = null;
+
+		String afterException = matcher.group(3);
+		String beforeException = matcher.group(2);
+
+		if (Validator.isNull(beforeException) &&
+			Validator.isNull(afterException)) {
+
+			replacement = matcher.group(4);
+
+			String beforeThrows = matcher.group(1);
+
+			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
+				replacement = beforeThrows + replacement;
+			}
+		}
+		else if (Validator.isNull(beforeException)) {
+			replacement = StringUtil.replaceFirst(
+				match, "SystemException, ", StringPool.BLANK);
+		}
+		else {
+			replacement = StringUtil.replaceFirst(
+				match, ", SystemException", StringPool.BLANK);
+		}
+
+		if (match.equals(replacement)) {
+			return content;
+		}
+
+		return fixSystemExceptions(
+			StringUtil.replaceFirst(content, match, replacement));
+	}
+
 	protected String fixTabsAndIncorrectEmptyLines(
 		String content, Set<JavaTerm> javaTerms) {
 
@@ -1346,6 +1387,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = StringUtil.replace(
 			newContent, " static interface ", " interface ");
+
+		// LPS-47055
+
+		newContent = fixSystemExceptions(newContent);
 
 		String oldContent = newContent;
 
@@ -3127,6 +3172,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusions;
 	private List<String> _testAnnotationsExclusions;
+	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
+		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExclusions;
 
 }

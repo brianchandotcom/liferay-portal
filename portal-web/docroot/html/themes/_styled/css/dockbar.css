@@ -78,6 +78,8 @@ $editLayoutPanelWidth: 460px;
 
 			@include respond-to(phone, tablet) {
 				@include flexbox;
+
+				padding: 0;
 			}
 
 			> .nav {
@@ -198,6 +200,7 @@ $editLayoutPanelWidth: 460px;
 
 							> a {
 								float: right;
+								font-weight: bold;
 								width: auto;
 
 								& > .nav-item-label {

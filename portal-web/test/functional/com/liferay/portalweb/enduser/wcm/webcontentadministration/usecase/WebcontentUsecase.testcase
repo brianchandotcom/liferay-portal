@@ -235,6 +235,94 @@
 		</execute>
 	</command>
 
+	<command known-issues="LPS-47880" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="addRoleViewPermissions" value="Power User" />
+			<var name="structureDescription" value="Structure Description" />
+			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="Global Structure" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="addRoleViewPermissions" value="Power User" />
+			<var name="structureName" value="Global Structure" />
+			<var name="templateDescription" value="Template Description" />
+			<var name="templateName" value="Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#editSubstructureDefaultValuesCP">
+			<var name="editSubstructureFieldNames" value="Text" />
+			<var name="substructureName" value="Global Structure" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userFirstName" value="test1" />
+			<var name="userLastName" value="test1" />
+			<var name="userScreenName" value="test1test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1test" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userFirstName" value="test1" />
+			<var name="userLastName" value="test1" />
+			<var name="userScreenName" value="test1test" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Site Administrator" />
+			<var name="siteName" value="Liferay" />
+			<var name="userFirstName" value="test1" />
+			<var name="userLastName" value="test1" />
+			<var name="userScreenName" value="test1test" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP" />
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="saveAsDraft" value="true" />
+			<var name="structureName" value="Global Structure" />
+			<var name="webContentText" value="Web Content Text" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

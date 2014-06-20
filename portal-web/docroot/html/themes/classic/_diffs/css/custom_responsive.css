@@ -18,6 +18,7 @@
 				font-size: 26px;
 
 				img {
+					height: auto;
 					width: 35px;
 				}
 			}

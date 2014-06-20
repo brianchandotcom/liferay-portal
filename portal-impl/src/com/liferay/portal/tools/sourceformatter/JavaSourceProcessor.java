@@ -1127,6 +1127,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return null;
 		}
 
+		String newContent = format(file, fileName, absolutePath, content);
+
+		compareAndAutoFixContent(file, fileName, content, newContent);
+
+		return newContent;
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
 		String className = file.getName();
 
 		int pos = className.lastIndexOf(StringPool.PERIOD);
@@ -1409,9 +1420,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			oldContent = newContent;
 		}
 
-		compareAndAutoFixContent(file, fileName, content, newContent);
+		if (content.equals(newContent)) {
+			return newContent;
+		}
 
-		return newContent;
+		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatAnnotations(

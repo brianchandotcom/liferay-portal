@@ -963,6 +963,10 @@ public class JournalArticleFinderImpl
 					ddmTemplateKeys);
 			}
 
+			sql = removeUnnecessaryJournalFilters(
+				sql, articleIds, version, titles, descriptions, contents,
+				displayDateGT_TS, displayDateLT_TS, reviewDate_TS);
+
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (inlineSQLHelper) {
@@ -1006,21 +1010,37 @@ public class JournalArticleFinderImpl
 				qPos.add(ddmTemplateKeys, 2);
 			}
 
-			qPos.add(articleIds, 2);
+			if (!isNullArray(articleIds)) {
+				qPos.add(articleIds);
+			}
 
 			if ((version != null) && (version > 0)) {
 				qPos.add(version);
 			}
 
-			qPos.add(titles, 2);
-			qPos.add(descriptions, 2);
-			qPos.add(contents, 2);
-			qPos.add(displayDateGT_TS);
-			qPos.add(displayDateGT_TS);
-			qPos.add(displayDateLT_TS);
-			qPos.add(displayDateLT_TS);
-			qPos.add(reviewDate_TS);
-			qPos.add(reviewDate_TS);
+			if (!isNullArray(titles)) {
+				qPos.add(titles);
+			}
+
+			if (!isNullArray(descriptions)) {
+				qPos.add(descriptions);
+			}
+
+			if (!isNullArray(contents)) {
+				qPos.add(contents);
+			}
+
+			if (displayDateGT_TS != null) {
+				qPos.add(displayDateGT_TS);
+			}
+
+			if (displayDateLT_TS != null) {
+				qPos.add(displayDateLT_TS);
+			}
+
+			if (reviewDate_TS != null) {
+				qPos.add(reviewDate_TS);
+			}
 
 			Iterator<Long> itr = q.iterate();
 
@@ -1312,6 +1332,10 @@ public class JournalArticleFinderImpl
 					ddmTemplateKeys);
 			}
 
+			sql = removeUnnecessaryJournalFilters(
+				sql, articleIds, version, titles, descriptions, contents,
+				displayDateGT_TS, displayDateLT_TS, reviewDate_TS);
+
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator("JournalArticle"));
@@ -1358,21 +1382,37 @@ public class JournalArticleFinderImpl
 				qPos.add(ddmTemplateKeys, 2);
 			}
 
-			qPos.add(articleIds, 2);
+			if (!isNullArray(articleIds)) {
+				qPos.add(articleIds);
+			}
 
 			if ((version != null) && (version > 0)) {
 				qPos.add(version);
 			}
 
-			qPos.add(titles, 2);
-			qPos.add(descriptions, 2);
-			qPos.add(contents, 2);
-			qPos.add(displayDateGT_TS);
-			qPos.add(displayDateGT_TS);
-			qPos.add(displayDateLT_TS);
-			qPos.add(displayDateLT_TS);
-			qPos.add(reviewDate_TS);
-			qPos.add(reviewDate_TS);
+			if (!isNullArray(titles)) {
+				qPos.add(titles);
+			}
+
+			if (!isNullArray(descriptions)) {
+				qPos.add(descriptions);
+			}
+
+			if (!isNullArray(contents)) {
+				qPos.add(contents);
+			}
+
+			if (displayDateGT_TS != null) {
+				qPos.add(displayDateGT_TS);
+			}
+
+			if (displayDateLT_TS != null) {
+				qPos.add(displayDateLT_TS);
+			}
+
+			if (reviewDate_TS != null) {
+				qPos.add(reviewDate_TS);
+			}
 
 			return (List<JournalArticle>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),
@@ -1441,6 +1481,68 @@ public class JournalArticleFinderImpl
 		}
 
 		return true;
+	}
+
+	protected String removeUnnecessaryJournalFilters(
+		String sql, String[] articleIds, Double version, String[] titles,
+		String[] descriptions, String[] contents, Date displayDateGT,
+		Date displayDateLT, Date reviewDate) {
+
+		if (isNullArray(articleIds)) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.articleId LIKE ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if ((version == null) || (version <= 0)) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.version = ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if (isNullArray(titles)) {
+			sql = StringUtil.replace(
+				sql, "(lower(JournalArticle.title) LIKE ?) " +
+				"[$AND_OR_CONNECTOR$] ",StringPool.BLANK);
+		}
+
+		if (isNullArray(descriptions)) {
+			sql = StringUtil.replace(
+				sql,
+				"(JournalArticle.description LIKE ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if (isNullArray(contents)) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.content LIKE ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if (displayDateGT == null) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.displayDate >= ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if (displayDateLT == null) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.displayDate <= ?) [$AND_OR_CONNECTOR$] ",
+				StringPool.BLANK);
+		}
+
+		if (reviewDate == null) {
+			sql = StringUtil.replace(
+				sql, "(JournalArticle.reviewDate <= ?) ", StringPool.BLANK);
+		}
+
+		sql = StringUtil.replace(
+			sql, "[$AND_OR_CONNECTOR$] )", StringPool.CLOSE_PARENTHESIS);
+
+		sql = StringUtil.replace(
+			sql, " AND (" + StringPool.DOUBLE_SPACE + ")", StringPool.BLANK);
+
+		return sql;
 	}
 
 	protected String replaceStatusJoin(

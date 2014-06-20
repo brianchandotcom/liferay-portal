@@ -73,14 +73,14 @@
 				([$TYPE_STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
 				(
-					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.articleId LIKE ?) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+					(lower(JournalArticle.title) LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.description LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ?)
 				)
 		]]>
 	</sql>
@@ -207,14 +207,14 @@
 				([$TYPE_STRUCTURE_TEMPLATE$]) AND
 				(tempJournalArticle.id_ IS NULL) AND
 				(
-					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.articleId LIKE ?) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+					(lower(JournalArticle.title) LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.description LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ?)
 				)
 			ORDER BY
 				JournalArticle.id_ ASC

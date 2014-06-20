@@ -20,6 +20,7 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNotFoundException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -58,10 +59,13 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			return JSONFactoryUtil.serializeThrowable(uploadException);
 		}
 
-		JSONWebServiceAction jsonWebServiceAction = null;
+		Throwable throwable = null;
+
+		int returnStatusCode = 200;
 
 		try {
-			jsonWebServiceAction = getJSONWebServiceAction(request);
+			JSONWebServiceAction jsonWebServiceAction =
+				getJSONWebServiceAction(request);
 
 			Object returnObj = jsonWebServiceAction.invoke();
 
@@ -73,23 +77,36 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			}
 		}
 		catch (InvocationTargetException ite) {
-			Throwable throwable = ite.getCause();
+			throwable = ite.getCause();
 
 			if (throwable instanceof SecurityException) {
-				throw (SecurityException)throwable;
+				returnStatusCode = HttpServletResponse.SC_FORBIDDEN;
 			}
+			else {
+				returnStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+			}
+		}
+		catch (JSONWebServiceNotFoundException e) {
+			throwable = e;
 
-			_log.error(throwable, throwable);
+			returnStatusCode = HttpServletResponse.SC_NOT_FOUND;
+		}
+		catch (SecurityException e) {
+			throwable = e;
 
-			return JSONFactoryUtil.serializeThrowable(throwable);
+			returnStatusCode = HttpServletResponse.SC_FORBIDDEN;
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
+			throwable = e;
 
-			return JSONFactoryUtil.serializeThrowable(e);
+			returnStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 		}
+
+		_log.error(throwable, throwable);
+
+		response.setStatus(returnStatusCode);
+
+		return JSONFactoryUtil.serializeThrowable(throwable);
 	}
 
 	/**

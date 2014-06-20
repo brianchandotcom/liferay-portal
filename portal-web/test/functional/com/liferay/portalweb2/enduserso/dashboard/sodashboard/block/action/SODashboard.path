@@ -91,6 +91,21 @@
 </tr>
 <!--WHATS_HAPPENING-->
 <tr>
+	<td>WHATS_HAPPENING</td>
+	<td>//div[contains(@class,'microblogs-status-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WHATS_HAPPENING_OPTIONS</td>
+	<td>//div[contains(@id,'microblogsportlet')]//span[contains(@class,'portlet-actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WHATS_HAPPENING_OPTIONS_LINK</td>
+	<td>//div[contains(@id,'microblogsportlet')]//span[contains(@class,'portlet-actions')]//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WHATS_HAPPENING_CONTENT_FIELD</td>
 	<td>//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]</td>
 	<td></td>

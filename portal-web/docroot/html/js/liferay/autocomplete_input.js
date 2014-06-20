@@ -77,7 +77,9 @@ AUI.add(
 					}
 				);
 
-				A.mix(TRIGGER_CONFIG_DEFAULTS, instance.getAttrs(), false, autocompleteAttrs);
+				instance._triggerConfigDefaults = A.merge(TRIGGER_CONFIG_DEFAULTS);
+
+				A.mix(instance._triggerConfigDefaults, instance.getAttrs(), false, autocompleteAttrs);
 			},
 
 			destructor: function() {
@@ -253,7 +255,7 @@ AUI.add(
 
 					var triggerConfig = instance.get(STR_TRIGGER)[AArray.indexOf(triggers, trigger)];
 
-					instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
+					instance.setAttrs(A.merge(instance._triggerConfigDefaults, triggerConfig));
 
 					instance._trigger = trigger;
 				}

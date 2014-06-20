@@ -198,11 +198,13 @@ public class BaseSPIProviderTest {
 
 		@Around(
 			"execution(* com.liferay.portal.kernel.process.ProcessExecutor." +
-				"execute(String, String, java.util.List, " +
+				"execute(String, String, String, java.util.List, " +
 					"com.liferay.portal.kernel.process.ProcessCallable)) && " +
-						"args(java, classPath, arguments, processCallable)")
+						"args(java, bootstrapClassPath, classPath, arguments," +
+							" processCallable)")
 		public Object execute(
-				String java, String classPath, List<String> arguments,
+				String java, String bootstrapClassPath, String classPath,
+				List<String> arguments,
 				ProcessCallable<? extends Serializable> processCallable)
 			throws ProcessException {
 

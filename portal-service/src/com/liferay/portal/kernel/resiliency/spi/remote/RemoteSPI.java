@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.nio.intraband.welder.WelderFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessLauncher;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPI;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
@@ -73,7 +73,7 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 		try {
 			SPIShutdownHook spiShutdownHook = new SPIShutdownHook();
 
-			ProcessExecutor.ProcessContext.attach(
+			ProcessLauncher.ProcessContext.attach(
 				spiConfiguration.getSPIId(), spiConfiguration.getPingInterval(),
 				spiShutdownHook);
 
@@ -86,14 +86,14 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			RegisterCallback registerCallback = new RegisterCallback(uuid, spi);
 
 			ProcessOutputStream processOutputStream =
-				ProcessExecutor.ProcessContext.getProcessOutputStream();
+				ProcessLauncher.ProcessContext.getProcessOutputStream();
 
 			processOutputStream.writeProcessCallable(registerCallback);
 
 			registrationReference = welder.weld(MPIHelperUtil.getIntraband());
 
 			ConcurrentMap<String, Object> attributes =
-				ProcessExecutor.ProcessContext.getAttributes();
+				ProcessLauncher.ProcessContext.getAttributes();
 
 			attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, this);
 
@@ -224,7 +224,7 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 	}
 
 	protected class SPIShutdownHook
-		extends Thread implements ProcessExecutor.ShutdownHook {
+		extends Thread implements ProcessLauncher.ShutdownHook {
 
 		public SPIShutdownHook() {
 			setDaemon(true);

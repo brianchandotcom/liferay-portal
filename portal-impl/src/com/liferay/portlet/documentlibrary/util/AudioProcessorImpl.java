@@ -366,6 +366,7 @@ public class AudioProcessorImpl
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
 
 				Future<String> future = ProcessExecutor.execute(
+					ClassPathUtil.getGlobalClassPath(),
 					ClassPathUtil.getPortalClassPath(), processCallable);
 
 				String processIdentity = String.valueOf(

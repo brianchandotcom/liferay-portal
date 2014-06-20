@@ -27,8 +27,7 @@ import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.process.ProcessExecutor.ProcessContext;
+import com.liferay.portal.kernel.process.ProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtilTestUtil;
@@ -168,16 +167,16 @@ public class RemoteSPITest {
 			ProcessContext.class, "_processOutputStream", processOutputStream);
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessExecutor.ProcessContext.getAttributes();
+			ProcessContext.getAttributes();
 
 		SPI spi = (SPI)ReflectionTestUtil.invokeBridge(
 			_mockRemoteSPI, "call", new Class<?>[0]);
 
 		Assert.assertSame(spi, UnicastRemoteObject.toStub(_mockRemoteSPI));
 
-		Assert.assertTrue(ProcessExecutor.ProcessContext.isAttached());
+		Assert.assertTrue(ProcessContext.isAttached());
 
-		ProcessExecutor.ProcessContext.detach();
+		ProcessContext.detach();
 
 		Assert.assertSame(
 			_mockRemoteSPI,
@@ -196,9 +195,9 @@ public class RemoteSPITest {
 			Assert.assertSame(ExportException.class, throwable.getClass());
 		}
 
-		Assert.assertTrue(ProcessExecutor.ProcessContext.isAttached());
+		Assert.assertTrue(ProcessContext.isAttached());
 
-		ProcessExecutor.ProcessContext.detach();
+		ProcessContext.detach();
 
 		Assert.assertNull(attributes.remove(SPI.SPI_INSTANCE_PUBLICATION_KEY));
 
@@ -219,9 +218,9 @@ public class RemoteSPITest {
 			Assert.assertSame(IOException.class, throwable.getClass());
 		}
 
-		Assert.assertTrue(ProcessExecutor.ProcessContext.isAttached());
+		Assert.assertTrue(ProcessContext.isAttached());
 
-		ProcessExecutor.ProcessContext.detach();
+		ProcessContext.detach();
 
 		Assert.assertNull(attributes.remove(SPI.SPI_INSTANCE_PUBLICATION_KEY));
 

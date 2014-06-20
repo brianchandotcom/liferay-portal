@@ -454,6 +454,17 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_STArrayable() {
+		try {
+			_persistence.countByR_ST(RandomTestUtil.nextLong(),
+				new int[] { RandomTestUtil.nextInt(), 0 });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_U() {
 		try {
 			_persistence.countByG_U(RandomTestUtil.nextLong(),

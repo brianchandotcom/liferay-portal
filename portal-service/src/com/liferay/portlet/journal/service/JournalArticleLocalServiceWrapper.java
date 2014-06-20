@@ -872,6 +872,13 @@ public class JournalArticleLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses) {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,
+			statuses);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long groupId, java.lang.String articleId, int status) {
 		return _journalArticleLocalService.fetchLatestArticle(groupId,
 			articleId, status);

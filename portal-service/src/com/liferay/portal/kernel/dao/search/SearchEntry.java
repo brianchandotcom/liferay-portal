@@ -11,72 +11,40 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.util.StringPool;
 
-import javax.servlet.jsp.PageContext;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
-public abstract class SearchEntry implements Cloneable {
+public interface SearchEntry {
 
 	public static final String DEFAULT_ALIGN = "left";
-
 	public static final int DEFAULT_COLSPAN = 1;
-
 	public static final String DEFAULT_CSS_CLASS = StringPool.BLANK;
-
 	public static final String DEFAULT_VALIGN = "middle";
 
-	public String getAlign() {
-		return _align;
-	}
+	public String getAlign();
 
-	public int getColspan() {
-		return _colspan;
-	}
+	public int getColspan();
 
-	public String getCssClass() {
-		return _cssClass;
-	}
+	public String getCssClass();
 
-	public int getIndex() {
-		return _index;
-	}
+	public int getIndex();
 
-	public String getValign() {
-		return _valign;
-	}
+	public String getValign();
 
-	public abstract void print(PageContext pageContext) throws Exception;
+	public void print(Object object) throws Exception;
 
-	public void setAlign(String align) {
-		_align = align;
-	}
+	public void setAlign(String align);
 
-	public void setColspan(int colspan) {
-		_colspan = colspan;
-	}
+	public void setColspan(int colspan);
 
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
+	public void setCssClass(String cssClass);
 
-	public void setIndex(int index) {
-		_index = index;
-	}
+	public void setIndex(int index);
 
-	public void setValign(String valign) {
-		_valign = valign;
-	}
-
-	private String _align = DEFAULT_ALIGN;
-	private int _colspan = DEFAULT_COLSPAN;
-	private String _cssClass = DEFAULT_CSS_CLASS;
-	private int _index;
-	private String _valign = DEFAULT_VALIGN;
+	public void setValign(String valign);
 
 }

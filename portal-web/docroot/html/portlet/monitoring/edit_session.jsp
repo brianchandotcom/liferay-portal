@@ -81,13 +81,13 @@ userTracker = userTracker.toEscapedModel();
 							<liferay-ui:message key="name" />
 						</dt>
 						<dd>
-							<%= (user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(pageContext, "not-available") %>
+							<%= (user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available") %>
 						</dd>
 						<dt>
 							<liferay-ui:message key="email-address" />
 						</dt>
 						<dd>
-							<%= (user2 != null) ? user2.getEmailAddress() : LanguageUtil.get(pageContext, "not-available") %>
+							<%= (user2 != null) ? user2.getEmailAddress() : LanguageUtil.get(request, "not-available") %>
 						</dd>
 						<dt>
 							<liferay-ui:message key="last-request" />

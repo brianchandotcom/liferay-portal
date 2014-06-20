@@ -189,10 +189,10 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						parentMessageURL.setParameter("struts_action", "/message_boards/view_message");
 						parentMessageURL.setParameter("messageId", String.valueOf(parentMessage.getMessageId()));
 
-						String author = parentMessage.isAnonymous() ? LanguageUtil.get(pageContext, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
+						String author = parentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
 						%>
 
-						<%= LanguageUtil.format(pageContext, "posted-as-a-reply-to", author, false) %>
+						<%= LanguageUtil.format(request, "posted-as-a-reply-to", author, false) %>
 					</c:if>
 				</div>
 
@@ -374,7 +374,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<liferay-ui:icon
 											iconCssClass="icon-paperclip"
 											label="<%= true %>"
-											message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
+											message='<%= LanguageUtil.format(request, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
 											url="<%= viewTrashAttachmentsURL %>"
 										/>
 									</li>

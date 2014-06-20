@@ -14,9 +14,9 @@
 
 package com.liferay.taglib.theme;
 
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Theme;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.ThemeUtil;
 
 import javax.servlet.jsp.JspException;
@@ -33,7 +33,7 @@ public class IncludeTag extends com.liferay.taglib.util.IncludeTag {
 
 			ThemeUtil.include(
 				servletContext, request, new PipingServletResponse(pageContext),
-				pageContext, getPage(), theme);
+				getPage(), theme);
 
 			return EVAL_PAGE;
 		}

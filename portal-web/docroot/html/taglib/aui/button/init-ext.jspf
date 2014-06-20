@@ -37,7 +37,7 @@ if (useDialog && Validator.isNotNull(escapedHREF)) {
 	}
 
 	data.put("href", href);
-	data.put("title", LanguageUtil.get(pageContext, value));
+	data.put("title", LanguageUtil.get(request, value));
 
 	onClick = StringPool.BLANK;
 

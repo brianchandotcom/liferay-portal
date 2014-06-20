@@ -73,7 +73,7 @@ if (workflowEnabled) {
 			<aui:field-wrapper label="parent-folder">
 
 				<%
-				String parentFolderName = LanguageUtil.get(pageContext, "home");
+				String parentFolderName = LanguageUtil.get(request, "home");
 
 				try {
 					JournalFolder parentFolder = JournalFolderServiceUtil.getFolder(parentFolderId);
@@ -345,7 +345,7 @@ if (workflowEnabled) {
 				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			},
 			function(event) {
 				<portlet:namespace />selectStructure(event.ddmstructureid, event.name);
@@ -408,13 +408,13 @@ if (workflowEnabled) {
 if (folder != null) {
 	JournalUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
 	if (parentFolderId > 0) {
 		JournalUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 	}
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 %>

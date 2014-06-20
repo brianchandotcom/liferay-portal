@@ -21,7 +21,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -45,11 +46,13 @@ public interface PortletDisplayTemplate {
 		String language);
 
 	public String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries)
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries)
 		throws Exception;
 
 	public String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries,
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception;
 

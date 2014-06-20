@@ -51,7 +51,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 		emptyLink.on(
 			'click',
 			function(event) {
-				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, confirmMessage) %>')) {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
 					submitForm(document.<portlet:namespace />emptyForm);
 				}
 			}

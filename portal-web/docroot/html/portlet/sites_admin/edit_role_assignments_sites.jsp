@@ -90,7 +90,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+			value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 		/>
 	</liferay-ui:search-container-row>
 

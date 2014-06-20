@@ -56,10 +56,10 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 				if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
 					if (refererLayout.isPublicLayout()) {
-						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-profile");
+						refererGroupDescriptiveName = LanguageUtil.get(request, "my-profile");
 					}
 					else {
-						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-dashboard");
+						refererGroupDescriptiveName = LanguageUtil.get(request, "my-dashboard");
 					}
 				}
 
@@ -180,7 +180,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
 	%>
 
-	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls navbar-nav" : "nav-add-controls nav-add-controls-notice navbar-nav" %>' icon="pencil" id="navAddControls">
+	<aui:nav ariaLabel='<%= LanguageUtil.get(request, "layout-controls") %>' collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls navbar-nav" : "nav-add-controls nav-add-controls-notice navbar-nav" %>' icon="pencil" id="navAddControls">
 		<aui:nav-item cssClass="dockbar-item" dropdown="<%= true %>" iconCssClass="icon-pencil" toggleTouch="<%= false %>">
 
 			<%

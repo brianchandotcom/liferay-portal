@@ -40,7 +40,7 @@ if (classPK > 0) {
 			<li class="<%= (website.isPrimary() && !websites.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
 				<a href="<%= website.getUrl() %>"><%= website.getUrl() %></a>
 
-				<%= LanguageUtil.get(pageContext, website.getType().getName()) %>
+				<%= LanguageUtil.get(request, website.getType().getName()) %>
 			</li>
 
 		<%

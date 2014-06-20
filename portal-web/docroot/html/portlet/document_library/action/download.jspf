@@ -19,7 +19,7 @@
 		<c:if test="<%= dlFileEntryActionsDisplayContext.isDownloadButtonVisible() %>">
 			<liferay-ui:icon
 				iconCssClass="icon-download"
-				message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+				message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 				url="<%= DLUtil.getDownloadURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
 			/>
 		</c:if>
@@ -28,7 +28,7 @@
 		<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
 			<liferay-ui:icon
 				iconCssClass="icon-download"
-				message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+				message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 				url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
 			/>
 		</c:if>

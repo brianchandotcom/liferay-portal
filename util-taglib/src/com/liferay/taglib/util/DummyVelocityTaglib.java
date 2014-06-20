@@ -37,6 +37,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Daniel Reuther
@@ -210,6 +211,11 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public MySitesTag getMySitesTag() throws Exception {
+		return null;
+	}
+
+	@Override
+	public PageContext getPageContext() {
 		return null;
 	}
 

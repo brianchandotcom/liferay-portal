@@ -110,7 +110,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 			<%
 			long parentCategoryId = category.getParentCategoryId();
-			String parentCategoryName = LanguageUtil.get(pageContext, "message-boards-home");
+			String parentCategoryName = LanguageUtil.get(request, "message-boards-home");
 
 			if (!category.isRoot()) {
 				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
@@ -249,13 +249,13 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
 								name="flag"
-								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(pageContext, "resolved") : LanguageUtil.get(pageContext, "waiting-for-an-answer") %>'
+								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(request, "resolved") : LanguageUtil.get(request, "waiting-for-an-answer") %>'
 							/>
 
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
 								name="started-by"
-								value='<%= message.isAnonymous() ? LanguageUtil.get(pageContext, "anonymous") : PortalUtil.getUserName(message) %>'
+								value='<%= message.isAnonymous() ? LanguageUtil.get(request, "anonymous") : PortalUtil.getUserName(message) %>'
 							/>
 
 							<liferay-ui:search-container-column-text
@@ -407,7 +407,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="started-by"
-						value='<%= message.isAnonymous() ? LanguageUtil.get(pageContext, "anonymous") : PortalUtil.getUserName(message) %>'
+						value='<%= message.isAnonymous() ? LanguageUtil.get(request, "anonymous") : PortalUtil.getUserName(message) %>'
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -450,8 +450,8 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		</aui:form>
 
 		<%
-		PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
 		%>
 
 	</c:when>
@@ -506,8 +506,8 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		</liferay-ui:panel-container>
 
 		<%
-		PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
 		%>
 
 	</c:when>
@@ -560,8 +560,8 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		</liferay-ui:search-container>
 
 		<%
-		PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
 		%>
 
 	</c:when>
@@ -578,7 +578,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		window,
 		'<portlet:namespace />deleteCategories',
 		function() {
-			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(pageContext, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm.method = 'post';
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />deleteCategoryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
@@ -593,7 +593,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		window,
 		'<portlet:namespace />deleteThreads',
 		function() {
-			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(pageContext, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm1.method = 'post';
 				document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
 				document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');

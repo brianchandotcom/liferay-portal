@@ -59,7 +59,7 @@ refererURL.setParameter("updateLayout", "true");
 				%>
 
 				<div class="lfr-add-content">
-					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-component lfr-content-category panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
+					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-component lfr-content-category panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "highlighted") %>'>
 						<aui:nav collapsible="<%= false %>">
 
 							<%

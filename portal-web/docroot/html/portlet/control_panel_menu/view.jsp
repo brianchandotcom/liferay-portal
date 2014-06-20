@@ -61,7 +61,7 @@
 			}
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(pageContext, "category." + siteAdministrationCategory) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(request, "category." + siteAdministrationCategory) %>'>
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%
@@ -82,7 +82,7 @@
 						scopeLabel = StringUtil.shorten(scopeLayout.getName(locale), 20);
 					}
 					else {
-						scopeLabel = LanguageUtil.get(pageContext, "default");
+						scopeLabel = LanguageUtil.get(request, "default");
 					}
 					%>
 

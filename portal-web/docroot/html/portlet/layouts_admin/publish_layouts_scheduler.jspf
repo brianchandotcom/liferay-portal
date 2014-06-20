@@ -58,7 +58,7 @@
 		window,
 		'<portlet:namespace />unschedulePublishEvent',
 		function(jobName) {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
 				document.<portlet:namespace />exportPagesFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= unscheduleCMD %>';
 				document.<portlet:namespace />exportPagesFm.<portlet:namespace />redirect.value = '<%= scheduledEventsURL %>';
 				document.<portlet:namespace />exportPagesFm.<portlet:namespace />jobName.value = jobName;

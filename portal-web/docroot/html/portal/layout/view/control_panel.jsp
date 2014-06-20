@@ -56,7 +56,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 		<%
 		String panelBodyCssClass = "panel-page-body";
 		String panelCategory = "lfr-ctrl-panel";
-		String categoryTitle = Validator.isNotNull(category) ? LanguageUtil.get(pageContext, "category." + category) : StringPool.BLANK;
+		String categoryTitle = Validator.isNotNull(category) ? LanguageUtil.get(request, "category." + category) : StringPool.BLANK;
 
 		if (!layoutTypePortlet.hasStateMax()) {
 			panelBodyCssClass += " panel-page-frontpage";

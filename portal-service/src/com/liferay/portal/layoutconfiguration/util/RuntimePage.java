@@ -20,7 +20,6 @@ import com.liferay.portal.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,21 +29,23 @@ import javax.servlet.jsp.PageContext;
 public interface RuntimePage {
 
 	public StringBundler getProcessedTemplate(
-			PageContext pageContext, String portletId,
-			TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
 		throws Exception;
 
 	public void processCustomizationSettings(
-			PageContext pageContext, TemplateResource templateResource)
-		throws Exception;
-
-	public void processTemplate(
-			PageContext pageContext, String portletId,
+			HttpServletRequest request, HttpServletResponse response,
 			TemplateResource templateResource)
 		throws Exception;
 
 	public void processTemplate(
-			PageContext pageContext, TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
+		throws Exception;
+
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource)
 		throws Exception;
 
 	public String processXML(

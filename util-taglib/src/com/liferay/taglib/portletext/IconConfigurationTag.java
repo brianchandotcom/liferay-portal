@@ -15,7 +15,7 @@
 package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.taglib.ui.IconTag;
@@ -55,7 +55,7 @@ public class IconConfigurationTag extends IconTag {
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
-		sb.append(LanguageUtil.get(pageContext, "configuration"));
+		sb.append(LanguageUtil.get(request, "configuration"));
 		sb.append("'); return false;");
 
 		setOnClick(sb.toString());

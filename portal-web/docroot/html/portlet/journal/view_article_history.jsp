@@ -29,7 +29,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 <c:choose>
 	<c:when test="<%= article == null %>">
 		<div class="alert alert-danger">
-			<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
+			<%= LanguageUtil.get(request, "the-selected-web-content-no-longer-exists") %>
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -180,7 +180,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					window,
 					'<portlet:namespace />deleteArticles',
 					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
+						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = '<%= scopeGroupId %>';
 							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = '';
@@ -198,7 +198,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					window,
 					'<portlet:namespace />expireArticles',
 					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
+						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.EXPIRE %>';
 							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = '<%= scopeGroupId %>';
 							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = '';

@@ -72,7 +72,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 					backURL="<%= redirect %>"
 					escapeXml="<%= false %>"
 					localizeTitle="<%= false %>"
-					title='<%= LanguageUtil.get(pageContext, "add-members") + ": " + LanguageUtil.get(pageContext, tabs1) %>'
+					title='<%= LanguageUtil.get(request, "add-members") + ": " + LanguageUtil.get(request, tabs1) %>'
 				/>
 			</c:when>
 			<c:otherwise>
@@ -107,10 +107,10 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 				<liferay-ui:icon
 					iconCssClass="icon-signin"
 					label="<%= true %>"
-					message='<%= LanguageUtil.get(pageContext, "membership-type") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, GroupConstants.getTypeLabel(group.getType())) %>'
+					message='<%= LanguageUtil.get(request, "membership-type") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, GroupConstants.getTypeLabel(group.getType())) %>'
 				/>
 
-				<liferay-ui:icon-help message='<%= LanguageUtil.get(pageContext, "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help") %>' />
+				<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help") %>' />
 
 				<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
 
@@ -130,7 +130,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 						<liferay-ui:icon
 							iconCssClass="icon-tasks"
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
+							message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
 							url="<%= viewMembershipRequestsURL %>"
 						/>
 					</c:if>
@@ -276,5 +276,5 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
 %>

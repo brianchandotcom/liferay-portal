@@ -30,7 +30,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= privateLayout ? LanguageUtil.get(pageContext, "import-private-pages") : LanguageUtil.get(pageContext, "import-public-pages") %>'
+	title='<%= privateLayout ? LanguageUtil.get(request, "import-private-pages") : LanguageUtil.get(request, "import-public-pages") %>'
 />
 
 <liferay-ui:tabs

@@ -111,14 +111,14 @@ else if (type.equals("assigned-to-my-roles")) {
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= (workflowLog == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+			value='<%= (workflowLog == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="due-date"
 			orderable="<%= true %>"
-			value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+			value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
 		/>
 
 		<c:if test='<%= !allTasks && !tabs1.equals("completed") %>'>

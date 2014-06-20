@@ -108,7 +108,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		title = structure.getName(locale);
 	}
 	else {
-		title = LanguageUtil.format(pageContext, "new-x", ddmDisplay.getStructureName(locale), false);
+		title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
 	}
 	%>
 
@@ -138,7 +138,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "details") %>'>
+			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
 				<aui:row cssClass="lfr-ddm-types-form-column">
 					<c:choose>
 						<c:when test="<%= scopeClassNameId == 0 %>">
@@ -184,7 +184,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
+				<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<div class="input-group">
@@ -211,7 +211,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 <%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>

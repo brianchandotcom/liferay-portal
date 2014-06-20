@@ -37,7 +37,7 @@ if (classPK > 0) {
 		%>
 
 			<li class="<%= (phone.isPrimary() && !phones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
 			</li>
 
 		<%

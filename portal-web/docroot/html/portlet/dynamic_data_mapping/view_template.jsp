@@ -152,7 +152,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="name"
-					value="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, template.getName(locale))) %>"
+					value="<%= HtmlUtil.escape(LanguageUtil.get(request, template.getName(locale))) %>"
 				/>
 			</c:if>
 
@@ -192,7 +192,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="mode"
-					value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
+					value="<%= LanguageUtil.get(request, template.getMode()) %>"
 				/>
 			</c:if>
 
@@ -200,7 +200,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="language"
-					value='<%= LanguageUtil.get(pageContext, template.getLanguage() + "[stands-for]") %>'
+					value='<%= LanguageUtil.get(request, template.getLanguage() + "[stands-for]") %>'
 				/>
 			</c:if>
 
@@ -241,7 +241,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 			{
 				id: '<portlet:namespace />copyTemplate',
 				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-template") %>',
+				title: '<%= UnicodeLanguageUtil.get(request, "copy-template") %>',
 				uri: uri
 			}
 		);
@@ -251,7 +251,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 		window,
 		'<portlet:namespace />deleteTemplates',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 				document.<portlet:namespace />fm.method = 'post';
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />deleteTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

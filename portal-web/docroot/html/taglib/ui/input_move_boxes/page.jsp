@@ -21,8 +21,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-move-boxes:cssClass"));
 
-String leftTitle = LanguageUtil.get(pageContext, (String)request.getAttribute("liferay-ui:input-move-boxes:leftTitle"));
-String rightTitle = LanguageUtil.get(pageContext, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
+String leftTitle = LanguageUtil.get(request, (String)request.getAttribute("liferay-ui:input-move-boxes:leftTitle"));
+String rightTitle = LanguageUtil.get(request, (String)request.getAttribute("liferay-ui:input-move-boxes:rightTitle"));
 
 String leftBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:leftBoxName");
 String rightBoxName = (String)request.getAttribute("liferay-ui:input-move-boxes:rightBoxName");
@@ -88,12 +88,12 @@ Map<String, Object> data = new HashMap<String, Object>();
 		{
 			contentBox: '#<%= randomNamespace + "input-move-boxes" %>',
 			strings: {
-				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", leftTitle, false) %>',
-				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", leftTitle, false) %>',
-				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
-				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
-				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", rightTitle, false) %>',
-				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", rightTitle, false) %>'
+				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", leftTitle, false) %>',
+				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", leftTitle, false) %>',
+				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
+				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
+				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", rightTitle, false) %>',
+				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", rightTitle, false) %>'
 			}
 		}
 	).render();

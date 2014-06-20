@@ -40,7 +40,7 @@ portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 	backURL="<%= redirect %>"
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(pageContext, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()) %>'
+	title='<%= LanguageUtil.get(request, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()) %>'
 />
 
 <liferay-ui:membership-policy-error />
@@ -111,7 +111,7 @@ portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>"
+			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

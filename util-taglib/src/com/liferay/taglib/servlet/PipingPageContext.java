@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.taglib.servlet;
 
 import java.io.Writer;
 

@@ -46,7 +46,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 
 			<c:choose>
 				<c:when test="<%= translateMessage %>">
-					<%= LanguageUtil.get(pageContext, message) %>
+					<%= LanguageUtil.get(request, message) %>
 				</c:when>
 				<c:otherwise>
 					<%= message %>

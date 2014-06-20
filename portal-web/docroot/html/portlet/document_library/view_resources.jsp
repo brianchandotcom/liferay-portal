@@ -55,7 +55,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.getScopeGroup().getDescriptiveName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "documents-and-media"), liferayPortletResponse.createRenderURL().toString());
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "documents-and-media"), liferayPortletResponse.createRenderURL().toString());
 		%>
 
 		<div id="<portlet:namespace />entries">

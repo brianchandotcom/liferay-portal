@@ -17,7 +17,7 @@
 <%
 ListType addressListType = address.getType();
 
-String mailingName = LanguageUtil.get(pageContext, addressListType.getName());
+String mailingName = LanguageUtil.get(request, addressListType.getName());
 
 String street1 = address.getStreet1();
 String street2 = address.getStreet2();

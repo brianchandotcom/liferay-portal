@@ -123,7 +123,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			%>
 
 			<div class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIconContainer">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="show-liferay-sync-tip" />" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src='<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>' title='<%= LanguageUtil.get(pageContext, "liferay-sync") %>' />
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="show-liferay-sync-tip" />" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src='<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>' title='<%= LanguageUtil.get(request, "liferay-sync") %>' />
 			</div>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
@@ -289,7 +289,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			repositories: [
 				{
 					id: '<%= scopeGroupId %>',
-					name: '<%= LanguageUtil.get(pageContext, "local") %>'
+					name: '<%= LanguageUtil.get(request, "local") %>'
 				}
 
 				<%

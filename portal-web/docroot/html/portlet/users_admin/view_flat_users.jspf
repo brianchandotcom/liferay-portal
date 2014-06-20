@@ -99,12 +99,12 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 	if (role != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
 	}
 
 	if (userGroup != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
 	}
 	%>
 
@@ -114,7 +114,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		if (userOrganization != null) {
 			UsersAdminUtil.addPortletBreadcrumbEntries(userOrganization, request, renderResponse);
 
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
 		}
 		%>
 

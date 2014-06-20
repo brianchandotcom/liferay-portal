@@ -36,6 +36,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Daniel Reuther
@@ -147,6 +148,8 @@ public interface VelocityTaglib {
 	public LayoutTag getLayoutTag() throws Exception;
 
 	public MySitesTag getMySitesTag() throws Exception;
+
+	public PageContext getPageContext();
 
 	public PngImageTag getPngImageTag() throws Exception;
 

@@ -59,7 +59,7 @@
 				<c:otherwise>
 
 					<%
-					String xugglerHelp = LanguageUtil.format(pageContext, "xuggler-help", "http://www.xuggle.com/xuggler/downloads", false);
+					String xugglerHelp = LanguageUtil.format(request, "xuggler-help", "http://www.xuggle.com/xuggler/downloads", false);
 
 					String[] xugglerOptions = PropsUtil.getArray(PropsKeys.XUGGLER_JAR_OPTIONS);
 

@@ -46,7 +46,7 @@ if (permissionChecker.isCompanyAdmin()) {
 <%@ include file="/html/portlet/roles_admin/init-ext.jsp" %>
 
 <%!
-private String _getActionLabel(PageContext pageContext, ThemeDisplay themeDisplay, String resourceName, String actionId) throws SystemException {
+private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDisplay, String resourceName, String actionId) throws SystemException {
 	String actionLabel = null;
 
 	if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
@@ -57,15 +57,15 @@ private String _getActionLabel(PageContext pageContext, ThemeDisplay themeDispla
 		if (Validator.isNull(controlPanelCategory)) {
 		}
 		else if (controlPanelCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-			actionLabel = LanguageUtil.get(pageContext, "access-in-site-administration");
+			actionLabel = LanguageUtil.get(request, "access-in-site-administration");
 		}
 		else if (controlPanelCategory.equals(PortletCategoryKeys.MY)) {
-			actionLabel = LanguageUtil.get(pageContext, "access-in-my-account");
+			actionLabel = LanguageUtil.get(request, "access-in-my-account");
 		}
 	}
 
 	if (actionLabel == null) {
-		actionLabel = ResourceActionsUtil.getAction(pageContext, actionId);
+		actionLabel = ResourceActionsUtil.getAction(request, actionId);
 	}
 
 	return actionLabel;

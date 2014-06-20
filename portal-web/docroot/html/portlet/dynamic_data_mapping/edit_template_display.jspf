@@ -30,7 +30,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
-						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
+						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(request, "search") %>' type="text">
 					</div>
 
 					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
@@ -56,7 +56,7 @@ if (Validator.isNotNull(scriptContent)) {
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
@@ -170,7 +170,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 			var getNoResultsNode = function() {
 				if (!noResultsNode) {
-					noResultsNode = A.Node.create('<div class="alert"><%= UnicodeLanguageUtil.get(pageContext, "there-are-no-results") %></div>');
+					noResultsNode = A.Node.create('<div class="alert"><%= UnicodeLanguageUtil.get(request, "there-are-no-results") %></div>');
 				}
 
 				return noResultsNode;
@@ -540,7 +540,7 @@ private String[] _getListCodeArray(
 	return listCodeArray;
 }
 
-private String _getPaletteItemTitle(PageContext pageContext, String label, Class<?> clazz) {
+private String _getPaletteItemTitle(HttpServletRequest request, String label, Class<?> clazz) {
 	StringBundler sb = new StringBundler(10);
 
 	if (clazz == null) {
@@ -550,7 +550,7 @@ private String _getPaletteItemTitle(PageContext pageContext, String label, Class
 	String className = clazz.getName();
 
 	sb.append("<br />");
-	sb.append(LanguageUtil.get(pageContext, label));
+	sb.append(LanguageUtil.get(request, label));
 	sb.append(StringPool.COLON);
 	sb.append("&nbsp;");
 
@@ -576,41 +576,41 @@ private String _getPaletteItemTitle(PageContext pageContext, String label, Class
 	return sb.toString();
 }
 
-private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDefinition templateVariableDefinition) {
+private String _getPaletteItemTitle(HttpServletRequest request, TemplateVariableDefinition templateVariableDefinition) {
 	StringBundler sb = new StringBundler(12);
 
 	String help = templateVariableDefinition.getHelp();
 
 	if (Validator.isNotNull(help)) {
 		sb.append("<p>");
-		sb.append(LanguageUtil.get(pageContext, help));
+		sb.append(LanguageUtil.get(request, help));
 		sb.append("</p>");
 	}
 
 	if (templateVariableDefinition.isCollection()) {
 		sb.append("<p><i>*");
-		sb.append(LanguageUtil.get(pageContext, "this-is-a-collection-of-fields"));
+		sb.append(LanguageUtil.get(request, "this-is-a-collection-of-fields"));
 		sb.append("</i></p>");
 	}
 	else if (templateVariableDefinition.isRepeatable()) {
 		sb.append("<p><i>*");
-		sb.append(LanguageUtil.get(pageContext, "this-is-a-repeatable-field"));
+		sb.append(LanguageUtil.get(request, "this-is-a-repeatable-field"));
 		sb.append("</i></p>");
 	}
 
 	if (!Validator.equals(templateVariableDefinition.getDataType(), "service-locator")) {
-		sb.append(LanguageUtil.get(pageContext, "variable"));
+		sb.append(LanguageUtil.get(request, "variable"));
 		sb.append(StringPool.COLON);
 		sb.append("&nbsp;");
 		sb.append(templateVariableDefinition.getName());
 	}
 
-	sb.append(_getPaletteItemTitle(pageContext, "class", templateVariableDefinition.getClazz()));
+	sb.append(_getPaletteItemTitle(request, "class", templateVariableDefinition.getClazz()));
 
 	if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-		sb.append(_getPaletteItemTitle(pageContext, "items-class", itemTemplateVariableDefinition.getClazz()));
+		sb.append(_getPaletteItemTitle(request, "items-class", itemTemplateVariableDefinition.getClazz()));
 	}
 
 	return sb.toString();

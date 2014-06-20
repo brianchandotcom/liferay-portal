@@ -30,7 +30,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 %>
 
 <liferay-ui:search-container
-	emptyResultsMessage='<%= LanguageUtil.get(pageContext, "custom-fields-are-not-enabled-for-any-resource") %>'
+	emptyResultsMessage='<%= LanguageUtil.get(request, "custom-fields-are-not-enabled-for-any-resource") %>'
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results
@@ -80,7 +80,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			int i = 0;
 
 			for (String name : attributeNames) {
-				String localizedName = LanguageUtil.get(pageContext, name);
+				String localizedName = LanguageUtil.get(request, name);
 
 				if (name.equals(localizedName)) {
 					localizedName = TextFormatter.format(name, TextFormatter.J);

@@ -136,7 +136,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<c:otherwise>
 
 								<%
-								String suffix = LanguageUtil.get(pageContext, "of") + StringPool.SPACE + numberFormat.format(pages);
+								String suffix = LanguageUtil.get(request, "of") + StringPool.SPACE + numberFormat.format(pages);
 
 								if (type.equals("approximate") || type.equals("more")) {
 									suffix = StringPool.BLANK;
@@ -147,7 +147,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									cssClass="current-page-menu"
 									direction="down"
 									icon=""
-									message='<%= LanguageUtil.get(pageContext, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
+									message='<%= LanguageUtil.get(request, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
 									showWhenSingleIcon="true"
 								>
 
@@ -198,7 +198,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<liferay-ui:icon-menu
 									direction="down"
 									icon=""
-									message='<%= delta + StringPool.SPACE + LanguageUtil.get(pageContext, "items-per-page") %>'
+									message='<%= delta + StringPool.SPACE + LanguageUtil.get(request, "items-per-page") %>'
 									showWhenSingleIcon="true"
 								>
 

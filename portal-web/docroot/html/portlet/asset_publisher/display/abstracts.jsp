@@ -71,10 +71,10 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 				String displayDate = StringPool.BLANK;
 
 				if (assetEntry.getPublishDate() != null) {
-					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+					displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
 				}
 				else if (assetEntry.getModifiedDate() != null) {
-					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+					displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
 				}
 				%>
 

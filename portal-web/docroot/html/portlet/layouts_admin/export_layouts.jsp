@@ -81,10 +81,10 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String rootNodeName = StringPool.BLANK;
 
 if (privateLayout) {
-	rootNodeName = LanguageUtil.get(pageContext, "private-pages");
+	rootNodeName = LanguageUtil.get(request, "private-pages");
 }
 else {
-	rootNodeName = LanguageUtil.get(pageContext, "public-pages");
+	rootNodeName = LanguageUtil.get(request, "public-pages");
 }
 
 DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, liveGroupId, privateLayout, 0, null, ExportImportDateUtil.RANGE_ALL);
@@ -145,7 +145,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= privateLayout ? LanguageUtil.get(pageContext, "export-private-pages") : LanguageUtil.get(pageContext, "export-public-pages") %>'
+	title='<%= privateLayout ? LanguageUtil.get(request, "export-private-pages") : LanguageUtil.get(request, "export-public-pages") %>'
 />
 
 <liferay-ui:tabs
@@ -352,7 +352,7 @@ if (!cmd.equals(Constants.ADD)) {
 																</li>
 															</ul>
 
-															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
+															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 
 															<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 																<li>
@@ -362,10 +362,10 @@ if (!cmd.equals(Constants.ADD)) {
 																		String last = MapUtil.getString(parameterMap, "last");
 																		%>
 
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' selected='<%= last.equals("12") %>' value="12" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' selected='<%= last.equals("24") %>' value="24" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48", false) %>' selected='<%= last.equals("48") %>' value="48" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' selected='<%= last.equals("168") %>' value="168" />
+																		<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' selected='<%= last.equals("12") %>' value="12" />
+																		<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' selected='<%= last.equals("24") %>' value="24" />
+																		<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' selected='<%= last.equals("48") %>' value="48" />
+																		<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' selected='<%= last.equals("168") %>' value="168" />
 																	</aui:select>
 																</li>
 															</ul>
@@ -383,7 +383,7 @@ if (!cmd.equals(Constants.ADD)) {
 											<liferay-ui:icon
 												iconCssClass="icon-calendar"
 												label="<%= true %>"
-												message='<%= LanguageUtil.get(pageContext, "date-range") + selectedLabelsHTML %>'
+												message='<%= LanguageUtil.get(request, "date-range") + selectedLabelsHTML %>'
 											/>
 										</li>
 
@@ -421,7 +421,7 @@ if (!cmd.equals(Constants.ADD)) {
 														<li class="tree-item">
 															<liferay-util:buffer var="badgeHTML">
 																<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
-																<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
+																<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 															</liferay-util:buffer>
 
 															<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" />
@@ -541,7 +541,7 @@ if (!cmd.equals(Constants.ADD)) {
 															<c:if test="<%= modelDeletionCount != 0 %>">
 
 																<%
-																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+																String deletionsLabel = LanguageUtil.get(request, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
 																%>
 
 																<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" />

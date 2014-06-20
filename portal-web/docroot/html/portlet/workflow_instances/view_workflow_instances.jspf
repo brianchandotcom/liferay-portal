@@ -55,7 +55,7 @@ catch (Exception e) {
 <%
 }
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, tabs2), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), currentURL);
 %>
 
 <%!

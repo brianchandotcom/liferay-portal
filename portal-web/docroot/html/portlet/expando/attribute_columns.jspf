@@ -19,7 +19,7 @@
 >
 
 	<%
-	String localizedName = LanguageUtil.get(pageContext, name);
+	String localizedName = LanguageUtil.get(request, name);
 
 	if (name.equals(localizedName)) {
 		localizedName = TextFormatter.format(name, TextFormatter.J);
@@ -30,7 +30,7 @@
 
 	<br />
 
-	<span class="key"><%= LanguageUtil.get(pageContext, "key") %></span>:
+	<span class="key"><%= LanguageUtil.get(request, "key") %></span>:
 
 	<a href="<%= rowURL %>"><%= HtmlUtil.escape(name) %></a>
 </liferay-ui:search-container-column-text>
@@ -38,7 +38,7 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="type"
-	value="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>"
+	value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>"
 />
 
 <liferay-ui:search-container-column-text

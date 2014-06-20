@@ -69,7 +69,7 @@
 
 						<div class="row">
 							<aui:fieldset cssClass="col-md-6" label="portal">
-								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(request, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 								<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
 
@@ -287,7 +287,7 @@
 
 						var loadingMask = new A.LoadingMask(
 							{
-								'strings.loading': '<%= UnicodeLanguageUtil.get(pageContext, "liferay-is-being-installed") %>',
+								'strings.loading': '<%= UnicodeLanguageUtil.get(request, "liferay-is-being-installed") %>',
 								target: A.getBody()
 							}
 						);
@@ -341,7 +341,7 @@
 												failure: function(event, id, obj) {
 													loadingMask.hide();
 
-													updateMessage('<%= UnicodeLanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
+													updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
 												}
 											},
 											on: {

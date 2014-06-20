@@ -14,11 +14,11 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.dao.search.JSPSearchEntry;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.taglib.search.JSPSearchEntry;
 
 import java.util.List;
 

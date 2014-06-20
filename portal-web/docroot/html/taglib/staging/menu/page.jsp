@@ -93,7 +93,7 @@ else {
 	}
 }
 
-String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
+String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 %>
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

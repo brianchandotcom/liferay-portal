@@ -74,5 +74,5 @@ long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, ((node == null) ? "add-wiki" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((node == null) ? "add-wiki" : "edit")), currentURL);
 %>

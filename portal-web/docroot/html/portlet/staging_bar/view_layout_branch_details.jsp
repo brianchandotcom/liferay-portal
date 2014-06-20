@@ -114,7 +114,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 				Liferay.Util.openWindow(
 					{
 						id: '<portlet:namespace />layoutRevisions',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-page-variations") %>',
+						title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
 						uri: event.currentTarget.attr('href')
 					}
 				);

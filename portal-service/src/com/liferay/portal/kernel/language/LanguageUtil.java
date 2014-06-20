@@ -29,7 +29,6 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,59 +71,59 @@ public class LanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
+		HttpServletRequest request, String pattern, LanguageWrapper argument) {
 
-		return getLanguage().format(pageContext, pattern, argument);
+		return getLanguage().format(request, pattern, argument);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
 		boolean translateArguments) {
 
 		return getLanguage().format(
-			pageContext, pattern, argument, translateArguments);
+			request, pattern, argument, translateArguments);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments) {
 
-		return getLanguage().format(pageContext, pattern, arguments);
+		return getLanguage().format(request, pattern, arguments);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments) {
 
 		return getLanguage().format(
-			pageContext, pattern, arguments, translateArguments);
+			request, pattern, arguments, translateArguments);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object argument) {
+		HttpServletRequest request, String pattern, Object argument) {
 
-		return getLanguage().format(pageContext, pattern, argument);
+		return getLanguage().format(request, pattern, argument);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object argument,
+		HttpServletRequest request, String pattern, Object argument,
 		boolean translateArguments) {
 
 		return getLanguage().format(
-			pageContext, pattern, argument, translateArguments);
+			request, pattern, argument, translateArguments);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
+		HttpServletRequest request, String pattern, Object[] arguments) {
 
-		return getLanguage().format(pageContext, pattern, arguments);
+		return getLanguage().format(request, pattern, arguments);
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments,
+		HttpServletRequest request, String pattern, Object[] arguments,
 		boolean translateArguments) {
 
 		return getLanguage().format(
-			pageContext, pattern, arguments, translateArguments);
+			request, pattern, arguments, translateArguments);
 	}
 
 	public static String format(
@@ -163,14 +162,14 @@ public class LanguageUtil {
 		return getLanguage().get(locale, key, defaultValue);
 	}
 
-	public static String get(PageContext pageContext, String key) {
-		return getLanguage().get(pageContext, key);
+	public static String get(HttpServletRequest request, String key) {
+		return getLanguage().get(request, key);
 	}
 
 	public static String get(
-		PageContext pageContext, String key, String defaultValue) {
+		HttpServletRequest request, String key, String defaultValue) {
 
-		return getLanguage().get(pageContext, key, defaultValue);
+		return getLanguage().get(request, key, defaultValue);
 	}
 
 	public static String get(ResourceBundle resourceBundle, String key) {
@@ -249,22 +248,22 @@ public class LanguageUtil {
 	}
 
 	public static String getTimeDescription(
-		PageContext pageContext, long milliseconds) {
+		HttpServletRequest request, long milliseconds) {
 
-		return getLanguage().getTimeDescription(pageContext, milliseconds);
+		return getLanguage().getTimeDescription(request, milliseconds);
 	}
 
 	public static String getTimeDescription(
-		PageContext pageContext, long milliseconds, boolean approximate) {
+		HttpServletRequest request, long milliseconds, boolean approximate) {
 
 		return getLanguage().getTimeDescription(
-			pageContext, milliseconds, approximate);
+			request, milliseconds, approximate);
 	}
 
 	public static String getTimeDescription(
-		PageContext pageContext, Long milliseconds) {
+		HttpServletRequest request, Long milliseconds) {
 
-		return getLanguage().getTimeDescription(pageContext, milliseconds);
+		return getLanguage().getTimeDescription(request, milliseconds);
 	}
 
 	public static void init() {

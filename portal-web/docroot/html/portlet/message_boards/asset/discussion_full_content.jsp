@@ -58,7 +58,7 @@ MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParent
 
 		<div>
 			<c:if test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-				<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
+				<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
 			</c:if>
 		</div>
 	</td>

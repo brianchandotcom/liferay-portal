@@ -24,7 +24,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 String modelResource = ParamUtil.getString(request, "modelResource");
 String modelResourceDescription = ParamUtil.getString(request, "modelResourceDescription");
-String modelResourceName = ResourceActionsUtil.getModelResource(pageContext, modelResource);
+String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 
 long resourceGroupId = ParamUtil.getLong(request, "resourceGroupId");
 
@@ -50,11 +50,11 @@ if (Validator.isNull(modelResource)) {
 
 	selResource = portlet.getRootPortletId();
 	selResourceDescription = PortalUtil.getPortletTitle(portlet, application, locale);
-	selResourceName = LanguageUtil.get(pageContext, "portlet");
+	selResourceName = LanguageUtil.get(request, "portlet");
 }
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(selResourceDescription), null);
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "permissions"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
 long groupId = themeDisplay.getScopeGroupId();
@@ -369,14 +369,14 @@ definePermissionsURL.setRefererPlid(plid);
 				%>
 
 					<liferay-ui:search-container-column-text
-						name="<%= ResourceActionsUtil.getAction(pageContext, action) %>"
+						name="<%= ResourceActionsUtil.getAction(request, action) %>"
 					>
 
 						<%
 						String dataMessage = StringPool.BLANK;
 
 						if (Validator.isNotNull(preselectedMsg)) {
-							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(pageContext, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(pageContext, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
+							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;

@@ -96,18 +96,18 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 				if (advancedSearch) {
 					if (folder != null) {
-						message = LanguageUtil.format(pageContext, "advanced-search-in-x", folder.getName(), false);
+						message = LanguageUtil.format(request, "advanced-search-in-x", folder.getName(), false);
 					}
 					else {
-						message = LanguageUtil.get(pageContext, "advanced-search-everywhere");
+						message = LanguageUtil.get(request, "advanced-search-everywhere");
 					}
 				}
 				else {
 					if (folder != null) {
-						message = LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}, false);
+						message = LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}, false);
 					}
 					else {
-						message = LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
+						message = LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
 					}
 				}
 				%>
@@ -423,10 +423,10 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 					<div class="alert alert-info">
 
 						<%
-						String message = LanguageUtil.get(pageContext, "no-web-content-was-found-that-matched-the-specified-filters");
+						String message = LanguageUtil.get(request, "no-web-content-was-found-that-matched-the-specified-filters");
 
 						if (!advancedSearch) {
-							message = LanguageUtil.format(pageContext, "no-web-content-was-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
+							message = LanguageUtil.format(request, "no-web-content-was-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
 						}
 						%>
 

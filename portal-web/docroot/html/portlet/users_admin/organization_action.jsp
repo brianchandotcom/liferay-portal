@@ -165,7 +165,7 @@ if (row == null) {
 
 				<liferay-ui:icon
 					iconCssClass="icon-plus"
-					message='<%= LanguageUtil.format(pageContext, "add-x", childrenType) %>'
+					message='<%= LanguageUtil.format(request, "add-x", childrenType) %>'
 					url="<%= addSuborganizationURL %>"
 				/>
 			</c:if>

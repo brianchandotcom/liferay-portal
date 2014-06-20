@@ -37,7 +37,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 	<liferay-ui:error exception="<%= AmazonException.class %>" />
 
 	<div class="breadcrumbs">
-		<%= ShoppingUtil.getBreadcrumbs(categoryId, pageContext, renderRequest, renderResponse) %>
+		<%= ShoppingUtil.getBreadcrumbs(categoryId, renderRequest, renderResponse) %>
 	</div>
 
 	<aui:fieldset>
@@ -53,7 +53,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 
 <aui:script>
 	function <portlet:namespace />saveBookItem() {
-		alert('<%= UnicodeLanguageUtil.get(pageContext, "please-be-patient") %>');
+		alert('<%= UnicodeLanguageUtil.get(request, "please-be-patient") %>');
 
 		submitForm(this);
 	}

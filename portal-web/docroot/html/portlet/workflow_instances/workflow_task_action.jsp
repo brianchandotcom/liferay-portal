@@ -110,7 +110,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 					toolbars: {
 						footer: [
 							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
+								label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 								on: {
 									click: function() {
 										submitForm(form);
@@ -118,7 +118,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 								}
 							},
 							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
+								label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
 								on: {
 									click: function() {
 										dialog.hide();

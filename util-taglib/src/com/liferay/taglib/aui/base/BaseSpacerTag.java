@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspException;
  * @author Julio Camarero
  * @generated
  */
-public class BaseSpacerTag extends com.liferay.portal.kernel.servlet.taglib.TagSupport {
+public class BaseSpacerTag extends com.liferay.taglib.TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

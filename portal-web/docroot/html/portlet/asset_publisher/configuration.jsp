@@ -101,7 +101,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
+						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -171,7 +171,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						data = new HashMap<String, Object>();
 
 						data.put("href", layoutSiteBrowserURLString);
-						data.put("title", LanguageUtil.get(pageContext, "pages"));
+						data.put("title", LanguageUtil.get(request, "pages"));
 						%>
 
 						<liferay-ui:icon
@@ -179,7 +179,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 							data="<%= data %>"
 							iconCssClass="icon-plus"
 							id="selectGroup"
-							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
+							message='<%= LanguageUtil.get(request, "pages") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
 							url="javascript:;"
 						/>
@@ -222,7 +222,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						data = new HashMap<String, Object>();
 
 						data.put("href", siteBrowserURLString);
-						data.put("title", LanguageUtil.get(pageContext, "sites"));
+						data.put("title", LanguageUtil.get(request, "sites"));
 						%>
 
 						<liferay-ui:icon
@@ -230,7 +230,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 							data="<%= data %>"
 							iconCssClass="icon-plus"
 							id="selectManageableGroup"
-							message='<%= LanguageUtil.get(pageContext, "other-site") + StringPool.TRIPLE_PERIOD %>'
+							message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
 							url="javascript:;"
 						/>

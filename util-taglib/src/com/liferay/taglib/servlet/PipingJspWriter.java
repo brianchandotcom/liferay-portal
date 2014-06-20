@@ -12,241 +12,208 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.taglib.servlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * @author Shuyang Zhou
  */
-public class BodyContentWrapper extends BodyContent {
+public class PipingJspWriter extends JspWriter {
 
-	public BodyContentWrapper(
-		BodyContent bodyContent, UnsyncStringWriter unsyncStringWriter) {
+	public PipingJspWriter(Writer writer) {
+		super(NO_BUFFER, false);
 
-		super(bodyContent.getEnclosingWriter());
-
-		_bodyContent = bodyContent;
-		_unsyncStringWriter = unsyncStringWriter;
-	}
-
-	@Override
-	public Writer append(char c) throws IOException {
-		return _bodyContent.append(c);
-	}
-
-	@Override
-	public Writer append(CharSequence charSequence) throws IOException {
-		return _bodyContent.append(charSequence);
-	}
-
-	@Override
-	public Writer append(CharSequence charSequence, int start, int end)
-		throws IOException {
-
-		return _bodyContent.append(charSequence, start, end);
+		_writer = writer;
 	}
 
 	@Override
 	public void clear() throws IOException {
-		_bodyContent.clear();
-	}
-
-	@Override
-	public void clearBody() {
-		_unsyncStringWriter.reset();
+		throw new IOException();
 	}
 
 	@Override
 	public void clearBuffer() {
-		_unsyncStringWriter.reset();
 	}
 
 	@Override
 	public void close() throws IOException {
-		_bodyContent.close();
+		_writer.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		_bodyContent.flush();
-	}
-
-	@Override
-	public int getBufferSize() {
-		return _bodyContent.getBufferSize();
-	}
-
-	@Override
-	public JspWriter getEnclosingWriter() {
-		return _bodyContent.getEnclosingWriter();
-	}
-
-	@Override
-	public Reader getReader() {
-		return _bodyContent.getReader();
+		_writer.flush();
 	}
 
 	@Override
 	public int getRemaining() {
-		return _bodyContent.getRemaining();
-	}
-
-	@Override
-	public String getString() {
-		return _unsyncStringWriter.toString();
-	}
-
-	public StringBundler getStringBundler() {
-		return _unsyncStringWriter.getStringBundler();
-	}
-
-	@Override
-	public boolean isAutoFlush() {
-		return _bodyContent.isAutoFlush();
+		return 0;
 	}
 
 	@Override
 	public void newLine() throws IOException {
-		_bodyContent.newLine();
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void print(boolean b) throws IOException {
-		_bodyContent.print(b);
+		if (b) {
+			_writer.write(StringPool.TRUE);
+		}
+		else {
+			_writer.write(StringPool.FALSE);
+		}
 	}
 
 	@Override
 	public void print(char c) throws IOException {
-		_bodyContent.print(c);
+		_writer.write(c);
 	}
 
 	@Override
 	public void print(char[] chars) throws IOException {
-		_bodyContent.print(chars);
+		_writer.write(chars);
 	}
 
 	@Override
 	public void print(double d) throws IOException {
-		_bodyContent.print(d);
+		_writer.write(String.valueOf(d));
 	}
 
 	@Override
 	public void print(float f) throws IOException {
-		_bodyContent.print(f);
+		_writer.write(String.valueOf(f));
 	}
 
 	@Override
 	public void print(int i) throws IOException {
-		_bodyContent.print(i);
+		_writer.write(String.valueOf(i));
 	}
 
 	@Override
 	public void print(long l) throws IOException {
-		_bodyContent.print(l);
+		_writer.write(String.valueOf(l));
 	}
 
 	@Override
 	public void print(Object object) throws IOException {
-		_bodyContent.print(object);
+		_writer.write(String.valueOf(object));
 	}
 
 	@Override
 	public void print(String string) throws IOException {
-		_bodyContent.print(string);
+		if (string == null) {
+			string = StringPool.NULL;
+		}
+
+		_writer.write(string);
 	}
 
 	@Override
 	public void println() throws IOException {
-		_bodyContent.println();
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(boolean b) throws IOException {
-		_bodyContent.println(b);
+		if (b) {
+			_writer.write(StringPool.TRUE);
+		}
+		else {
+			_writer.write(StringPool.FALSE);
+		}
+
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(char c) throws IOException {
-		_bodyContent.println(c);
+		_writer.write(c);
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(char[] chars) throws IOException {
-		_bodyContent.println(chars);
+		_writer.write(chars);
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(double d) throws IOException {
-		_bodyContent.println(d);
+		_writer.write(String.valueOf(d));
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(float f) throws IOException {
-		_bodyContent.println(f);
+		_writer.write(String.valueOf(f));
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(int i) throws IOException {
-		_bodyContent.println(i);
+		_writer.write(String.valueOf(i));
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(long l) throws IOException {
-		_bodyContent.println(l);
+		_writer.write(String.valueOf(l));
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(Object object) throws IOException {
-		_bodyContent.println(object);
+		_writer.write(String.valueOf(object));
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void println(String string) throws IOException {
-		_bodyContent.println(string);
+		if (string == null) {
+			string = StringPool.NULL;
+		}
+
+		_writer.write(string);
+		_writer.write(_LINE_SEPARATOR);
 	}
 
 	@Override
 	public void write(char[] chars) throws IOException {
-		_bodyContent.write(chars);
+		_writer.write(chars);
 	}
 
 	@Override
 	public void write(char[] chars, int offset, int length) throws IOException {
-		_bodyContent.write(chars, offset, length);
+		_writer.write(chars, offset, length);
 	}
 
 	@Override
 	public void write(int c) throws IOException {
-		_bodyContent.write(c);
+		_writer.write(c);
 	}
 
 	@Override
 	public void write(String string) throws IOException {
-		_bodyContent.write(string);
+		_writer.write(string);
 	}
 
 	@Override
 	public void write(String string, int offset, int length)
 		throws IOException {
 
-		_bodyContent.write(string, offset, length);
+		_writer.write(string, offset, length);
 	}
 
-	@Override
-	public void writeOut(Writer writer) throws IOException {
-		_bodyContent.writeOut(writer);
-	}
+	private static final String _LINE_SEPARATOR = System.getProperty(
+		"line.separator");
 
-	private BodyContent _bodyContent;
-	private UnsyncStringWriter _unsyncStringWriter;
+	private Writer _writer;
 
 }

@@ -119,7 +119,7 @@ if (portletDisplayDDMTemplateId > 0) {
 %>
 
 	<div class="entry-body">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, _convertToBlogEntries(results)) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, _convertToBlogEntries(results)) %>
 	</div>
 
 <%

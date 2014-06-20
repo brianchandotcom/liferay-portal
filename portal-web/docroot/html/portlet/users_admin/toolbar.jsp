@@ -61,7 +61,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>
 
-					<aui:nav-item href="<%= addOrganizationURL %>" iconCssClass="icon-globe" label="<%= LanguageUtil.get(pageContext, organizationType) %>" />
+					<aui:nav-item href="<%= addOrganizationURL %>" iconCssClass="icon-globe" label="<%= LanguageUtil.get(request, organizationType) %>" />
 
 				<%
 				}

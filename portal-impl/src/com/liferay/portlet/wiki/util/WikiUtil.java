@@ -88,7 +88,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -190,7 +190,7 @@ public class WikiUtil {
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
 		long nodeId, String title, double sourceVersion, double targetVersion,
-		PageContext pageContext) {
+		HttpServletRequest request) {
 
 		double previousVersion = 0;
 		double nextVersion = 0;
@@ -219,7 +219,7 @@ public class WikiUtil {
 			String extraInfo = StringPool.BLANK;
 
 			if (page.isMinorEdit()) {
-				extraInfo = LanguageUtil.get(pageContext, "minor-edit");
+				extraInfo = LanguageUtil.get(request, "minor-edit");
 			}
 
 			DiffVersion diffVersion = new DiffVersion(

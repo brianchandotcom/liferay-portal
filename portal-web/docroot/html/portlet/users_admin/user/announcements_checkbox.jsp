@@ -51,7 +51,7 @@ else if (index == 3) {
 	disabled="<%= disabled %>"
 	label=""
 	name="<%= param %>"
-	title="<%= LanguageUtil.format(pageContext, messageKey, delivery.getType()) %>"
+	title="<%= LanguageUtil.format(request, messageKey, delivery.getType()) %>"
 	type="checkbox"
 	value="<%= defaultValue %>"
 />

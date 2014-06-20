@@ -121,9 +121,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 <%
 if (!layoutSetPrototype.isNew()) {
 	PortalUtil.addPortletBreadcrumbEntry(request, layoutSetPrototype.getName(locale), null);
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-page"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-page"), currentURL);
 }
 %>

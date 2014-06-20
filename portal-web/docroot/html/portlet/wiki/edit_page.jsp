@@ -248,7 +248,7 @@ if (Validator.isNull(redirect)) {
 							for (int i = 0; i < WikiPageConstants.FORMATS.length; i++) {
 							%>
 
-								<aui:option label='<%= LanguageUtil.get(pageContext, "wiki.formats." + WikiPageConstants.FORMATS[i]) %>' selected="<%= format.equals(WikiPageConstants.FORMATS[i]) %>" value="<%= WikiPageConstants.FORMATS[i] %>" />
+								<aui:option label='<%= LanguageUtil.get(request, "wiki.formats." + WikiPageConstants.FORMATS[i]) %>' selected="<%= format.equals(WikiPageConstants.FORMATS[i]) %>" value="<%= WikiPageConstants.FORMATS[i] %>" />
 
 							<%
 							}
@@ -452,7 +452,7 @@ if (Validator.isNull(redirect)) {
 					Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 					%>
 
-					<%= LanguageUtil.format(pageContext, "this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet", new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())}, false) %>
+					<%= LanguageUtil.format(request, "this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet", new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())}, false) %>
 				</div>
 			</c:if>
 		</c:otherwise>
@@ -465,7 +465,7 @@ if (Validator.isNull(redirect)) {
 
 		var newFormat = formatSelect.options[formatSelect.selectedIndex].text;
 
-		var confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
+		var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
 		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
 
@@ -539,9 +539,9 @@ if (Validator.isNull(redirect)) {
 <%
 if (!newPage) {
 	PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), viewPageURL.toString());
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-page"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-page"), currentURL);
 }
 %>

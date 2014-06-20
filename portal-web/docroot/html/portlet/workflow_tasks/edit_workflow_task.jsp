@@ -43,7 +43,7 @@ if (assetRenderer != null) {
 	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }
 
-String headerTitle = LanguageUtil.get(pageContext, workflowTask.getName());
+String headerTitle = LanguageUtil.get(request, workflowTask.getName());
 
 headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowHandler.getTitle(classPK, locale));
 
@@ -107,7 +107,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= LanguageUtil.get(pageContext, "nobody") %>' />
+							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= LanguageUtil.get(request, "nobody") %>' />
 						</c:otherwise>
 					</c:choose>
 
@@ -143,13 +143,13 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					</c:if>
 				</div>
 
-				<aui:input name="state" type="resource" value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
+				<aui:input name="state" type="resource" value="<%= LanguageUtil.get(request, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
 			</aui:col>
 
 			<aui:col width="<%= 50 %>">
 				<aui:input name="createDate" type="resource" value="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
 
-				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
+				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
 					<portlet:actionURL var="updateDueDateURL">
@@ -180,7 +180,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(pageContext, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
+				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(request, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -194,7 +194,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 									viewDiffsPortletURL.setWindowState(LiferayWindowState.POP_UP);
 									viewDiffsPortletURL.setPortletMode(PortletMode.VIEW);
 
-									String taglibViewDiffsURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "viewDiffs', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "diffs")) + "', uri:'" + HtmlUtil.escapeJS(viewDiffsPortletURL.toString()) + "'});";
+									String taglibViewDiffsURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "viewDiffs', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "diffs")) + "', uri:'" + HtmlUtil.escapeJS(viewDiffsPortletURL.toString()) + "'});";
 									%>
 
 									<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= taglibViewDiffsURL %>" />
@@ -217,7 +217,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
 
 										<%
-										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURLString) + "'});";
+										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURLString) + "'});";
 										%>
 
 										<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= taglibEditURL %>" />
@@ -310,7 +310,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 			/>
 
 			<div class="task-name">
-				<%= LanguageUtil.get(pageContext, HtmlUtil.escape(workflowTask.getName())) %>
+				<%= LanguageUtil.get(request, HtmlUtil.escape(workflowTask.getName())) %>
 			</div>
 		</div>
 

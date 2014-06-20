@@ -110,7 +110,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 						<liferay-ui:icon-menu
 							cssClass="select-existing-selector"
 							direction="right" icon="../aui/plus"
-							message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
+							message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
 							showWhenSingleIcon="<%= true %>"
 						>
 
@@ -142,7 +142,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 									String type = curRendererFactory.getTypeName(locale);
 
-									data.put("title", LanguageUtil.format(pageContext, "select-x", type, false));
+									data.put("title", LanguageUtil.format(request, "select-x", type, false));
 									data.put("type", type);
 							%>
 
@@ -169,7 +169,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 										String type = assetAvailableClassType.getName();
 
-										data.put("title", LanguageUtil.format(pageContext, "select-x", type, false));
+										data.put("title", LanguageUtil.format(request, "select-x", type, false));
 										data.put("type", type);
 							%>
 

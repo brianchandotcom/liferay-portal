@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.search;
+package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Date;
 
@@ -29,19 +29,15 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class UserSearchEntry extends TextSearchEntry {
+public class StatusSearchEntry extends TextSearchEntry {
 
 	@Override
 	public Object clone() {
-		UserSearchEntry userSearchEntry = new UserSearchEntry();
+		StatusSearchEntry jspSearchEntry = new StatusSearchEntry();
 
-		BeanPropertiesUtil.copyProperties(this, userSearchEntry);
+		BeanPropertiesUtil.copyProperties(this, jspSearchEntry);
 
-		return userSearchEntry;
-	}
-
-	public Date getDate() {
-		return _date;
+		return jspSearchEntry;
 	}
 
 	public HttpServletRequest getRequest() {
@@ -56,20 +52,38 @@ public class UserSearchEntry extends TextSearchEntry {
 		return _servletContext;
 	}
 
-	public long getUserId() {
-		return _userId;
+	public int getStatus() {
+		return _status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
 	}
 
 	@Override
-	public void print(PageContext pageContext) throws Exception {
+	public void print(Object object) throws Exception {
+		if (!(object instanceof PageContext)) {
+			return;
+		}
+
+		PageContext pageContext = (PageContext)object;
+
 		if (_request == null) {
 			_request = (HttpServletRequest)pageContext.getRequest();
 		}
 
 		_request.setAttribute(
-			"liferay-ui:search-container-column-user:date", _date);
+			"liferay-ui:search-container-column-status:status", _status);
 		_request.setAttribute(
-			"liferay-ui:search-container-column-user:userId", _userId);
+			"liferay-ui:search-container-column-status:statusByUserId",
+			_statusByUserId);
+		_request.setAttribute(
+			"liferay-ui:search-container-column-status:statusDate",
+			_statusDate);
 
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
@@ -84,10 +98,6 @@ public class UserSearchEntry extends TextSearchEntry {
 		}
 	}
 
-	public void setDate(Date date) {
-		_date = date;
-	}
-
 	public void setRequest(HttpServletRequest request) {
 		_request = request;
 	}
@@ -100,17 +110,26 @@ public class UserSearchEntry extends TextSearchEntry {
 		_servletContext = servletContext;
 	}
 
-	public void setUserId(long userId) {
-		_userId = userId;
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/search_container/user.jsp";
+		"/html/taglib/ui/search_container/status.jsp";
 
-	private Date _date;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
-	private long _userId;
+	private int _status;
+	private long _statusByUserId;
+	private Date _statusDate;
 
 }

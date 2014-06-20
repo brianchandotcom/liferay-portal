@@ -276,7 +276,7 @@ double version = ParamUtil.getDouble(request, "version");
 		%>
 
 			<div class="alert alert-danger">
-				<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
+				<%= LanguageUtil.get(request, "the-selected-web-content-no-longer-exists") %>
 			</div>
 
 		<%

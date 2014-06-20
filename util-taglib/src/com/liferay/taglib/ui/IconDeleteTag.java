@@ -15,7 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -95,12 +95,12 @@ public class IconDeleteTag extends IconTag {
 			sb.append("javascript:if (confirm('");
 
 			if (Validator.isNotNull(_confirmation)) {
-				sb.append(UnicodeLanguageUtil.get(pageContext, _confirmation));
+				sb.append(UnicodeLanguageUtil.get(request, _confirmation));
 			}
 			else {
 				String confirmation = "are-you-sure-you-want-to-delete-this";
 
-				sb.append(UnicodeLanguageUtil.get(pageContext, confirmation));
+				sb.append(UnicodeLanguageUtil.get(request, confirmation));
 			}
 
 			sb.append("')) { ");

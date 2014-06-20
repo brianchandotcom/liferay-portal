@@ -69,7 +69,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -699,7 +698,7 @@ public interface Portal {
 
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay);
 
-	public String getFirstPageLayoutTypes(PageContext pageContext);
+	public String getFirstPageLayoutTypes(HttpServletRequest request);
 
 	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay);
 

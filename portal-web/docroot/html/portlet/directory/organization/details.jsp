@@ -32,7 +32,7 @@ long logoId = organization.getLogoId();
 			<liferay-ui:message key="type" />
 		</dt>
 		<dd>
-			<%= LanguageUtil.get(pageContext, organization.getType()) %>
+			<%= LanguageUtil.get(request, organization.getType()) %>
 		</dd>
 
 		<c:if test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS %>">
@@ -40,7 +40,7 @@ long logoId = organization.getLogoId();
 				<liferay-ui:message key="status" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(pageContext, ListTypeServiceUtil.getListType(organization.getStatusId()).getName()) %>
+				<%= LanguageUtil.get(request, ListTypeServiceUtil.getListType(organization.getStatusId()).getName()) %>
 			</dd>
 		</c:if>
 
@@ -49,7 +49,7 @@ long logoId = organization.getLogoId();
 				<liferay-ui:message key="country" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(pageContext, CountryServiceUtil.getCountry(organization.getCountryId()).getName()) %>
+				<%= LanguageUtil.get(request, CountryServiceUtil.getCountry(organization.getCountryId()).getName()) %>
 			</dd>
 		</c:if>
 
@@ -58,7 +58,7 @@ long logoId = organization.getLogoId();
 				<liferay-ui:message key="region" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(pageContext, RegionServiceUtil.getRegion(organization.getRegionId()).getName()) %>
+				<%= LanguageUtil.get(request, RegionServiceUtil.getRegion(organization.getRegionId()).getName()) %>
 			</dd>
 		</c:if>
 

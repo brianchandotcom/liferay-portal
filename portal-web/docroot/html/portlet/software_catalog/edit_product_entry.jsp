@@ -336,9 +336,9 @@ if (productEntry != null) {
 	portletURL.setParameter("productEntryId", String.valueOf(productEntry.getProductEntryId()));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, productEntry.getName(), portletURL.toString());
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-page"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-page"), currentURL);
 }
 %>

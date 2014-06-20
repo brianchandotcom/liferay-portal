@@ -99,7 +99,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 				<%
 				DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-multiple-file-entries"), currentURL);
+				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-multiple-file-entries"), currentURL);
 				%>
 
 				<aui:script>
@@ -171,10 +171,10 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 													}
 
 													if (originalFileName === item.fileName) {
-														childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(pageContext, "successfully-saved") %></span>';
+														childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
 													}
 													else {
-														childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(pageContext, "successfully-saved") %> (' + item.fileName + ')</span>';
+														childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
 													}
 												}
 												else {
@@ -207,7 +207,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 											selectedItems.removeClass('selectable').removeClass('selected').addClass('upload-error');
 
-											selectedItems.append('<span class="error-message"><%= UnicodeLanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
+											selectedItems.append('<span class="error-message"><%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
 
 											selectedItems.all('input').remove(true);
 

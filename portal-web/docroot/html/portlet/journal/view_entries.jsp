@@ -38,7 +38,7 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 
 long ddmStructureId = 0;
 
-String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
+String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 

@@ -44,7 +44,7 @@ if (progressTracker != null) {
 		var progressId = parent['<%= HtmlUtil.escapeJS(progressId) %>'];
 
 		if (progressId && (typeof progressId.set == 'function')) {
-			progressId.set('message', '<%= LanguageUtil.get(pageContext, message) %>');
+			progressId.set('message', '<%= LanguageUtil.get(request, message) %>');
 			progressId.set('value', <%= percent %>);
 		}
 	}());

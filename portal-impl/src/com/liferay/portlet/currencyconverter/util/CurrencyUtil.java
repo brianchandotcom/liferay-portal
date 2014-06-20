@@ -28,16 +28,14 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class CurrencyUtil {
 
-	public static Map<String, String> getAllSymbols(PageContext pageContext) {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+	public static Map<String, String> getAllSymbols(
+		HttpServletRequest request) {
 
 		Locale locale = request.getLocale();
 
@@ -52,7 +50,7 @@ public class CurrencyUtil {
 		symbols = new TreeMap<String, String>();
 
 		for (String symbol : _instance._currencyIds) {
-			symbols.put(LanguageUtil.get(pageContext, symbol), symbol);
+			symbols.put(LanguageUtil.get(request, symbol), symbol);
 		}
 
 		_symbolsPool.put(key, symbols);

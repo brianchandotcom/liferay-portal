@@ -333,18 +333,18 @@ if (!selectableTree) {
 
 					if (node.layoutRevisionId) {
 						if (!node.layoutRevisionHead) {
-							title = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-not-a-version-of-this-page-marked-as-ready-for-publication") %>';
+							title = '<%= UnicodeLanguageUtil.get(request, "there-is-not-a-version-of-this-page-marked-as-ready-for-publication") %>';
 						}
 						else if (node.layoutBranchName) {
 							node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
 
-							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(pageContext, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
+							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(request, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
 						}
 
 						if (node.incomplete) {
 							cssClass = 'incomplete-layout';
 
-							title = '<%= UnicodeLanguageUtil.get(pageContext, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
+							title = '<%= UnicodeLanguageUtil.get(request, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
 						}
 					}
 

@@ -93,7 +93,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 			WikiPage parentPage = wikiPage.getViewableParentPage();
 
 			if (parentPage == null) {
-				parentText = StringPool.OPEN_PARENTHESIS + LanguageUtil.get(pageContext, "none") + StringPool.CLOSE_PARENTHESIS;
+				parentText = StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, "none") + StringPool.CLOSE_PARENTHESIS;
 			}
 			else {
 				parentText = parentPage.getTitle();

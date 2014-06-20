@@ -205,7 +205,7 @@ if (selUser != null) {
 		backURL="<%= backURL %>"
 		escapeXml="<%= false %>"
 		localizeTitle="<%= (selUser == null) %>"
-		title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(pageContext, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false) %>'
+		title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false) %>'
 	/>
 </c:if>
 

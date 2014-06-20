@@ -55,7 +55,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 	/>
 
 	<div class="breadcrumbs">
-		<%= ShoppingUtil.getBreadcrumbs(item.getCategoryId(), pageContext, renderRequest, renderResponse) %>
+		<%= ShoppingUtil.getBreadcrumbs(item.getCategoryId(), renderRequest, renderResponse) %>
 	</div>
 
 	<table border="0" cellpadding="0" cellspacing="0">
@@ -232,7 +232,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 		%>
 
 			if (document.<portlet:namespace />fm['<portlet:namespace />fieldName<%= HtmlUtil.escapeJS(fieldName) %>'].value == '') {
-				alert('<%= UnicodeLanguageUtil.get(pageContext, "please-select-all-options") %>');
+				alert('<%= UnicodeLanguageUtil.get(request, "please-select-all-options") %>');
 
 				return;
 			}

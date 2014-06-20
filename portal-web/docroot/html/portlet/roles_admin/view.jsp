@@ -128,14 +128,14 @@ String portletURLString = portletURL.toString();
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="type"
-				value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>"
+				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 			/>
 
 			<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="subType"
-					value="<%= LanguageUtil.get(pageContext, role.getSubtype()) %>"
+					value="<%= LanguageUtil.get(request, role.getSubtype()) %>"
 				/>
 			</c:if>
 

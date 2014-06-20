@@ -14,7 +14,7 @@
 
 package com.liferay.util.freemarker;
 
-import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -30,7 +30,7 @@ import freemarker.template.TemplateHashModel;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletConfig;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -57,22 +57,16 @@ public class FreeMarkerTemplateTaglibSupportProvider
 			"fullTemplatesPath", servletContextName.concat(
 				TemplateConstants.SERVLET_SEPARATOR));
 
-		ServletConfig servletConfig =
-			(ServletConfig)portletRequest.getAttribute(
-				PortletServlet.PORTLET_SERVLET_CONFIG);
+		ServletContext servletContext = ServletContextPool.get(
+			servletContextName);
 
-		PortletServlet portletServlet = new PortletServlet();
-
-		portletServlet.init(servletConfig);
+		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(
-				portletServlet, ObjectWrapper.DEFAULT_WRAPPER);
+				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
 		template.put("Application", servletContextHashModel);
-
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
 
 		TemplateHashModel taglibsFactory =
 			FreeMarkerTaglibFactoryUtil.createTaglibFactory(servletContext);

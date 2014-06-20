@@ -94,7 +94,7 @@ portletURL.setParameter("tabs1", tabs1);
 		// End date
 
 		if (coupon.getEndDate() == null) {
-			row.addText(LanguageUtil.get(pageContext, "never"), rowURL);
+			row.addText(LanguageUtil.get(request, "never"), rowURL);
 		}
 		else {
 			row.addDate(coupon.getEndDate(), rowURL);
@@ -102,7 +102,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Discount type
 
-		row.addText(LanguageUtil.get(pageContext, coupon.getDiscountType()), rowURL);
+		row.addText(LanguageUtil.get(request, coupon.getDiscountType()), rowURL);
 
 		// Action
 
@@ -124,7 +124,7 @@ portletURL.setParameter("tabs1", tabs1);
 		window,
 		'<portlet:namespace />deleteCoupons',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />deleteCouponIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 

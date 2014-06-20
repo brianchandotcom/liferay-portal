@@ -99,7 +99,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 
 		<liferay-ui:search-container-column-text
 			name="active"
-			value='<%= LanguageUtil.get(pageContext, (pluginSetting.isActive() ? "yes" : "no")) %>'
+			value='<%= LanguageUtil.get(request, (pluginSetting.isActive() ? "yes" : "no")) %>'
 		/>
 
 		<liferay-ui:search-container-column-text

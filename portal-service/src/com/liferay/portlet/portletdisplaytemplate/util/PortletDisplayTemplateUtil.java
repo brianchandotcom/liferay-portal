@@ -22,7 +22,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -128,8 +129,8 @@ public class PortletDisplayTemplateUtil {
 	 * Returns the result of rendering the DDM template with the entries in the
 	 * page context.
 	 *
-	 * @param  pageContext the page context in which the template is rendered.
-	 *         For example, this could be the context of the JSP view.
+	 * @param  request the request under which the template is rendered.
+	 * @param  response the response under which the template is rendered.
 	 * @param  ddmTemplateId the primary key of the DDM template
 	 * @param  entries the entries that are rendered in the template
 	 * @return the result of rendering the DDM template with the entries in the
@@ -137,19 +138,20 @@ public class PortletDisplayTemplateUtil {
 	 * @throws Exception if the DDM template could not be rendered
 	 */
 	public static String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries)
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries)
 		throws Exception {
 
 		return getPortletDisplayTemplate().renderDDMTemplate(
-			pageContext, ddmTemplateId, entries);
+			request, response, ddmTemplateId, entries);
 	}
 
 	/**
 	 * Returns the result of rendering the DDM template with the entries in the
 	 * page context and template context.
 	 *
-	 * @param  pageContext the page context in which the template is rendered.
-	 *         For example, this could be the context of the JSP view.
+	 * @param  request the request under which the template is rendered.
+	 * @param  response the response under which the template is rendered.
 	 * @param  ddmTemplateId the primary key of the DDM template
 	 * @param  entries the entries that are rendered in the template
 	 * @param  contextObjects the map of objects defining the context in which
@@ -159,12 +161,13 @@ public class PortletDisplayTemplateUtil {
 	 * @throws Exception if the DDM template could not be rendered
 	 */
 	public static String renderDDMTemplate(
-			PageContext pageContext, long ddmTemplateId, List<?> entries,
+			HttpServletRequest request, HttpServletResponse response,
+			long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception {
 
 		return getPortletDisplayTemplate().renderDDMTemplate(
-			pageContext, ddmTemplateId, entries, contextObjects);
+			request, response, ddmTemplateId, entries, contextObjects);
 	}
 
 	public void setPortletDisplayTemplate(

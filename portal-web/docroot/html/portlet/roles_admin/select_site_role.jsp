@@ -92,7 +92,7 @@ if (step == 1) {
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+						value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>
@@ -152,7 +152,7 @@ if (step == 1) {
 			<c:if test="<%= selUser != null %>">
 
 				<%
-				String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
+				String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(request, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
 				%>
 
 				<div class="breadcrumbs">

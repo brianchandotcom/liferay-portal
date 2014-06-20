@@ -145,7 +145,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(new Object[] {role, actionId, curResource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, i);
 
-	row.addText(_getActionLabel(pageContext, themeDisplay, curResource, actionId));
+	row.addText(_getActionLabel(request, themeDisplay, curResource, actionId));
 
 	if (showScope) {
 		row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");

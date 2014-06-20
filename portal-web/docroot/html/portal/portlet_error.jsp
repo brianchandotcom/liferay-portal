@@ -22,10 +22,10 @@
 String portletTitle = HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse));
 
 if (portletTitle == null) {
-	portletTitle = LanguageUtil.get(pageContext, "portlet");
+	portletTitle = LanguageUtil.get(request, "portlet");
 }
 %>
 
 <div class="alert alert-danger">
-	<%= LanguageUtil.format(pageContext, "is-temporarily-unavailable", portletTitle, false) %>
+	<%= LanguageUtil.format(request, "is-temporarily-unavailable", portletTitle, false) %>
 </div>

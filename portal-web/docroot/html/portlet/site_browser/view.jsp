@@ -203,7 +203,7 @@ portletURL.setParameter("target", target);
 
 			<liferay-ui:search-container-column-text
 				name="type"
-				value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
+				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text>

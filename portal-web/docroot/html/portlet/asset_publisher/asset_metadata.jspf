@@ -50,19 +50,19 @@ for (int j = 0; j < metadataFields.length; j++) {
 	else if (metadataFields[j].equals("priority")) {
 		iconCssClass = "icon-long-arrow-up";
 
-		value = LanguageUtil.get(pageContext, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
+		value = LanguageUtil.get(request, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
 	}
 	else if (metadataFields[j].equals("author")) {
 		iconCssClass = "icon-user";
 
 		String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
 
-		value = LanguageUtil.get(pageContext, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
+		value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
 	}
 	else if (metadataFields[j].equals("view-count")) {
 		int viewCount = assetEntry.getViewCount();
 
-		value = viewCount + StringPool.SPACE + LanguageUtil.get(pageContext, (viewCount == 1) ? "view" : "views");
+		value = viewCount + StringPool.SPACE + LanguageUtil.get(request, (viewCount == 1) ? "view" : "views");
 	}
 	else if (metadataFields[j].equals("categories")) {
 		value = "categories";

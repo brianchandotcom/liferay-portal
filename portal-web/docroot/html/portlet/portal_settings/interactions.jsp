@@ -55,7 +55,7 @@ SocialInteractionsConfiguration defaultSocialInteractionsConfiguration = SocialI
 				int[] socialInteractionsSocialRelationTypesArray = defaultSocialInteractionsConfiguration.getSocialInteractionsSocialRelationTypesArray();
 
 				for (int socialInteractionSocialRelationType : socialInteractionsSocialRelationTypesArray) {
-					leftList.add(new KeyValuePair(Integer.toString(socialInteractionSocialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialInteractionSocialRelationType))));
+					leftList.add(new KeyValuePair(Integer.toString(socialInteractionSocialRelationType), LanguageUtil.get(request, SocialRelationTypesUtil.getTypeLabel(socialInteractionSocialRelationType))));
 				}
 
 				// Right list
@@ -64,7 +64,7 @@ SocialInteractionsConfiguration defaultSocialInteractionsConfiguration = SocialI
 
 				for (int socialInteractionsSocialRelationType : allSocialInteractionsSocialRelationTypes) {
 					if (Arrays.binarySearch(socialInteractionsSocialRelationTypesArray, socialInteractionsSocialRelationType) < 0) {
-						rightList.add(new KeyValuePair(Integer.toString(socialInteractionsSocialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialInteractionsSocialRelationType))));
+						rightList.add(new KeyValuePair(Integer.toString(socialInteractionsSocialRelationType), LanguageUtil.get(request, SocialRelationTypesUtil.getTypeLabel(socialInteractionsSocialRelationType))));
 					}
 				}
 				%>
@@ -142,7 +142,7 @@ for (Portlet portlet : portlets) {
 								int[] socialInteractionsSocialRelationTypesArray = socialInteractionsConfiguration.getSocialInteractionsSocialRelationTypesArray();
 
 								for (int socialInteractionSocialRelationType : socialInteractionsSocialRelationTypesArray) {
-									leftList.add(new KeyValuePair(Integer.toString(socialInteractionSocialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialInteractionSocialRelationType))));
+									leftList.add(new KeyValuePair(Integer.toString(socialInteractionSocialRelationType), LanguageUtil.get(request, SocialRelationTypesUtil.getTypeLabel(socialInteractionSocialRelationType))));
 								}
 
 								// Right list
@@ -151,7 +151,7 @@ for (Portlet portlet : portlets) {
 
 								for (int socialInteractionsSocialRelationType : allSocialInteractionsSocialRelationTypes) {
 									if (Arrays.binarySearch(socialInteractionsSocialRelationTypesArray, socialInteractionsSocialRelationType) < 0) {
-										rightList.add(new KeyValuePair(Integer.toString(socialInteractionsSocialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialInteractionsSocialRelationType))));
+										rightList.add(new KeyValuePair(Integer.toString(socialInteractionsSocialRelationType), LanguageUtil.get(request, SocialRelationTypesUtil.getTypeLabel(socialInteractionsSocialRelationType))));
 									}
 								}
 								%>

@@ -136,7 +136,7 @@ if (summary != null) {
 				<liferay-ui:icon
 					iconCssClass="icon-download-alt"
 					label="<%= false %>"
-					message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
+					message='<%= LanguageUtil.format(request, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
 					url="<%= downloadURL %>"
 				/>
 			</c:if>

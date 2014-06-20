@@ -61,7 +61,7 @@ public class ATag extends BaseATag {
 			if (isOpensNewWindow()) {
 				jspWriter.write("<span class=\"opens-new-window-accessible\">");
 				jspWriter.write(
-					LanguageUtil.get(pageContext, "opens-new-window"));
+					LanguageUtil.get(request, "opens-new-window"));
 				jspWriter.write("</span>");
 			}
 
@@ -142,12 +142,12 @@ public class ATag extends BaseATag {
 			jspWriter.write("title=\"");
 
 			if (Validator.isNotNull(title)) {
-				jspWriter.write(LanguageUtil.get(pageContext, title));
+				jspWriter.write(LanguageUtil.get(request, title));
 			}
 
 			if (isOpensNewWindow()) {
 				jspWriter.write(
-					LanguageUtil.get(pageContext, "opens-new-window"));
+					LanguageUtil.get(request, "opens-new-window"));
 			}
 
 			jspWriter.write("\" ");
@@ -162,7 +162,7 @@ public class ATag extends BaseATag {
 		jspWriter.write(">");
 
 		if (Validator.isNotNull(label)) {
-			jspWriter.write(LanguageUtil.get(pageContext, label));
+			jspWriter.write(LanguageUtil.get(request, label));
 		}
 
 		return EVAL_BODY_INCLUDE;

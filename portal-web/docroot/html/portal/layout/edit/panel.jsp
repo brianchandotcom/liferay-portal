@@ -115,7 +115,7 @@ if (selLayout != null) {
 		portletLister.setIncludeInstanceablePortlets(false);
 		portletLister.setIteratePortlets(true);
 		portletLister.setLayoutTypePortlet(layoutTypePortlet);
-		portletLister.setRootNodeName(LanguageUtil.get(pageContext, "application"));
+		portletLister.setRootNodeName(LanguageUtil.get(request, "application"));
 		portletLister.setServletContext(application);
 		portletLister.setThemeDisplay(themeDisplay);
 		portletLister.setUser(user);

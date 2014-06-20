@@ -112,7 +112,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				<liferay-ui:icon
 					iconCssClass="icon-plus"
 					id="scopeCurLayout"
-					message='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(pageContext, "create-new") + ")" %>'
+					message='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>'
 					method="post"
 					url="<%= createNewScopeURL %>"
 				/>

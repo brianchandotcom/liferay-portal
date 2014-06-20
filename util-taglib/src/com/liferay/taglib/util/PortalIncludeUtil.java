@@ -14,12 +14,40 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.servlet.PortalIncludeUtil}
+ * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-@Deprecated
-public class PortalIncludeUtil
-	extends com.liferay.portal.kernel.servlet.PortalIncludeUtil {
+public class PortalIncludeUtil {
+
+	public static void include(PageContext pageContext, String path)
+		throws IOException, ServletException {
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		ServletContext servletContext = (ServletContext)request.getAttribute(
+			WebKeys.CTX);
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(path);
+
+		requestDispatcher.include(
+			request, new PipingServletResponse(response, pageContext.getOut()));
+	}
+
 }

@@ -272,7 +272,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 			<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(pageContext, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()), false) %>
+					<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()), false) %>
 				</div>
 			</c:if>
 
@@ -333,7 +333,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			var cancelButton = A.one('#<portlet:namespace />cancelButton');
 
 			var saveStatus = A.one('#<portlet:namespace />saveStatus');
-			var saveText = '<%= UnicodeLanguageUtil.format(pageContext, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
+			var saveText = '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
 
 			if (draft && ajax) {
 				if ((title == '') || (content == '')) {
@@ -385,7 +385,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 							failure: function() {
 								if (saveStatus) {
 									saveStatus.attr('className', 'alert alert-danger save-status');
-									saveStatus.html('<%= UnicodeLanguageUtil.get(pageContext, "could-not-save-draft-to-the-server") %>');
+									saveStatus.html('<%= UnicodeLanguageUtil.get(request, "could-not-save-draft-to-the-server") %>');
 								}
 							},
 							start: function() {
@@ -393,7 +393,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 								if (saveStatus) {
 									saveStatus.attr('className', 'alert alert-info save-status pending');
-									saveStatus.html('<%= UnicodeLanguageUtil.get(pageContext, "saving-draft") %>');
+									saveStatus.html('<%= UnicodeLanguageUtil.get(request, "saving-draft") %>');
 								}
 							},
 							success: function(event, id, obj) {
@@ -558,10 +558,10 @@ if (entry != null) {
 	portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, entry.getTitle(), portletURL.toString());
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-entry"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-entry"), currentURL);
 }
 %>
 

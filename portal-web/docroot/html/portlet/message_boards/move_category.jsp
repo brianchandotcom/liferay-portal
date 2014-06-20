@@ -29,7 +29,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (category == null) %>"
-	title='<%= LanguageUtil.format(pageContext, "move-x", category.getName(), false) %>'
+	title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
 />
 
 <portlet:actionURL var="moveCategoryURL">
@@ -89,7 +89,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 if (category != null) {
 	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
 }
 %>
 

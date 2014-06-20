@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.taglib.servlet;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.taglib.BodyContentWrapper;
 
 import java.io.IOException;
 import java.io.Writer;

@@ -58,7 +58,7 @@ for (int i = 0; i < scheduledJobs.size(); i++) {
 		row.addDate(endDate);
 	}
 	else {
-		row.addText(LanguageUtil.get(pageContext, "no-end-date"));
+		row.addText(LanguageUtil.get(request, "no-end-date"));
 	}
 
 	// Action
@@ -70,7 +70,7 @@ for (int i = 0; i < scheduledJobs.size(); i++) {
 	sb.append(schedulerResponse.getJobName());
 	sb.append("');");
 
-	row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "delete"), sb.toString());
+	row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(request, "delete"), sb.toString());
 
 	resultRows.add(row);
 }

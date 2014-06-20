@@ -68,5 +68,5 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()), currentURL);
 %>

@@ -26,7 +26,6 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,31 +48,31 @@ public interface Language {
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument);
+		HttpServletRequest request, String pattern, LanguageWrapper argument);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments);
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments);
 
 	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, Object argument);
+		HttpServletRequest request, String pattern, Object argument);
 
 	public String format(
-		PageContext pageContext, String pattern, Object argument,
+		HttpServletRequest request, String pattern, Object argument,
 		boolean translateArguments);
 
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments);
+		HttpServletRequest request, String pattern, Object[] arguments);
 
 	public String format(
-		PageContext pageContext, String pattern, Object[] arguments,
+		HttpServletRequest request, String pattern, Object[] arguments,
 		boolean translateArguments);
 
 	public String format(
@@ -94,9 +93,9 @@ public interface Language {
 
 	public String get(Locale locale, String key, String defaultValue);
 
-	public String get(PageContext pageContext, String key);
+	public String get(HttpServletRequest request, String key);
 
-	public String get(PageContext pageContext, String key, String defaultValue);
+	public String get(HttpServletRequest request, String key, String defaultValue);
 
 	public String get(ResourceBundle resourceBundle, String key);
 
@@ -133,13 +132,13 @@ public interface Language {
 	public String getTimeDescription(Locale locale, Long milliseconds);
 
 	public String getTimeDescription(
-		PageContext pageContext, long milliseconds);
+		HttpServletRequest request, long milliseconds);
 
 	public String getTimeDescription(
-		PageContext pageContext, long milliseconds, boolean approximate);
+		HttpServletRequest request, long milliseconds, boolean approximate);
 
 	public String getTimeDescription(
-		PageContext pageContext, Long milliseconds);
+		HttpServletRequest request, Long milliseconds);
 
 	public void init();
 

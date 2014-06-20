@@ -64,7 +64,7 @@ String property = (String)request.getAttribute("liferay-ui:write:property");
 					try {
 						region = RegionServiceUtil.getRegion(organization.getRegionId());
 
-						regionName = LanguageUtil.get(pageContext, region.getName());
+						regionName = LanguageUtil.get(request, region.getName());
 					}
 					catch (Exception e) {
 					}

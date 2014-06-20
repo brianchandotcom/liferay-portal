@@ -74,7 +74,7 @@ searchContainer.setTotal(total);
 String parentTitle = StringPool.BLANK;
 
 if (browseBy.equals("structure")) {
-	parentTitle = LanguageUtil.get(pageContext, "browse-by-structure");
+	parentTitle = LanguageUtil.get(request, "browse-by-structure");
 }
 else {
 	if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId > 0)) {
@@ -83,7 +83,7 @@ else {
 		parentTitle = grandparentFolder.getName();
 	}
 	else if (((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0)) || ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0) && expandFolder)) {
-		parentTitle = LanguageUtil.get(pageContext, "home");
+		parentTitle = LanguageUtil.get(request, "home");
 	}
 }
 %>
@@ -110,7 +110,7 @@ else {
 
 					dataView.put("folder-id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 					dataView.put("navigation", "home");
-					dataView.put("title", LanguageUtil.get(pageContext, "home"));
+					dataView.put("title", LanguageUtil.get(request, "home"));
 					%>
 
 					<liferay-portlet:renderURL varImpl="viewArticlesHomeURL">
@@ -125,7 +125,7 @@ else {
 					<liferay-ui:app-view-navigation-entry
 						actionJsp="/html/portlet/journal/folder_action.jsp"
 						dataView="<%= dataView %>"
-						entryTitle='<%= LanguageUtil.get(pageContext, "home") %>'
+						entryTitle='<%= LanguageUtil.get(request, "home") %>'
 						iconImage="icon-home"
 						selected='<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) %>'
 						viewURL="<%= viewArticlesHomeURL.toString() %>"
@@ -149,7 +149,7 @@ else {
 
 					<liferay-ui:app-view-navigation-entry
 						dataView="<%= dataView %>"
-						entryTitle='<%= LanguageUtil.get(pageContext, "recent") %>'
+						entryTitle='<%= LanguageUtil.get(request, "recent") %>'
 						iconImage="icon-time"
 						selected='<%= navigation.equals("recent") %>'
 						viewURL="<%= viewRecentArticlesURL.toString() %>"
@@ -175,7 +175,7 @@ else {
 
 						<liferay-ui:app-view-navigation-entry
 							dataView="<%= dataView %>"
-							entryTitle='<%= LanguageUtil.get(pageContext, "mine") %>'
+							entryTitle='<%= LanguageUtil.get(request, "mine") %>'
 							iconImage="icon-user"
 							selected='<%= navigation.equals("mine") %>'
 							viewURL="<%= viewMyArticlesURL.toString() %>"
@@ -205,7 +205,7 @@ else {
 						<liferay-ui:app-view-navigation-entry
 							cssClass="folder structure"
 							dataView="<%= dataView %>"
-							entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-structure") %>'
+							entryTitle='<%= LanguageUtil.get(request, "browse-by-structure") %>'
 							iconImage="icon-th-large"
 							selected='<%= browseBy.equals("structure") %>'
 							viewURL="<%= filterDDMStructureArticlesURL.toString() %>"
@@ -232,7 +232,7 @@ else {
 
 					<liferay-ui:app-view-navigation-entry
 						dataView="<%= dataView %>"
-						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
+						entryTitle='<%= LanguageUtil.get(request, "up") %>'
 						iconImage="icon-level-up"
 						viewURL="<%= viewURL.toString() %>"
 					/>
@@ -297,7 +297,7 @@ else {
 
 					<liferay-ui:app-view-navigation-entry
 						dataView="<%= dataView %>"
-						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
+						entryTitle='<%= LanguageUtil.get(request, "up") %>'
 						iconImage="icon-level-up"
 						viewURL="<%= viewURL.toString() %>"
 					/>

@@ -111,14 +111,14 @@ portletURL.setParameter("tabs1", "default-configuration");
 						try {
 							WorkflowDefinitionLink defaultWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
 
-							defaultOptionMessage = LanguageUtil.get(pageContext, "default") + StringPool.COLON + StringPool.SPACE + defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
+							defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
 						}
 						catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							defaultOptionMessage = LanguageUtil.get(pageContext, "default") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "no-workflow");
+							defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "no-workflow");
 						}
 					}
 					else {
-						defaultOptionMessage = LanguageUtil.get(pageContext, "no-workflow");
+						defaultOptionMessage = LanguageUtil.get(request, "no-workflow");
 					}
 					%>
 

@@ -27,7 +27,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="submit">
-					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
+					<%= LanguageUtil.get(request, buttonLabel, "search") %>
 				</button>
 			</span>
 		</div>

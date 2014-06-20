@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
@@ -48,6 +47,7 @@ import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.DummyVelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
@@ -75,7 +75,6 @@ import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -89,39 +88,41 @@ public class RuntimePageImpl implements RuntimePage {
 
 	@Override
 	public StringBundler getProcessedTemplate(
-			PageContext pageContext, String portletId,
-			TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
 		throws Exception {
 
-		return doDispatch(pageContext, portletId, templateResource, true);
+		return doDispatch(request, response, portletId, templateResource, true);
 	}
 
 	@Override
 	public void processCustomizationSettings(
-			PageContext pageContext, TemplateResource templateResource)
-		throws Exception {
-
-		doDispatch(pageContext, null, templateResource, false);
-	}
-
-	@Override
-	public void processTemplate(
-			PageContext pageContext, String portletId,
+			HttpServletRequest request, HttpServletResponse response,
 			TemplateResource templateResource)
 		throws Exception {
 
-		StringBundler sb = doDispatch(
-			pageContext, portletId, templateResource, true);
-
-		sb.writeTo(pageContext.getOut());
+		doDispatch(request, response, null, templateResource, false);
 	}
 
 	@Override
 	public void processTemplate(
-			PageContext pageContext, TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
 		throws Exception {
 
-		processTemplate(pageContext, null, templateResource);
+		StringBundler sb = doDispatch(
+			request, response, portletId, templateResource, true);
+
+		sb.writeTo(response.getWriter());
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource)
+		throws Exception {
+
+		processTemplate(request, response, null, templateResource);
 	}
 
 	@Override
@@ -247,8 +248,9 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected StringBundler doDispatch(
-			PageContext pageContext, String portletId,
-			TemplateResource templateResource, boolean processTemplate)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource,
+			boolean processTemplate)
 		throws Exception {
 
 		ClassLoader pluginClassLoader = null;
@@ -282,11 +284,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 			if (processTemplate) {
 				return doProcessTemplate(
-					pageContext, portletId, templateResource, false);
+					request, response, portletId, templateResource, false);
 			}
 			else {
 				doProcessCustomizationSettings(
-					pageContext, templateResource, false);
+					request, response, templateResource, false);
 
 				return null;
 			}
@@ -301,15 +303,13 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doProcessCustomizationSettings(
-			PageContext pageContext, TemplateResource templateResource,
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource,
 			boolean restricted)
 		throws Exception {
 
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
 		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(pageContext);
+			new CustomizationSettingsProcessor(request, response);
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
@@ -328,7 +328,7 @@ public class RuntimePageImpl implements RuntimePage {
 		template.put("theme", velocityTaglib);
 
 		try {
-			template.processTemplate(pageContext.getOut());
+			template.processTemplate(response.getWriter());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -338,14 +338,10 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected StringBundler doProcessTemplate(
-			PageContext pageContext, String portletId,
-			TemplateResource templateResource, boolean restricted)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource,
+			boolean restricted)
 		throws Exception {
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
 
 		TemplateProcessor processor = new TemplateProcessor(
 			request, response, portletId);
@@ -364,9 +360,8 @@ public class RuntimePageImpl implements RuntimePage {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			pageContext.getServletContext(), request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext, template);
+			request.getServletContext(), request,
+			new PipingServletResponse(response, unsyncStringWriter), template);
 
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);

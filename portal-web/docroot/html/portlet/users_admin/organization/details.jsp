@@ -93,7 +93,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
+				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
 
 				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
 			</c:otherwise>
@@ -210,7 +210,7 @@ if (parentOrganization != null) {
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, curOrganization.getType()) %>"
+			value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

@@ -102,7 +102,7 @@
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="last-vote-date"
-						value='<%= LanguageUtil.get(pageContext, "never") %>'
+						value='<%= LanguageUtil.get(request, "never") %>'
 					/>
 				</c:otherwise>
 			</c:choose>
@@ -119,7 +119,7 @@
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="expiration-date"
-						value='<%= LanguageUtil.get(pageContext, "never") %>'
+						value='<%= LanguageUtil.get(request, "never") %>'
 					/>
 				</c:otherwise>
 			</c:choose>

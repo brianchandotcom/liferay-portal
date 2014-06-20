@@ -167,7 +167,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 			%>
 
 			<aui:button-row>
-				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
+				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
 				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
 			</aui:button-row>
@@ -242,7 +242,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 											cssClass: 'lfr-add-dialog',
 											width: 600
 										},
-										title: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>'
+										title: '<%= UnicodeLanguageUtil.get(request, "add-child-page") %>'
 									}
 								);
 							}
@@ -267,7 +267,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 								{
 									cache: false,
 									id: '<portlet:namespace /><%= HtmlUtil.escapeJS(selLayout.getFriendlyURL().substring(1)) %>_permissions',
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+									title: '<%= UnicodeLanguageUtil.get(request, "permissions") %>',
 
 									<liferay-security:permissionsURL
 										modelResource="<%= Layout.class.getName() %>"
@@ -292,7 +292,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 									dialog: {
 										bodyContent: content.show()
 									},
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-applications") %>'
+									title: '<%= UnicodeLanguageUtil.get(request, "copy-applications") %>'
 								}
 							);
 
@@ -350,7 +350,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 			action = action || '<%= Constants.UPDATE %>';
 
 			if (action == '<%= Constants.DELETE %>') {
-				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+				if (!confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
 					return false;
 				}
 

@@ -21,7 +21,6 @@ import com.liferay.portal.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,12 +30,12 @@ import javax.servlet.jsp.PageContext;
 public class RuntimePageUtil {
 
 	public static StringBundler getProcessedTemplate(
-			PageContext pageContext, String portletId,
-			TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
 		throws Exception {
 
 		return getRuntimePage().getProcessedTemplate(
-			pageContext, portletId, templateResource);
+			request, response, portletId, templateResource);
 	}
 
 	public static RuntimePage getRuntimePage() {
@@ -46,27 +45,29 @@ public class RuntimePageUtil {
 	}
 
 	public static void processCustomizationSettings(
-			PageContext pageContext, TemplateResource templateResource)
-		throws Exception {
-
-		getRuntimePage().processCustomizationSettings(
-			pageContext, templateResource);
-	}
-
-	public static void processTemplate(
-			PageContext pageContext, String portletId,
+			HttpServletRequest request, HttpServletResponse response,
 			TemplateResource templateResource)
 		throws Exception {
 
-		getRuntimePage().processTemplate(
-			pageContext, portletId, templateResource);
+		getRuntimePage().processCustomizationSettings(
+			request, response, templateResource);
 	}
 
 	public static void processTemplate(
-			PageContext pageContext, TemplateResource templateResource)
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource)
 		throws Exception {
 
-		getRuntimePage().processTemplate(pageContext, templateResource);
+		getRuntimePage().processTemplate(
+			request, response, portletId, templateResource);
+	}
+
+	public static void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource)
+		throws Exception {
+
+		getRuntimePage().processTemplate(request, response, templateResource);
 	}
 
 	public static String processXML(

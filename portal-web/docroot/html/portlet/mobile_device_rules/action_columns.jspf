@@ -21,7 +21,7 @@ Group group = GroupLocalServiceUtil.getGroup(action.getGroupId());
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="scope"
-	value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
+	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 />
 
 <liferay-ui:search-container-column-text

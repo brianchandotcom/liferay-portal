@@ -60,7 +60,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 										height: 300,
 										width: 400
 									},
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>'
+									title: '<%= UnicodeLanguageUtil.get(request, "report-inappropriate-content") %>'
 								}
 							);
 
@@ -106,7 +106,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 										height: 300,
 										width: 400
 									},
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>'
+									title: '<%= UnicodeLanguageUtil.get(request, "report-inappropriate-content") %>'
 								}
 							);
 

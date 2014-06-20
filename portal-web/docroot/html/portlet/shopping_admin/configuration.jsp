@@ -68,7 +68,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 					List leftList = new ArrayList();
 
 					for (String ccType : ccTypes2) {
-						leftList.add(new KeyValuePair(HtmlUtil.escapeAttribute(ccType), LanguageUtil.get(pageContext, "cc_" + HtmlUtil.escape(ccType))));
+						leftList.add(new KeyValuePair(HtmlUtil.escapeAttribute(ccType), LanguageUtil.get(request, "cc_" + HtmlUtil.escape(ccType))));
 					}
 
 					// Right list
@@ -77,7 +77,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 					for (String ccType : ccTypes1) {
 						if (!ArrayUtil.contains(ccTypes2, ccType)) {
-							rightList.add(new KeyValuePair(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
+							rightList.add(new KeyValuePair(ccType, LanguageUtil.get(request, "cc_" + ccType)));
 						}
 					}
 					%>
@@ -129,7 +129,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 		<liferay-ui:section>
 			<div class="alert alert-info">
-				<liferay-ui:message key="calculate-a-flat-shipping-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(pageContext, "or")) %> --</span> <liferay-ui:message key="calculate-the-shipping-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
+				<liferay-ui:message key="calculate-a-flat-shipping-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="calculate-the-shipping-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 
 			<aui:fieldset>
@@ -170,7 +170,7 @@ shoppingSettings = ShoppingSettings.getInstance(themeDisplay.getSiteGroupId(), r
 
 		<liferay-ui:section>
 			<div class="alert alert-info">
-				<liferay-ui:message key="calculate-a-flat-insurance-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(pageContext, "or")) %> --</span> <liferay-ui:message key="calculate-the-insurance-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
+				<liferay-ui:message key="calculate-a-flat-insurance-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="calculate-the-insurance-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 
 			<aui:fieldset>

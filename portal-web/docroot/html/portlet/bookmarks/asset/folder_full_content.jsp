@@ -43,7 +43,7 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS
 
 			<div class="lfr-asset-metadata">
 				<div class="icon-calendar lfr-asset-icon">
-					<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
+					<%= LanguageUtil.format(request, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
 				</div>
 
 				<%

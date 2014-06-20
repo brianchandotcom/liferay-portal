@@ -49,7 +49,7 @@ long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemp
 		List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, breadcrumbEntries) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayTemplateId, breadcrumbEntries) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:breadcrumb

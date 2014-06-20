@@ -160,7 +160,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
 							StringBundler sb = new StringBundler(6);
 
-							sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
+							sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
 							sb.append(StringPool.SPACE);
 							sb.append(StringPool.OPEN_PARENTHESIS);
 							sb.append(StringPool.PERIOD);
@@ -394,10 +394,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					refererPortletName: '<%= PortletKeys.JOURNAL %>',
 					showAncestorScopes: true,
 					struts_action: '/dynamic_data_mapping/select_structure',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 				},
 				function(event) {
-					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
+					if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
 						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 
 						Liferay.fire('<portlet:namespace />refreshEditor');
@@ -428,9 +428,9 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 	%>
 
-	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
+	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(pageContext, "save-and-continue") %>' />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(request, "save-and-continue") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>

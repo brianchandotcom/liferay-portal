@@ -67,7 +67,7 @@
 					publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 					publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
 
-					publishMessage = LanguageUtil.format(pageContext, publishDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()), false);
+					publishMessage = LanguageUtil.format(request, publishDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()), false);
 					%>
 
 				</c:when>
@@ -175,7 +175,7 @@
 										width: 820
 									},
 									id: '<portlet:namespace />layoutSetBranches',
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
+									title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
 									uri: event.currentTarget.attr('href')
 								}
 							);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -26,7 +27,10 @@ import java.io.Writer;
 
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
@@ -36,13 +40,20 @@ import javax.servlet.jsp.tagext.Tag;
  */
 public class CustomizationSettingsProcessor implements ColumnProcessor {
 
-	public CustomizationSettingsProcessor(PageContext pageContext) {
-		_pageContext = pageContext;
-		_writer = pageContext.getOut();
+	public CustomizationSettingsProcessor(
+		HttpServletRequest request, HttpServletResponse response) {
 
-		ServletRequest servletRequest = pageContext.getRequest();
+		ServletContext servletContext = request.getServletContext();
 
-		Layout selLayout = (Layout)servletRequest.getAttribute(
+		JspFactory jspFactory = JspFactory.getDefaultFactory();
+
+		_pageContext = jspFactory.getPageContext(
+			new JSPSupportServlet(servletContext), request, response, null,
+			false, 0, false);
+
+		_writer = _pageContext.getOut();
+
+		Layout selLayout = (Layout)request.getAttribute(
 			"edit_pages.jsp-selLayout");
 
 		_layoutTypeSettings = selLayout.getTypeSettingsProperties();

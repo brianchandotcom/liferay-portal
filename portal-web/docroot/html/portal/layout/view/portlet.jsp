@@ -35,7 +35,7 @@ if (themeDisplay.isFacebook() || themeDisplay.isStatePopUp() || themeDisplay.isW
 	}
 
 	if (Validator.isNotNull(velocityTemplateContent)) {
-		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+		RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 	}
 }
 else {
@@ -57,7 +57,7 @@ else {
 	String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 	if (Validator.isNotNull(velocityTemplateContent)) {
-		RuntimePageUtil.processTemplate(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 	}
 }
 %>

@@ -44,7 +44,7 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 
 			<liferay-ui:icon
 				iconCssClass="icon-undo"
-				message='<%= LanguageUtil.get(pageContext, "restore-version") + " " + String.valueOf(version) %>'
+				message='<%= LanguageUtil.get(request, "restore-version") + " " + String.valueOf(version) %>'
 				url="<%= revertURL %>"
 			/>
 		</c:if>

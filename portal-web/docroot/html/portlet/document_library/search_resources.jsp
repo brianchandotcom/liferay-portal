@@ -112,7 +112,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
+				<%= (folder != null) ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
 			</span>
 
 			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -319,7 +319,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 				<c:if test="<%= searchResultsList.isEmpty() %>">
 					<div class="alert alert-info">
-						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
+						<%= LanguageUtil.format(request, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
 					</div>
 				</c:if>
 
@@ -358,7 +358,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 			<c:when test="<%= showRepositoryTabs %>">
 
 			<%
-			String selectedTab = LanguageUtil.get(pageContext, "local");
+			String selectedTab = LanguageUtil.get(request, "local");
 
 			for (Folder mountFolder : mountFolders) {
 				if (mountFolder.getRepositoryId() == searchRepositoryId) {
@@ -369,7 +369,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
-						names='<%= LanguageUtil.get(pageContext, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
+						names='<%= LanguageUtil.get(request, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
 						refresh="<%= false %>"
 						value="<%= selectedTab %>"
 					>
@@ -381,7 +381,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 									</c:when>
 									<c:otherwise>
 										<div class="alert alert-info">
-											<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
+											<%= LanguageUtil.get(request, "searching,-please-wait") %>
 										</div>
 										<div class="loading-animation"></div>
 									</c:otherwise>
@@ -401,7 +401,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 										</c:when>
 										<c:otherwise>
 											<div class="alert alert-info">
-												<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
+												<%= LanguageUtil.get(request, "searching,-please-wait") %>
 											</div>
 											<div class="loading-animation"></div>
 										</c:otherwise>

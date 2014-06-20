@@ -28,7 +28,7 @@ if (bodyContent != null) {
 }
 
 if (Validator.isNull(title)) {
-	title = HtmlUtil.stripHtml(LanguageUtil.get(pageContext, label));
+	title = HtmlUtil.stripHtml(LanguageUtil.get(request, label));
 }
 %>
 
@@ -71,7 +71,7 @@ if (Validator.isNull(title)) {
 					{
 						content: '#<%= id %>',
 						maxDisplayItems: <%= PropsValues.MENU_MAX_DISPLAY_ITEMS %>,
-						'strings.placeholder': '<%= LanguageUtil.get(pageContext, "search") %>',
+						'strings.placeholder': '<%= LanguageUtil.get(request, "search") %>',
 						toggle: <%= toggle %>,
 						toggleTouch: <%= toggleTouch %>,
 						trigger: '#<%= id %> a'

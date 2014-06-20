@@ -15,7 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,7 +51,7 @@ public class IconDeactivateTag extends IconTag {
 		sb.append("javascript:if (confirm('");
 		sb.append(
 			UnicodeLanguageUtil.get(
-				pageContext, "are-you-sure-you-want-to-deactivate-this"));
+				request, "are-you-sure-you-want-to-deactivate-this"));
 		sb.append("')) { ");
 		sb.append(url);
 		sb.append(" } else { self.focus(); }");

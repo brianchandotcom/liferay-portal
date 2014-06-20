@@ -84,7 +84,7 @@ String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(
 					dialog: {
 						destroyOnHide: true
 					},
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "cas") %>'
+					title: '<%= UnicodeLanguageUtil.get(request, "cas") %>'
 				}
 			);
 

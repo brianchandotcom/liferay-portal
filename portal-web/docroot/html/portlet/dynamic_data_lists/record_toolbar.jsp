@@ -40,7 +40,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 			{
 				icon: 'icon-time',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>',
+				label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 				on: {
 					click: function(event) {
 						event.domEvent.preventDefault();

@@ -67,12 +67,12 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 				</aui:select>
 			</c:when>
 			<c:when test="<%= (role == null) %>">
-				<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(pageContext, RoleConstants.getTypeLabel(type)) %>" />
+				<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, RoleConstants.getTypeLabel(type)) %>" />
 
 				<aui:input name="type" type="hidden" value="<%= String.valueOf(type) %>" />
 			</c:when>
 			<c:otherwise>
-				<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>" />
+				<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>" />
 			</c:otherwise>
 		</c:choose>
 
@@ -144,5 +144,5 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, ((role == null) ? "add-role" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "edit")), currentURL);
 %>

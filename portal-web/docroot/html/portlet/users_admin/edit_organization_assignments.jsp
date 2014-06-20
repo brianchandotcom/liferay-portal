@@ -36,7 +36,7 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 
 UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
 %>
 
 <liferay-ui:header

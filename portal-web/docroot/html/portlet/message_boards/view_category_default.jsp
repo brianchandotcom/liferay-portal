@@ -40,7 +40,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 	%>
 
 	<c:if test="<%= categoriesCount > 0 %>">
-		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, (category != null) ? "subcategories[message-board]" : "categories[message-board]") %>'>
+		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, (category != null) ? "subcategories[message-board]" : "categories[message-board]") %>'>
 			<liferay-ui:search-container
 				curParam="cur1"
 				deltaConfigurable="<%= false %>"
@@ -73,7 +73,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		</liferay-ui:panel>
 	</c:if>
 
-	<liferay-ui:panel collapsible="<%= threadsPanelCollapsible %>" cssClass="threads-panel" extended="<%= threadsPanelExtended %>" id="messageBoardsThreadsPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "threads") %>'>
+	<liferay-ui:panel collapsible="<%= threadsPanelCollapsible %>" cssClass="threads-panel" extended="<%= threadsPanelExtended %>" id="messageBoardsThreadsPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "threads") %>'>
 		<liferay-ui:search-container
 			curParam="cur2"
 			emptyResultsMessage="there-are-no-threads-in-this-category"

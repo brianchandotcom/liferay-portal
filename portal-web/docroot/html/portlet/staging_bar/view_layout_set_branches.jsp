@@ -64,7 +64,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, "add-site-pages-variation") + "');";
+	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(request, "add-site-pages-variation") + "');";
 	%>
 
 	<aui:button-row>

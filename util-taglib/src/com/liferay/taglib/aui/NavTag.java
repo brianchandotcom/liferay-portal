@@ -94,7 +94,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 					User user = themeDisplay.getUser();
 
 					sb.append("<img alt=\"");
-					sb.append(LanguageUtil.get(pageContext, "my-account"));
+					sb.append(LanguageUtil.get(request, "my-account"));
 					sb.append("\" class=\"user-avatar-image\" ");
 					sb.append("src=\"");
 					sb.append(user.getPortraitURL(themeDisplay));

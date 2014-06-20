@@ -45,7 +45,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 	<c:if test="<%= parentCategoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
 		<div class="breadcrumbs">
-			<%= ShoppingUtil.getBreadcrumbs(parentCategoryId, pageContext, renderRequest, renderResponse) %>
+			<%= ShoppingUtil.getBreadcrumbs(parentCategoryId, renderRequest, renderResponse) %>
 		</div>
 	</c:if>
 

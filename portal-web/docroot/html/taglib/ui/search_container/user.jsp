@@ -37,7 +37,7 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 			<c:if test="<%= date != null %>">
 				<div class="row">
 					<span class="col-md-12 date-info">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - date.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</span>
 				</div>
 			</c:if>

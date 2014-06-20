@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.portlet;
 
-import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.taglib.TagSupport;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import javax.portlet.PortletResponse;

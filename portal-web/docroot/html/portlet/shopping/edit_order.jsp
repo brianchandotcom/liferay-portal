@@ -346,7 +346,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 					String taglibOpenCouponWindow = "var viewCouponWindow = window.open('" + viewCouponURL + "', 'viewCoupon', 'directories=no,height=200,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=280'); void(''); viewCouponWindow.focus();";
 					%>
 
-					<aui:a href='<%= "javascript:" + taglibOpenCouponWindow %>' label='<%= "(" + LanguageUtil.get(pageContext, order.getCouponCodes()) + ")" %>' />
+					<aui:a href='<%= "javascript:" + taglibOpenCouponWindow %>' label='<%= "(" + LanguageUtil.get(request, order.getCouponCodes()) + ")" %>' />
 				</td>
 			</tr>
 		</c:if>
@@ -383,13 +383,13 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 			String taglibSendEmailConfirmation = renderResponse.getNamespace() + "sendEmail('confirmation');";
 			%>
 
-			<aui:button onClick="<%= taglibSendEmailConfirmation %>" value='<%= LanguageUtil.get(pageContext, (order.isSendOrderEmail() ? "" : "re") + "send-confirmation-email") %>' />
+			<aui:button onClick="<%= taglibSendEmailConfirmation %>" value='<%= LanguageUtil.get(request, (order.isSendOrderEmail() ? "" : "re") + "send-confirmation-email") %>' />
 
 			<%
 			String taglibSendEmailShipping = renderResponse.getNamespace() + "sendEmail('shipping');";
 			%>
 
-			<aui:button onClick="<%= taglibSendEmailShipping %>" value='<%= LanguageUtil.get(pageContext, (order.isSendShippingEmail() ? "" : "re") + "send-shipping-email") %>' />
+			<aui:button onClick="<%= taglibSendEmailShipping %>" value='<%= LanguageUtil.get(request, (order.isSendShippingEmail() ? "" : "re") + "send-shipping-email") %>' />
 
 			<c:if test="<%= ShoppingOrderPermission.contains(permissionChecker, scopeGroupId, order, ActionKeys.DELETE) %>">
 				<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrder();" %>' value="delete" />

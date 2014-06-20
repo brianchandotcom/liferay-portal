@@ -125,7 +125,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
@@ -139,7 +139,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		Liferay.Util.openWindow(
 			{
 				id: '<portlet:namespace />openFileEntryTypeView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "document-types") %>',
+				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
 			}
 		);
@@ -155,7 +155,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			}
 		);
 	}

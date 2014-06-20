@@ -86,7 +86,7 @@
 		<column name="structureKey" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
-		<column name="xsd" type="String" />
+		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
 
@@ -278,11 +278,11 @@
 		<exception>Storage</exception>
 		<exception>StorageFieldName</exception>
 		<exception>StorageFieldRequired</exception>
+		<exception>StructureDefinition</exception>
 		<exception>StructureDuplicateElement</exception>
 		<exception>StructureDuplicateStructureKey</exception>
 		<exception>StructureField</exception>
 		<exception>StructureName</exception>
-		<exception>StructureXsd</exception>
 		<exception>TemplateDuplicateTemplateKey</exception>
 		<exception>TemplateName</exception>
 		<exception>TemplateScript</exception>

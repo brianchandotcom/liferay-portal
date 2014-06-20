@@ -257,7 +257,7 @@ if (feed != null) {
 						<optgroup label="<liferay-ui:message key="structure-fields" />">
 
 							<%
-							Document doc = SAXReaderUtil.read(ddmStructure.getXsd());
+							Document doc = SAXReaderUtil.read(ddmStructure.getDefinition());
 
 							XPath xpathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 

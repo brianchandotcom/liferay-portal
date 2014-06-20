@@ -204,23 +204,13 @@ AUI.add(
 						return field;
 					},
 
-					getContentXSD: function() {
+					getContentDefinition: function() {
 						var instance = this;
 
-						return window[instance.get('portletNamespace') + 'getContentXSD']();
+						return window[instance.get('portletNamespace') + 'getContentDefinition']();
 					},
 
-					getFieldLocalizedValue: function(field, attribute, locale) {
-						var instance = this;
-
-						var localizationMap = field.get('localizationMap');
-
-						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
-
-						return instance.normalizeValue(value);
-					},
-
-					getXSD: function() {
+					getDefinition: function() {
 						var instance = this;
 
 						var buffer = [];
@@ -250,6 +240,16 @@ AUI.add(
 						buffer.push(root.closeTag);
 
 						return buffer.join(STR_BLANK);
+					},
+
+					getFieldLocalizedValue: function(field, attribute, locale) {
+						var instance = this;
+
+						var localizationMap = field.get('localizationMap');
+
+						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
+
+						return instance.normalizeValue(value);
 					},
 
 					normalizeValue: function(value) {

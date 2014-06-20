@@ -82,7 +82,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			Element structureElementRootElement = structureElement.element(
 				"root");
 
-			String xsd = structureElementRootElement.asXML();
+			String definition = structureElementRootElement.asXML();
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
@@ -101,8 +101,8 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
 				defaultLocaleAttribute.getValue());
 
-			xsd = DDMXMLUtil.updateXMLDefaultLocale(
-				xsd, ddmStructureDefaultLocale, locale);
+			definition = DDMXMLUtil.updateXMLDefaultLocale(
+				definition, ddmStructureDefaultLocale, locale);
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
 				!UpgradeProcessUtil.isCreateIGImageDocumentType()) {
@@ -113,7 +113,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-				ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+				ddmStructureKey, nameMap, descriptionMap, definition, "xml",
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
 			String templateFileName = structureElement.elementText("template");
@@ -150,7 +150,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 		return rootElement.elements("structure");
 	}
 
-	protected String getDynamicDDMStructureXSD(
+	protected String getDynamicDDMStructureDefinition(
 			String fileName, String dynamicDDMStructureName, Locale locale)
 		throws DocumentException {
 

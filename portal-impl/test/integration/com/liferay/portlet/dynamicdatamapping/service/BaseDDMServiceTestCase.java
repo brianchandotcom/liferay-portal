@@ -74,24 +74,25 @@ public class BaseDDMServiceTestCase {
 		return addFormTemplate(classPK, name, getTestTemplateScript("xsd"));
 	}
 
-	protected DDMTemplate addFormTemplate(long classPK, String name, String xsd)
+	protected DDMTemplate addFormTemplate(
+			long classPK, String name, String definition)
 		throws Exception {
 
 		return addTemplate(
 			PortalUtil.getClassNameId(DDMStructure.class), classPK, name,
 			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", xsd);
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", definition);
 	}
 
 	protected DDMStructure addStructure(
 			long parentStructureId, long classNameId, String structureKey,
-			String name, String xsd, String storageType, int type)
+			String name, String definition, String storageType, int type)
 		throws Exception {
 
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), group.getGroupId(), parentStructureId,
-			classNameId, structureKey, getDefaultLocaleMap(name), null, xsd,
-			storageType, type,
+			classNameId, structureKey, getDefaultLocaleMap(name), null,
+			definition, storageType, type,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
@@ -101,18 +102,18 @@ public class BaseDDMServiceTestCase {
 		String storageType = StorageType.XML.getValue();
 
 		return addStructure(
-			classNameId, null, name, getTestStructureXsd(storageType),
+			classNameId, null, name, getTestStructureDefinition(storageType),
 			storageType, DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	protected DDMStructure addStructure(
-			long classNameId, String structureKey, String name, String xsd,
-			String storageType, int type)
+			long classNameId, String structureKey, String name,
+			String definition, String storageType, int type)
 		throws Exception {
 
 		return addStructure(
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-			structureKey, name, xsd, storageType, type);
+			structureKey, name, definition, storageType, type);
 	}
 
 	protected DDMTemplate addTemplate(
@@ -160,7 +161,9 @@ public class BaseDDMServiceTestCase {
 		return map;
 	}
 
-	protected String getTestStructureXsd(String storageType) throws Exception {
+	protected String getTestStructureDefinition(String storageType)
+		throws Exception {
+
 		String text = StringPool.BLANK;
 
 		if (storageType.equals(StorageType.XML.getValue())) {

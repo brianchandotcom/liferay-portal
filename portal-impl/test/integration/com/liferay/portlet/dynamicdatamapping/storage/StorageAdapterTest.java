@@ -54,10 +54,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testBooleanField() throws Exception {
-		String xsd = readText("ddm-structure-boolean-field.xsd");
+		String definition = readText("ddm-structure-boolean-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Boolean Field Structure", xsd,
+			_classNameId, null, "Boolean Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -85,10 +85,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testDateField() throws Exception {
-		String xsd = readText("ddm-structure-date-field.xsd");
+		String definition = readText("ddm-structure-date-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Date Field Structure", xsd,
+			_classNameId, null, "Date Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -122,10 +122,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testDecimalField() throws Exception {
-		String xsd = readText("ddm-structure-decimal-field.xsd");
+		String definition = readText("ddm-structure-decimal-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Decimal Field Structure", xsd,
+			_classNameId, null, "Decimal Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -153,11 +153,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testDocLibraryField() throws Exception {
-		String xsd = readText("ddm-structure-doc-lib-field.xsd");
+		String definition = readText("ddm-structure-doc-lib-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Documents and Media Field Structure", xsd,
-			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			_classNameId, null, "Documents and Media Field Structure",
+			definition, StorageType.XML.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
 
@@ -196,10 +197,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testIntegerField() throws Exception {
-		String xsd = readText("ddm-structure-integer-field.xsd");
+		String definition = readText("ddm-structure-integer-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Integer Field Structure", xsd,
+			_classNameId, null, "Integer Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -227,10 +228,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testLinkToPageField() throws Exception {
-		String xsd = readText("ddm-structure-link-to-page-field.xsd");
+		String definition = readText("ddm-structure-link-to-page-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Link to Page Field Structure", xsd,
+			_classNameId, null, "Link to Page Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -260,10 +261,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testNumberField() throws Exception {
-		String xsd = readText("ddm-structure-number-field.xsd");
+		String definition = readText("ddm-structure-number-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Number Field Structure", xsd,
+			_classNameId, null, "Number Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -291,10 +292,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testRadioField() throws Exception {
-		String xsd = readText("ddm-structure-radio-field.xsd");
+		String definition = readText("ddm-structure-radio-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Radio Field Structure", xsd,
+			_classNameId, null, "Radio Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -322,10 +323,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSelectField() throws Exception {
-		String xsd = readText("ddm-structure-select-field.xsd");
+		String definition = readText("ddm-structure-select-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Select Field Structure", xsd,
+			_classNameId, null, "Select Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();
@@ -353,10 +354,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testTextField() throws Exception {
-		String xsd = readText("ddm-structure-text-field.xsd");
+		String definition = readText("ddm-structure-text-field.xsd");
 
 		DDMStructure structure = addStructure(
-			_classNameId, null, "Text Field Structure", xsd,
+			_classNameId, null, "Text Field Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Fields fields = new Fields();

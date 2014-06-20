@@ -91,10 +91,10 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
-		String xsd = getDynamicDDMStructureXSD(
+		String definition = getDynamicDDMStructureDefinition(
 			"document-library-structures.xml", dlFileEntryTypeKey, locale);
 
-		serviceContext.setAttribute("xsd", xsd);
+		serviceContext.setAttribute("definition", definition);
 
 		try {
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
@@ -184,7 +184,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 					name);
 
 			if (ddmStructure != null) {
-				ddmStructure.setXsd(structureElementRootXML);
+				ddmStructure.setDefinition(structureElementRootXML);
 
 				DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
 			}

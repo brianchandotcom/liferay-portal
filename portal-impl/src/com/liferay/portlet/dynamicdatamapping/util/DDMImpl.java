@@ -433,7 +433,7 @@ public class DDMImpl implements DDM {
 
 			ddmStructure = (DDMStructure)ddmStructure.clone();
 
-			ddmStructure.setXsd(ddmTemplate.getScript());
+			ddmStructure.setDefinition(ddmTemplate.getScript());
 		}
 		catch (NoSuchTemplateException nste) {
 		}

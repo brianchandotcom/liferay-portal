@@ -1812,7 +1812,7 @@
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="xsd" type="String">
+		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="storageType" type="String" />

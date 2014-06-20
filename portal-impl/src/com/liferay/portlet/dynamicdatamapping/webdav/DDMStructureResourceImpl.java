@@ -35,7 +35,7 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 			parentPath, name,
 			structure.getName(structure.getDefaultLanguageId()),
 			structure.getCreateDate(), structure.getModifiedDate(),
-			structure.getXsd().length());
+			structure.getDefinition().length());
 
 		setModel(structure);
 		setClassName(DDMStructure.class.getName());
@@ -48,7 +48,7 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
 			return new UnsyncByteArrayInputStream(
-				_structure.getXsd().getBytes(StringPool.UTF8));
+				_structure.getDefinition().getBytes(StringPool.UTF8));
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

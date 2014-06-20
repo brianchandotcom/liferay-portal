@@ -147,7 +147,7 @@ public class BaseDDMTest extends PowerMockito {
 
 		structure.setStructureId(RandomTestUtil.randomLong());
 		structure.setName(name);
-		structure.setXsd(document.asXML());
+		structure.setDefinition(document.asXML());
 
 		_structures.put(structure.getStructureId(), structure);
 

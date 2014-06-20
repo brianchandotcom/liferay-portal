@@ -113,6 +113,19 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
+	public void testAddDDMStructureWithDefinition() throws Exception {
+		Assert.assertNotNull(
+			DDMStructureTestUtil.addStructure(JournalArticle.class.getName()));
+	}
+
+	@Test
+	public void testAddDDMStructureWithDefinitionAndLocale() throws Exception {
+		Assert.assertNotNull(
+			DDMStructureTestUtil.addStructure(
+				JournalArticle.class.getName(), LocaleUtil.getSiteDefault()));
+	}
+
+	@Test
 	public void testAddDDMStructureWithLocale() throws Exception {
 		Assert.assertNotNull(
 			DDMStructureTestUtil.addStructure(
@@ -141,19 +154,6 @@ public class JournalTestUtilTest {
 				PortalUtil.getDefaultCompanyId(), availableLocales,
 				defaultLocale);
 		}
-	}
-
-	@Test
-	public void testAddDDMStructureWithXSD() throws Exception {
-		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(JournalArticle.class.getName()));
-	}
-
-	@Test
-	public void testAddDDMStructureWithXSDAndLocale() throws Exception {
-		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(
-				JournalArticle.class.getName(), LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
@@ -233,8 +233,9 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testGetSampleStructureXSD() {
-		Assert.assertNotNull(DDMStructureTestUtil.getSampleStructureXSD());
+	public void testGetSampleStructureDefinition() {
+		Assert.assertNotNull(
+			DDMStructureTestUtil.getSampleStructureDefinition());
 	}
 
 	@Test

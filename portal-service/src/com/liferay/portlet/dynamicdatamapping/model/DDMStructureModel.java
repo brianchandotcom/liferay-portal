@@ -468,19 +468,19 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 		Locale defaultLocale);
 
 	/**
-	 * Returns the xsd of this d d m structure.
+	 * Returns the definition of this d d m structure.
 	 *
-	 * @return the xsd of this d d m structure
+	 * @return the definition of this d d m structure
 	 */
 	@AutoEscape
-	public String getXsd();
+	public String getDefinition();
 
 	/**
-	 * Sets the xsd of this d d m structure.
+	 * Sets the definition of this d d m structure.
 	 *
-	 * @param xsd the xsd of this d d m structure
+	 * @param definition the definition of this d d m structure
 	 */
-	public void setXsd(String xsd);
+	public void setDefinition(String definition);
 
 	/**
 	 * Returns the storage type of this d d m structure.

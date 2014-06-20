@@ -82,14 +82,14 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		String xsd = StringUtil.read(
+		String definition = StringUtil.read(
 			classLoader,
 			"com/liferay/portlet/journal/dependencies" +
 				"/test-ddm-structure-image-field.xml");
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
-			xsd);
+			definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());

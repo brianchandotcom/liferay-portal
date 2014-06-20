@@ -67,7 +67,7 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("structureKey", getStructureKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("xsd", getXsd());
+		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
 
@@ -154,10 +154,10 @@ public class DDMStructureWrapper implements DDMStructure,
 			setDescription(description);
 		}
 
-		String xsd = (String)attributes.get("xsd");
+		String definition = (String)attributes.get("definition");
 
-		if (xsd != null) {
-			setXsd(xsd);
+		if (definition != null) {
+			setDefinition(definition);
 		}
 
 		String storageType = (String)attributes.get("storageType");
@@ -731,23 +731,23 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the xsd of this d d m structure.
+	* Returns the definition of this d d m structure.
 	*
-	* @return the xsd of this d d m structure
+	* @return the definition of this d d m structure
 	*/
 	@Override
-	public java.lang.String getXsd() {
-		return _ddmStructure.getXsd();
+	public java.lang.String getDefinition() {
+		return _ddmStructure.getDefinition();
 	}
 
 	/**
-	* Sets the xsd of this d d m structure.
+	* Sets the definition of this d d m structure.
 	*
-	* @param xsd the xsd of this d d m structure
+	* @param definition the definition of this d d m structure
 	*/
 	@Override
-	public void setXsd(java.lang.String xsd) {
-		_ddmStructure.setXsd(xsd);
+	public void setDefinition(java.lang.String definition) {
+		_ddmStructure.setDefinition(definition);
 	}
 
 	/**

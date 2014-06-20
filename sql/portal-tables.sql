@@ -522,7 +522,7 @@ create table DDMStructure (
 	structureKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	xsd TEXT null,
+	definition TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER
 );

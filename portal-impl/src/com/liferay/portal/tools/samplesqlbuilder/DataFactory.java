@@ -2553,7 +2553,7 @@ public class DataFactory {
 
 		dDMStructureModel.setName(sb.toString());
 
-		dDMStructureModel.setXsd(xsd);
+		dDMStructureModel.setDefinition(xsd);
 		dDMStructureModel.setStorageType("xml");
 
 		return dDMStructureModel;

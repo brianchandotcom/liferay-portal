@@ -98,7 +98,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -5440,7 +5440,7 @@ public class JournalArticleLocalServiceImpl
 		try {
 			checkStructure(article, ddmStructure);
 		}
-		catch (StructureXsdException sxsde) {
+		catch (StructureDefinitionException sde) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(8);
 
@@ -5451,7 +5451,7 @@ public class JournalArticleLocalServiceImpl
 				sb.append(", version=");
 				sb.append(article.getVersion());
 				sb.append("} has content that does not match its structure: ");
-				sb.append(sxsde.getMessage());
+				sb.append(sde.getMessage());
 
 				_log.warn(sb.toString());
 			}
@@ -5496,7 +5496,7 @@ public class JournalArticleLocalServiceImpl
 			if (!contentElementType.equals("list") &&
 				!contentElementType.equals("multi-list")) {
 
-				throw new StructureXsdException(fieldName);
+				throw new StructureDefinitionException(fieldName);
 			}
 		}
 	}

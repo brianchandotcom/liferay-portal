@@ -43,7 +43,7 @@ long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 String structureKey = BeanParamUtil.getString(structure, request, "structureKey");
 
-String script = BeanParamUtil.getString(structure, request, "xsd");
+String script = BeanParamUtil.getString(structure, request, "definition");
 
 JSONArray scriptJSONArray = null;
 
@@ -53,7 +53,7 @@ if (Validator.isNotNull(script)) {
 			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
 		}
 		catch (Exception e) {
-			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getXsd());
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
 		}
 	}
 	else {
@@ -81,7 +81,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="xsd" type="hidden" />
+	<aui:input name="definition" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
@@ -95,9 +95,9 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		</c:if>
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
 	<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= StructureXsdException.class %>" message="please-enter-a-valid-xsd" />
 
 	<%
 	boolean localizeTitle = true;
@@ -264,7 +264,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getContentXSD();
+			document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentDefinition();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

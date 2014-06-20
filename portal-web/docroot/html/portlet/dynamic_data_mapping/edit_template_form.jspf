@@ -16,7 +16,7 @@
 
 <%
 if (Validator.isNull(script)) {
-	script = structure.getXsd();
+	script = structure.getDefinition();
 	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
 }
 

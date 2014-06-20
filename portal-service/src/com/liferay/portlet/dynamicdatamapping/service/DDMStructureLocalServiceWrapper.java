@@ -581,7 +581,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	(optionally <code>null</code>)
 	* @param nameMap the structure's locales and localized names
 	* @param descriptionMap the structure's locales and localized descriptions
-	* @param xsd the structure's XML schema definition
+	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
 	"expando". For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
@@ -601,12 +601,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd, java.lang.String storageType, int type,
+		java.lang.String definition, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.addStructure(userId, groupId,
 			parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, storageType, type, serviceContext);
+			descriptionMap, definition, storageType, type, serviceContext);
 	}
 
 	/**
@@ -620,7 +620,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	related model
 	* @param nameMap the structure's locales and localized names
 	* @param descriptionMap the structure's locales and localized descriptions
-	* @param xsd the structure's XML schema definition
+	* @param definition the structure's XML schema definition
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions, and
 	group permissions for the structure.
@@ -634,11 +634,11 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		java.lang.String definition,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.addStructure(userId, groupId,
-			classNameId, nameMap, descriptionMap, xsd, serviceContext);
+			classNameId, nameMap, descriptionMap, definition, serviceContext);
 	}
 
 	/**
@@ -655,7 +655,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	(optionally <code>null</code>)
 	* @param nameMap the structure's locales and localized names
 	* @param descriptionMap the structure's locales and localized descriptions
-	* @param xsd the structure's XML schema definition
+	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
 	"expando". For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
@@ -675,12 +675,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		long classNameId, java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd, java.lang.String storageType, int type,
+		java.lang.String definition, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.addStructure(userId, groupId,
 			parentStructureKey, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, storageType, type, serviceContext);
+			descriptionMap, definition, storageType, type, serviceContext);
 	}
 
 	/**
@@ -1467,6 +1467,27 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	/**
+	* Updates the structure matching the structure ID, replacing its XSD with a
+	* new one.
+	*
+	* @param structureId the primary key of the structure
+	* @param definition the structure's new XML schema definition
+	* @param serviceContext the service context to be applied. Can set the
+	structure's modification date.
+	* @return the updated structure
+	* @throws PortalException if a matching structure could not be found, if
+	the XSD was not well-formed, or if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateDefinition(
+		long structureId, java.lang.String definition,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLocalService.updateDefinition(structureId,
+			definition, serviceContext);
+	}
+
+	/**
 	* Updates the structure matching the class name ID, structure key, and
 	* group, replacing its old parent structure, name map, description map, and
 	* XSD with new ones.
@@ -1479,7 +1500,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @param nameMap the structure's new locales and localized names
 	* @param descriptionMap the structure's new locales and localized
 	description
-	* @param xsd the structure's new XML schema definition
+	* @param definition the structure's new XML schema definition
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
 	* @return the updated structure
@@ -1492,12 +1513,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		java.lang.String definition,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.updateStructure(groupId,
 			parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, serviceContext);
+			descriptionMap, definition, serviceContext);
 	}
 
 	/**
@@ -1509,7 +1530,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @param nameMap the structure's new locales and localized names
 	* @param descriptionMap the structure's new locales and localized
 	descriptions
-	* @param xsd the structure's new XML schema definition
+	* @param definition the structure's new XML schema definition
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
 	* @return the updated structure
@@ -1521,31 +1542,11 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
+		java.lang.String definition,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.updateStructure(structureId,
-			parentStructureId, nameMap, descriptionMap, xsd, serviceContext);
-	}
-
-	/**
-	* Updates the structure matching the structure ID, replacing its XSD with a
-	* new one.
-	*
-	* @param structureId the primary key of the structure
-	* @param xsd the structure's new XML schema definition
-	* @param serviceContext the service context to be applied. Can set the
-	structure's modification date.
-	* @return the updated structure
-	* @throws PortalException if a matching structure could not be found, if
-	the XSD was not well-formed, or if a portal exception occurred
-	*/
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateXSD(
-		long structureId, java.lang.String xsd,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLocalService.updateXSD(structureId, xsd,
+			parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext);
 	}
 

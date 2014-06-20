@@ -98,23 +98,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have blocked this user." />
 
 		<if>
-			<isset var="numberOfUsersBlocked" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfUsersBlocked}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -177,23 +168,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not connected to this user anymore." />
 
 		<if>
-			<isset var="numberOfConnections" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfConnections}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_CONNECTED_MESSAGE" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_CONNECTED_MESSAGE" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -209,6 +191,39 @@
 
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
 		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="DISCONNECT_BUTTON" value1="Disconnect" />
+	</command>
+
+	<command name="downloadVCard">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="VCARD_BUTTON" value1="vCard" />
+	</command>
+
+	<command name="downloadVCardAllUsers">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#check" locator-key1="CONTACTS_LIST_ALL_CHECKBOX" />
+		<execute action="SOContactscenter#assertClick" locator-key1="VCARD_BUTTON" value1="vCard" />
+	</command>
+
+	<command name="downloadVCardSelectedUsersList">
+		<execute macro="SOContactsCenter#selectUsers" />
+
+		<execute action="SOContactscenter#assertClick" locator-key1="VCARD_BUTTON" value1="vCard" />
 	</command>
 
 	<command name="editContact">
@@ -254,23 +269,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are now following this user." />
 
 		<if>
-			<isset var="numberOfUsersFollowing" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfUsersFollowing}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_FOLLOWING_MESSAGE" value1="Following" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_FOLLOWING_MESSAGE" value1="Following" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -339,23 +345,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="This user has received a connection request from you." />
 
 		<if>
-			<isset var="numberOfConnections" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfConnections}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -380,50 +377,14 @@
 		</execute>
 
 		<if>
-			<or>
-				<isset var="numberOfConnections" />
-				<isset var="numberOfUsersFollowing" />
-				<isset var="numberOfUsersBlocked" />
-				<isset var="numberOfUsers" />
-			</or>
+			<isset var="userListNameList" />
 			<then>
-				<if>
-					<isset var="numberOfConnections" />
-					<then>
-						<var name="numberOfUsers" value="${numberOfConnections}" />
-					</then>
-					<elseif>
-						<isset var="numberOfUsersFollowing" />
-						<then>
-							<var name="numberOfUsers" value="${numberOfUsersFollowing}" />
-						</then>
-					</elseif>
-					<elseif>
-						<isset var="numberOfUsersBlocked" />
-						<then>
-							<var name="numberOfUsers" value="${numberOfUsersBlocked}" />
-						</then>
-					</elseif>
-					<else>
-						<var name="numberOfUsers" value="${numberOfUsers}" />
-					</else>
-				</if>
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<var name="userNumber" value="0" />
-
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfUsers}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#check" locator-key1="CONTACTS_LIST_CHECKBOX" />
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#check" locator-key1="CONTACTS_LIST_CHECKBOX" />
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -540,23 +501,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have unblocked this user." />
 
 		<if>
-			<isset var="numberOfUsersBlocked" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfUsersBlocked}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -596,23 +548,14 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not following this user anymore." />
 
 		<if>
-			<isset var="numberOfUsersFollowing" />
+			<isset var="userListNameList" />
 			<then>
-				<var name="userNumber" value="0" />
+				<for list="${userListNameList}" param="userListName">
+					<var name="key_userListName" value="${userListName}" />
 
-				<while>
-					<not>
-						<equals arg1="${userNumber}" arg2="${numberOfUsersFollowing}" />
-					</not>
-					<then>
-						<var name="userNumber" value="${userNumber?increment()}" />
-
-						<var name="key_userListName" value="${userNumber}" />
-
-						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
-						<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_FOLLOWING_MESSAGE" />
-					</then>
-				</while>
+					<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+					<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_FOLLOWING_MESSAGE" />
+				</for>
 			</then>
 			<else>
 				<var name="userListName" value="${userListName}" />
@@ -781,6 +724,25 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMPTY" value1="There are no results." />
 	</command>
 
+	<command name="viewSiteMember">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="${siteName}" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+	</command>
+
 	<command name="viewUser">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Contacts Center" />
@@ -798,5 +760,213 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+	</command>
+
+	<command name="viewUserDetailsAdditionalEmailAddress">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
+	</command>
+
+	<command name="viewUserDetailsAddress">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_ADDRESS_TITLE" value1="Addresses:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
+	</command>
+
+	<command name="viewUserDetailsInstantMessenger">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
+	</command>
+
+	<command name="viewUserDetailsIntroduction">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INTRODUCTION_TITLE" value1="Introduction:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
+	</command>
+
+	<command name="viewUserDetailsPhoneNumbers">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PHONE_NUMBERS_TITLE" value1="Phones:" />
+
+		<if>
+			<isset var="userPhoneNumberExtension" />
+			<then>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PHONE_NUMBERS_CONTENT" value1="${userPhoneNumberType} ${userPhoneNumberNumber} ${userPhoneNumberExtension}" />
+			</then>
+			<else>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PHONE_NUMBERS_CONTENT" value1="${userPhoneNumberType} ${userPhoneNumberNumber}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewUserDetailsProfilePicture">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="SOContactscenter#assertElementPresent" locator-key1="USER_DETAILS_PROFILE_PICTURE" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="USER_DETAILS_DEFAULT_PROFILE_PICTURE" />
+	</command>
+
+	<command name="viewUserDetailsProjects">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_DESCRIPTION" value1="${userProjectDescription}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewUserDetailsProjectsEdit">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_TITLE" value1="${userProjectTitle}:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_PROJECTS_DESCRIPTION" value1="${userProjectDescription}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewUserDetailsSMS">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_SMS_TITLE" value1="SMS:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_SMS_CONTENT" value1="${userSMS}"  />
+	</command>
+
+	<command name="viewUserDetailsSocialNetwork">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
+	</command>
+
+	<command name="viewUserDetailsWebsite">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_WEBSITES_TITLE" value1="Websites:" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
 </definition>

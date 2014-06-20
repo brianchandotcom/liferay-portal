@@ -88,11 +88,11 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "structureKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "xsd", Types.CLOB },
+			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
 			{ "type_", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,xsd TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
@@ -144,7 +144,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setStructureKey(soapModel.getStructureKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setXsd(soapModel.getXsd());
+		model.setDefinition(soapModel.getDefinition());
 		model.setStorageType(soapModel.getStorageType());
 		model.setType(soapModel.getType());
 
@@ -249,7 +249,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		attributes.put("structureKey", getStructureKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("xsd", getXsd());
+		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
 
@@ -339,10 +339,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			setDescription(description);
 		}
 
-		String xsd = (String)attributes.get("xsd");
+		String definition = (String)attributes.get("definition");
 
-		if (xsd != null) {
-			setXsd(xsd);
+		if (definition != null) {
+			setDefinition(definition);
 		}
 
 		String storageType = (String)attributes.get("storageType");
@@ -820,18 +820,18 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@JSON
 	@Override
-	public String getXsd() {
-		if (_xsd == null) {
+	public String getDefinition() {
+		if (_definition == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _xsd;
+			return _definition;
 		}
 	}
 
 	@Override
-	public void setXsd(String xsd) {
-		_xsd = xsd;
+	public void setDefinition(String definition) {
+		_definition = definition;
 	}
 
 	@JSON
@@ -861,12 +861,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_type = type;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDdmForm() {
 		return null;
 	}
 
-	public void setDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm DDMForm) {
+	public void setDdmForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
 	}
 
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedFieldsMap() {
@@ -1025,7 +1025,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setStructureKey(getStructureKey());
 		ddmStructureImpl.setName(getName());
 		ddmStructureImpl.setDescription(getDescription());
-		ddmStructureImpl.setXsd(getXsd());
+		ddmStructureImpl.setDefinition(getDefinition());
 		ddmStructureImpl.setStorageType(getStorageType());
 		ddmStructureImpl.setType(getType());
 
@@ -1114,7 +1114,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureModelImpl._originalDescription = ddmStructureModelImpl._description;
 
-		setDDMForm(null);
+		setDdmForm(null);
 
 		setLocalizedFieldsMap(null);
 
@@ -1199,12 +1199,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			ddmStructureCacheModel.description = null;
 		}
 
-		ddmStructureCacheModel.xsd = getXsd();
+		ddmStructureCacheModel.definition = getDefinition();
 
-		String xsd = ddmStructureCacheModel.xsd;
+		String definition = ddmStructureCacheModel.definition;
 
-		if ((xsd != null) && (xsd.length() == 0)) {
-			ddmStructureCacheModel.xsd = null;
+		if ((definition != null) && (definition.length() == 0)) {
+			ddmStructureCacheModel.definition = null;
 		}
 
 		ddmStructureCacheModel.storageType = getStorageType();
@@ -1217,7 +1217,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureCacheModel.type = getType();
 
-		ddmStructureCacheModel._DDMForm = getDDMForm();
+		ddmStructureCacheModel._ddmForm = getDdmForm();
 
 		ddmStructureCacheModel._localizedFieldsMap = getLocalizedFieldsMap();
 
@@ -1258,8 +1258,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
-		sb.append(", xsd=");
-		sb.append(getXsd());
+		sb.append(", definition=");
+		sb.append(getDefinition());
 		sb.append(", storageType=");
 		sb.append(getStorageType());
 		sb.append(", type=");
@@ -1330,8 +1330,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>xsd</column-name><column-value><![CDATA[");
-		sb.append(getXsd());
+			"<column><column-name>definition</column-name><column-value><![CDATA[");
+		sb.append(getDefinition());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>storageType</column-name><column-value><![CDATA[");
@@ -1378,7 +1378,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _originalDescription;
-	private String _xsd;
+	private String _definition;
 	private String _storageType;
 	private int _type;
 	private long _columnBitmask;

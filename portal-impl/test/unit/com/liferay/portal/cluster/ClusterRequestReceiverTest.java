@@ -272,11 +272,9 @@ public class ClusterRequestReceiverTest
 
 			Address address = clusterExecutorImpl2.getLocalClusterNodeAddress();
 
-			MethodHandler methodHandler1 = new MethodHandler(
-				_testMethod4MethodKey, value);
-
 			ClusterRequest clusterRequest1 =
-				ClusterRequest.createUnicastRequest(methodHandler1, address);
+				ClusterRequest.createUnicastRequest(
+					new MethodHandler(_testMethod4MethodKey, value), address);
 
 			FutureClusterResponses futureClusterResponses1 =
 				clusterExecutorImpl1.execute(clusterRequest1);
@@ -285,11 +283,10 @@ public class ClusterRequestReceiverTest
 				futureClusterResponses1.get(), clusterRequest1.getUuid(), value,
 				address);
 
-			MethodHandler methodHandler2 = new MethodHandler(
-				_testMethod4MethodKey, StringPool.BLANK);
-
 			ClusterRequest clusterRequest2 =
-				ClusterRequest.createUnicastRequest(methodHandler2, address);
+				ClusterRequest.createUnicastRequest(
+					new MethodHandler(_testMethod4MethodKey, StringPool.BLANK),
+					address);
 
 			FutureClusterResponses futureClusterResponses2 =
 				clusterExecutorImpl1.execute(clusterRequest2);

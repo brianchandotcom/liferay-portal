@@ -57,13 +57,17 @@ public class TestBean {
 			return value;
 		}
 
-		if ((_testThreadLocal.get() == null) &&
-			(threadLocalCache.get(_THREAD_LOCAL_CACHE_KEY) == null)) {
-
-			return null;
+		if (_testThreadLocal.get() != null) {
+			throw new IllegalStateException(
+				"Short live thread local has not been cleared");
 		}
 
-		throw new IllegalStateException();
+		if (threadLocalCache.get(_THREAD_LOCAL_CACHE_KEY) != null) {
+			throw new IllegalStateException(
+				"Thread local cache has not been cleared");
+		}
+
+		return null;
 	}
 
 	private static final String _THREAD_LOCAL_CACHE_KEY  =

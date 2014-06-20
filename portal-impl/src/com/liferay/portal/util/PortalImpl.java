@@ -8192,8 +8192,9 @@ public class PortalImpl implements Portal {
 	protected String getValidPortalDomain(long companyId, String domain) {
 		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
 			if (StringUtil.wildcardMatches(
-				domain, virtualHost, (char) 0, CharPool.STAR, (char) 0, false))
-			{
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
 				return domain;
 			}
 		}

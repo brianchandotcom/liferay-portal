@@ -13,7 +13,7 @@
 		width: 200px;
 
 		@include respond-to(phone, tablet) {
-			height: 210px;
+			height: 230px;
 		}
 
 		.entry-title {

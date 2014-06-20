@@ -187,6 +187,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testThrowsSystemException() throws Exception {
+		test("ThrowsSystemException.testjava");
+	}
+
+	@Test
 	public void testUnusedImport() throws Exception {
 		test("UnusedImport.testjava");
 	}

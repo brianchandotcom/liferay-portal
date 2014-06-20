@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.messaging.async.Async;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -32,6 +33,7 @@ import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * The social activity local service. This service provides the means to record
@@ -169,7 +171,7 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		socialActivityLocalService.addActivity(activity, mirrorActivity);
+		addActivityCallback(activity, mirrorActivity);
 	}
 
 	/**
@@ -1105,6 +1107,23 @@ public class SocialActivityLocalServiceImpl
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
 		return socialActivityFinder.countByUserOrganizations(userId);
+	}
+
+	protected void addActivityCallback(
+		final SocialActivity activity, final SocialActivity mirrorActivity) {
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				socialActivityLocalService.addActivity(
+					activity, mirrorActivity);
+
+				return null;
+			}
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
 	protected boolean isLogActivity(SocialActivity activity) {

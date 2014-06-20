@@ -16,6 +16,8 @@ package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceReference;
 
+import java.util.Comparator;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -23,6 +25,49 @@ public class ServiceTrackerMapFactory {
 
 	public static class Comparators {
 
+		public static <T> Comparator<ServiceReference<T>> fromProperty(
+			final String property) {
+
+			return new Comparator<ServiceReference<T>>() {
+
+				@Override
+				public int compare(
+					ServiceReference<T> sr1, ServiceReference<T> sr2) {
+
+					if (sr1 == null) {
+						if (sr2 == null) {
+							return 0;
+						}
+						else {
+							return -1;
+						}
+					}
+					else if (sr2 == null) {
+						return 1;
+					}
+
+					try {
+						Comparable property1 = (Comparable)sr1.getProperty(
+							property);
+
+						Object property2 = sr2.getProperty(property);
+
+						if (property1 == null) {
+							if (property2 != null) {
+								return -1;
+							}
+
+							return -(sr1.compareTo(sr2));
+						}
+
+						return -(property1.compareTo(property2));
+					}
+					catch (ClassCastException e) {
+						return 0;
+					}
+				}
+			};
+		}
 	}
 
 	public static class Mappers {

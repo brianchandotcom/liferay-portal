@@ -16,18 +16,14 @@
 
 <%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
 
+<liferay-staging:defineObjects />
+
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "export");
 
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
 String errorMessageKey = StringPool.BLANK;
-
-Group group = themeDisplay.getScopeGroup();
-
-Group stagingGroup = group;
-
-Group liveGroup = stagingGroup.getLiveGroup();
 
 Layout targetLayout = null;
 

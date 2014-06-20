@@ -326,7 +326,7 @@
 
 <#assign logo_description = "" />
 
-<#if !$show_site_name>
+<#if !show_site_name>
 	<#assign logo_description = htmlUtil.escape(site_name) />
 </#if>
 

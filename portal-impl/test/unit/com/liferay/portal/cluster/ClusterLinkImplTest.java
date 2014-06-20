@@ -71,6 +71,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -119,6 +120,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -188,6 +190,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -235,6 +238,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -294,6 +298,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -315,6 +320,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -345,6 +351,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -410,6 +417,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -458,6 +466,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -519,6 +528,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -572,6 +582,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
@@ -621,6 +632,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}

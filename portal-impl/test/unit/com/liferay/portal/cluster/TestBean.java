@@ -14,6 +14,11 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+
 /**
  * @author Tina Tian
  */
@@ -39,14 +44,36 @@ public class TestBean {
 		throw new Exception(timeStamp);
 	}
 
-	public void setKey(String key) {
-		_key = key;
+	public static String testMethod4(String value) {
+		ThreadLocalCache<String> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, TestBean.class.getName());
+
+		if (value.length() > 0) {
+			threadLocalCache.put(_THREAD_LOCAL_CACHE_KEY, value);
+
+			_testThreadLocal.set(value);
+
+			return value;
+		}
+
+		if (_testThreadLocal.get() != null) {
+			throw new IllegalStateException(
+				"Short live thread local has not been cleared");
+		}
+
+		if (threadLocalCache.get(_THREAD_LOCAL_CACHE_KEY) != null) {
+			throw new IllegalStateException(
+				"Thread local cache has not been cleared");
+		}
+
+		return null;
 	}
 
-	public String testMethod4() {
-		return _key;
-	}
+	private static final String _THREAD_LOCAL_CACHE_KEY  =
+		"thread_local_cache_key";
 
-	private String _key;
+	private static ThreadLocal<String> _testThreadLocal =
+		new CentralizedThreadLocal<String>(true);
 
 }

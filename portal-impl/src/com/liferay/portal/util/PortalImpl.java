@@ -8190,9 +8190,11 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getValidPortalDomain(long companyId, String domain) {
-		for (String validVirtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-			if (StringUtil.equalsIgnoreCase(domain, validVirtualHost)) {
-				return validVirtualHost;
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.wildcardMatches(
+				domain, virtualHost, (char) 0, CharPool.STAR, (char) 0, false))
+			{
+				return domain;
 			}
 		}
 
@@ -8215,8 +8217,8 @@ public class PortalImpl implements Portal {
 		if (_log.isWarnEnabled()) {
 			_log.warn(
 				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
-					"\" in portal.properties to allow " + domain +
-						" as a domain");
+					"\" in portal.properties to allow \"" + domain +
+						"\" as a domain");
 		}
 
 		try {

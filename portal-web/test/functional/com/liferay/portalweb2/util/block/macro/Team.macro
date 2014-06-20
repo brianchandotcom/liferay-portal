@@ -147,6 +147,6 @@
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${teamName}" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitememberships#assertElementPresent" locator-key1="USER_TABLE_ACTIONS" />
 	</command>
 </definition>

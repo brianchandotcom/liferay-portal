@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

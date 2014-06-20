@@ -16,9 +16,9 @@
 <!---->
 <tr>
 	<td>EXTEND_ACTION_PATH</td>
- 	<td>Dynamicdatamapping</td>
- 	<td></td>
- </tr>
+	<td>Dynamicdatamapping</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[contains(., 'Cancel')]</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

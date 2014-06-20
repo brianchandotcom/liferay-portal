@@ -13,7 +13,6 @@
 	<td></td>
 	<td>CPDocumentsandmedia</td>
 </tr>
-<!---->
 <tr>
 	<td>PORTLET_TITLE</td>
 	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
@@ -31,7 +30,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL_ROWS_CHECKBOX</td>
-	<td>//input[@id='_199_allRowIds']</td>
+	<td>//input[contains(@id,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

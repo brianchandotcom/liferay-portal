@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_CONTENT</td>
+	<td>//li[contains(@class,'user-notification') and contains(@class,'unread')]/div[contains(.,'${key_contentBody}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_TITLE</td>
+	<td>//li[contains(@class,'user-notification') and contains(@class,'unread')]/div[contains(.,'${key_contentBody}')]//div[@class='body']/div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_BODY</td>
+	<td>//li[contains(@class,'user-notification') and contains(@class,'unread')]/div[contains(.,'${key_contentBody}')]//div[@class='body']/div[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_CONTENT_1</td>
 	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[1]</td>
 	<td></td>

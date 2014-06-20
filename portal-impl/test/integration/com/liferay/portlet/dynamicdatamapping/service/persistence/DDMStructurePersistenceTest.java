@@ -157,7 +157,7 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setDescription(RandomTestUtil.randomString());
 
-		newDDMStructure.setXsd(RandomTestUtil.randomString());
+		newDDMStructure.setDefinition(RandomTestUtil.randomString());
 
 		newDDMStructure.setStorageType(RandomTestUtil.randomString());
 
@@ -195,8 +195,8 @@ public class DDMStructurePersistenceTest {
 			newDDMStructure.getName());
 		Assert.assertEquals(existingDDMStructure.getDescription(),
 			newDDMStructure.getDescription());
-		Assert.assertEquals(existingDDMStructure.getXsd(),
-			newDDMStructure.getXsd());
+		Assert.assertEquals(existingDDMStructure.getDefinition(),
+			newDDMStructure.getDefinition());
 		Assert.assertEquals(existingDDMStructure.getStorageType(),
 			newDDMStructure.getStorageType());
 		Assert.assertEquals(existingDDMStructure.getType(),
@@ -437,7 +437,7 @@ public class DDMStructurePersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentStructureId", true, "classNameId",
 			true, "structureKey", true, "name", true, "description", true,
-			"xsd", true, "storageType", true, "type", true);
+			"definition", true, "storageType", true, "type", true);
 	}
 
 	@Test
@@ -690,7 +690,7 @@ public class DDMStructurePersistenceTest {
 
 		ddmStructure.setDescription(RandomTestUtil.randomString());
 
-		ddmStructure.setXsd(RandomTestUtil.randomString());
+		ddmStructure.setDefinition(RandomTestUtil.randomString());
 
 		ddmStructure.setStorageType(RandomTestUtil.randomString());
 

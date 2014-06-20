@@ -70,10 +70,10 @@ public class JournalTransformerTest {
 
 		JournalTestUtil.addMetadataElement(linkElement, "en_US", "link");
 
-		String xsd = document.asXML();
+		String definition = document.asXML();
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName(), xsd);
+			JournalArticle.class.getName(), definition);
 
 		String xsl = "$name.getData()";
 

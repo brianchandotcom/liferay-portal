@@ -80,11 +80,12 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
-		String xsd = DDMStructureTestUtil.getSampleStructureXSD("name");
+		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
+			"name");
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
-			xsd);
+			definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			serviceContext.getScopeGroupId(), _ddmStructure.getStructureId());
@@ -249,12 +250,13 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	protected void updateDDMStructure(ServiceContext serviceContext)
 		throws Exception {
 
-		String xsd = DDMStructureTestUtil.getSampleStructureXSD("title");
+		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
+			"title");
 
 		DDMStructureLocalServiceUtil.updateStructure(
 			_ddmStructure.getStructureId(),
 			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
-			_ddmStructure.getDescriptionMap(), xsd, serviceContext);
+			_ddmStructure.getDescriptionMap(), definition, serviceContext);
 	}
 
 	private DDMStructure _ddmStructure;

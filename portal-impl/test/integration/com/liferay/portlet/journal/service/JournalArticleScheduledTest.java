@@ -106,10 +106,10 @@ public class JournalArticleScheduledTest {
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
-		String xsd = DDMStructureTestUtil.getSampleStructureXSD();
+		String definition = DDMStructureTestUtil.getSampleStructureDefinition();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), xsd);
+			groupId, JournalArticle.class.getName(), definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			groupId, ddmStructure.getStructureId());

@@ -85,10 +85,10 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
 
-		String xsd = readText("test-ddm-structure-all-fields.xml");
+		String definition = readText("test-ddm-structure-all-fields.xml");
 
 		_ddmStructure = addStructure(
-			classNameId, null, "Test Structure", xsd,
+			classNameId, null, "Test Structure", definition,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 

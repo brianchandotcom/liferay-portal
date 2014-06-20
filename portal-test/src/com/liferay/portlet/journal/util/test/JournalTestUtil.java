@@ -125,11 +125,11 @@ public class JournalTestUtil {
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
-		String xsd = DDMStructureTestUtil.getSampleStructureXSD(
+		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
 			_locales, defaultLocale);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), xsd, defaultLocale);
+			groupId, JournalArticle.class.getName(), definition, defaultLocale);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			groupId, ddmStructure.getStructureId());

@@ -55,7 +55,7 @@ public class JSONSerializerTest {
 	public void testSerializeDDMStructure() {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
-		ddmStructure.setXsd("value");
+		ddmStructure.setDefinition("value");
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 

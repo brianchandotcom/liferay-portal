@@ -35,7 +35,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
@@ -121,7 +121,7 @@ public class JournalArticleServiceTest {
 			"test-journal-content-html-required-field.xml", requiredFields);
 	}
 
-	@Test(expected = StructureXsdException.class)
+	@Test(expected = StructureDefinitionException.class)
 	public void testCheckArticleWithInvalidStructure() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());
@@ -597,14 +597,14 @@ public class JournalArticleServiceTest {
 	}
 
 	protected void testAddArticleRequiredFields(
-			String ddmStructureXSD, String journalArticleContent,
+			String ddmStructureDefinition, String journalArticleContent,
 			Map<String, String> requiredFields)
 		throws Exception {
 
-		String xsd = readText(ddmStructureXSD);
+		String definition = readText(ddmStructureDefinition);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(), xsd);
+			_group.getGroupId(), JournalArticle.class.getName(), definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId());

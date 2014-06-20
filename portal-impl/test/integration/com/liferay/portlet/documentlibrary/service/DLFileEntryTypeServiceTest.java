@@ -108,7 +108,7 @@ public class DLFileEntryTypeServiceTest {
 		byte[] testFileBytes = FileUtil.getBytes(
 			getClass(), _TEST_DDM_STRUCTURE);
 
-		serviceContext.setAttribute("xsd", new String(testFileBytes));
+		serviceContext.setAttribute("definition", new String(testFileBytes));
 
 		User user = TestPropsValues.getUser();
 

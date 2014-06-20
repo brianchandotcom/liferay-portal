@@ -373,8 +373,6 @@ public abstract class BaseClusterExecutorImplTestCase
 		TestBean.class, "testMethod2");
 	protected static MethodKey testMethod3MethodKey = new MethodKey(
 		TestBean.class, "testMethod3", String.class);
-	protected static MethodKey testMethod4MethodKey = new MethodKey(
-		TestBean.class, "testMethod4");
 
 	protected class MockClusterEventListener implements ClusterEventListener {
 

@@ -39,14 +39,4 @@ public class TestBean {
 		throw new Exception(timeStamp);
 	}
 
-	public void setKey(String key) {
-		_key = key;
-	}
-
-	public String testMethod4() {
-		return _key;
-	}
-
-	private String _key;
-
 }

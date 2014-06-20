@@ -248,17 +248,19 @@ public class EditTemplateAction extends PortletAction {
 
 		String script = FileUtil.read(file);
 
-		if (Validator.isNotNull(script) && !isTextFile(file)) {
+		if (Validator.isNotNull(script) && !isValidFile(file)) {
 			throw new TemplateScriptException();
 		}
 
 		return GetterUtil.getString(script, scriptContent);
 	}
 
-	protected boolean isTextFile(File file) {
+	protected boolean isValidFile(File file) {
 		String contentType = MimeTypesUtil.getContentType(file);
 
-		if (contentType.startsWith(ContentTypes.TEXT)) {
+		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
+			contentType.startsWith(ContentTypes.TEXT)) {
+
 			return true;
 		}
 

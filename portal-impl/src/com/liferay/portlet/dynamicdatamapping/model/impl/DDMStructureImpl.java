@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -290,9 +289,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public DDMForm getFullHierarchyDDMForm()
-		throws PortalException, SystemException {
-
+	public DDMForm getFullHierarchyDDMForm() throws PortalException {
 		DDMForm ddmForm = getDDMForm();
 
 		DDMStructure parentDDMStructure = getParentDDMStructure();
@@ -587,9 +584,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		setXsd(DDMFormXSDSerializerUtil.serialize(ddmForm));
 	}
 
-	protected DDMStructure getParentDDMStructure()
-		throws PortalException, SystemException {
-
+	protected DDMStructure getParentDDMStructure() throws PortalException {
 		if (getParentStructureId() == 0) {
 			return null;
 		}

@@ -32,9 +32,7 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 	}
 
 	@Override
-	public void scan(byte[] bytes)
-		throws AntivirusScannerException, SystemException {
-
+	public void scan(byte[] bytes) throws AntivirusScannerException {
 		File file = null;
 
 		try {
@@ -55,9 +53,7 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 	}
 
 	@Override
-	public void scan(InputStream inputStream)
-		throws AntivirusScannerException, SystemException {
-
+	public void scan(InputStream inputStream) throws AntivirusScannerException {
 		File file = null;
 
 		try {

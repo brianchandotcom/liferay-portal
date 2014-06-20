@@ -35,7 +35,7 @@ public class PwdAuthenticator {
 	public static boolean authenticate(
 			String login, String clearTextPassword,
 			String currentEncryptedPassword)
-		throws PwdEncryptorException, SystemException {
+		throws PwdEncryptorException {
 
 		String encryptedPassword = PasswordEncryptorUtil.encrypt(
 			clearTextPassword, currentEncryptedPassword);

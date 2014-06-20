@@ -142,7 +142,7 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public AssetCategory findByG_N(long groupId, String name)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 
 		name = StringUtil.toLowerCase(name.trim());
 

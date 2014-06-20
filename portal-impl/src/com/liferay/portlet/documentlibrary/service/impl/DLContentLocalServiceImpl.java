@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -125,7 +124,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	@Override
 	public DLContent getContent(long companyId, long repositoryId, String path)
-		throws NoSuchContentException, SystemException {
+		throws NoSuchContentException {
 
 		OrderByComparator orderByComparator = new DLContentVersionComparator();
 
@@ -142,7 +141,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 	@Override
 	public DLContent getContent(
 			long companyId, long repositoryId, String path, String version)
-		throws NoSuchContentException, SystemException {
+		throws NoSuchContentException {
 
 		return dlContentPersistence.findByC_R_P_V(
 			companyId, repositoryId, path, version);

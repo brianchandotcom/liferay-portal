@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -87,7 +86,7 @@ public class FileEntryUtil {
 	@Deprecated
 	public static FileEntry findByR_F_T(
 			long repositoryId, long folderId, String title)
-		throws NoSuchFileEntryException, SystemException {
+		throws NoSuchFileEntryException {
 
 		DLFileEntry dlFileEntry = DLFileEntryUtil.findByG_F_T(
 			repositoryId, folderId, title);

@@ -58,7 +58,7 @@ public class DocumentConversionUtil {
 	public static File convert(
 			String id, InputStream inputStream, String sourceExtension,
 			String targetExtension)
-		throws IOException, SystemException {
+		throws IOException {
 
 		return _instance._convert(
 			id, inputStream, sourceExtension, targetExtension);
@@ -162,7 +162,7 @@ public class DocumentConversionUtil {
 	private File _convert(
 			String id, InputStream inputStream, String sourceExtension,
 			String targetExtension)
-		throws IOException, SystemException {
+		throws IOException {
 
 		if (!isEnabled()) {
 			return null;

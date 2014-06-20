@@ -553,7 +553,7 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public JournalArticle findByR_D(long resourcePrimKey, Date displayDate)
-		throws NoSuchArticleException, SystemException {
+		throws NoSuchArticleException {
 
 		Timestamp displayDate_TS = CalendarUtil.getTimestamp(displayDate);
 

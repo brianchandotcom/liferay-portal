@@ -17,7 +17,6 @@ package com.liferay.mail.service.persistence;
 import com.liferay.mail.NoSuchCyrusUserException;
 import com.liferay.mail.model.CyrusUser;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,7 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class CyrusUserUtil {
 
 	public static CyrusUser findByPrimaryKey(long userId)
-		throws NoSuchCyrusUserException, SystemException {
+		throws NoSuchCyrusUserException {
 
 		return getPersistence().findByPrimaryKey(userId);
 	}
@@ -39,9 +38,7 @@ public class CyrusUserUtil {
 		return _persistence;
 	}
 
-	public static void remove(long userId)
-		throws NoSuchCyrusUserException, SystemException {
-
+	public static void remove(long userId) throws NoSuchCyrusUserException {
 		getPersistence().remove(userId);
 	}
 

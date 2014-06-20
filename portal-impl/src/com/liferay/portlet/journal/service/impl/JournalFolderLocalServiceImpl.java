@@ -17,7 +17,6 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Indexable;
@@ -402,7 +401,7 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public long getInheritedWorkflowFolderId(long folderId)
-		throws NoSuchFolderException, SystemException {
+		throws NoSuchFolderException {
 
 		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
@@ -427,7 +426,7 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public long getOverridedDDMStructuresFolderId(long folderId)
-		throws NoSuchFolderException, SystemException {
+		throws NoSuchFolderException {
 
 		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
@@ -599,9 +598,8 @@ public class JournalFolderLocalServiceImpl
 
 				@Override
 				public List<JournalFolder> findTreeModels(
-						long previousId, long companyId, long parentPrimaryKey,
-						int size)
-					throws SystemException {
+					long previousId, long companyId, long parentPrimaryKey,
+					int size) {
 
 					return journalFolderPersistence.findByF_C_P_NotS(
 						previousId, companyId, parentPrimaryKey,

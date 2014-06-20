@@ -18,7 +18,6 @@ import com.liferay.mail.NoSuchCyrusUserException;
 import com.liferay.mail.model.CyrusUser;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Dummy;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -30,7 +29,7 @@ public class CyrusUserPersistenceImpl
 
 	@Override
 	public CyrusUser findByPrimaryKey(long userId)
-		throws NoSuchCyrusUserException, SystemException {
+		throws NoSuchCyrusUserException {
 
 		Session session = null;
 
@@ -52,9 +51,7 @@ public class CyrusUserPersistenceImpl
 	}
 
 	@Override
-	public void remove(long userId)
-		throws NoSuchCyrusUserException, SystemException {
-
+	public void remove(long userId) throws NoSuchCyrusUserException {
 		Session session = null;
 
 		try {

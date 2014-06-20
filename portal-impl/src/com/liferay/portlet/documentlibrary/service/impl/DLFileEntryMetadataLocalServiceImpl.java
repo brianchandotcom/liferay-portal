@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -173,7 +172,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 			long companyId, DDMStructure ddmStructure, long fileEntryTypeId,
 			long fileEntryId, long fileVersionId, Fields fields,
 			ServiceContext serviceContext)
-		throws StorageException, SystemException {
+		throws StorageException {
 
 		DLFileEntryMetadata fileEntryMetadata =
 			dlFileEntryMetadataPersistence.fetchByD_F(

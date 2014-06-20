@@ -16,7 +16,6 @@ package com.liferay.mail.service.persistence;
 
 import com.liferay.mail.NoSuchCyrusVirtualException;
 import com.liferay.mail.model.CyrusVirtual;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Dummy;
 import com.liferay.portal.service.persistence.BasePersistence;
 
@@ -28,12 +27,11 @@ import java.util.List;
 public interface CyrusVirtualPersistence extends BasePersistence<Dummy> {
 
 	public CyrusVirtual findByPrimaryKey(String emailAddress)
-		throws NoSuchCyrusVirtualException, SystemException;
+		throws NoSuchCyrusVirtualException;
 
 	public List<CyrusVirtual> findByUserId(long userId);
 
-	public void remove(String emailAddress)
-		throws NoSuchCyrusVirtualException, SystemException;
+	public void remove(String emailAddress) throws NoSuchCyrusVirtualException;
 
 	public void removeByUserId(long userId);
 

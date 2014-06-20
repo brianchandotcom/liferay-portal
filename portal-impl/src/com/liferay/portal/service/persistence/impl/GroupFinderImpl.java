@@ -644,7 +644,7 @@ public class GroupFinderImpl
 
 	@Override
 	public Group findByC_N(long companyId, String name)
-		throws NoSuchGroupException, SystemException {
+		throws NoSuchGroupException {
 
 		name = StringUtil.lowerCase(name);
 

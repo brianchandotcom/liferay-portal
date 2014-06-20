@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -992,7 +991,7 @@ public interface Portal {
 
 	public PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
-		throws PortletException, SystemException;
+		throws PortletException;
 
 	public String getPortletDescription(
 		Portlet portlet, ServletContext servletContext, Locale locale);

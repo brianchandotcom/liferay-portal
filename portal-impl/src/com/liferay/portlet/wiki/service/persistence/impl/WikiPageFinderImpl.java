@@ -107,7 +107,7 @@ public class WikiPageFinderImpl
 
 	@Override
 	public WikiPage findByResourcePrimKey(long resourcePrimKey)
-		throws NoSuchPageException, SystemException {
+		throws NoSuchPageException {
 
 		Session session = null;
 

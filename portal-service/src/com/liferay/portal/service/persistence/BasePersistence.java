@@ -117,8 +117,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	public T fetchByPrimaryKey(Serializable primaryKey);
 
 	public Map<Serializable, T> fetchByPrimaryKeys(
-			Set<Serializable> primaryKeys)
-		throws SystemException;
+		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns the model instance with the primary key or throws a {@link
@@ -132,7 +131,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         system exception occurred
 	 */
 	public T findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException;
+		throws NoSuchModelException;
 
 	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
@@ -242,8 +241,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @throws NoSuchModelException if an instance of this model with the
 	 *         primary key could not be found
 	 */
-	public T remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException;
+	public T remove(Serializable primaryKey) throws NoSuchModelException;
 
 	/**
 	 * Removes the model instance from the database. Also notifies the

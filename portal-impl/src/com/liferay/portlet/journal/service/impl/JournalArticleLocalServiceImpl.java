@@ -1796,7 +1796,7 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle article, String ddmTemplateKey, String viewMode,
 			String languageId, int page,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getArticleDisplay(
 			article, ddmTemplateKey, viewMode, languageId, page,
@@ -5856,7 +5856,7 @@ public class JournalArticleLocalServiceImpl
 			String languageId, int page,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay,
 			boolean propagateException)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String content = null;
 

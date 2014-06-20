@@ -178,7 +178,7 @@ public class UserGroupFinderImpl
 
 	@Override
 	public UserGroup findByC_N(long companyId, String name)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 
 		name = StringUtil.lowerCase(name);
 

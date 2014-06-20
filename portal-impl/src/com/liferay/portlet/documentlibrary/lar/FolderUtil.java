@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -53,7 +52,7 @@ public class FolderUtil {
 	}
 
 	public static Folder findByPrimaryKey(long folderId)
-		throws NoSuchFolderException, SystemException {
+		throws NoSuchFolderException {
 
 		DLFolder dlFolder = DLFolderUtil.findByPrimaryKey(folderId);
 

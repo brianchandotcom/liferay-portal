@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -36,18 +35,18 @@ public interface DLValidator {
 		throws FolderNameException;
 
 	public void validateFileExtension(String fileName)
-		throws FileExtensionException, SystemException;
+		throws FileExtensionException;
 
 	public void validateFileName(String fileName) throws FileNameException;
 
 	public void validateFileSize(String fileName, byte[] bytes)
-		throws FileSizeException, SystemException;
+		throws FileSizeException;
 
 	public void validateFileSize(String fileName, File file)
-		throws FileSizeException, SystemException;
+		throws FileSizeException;
 
 	public void validateFileSize(String fileName, InputStream is)
-		throws FileSizeException, SystemException;
+		throws FileSizeException;
 
 	public void validateSourceFileExtension(
 			String fileExtension, String sourceFileName)

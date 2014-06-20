@@ -34,9 +34,7 @@ public abstract class BaseInputStreamAntivirusScanner
 	}
 
 	@Override
-	public void scan(File file)
-		throws AntivirusScannerException, SystemException {
-
+	public void scan(File file) throws AntivirusScannerException {
 		InputStream inputStream = null;
 
 		try {

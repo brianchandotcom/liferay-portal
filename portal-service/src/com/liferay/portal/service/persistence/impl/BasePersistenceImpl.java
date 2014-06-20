@@ -119,8 +119,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public Map<Serializable, T> fetchByPrimaryKeys(
-			Set<Serializable> primaryKeys)
-		throws SystemException {
+		Set<Serializable> primaryKeys) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -128,7 +127,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	@SuppressWarnings("unused")
 	public T findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
+		throws NoSuchModelException {
 
 		throw new UnsupportedOperationException();
 	}
@@ -266,9 +265,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	@SuppressWarnings("unused")
-	public T remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-
+	public T remove(Serializable primaryKey) throws NoSuchModelException {
 		throw new UnsupportedOperationException();
 	}
 

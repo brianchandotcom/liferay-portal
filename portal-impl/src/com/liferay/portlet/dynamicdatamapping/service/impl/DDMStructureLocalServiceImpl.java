@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1447,7 +1446,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected DDMForm getParentDDMForm(long parentStructureId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DDMStructure parentStructure =
 			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);

@@ -19,7 +19,6 @@ import com.liferay.mail.model.CyrusVirtual;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Dummy;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -37,7 +36,7 @@ public class CyrusVirtualPersistenceImpl
 
 	@Override
 	public CyrusVirtual findByPrimaryKey(String emailAddress)
-		throws NoSuchCyrusVirtualException, SystemException {
+		throws NoSuchCyrusVirtualException {
 
 		Session session = null;
 
@@ -80,9 +79,7 @@ public class CyrusVirtualPersistenceImpl
 	}
 
 	@Override
-	public void remove(String emailAddress)
-		throws NoSuchCyrusVirtualException, SystemException {
-
+	public void remove(String emailAddress) throws NoSuchCyrusVirtualException {
 		Session session = null;
 
 		try {

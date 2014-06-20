@@ -94,10 +94,10 @@ public class ExportImportDateUtil {
 
 		Map<String, Serializable> settingsMap = configuration.getSettingsMap();
 
-		Date endDate = (Date)settingsMap.get("endDate");
 		Date startDate = (Date)settingsMap.get("startDate");
+		Date endDate = (Date)settingsMap.get("endDate");
 
-		if ((endDate != null) && (startDate != null)) {
+		if ((startDate != null) && (endDate != null)) {
 			return new DateRange(startDate, endDate);
 		}
 

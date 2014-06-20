@@ -35,17 +35,15 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		</li>
 
 		<%
-		long userId = GetterUtil.getLong(fieldParam);
+		String userName = GetterUtil.getString(fieldParam);
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			long curUserId = GetterUtil.getLong(termCollector.getTerm());
-
-			User curUser = UserLocalServiceUtil.getUser(curUserId);
+			String curUserName = GetterUtil.getString(termCollector.getTerm());
 		%>
 
-			<c:if test="<%= userId == curUserId %>">
+			<c:if test="<%= userName == curUserName %>">
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
@@ -62,8 +60,8 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 			%>
 
-			<li class="facet-value <%= (userId == curUserId) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curUserId %>" href="javascript:;">
+			<li class="facet-value <%= (userName == curUserName) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= curUserName %>" href="javascript:;">
 					<%= HtmlUtil.escape(curUser.getFullName()) %>
 
 					<c:if test="<%= showAssetCount %>">

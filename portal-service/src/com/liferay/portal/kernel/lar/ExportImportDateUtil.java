@@ -94,6 +94,13 @@ public class ExportImportDateUtil {
 
 		Map<String, Serializable> settingsMap = configuration.getSettingsMap();
 
+		Date startDate = (Date)settingsMap.get("startDate");
+		Date endDate = (Date)settingsMap.get("endDate");
+
+		if ((startDate != null) && (endDate != null)) {
+			return new DateRange(startDate, endDate);
+		}
+
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 

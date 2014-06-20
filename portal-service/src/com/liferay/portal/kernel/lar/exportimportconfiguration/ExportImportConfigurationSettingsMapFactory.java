@@ -15,11 +15,9 @@
 package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -139,24 +137,13 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
 			portletRequest);
 
-		String defaultDateRange =
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
-
-		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
-			defaultDateRange = ExportImportDateUtil.RANGE_ALL;
-		}
-
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			portletRequest, groupId, privateLayout, 0, null, defaultDateRange);
-
 		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
 			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 
 			return buildSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
-				portletRequest.getParameterMap(), dateRange.getStartDate(),
-				dateRange.getEndDate(), themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+				portletRequest.getParameterMap(), null, null,
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
 		Group stagingGroup = GroupLocalServiceUtil.getGroup(groupId);
@@ -173,8 +160,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 			return buildSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
 				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate(),
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+				null, null, themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 
 		UnicodeProperties groupTypeSettingsProperties =
@@ -212,8 +199,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
 			parameterMap, remoteAddress, remotePort, remotePathContext,
-			secureConnection, remoteGroupId, remotePrivateLayout,
-			dateRange.getStartDate(), dateRange.getEndDate(),
+			secureConnection, remoteGroupId, remotePrivateLayout, null, null,
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 	}
 

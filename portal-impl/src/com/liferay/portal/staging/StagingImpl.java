@@ -107,6 +107,7 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -358,7 +359,7 @@ public class StagingImpl implements Staging {
 				user.getUserId(), sourceGroupId, privateLayout, layoutIdMap,
 				parameterMap, remoteAddress, remotePort, remotePathContext,
 				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
-				endDate, null, null);
+				endDate, user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1368,10 +1369,13 @@ public class StagingImpl implements Staging {
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
 
+		User user = UserLocalServiceUtil.getUser(userId);
+
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap, startDate, endDate, null, null);
+				parameterMap, startDate, endDate, user.getLocale(),
+				user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -2124,10 +2128,6 @@ public class StagingImpl implements Staging {
 				portletRequest, targetGroupId);
 		}
 
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			portletRequest, sourceGroupId, privateLayout, 0, null,
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_LOCAL_PUBLISHER, targetGroupId);
@@ -2158,22 +2158,19 @@ public class StagingImpl implements Staging {
 
 			LayoutServiceUtil.schedulePublishToLive(
 				sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap, scope, dateRange.getStartDate(),
-				dateRange.getEndDate(), groupName, cronText,
+				parameterMap, scope, null, null, groupName, cronText,
 				startCalendar.getTime(), schedulerEndDate, description);
 		}
 		else {
 			if (scope.equals("all-pages")) {
 				publishLayouts(
 					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, parameterMap, dateRange.getStartDate(),
-					dateRange.getEndDate());
+					privateLayout, parameterMap, null, null);
 			}
 			else {
 				publishLayouts(
 					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, layoutIds, parameterMap,
-					dateRange.getStartDate(), dateRange.getEndDate());
+					privateLayout, layoutIds, parameterMap, null, null);
 			}
 		}
 	}
@@ -2240,10 +2237,6 @@ public class StagingImpl implements Staging {
 			groupId, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId);
 
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			portletRequest, groupId, privateLayout, 0, null,
-			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_REMOTE_PUBLISHER, groupId);
@@ -2275,16 +2268,15 @@ public class StagingImpl implements Staging {
 			LayoutServiceUtil.schedulePublishToRemote(
 				groupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
-				dateRange.getEndDate(), groupName, cronText,
-				startCalendar.getTime(), schedulerEndDate, description);
+				remoteGroupId, remotePrivateLayout, null, null, groupName,
+				cronText, startCalendar.getTime(), schedulerEndDate,
+				description);
 		}
 		else {
 			copyRemoteLayouts(
 				groupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
-				dateRange.getEndDate());
+				remoteGroupId, remotePrivateLayout, null, null);
 		}
 	}
 

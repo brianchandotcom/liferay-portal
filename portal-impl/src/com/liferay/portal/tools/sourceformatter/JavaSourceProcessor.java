@@ -1403,22 +1403,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixSystemExceptions(newContent);
 
-		String oldContent = newContent;
+		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+			newContent, fileName);
 
-		while (true) {
-			newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-				oldContent, fileName);
+		newContent = formatJava(fileName, absolutePath, newContent);
 
-			newContent = formatJava(fileName, absolutePath, newContent);
-
-			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
-
-			if (oldContent.equals(newContent)) {
-				break;
-			}
-
-			oldContent = newContent;
-		}
+		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
 
 		if (content.equals(newContent)) {
 			return newContent;

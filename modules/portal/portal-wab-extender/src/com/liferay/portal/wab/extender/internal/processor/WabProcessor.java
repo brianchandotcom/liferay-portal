@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.wab.extender.internal.util.AntUtil;
@@ -37,6 +38,7 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -196,6 +198,22 @@ public class WabProcessor {
 		}
 
 		return _manifestFile;
+	}
+
+	protected Properties getPluginPackageProperties() {
+		File file = new File(
+			_pluginDir, "WEB-INF/liferay-plugin-package.properties");
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		try {
+			return PropertiesUtil.load(FileUtil.read(file));
+		}
+		catch (IOException ioe) {
+			return new Properties();
+		}
 	}
 
 	protected boolean isValidOsgiBundle() {

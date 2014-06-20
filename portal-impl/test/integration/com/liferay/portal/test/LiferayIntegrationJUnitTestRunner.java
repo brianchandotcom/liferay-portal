@@ -17,12 +17,15 @@ package com.liferay.portal.test;
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
+import com.liferay.portal.test.log.LogAssertionUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.test.TestPropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.junit.runner.notification.RunNotifier;
+import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
@@ -81,6 +84,26 @@ public class LiferayIntegrationJUnitTestRunner
 						currentThread, inheritableThreadLocals);
 					_threadLocalsField.set(currentThread, threadLocals);
 				}
+			}
+
+		};
+	}
+
+	@Override
+	protected Statement methodBlock(FrameworkMethod method) {
+		final Statement methodBlock = super.methodBlock(method);
+
+		if (!TestPropsValues.ASSERT_LOGS) {
+			return methodBlock;
+		}
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				LogAssertionUtil.enableLogAssertion();
+
+				methodBlock.evaluate();
 			}
 
 		};

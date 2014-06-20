@@ -451,10 +451,6 @@
 		position: fixed;
 	}
 
-	.modal-body {
-		overflow: auto;
-	}
-
 	.modal-hidden {
 		display: none;
 	}

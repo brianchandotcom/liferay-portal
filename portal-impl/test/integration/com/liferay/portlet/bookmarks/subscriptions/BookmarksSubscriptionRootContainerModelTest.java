@@ -26,6 +26,7 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
@@ -72,6 +73,14 @@ public class BookmarksSubscriptionRootContainerModelTest
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
+
+		BookmarksTestUtil.updateEntry(entry);
 	}
 
 }

@@ -113,6 +113,14 @@ public class JournalSubscriptionClassTypeTest
 		return ddmStructure.getStructureId();
 	}
 
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(article, true);
+	}
+
 	protected DDMStructure _ddmStructure;
 	protected DDMTemplate _ddmTemplate;
 

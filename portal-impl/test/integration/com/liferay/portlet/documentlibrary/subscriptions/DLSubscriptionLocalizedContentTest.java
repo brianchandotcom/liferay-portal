@@ -70,8 +70,21 @@ public class DLSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
 		return "emailFileEntryAddedBody";
+	}
+
+	@Override
+	protected String getSubscriptionUpdatedBodyPreferenceName()
+		throws Exception {
+
+		return "emailFileEntryUpdatedBody";
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), baseModelId, false, true);
 	}
 
 }

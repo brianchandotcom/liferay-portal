@@ -74,11 +74,10 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long updateEntry(long baseModelId) throws Exception {
-		WikiPage page = WikiTestUtil.updatePage(
-			WikiPageLocalServiceUtil.getPage(baseModelId, true));
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
-		return page.getResourcePrimKey();
+		WikiTestUtil.updatePage(page);
 	}
 
 }

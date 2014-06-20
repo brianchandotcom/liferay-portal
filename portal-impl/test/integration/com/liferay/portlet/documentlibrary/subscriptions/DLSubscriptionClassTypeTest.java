@@ -88,4 +88,10 @@ public class DLSubscriptionClassTypeTest
 		return basicEntryType.getPrimaryKey();
 	}
 
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), baseModelId, false, true);
+	}
+
 }

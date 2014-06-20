@@ -24,6 +24,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -66,6 +67,14 @@ public class JournalSubscriptionRootContainerModelTest
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(article, true);
 	}
 
 }

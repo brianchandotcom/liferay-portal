@@ -25,6 +25,7 @@ import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTes
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
@@ -74,8 +75,23 @@ public class BookmarksSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
 		return "emailEntryAddedBody";
+	}
+
+	@Override
+	protected String getSubscriptionUpdatedBodyPreferenceName()
+		throws Exception {
+
+		return "emailEntryUpdatedBody";
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
+
+		BookmarksTestUtil.updateEntry(entry);
 	}
 
 }

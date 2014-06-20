@@ -27,6 +27,7 @@ import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTes
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -70,12 +71,20 @@ public class JournalSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
+	protected String getSubscriptionAddedBodyPreferenceName() throws Exception {
 		return "emailArticleAddedBody";
 	}
 
 	@Override
-	protected void setAddBaseModelSubscriptionBodyPreferences()
+	protected String getSubscriptionUpdatedBodyPreferenceName()
+		throws Exception {
+
+		return "emailArticleUpdatedBody";
+	}
+
+	@Override
+	protected void setBaseModelSubscriptionBodyPreferences(
+			String bodyPreferenceName)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -83,15 +92,23 @@ public class JournalSubscriptionLocalizedContentTest
 				layout, getPortletId());
 
 		LocalizationUtil.setPreferencesValue(
-			portletPreferences, getSubscriptionBodyPreferenceName(),
+			portletPreferences, bodyPreferenceName,
 			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), GERMAN_BODY);
 		LocalizationUtil.setPreferencesValue(
-			portletPreferences, getSubscriptionBodyPreferenceName(),
+			portletPreferences, bodyPreferenceName,
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), SPANISH_BODY);
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(
 			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 			PortletKeys.PREFS_PLID_SHARED, getPortletId(), portletPreferences);
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(article, true);
 	}
 
 }

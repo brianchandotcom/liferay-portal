@@ -66,4 +66,10 @@ public class DLSubscriptionContainerModelTest
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), baseModelId, false, true);
+	}
+
 }

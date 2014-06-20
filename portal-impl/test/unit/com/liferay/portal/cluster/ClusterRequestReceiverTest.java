@@ -36,7 +36,12 @@ import org.junit.runner.RunWith;
 public class ClusterRequestReceiverTest
 	extends BaseClusterExecutorImplTestCase {
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testInvoke1() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -72,7 +77,12 @@ public class ClusterRequestReceiverTest
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testInvoke2() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -110,7 +120,12 @@ public class ClusterRequestReceiverTest
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testInvoke3() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -146,7 +161,12 @@ public class ClusterRequestReceiverTest
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testInvoke4() throws Exception {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
@@ -189,7 +209,12 @@ public class ClusterRequestReceiverTest
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testInvoke5() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;

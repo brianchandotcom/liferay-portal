@@ -70,6 +70,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			EnableClusterExecutorDebugAdvice.class, EnableLiveUsersAdvice.class
 		}
@@ -185,7 +186,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testClusterTopology() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -242,6 +248,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class, JChannelExceptionAdvice.class,
 			SetBadPortalInetSocketAddressAdvice.class
 		}
@@ -346,7 +353,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByFireAndForget() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -408,7 +420,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByLocalMethod1() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -440,7 +457,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByLocalMethod2() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -470,7 +492,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByLocalMethod3() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -502,7 +529,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByLocalMethod4() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -529,7 +561,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteByShortcutMethod() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -607,7 +644,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteBySkipLocal() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -683,7 +725,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteWithCallBack1() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -721,7 +768,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testExecuteWithCallBack2() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -833,7 +885,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testGetMethods2() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -913,7 +970,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testMemberRemoved() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
@@ -945,7 +1007,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
+			EnableClusterLinkAdvice.class
+		}
+	)
 	@Test
 	public void testPortalConfigured1() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
@@ -1008,6 +1075,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			SetPortalInetSocketAddressAdvice.class
 		}
@@ -1051,6 +1119,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			SetPortalInetSocketAddressAdvice.class,
 			SetWebServerProtocolAdvice.class
@@ -1095,6 +1164,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
+			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			SetBadPortalInetSocketAddressAdvice.class,
 			SetWebServerProtocolAdvice.class

@@ -61,7 +61,7 @@
 		<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
 		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="(Required)" />
+		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="Required" />
 		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="Please enter a valid URL." />
 	</command>
 
@@ -74,7 +74,7 @@
 		<execute action="PGBookmarksAddBookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURLInvalid}" />
 		<execute action="PGBookmarksAddBookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
 		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGBookmarksAddBookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL (Required) Please enter a valid URL." />
+		<execute action="PGBookmarksAddBookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL Required Please enter a valid URL." />
 	</command>
 
 	<command name="addNullCP">
@@ -96,7 +96,7 @@
 
 		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="(Required)" />
+		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="Required" />
 		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
@@ -167,7 +167,7 @@
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
-		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 
@@ -181,7 +181,7 @@
 	<command name="editCP">
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPBookmarks#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPBookmarksEditbookmark#type" locator-key1="NAME_FIELD" value1="${editBookmarkName}" />
@@ -209,7 +209,7 @@
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
-		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="PGBookmarksEditBookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkNameEdit}" />
@@ -237,7 +237,7 @@
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
 		<execute action="PGBookmarksEditBookmark#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 		<execute action="PGBookmarksSelectFolder#selectFrame" locator-key1="IFRAME" />
@@ -270,7 +270,7 @@
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute action="CPBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPBookmarksFolder#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
 
 		<if>
@@ -310,7 +310,7 @@
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPBookmarks#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 		<execute action="CPBookmarks#assertTextNotPresent" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
@@ -320,7 +320,7 @@
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
-		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" />
 		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 	</command>
@@ -392,7 +392,7 @@
 		<while>
 			<condition action="CPBookmarks#isElementPresent" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" />
 			<then>
-				<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPBookmarks#click" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" />
 				<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>

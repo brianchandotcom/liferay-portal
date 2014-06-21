@@ -19,7 +19,7 @@
 
 		<execute action="CPBookmarksAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPBookmarksAddfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="Name" />
-		<execute action="CPBookmarksAddfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="(Required)" />
+		<execute action="CPBookmarksAddfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="Required" />
 		<execute action="CPBookmarksAddfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
@@ -34,7 +34,7 @@
 		<execute action="CPBookmarksAddsubfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPBookmarksAddsubfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="Name" />
-		<execute action="CPBookmarksAddsubfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="(Required)" />
+		<execute action="CPBookmarksAddsubfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="Required" />
 		<execute action="CPBookmarksAddsubfolder#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 

@@ -144,7 +144,7 @@
 <!--PAGE_TREE-->
 <tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
-	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/span[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_1</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[1]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,7 +164,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_2</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[2]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,7 +174,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_3</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[3]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[3]</td>
 	<td></td>
 </tr>
 <tr>

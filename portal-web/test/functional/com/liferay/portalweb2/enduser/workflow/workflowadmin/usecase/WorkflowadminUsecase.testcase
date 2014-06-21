@@ -254,7 +254,7 @@
 		<execute macro="Workflow#approveTaskByNotifications">
 			<var name="notificationContent" value="Test Test sent you a Blogs Entry for review in the workflow." />
 			<var name="notificationCount" value="1" />
-			<var name="userName" value="test" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

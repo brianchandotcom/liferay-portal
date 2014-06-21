@@ -602,7 +602,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2325" name="DeleteTaskAssignedToMe" priority="5">
+	<command name="DeleteTaskAssignedToMe" priority="5">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">

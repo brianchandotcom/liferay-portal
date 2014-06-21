@@ -2,6 +2,8 @@
 	<command name="addWhatsHappeningEntry">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
 			<then>
@@ -36,6 +38,8 @@
 
 	<command name="addWhatsHappeningEntryInvalid">
 		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
 
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
@@ -78,6 +82,55 @@
 		</if>
 
 		<execute action="SODashboard#assertTextNotPresent" value1="${whatsHappeningEntryContent}" />
+	</command>
+
+	<command name="configureWhatsHappeningDisplayPG">
+		<if>
+			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING" />
+			<then>
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+
+				<if>
+					<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<then>
+						<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+						<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+					</then>
+				</if>
+
+				<execute action="SODashboard#makeVisible" locator-key1="WHATS_HAPPENING_OPTIONS" />
+				<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_OPTIONS_LINK" />
+
+				<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+				<execute action="SODashboardWhatsHappeningConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+				<execute action="SODashboardWhatsHappeningConfiguration#check" locator-key1="DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
+				<execute action="SODashboardWhatsHappeningConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="SODashboardWhatsHappeningConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute action="SODashboardWhatsHappeningConfiguration#selectFrameTop" />
+				<execute action="SODashboardWhatsHappeningConfiguration#click" locator-key1="CLOSE_BUTTON" />
+
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<then>
+						<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+						<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+					</then>
+				</if>
+			</then>
+		</if>
 	</command>
 
 	<command name="tearDownCP">
@@ -153,6 +206,8 @@
 	</command>
 
 	<command name="viewLinkHome">
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" value1="Update your status..." />
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
 

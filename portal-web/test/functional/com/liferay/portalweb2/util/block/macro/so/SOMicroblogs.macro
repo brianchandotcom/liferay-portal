@@ -660,6 +660,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
 			<then>
@@ -698,6 +700,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
 			<then>
@@ -734,6 +738,8 @@
 	<command name="viewMicroblogsEntryNone">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
 			<then>
@@ -766,6 +772,8 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
@@ -858,6 +866,8 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
@@ -904,6 +914,8 @@
 		</if>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${whatsHappeningEntryContent}" />
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />

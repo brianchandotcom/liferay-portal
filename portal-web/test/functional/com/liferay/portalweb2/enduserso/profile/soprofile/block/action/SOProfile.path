@@ -79,6 +79,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WHATS_HAPPENING</td>
+	<td>//div[contains(@class,'microblogs-status-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WHATS_HAPPENING_OPTIONS</td>
+	<td>//div[contains(@id,'microblogsportlet')]//span[contains(@class,'portlet-actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WHATS_HAPPENING_OPTIONS_LINK</td>
+	<td>//div[contains(@id,'microblogsportlet')]//span[contains(@class,'portlet-actions')]//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WHATS_HAPPENING_ENTRY_CONTENT</td>
 	<td>//div[@class='entry-bubble']/div[@class='content']</td>
 	<td></td>

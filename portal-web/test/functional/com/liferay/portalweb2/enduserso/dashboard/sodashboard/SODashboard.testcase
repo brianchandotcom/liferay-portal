@@ -638,7 +638,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2325,SOS-2326" name="ViewDeletedUpcomingTaskAssignedToMe" priority="4">
+	<command name="ViewDeletedUpcomingTaskAssignedToMe" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 
@@ -1154,7 +1154,7 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 	</command>
 
-	<command known-issues="SOS-2325" name="ViewUpcomingTaskAssignedToConnection" priority="5">
+	<command known-issues="SOS-2326" name="ViewUpcomingTaskAssignedToConnection" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1211,7 +1211,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2325" name="ViewUpcomingTaskAssignedToMe" priority="5">
+	<command known-issues="SOS-2326" name="ViewUpcomingTaskAssignedToMe" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 
@@ -1233,7 +1233,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2325" name="ViewUpcomingTaskReassignedToConnection" priority="5">
+	<command known-issues="SOS-2326" name="ViewUpcomingTaskReassignedToConnection" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1461,6 +1461,8 @@
 		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="Microblogs Post Comment" />

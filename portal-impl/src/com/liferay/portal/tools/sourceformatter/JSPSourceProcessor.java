@@ -783,6 +783,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			int y = content.indexOf("%>" + quoteType, x);
 
 			while ((x != -1) && (y != -1)) {
+				String beforeResult = content.substring(matcher.start(), x);
+
+				if (beforeResult.contains(" />\"")) {
+					break;
+				}
+
 				String result = content.substring(x + 1, y + 2);
 
 				if (result.contains(quoteType)) {

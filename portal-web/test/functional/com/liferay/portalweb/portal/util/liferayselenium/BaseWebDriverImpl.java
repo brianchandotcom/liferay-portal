@@ -148,6 +148,10 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
+		if (!getLocation().contains("localhost")) {
+			return;
+		}
+
 		String pageSource = null;
 
 		try {

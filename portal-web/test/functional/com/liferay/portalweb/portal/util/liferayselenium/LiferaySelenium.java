@@ -44,6 +44,10 @@ public interface LiferaySelenium extends Selenium {
 	public void assertEmailSubject(String index, String subject)
 		throws Exception;
 
+	public void assertHTMLSourceTextNotPresent(String value) throws Exception;
+
+	public void assertHTMLSourceTextPresent(String value) throws Exception;
+
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception;
 
@@ -137,6 +141,8 @@ public interface LiferaySelenium extends Selenium {
 	public boolean isElementNotPresent(String locator);
 
 	public boolean isElementPresentAfterWait(String locator) throws Exception;
+
+	public boolean isHTMLSourceTextPresent(String value) throws Exception;
 
 	public boolean isNotChecked(String locator);
 

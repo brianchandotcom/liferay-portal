@@ -1,0 +1,5 @@
+<definition>
+	<command name="assertHTMLSourceTextNotPresent">
+		<execute selenium="assertHTMLSourceTextNotPresent" />
+	</command>
+</definition>

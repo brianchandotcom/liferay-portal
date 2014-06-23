@@ -23,6 +23,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -225,7 +226,7 @@ public class ParamUtil {
 	}
 
 	public static boolean getBoolean(HttpServletRequest request, String param) {
-		return GetterUtil.getBoolean(request.getParameter(param));
+		return get(request, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
@@ -237,7 +238,7 @@ public class ParamUtil {
 	public static boolean getBoolean(
 		PortletRequest portletRequest, String param) {
 
-		return GetterUtil.getBoolean(portletRequest.getParameter(param));
+		return get(portletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(

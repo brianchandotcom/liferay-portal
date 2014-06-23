@@ -61,8 +61,8 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>template-header</name>
-		<tag-class>com.liferay.taglib.staging.TemplateHeaderTag</tag-class>
+		<name>configuration-header</name>
+		<tag-class>com.liferay.taglib.staging.ConfigurationHeaderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>exportImportConfiguration</name>

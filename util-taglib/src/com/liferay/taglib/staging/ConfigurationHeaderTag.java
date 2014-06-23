@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Levente Hudák
  */
-public class TemplateHeaderTag extends IncludeTag {
+public class ConfigurationHeaderTag extends IncludeTag {
 
 	public void setExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration) {
@@ -48,12 +48,13 @@ public class TemplateHeaderTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-staging:template-header:exportImportConfiguration",
+			"liferay-staging:configuration-header:exportImportConfiguration",
 			_exportImportConfiguration);
 		request.setAttribute(
-			"liferay-staging:template-header:liferayPortletRequest",
+			"liferay-staging:configuration-header:liferayPortletRequest",
 			pageContext.getAttribute("liferayPortletRequest"));
-		request.setAttribute("liferay-staging:template-header:title", _title);
+		request.setAttribute(
+			"liferay-staging:configuration-header:title", _title);
 	}
 
 	private static final String _PAGE =

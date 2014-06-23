@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:template-header:exportImportConfiguration");
-LiferayPortletRequest liferayPortletRequest = (LiferayPortletRequest)request.getAttribute("liferay-staging:template-header:liferayPortletRequest");
-String title = GetterUtil.getString((String)request.getAttribute("liferay-staging:template-header:title"));
+ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:configuration-header:exportImportConfiguration");
+LiferayPortletRequest liferayPortletRequest = (LiferayPortletRequest)request.getAttribute("liferay-staging:configuration-header:liferayPortletRequest");
+String title = GetterUtil.getString((String)request.getAttribute("liferay-staging:configuration-header:title"));
 %>

@@ -347,6 +347,10 @@
 			<var name="microblogsEntryContent" value="${whatsHappeningEntryContent}" />
 		</execute>
 
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#configureWhatsHappeningDisplayPG" />
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />

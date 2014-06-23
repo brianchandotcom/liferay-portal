@@ -117,16 +117,19 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		/* ---------- Control panel home category header ---------- */
 
-		.control-panel-home-category-header a {
-			background: none no-repeat 0 50%;
+		.control-panel-home-category-header {
 			border-bottom: 1px solid #D4D4D4;
-			color: #009AE5;
-			display: block;
-			font-size: 24px;
-			font-weight: 100;
-			line-height: 1.5;
 			margin-bottom: 30px;
-			padding-left: 47px;
+
+			a {
+				background: none no-repeat 0 50%;
+				color: #009AE5;
+				display: inline;
+				font-size: 24px;
+				font-weight: 100;
+				line-height: 1.5;
+				padding: 10px 0 10px 47px;				
+			}
 		}
 
 		#control-panel-home-category-headerapps a {

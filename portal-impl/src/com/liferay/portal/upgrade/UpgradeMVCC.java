@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -27,6 +28,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -74,11 +76,28 @@ public class UpgradeMVCC extends UpgradeProcess {
 		return rootElement.elements("class");
 	}
 
+	protected String normalizeName(
+			String name, DatabaseMetaData databaseMetaData)
+		throws SQLException {
+
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return StringUtil.toLowerCase(name);
+		}
+
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return StringUtil.toUpperCase(name);
+		}
+
+		return name;
+	}
+
 	protected void upgradeMVCC(
 			DatabaseMetaData databaseMetaData, Element classElement)
 		throws Exception {
 
 		String table = classElement.attributeValue("table");
+
+		table = normalizeName(table, databaseMetaData);
 
 		ResultSet tableResultSet = databaseMetaData.getTables(
 			null, null, table, null);
@@ -91,7 +110,8 @@ public class UpgradeMVCC extends UpgradeProcess {
 			}
 
 			ResultSet columnResultSet = databaseMetaData.getColumns(
-				null, null, table, "mvccVersion");
+				null, null, table,
+				normalizeName("mvccVersion", databaseMetaData));
 
 			try {
 				if (columnResultSet.next()) {

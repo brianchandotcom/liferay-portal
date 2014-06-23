@@ -399,8 +399,6 @@ $editLayoutPanelWidth: 460px;
 			}
 
 			> li.staging-toggle {
-				padding: 5px 0;
-
 				@include respond-to(phone, tablet) {
 					padding: 10px;
 				}

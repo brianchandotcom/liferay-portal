@@ -405,7 +405,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						max-height: 300px;
 						overflow-x: hidden;
 						overflow-y: auto;
-						padding: 0;
+						padding: 5px 0;
 
 						&:after, &:before {
 							border-width: 0;

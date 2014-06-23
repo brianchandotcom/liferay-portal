@@ -197,7 +197,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	protected PortletPreferences getCompanyPortletPreferences(
 		long companyId, String settingsId) {
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
+		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
 			companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
 			settingsId);
 	}
@@ -211,7 +211,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	protected PortletPreferences getGroupPortletPreferences(
 		long companyId, long groupId, String settingsId) {
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
+		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
 			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
 			settingsId);
 	}
@@ -272,7 +272,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 		}
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
+		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
 			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
 			portletId);
 	}

@@ -44,7 +44,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 		else {
 			includes = new String[] {
-				"**\\portal.properties", "**\\portal-ext.properties"
+				"**\\portal.properties", "**\\portal-ext.properties",
+				"**\\portlet.properties"
 			};
 		}
 
@@ -58,8 +59,15 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 			String content = fileUtil.read(file);
 
-			formatPortalProperties(
-				fileName, content, portalPortalPropertiesContent);
+			if (!portalSource && fileName.endsWith("portlet.properties")) {
+				String newContent = formatPortletProperties(content);
+
+				compareAndAutoFixContent(file, fileName, content, newContent);
+			}
+			else {
+				formatPortalProperties(
+					fileName, content, portalPortalPropertiesContent);
+			}
 		}
 	}
 
@@ -147,6 +155,16 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 			previousPos = pos;
 		}
+	}
+
+	protected String formatPortletProperties(String content) {
+		if (!content.contains("include-and-override=portlet-ext.properties")) {
+			content =
+				"include-and-override=portlet-ext.properties" + "\n\n" +
+					content;
+		}
+
+		return content;
 	}
 
 }

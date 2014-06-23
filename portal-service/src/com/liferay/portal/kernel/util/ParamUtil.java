@@ -23,6 +23,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -38,7 +39,13 @@ public class ParamUtil {
 	public static boolean get(
 		HttpServletRequest request, String param, boolean defaultValue) {
 
-		return GetterUtil.get(request.getParameter(param), defaultValue);
+		if (Validator.isNotNull(request.getParameter(param))) {
+			return GetterUtil.get(request.getParameter(param), defaultValue);
+		}
+
+		String checkboxNames = ParamUtil.getString(request, "checkboxNames");
+
+		return getDefaultBooleanValue(param, checkboxNames, defaultValue);
 	}
 
 	public static Date get(
@@ -101,7 +108,15 @@ public class ParamUtil {
 	public static boolean get(
 		PortletRequest portletRequest, String param, boolean defaultValue) {
 
-		return GetterUtil.get(portletRequest.getParameter(param), defaultValue);
+		if (Validator.isNotNull(portletRequest.getParameter(param))) {
+			return GetterUtil.get(
+				portletRequest.getParameter(param), defaultValue);
+		}
+
+		String checkboxNames = ParamUtil.getString(
+			portletRequest, "checkboxNames");
+
+		return getDefaultBooleanValue(param, checkboxNames, defaultValue);
 	}
 
 	public static Date get(
@@ -225,7 +240,7 @@ public class ParamUtil {
 	}
 
 	public static boolean getBoolean(HttpServletRequest request, String param) {
-		return GetterUtil.getBoolean(request.getParameter(param));
+		return get(request, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
@@ -237,7 +252,7 @@ public class ParamUtil {
 	public static boolean getBoolean(
 		PortletRequest portletRequest, String param) {
 
-		return GetterUtil.getBoolean(portletRequest.getParameter(param));
+		return get(portletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
@@ -908,6 +923,23 @@ public class ParamUtil {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
 		}
+	}
+
+	protected static boolean getDefaultBooleanValue(
+		String param, String checkboxNames, boolean defaultValue) {
+
+		if (Validator.isNull(checkboxNames)) {
+			return defaultValue;
+		}
+
+		List<String> checboxNamesList = ListUtil.fromString(
+			checkboxNames, StringPool.COMMA);
+
+		if (checboxNamesList.contains(param)) {
+			return false;
+		}
+
+		return defaultValue;
 	}
 
 }

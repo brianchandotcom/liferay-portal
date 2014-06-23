@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -80,10 +81,11 @@ public class UpgradeMVCC extends UpgradeProcess {
 		throws SQLException {
 
 		if (databaseMetaData.storesLowerCaseIdentifiers()) {
-			return name.toLowerCase();
+			return StringUtil.toLowerCase(name);
 		}
-		else if (databaseMetaData.storesUpperCaseIdentifiers()) {
-			return name.toUpperCase();
+
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return StringUtil.toUpperCase(name);
 		}
 
 		return name;

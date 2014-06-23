@@ -928,7 +928,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 						user.getCompanyId(), strutsPath);
 				}
 
-				if ((portlet != null) && portlet.isActive()) {
+				if ((portlet != null) && portlet.isActive() &&
+					!portlet.isSystem()) {
+
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)request.getAttribute(
 							WebKeys.THEME_DISPLAY);

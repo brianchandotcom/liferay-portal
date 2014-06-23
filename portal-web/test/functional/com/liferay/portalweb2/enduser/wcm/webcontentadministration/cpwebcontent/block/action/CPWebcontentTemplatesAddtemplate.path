@@ -91,7 +91,7 @@
 <!--PALETTE-->
 <tr>
 	<td>PALETTE_FIELD</td>
-	<td>//div[@class='palette-section' and contains(.,'Fields')]/ul/li/span[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Fields')]//ul/li/span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

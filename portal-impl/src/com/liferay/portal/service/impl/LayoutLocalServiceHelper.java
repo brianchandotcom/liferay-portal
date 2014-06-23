@@ -275,7 +275,9 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	public void validateFirstLayout(Layout layout) throws PortalException {
 		Group group = layout.getGroup();
 
-		if (group.isGuest() && !hasGuestViewPermission(layout)) {
+		if (group.isGuest() && layout.isPublicLayout() &&
+			!hasGuestViewPermission(layout)) {
+
 			LayoutTypeException lte = new LayoutTypeException(
 				LayoutTypeException.FIRST_LAYOUT_PERMISSION);
 

@@ -69,6 +69,18 @@
 		</default>
 	</command>
 
+	<command name="assertHTMLSourceTextNotPresent">
+		<default>
+			<execute function="AssertHTMLSourceTextNotPresent#assertHTMLSourceTextNotPresent" />
+		</default>
+	</command>
+
+	<command name="assertHTMLSourceTextPresent">
+		<default>
+			<execute function="AssertHTMLSourceTextPresent#assertHTMLSourceTextPresent" />
+		</default>
+	</command>
+
 	<command name="assertLocation">
 		<default>
 			<execute function="AssertLocation#assertLocation" />

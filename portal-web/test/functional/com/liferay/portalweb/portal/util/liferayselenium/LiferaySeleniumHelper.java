@@ -40,6 +40,10 @@ import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.net.URL;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -156,6 +160,78 @@ public class LiferaySeleniumHelper {
 
 		BaseTestCase.assertEquals(
 			subject, liferaySelenium.getEmailSubject(index));
+	}
+
+	public static void assertHTMLSourceTextNotPresent(
+			LiferaySelenium liferaySelenium, String value)
+		throws Exception {
+
+		String currentURL = liferaySelenium.getLocation();
+
+		URL url = new URL(currentURL);
+
+		InputStream inputStream = url.openStream();
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		String line;
+
+		Boolean found = false;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			Pattern pattern = Pattern.compile(value);
+			Matcher matcher = pattern.matcher(line);
+
+			if (!matcher.find()) {
+				found = true;
+			}
+		}
+
+		if (found) {
+			throw new Exception(
+				"Pattern \"" + value + "\" does exists in \"" +
+					currentURL + "\"");
+		}
+
+		inputStream.close();
+		bufferedReader.close();
+	}
+
+	public static void assertHTMLSourceTextPresent(
+			LiferaySelenium liferaySelenium, String value)
+		throws Exception {
+
+		String currentURL = liferaySelenium.getLocation();
+
+		URL url = new URL(currentURL);
+
+		InputStream inputStream = url.openStream();
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		String line;
+
+		Boolean notFound = false;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			Pattern pattern = Pattern.compile(value);
+			Matcher matcher = pattern.matcher(line);
+
+			if (!matcher.find()) {
+				notFound = true;
+			}
+		}
+
+		if (notFound) {
+			throw new Exception(
+				"Pattern \"" + value + "\" does not exists in \"" +
+					currentURL + "\"");
+		}
+
+		inputStream.close();
+		bufferedReader.close();
 	}
 
 	public static void assertLiferayErrors() throws Exception {

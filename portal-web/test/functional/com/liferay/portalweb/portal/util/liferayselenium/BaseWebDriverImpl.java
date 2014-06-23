@@ -141,6 +141,16 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
+		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+	}
+
+	@Override
+	public void assertHTMLSourceTextPresent(String value) throws Exception {
+		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+	}
+
+	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
 

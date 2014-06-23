@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.wab.extender.internal.introspection.ClassLoaderSource;
+import com.liferay.portal.wab.extender.internal.introspection.Source;
 import com.liferay.portal.wab.extender.internal.util.AntUtil;
 
 import java.io.File;
@@ -47,6 +49,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,6 +58,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.depend.DependencyVisitor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -281,6 +287,61 @@ public class WabProcessor {
 		analyzer.setClasspath(files.toArray(new File[classPath.size()]));
 	}
 
+	protected Set<String> processClass(
+			DependencyVisitor dependencyVisitor, String className,
+			Source source)
+		throws IOException {
+
+		if (className.startsWith("java/")) {
+			return Collections.emptySet();
+		}
+
+		InputStream inputStream = source.getResourceAsStream(className);
+
+		if (inputStream == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> packages = new HashSet<String>();
+
+		try {
+			ClassReader classReader = new ClassReader(inputStream);
+
+			classReader.accept(dependencyVisitor, 0);
+
+			Set<String> pkgs = dependencyVisitor.getPackages();
+
+			for (String pkg : pkgs) {
+				pkg = pkg.replaceAll(StringPool.SLASH, StringPool.PERIOD);
+
+				if (pkg.startsWith("com.sun.") || pkg.startsWith("sun.")) {
+					continue;
+				}
+
+				packages.add(pkg);
+			}
+
+			String superName = classReader.getSuperName();
+
+			if (superName != null) {
+				packages.addAll(
+					processReferencedDependencies(
+						superName.replace('.', '/') + ".class", source));
+			}
+
+			String[] interfaces = classReader.getInterfaces();
+
+			if ((interfaces != null) && (interfaces.length > 0)) {
+				packages.addAll(processInterfaces(interfaces, source));
+			}
+		}
+		catch (Exception e) {
+			_log.error("Error processing class " + className, e);
+		}
+
+		return packages;
+	}
+
 	protected void processFiles(
 			File dir, URI uri, Map<String, File> classPath,
 			String[] portalDependencyJars)
@@ -326,15 +387,93 @@ public class WabProcessor {
 				classPath.put(path, file);
 			}
 			else if (path.endsWith(".jsp") || path.endsWith(".jspf")) {
-				processJSPDepedencies(file);
+				_importPackages.addAll(processJSPDependencies(file));
 			}
 		}
 	}
 
-	protected void processJSPDepedencies(File file) throws IOException {
+	protected Set<String> processInterfaces(String[] interfaces, Source source)
+		throws IOException {
 
-		// TODO
+		Set<String> packages = new HashSet<String>();
 
+		for (String interfaceName : interfaces) {
+			packages.addAll(
+				processReferencedDependencies(
+					interfaceName.replace('.', '/') + ".class", source));
+		}
+
+		return packages;
+	}
+
+	protected Set<String> processJSPDependencies(File file) throws IOException {
+		DependencyVisitor dependencyVisitor = new DependencyVisitor();
+
+		Source source = new ClassLoaderSource(_classLoader);
+
+		String content = FileUtil.read(file);
+
+		int pos = -1;
+		int startPos = content.length();
+
+		Set<String> packages = new HashSet<String>();
+
+		while (true) {
+			pos = content.lastIndexOf("<%@", startPos);
+
+			if (pos == -1) {
+				break;
+			}
+
+			startPos = pos;
+
+			int x = content.indexOf("import=\"", startPos);
+			int y = -1;
+
+			if (x != -1) {
+				x = x + "import=\"".length();
+				y = content.indexOf("\"", x);
+			}
+
+			if ((x != -1) && (y != -1)) {
+				String s = content.substring(x, y);
+
+				packages.addAll(
+					processClass(
+						dependencyVisitor, s.replace('.', '/') + ".class",
+						source));
+			}
+
+			startPos -= 3;
+		}
+
+		Set<String> globals = dependencyVisitor.getGlobals();
+
+		for (String global : globals) {
+			packages.add(
+				global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+		}
+
+		return packages;
+	}
+
+	protected Set<String> processReferencedDependencies(
+			String className, Source source)
+		throws IOException {
+
+		DependencyVisitor dependencyVisitor = new DependencyVisitor();
+
+		Set<String> packages = processClass(
+			dependencyVisitor, className, source);
+
+		Set<String> globals = dependencyVisitor.getGlobals();
+
+		for (String global : globals) {
+			packages.add(
+				global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+		}
+
+		return packages;
 	}
 
 	protected void processServicePackagePath(File file) {
@@ -366,6 +505,7 @@ public class WabProcessor {
 	private String _context;
 	private File _file;
 	private Set<String> _ignoredResources = new HashSet<String>();
+	private Set<String> _importPackages = new HashSet<String>();
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;
 	private File _pluginDir;

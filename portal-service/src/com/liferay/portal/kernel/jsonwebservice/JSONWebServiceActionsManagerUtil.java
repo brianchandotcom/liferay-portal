@@ -44,7 +44,7 @@ public class JSONWebServiceActionsManagerUtil {
 	public static JSONWebServiceAction getJSONWebServiceAction(
 			HttpServletRequest request, String path, String method,
 			Map<String, Object> parameterMap)
-		throws JSONWebServiceNotFoundException {
+		throws NoSuchJSONWebServiceException {
 
 		return getJSONWebServiceActionsManager().getJSONWebServiceAction(
 			request, path, method, parameterMap);

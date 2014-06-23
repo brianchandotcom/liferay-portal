@@ -20,7 +20,7 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNotFoundException;
+import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -92,7 +92,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
 
-			if (e instanceof JSONWebServiceNotFoundException) {
+			if (e instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
 			else if (e instanceof SecurityException) {

@@ -15,7 +15,6 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="name"
 >
 

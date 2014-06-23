@@ -48,7 +48,8 @@ public class ServiceTrackerMapFactory {
 		createListMapFromProperty(Class<S> clazz, String property) {
 
 		return new ServiceTrackerMapImpl<String, S, List<S>>(
-			clazz,"("+property+"=*)", Mappers.<String>fromProperty(property),
+			clazz,"(" + property + "=*)",
+			Mappers.<String>fromProperty(property),
 			new ListServiceTrackerBucketFactory<S>(
 				Comparators.<S>fromProperty("service.ranking")));
 	}
@@ -77,7 +78,8 @@ public class ServiceTrackerMapFactory {
 		Class<S> clazz, String property) {
 
 		return new ServiceTrackerMapImpl<String, S, S>(
-			clazz, "("+property+"=*)", Mappers.<String>fromProperty(property),
+			clazz, "(" + property + "=*)",
+			Mappers.<String>fromProperty(property),
 			new ObjectServiceTrackerBucketFactory<S>(
 				Comparators.<S>fromProperty("service.ranking")));
 	}

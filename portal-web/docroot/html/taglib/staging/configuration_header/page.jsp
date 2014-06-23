@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/staging/configuration_header/init.jsp" %>
 
-<aui:fieldset cssClass="options-group" label="<%= title %>">
+<aui:fieldset cssClass="options-group" label="<%= label %>">
 	<c:choose>
 		<c:when test='<%= SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "name") %>'>
 			<aui:model-context bean="<%= null %>" model="<%= ExportImportConfiguration.class %>" />

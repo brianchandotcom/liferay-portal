@@ -288,7 +288,7 @@ else {
 					</liferay-ui:error>
 
 					<c:if test="<%= !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE) %>">
-						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" title='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>' />
+						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>' />
 					</c:if>
 
 					<div id="<portlet:namespace />publishOptions">

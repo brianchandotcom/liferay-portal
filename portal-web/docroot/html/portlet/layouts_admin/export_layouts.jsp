@@ -191,7 +191,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 				<div class="export-dialog-tree">
 					<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" title='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
+						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
 					</c:if>
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">

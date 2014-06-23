@@ -79,7 +79,7 @@
 			<type>com.liferay.portal.model.ExportImportConfiguration</type>
 		</attribute>
 		<attribute>
-			<name>title</name>
+			<name>label</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>

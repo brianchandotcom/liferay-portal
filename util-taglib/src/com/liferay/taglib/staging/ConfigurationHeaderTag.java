@@ -30,14 +30,14 @@ public class ConfigurationHeaderTag extends IncludeTag {
 		_exportImportConfiguration = exportImportConfiguration;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
+	public void setLabel(String label) {
+		_label = label;
 	}
 
 	@Override
 	protected void cleanUp() {
 		_exportImportConfiguration = null;
-		_title = null;
+		_label = null;
 	}
 
 	@Override
@@ -51,16 +51,16 @@ public class ConfigurationHeaderTag extends IncludeTag {
 			"liferay-staging:configuration-header:exportImportConfiguration",
 			_exportImportConfiguration);
 		request.setAttribute(
+			"liferay-staging:configuration-header:label", _label);
+		request.setAttribute(
 			"liferay-staging:configuration-header:liferayPortletRequest",
 			pageContext.getAttribute("liferayPortletRequest"));
-		request.setAttribute(
-			"liferay-staging:configuration-header:title", _title);
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/staging/template/page.jsp";
+		"/html/taglib/staging/configuration_header/page.jsp";
 
 	private ExportImportConfiguration _exportImportConfiguration;
-	private String _title;
+	private String _label;
 
 }

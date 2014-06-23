@@ -680,12 +680,32 @@
 		<execute action="CKEditor#click" locator-key1="CONTENT_IMAGE_LINK" />
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
 
-		<execute action="Home#selectWindow" locator1="Resources Browser" />
+		<execute action="CKEditor#selectFrame" locator-key1="LINK_IMAGE_BROWSE_SERVER_IFRAME" />
+		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
 
-		<execute action="CKEditor#sikuliClick" locator-key1="RESOURCES_BROWSER_LIFERAY_PNG" />
-		<execute action="CKEditor#sikuliClick" locator-key1="RESOURCES_BROWSER_DOCUMENTS_AND_MEDIA_DOCUMENT_PNG" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Home#selectWindow" locator1="null" />
+		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
+
+		<var name="key_navButton" value="${navButton}" />
+		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_NAVIGATION_BUTTON" />
+
+		<if>
+			<isset var="key_folderName" />
+			<then>
+				<for list="${dmFolderNames}" param="folderName">
+					<var name="key_folderName" value="${folderName}" />
+
+					<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_FOLDER_NAME" />
+				</for>
+			</then>
+		</if>
+
+		<var name="key_documentName" value="${documentName}" />
+
+		<execute action="CKEditor#assertClick" locator-key1="LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CKEditor#selectFrame" value1="relative=top" />
 
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 	</command>

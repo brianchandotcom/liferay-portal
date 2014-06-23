@@ -15,6 +15,10 @@
 package com.liferay.portal.kernel.jsonwebservice;
 
 import com.liferay.portal.kernel.exception.PortalException;
+
+/**
+ * @author Igor Spasic
+ */
 public class JSONWebServiceNotFoundException extends PortalException {
 
 	public JSONWebServiceNotFoundException() {

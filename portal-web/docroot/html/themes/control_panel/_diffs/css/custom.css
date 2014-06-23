@@ -124,11 +124,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			a {
 				background: none no-repeat 0 50%;
 				color: #009AE5;
-				display: inline;
+				display: inline-block;
 				font-size: 24px;
 				font-weight: 100;
 				line-height: 1.5;
-				padding: 10px 0 10px 47px;				
+				padding-left: 47px;
 			}
 		}
 

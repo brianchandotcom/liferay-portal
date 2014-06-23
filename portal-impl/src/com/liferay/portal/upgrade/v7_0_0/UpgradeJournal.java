@@ -130,9 +130,9 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("insert into DDMStructure (uuid_, structureId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, parentStructureId, classNameId, ");
-			sb.append("structureKey, name, description, xsd, storageType, ");
-			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?)");
+			sb.append("structureKey, name, description, definition, ");
+			sb.append("storageType, type_) values ");
+			sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 

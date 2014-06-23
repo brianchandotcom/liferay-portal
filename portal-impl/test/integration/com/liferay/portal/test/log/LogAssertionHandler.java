@@ -18,8 +18,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.junit.Assert;
-
 /**
  * @author William Newbury
  */
@@ -41,8 +39,9 @@ public class LogAssertionHandler extends Handler {
 		Level level = logRecord.getLevel();
 
 		if (level.equals(Level.SEVERE)) {
-			Assert.fail(
-				"Test failed due to logged error: " + logRecord.getMessage());
+			ConcurrentAssertUtil.caughtError(
+				"Test failed due to logged error: " +
+					logRecord.getMessage());
 		}
 	}
 

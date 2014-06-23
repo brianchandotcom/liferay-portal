@@ -18,8 +18,6 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
-import org.junit.Assert;
-
 /**
  * @author William Newbury
  */
@@ -42,7 +40,7 @@ public class LogAssertionAppender extends AppenderSkeleton {
 		Level level = loggingEvent.getLevel();
 
 		if (level.equals(Level.ERROR) || level.equals(Level.FATAL)) {
-			Assert.fail(
+			ConcurrentAssertUtil.caughtError(
 				"Test failed due to logged error: " +
 					loggingEvent.getMessage());
 		}

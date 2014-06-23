@@ -17,6 +17,7 @@ package com.liferay.portal.test;
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
+import com.liferay.portal.test.log.ConcurrentAssertUtil;
 import com.liferay.portal.test.log.LogAssertionUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -101,9 +102,16 @@ public class LiferayIntegrationJUnitTestRunner
 
 			@Override
 			public void evaluate() throws Throwable {
-				LogAssertionUtil.enableLogAssertion();
+				ConcurrentAssertUtil.startAssert();
 
-				statement.evaluate();
+				try {
+					LogAssertionUtil.enableLogAssertion();
+
+					statement.evaluate();
+				}
+				finally {
+					ConcurrentAssertUtil.endAssert();
+				}
 			}
 
 		};

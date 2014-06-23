@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.pegdown;
+package com.liferay.markdown.converter.internal.pegdown;
 
-import com.liferay.markdown.MarkdownConverter;
+import com.liferay.markdown.converter.MarkdownConverter;
+import com.liferay.markdown.converter.internal.pegdown.parser.LiferayParser;
+import com.liferay.markdown.converter.internal.pegdown.processor.LiferayPegDownProcessor;
 
 import java.io.IOException;
 
 import org.parboiled.Parboiled;
 
 import org.pegdown.Extensions;
-import org.pegdown.LiferayParser;
 import org.pegdown.LinkRenderer;
 
 /**
@@ -33,13 +34,13 @@ public class LiferayPegDownConverter implements MarkdownConverter {
 		int parserOptions = Extensions.ALL & ~Extensions.HARDWRAPS;
 
 		LiferayParser liferayParser = Parboiled.createParser(
-			org.pegdown.LiferayParser.class, parserOptions);
+			LiferayParser.class, parserOptions);
 
 		_liferayPegDownProcessor = new LiferayPegDownProcessor(liferayParser);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.liferay.documentation.pegdown.MarkdownConverter#convert(java.lang.String)
+	 * @see com.liferay.markdown.converter.MarkdownConverter#convert(java.lang.String)
 	 */
 
 	@Override

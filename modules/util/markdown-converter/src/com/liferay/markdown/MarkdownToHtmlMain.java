@@ -14,7 +14,8 @@
 
 package com.liferay.markdown;
 
-import com.liferay.pegdown.LiferayPegDownConverter;
+import com.liferay.markdown.converter.MarkdownConverter;
+import com.liferay.markdown.converter.internal.pegdown.LiferayPegDownConverter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

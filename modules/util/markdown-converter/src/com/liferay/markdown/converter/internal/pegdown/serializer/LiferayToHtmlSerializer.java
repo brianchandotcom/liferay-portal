@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.pegdown;
+package com.liferay.markdown.converter.internal.pegdown.serializer;
 
-import com.liferay.pegdown.ast.PicWithCaptionNode;
-import com.liferay.pegdown.ast.SidebarNode;
+import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
+import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;

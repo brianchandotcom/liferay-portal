@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.pegdown;
+package com.liferay.markdown.converter.internal.pegdown.processor;
+
+import com.liferay.markdown.converter.internal.pegdown.serializer.LiferayToHtmlSerializer;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.Parser;
@@ -21,7 +23,7 @@ import org.pegdown.ast.RootNode;
 
 /**
  * Converts Markdown to HTML using a {@link
- * com.liferay.pegdown.LiferayToHtmlSerializer}.
+ * com.liferay.markdown.converter.internal.pegdown.serializer.LiferayToHtmlSerializer}.
  *
  * @author James Hinkey
  */

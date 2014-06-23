@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.pegdown.ast;
+package com.liferay.markdown.converter.internal.pegdown.ast;
 
 import java.util.List;
 
@@ -22,14 +22,17 @@ import org.pegdown.ast.TextNode;
 import org.pegdown.ast.Visitor;
 
 /**
- * Represents picture with an associated caption.
+ * Represents a "side-bar" image with associated text. A "side-bar" is currently
+ * set apart from the surrounding text of a document by a horizontal rule above
+ * and below the image and its associated text. The image is typically an icon
+ * (e.g. a pen tip for a tip side-bar) that denotes the type of the "side-bar".
  *
  * @author James Hinkey
  */
-public class PicWithCaptionNode extends SuperNode {
+public class SidebarNode extends SuperNode {
 
-	public PicWithCaptionNode(String src, Node node) {
-		super(node);
+	public SidebarNode(Node captionNode, String src, Node node) {
+		super(captionNode);
 
 		_alt = _getAlt(node);
 		_src = src;
@@ -68,7 +71,7 @@ public class PicWithCaptionNode extends SuperNode {
 
 	private static final String _BLANK = "";
 
-	private final String _alt;
-	private final String _src;
+	private String _alt;
+	private String _src;
 
 }

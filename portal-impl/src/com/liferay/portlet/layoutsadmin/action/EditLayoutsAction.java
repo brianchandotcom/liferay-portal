@@ -935,14 +935,11 @@ public class EditLayoutsAction extends PortletAction {
 					LayoutPrototypeServiceUtil.getLayoutPrototype(
 						layoutPrototypeId);
 
-				String layoutPrototypeLinkEnabled = ParamUtil.getString(
+				boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
 					uploadPortletRequest, "layoutPrototypeLinkEnabled");
 
-				if (Validator.isNotNull(layoutPrototypeLinkEnabled)) {
-					serviceContext.setAttribute(
-						"layoutPrototypeLinkEnabled",
-						layoutPrototypeLinkEnabled);
-				}
+				serviceContext.setAttribute(
+					"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);
 
 				serviceContext.setAttribute(
 					"layoutPrototypeUuid", layoutPrototype.getUuid());

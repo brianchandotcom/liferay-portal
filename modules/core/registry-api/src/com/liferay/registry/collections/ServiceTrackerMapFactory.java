@@ -123,7 +123,7 @@ public class ServiceTrackerMapFactory {
 
 						return -(property1.compareTo(property2));
 					}
-					catch (ClassCastException e) {
+					catch (ClassCastException cce) {
 						return 0;
 					}
 				}

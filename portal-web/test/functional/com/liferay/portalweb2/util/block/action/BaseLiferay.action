@@ -223,6 +223,12 @@
 		</default>
 	</command>
 
+	<command name="isHTMLSourceTextPresent">
+		<default>
+			<execute function="IsHTMLSourceTextPresent#isHTMLSourceTextPresent" />
+		</default>
+	</command>
+
 	<command name="isNotVisible">
 		<default>
 			<execute function="IsNotVisible#isNotVisible" />

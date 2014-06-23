@@ -39,6 +39,7 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -166,72 +167,20 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String value)
 		throws Exception {
 
-		String currentURL = liferaySelenium.getLocation();
-
-		URL url = new URL(currentURL);
-
-		InputStream inputStream = url.openStream();
-
-		BufferedReader bufferedReader = new BufferedReader(
-			new InputStreamReader(inputStream));
-
-		String line;
-
-		Boolean found = false;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			Pattern pattern = Pattern.compile(value);
-			Matcher matcher = pattern.matcher(line);
-
-			if (!matcher.find()) {
-				found = true;
-			}
-		}
-
-		if (found) {
+		if (isHTMLSourceTextPresent(liferaySelenium, value)) {
 			throw new Exception(
-				"Pattern \"" + value + "\" does exists in \"" +
-					currentURL + "\"");
+				"Pattern \"" + value + "\" does exists in the HTML source");
 		}
-
-		inputStream.close();
-		bufferedReader.close();
 	}
 
 	public static void assertHTMLSourceTextPresent(
 			LiferaySelenium liferaySelenium, String value)
 		throws Exception {
 
-		String currentURL = liferaySelenium.getLocation();
-
-		URL url = new URL(currentURL);
-
-		InputStream inputStream = url.openStream();
-
-		BufferedReader bufferedReader = new BufferedReader(
-			new InputStreamReader(inputStream));
-
-		String line;
-
-		Boolean notFound = false;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			Pattern pattern = Pattern.compile(value);
-			Matcher matcher = pattern.matcher(line);
-
-			if (!matcher.find()) {
-				notFound = true;
-			}
-		}
-
-		if (notFound) {
+		if (!isHTMLSourceTextPresent(liferaySelenium, value)) {
 			throw new Exception(
-				"Pattern \"" + value + "\" does not exists in \"" +
-					currentURL + "\"");
+				"Pattern \"" + value + "\" does not exists in the HTML source");
 		}
-
-		inputStream.close();
-		bufferedReader.close();
 	}
 
 	public static void assertLiferayErrors() throws Exception {
@@ -560,6 +509,36 @@ public class LiferaySeleniumHelper {
 		}
 
 		return liferaySelenium.isElementPresent(locator);
+	}
+
+	public static boolean isHTMLSourceTextPresent(
+			LiferaySelenium liferaySelenium, String value)
+		throws Exception {
+
+		URL url = new URL(liferaySelenium.getLocation());
+
+		InputStream inputStream = url.openStream();
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		String line;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			Pattern pattern = Pattern.compile(value);
+
+			Matcher matcher = pattern.matcher(line);
+
+			if (matcher.find()) {
+				return true;
+			}
+		}
+
+		inputStream.close();
+
+		bufferedReader.close();
+
+		return false;
 	}
 
 	public static boolean isIgnorableErrorLine(String line) {

@@ -23,6 +23,10 @@ import org.parboiled.Parboiled;
 import org.pegdown.Extensions;
 import org.pegdown.LiferayParser;
 import org.pegdown.LinkRenderer;
+
+/**
+ * @author James Hinkey
+ */
 public class LiferayPegDownConverter implements MarkdownConverter {
 
 	public LiferayPegDownConverter() {
@@ -35,11 +39,11 @@ public class LiferayPegDownConverter implements MarkdownConverter {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.liferay.documentation.pegdown.MarkdownConverter#markdownToHtml(java.lang.String)
+	 * @see com.liferay.documentation.pegdown.MarkdownConverter#convert(java.lang.String)
 	 */
 
 	@Override
-	public String markdownToHtml(String markdown) throws IOException {
+	public String convert(String markdown) throws IOException {
 		String html = _liferayPegDownProcessor.markdownToHtml(
 			markdown, new LinkRenderer());
 

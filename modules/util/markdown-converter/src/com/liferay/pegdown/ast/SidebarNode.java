@@ -31,10 +31,10 @@ import org.pegdown.ast.Visitor;
  */
 public class SidebarNode extends SuperNode {
 
-	public SidebarNode(Node captionNode, String title, String src, Node node) {
+	public SidebarNode(Node captionNode, String src, Node node) {
 		super(captionNode);
 
-		_alt = _getText(node);
+		_alt = _getAlt(node);
 		_src = src;
 	}
 
@@ -51,7 +51,7 @@ public class SidebarNode extends SuperNode {
 		return _src;
 	}
 
-	private String _getText(Node node) {
+	private String _getAlt(Node node) {
 		if (node == null) {
 			return _BLANK;
 		}

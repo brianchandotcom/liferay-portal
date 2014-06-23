@@ -21,7 +21,7 @@ import org.pegdown.ast.RootNode;
 
 /**
  * Converts Markdown to HTML using a {@link
- * com.liferay.importer.pegdown.LiferayToHtmlSerializer}.
+ * com.liferay.pegdown.LiferayToHtmlSerializer}.
  *
  * @author James Hinkey
  */

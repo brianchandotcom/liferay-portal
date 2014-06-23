@@ -82,9 +82,7 @@ public class LiferayParser extends Parser {
 			TestNot(OneOrMore(CharEntity())), '!', Label(), Spn1(), '(', Sp(),
 			LinkSource(), Spn1(), FirstOf(LinkTitle(), push("")), Sp(), ')',
 			Sp(), Para(),
-			push(
-				new SidebarNode(
-					popAsNode(), popAsString(), popAsString(), popAsNode())));
+			push(new SidebarNode(popAsNode(), popAsString(), popAsNode())));
 	}
 
 }

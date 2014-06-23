@@ -15,8 +15,12 @@
 package com.liferay.markdown;
 
 import java.io.IOException;
+
+/**
+ * @author James Hinkey
+ */
 public interface MarkdownConverter {
 
-	public abstract String markdownToHtml(String markdown) throws IOException;
+	public abstract String convert(String markdown) throws IOException;
 
 }

@@ -21,10 +21,14 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+/**
+ * @author James Hinkey
+ */
 public class MarkdownToHtmlMain {
 
 	public static void main(String[] args) throws IOException {
-		if (args == null || args.length < 2) {
+		if ((args == null) || (args.length < 2)) {
 			throw new IllegalArgumentException(
 				"Requires 2 arguments: markdownFile htmlFile");
 		}
@@ -32,30 +36,35 @@ public class MarkdownToHtmlMain {
 		String markdownFile = args[0];
 		String htmlFile = args[1];
 
+		BufferedReader bufferedReader = new BufferedReader(
+			new FileReader(markdownFile));
+
+		String line = bufferedReader.readLine();
+
 		StringBuilder sb = new StringBuilder();
 
-	BufferedReader br = new BufferedReader(new FileReader(markdownFile));
+		while (line != null) {
+			sb.append(line);
+			sb.append("\n");
 
-	String line = br.readLine();
-
-	while (line != null) {
-		sb.append(line);
-		sb.append("\n");
-		line = br.readLine();
+			line = bufferedReader.readLine();
 		}
 
-	br.close();
+		bufferedReader.close();
 
-	MarkdownConverter converter = new LiferayPegDownConverter();
+		MarkdownConverter markdownConverter = new LiferayPegDownConverter();
 
-	String html = converter.markdownToHtml(sb.toString());
+		String html = markdownConverter.convert(sb.toString());
 
-		BufferedWriter out = new BufferedWriter(new FileWriter(htmlFile));
+		BufferedWriter bufferedWriter = new BufferedWriter(
+			new FileWriter(htmlFile));
 
-		out.append(html);
-		out.append("\n");
-		out.flush();
-		out.close();
+		bufferedWriter.append(html);
+		bufferedWriter.append("\n");
+
+		bufferedWriter.flush();
+
+		bufferedWriter.close();
 	}
 
 }

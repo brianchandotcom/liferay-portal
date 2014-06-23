@@ -31,20 +31,8 @@ public class PicWithCaptionNode extends SuperNode {
 	public PicWithCaptionNode(String src, Node node) {
 		super(node);
 
+		_alt = _getAlt(node);
 		_src = src;
-
-		List<Node> nodes = node.getChildren();
-
-		if ((nodes != null) && !nodes.isEmpty() &&
-			(nodes.get(0) instanceof TextNode)) {
-
-			TextNode textNode = (TextNode)nodes.get(0);
-
-			_alt = textNode.getText();
-		}
-		else {
-			_alt = _BLANK;
-		}
 	}
 
 	@Override
@@ -58,6 +46,24 @@ public class PicWithCaptionNode extends SuperNode {
 
 	public String getSrc() {
 		return _src;
+	}
+
+	private String _getAlt(Node node) {
+		if (node == null) {
+			return _BLANK;
+		}
+
+		List<Node> nodes = node.getChildren();
+
+		if ((nodes != null) && !nodes.isEmpty() &&
+			(nodes.get(0) instanceof TextNode)) {
+
+			TextNode textNode = (TextNode)nodes.get(0);
+
+			return textNode.getText();
+		}
+
+		return _BLANK;
 	}
 
 	private static final String _BLANK = "";

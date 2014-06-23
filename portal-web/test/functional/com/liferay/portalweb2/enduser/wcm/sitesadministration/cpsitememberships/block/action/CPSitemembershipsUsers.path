@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>CPSitemembershipsUsers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitemembershipsUsers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitemembershipsUsers</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEARCH-->
+<tr>
+	<td>USER_SEARCH_FIELD</td>
+	<td>//div[contains(@class,'input-group')]/input[contains(@name,'_174_keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEARCH_BUTTON</td>
+	<td>//span[contains(@class,'input-group')]/button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -74,11 +75,27 @@ public class UpgradeMVCC extends UpgradeProcess {
 		return rootElement.elements("class");
 	}
 
+	protected String normalizeName(
+			String name, DatabaseMetaData databaseMetaData)
+		throws SQLException {
+
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return name.toLowerCase();
+		}
+		else if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return name.toUpperCase();
+		}
+
+		return name;
+	}
+
 	protected void upgradeMVCC(
 			DatabaseMetaData databaseMetaData, Element classElement)
 		throws Exception {
 
 		String table = classElement.attributeValue("table");
+
+		table = normalizeName(table, databaseMetaData);
 
 		ResultSet tableResultSet = databaseMetaData.getTables(
 			null, null, table, null);
@@ -91,7 +108,8 @@ public class UpgradeMVCC extends UpgradeProcess {
 			}
 
 			ResultSet columnResultSet = databaseMetaData.getColumns(
-				null, null, table, "mvccVersion");
+				null, null, table,
+				normalizeName("mvccVersion", databaseMetaData));
 
 			try {
 				if (columnResultSet.next()) {

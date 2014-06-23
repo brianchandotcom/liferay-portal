@@ -63,15 +63,15 @@ boolean singlePageApplication = PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_E
 			}
 
 			for (Group manageableSiteGroup : manageableSiteGroups) {
-				boolean selected = false;
+				String cssSelected = StringPool.BLANK;
 
-				if (singlePageApplication && siteGroup.getGroupId() == manageableSiteGroup.getGroupId()) {
-					selected = true;
+				if (singlePageApplication && (siteGroup.getGroupId() == manageableSiteGroup.getGroupId())) {
+					cssSelected = "selected";
 				}
 			%>
 
 				<liferay-ui:icon
-					cssClass='<%= "site-group" + (selected ? " selected" : StringPool.BLANK) %>'
+					cssClass='<%= "site-group " + cssSelected %>'
 					iconCssClass="<%= manageableSiteGroup.getIconCssClass() %>"
 					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
@@ -87,13 +87,13 @@ boolean singlePageApplication = PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_E
 
 		<c:if test="<%= singlePageApplication %>">
 			<aui:script>
-				var siteSelectorLabel;
-
 				Liferay.provide(
 					window,
 					'<portlet:namespace />changeSiteLabel',
 					function(target) {
 						var A = AUI();
+
+						var siteSelectorLabel = A.one('#<portlet:namespace/>controlPanelSiteSelector .lfr-icon-menu-text');
 
 						var newSite = A.one(target).ancestor('.site-group', false, '.lfr-menu-list');
 						var prevSite = A.one('.site-group.selected');
@@ -102,11 +102,9 @@ boolean singlePageApplication = PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_E
 							newSite.addClass('selected');
 							prevSite.removeClass('selected');
 
-							if (!siteSelectorLabel) {
-								siteSelectorLabel = A.one('#<portlet:namespace/>controlPanelSiteSelector .lfr-icon-menu-text');
-							}
+							var newSiteIconHtml = newSite.one('.taglib-text-icon').html();
 
-							siteSelectorLabel.html(newSite.one('.taglib-text-icon').html());
+							siteSelectorLabel.html(newSiteIconHtml);
 						}
 					},
 					['aui-base']

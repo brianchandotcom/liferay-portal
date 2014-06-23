@@ -513,6 +513,8 @@ public class SearchEngineUtil {
 			return;
 		}
 
+		waitForSystemSearchEngine();
+
 		_companyIds.add(companyId);
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {

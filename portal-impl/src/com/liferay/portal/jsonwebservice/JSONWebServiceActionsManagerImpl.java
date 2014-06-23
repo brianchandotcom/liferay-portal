@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -144,8 +145,9 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request, String path, String method,
-		Map<String, Object> parameterMap) {
+			HttpServletRequest request, String path, String method,
+			Map<String, Object> parameterMap)
+		throws NoSuchJSONWebServiceException {
 
 		JSONWebServiceActionParameters jsonWebServiceActionParameters =
 			new JSONWebServiceActionParameters();
@@ -173,7 +175,7 @@ public class JSONWebServiceActionsManagerImpl
 				contextPath, path, method, parameterNames);
 
 		if (jsonWebServiceActionConfigIndex == -1) {
-			throw new RuntimeException(
+			throw new NoSuchJSONWebServiceException(
 				"No JSON web service action with path " + path +
 					" and method " + method + " for /" + contextPath);
 		}

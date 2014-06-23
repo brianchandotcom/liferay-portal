@@ -20,6 +20,7 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -58,10 +59,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			return JSONFactoryUtil.serializeThrowable(uploadException);
 		}
 
-		JSONWebServiceAction jsonWebServiceAction = null;
-
 		try {
-			jsonWebServiceAction = getJSONWebServiceAction(request);
+			JSONWebServiceAction jsonWebServiceAction = getJSONWebServiceAction(
+				request);
 
 			Object returnObj = jsonWebServiceAction.invoke();
 
@@ -72,21 +72,39 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.getNullJSON();
 			}
 		}
-		catch (InvocationTargetException ite) {
-			Throwable throwable = ite.getCause();
-
-			if (throwable instanceof SecurityException) {
-				throw (SecurityException)throwable;
-			}
-
-			_log.error(throwable, throwable);
-
-			return JSONFactoryUtil.serializeThrowable(throwable);
-		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			int status = 0;
+
+			if (e instanceof InvocationTargetException) {
+				Throwable throwable = e.getCause();
+
+				if (throwable instanceof SecurityException) {
+					status = HttpServletResponse.SC_FORBIDDEN;
+				}
+				else {
+					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				}
+
+				_log.error(throwable, throwable);
+
+				response.setStatus(status);
+
+				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
+
+			if (e instanceof NoSuchJSONWebServiceException) {
+				status = HttpServletResponse.SC_NOT_FOUND;
+			}
+			else if (e instanceof SecurityException) {
+				status = HttpServletResponse.SC_FORBIDDEN;
+			}
+			else {
+				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+			}
+
+			_log.error(e, e);
+
+			response.setStatus(status);
 
 			return JSONFactoryUtil.serializeThrowable(e);
 		}

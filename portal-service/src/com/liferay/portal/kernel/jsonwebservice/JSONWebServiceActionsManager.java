@@ -34,8 +34,9 @@ public interface JSONWebServiceActionsManager {
 		HttpServletRequest request);
 
 	public JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request, String path, String method,
-		Map<String, Object> parameters);
+			HttpServletRequest request, String path, String method,
+			Map<String, Object> parameters)
+		throws NoSuchJSONWebServiceException;
 
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature);

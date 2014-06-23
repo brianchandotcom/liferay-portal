@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -399,10 +400,12 @@ public class JSONWebServiceActionsManagerImpl
 		for (MethodParameter methodParameter : methodParameters) {
 			String methodParameterName = methodParameter.getName();
 
-			methodParameterName = methodParameterName.toLowerCase();
+			methodParameterName = StringUtil.toLowerCase(methodParameterName);
 
 			for (String parameterName : parameterNames) {
-				if (parameterName.equalsIgnoreCase(methodParameterName)) {
+				if (StringUtil.equalsIgnoreCase(
+						parameterName, methodParameterName)) {
+
 					matched++;
 				}
 			}

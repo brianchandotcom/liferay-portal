@@ -2270,6 +2270,10 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#configureWhatsHappeningDisplayPG" />
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
@@ -2550,6 +2554,10 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
 		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#configureWhatsHappeningDisplayPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />

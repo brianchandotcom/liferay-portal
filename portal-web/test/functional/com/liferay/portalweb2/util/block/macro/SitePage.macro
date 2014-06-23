@@ -19,7 +19,7 @@
 		<execute macro="SitePage#expandRootCP" />
 
 		<if>
-			<isset var="childPageName" />
+			<isset var="childSitepageName" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 			</then>

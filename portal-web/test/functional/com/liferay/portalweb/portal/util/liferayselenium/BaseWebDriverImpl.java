@@ -141,6 +141,16 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
+		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+	}
+
+	@Override
+	public void assertHTMLSourceTextPresent(String value) throws Exception {
+		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+	}
+
+	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
 
@@ -486,6 +496,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public boolean isElementPresentAfterWait(String locator) throws Exception {
 		return LiferaySeleniumHelper.isElementPresentAfterWait(this, locator);
+	}
+
+	@Override
+	public boolean isHTMLSourceTextPresent(String value) throws Exception {
+		return LiferaySeleniumHelper.isHTMLSourceTextPresent(this, value);
 	}
 
 	@Override

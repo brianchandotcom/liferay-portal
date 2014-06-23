@@ -233,7 +233,7 @@ if (!selectableTree) {
 								childrenChange: function(event) {
 									var target = event.target;
 
-									target.attr('alwaysShowHitArea', (event.newVal.length > 0));
+									target.set('alwaysShowHitArea', (event.newVal.length > 0));
 
 									target.eachChildren(TreeUtil.restoreSelectedNode);
 

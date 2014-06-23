@@ -177,6 +177,13 @@ public class EditPublishConfigurationAction
 			actionRequest, portletId + "exportImportConfigurationId",
 			exportImportConfigurationId);
 
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+
+		SessionMessages.add(actionRequest, portletId + "name", name);
+		SessionMessages.add(
+			actionRequest, portletId + "description", description);
+
 		int exportImportConfigurationType =
 			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
 
@@ -196,13 +203,6 @@ public class EditPublishConfigurationAction
 
 		SessionMessages.add(
 			actionRequest, portletId + "settingsMap", settingsMap);
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		SessionMessages.add(actionRequest, portletId + "name", name);
-		SessionMessages.add(
-			actionRequest, portletId + "description", description);
 	}
 
 	protected void relaunchPublishLayoutConfiguration(

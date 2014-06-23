@@ -170,6 +170,13 @@ public class EditExportConfigurationAction extends PortletAction {
 			actionRequest, portletId + "exportImportConfigurationId",
 			exportImportConfigurationId);
 
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+
+		SessionMessages.add(actionRequest, portletId + "name", name);
+		SessionMessages.add(
+			actionRequest, portletId + "description", description);
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		Map<String, Serializable> settingsMap =
@@ -179,13 +186,6 @@ public class EditExportConfigurationAction extends PortletAction {
 
 		SessionMessages.add(
 			actionRequest, portletId + "settingsMap", settingsMap);
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		SessionMessages.add(actionRequest, portletId + "name", name);
-		SessionMessages.add(
-			actionRequest, portletId + "description", description);
 	}
 
 	protected void deleteExportImportConfiguration(

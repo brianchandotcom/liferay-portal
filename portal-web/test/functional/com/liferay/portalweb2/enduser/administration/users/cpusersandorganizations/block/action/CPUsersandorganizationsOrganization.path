@@ -41,17 +41,17 @@
 <!--MENU-->
 <tr>
 	<td>MENU_EDIT</td>
-	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'lfr-asset-column-actions')]/ul/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_ASSIGN_USERS</td>
-	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Assign Users')]</td>
+	<td>//div[contains(@class,'lfr-asset-column-actions')]/ul/li/a[contains(.,'Assign Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DELETE</td>
-	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'lfr-asset-column-actions')]/ul/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

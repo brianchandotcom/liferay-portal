@@ -39,7 +39,13 @@ public class ParamUtil {
 	public static boolean get(
 		HttpServletRequest request, String param, boolean defaultValue) {
 
-		return GetterUtil.get(request.getParameter(param), defaultValue);
+		if (Validator.isNotNull(request.getParameter(param))) {
+			return GetterUtil.get(request.getParameter(param), defaultValue);
+		}
+
+		String checkboxNames = ParamUtil.getString(request, "checkboxNames");
+
+		return getDefaultBooleanValue(param, checkboxNames, defaultValue);
 	}
 
 	public static Date get(
@@ -102,7 +108,15 @@ public class ParamUtil {
 	public static boolean get(
 		PortletRequest portletRequest, String param, boolean defaultValue) {
 
-		return GetterUtil.get(portletRequest.getParameter(param), defaultValue);
+		if (Validator.isNotNull(portletRequest.getParameter(param))) {
+			return GetterUtil.get(
+				portletRequest.getParameter(param), defaultValue);
+		}
+
+		String checkboxNames = ParamUtil.getString(
+			portletRequest, "checkboxNames");
+
+		return getDefaultBooleanValue(param, checkboxNames, defaultValue);
 	}
 
 	public static Date get(
@@ -909,6 +923,23 @@ public class ParamUtil {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
 		}
+	}
+
+	protected static boolean getDefaultBooleanValue(
+		String param, String checkboxNames, boolean defaultValue) {
+
+		if (Validator.isNull(checkboxNames)) {
+			return defaultValue;
+		}
+
+		List<String> checboxNamesList = ListUtil.fromString(
+			checkboxNames, StringPool.COMMA);
+
+		if (checboxNamesList.contains(param)) {
+			return false;
+		}
+
+		return defaultValue;
 	}
 
 }

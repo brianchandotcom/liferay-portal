@@ -35,8 +35,6 @@
 
 		<action path="/portal/extend_session" forward="/portal/extend_session.jsp" />
 
-		<action path="/portal/fckeditor" type="com.liferay.portal.editor.fckeditor.ConnectorAction" />
-
 		<action path="/portal/flash" forward="/portal/flash.jsp" />
 
 		<action path="/portal/j_login" forward="/portal/j_login.jsp" />

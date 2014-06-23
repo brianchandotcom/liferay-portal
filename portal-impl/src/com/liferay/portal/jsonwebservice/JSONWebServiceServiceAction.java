@@ -59,13 +59,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			return JSONFactoryUtil.serializeThrowable(uploadException);
 		}
 
-		Throwable throwable = null;
-
-		int returnStatusCode = 200;
-
 		try {
-			JSONWebServiceAction jsonWebServiceAction =
-				getJSONWebServiceAction(request);
+			JSONWebServiceAction jsonWebServiceAction = getJSONWebServiceAction(
+				request);
 
 			Object returnObj = jsonWebServiceAction.invoke();
 
@@ -76,37 +72,42 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.getNullJSON();
 			}
 		}
-		catch (InvocationTargetException ite) {
-			throwable = ite.getCause();
+		catch (Exception e) {
+			int status = 0;
 
-			if (throwable instanceof SecurityException) {
-				returnStatusCode = HttpServletResponse.SC_FORBIDDEN;
+			if (e instanceof InvocationTargetException) {
+				Throwable throwable = e.getCause();
+
+				if (throwable instanceof SecurityException) {
+					status = HttpServletResponse.SC_FORBIDDEN;
+				}
+				else {
+					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				}
+
+				_log.error(throwable, throwable);
+
+				response.setStatus(status);
+
+				return JSONFactoryUtil.serializeThrowable(throwable);
+			}
+
+			if (e instanceof JSONWebServiceNotFoundException) {
+				status = HttpServletResponse.SC_NOT_FOUND;
+			}
+			else if (e instanceof SecurityException) {
+				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {
-				returnStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
+
+			_log.error(e, e);
+
+			response.setStatus(status);
+
+			return JSONFactoryUtil.serializeThrowable(e);
 		}
-		catch (JSONWebServiceNotFoundException e) {
-			throwable = e;
-
-			returnStatusCode = HttpServletResponse.SC_NOT_FOUND;
-		}
-		catch (SecurityException e) {
-			throwable = e;
-
-			returnStatusCode = HttpServletResponse.SC_FORBIDDEN;
-		}
-		catch (Exception e) {
-			throwable = e;
-
-			returnStatusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-		}
-
-		_log.error(throwable, throwable);
-
-		response.setStatus(returnStatusCode);
-
-		return JSONFactoryUtil.serializeThrowable(throwable);
 	}
 
 	/**

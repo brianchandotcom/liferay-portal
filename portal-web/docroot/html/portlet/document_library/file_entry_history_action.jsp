@@ -21,10 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Object[] objArray = (Object[])row.getObject();
-
-FileEntry fileEntry = (FileEntry)objArray[0];
-FileVersion fileVersion = (FileVersion)objArray[1];
+FileVersion fileVersion = (FileVersion)row.getObject();
+FileEntry fileEntry = fileVersion.getFileEntry();
 %>
 
 <liferay-ui:icon-menu direction='<%= "down" %>' extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">

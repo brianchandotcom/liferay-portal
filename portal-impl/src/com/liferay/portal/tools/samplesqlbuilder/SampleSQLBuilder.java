@@ -296,28 +296,44 @@ public class SampleSQLBuilder {
 
 			@Override
 			public void run() {
+				Writer sampleSQLWriter = null;
+				Map<String, Object> context = null;
+
 				try {
-					Writer sampleSQLWriter = new UnsyncTeeWriter(
+					sampleSQLWriter = new UnsyncTeeWriter(
 						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(new File(_outputDir, "sample.sql")));
 
-					Map<String, Object> context = getContext();
+					context = getContext();
 
 					FreeMarkerUtil.process(_script, context, sampleSQLWriter);
-
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				finally {
 					for (String csvFileName : _csvFileNames) {
 						Writer csvWriter = (Writer)context.get(
 							csvFileName + "CSVWriter");
 
-						csvWriter.close();
+						try {
+							csvWriter.close();
+						}
+						catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
 					}
 
-					sampleSQLWriter.close();
+					if (sampleSQLWriter != null) {
+						try {
+							sampleSQLWriter.close();
+						}
+						catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
+					}
 
 					charPipe.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 

@@ -136,7 +136,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					}
 				}
 
-				ClassWriter classWriter = new ClassWriter(
+				ClassWriter classWriter = new ContextAwareClassWriter(
 					ClassWriter.COMPUTE_FRAMES);
 
 				String name = className.replace('/', '.');
@@ -164,7 +164,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 			if (className.equals(
 					"net/sourceforge/cobertura/coveragedata/TouchCollector")) {
 
-				ClassWriter classWriter = new ClassWriter(
+				ClassWriter classWriter = new ContextAwareClassWriter(
 					ClassWriter.COMPUTE_FRAMES);
 
 				ClassVisitor classVisitor = new TouchCollectorClassVisitor(

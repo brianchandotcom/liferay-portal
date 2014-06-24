@@ -17,20 +17,26 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
-
 long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("displayStyle", JournalUtil.getDisplayStyle(liferayPortletRequest));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 	<aui:nav-bar>
 		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
-			<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
+
+			<%
+			String keywords = ParamUtil.getString(request, "keywords");
+
+			boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
+			%>
+
+			<c:if test="<%= Validator.isNull(keywords) && !advancedSearch %>">
 				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
 			</c:if>
 		</aui:nav>

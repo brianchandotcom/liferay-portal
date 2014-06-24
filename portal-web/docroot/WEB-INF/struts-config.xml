@@ -909,10 +909,6 @@
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
-		<action path="/journal/search" type="com.liferay.portlet.journal.action.SearchAction">
-			<forward name="portlet.journal.view" path="portlet.journal.view" />
-		</action>
-
 		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
 
 		<action path="/journal/select_folder" type="com.liferay.portlet.journal.action.EditFolderAction">

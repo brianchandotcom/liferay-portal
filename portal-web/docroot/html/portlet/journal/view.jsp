@@ -85,7 +85,21 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				<aui:input name="newFolderId" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
+
+					<%
+					String keywords = ParamUtil.getString(request, "keywords");
+
+					boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
+					%>
+
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(keywords) || advancedSearch %>">
+							<liferay-util:include page="/html/portlet/journal/search_resources.jsp" />
+						</c:when>
+						<c:otherwise>
+							<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</aui:form>
 		</aui:col>

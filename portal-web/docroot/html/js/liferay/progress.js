@@ -93,7 +93,7 @@ AUI.add(
 							]
 						);
 
-						instance._frame.set('src', url);
+						instance._frame.attr('src', url);
 					},
 
 					_afterComplete: function(event) {

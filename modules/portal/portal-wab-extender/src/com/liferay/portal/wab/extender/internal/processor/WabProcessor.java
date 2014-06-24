@@ -190,6 +190,10 @@ public class WabProcessor {
 		}
 	}
 
+	protected String getFileName(String className) {
+		return className.replace(CharPool.PERIOD, CharPool.SLASH) + ".class";
+	}
+
 	protected Manifest getManifest() throws IOException {
 		File manifestFile = getManifestFile();
 
@@ -394,10 +398,6 @@ public class WabProcessor {
 				_importPackageNames.addAll(processJSPDependencies(file));
 			}
 		}
-	}
-
-	protected String getFileName(String className) {
-		return className.replace(CharPool.PERIOD, CharPool.SLASH) + ".class";
 	}
 
 	protected Set<String> processJSPDependencies(File file) throws IOException {

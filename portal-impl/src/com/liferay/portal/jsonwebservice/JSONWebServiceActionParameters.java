@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -267,12 +268,7 @@ public class JSONWebServiceActionParameters {
 					_parameterTypes.put(key, typeName);
 				}
 
-				if (value instanceof String) {
-					if (Validator.isBlank((String)value)) {
-						value = Void.TYPE;
-					}
-				}
-				else if (value == null) {
+				if (Validator.isNull(GetterUtil.getString(value))) {
 					value = Void.TYPE;
 				}
 			}
@@ -287,10 +283,8 @@ public class JSONWebServiceActionParameters {
 
 				_parameterTypes.put(key, typeName);
 
-				if (value instanceof String) {
-					if (Validator.isBlank((String)value)) {
-						value = Void.TYPE;
-					}
+				if (Validator.isNull(GetterUtil.getString(value))) {
+					value = Void.TYPE;
 				}
 			}
 

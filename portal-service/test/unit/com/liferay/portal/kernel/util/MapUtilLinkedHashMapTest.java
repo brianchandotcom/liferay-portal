@@ -122,6 +122,16 @@ public class MapUtilLinkedHashMapTest {
 	}
 
 	@Test
+	public void testTypeNonPrimitiveWithoutStringBasedConstructor()
+		throws Exception {
+
+		Map<String, Object> map = MapUtil.toLinkedHashMap(
+			new String[] {"one:1:" + Object.class.getName()});
+
+		Assert.assertTrue(map.size() == 0);
+	}
+
+	@Test
 	public void testTypeShort() throws Exception {
 		Map<String, Object> map = MapUtil.toLinkedHashMap(
 			new String[] {"one:1:short"});

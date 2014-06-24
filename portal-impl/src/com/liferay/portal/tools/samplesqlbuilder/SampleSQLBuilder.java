@@ -204,7 +204,7 @@ public class SampleSQLBuilder {
 		}
 	}
 
-	protected void compressSQL(Reader reader, File dir) throws IOException {
+	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBFactoryUtil.getDB(_dbType);
 
 		if (db instanceof MySQLDB) {
@@ -221,7 +221,9 @@ public class SampleSQLBuilder {
 
 		String s = null;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
+		while ((_freemarkerException == null) &&
+			   ((s = unsyncBufferedReader.readLine()) != null)) {
+
 			s = s.trim();
 
 			if (s.length() > 0) {
@@ -236,6 +238,11 @@ public class SampleSQLBuilder {
 		}
 
 		unsyncBufferedReader.close();
+
+		if (_freemarkerException != null) {
+			throw new Exception(
+				"Unable to process freemarker template ", _freemarkerException);
+		}
 
 		for (Map.Entry<String, StringBundler> entry : insertSQLs.entrySet()) {
 			String tableName = entry.getKey();
@@ -309,7 +316,7 @@ public class SampleSQLBuilder {
 					FreeMarkerUtil.process(_script, context, sampleSQLWriter);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					_freemarkerException = e;
 				}
 				finally {
 					for (String csvFileName : _csvFileNames) {
@@ -448,6 +455,7 @@ public class SampleSQLBuilder {
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
+	private volatile Exception _freemarkerException;
 
 	private String[] _csvFileNames;
 	private DataFactory _dataFactory;

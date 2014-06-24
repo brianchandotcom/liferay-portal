@@ -769,7 +769,7 @@ AUI.add(
 						return folderEntry;
 					},
 
-					_getFolderId: function(target) {
+					_getTargetFolderId: function(target) {
 						var instance = this;
 
 						var folderEntry = instance._getFolderEntryNode(target);
@@ -992,7 +992,7 @@ AUI.add(
 					_queueSelectedFiles: function(target, filesPartition) {
 						var instance = this;
 
-						var key = instance._getFolderId(target);
+						var key = instance._getTargetFolderId(target);
 
 						var keyData = instance._getUploadStatus(key);
 
@@ -1199,7 +1199,7 @@ AUI.add(
 					_updateStatusUI: function(target, filesPartition) {
 						var instance = this;
 
-						var folderId = instance._getFolderId(target);
+						var folderId = instance._getTargetFolderId(target);
 
 						var folder = (folderId !== instance.get('folderId'));
 

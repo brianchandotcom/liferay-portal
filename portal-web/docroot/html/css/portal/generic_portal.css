@@ -38,11 +38,6 @@ td {
 	}
 }
 
-.dialog-iframe-bd {
-	overflow-x: hidden;
-	overflow-y: auto;
-}
-
 .lfr-code {
 	border: 1px solid transparent;
 	font-family: monospace;

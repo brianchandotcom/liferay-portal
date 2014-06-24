@@ -34,9 +34,7 @@ boolean publicLayoutSetPrototypeLinkEnabled = true;
 
 if (showPrototypes && (group != null)) {
 	try {
-		LayoutLocalServiceUtil.getLayouts(liveGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
+		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), true);
 
 		privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
@@ -50,9 +48,7 @@ if (showPrototypes && (group != null)) {
 	}
 
 	try {
-		LayoutLocalServiceUtil.getLayouts(liveGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
+		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false);
 
 		publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
@@ -212,7 +208,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								</aui:select>
 
 								<c:choose>
-									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+									<c:when test="<%= ((group == null) || !group.isStaged()) && hasUnlinkLayoutSetPrototypePermission %>">
 										<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
 											<c:if test="<%= disableLayoutSetPrototypeInput %>">
 												<div class="alert alert-info">
@@ -254,7 +250,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 										</c:choose>
 
 										<c:choose>
-											<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+											<c:when test="<%= (publicLayoutSetPrototype != null) && !group.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<c:if test="<%= disableLayoutSetPrototypeInput %>">
 													<div class="alert alert-info">
 														<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
@@ -314,7 +310,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								</aui:select>
 
 								<c:choose>
-									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+									<c:when test="<%= ((group == null) || !group.isStaged()) && hasUnlinkLayoutSetPrototypePermission %>">
 										<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
 											<c:if test="<%= disableLayoutSetPrototypeInput %>">
 												<div class="alert alert-info">
@@ -356,7 +352,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 										</c:choose>
 
 										<c:choose>
-											<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+											<c:when test="<%= (privateLayoutSetPrototype != null) && !group.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<c:if test="<%= disableLayoutSetPrototypeInput %>">
 													<div class="alert alert-info">
 														<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />

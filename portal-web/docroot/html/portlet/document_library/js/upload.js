@@ -156,7 +156,7 @@ AUI.add(
 					zeroByteFile: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
 				};
 
-				instance._attachEventHandlers();
+				instance._bindDragDropUI();
 			},
 
 			destructor: function() {
@@ -200,7 +200,32 @@ AUI.add(
 				);
 			},
 
-			_attachEventHandlers: function() {
+			_attachSubscriptions: function(data) {
+				var instance = this;
+
+				var handles = instance._handles;
+
+				var uploader = instance._getUploader();
+				var displayStyle = instance._getDisplayStyle();
+
+				if (data.folder) {
+					handles.push(
+						uploader.on('uploadstart', instance._showFolderUploadStarting, instance, data),
+						uploader.on('totaluploadprogress', instance._showFolderUploadProgress, instance, data),
+						uploader.on('uploadcomplete', instance._detectFolderUploadError, instance, data),
+						uploader.on('alluploadscomplete', instance._showFolderUploadComplete, instance, data, displayStyle)
+					);
+				}
+				else {
+					handles.push(
+						uploader.after('fileuploadstart', instance._showFileUploadStarting, instance),
+						uploader.on('uploadprogress', instance._showFileUploadProgress, instance),
+						uploader.on('uploadcomplete', instance._showFileUploadComplete, instance, displayStyle)
+					);
+				}
+			},
+
+			_bindDragDropUI: function() {
 				var instance = this;
 
 				var docElement = A.one(DOC.documentElement);
@@ -327,31 +352,6 @@ AUI.add(
 					entriesDragDelegateHandle,
 					entriesClickDelegateHandle
 				];
-			},
-
-			_attachSubscriptions: function(data) {
-				var instance = this;
-
-				var handles = instance._handles;
-
-				var uploader = instance._getUploader();
-				var displayStyle = instance._getDisplayStyle();
-
-				if (data.folder) {
-					handles.push(
-						uploader.on('uploadstart', instance._showFolderUploadStarting, instance, data),
-						uploader.on('totaluploadprogress', instance._showFolderUploadProgress, instance, data),
-						uploader.on('uploadcomplete', instance._detectFolderUploadError, instance, data),
-						uploader.on('alluploadscomplete', instance._showFolderUploadComplete, instance, data, displayStyle)
-					);
-				}
-				else {
-					handles.push(
-						uploader.after('fileuploadstart', instance._showFileUploadStarting, instance),
-						uploader.on('uploadprogress', instance._showFileUploadProgress, instance),
-						uploader.on('uploadcomplete', instance._showFileUploadComplete, instance, displayStyle)
-					);
-				}
 			},
 
 			_combineFileLists: function(fileList, queuedFiles) {

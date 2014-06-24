@@ -381,6 +381,8 @@
 		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 
+		<execute action="CPSites#pause" locator1="5000" />
+
 		<if>
 			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 			<then>
@@ -587,7 +589,12 @@
 
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute action="CPSitepages#click" locator-key1="DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
+			</then>
+		</if>
 
 		<var name="key_componentOrPortletName" value="${componentName}" />
 

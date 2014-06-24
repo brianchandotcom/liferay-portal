@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,9 +33,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.login.util.LoginUtil;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -49,21 +48,12 @@ import javax.servlet.http.HttpSession;
  */
 public class AutoLoginFilter extends BasePortalFilter {
 
-	public static void registerAutoLogin(AutoLogin autoLogin) {
-		_autoLogins.add(autoLogin);
-	}
-
-	public static void unregisterAutoLogin(AutoLogin autoLogin) {
-		_autoLogins.remove(autoLogin);
-	}
-
 	public AutoLoginFilter() {
-		for (String autoLoginClassName : PropsValues.AUTO_LOGIN_HOOKS) {
-			AutoLogin autoLogin = (AutoLogin)InstancePool.get(
-				autoLoginClassName);
+		Registry registry = RegistryUtil.getRegistry();
 
-			_autoLogins.add(autoLogin);
-		}
+		_serviceTracker = registry.trackServices(AutoLogin.class);
+
+		_serviceTracker.open();
 	}
 
 	protected String getLoginRemoteUser(
@@ -201,7 +191,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 		if (!PropsValues.AUTH_LOGIN_DISABLED &&
 			(remoteUser == null) && (jUserName == null)) {
 
-			for (AutoLogin autoLogin : _autoLogins) {
+			for (Object autoLoginObj : _serviceTracker.getServices()) {
+				AutoLogin autoLogin = (AutoLogin)autoLoginObj;
 				try {
 					String[] credentials = autoLogin.login(request, response);
 
@@ -271,7 +262,6 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(AutoLoginFilter.class);
 
-	private static List<AutoLogin> _autoLogins =
-		new CopyOnWriteArrayList<AutoLogin>();
+	private ServiceTracker<?, AutoLogin> _serviceTracker;
 
 }

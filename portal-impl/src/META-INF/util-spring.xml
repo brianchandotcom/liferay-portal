@@ -605,13 +605,26 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
+	<bean id="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" class="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.CASAutoLogin" class="com.liferay.portal.security.auth.CASAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.DefaultScreenNameGenerator" class="com.liferay.portal.security.auth.DefaultScreenNameGenerator" />
+	<bean id="com.liferay.portal.security.auth.DefaultScreenNameValidator" class="com.liferay.portal.security.auth.DefaultScreenNameValidator" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" class="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.FacebookAutoLogin" class="com.liferay.portal.security.auth.FacebookAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.security.auth.LiberalScreenNameValidator" />
+	<bean id="com.liferay.portal.security.auth.NtlmAutoLogin" class="com.liferay.portal.security.auth.NtlmAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.OpenIdAutoLogin" class="com.liferay.portal.security.auth.OpenIdAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.OpenSSOAutoLogin" class="com.liferay.portal.security.auth.OpenSSOAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.ParameterAutoLogin" class="com.liferay.portal.security.auth.ParameterAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.RememberMeAutoLogin" class="com.liferay.portal.security.auth.RememberMeAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.RequestHeaderAutoLogin" class="com.liferay.portal.security.auth.RequestHeaderAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
+	<bean id="com.liferay.portal.security.auth.SiteMinderAutoLogin" class="com.liferay.portal.security.auth.SiteMinderAutoLogin" />
 	<bean id="com.liferay.portal.security.ldap.AttributesTransformerFactory" class="com.liferay.portal.security.ldap.AttributesTransformerFactory" />
 	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
 		<property name="organizationMembershipPolicyFactory">

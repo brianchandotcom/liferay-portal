@@ -32,4 +32,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="close">
+		<case locator-key1="MESSAGES_POP_UP_WINDOW">
+			<execute function="Close#closeWindow" />
+		</case>t
+	</command>
 </definition>

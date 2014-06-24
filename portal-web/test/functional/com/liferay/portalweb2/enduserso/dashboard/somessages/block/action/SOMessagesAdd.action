@@ -5,6 +5,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="TO_FIELD_DROPDOWN_LIST">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="TO_FIELD">
 			<execute function="Type#sendKeys" />

@@ -4,6 +4,10 @@
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
 
+		<case locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+
 		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
@@ -18,11 +22,31 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
 		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

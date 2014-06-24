@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -153,7 +154,7 @@ public class IconTag extends IncludeTag {
 		_id = null;
 		_image = null;
 		_imageHover = null;
-		_label = false;
+		_label = null;
 		_lang = null;
 		_linkCssClass = null;
 		_localizeMessage = true;
@@ -200,7 +201,7 @@ public class IconTag extends IncludeTag {
 		if (_alt != null) {
 			details = " alt=\"" + LanguageUtil.get(request, _alt) + "\"";
 		}
-		else if (_label) {
+		else if (isLabel()) {
 			details = " alt=\"\"";
 		}
 		else {
@@ -513,6 +514,40 @@ public class IconTag extends IncludeTag {
 		return false;
 	}
 
+	protected boolean isLabel() {
+		if (_label != null) {
+			return _label;
+		}
+
+		IntegerWrapper iconListIconCount = (IntegerWrapper)request.getAttribute(
+			"liferay-ui:icon-list:icon-count");
+
+		Boolean iconListSingleIcon = (Boolean)request.getAttribute(
+			"liferay-ui:icon-list:single-icon");
+
+		if ((iconListIconCount != null) || (iconListSingleIcon != null)) {
+			_label = true;
+
+			return true;
+		}
+
+		IntegerWrapper iconMenuIconCount = (IntegerWrapper)request.getAttribute(
+			"liferay-ui:icon-menu:icon-count");
+
+		Boolean iconMenuSingleIcon = (Boolean)request.getAttribute(
+			"liferay-ui:icon-menu:single-icon");
+
+		if ((iconMenuIconCount != null) || (iconMenuSingleIcon != null)) {
+			_label = true;
+
+			return true;
+		}
+
+		_label = false;
+
+		return false;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:icon:alt", _alt);
@@ -528,7 +563,8 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:imageHover", _imageHover);
 		request.setAttribute(
 			"liferay-ui:icon:forcePost", String.valueOf(isForcePost()));
-		request.setAttribute("liferay-ui:icon:label", String.valueOf(_label));
+		request.setAttribute(
+			"liferay-ui:icon:label", String.valueOf(isLabel()));
 		request.setAttribute("liferay-ui:icon:lang", _lang);
 		request.setAttribute("liferay-ui:icon:linkCssClass", _linkCssClass);
 		request.setAttribute(
@@ -561,7 +597,7 @@ public class IconTag extends IncludeTag {
 	private String _id;
 	private String _image;
 	private String _imageHover;
-	private boolean _label;
+	private Boolean _label;
 	private String _lang;
 	private String _linkCssClass;
 	private boolean _localizeMessage = true;

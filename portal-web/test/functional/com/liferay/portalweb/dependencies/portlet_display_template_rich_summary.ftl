@@ -67,7 +67,7 @@
 			formAction=discussionURL?string
 			formName="fm" + entry.getClassPK()
 			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
-			redirect=portalUtil.getCurrentURL(request)
+			redirect=currentURL
 			userId=assetRenderer.getUserId()
 		/>
 	</#if>

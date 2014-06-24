@@ -239,11 +239,11 @@ AUI.add(
 							instance._uploader.destroy();
 						}
 
-						instance._detachSubscriptions();
-
 						if (instance._tooltipDelegate) {
 							instance._tooltipDelegate.destroy();
 						}
+
+						instance._detachSubscriptions();
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},

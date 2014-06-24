@@ -83,7 +83,7 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 				displayStyle="<%= displayStyle %>"
 				displayStyleGroupId="<%= displayStyleGroupId %>"
-				refreshURL="<%= currentURL %>"
+				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"
 			/>
 		</div>

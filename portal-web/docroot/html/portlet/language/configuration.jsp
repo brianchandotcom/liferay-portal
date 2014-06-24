@@ -77,7 +77,7 @@
 				displayStyleGroupId="<%= displayStyleGroupId %>"
 				displayStyles="<%= Arrays.asList(PropsValues.LANGUAGE_DISPLAY_STYLE_OPTIONS) %>"
 				label="display-template"
-				refreshURL="<%= configurationRenderURL.toString() %>"
+				refreshURL="<%= configurationRenderURL %>"
 			/>
 		</div>
 	</aui:fieldset>

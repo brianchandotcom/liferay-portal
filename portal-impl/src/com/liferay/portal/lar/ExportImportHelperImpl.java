@@ -1236,7 +1236,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long importGroupId = MapUtil.getLong(
 				groupIds, groupId, portletDataContext.getScopeGroupId());
 
-			FileEntry importedFileEntry;
+			FileEntry importedFileEntry = null;
 
 			try {
 				importedFileEntry =

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SEARCH_ADVANCED_MENULIST</td>
-	<td>//a[@id='toggle_id_asset_searchtoggleAdvanced']</td>
+	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>

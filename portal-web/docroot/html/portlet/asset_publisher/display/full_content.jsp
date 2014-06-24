@@ -17,7 +17,11 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = null;
+
+if (AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource)) {
+	redirect = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "redirect");
+}
 
 List results = (List)request.getAttribute("view.jsp-results");
 

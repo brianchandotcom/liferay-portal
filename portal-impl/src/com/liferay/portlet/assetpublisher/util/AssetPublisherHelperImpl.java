@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -80,7 +81,10 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		String viewURL = null;
 
-		String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		String currentURL = currentURLObj.toString();
 
 		if (viewInContext) {
 			String viewFullContentURLString = viewFullContentURL.toString();

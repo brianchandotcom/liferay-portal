@@ -141,7 +141,7 @@ AUI.add(
 							if (value != Liferay.Language.get('font')) {
 								instance.insertTag('font', value);
 
-								target.attr('selectedIndex', 0);
+								target.set('selectedIndex', 0);
 							}
 						},
 						options: [Liferay.Language.get('font'), 'Arial', 'Comic Sans', 'Courier New', 'Tahoma', 'Times New Roman', 'Verdana', 'Wingdings']
@@ -156,7 +156,7 @@ AUI.add(
 							if (value != Liferay.Language.get('size')) {
 								instance.insertTag('size', value);
 
-								target.attr('selectedIndex', 0);
+								target.set('selectedIndex', 0);
 							}
 						},
 						options: [Liferay.Language.get('size'), 1, 2, 3, 4, 5, 6, 7]

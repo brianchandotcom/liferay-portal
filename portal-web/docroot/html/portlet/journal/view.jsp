@@ -25,10 +25,9 @@ JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDE
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-	try {
-		folder = JournalFolderLocalServiceUtil.getFolder(folderId);
-	}
-	catch (NoSuchFolderException nsfe) {
+	folder = JournalFolderLocalServiceUtil.fetchFolder(folderId);
+
+	if (folder == null) {
 		folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }

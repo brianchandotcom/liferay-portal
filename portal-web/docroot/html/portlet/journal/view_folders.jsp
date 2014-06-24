@@ -35,10 +35,9 @@ if (folder != null) {
 	}
 
 	if (parentFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-		try {
-			JournalFolderServiceUtil.getFolder(folderId);
-		}
-		catch (NoSuchFolderException nsfe) {
+		JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(folderId);
+
+		if (parentFolder != null) {
 			parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 	}

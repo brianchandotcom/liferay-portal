@@ -787,6 +787,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sikuliKeyPress(String value) throws Exception {
+		LiferaySeleniumHelper.sikuliKeyPress(this, value);
+	}
+
+	@Override
 	public void sikuliLeftMouseDown() throws Exception {
 		LiferaySeleniumHelper.sikuliLeftMouseDown(this);
 	}

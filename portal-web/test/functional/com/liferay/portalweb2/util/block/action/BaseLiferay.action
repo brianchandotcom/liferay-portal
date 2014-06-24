@@ -391,6 +391,12 @@
 		</default>
 	</command>
 
+	<command name="sikuliKeyPress">
+		<default>
+			<execute function="SikuliKeyPress#sikuliKeyPress" />
+		</default>
+	</command>
+
 	<command name="sikuliLeftMouseDown">
 		<default>
 			<description message="Push left mouse button down." />

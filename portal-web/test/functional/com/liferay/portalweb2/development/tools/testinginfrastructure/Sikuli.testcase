@@ -4,7 +4,8 @@
 	<command name="Smoke" priority="5">
 		<execute action="PGLogin#sikuliAssertElementPresent" locator-key1="SIGN_IN_BUTTON_PNG" />
 		<execute action="PGLogin#sikuliAssertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_ICON_PNG" />
-		<execute action="PGLogin#sikuliType" locator-key1="EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
+		<execute action="PGLogin#sikuliClick" locator-key1="EMAIL_ADDRESS_FIELD_PNG" />
+		<execute action="PGLogin#sikuliKeyPress" locator1="test@liferay.com" />
 		<execute action="PGLogin#sikuliType" locator-key1="PASSWORD_FIELD_PNG" value1="test" />
 		<execute action="PGLogin#check" locator-key1="REMEMBER_ME_CHECKBOX" />
 		<execute action="PGLogin#sikuliClick" locator-key1="SIGN_IN_BUTTON_PNG" />
@@ -14,6 +15,8 @@
 		<if>
 			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
 			<then>
+				<execute action="PGLogin#sikuliKeyPress" locator1="Down,10" />
+				<execute action="PGLogin#sikuliKeyPress" locator1="Up,5" />
 				<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
 			</then>
 		</if>

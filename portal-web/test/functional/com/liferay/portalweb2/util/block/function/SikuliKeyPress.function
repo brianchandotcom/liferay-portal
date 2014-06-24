@@ -1,0 +1,5 @@
+<definition>
+	<command name="sikuliKeyPress">
+		<execute selenium="sikuliKeyPress" />
+	</command>
+</definition>

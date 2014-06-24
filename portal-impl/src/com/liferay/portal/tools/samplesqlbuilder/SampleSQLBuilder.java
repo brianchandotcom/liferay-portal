@@ -204,7 +204,7 @@ public class SampleSQLBuilder {
 		}
 	}
 
-	protected void compressSQL(Reader reader, File dir) throws IOException {
+	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBFactoryUtil.getDB(_dbType);
 
 		if (db instanceof MySQLDB) {
@@ -221,7 +221,9 @@ public class SampleSQLBuilder {
 
 		String s = null;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
+		while ((_freemarkerException == null) &&
+			   ((s = unsyncBufferedReader.readLine()) != null)) {
+
 			s = s.trim();
 
 			if (s.length() > 0) {
@@ -236,6 +238,11 @@ public class SampleSQLBuilder {
 		}
 
 		unsyncBufferedReader.close();
+
+		if (_freemarkerException != null) {
+			throw new Exception(
+				"Unable to process freemarker template ", _freemarkerException);
+		}
 
 		for (Map.Entry<String, StringBundler> entry : insertSQLs.entrySet()) {
 			String tableName = entry.getKey();
@@ -296,28 +303,44 @@ public class SampleSQLBuilder {
 
 			@Override
 			public void run() {
+				Writer sampleSQLWriter = null;
+				Map<String, Object> context = null;
+
 				try {
-					Writer sampleSQLWriter = new UnsyncTeeWriter(
+					sampleSQLWriter = new UnsyncTeeWriter(
 						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(new File(_outputDir, "sample.sql")));
 
-					Map<String, Object> context = getContext();
+					context = getContext();
 
 					FreeMarkerUtil.process(_script, context, sampleSQLWriter);
-
+				}
+				catch (Exception e) {
+					_freemarkerException = e;
+				}
+				finally {
 					for (String csvFileName : _csvFileNames) {
 						Writer csvWriter = (Writer)context.get(
 							csvFileName + "CSVWriter");
 
-						csvWriter.close();
+						try {
+							csvWriter.close();
+						}
+						catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
 					}
 
-					sampleSQLWriter.close();
+					if (sampleSQLWriter != null) {
+						try {
+							sampleSQLWriter.close();
+						}
+						catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
+					}
 
 					charPipe.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 
@@ -436,6 +459,7 @@ public class SampleSQLBuilder {
 	private String[] _csvFileNames;
 	private DataFactory _dataFactory;
 	private String _dbType;
+	private volatile Exception _freemarkerException;
 	private int _optimizeBufferSize;
 	private String _outputDir;
 	private String _script;

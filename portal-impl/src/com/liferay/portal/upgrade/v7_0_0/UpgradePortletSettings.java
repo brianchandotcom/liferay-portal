@@ -329,8 +329,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		// Delete Service Keys From Portlet Settings
 
-		resetPortletPreferencesValues(
-			portletId, ownerType, serviceKeys);
+		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
 	}
 
 	protected void upgradeMainPortlet(
@@ -353,8 +352,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		// Delete Service Keys From Portlet Settings
 
-		resetPortletPreferencesValues(
-			portletId, ownerType, serviceKeys);
+		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
 	}
 
 	private void _logCopyOfPortletInstanceSettings(

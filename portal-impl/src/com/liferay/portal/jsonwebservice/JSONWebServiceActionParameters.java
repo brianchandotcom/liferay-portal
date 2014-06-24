@@ -262,7 +262,7 @@ public class JSONWebServiceActionParameters {
 
 				if (typeName != null) {
 					if (_parameterTypes == null) {
-						_parameterTypes = new HashMap<>();
+						_parameterTypes = new HashMap<String, String>();
 					}
 
 					_parameterTypes.put(key, typeName);
@@ -278,7 +278,7 @@ public class JSONWebServiceActionParameters {
 				key = key.substring(0, pos);
 
 				if (_parameterTypes == null) {
-					_parameterTypes = new HashMap<>();
+					_parameterTypes = new HashMap<String, String>();
 				}
 
 				_parameterTypes.put(key, typeName);

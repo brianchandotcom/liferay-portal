@@ -14,57 +14,32 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class AttributesTransformerFactory {
 
 	public static AttributesTransformer getInstance() {
-		return _attributesTransformer;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(
-		AttributesTransformer attributesTransformer) {
+	private AttributesTransformerFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(attributesTransformer));
-		}
+		_serviceTracker = registry.trackServices(AttributesTransformer.class);
 
-		if (attributesTransformer == null) {
-			_attributesTransformer = _originalAttributesTransformer;
-		}
-		else {
-			_attributesTransformer = attributesTransformer;
-		}
+		_serviceTracker.open();
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
-		}
+	private static AttributesTransformerFactory _instance =
+		new AttributesTransformerFactory();
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalAttributesTransformer =
-			(AttributesTransformer)InstanceFactory.newInstance(
-				classLoader, PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
-
-		_attributesTransformer = _originalAttributesTransformer;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		AttributesTransformerFactory.class);
-
-	private static volatile AttributesTransformer _attributesTransformer;
-	private static AttributesTransformer _originalAttributesTransformer;
+	private ServiceTracker<?, AttributesTransformer> _serviceTracker;
 
 }

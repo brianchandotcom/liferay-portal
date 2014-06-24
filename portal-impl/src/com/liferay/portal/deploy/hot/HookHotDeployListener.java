@@ -122,7 +122,6 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
-import com.liferay.portal.security.ldap.AttributesTransformerFactory;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil;
@@ -516,7 +515,15 @@ public class HookHotDeployListener
 		if (portalProperties.containsKey(
 				PropsKeys.LDAP_ATTRS_TRANSFORMER_IMPL)) {
 
-			AttributesTransformerFactory.setInstance(null);
+			String ldapAttClassName = portalProperties.getProperty(
+				PropsKeys.LDAP_ATTRS_TRANSFORMER_IMPL);
+
+			ServiceRegistration<?> serviceRegistration =
+				serviceRegistrations.remove(ldapAttClassName);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 		}
 
 		if (portalProperties.containsKey(LOCK_LISTENERS)) {
@@ -1890,7 +1897,12 @@ public class HookHotDeployListener
 					portletClassLoader, AttributesTransformer.class,
 					attributesTransformerClassName);
 
-			AttributesTransformerFactory.setInstance(attributesTransformer);
+			ServiceRegistration<AttributesTransformer> serviceRegistration =
+			registry.registerService(AttributesTransformer.class,
+				attributesTransformer);
+
+			serviceRegistrations.put(attributesTransformerClassName,
+				serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(LOCK_LISTENERS)) {

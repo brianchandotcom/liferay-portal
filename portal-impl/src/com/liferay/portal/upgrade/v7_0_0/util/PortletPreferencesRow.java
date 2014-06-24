@@ -20,10 +20,10 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 public class PortletPreferencesRow {
 
 	public PortletPreferencesRow(
-		long mvccVersion, long ownerId, int ownerType, long plid,
-		String portletId, long portletPreferencesId, String preferences) {
+		long ownerId, int ownerType, long plid, String portletId,
+		long portletPreferencesId, String preferences) {
 
-		_mvccVersion = mvccVersion;
+		_mvccVersion = 0;
 		_ownerId = ownerId;
 		_ownerType = ownerType;
 		_plid = plid;

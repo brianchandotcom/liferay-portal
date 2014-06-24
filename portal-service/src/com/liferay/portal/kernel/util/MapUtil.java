@@ -294,6 +294,10 @@ public class MapUtil {
 
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
+		if (params == null) {
+			return (LinkedHashMap<String, T>)map;
+		}
+
 		for (String param : params) {
 			String[] kvp = StringUtil.split(param, delimiter);
 

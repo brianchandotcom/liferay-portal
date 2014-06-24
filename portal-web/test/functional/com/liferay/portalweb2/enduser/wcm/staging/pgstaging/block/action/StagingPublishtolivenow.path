@@ -281,7 +281,7 @@
 <!--PUBLISH_TEMPLATES-->
 <tr>
 	<td>PUBLISH_TEMPLATES_NEW_BUTTON</td>
-	<td>//button[contains(.,'New')]</td>
+	<td>//div/a[contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>

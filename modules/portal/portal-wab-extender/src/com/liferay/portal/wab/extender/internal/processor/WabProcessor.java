@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
+import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -383,6 +385,33 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected boolean processClassElement(Element element, Class<?> clazz) {
+		String elementValue = element.getTextTrim();
+
+		if (!elementValue.equals(clazz.getName())) {
+			return false;
+		}
+
+		for (Element initParamElement : element.elements("init-param")) {
+			Element initParamNameElement = initParamElement.element(
+				"param-name");
+
+			String initParamNameValue = initParamNameElement.getTextTrim();
+
+			if (initParamNameValue.equals(element.getName())) {
+				initParamNameElement = initParamElement.element("param-value");
+
+				element.setText(initParamNameElement.getTextTrim());
+
+				initParamElement.detach();
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void processExtraHeaders(Analyzer analyzer) {
 		String bundleSymbolicName = analyzer.getProperty(
 			Constants.BUNDLE_SYMBOLICNAME);
@@ -654,6 +683,56 @@ public class WabProcessor {
 		}
 	}
 
+	protected void processWebXML(String path) throws IOException {
+		File file = new File(_file, path);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		String content = FileUtil.read(file);
+
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(content);
+		}
+		catch (DocumentException de) {
+			throw new IOException(de);
+		}
+
+		Element rootElement = document.getRootElement();
+
+		for (Element element : rootElement.elements("filter")) {
+			Element filterClassElement = element.element("filter-class");
+
+			if (processClassElement(
+					filterClassElement, PortalClassLoaderFilter.class)) {
+
+				break;
+			}
+		}
+
+		for (Element element : rootElement.elements("servlet")) {
+			Element servletClassElement = element.element("servlet-class");
+
+			if (processClassElement(
+					servletClassElement, PortalClassLoaderServlet.class)) {
+
+				break;
+			}
+		}
+
+		try {
+			content = DDMXMLUtil.formatXML(document);
+
+			FileUtil.write(file, content);
+		}
+		catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
+
 	protected void transformToOSGiBundle() throws IOException {
 		Analyzer analyzer = new Analyzer();
 
@@ -669,6 +748,9 @@ public class WabProcessor {
 		processManifestVersion(analyzer);
 
 		processPortletXML();
+
+		processWebXML("WEB-INF/web.xml");
+		processWebXML("WEB-INF/liferay-web.xml");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

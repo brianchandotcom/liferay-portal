@@ -60,7 +60,7 @@ public class MapUtilLinkedHashMapTest {
 	}
 
 	@Test
-	public void testTypeByte() throws Exception {
+	public void testTypeNonPrimitive() throws Exception {
 		Map<String, Object> map = MapUtil.toLinkedHashMap(
 			new String[] {"one:1:" + Byte.class.getName()});
 

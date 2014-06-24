@@ -23,12 +23,18 @@
 		<description message="Add a page called ${pageName}." />
 
 		<if>
-			<not>
-				<equals arg1="${defaultURL}" arg2="false" />
-			</not>
+			<isset var="nodePort" />
 			<then>
-				<execute macro="Page#openURL" />
+				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
 			</then>
+			<elseif>
+				<not>
+					<equals arg1="${defaultURL}" arg2="false" />
+				</not>
+				<then>
+					<execute macro="Page#openURL" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
@@ -82,6 +88,12 @@
 		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
 
 		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${localizedAdmin}" />
+	</command>
+
+	<command name="assertnodePortPG">
+		<var name="key_nodePort" value="${nodePort}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="NODE_NAME" />
 	</command>
 
 	<command name="changeLogoViaPageCP">
@@ -147,7 +159,15 @@
 	</command>
 
 	<command name="gotoCmdCP">
-		<execute macro="Page#openURL" />
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<else>
+				<execute macro="Page#openURL" />
+			</else>
+		</if>
 
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertClick" locator-key1="${portletCategoryKey}" value1="${portletCategoryName}" />
@@ -347,12 +367,18 @@
 		<description message="Navigate to the page named ${pageName}." />
 
 		<if>
-			<not>
-				<equals arg1="${defaultURL}" arg2="false" />
-			</not>
+			<isset var="nodePort" />
 			<then>
-				<execute macro="Page#openURL" />
+				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
 			</then>
+			<elseif>
+				<not>
+					<equals arg1="${defaultURL}" arg2="false" />
+				</not>
+				<then>
+					<execute macro="Page#openURL" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>

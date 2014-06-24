@@ -1,0 +1,165 @@
+<definition component-name="portal-tools">
+	<property name="cluster.enabled" value="true" />
+	<property name="testray.main.component.name" value="Platform" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+	</tear-down>
+
+	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
+		<property name="app.server.bundle.suffixes" value="1" />
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="1080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="1080" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+			<var name="nodePort" value="1080" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="nodePort" value="1080" />
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#emptyCP" />
+
+		<execute macro="User#logoutPG">
+			<var name="nodePort" value="1080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entrySearchTerm" value="Blogs Entry1 Title" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+	</command>
+</definition>

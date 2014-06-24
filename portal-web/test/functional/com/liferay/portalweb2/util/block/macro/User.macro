@@ -1262,7 +1262,15 @@
 	<command name="loginPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
 
-		<execute macro="Page#openURL" />
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<else>
+				<execute macro="Page#openURL" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
@@ -1359,7 +1367,15 @@
 	<command name="logoutPG">
 		<description message="Log out of Liferay Portal." />
 
-		<execute macro="Page#openURL" />
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<else>
+				<execute macro="Page#openURL" />
+			</else>
+		</if>
 
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />

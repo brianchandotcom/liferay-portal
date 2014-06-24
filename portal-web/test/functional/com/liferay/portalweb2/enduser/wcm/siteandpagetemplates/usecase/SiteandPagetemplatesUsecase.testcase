@@ -100,8 +100,6 @@
 			<var name="pageName" value="Page2 Name" />
 		</execute>
 
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -142,8 +140,6 @@
 			<var name="defaultURL" value="false" />
 			<var name="portletName" value="Hello World" />
 		</execute>
-
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page1 Name" />
@@ -216,8 +212,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Message Boards" />
 		</execute>
-
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -770,8 +764,6 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -789,8 +781,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Tasks" />
 		</execute>
-
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -869,8 +859,6 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -889,8 +877,6 @@
 			<var name="permissionFlagged" value="true" />
 			<var name="roleName" value="Guest" />
 		</execute>
-
-		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
 	</command>
 
 	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="5">

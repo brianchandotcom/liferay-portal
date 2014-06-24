@@ -200,4 +200,73 @@
 
 		<execute action="Home#assertTextEquals" locator-key1="STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
 	</command>
+
+	<command name="ViewVirtualHostPrivateSitePage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editVirtualHostCP">
+			<var name="virtualHostName" value="www.able.com" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="publicPageVirtualHostURL" value="www.baker.com" />
+			<var name="publicVirtualHosts" value="${publicPageVirtualHostURL}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="privatePageVirtualHostURL" value="www.charlie.com" />
+			<var name="privateVirtualHosts" value="${privatePageVirtualHostURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Public Page" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
+		</execute>
+
+		<execute action="Home#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="siteNameURL" value="${virtualHostsURL}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
+		</execute>
+
+		<var name="key_pageName" value="Private Page" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="Private Page" />
+		<execute action="Home#assertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
 </definition>

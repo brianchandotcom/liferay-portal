@@ -23,7 +23,7 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest);
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
 
 String orderByType = ParamUtil.getString(request, "orderByType");
 

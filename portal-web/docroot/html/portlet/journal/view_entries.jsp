@@ -19,7 +19,7 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest);
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
 
 long ddmStructureId = 0;
 

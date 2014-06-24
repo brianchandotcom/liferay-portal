@@ -45,7 +45,7 @@ if (folder != null) {
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest);
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
 
 int total = 0;
 

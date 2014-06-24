@@ -23,7 +23,7 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", JournalUtil.getDisplayStyle(liferayPortletRequest));
+portletURL.setParameter("displayStyle", JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">

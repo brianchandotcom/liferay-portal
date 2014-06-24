@@ -132,7 +132,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 	new Liferay.Portlet.JournalNavigation(
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
-			displayStyle: '<%= HtmlUtil.escapeJS(JournalUtil.getDisplayStyle(liferayPortletRequest)) %>',
+			displayStyle: '<%= HtmlUtil.escapeJS(JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews)) %>',
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',

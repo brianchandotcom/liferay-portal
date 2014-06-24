@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -672,17 +671,11 @@ public class JournalUtil {
 	}
 
 	public static String getDisplayStyle(
-		LiferayPortletRequest liferayPortletRequest) {
+		LiferayPortletRequest liferayPortletRequest, String[] displayViews) {
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				liferayPortletRequest);
-
-		String[] displayViews = StringUtil.split(
-			PrefsParamUtil.getString(
-				liferayPortletRequest.getPreferences(), liferayPortletRequest,
-				"displayViews",
-				StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
 
 		String displayStyle = ParamUtil.getString(
 			liferayPortletRequest, "displayStyle");

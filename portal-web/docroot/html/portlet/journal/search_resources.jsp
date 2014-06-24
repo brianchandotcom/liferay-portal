@@ -23,7 +23,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId", folderId);
 
-String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest);
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
 
 JournalFolder folder = null;
 

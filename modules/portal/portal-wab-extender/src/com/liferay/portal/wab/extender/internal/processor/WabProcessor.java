@@ -36,12 +36,19 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.wab.extender.internal.introspection.ClassLoaderSource;
 import com.liferay.portal.wab.extender.internal.introspection.Source;
 import com.liferay.portal.wab.extender.internal.util.AntUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -529,6 +536,88 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
 	}
 
+	protected void processPortletXML() throws IOException {
+		File file = new File(
+			_file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		String content = FileUtil.read(file);
+
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(content);
+		}
+		catch (DocumentException de) {
+			throw new IOException(de);
+		}
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> elements = rootElement.elements("portlet");
+
+		for (Element element : elements) {
+			String portletName = PortalUtil.getJsSafePortletId(
+				element.elementText("portlet-name"));
+
+			String invokerPortletName =
+				_MODULE + _context + StringPool.SLASH + portletName;
+
+			XPath xPath = SAXReaderUtil.createXPath(
+				_INVOKER_PORTLET_NAME_XPATH, "x",
+				"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" );
+
+			Element invokerPortletNameEl = (Element)xPath.selectSingleNode(
+				element);
+
+			if (invokerPortletNameEl == null) {
+				Element portletClassElement = element.element("portlet-class");
+
+				List<Node> children = element.content();
+
+				int pos = children.indexOf(portletClassElement);
+
+				QName qName = rootElement.getQName();
+
+				Element initParamElement = SAXReaderUtil.createElement(
+					SAXReaderUtil.createQName(
+						"init-param", qName.getNamespace()));
+
+				initParamElement.addElement("name").setText(
+					"com.liferay.portal.invokerPortletName");
+				initParamElement.addElement("value").setText(
+					invokerPortletName);
+
+				children.add(pos + 1, initParamElement);
+			}
+			else {
+				Element valueElement = invokerPortletNameEl.element("value");
+
+				invokerPortletName = valueElement.getTextTrim();
+
+				if (!invokerPortletName.startsWith(StringPool.SLASH)) {
+					invokerPortletName = StringPool.SLASH + invokerPortletName;
+				}
+
+				invokerPortletName = _MODULE + _context + invokerPortletName;
+
+				valueElement.setText(invokerPortletName);
+			}
+		}
+
+		try {
+			content = DDMXMLUtil.formatXML(document);
+
+			FileUtil.write(file, content);
+		}
+		catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
+
 	protected Set<String> processReferencedDependencies(
 		Source source, String className) {
 
@@ -573,7 +662,14 @@ public class WabProcessor {
 		processBundleVersion(analyzer);
 
 		processManifestVersion(analyzer);
+
+		processPortletXML();
 	}
+
+	private static final String _INVOKER_PORTLET_NAME_XPATH =
+		"x:init-param[x:name/text()='com.liferay.portal.invokerPortletName']";
+
+	private static final String _MODULE = Portal.PATH_MODULE.substring(1);
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 

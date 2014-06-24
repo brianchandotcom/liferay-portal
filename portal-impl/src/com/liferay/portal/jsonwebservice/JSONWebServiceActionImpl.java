@@ -162,17 +162,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				list = (List<?>)value;
 			}
 			else {
-				String stringValue = value.toString();
+				String valueString = value.toString();
 
-				stringValue = stringValue.trim();
+				valueString = valueString.trim();
 
-				if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-					stringValue = StringPool.OPEN_BRACKET.concat(
-						stringValue).concat(StringPool.CLOSE_BRACKET);
+				if (!valueString.startsWith(StringPool.OPEN_BRACKET)) {
+					valueString = StringPool.OPEN_BRACKET.concat(
+						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
 				list = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, ArrayList.class);
+					valueString, ArrayList.class);
 			}
 
 			return _convertListToArray(list, parameterType.getComponentType());
@@ -182,11 +182,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			calendar.setLenient(false);
 
-			String stringValue = value.toString();
+			String valueString = value.toString();
 
-			stringValue = stringValue.trim();
+			valueString = valueString.trim();
 
-			long timeInMillis = GetterUtil.getLong(stringValue);
+			long timeInMillis = GetterUtil.getLong(valueString);
 
 			calendar.setTimeInMillis(timeInMillis);
 
@@ -199,27 +199,27 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				list = (List<?>)value;
 			}
 			else {
-				String stringValue = value.toString();
+				String valueString = value.toString();
 
-				stringValue = stringValue.trim();
+				valueString = valueString.trim();
 
-				if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-					stringValue = StringPool.OPEN_BRACKET.concat(
-						stringValue).concat(StringPool.CLOSE_BRACKET);
+				if (!valueString.startsWith(StringPool.OPEN_BRACKET)) {
+					valueString = StringPool.OPEN_BRACKET.concat(
+						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
 				list = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, ArrayList.class);
+					valueString, ArrayList.class);
 			}
 
 			return _generifyList(list, genericParameterTypes);
 		}
 		else if (parameterType.equals(Locale.class)) {
-			String stringValue = value.toString();
+			String valueString = value.toString();
 
-			stringValue = stringValue.trim();
+			valueString = valueString.trim();
 
-			return LocaleUtil.fromLanguageId(stringValue);
+			return LocaleUtil.fromLanguageId(valueString);
 		}
 		else if (parameterType.equals(Map.class)) {
 			Map<?, ?> map = null;
@@ -228,12 +228,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				map = (Map)value;
 			}
 			else {
-				String stringValue = value.toString();
+				String valueString = value.toString();
 
-				stringValue = stringValue.trim();
+				valueString = valueString.trim();
 
 				map = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, HashMap.class);
+					valueString, HashMap.class);
 			}
 
 			return _generifyMap(map, genericParameterTypes);
@@ -244,14 +244,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			try {
 				parameterValue = _convertType(value, parameterType);
 			}
-			catch (Exception e) {
+			catch (Exception e1) {
 				if (value instanceof Map) {
 					try {
 						parameterValue = _createDefaultParameterValue(
 							null, parameterType);
 					}
-					catch (Exception ex) {
-						throw new ClassCastException(e.getMessage());
+					catch (Exception e2) {
+						throw new ClassCastException(e1.getMessage());
 					}
 
 					BeanCopy beanCopy = BeanCopy.beans(value, parameterValue);
@@ -259,16 +259,16 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					beanCopy.copy();
 				}
 				else {
-					String stringValue = value.toString();
+					String valueString = value.toString();
 
-					stringValue = stringValue.trim();
+					valueString = valueString.trim();
 
-					if (!stringValue.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-						throw new ClassCastException(e.getMessage());
+					if (!valueString.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+						throw new ClassCastException(e1.getMessage());
 					}
 
 					parameterValue = JSONFactoryUtil.looseDeserializeSafe(
-						stringValue, parameterType);
+						valueString, parameterType);
 				}
 			}
 

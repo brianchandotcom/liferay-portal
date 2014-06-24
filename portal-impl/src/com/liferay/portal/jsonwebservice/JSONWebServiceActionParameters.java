@@ -242,7 +242,7 @@ public class JSONWebServiceActionParameters {
 
 		@Override
 		public Object put(String key, Object value) {
-			final int colonIndex = key.indexOf(CharPool.COLON);
+			int pos = key.indexOf(CharPool.COLON);
 
 			if (key.startsWith(StringPool.DASH)) {
 				key = key.substring(1);
@@ -254,10 +254,10 @@ public class JSONWebServiceActionParameters {
 
 				String typeName = null;
 
-				if (colonIndex != -1) {
-					typeName = key.substring(colonIndex);
+				if (pos != -1) {
+					typeName = key.substring(pos);
 
-					key = key.substring(0, colonIndex - 1);
+					key = key.substring(0, pos - 1);
 				}
 
 				if (typeName != null) {
@@ -272,10 +272,10 @@ public class JSONWebServiceActionParameters {
 					value = Void.TYPE;
 				}
 			}
-			else if (colonIndex != -1) {
-				String typeName = key.substring(colonIndex + 1);
+			else if (pos != -1) {
+				String typeName = key.substring(pos + 1);
 
-				key = key.substring(0, colonIndex);
+				key = key.substring(0, pos);
 
 				if (_parameterTypes == null) {
 					_parameterTypes = new HashMap<>();
@@ -288,7 +288,7 @@ public class JSONWebServiceActionParameters {
 				}
 			}
 
-			int pos = key.indexOf(CharPool.PERIOD);
+			pos = key.indexOf(CharPool.PERIOD);
 
 			if (pos != -1) {
 				String baseName = key.substring(0, pos);

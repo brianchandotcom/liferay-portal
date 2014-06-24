@@ -117,9 +117,7 @@ import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
-import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
-import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -595,18 +593,6 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_VALIDATOR)) {
 			FullNameValidatorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_SCREEN_NAME_GENERATOR)) {
-
-			ScreenNameGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_SCREEN_NAME_VALIDATOR)) {
-
-			ScreenNameValidatorFactory.setInstance(null);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -2126,7 +2112,12 @@ public class HookHotDeployListener
 					portletClassLoader, ScreenNameGenerator.class,
 					screenNameGeneratorClassName);
 
-			ScreenNameGeneratorFactory.setInstance(screenNameGenerator);
+			ServiceRegistration<ScreenNameGenerator> serviceRegistration =
+					registry.registerService(
+						ScreenNameGenerator.class, screenNameGenerator);
+
+			serviceRegistrations.put(screenNameGeneratorClassName,
+				serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2140,7 +2131,12 @@ public class HookHotDeployListener
 					portletClassLoader, ScreenNameValidator.class,
 					screenNameValidatorClassName);
 
-			ScreenNameValidatorFactory.setInstance(screenNameValidator);
+			ServiceRegistration<ScreenNameValidator> serviceRegistration =
+					registry.registerService(
+						ScreenNameValidator.class, screenNameValidator);
+
+			serviceRegistrations.put(screenNameValidatorClassName,
+				serviceRegistration);
 		}
 
 		Set<String> liferayFilterClassNames =

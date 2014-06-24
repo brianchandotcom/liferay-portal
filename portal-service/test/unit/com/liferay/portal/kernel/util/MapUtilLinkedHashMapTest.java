@@ -109,6 +109,16 @@ public class MapUtilLinkedHashMapTest {
 		Assert.assertTrue(map.containsValue((byte)1));
 
 		Assert.assertTrue(map.get("one") instanceof Byte);
+
+		map = MapUtil.toLinkedHashMap(
+			new String[] {"one:1:" + Float.class.getName()});
+
+		Assert.assertTrue(map.size() == 1);
+
+		Assert.assertTrue(map.containsKey("one"));
+		Assert.assertTrue(map.containsValue((float)1));
+
+		Assert.assertTrue(map.get("one") instanceof Float);
 	}
 
 	@Test

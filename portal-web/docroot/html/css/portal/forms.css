@@ -52,27 +52,15 @@
 }
 
 .input-flex-add-on {
+	position: relative;
 	width: 100%;
 
-	&.input-group {
-		input[type="text"] {
-			margin-bottom: 0;
-			margin-left: -1px;
-		}
-	}
-
-	&.input-group {
-		input[type="text"] {
-			margin-bottom: 0;
-		}
-
-		.input-group-addon {
-			height: auto;
-			text-align: left;
-			white-space: normal;
-
-			@include word-break(break-all);
-		}
+	&:after {
+		clear: left;
+		content: "";
+		display: block;
+		height: 0;
+		visibility: hidden;
 	}
 
 	input {
@@ -83,11 +71,24 @@
 	.input-group-addon {
 		float: left;
 		margin-top: -1px;
+		padding: 10px;
+		white-space: normal;
+		width: auto;
+
+		@include word-break(break-all);
 	}
 
 	.input-localized-content {
 		clear: both;
+		left: 0;
 		padding-top: 10px;
+		position: absolute;
+		top: 100%;
+	}
+
+	.input-localized-input {
+		display: block;
+		float: left;
 	}
 }
 

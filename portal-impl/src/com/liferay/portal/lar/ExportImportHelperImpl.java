@@ -15,7 +15,6 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -1243,12 +1242,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 						uuid, importGroupId);
 			}
-			catch (NoSuchModelException nsme) {
+			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsme, nsme);
+					_log.debug(pe, pe);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(nsme.getMessage());
+					_log.warn(pe.getMessage());
 				}
 
 				continue;

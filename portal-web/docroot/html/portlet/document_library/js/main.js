@@ -168,7 +168,10 @@ AUI.add(
 
 						instance._appViewFolders = new Liferay.AppViewFolders(foldersConfig);
 
+						instance._folderId = foldersConfig.defaultParentFolderId;
+
 						var eventHandles = [
+							Liferay.after('liferay-app-view-folders:dataRequest', instance._afterDataRequest ,instance),
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
 							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
 							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance),
@@ -219,6 +222,12 @@ AUI.add(
 						instance._appViewSelect.destroy();
 
 						instance._documentLibraryContainer.purge(true);
+					},
+
+					_afterDataRequest: function(event) {
+						var instance = this;
+
+						instance._folderId = event.requestParams[instance.ns('folderId')];
 					},
 
 					_afterStateChange: function(event) {
@@ -300,7 +309,7 @@ AUI.add(
 								dimensions: config.folders.dimensions,
 								displayStyle: config.displayStyle,
 								entriesContainer: instance._entriesContainer,
-								folderId: config.folders.defaultFolderId,
+								folderId: instance._folderId,
 								listViewContainer: instance.byId('listViewContainer'),
 								maxFileSize: config.maxFileSize,
 								redirect: config.redirect,

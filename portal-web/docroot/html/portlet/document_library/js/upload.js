@@ -158,8 +158,15 @@ AUI.add(
 						value: {}
 					},
 					folderId: {
+						getter: function() {
+							var instance = this;
+
+							return instance.get('host')._folderId;
+						},
 						setter: A.Lang.toInt,
-						validator: A.Lang.isNumber || A.Lang.isString
+						validator: A.Lang.isNumber || A.Lang.isString,
+						readonly: true,
+						value: null
 					},
 					listViewContainer: {
 						validator: A.one,
@@ -301,16 +308,6 @@ AUI.add(
 
 						var onDataRequestHandle = Liferay.on(host.ns('dataRequest'), instance._onDataRequest, instance);
 
-						var afterDataRequestHandle = Liferay.after(
-							'liferay-app-view-folders:dataRequest',
-							function(event) {
-								var requestParams = event.requestParams;
-
-								instance.set('folderId', requestParams[folderId]);
-							},
-							instance
-						);
-
 						var removeCssClassTask = A.debounce(
 							function() {
 								docElement.removeClass('upload-drop-intent');
@@ -407,7 +404,6 @@ AUI.add(
 
 						instance._eventHandles = [
 							onDataRequestHandle,
-							afterDataRequestHandle,
 							onDragOverHandle,
 							onDropHandle,
 							entriesDragDelegateHandle,

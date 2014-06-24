@@ -258,6 +258,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 				strutsAction: '/document_library/view'
 			},
 			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
+			scopeGroupId: '<%= scopeGroupId %>',
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',

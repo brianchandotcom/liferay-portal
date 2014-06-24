@@ -523,7 +523,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 						displayPageMessage(messageText, messageType);
 
-						okButton.attr('disabled', disabled);
+						okButton.set('disabled', disabled);
 					};
 
 					var toolbar = new A.Toolbar(

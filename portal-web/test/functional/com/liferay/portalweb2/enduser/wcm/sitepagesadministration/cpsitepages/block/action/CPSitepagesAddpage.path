@@ -88,12 +88,12 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_CHECKBOX</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]</td>
+	<td>//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]/input</td>
+	<td>//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
 <tr>

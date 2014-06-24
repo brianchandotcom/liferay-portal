@@ -36,17 +36,17 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
-	<td>//li[contains(.,'Site Template Settings')]/a/span/span</td>
+	<td>//li[contains(.,'Site Template Settings')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_APPLICATION_DISPLAY_TEMPLATES</td>
-	<td>//li[contains(.,'Application Display Templates')]/a</td>
+	<td>//li[contains(.,'Application Display Templates')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_MOBILE_DEVICE_FAMILIES</td>
-	<td>//li[contains(.,'Mobile Device Families')]/a</td>
+	<td>//li[contains(.,'Mobile Device Families')]/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

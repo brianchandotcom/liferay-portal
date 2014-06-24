@@ -116,9 +116,9 @@ public class WabProcessor {
 
 		executeAutoDeployers(autoDeploymentContext);
 
-		PluginPackage pluginPackage = autoDeploymentContext.getPluginPackage();
+		_pluginPackage = autoDeploymentContext.getPluginPackage();
 
-		_context = pluginPackage.getContext();
+		_context = _pluginPackage.getContext();
 
 		File deployDir = autoDeploymentContext.getDeployDir();
 
@@ -561,6 +561,7 @@ public class WabProcessor {
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;
 	private File _pluginDir;
+	private PluginPackage _pluginPackage;
 	private String _servicePackageName;
 
 }

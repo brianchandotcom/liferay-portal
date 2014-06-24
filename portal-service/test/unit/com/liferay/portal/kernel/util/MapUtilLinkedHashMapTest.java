@@ -47,6 +47,23 @@ public class MapUtilLinkedHashMapTest {
 	}
 
 	@Test
+	public void testInvalidKVLength() throws Exception {
+		// kv length equals to 1
+
+		Map<String, Object> map = MapUtil.toLinkedHashMap(
+			new String[] {"one"});
+
+		Assert.assertTrue(map.size() == 0);
+
+		// kv length greather than 3
+
+		map = MapUtil.toLinkedHashMap(
+			new String[] {"one:two:three:four"});
+
+		Assert.assertTrue(map.size() == 0);
+	}
+
+	@Test
 	public void testTypeBoolean() throws Exception {
 		Map<String, Object> map = MapUtil.toLinkedHashMap(
 			new String[] {"one:true:boolean"});

@@ -33,7 +33,16 @@ if ((portletResponse != null) && auiFormUseNamespace) {
 	namespace = GetterUtil.getString(request.getAttribute("aui:form:portletNamespace"), portletResponse.getNamespace());
 }
 
-String currentURL = PortalUtil.getCurrentURL(request);
+String currentURL = null;
+
+if ((portletRequest != null) && (portletResponse != null)) {
+	PortletURL currentURLObj = PortletURLUtil.getCurrent(PortalUtil.getLiferayPortletRequest(portletRequest), PortalUtil.getLiferayPortletResponse(portletResponse));
+
+	currentURL = currentURLObj.toString();
+}
+else {
+	currentURL = PortalUtil.getCurrentURL(request);
+}
 %>
 
 <%@ include file="/html/taglib/init-ext.jsp" %>

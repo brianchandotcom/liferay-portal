@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 
-import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -91,14 +90,14 @@ public class ProcessExecutor {
 
 			Process process = processBuilder.start();
 
-			DataOutputStream dataOutputStream = new DataOutputStream(
-				process.getOutputStream());
+			ObjectOutputStream bootstrapObjectOutputStream =
+				new ObjectOutputStream(process.getOutputStream());
 
-			dataOutputStream.writeUTF(processCallable.toString());
-			dataOutputStream.writeUTF(classPath);
+			bootstrapObjectOutputStream.writeObject(processCallable.toString());
+			bootstrapObjectOutputStream.writeObject(classPath);
 
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				dataOutputStream);
+				bootstrapObjectOutputStream);
 
 			try {
 				objectOutputStream.writeObject(processCallable);

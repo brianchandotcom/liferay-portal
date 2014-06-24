@@ -108,6 +108,20 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolderSoap fetchFolder(
+		long folderId) throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.fetchFolder(folderId);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolderSoap getFolder(
 		long folderId) throws RemoteException {
 		try {

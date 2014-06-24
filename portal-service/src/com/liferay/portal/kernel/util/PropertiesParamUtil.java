@@ -14,11 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.service.ServiceContext;
-
-import java.io.Serializable;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -346,20 +341,16 @@ public class PropertiesParamUtil {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		List<String> params = filterParams(
-			prefix, ListUtil.fromCollection(parameterMap.keySet()), null);
+		for (String param : parameterMap.keySet()) {
+			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
+				String key = param.substring(
+					prefix.length(), param.length() - 2);
 
-		for (String param : params) {
-			String key = param.substring(prefix.length(), param.length() - 2);
+				String value = request.getParameter(param);
 
-			String value = request.getParameter(param);
-
-			properties.setProperty(key, value);
+				properties.setProperty(key, value);
+			}
 		}
-
-		String checkboxNames = ParamUtil.getString(request, "checkboxNames");
-
-		addCheckboxValues(properties, params, prefix, checkboxNames);
 
 		return properties;
 	}
@@ -369,47 +360,18 @@ public class PropertiesParamUtil {
 
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
+		for (String param : portletRequest.getParameterMap().keySet()) {
+			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {
+				String key = param.substring(
+					prefix.length(), param.length() - 2);
 
-		List<String> params = filterParams(
-			prefix, ListUtil.fromCollection(parameterMap.keySet()), null);
+				String[] values = portletRequest.getParameterValues(param);
 
-		for (String param : params) {
-			String[] values = portletRequest.getParameterValues(param);
+				String value = StringUtil.merge(values);
 
-			String value = StringUtil.merge(values);
-
-			properties.setProperty(getKey(param, prefix), value);
+				properties.setProperty(key, value);
+			}
 		}
-
-		String checkboxNames = ParamUtil.getString(
-			portletRequest, "checkboxNames");
-
-		addCheckboxValues(properties, params, prefix, checkboxNames);
-
-		return properties;
-	}
-
-	public static UnicodeProperties getProperties(
-		ServiceContext serviceContext, String prefix) {
-
-		UnicodeProperties properties = new UnicodeProperties(true);
-
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
-
-		List<String> params = filterParams(
-			prefix, ListUtil.fromCollection(attributes.keySet()), null);
-
-		for (String param : params) {
-			String value = ParamUtil.getString(serviceContext, param);
-
-			properties.setProperty(getKey(param, prefix), value);
-		}
-
-		String checkboxNames = ParamUtil.getString(
-			serviceContext, "checkboxNames");
-
-		addCheckboxValues(properties, params, prefix, checkboxNames);
 
 		return properties;
 	}
@@ -488,55 +450,6 @@ public class PropertiesParamUtil {
 			propertiesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
-	}
-
-	protected static void addCheckboxValues(
-		UnicodeProperties properties, List<String> params, String prefix,
-		String checkboxNames) {
-
-		if (Validator.isNull(checkboxNames)) {
-			return;
-		}
-
-		List<String> checkboxParams = filterParams(
-			prefix, ListUtil.fromString(checkboxNames, StringPool.COMMA),
-			params);
-
-		for (String param : checkboxParams) {
-			properties.setProperty(
-				getKey(param, prefix), Boolean.FALSE.toString());
-		}
-	}
-
-	protected static List<String> filterParams(
-		final String prefix, List<String> params,
-		final List<String> excludedParams) {
-
-		PredicateFilter<String> predicateFilter =
-			new PredicateFilter<String>() {
-
-				@Override
-				public boolean filter(String param) {
-					if (!param.startsWith(prefix)) {
-						return false;
-					}
-
-					if ((excludedParams != null) &&
-						excludedParams.contains(param)) {
-
-						return false;
-					}
-
-					return true;
-				}
-
-			};
-
-		return ListUtil.filter(params, predicateFilter);
-	}
-
-	protected static String getKey(String param, String prefix) {
-		return param.substring(prefix.length(), param.length() - 2);
 	}
 
 }

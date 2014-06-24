@@ -176,7 +176,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Map<?, ?> map = null;
 
 			if (value instanceof Map) {
-				map = (Map)value;
+				map = (Map<Object, Object>)value;
 			}
 			else {
 				String valueString = value.toString();

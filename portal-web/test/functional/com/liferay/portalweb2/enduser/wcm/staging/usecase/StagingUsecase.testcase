@@ -168,9 +168,11 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="DMDocument#linkImage" />
-
-		<execute action="Home#selectWindow" locator1 = "Web Content - Liferay" />
+		<execute macro="DMDocument#linkImage">
+			<var name="documentName" value="DM Document Title" />
+			<var name="navButton" value="Documents" />
+			<var name="siteName" value="Liferay" />
+		</execute>
 
 		<execute macro="WebContent#publishBasicCP" />
 

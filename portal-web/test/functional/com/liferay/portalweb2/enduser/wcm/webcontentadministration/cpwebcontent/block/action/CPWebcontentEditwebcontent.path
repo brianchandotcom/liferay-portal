@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>VIEW_HISTORY_BUTTON</td>
-	<td>//button[contains(.,'View History')]</td>
+	<td>//a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATIONS_LINK</td>
-	<td>//a[contains(@class,'journal-article-translation') and contains(.,'${key_localizedLanguage}')]</td>
+	<td>xpath=(//a[contains(@class,'journal-article-translation') and contains(.,'${key_localizedLanguage}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

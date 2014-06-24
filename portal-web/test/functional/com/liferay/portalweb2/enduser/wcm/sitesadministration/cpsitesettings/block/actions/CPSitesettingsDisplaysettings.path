@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
-	<td>//div[@class='btn-group btn-group-vertical']/button[1]</td>
+	<td>//div[@class='btn-group-vertical']/button[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
-	<td>//div[@class='btn-group btn-group-vertical']/button[2]</td>
+	<td>//div[@class='btn-group-vertical']/button[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[@class='btn btn-primary']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

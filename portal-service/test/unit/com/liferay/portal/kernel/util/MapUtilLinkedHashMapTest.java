@@ -60,19 +60,6 @@ public class MapUtilLinkedHashMapTest {
 	}
 
 	@Test
-	public void testTypeNonPrimitive() throws Exception {
-		Map<String, Object> map = MapUtil.toLinkedHashMap(
-			new String[] {"one:1:" + Byte.class.getName()});
-
-		Assert.assertTrue(map.size() == 1);
-
-		Assert.assertTrue(map.containsKey("one"));
-		Assert.assertTrue(map.containsValue((byte)1));
-
-		Assert.assertTrue(map.get("one") instanceof Byte);
-	}
-
-	@Test
 	public void testTypeDouble() throws Exception {
 		Map<String, Object> map = MapUtil.toLinkedHashMap(
 			new String[] {"one:1.0:double"});
@@ -109,6 +96,19 @@ public class MapUtilLinkedHashMapTest {
 		Assert.assertTrue(map.containsValue(1l));
 
 		Assert.assertTrue(map.get("one") instanceof Long);
+	}
+
+	@Test
+	public void testTypeNonPrimitive() throws Exception {
+		Map<String, Object> map = MapUtil.toLinkedHashMap(
+			new String[] {"one:1:" + Byte.class.getName()});
+
+		Assert.assertTrue(map.size() == 1);
+
+		Assert.assertTrue(map.containsKey("one"));
+		Assert.assertTrue(map.containsValue((byte)1));
+
+		Assert.assertTrue(map.get("one") instanceof Byte);
 	}
 
 	@Test

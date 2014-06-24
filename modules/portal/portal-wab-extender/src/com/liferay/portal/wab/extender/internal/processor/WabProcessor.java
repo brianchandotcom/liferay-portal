@@ -517,6 +517,17 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processManifestVersion(Analyzer analyzer) {
+		String manifestVersion = MapUtil.getString(
+			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+
+		if (Validator.isNull(manifestVersion)) {
+			manifestVersion = "2";
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
+	}
+
 	protected Set<String> processReferencedDependencies(
 		Source source, String className) {
 
@@ -561,6 +572,8 @@ public class WabProcessor {
 		// Order is important
 
 		processBundleVersion(analyzer);
+
+		processManifestVersion(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

@@ -64,6 +64,13 @@ public class MapUtilLinkedHashMapTest {
 	}
 
 	@Test
+	public void testNull() throws Exception {
+		Map<String, Object> map = MapUtil.toLinkedHashMap(null);
+
+		Assert.assertTrue(map.size() == 0);
+	}
+
+	@Test
 	public void testTypeBoolean() throws Exception {
 		Map<String, Object> map = MapUtil.toLinkedHashMap(
 			new String[] {"one:true:boolean"});

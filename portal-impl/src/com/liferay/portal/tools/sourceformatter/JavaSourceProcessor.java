@@ -2259,7 +2259,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				javaTerms.add(javaTerm);
 			}
 
-			//newContent = sortJavaTerms(fileName, content, javaTerms);
+			newContent = sortJavaTerms(fileName, content, javaTerms);
 
 			newContent = fixTabsAndIncorrectEmptyLines(newContent, javaTerms);
 		}

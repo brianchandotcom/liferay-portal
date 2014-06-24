@@ -28,11 +28,11 @@
 			<then>
 				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
 
-				<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_COMMENT_FIELD" value1="${workflowActivityComment}" />
+				<execute action="CPMyworkflowtasks#type" locator-key1="DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
 			</then>
 		</if>
 
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPMyworkflowtasks#pause" locator1="1000" />
 
@@ -94,7 +94,7 @@
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_APPROVE" value1="Approve" />
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
@@ -118,7 +118,7 @@
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="${userName}" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_APPROVE" value1="Approve" />
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
@@ -152,11 +152,11 @@
 		<if>
 			<isset var="workflowActivityComment" />
 			<then>
-				<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_COMMENT_FIELD" value1="${workflowActivityComment}" />
+				<execute action="CPMyworkflowtasks#type" locator-key1="DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
 			</then>
 		</if>
 
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
@@ -213,7 +213,7 @@
 			</else>
 		</if>
 
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
 
@@ -235,7 +235,7 @@
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Nobody" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_ASSIGN_TO_ME" value1="Assign to Me" />
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
@@ -288,7 +288,7 @@
 
 		<execute action="CPMyworkflowtasks#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
@@ -339,7 +339,7 @@
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_REJECT" value1="Reject" />
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
@@ -367,7 +367,7 @@
 
 		<execute action="CPMyworkflowtasks#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_RESUBMIT" value1="Resubmit" />
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
@@ -408,7 +408,7 @@
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_RESUBMIT" value1="Resubmit" />
-		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
@@ -478,10 +478,10 @@
 		<execute action="CPMyworkflowtasks#click" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE" value1="Update Due Date" />
 
-		<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_DUE_DATE" value1="${workflowDueDate}" />
-		<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_DUE_DATE" value1="${workflowDueDate}" />
-		<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
-		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#type" locator-key1="DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<execute action="CPMyworkflowtasks#type" locator-key1="DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<execute action="CPMyworkflowtasks#type" locator-key1="DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />

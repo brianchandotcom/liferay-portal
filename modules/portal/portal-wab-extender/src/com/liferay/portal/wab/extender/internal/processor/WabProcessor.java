@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,6 +53,7 @@ import java.net.URI;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -361,6 +364,50 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processExtraHeaders(Analyzer analyzer) {
+		Properties properties = PropsUtil.getProperties(
+			PropsKeys.MODULE_FRAMEWORK_WEB_EXTENDER_HEADERS, true);
+
+		String bundleSymbolicName = analyzer.getProperty(
+			Constants.BUNDLE_SYMBOLICNAME);
+
+		Enumeration<Object> keys = properties.keys();
+
+		while (keys.hasMoreElements()) {
+			String key = (String)keys.nextElement();
+			String originalKey = key;
+
+			if (key.endsWith(StringPool.CLOSE_BRACKET)) {
+				String filter =
+					StringPool.OPEN_BRACKET + bundleSymbolicName +
+						StringPool.CLOSE_BRACKET;
+
+				if (!key.endsWith(filter)) {
+					continue;
+				}
+
+				key = key.substring(0, key.indexOf(StringPool.OPEN_BRACKET));
+			}
+
+			String value = properties.getProperty(originalKey);
+
+			if (key.equals(Constants.IMPORT_PACKAGE) &&
+				Validator.isNotNull(value)) {
+
+				Collections.addAll(
+					_importPackageNames, StringUtil.split(value));
+			}
+			else if (key.equals(Constants.EXPORT_PACKAGE) &&
+					 Validator.isNotNull(value)) {
+
+				Collections.addAll(
+					_exportPackageNames, StringUtil.split(value));
+			}
+
+			analyzer.setProperty(key, value);
+		}
+	}
+
 	protected void processFiles(
 			File dir, URI uri, Map<String, File> classPath,
 			String[] portalDependencyJars)
@@ -499,6 +546,7 @@ public class WabProcessor {
 
 		processBundleClasspath(analyzer);
 		processBundleSymbolicName(analyzer);
+		processExtraHeaders(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
@@ -506,6 +554,7 @@ public class WabProcessor {
 	private BundleContext _bundleContext;
 	private ClassLoader _classLoader;
 	private String _context;
+	private Set<String> _exportPackageNames = new HashSet<String>();
 	private File _file;
 	private Set<String> _ignoredResources = new HashSet<String>();
 	private Set<String> _importPackageNames = new HashSet<String>();

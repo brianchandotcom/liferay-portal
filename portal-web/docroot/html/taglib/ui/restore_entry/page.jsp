@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String duplicateEntryAction = (String)request.getAttribute("liferay-ui:restore-entry:duplicateEntryAction");
@@ -31,7 +31,7 @@ String restoreEntryAction = (String)request.getAttribute("liferay-ui:restore-ent
 
 	<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 		<portlet:param name="struts_action" value="<%= duplicateEntryAction %>" />
-		<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="restoreEntryAction" value="<%= restoreEntryAction %>" />
 	</portlet:renderURL>
 

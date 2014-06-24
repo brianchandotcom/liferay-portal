@@ -69,7 +69,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 						displayStyle="<%= displayStyle %>"
 						displayStyleGroupId="<%= displayStyleGroupId %>"
-						refreshURL="<%= currentURL %>"
+						refreshURL="<%= configurationRenderURL %>"
 						showEmptyOption="<%= true %>"
 					/>
 				</div>

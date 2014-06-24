@@ -73,7 +73,7 @@
 							displayStyle="<%= displayStyle %>"
 							displayStyleGroupId="<%= displayStyleGroupId %>"
 							displayStyles="<%= displayStyles %>"
-							refreshURL="<%= currentURL %>"
+							refreshURL="<%= configurationRenderURL %>"
 						/>
 					</div>
 				</ul>

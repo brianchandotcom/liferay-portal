@@ -363,6 +363,20 @@ public class UserNotificationEventLocalServiceUtil {
 			end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived) {
+		return getService()
+				   .getArchivedUserNotificationEvents(userId, deliveryType,
+			archived);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived, int start, int end) {
+		return getService()
+				   .getArchivedUserNotificationEvents(userId, deliveryType,
+			archived, start, end);
+	}
+
 	public static int getArchivedUserNotificationEventsCount(long userId,
 		boolean archived) {
 		return getService()
@@ -374,6 +388,13 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService()
 				   .getArchivedUserNotificationEventsCount(userId,
 			actionRequired, archived);
+	}
+
+	public static int getArchivedUserNotificationEventsCount(long userId,
+		int deliveryType, boolean archived) {
+		return getService()
+				   .getArchivedUserNotificationEventsCount(userId,
+			deliveryType, archived);
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
@@ -403,6 +424,20 @@ public class UserNotificationEventLocalServiceUtil {
 			start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered) {
+		return getService()
+				   .getDeliveredUserNotificationEvents(userId, deliveryType,
+			delivered);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered, int start, int end) {
+		return getService()
+				   .getDeliveredUserNotificationEvents(userId, deliveryType,
+			delivered, start, end);
+	}
+
 	public static int getDeliveredUserNotificationEventsCount(long userId,
 		boolean delivered) {
 		return getService()
@@ -414,6 +449,13 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService()
 				   .getDeliveredUserNotificationEventsCount(userId, delivered,
 			actionRequired);
+	}
+
+	public static int getDeliveredUserNotificationEventsCount(long userId,
+		int deliveryType, boolean delivered) {
+		return getService()
+				   .getDeliveredUserNotificationEventsCount(userId,
+			deliveryType, delivered);
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
@@ -443,8 +485,19 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType) {
+		return getService().getUserNotificationEvents(userId, deliveryType);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int start, int end) {
 		return getService().getUserNotificationEvents(userId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType, int start, int end) {
+		return getService()
+				   .getUserNotificationEvents(userId, deliveryType, start, end);
 	}
 
 	public static int getUserNotificationEventsCount(long userId) {
@@ -459,6 +512,11 @@ public class UserNotificationEventLocalServiceUtil {
 	public static int getUserNotificationEventsCount(long userId,
 		boolean archived) {
 		return getService().getUserNotificationEventsCount(userId, archived);
+	}
+
+	public static int getUserNotificationEventsCount(long userId,
+		int deliveryType) {
+		return getService().getUserNotificationEventsCount(userId, deliveryType);
 	}
 
 	public static com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(

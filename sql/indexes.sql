@@ -688,6 +688,8 @@ create unique index IX_8B6E3ACE on UserNotificationDelivery (userId, portletId, 
 create index IX_5CE95F03 on UserNotificationEvent (userId, actionRequired, archived);
 create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_E32CC19 on UserNotificationEvent (userId, delivered, actionRequired);
+create index IX_A87A585C on UserNotificationEvent (userId, deliveryType, archived);
+create index IX_EF7441EE on UserNotificationEvent (userId, deliveryType, delivered);
 create index IX_A6BAFDFE on UserNotificationEvent (uuid_, companyId);
 
 create index IX_29BA1CF5 on UserTracker (companyId);

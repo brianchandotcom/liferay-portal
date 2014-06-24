@@ -226,6 +226,19 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_DT() {
+		try {
+			_persistence.countByU_DT(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
+
+			_persistence.countByU_DT(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByU_D() {
 		try {
 			_persistence.countByU_D(RandomTestUtil.nextLong(),
@@ -245,6 +258,32 @@ public class UserNotificationEventPersistenceTest {
 				RandomTestUtil.randomBoolean());
 
 			_persistence.countByU_A(0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_DT_D() {
+		try {
+			_persistence.countByU_DT_D(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+			_persistence.countByU_DT_D(0L, 0, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_DT_A() {
+		try {
+			_persistence.countByU_DT_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+			_persistence.countByU_DT_A(0L, 0, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

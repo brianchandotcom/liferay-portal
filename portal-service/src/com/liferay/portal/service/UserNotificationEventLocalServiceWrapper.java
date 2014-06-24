@@ -391,6 +391,20 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
+			deliveryType, archived);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived, int start, int end) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEvents(userId,
+			deliveryType, archived, start, end);
+	}
+
+	@Override
 	public int getArchivedUserNotificationEventsCount(long userId,
 		boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
@@ -402,6 +416,13 @@ public class UserNotificationEventLocalServiceWrapper
 		boolean actionRequired, boolean archived) {
 		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
 			actionRequired, archived);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(long userId,
+		int deliveryType, boolean archived) {
+		return _userNotificationEventLocalService.getArchivedUserNotificationEventsCount(userId,
+			deliveryType, archived);
 	}
 
 	@Override
@@ -434,6 +455,20 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
+			deliveryType, delivered);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered, int start, int end) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEvents(userId,
+			deliveryType, delivered, start, end);
+	}
+
+	@Override
 	public int getDeliveredUserNotificationEventsCount(long userId,
 		boolean delivered) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
@@ -445,6 +480,13 @@ public class UserNotificationEventLocalServiceWrapper
 		boolean delivered, boolean actionRequired) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
 			delivered, actionRequired);
+	}
+
+	@Override
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		int deliveryType, boolean delivered) {
+		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
+			deliveryType, delivered);
 	}
 
 	@Override
@@ -479,9 +521,23 @@ public class UserNotificationEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType) {
+		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
+			deliveryType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int start, int end) {
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType, int start, int end) {
+		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
+			deliveryType, start, end);
 	}
 
 	@Override
@@ -498,6 +554,12 @@ public class UserNotificationEventLocalServiceWrapper
 	public int getUserNotificationEventsCount(long userId, boolean archived) {
 		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
 			archived);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(long userId, int deliveryType) {
+		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
+			deliveryType);
 	}
 
 	@Override

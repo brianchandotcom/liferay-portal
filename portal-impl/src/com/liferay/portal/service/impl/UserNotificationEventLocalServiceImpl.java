@@ -171,6 +171,22 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived) {
+
+		return userNotificationEventPersistence.findByU_DT_A(
+			userId, deliveryType, archived);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived, int start, int end) {
+
+		return userNotificationEventPersistence.findByU_DT_A(
+			userId, deliveryType, archived, start, end);
+	}
+
+	@Override
 	public int getArchivedUserNotificationEventsCount(
 		long userId, boolean archived) {
 
@@ -183,6 +199,14 @@ public class UserNotificationEventLocalServiceImpl
 
 		return userNotificationEventPersistence.countByU_A_A(
 			userId, actionRequired, archived);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(
+		long userId, int deliveryType, boolean archived) {
+
+		return userNotificationEventPersistence.countByU_DT_A(
+			userId, deliveryType, archived);
 	}
 
 	@Override
@@ -218,6 +242,22 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public List<UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered) {
+
+		return userNotificationEventPersistence.findByU_DT_D(
+			userId, deliveryType, delivered);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered, int start, int end) {
+
+		return userNotificationEventPersistence.findByU_DT_D(
+			userId, deliveryType, delivered, start, end);
+	}
+
+	@Override
 	public int getDeliveredUserNotificationEventsCount(
 		long userId, boolean delivered) {
 
@@ -230,6 +270,14 @@ public class UserNotificationEventLocalServiceImpl
 
 		return userNotificationEventPersistence.countByU_D_A(
 			userId, delivered, actionRequired);
+	}
+
+	@Override
+	public int getDeliveredUserNotificationEventsCount(
+		long userId, int deliveryType, boolean delivered) {
+
+		return userNotificationEventPersistence.countByU_DT_D(
+			userId, deliveryType, delivered);
 	}
 
 	@Override
@@ -263,10 +311,26 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType) {
+
+		return userNotificationEventPersistence.findByU_DT(
+			userId, deliveryType);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getUserNotificationEvents(
 		long userId, int start, int end) {
 
 		return userNotificationEventPersistence.findByUserId(
 			userId, start, end);
+	}
+
+	@Override
+	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType, int start, int end) {
+
+		return userNotificationEventPersistence.findByU_DT(
+			userId, deliveryType, start, end);
 	}
 
 	@Override
@@ -282,6 +346,12 @@ public class UserNotificationEventLocalServiceImpl
 	@Override
 	public int getUserNotificationEventsCount(long userId, boolean archived) {
 		return getArchivedUserNotificationEventsCount(userId, archived);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(long userId, int deliveryType) {
+		return userNotificationEventPersistence.countByU_DT(
+			userId, deliveryType);
 	}
 
 	@Override

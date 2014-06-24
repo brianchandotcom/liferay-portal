@@ -305,12 +305,24 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 		long userId, boolean archived, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getArchivedUserNotificationEvents(
+		long userId, int deliveryType, boolean archived, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArchivedUserNotificationEventsCount(long userId,
 		boolean archived);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArchivedUserNotificationEventsCount(long userId,
 		boolean actionRequired, boolean archived);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArchivedUserNotificationEventsCount(long userId,
+		int deliveryType, boolean archived);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
@@ -330,12 +342,24 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 		long userId, boolean delivered, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
+		long userId, int deliveryType, boolean delivered, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDeliveredUserNotificationEventsCount(long userId,
 		boolean delivered);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDeliveredUserNotificationEventsCount(long userId,
 		boolean delivered, boolean actionRequired);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDeliveredUserNotificationEventsCount(long userId,
+		int deliveryType, boolean delivered);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
@@ -361,7 +385,15 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, int deliveryType, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(long userId);
@@ -373,6 +405,9 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(long userId, boolean archived);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserNotificationEventsCount(long userId, int deliveryType);
 
 	public com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(
 		long userId, java.lang.String portletId, int deliveryType,

@@ -93,9 +93,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static long ARCHIVED_COLUMN_BITMASK = 2L;
 	public static long COMPANYID_COLUMN_BITMASK = 4L;
 	public static long DELIVERED_COLUMN_BITMASK = 8L;
-	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long UUID_COLUMN_BITMASK = 32L;
-	public static long TIMESTAMP_COLUMN_BITMASK = 64L;
+	public static long DELIVERYTYPE_COLUMN_BITMASK = 16L;
+	public static long USERID_COLUMN_BITMASK = 32L;
+	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long TIMESTAMP_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -375,7 +376,19 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public void setDeliveryType(int deliveryType) {
+		_columnBitmask |= DELIVERYTYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalDeliveryType) {
+			_setOriginalDeliveryType = true;
+
+			_originalDeliveryType = _deliveryType;
+		}
+
 		_deliveryType = deliveryType;
+	}
+
+	public int getOriginalDeliveryType() {
+		return _originalDeliveryType;
 	}
 
 	@Override
@@ -608,6 +621,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventModelImpl._setOriginalUserId = false;
 
+		userNotificationEventModelImpl._originalDeliveryType = userNotificationEventModelImpl._deliveryType;
+
+		userNotificationEventModelImpl._setOriginalDeliveryType = false;
+
 		userNotificationEventModelImpl._originalDelivered = userNotificationEventModelImpl._delivered;
 
 		userNotificationEventModelImpl._setOriginalDelivered = false;
@@ -792,6 +809,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private String _type;
 	private long _timestamp;
 	private int _deliveryType;
+	private int _originalDeliveryType;
+	private boolean _setOriginalDeliveryType;
 	private long _deliverBy;
 	private boolean _delivered;
 	private boolean _originalDelivered;

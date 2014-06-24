@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -80,6 +82,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -665,6 +669,46 @@ public class JournalUtil {
 		}
 
 		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
+	}
+
+	public static String getDisplayStyle(
+		LiferayPortletRequest liferayPortletRequest) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				liferayPortletRequest);
+
+		String[] displayViews = StringUtil.split(
+			PrefsParamUtil.getString(
+				liferayPortletRequest.getPreferences(), liferayPortletRequest,
+				"displayViews",
+				StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
+
+		String displayStyle = ParamUtil.getString(
+			liferayPortletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				PortletKeys.JOURNAL, "display-style",
+				PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
+		}
+		else {
+			boolean saveDisplayStyle = ParamUtil.getBoolean(
+				liferayPortletRequest, "saveDisplayStyle");
+
+			if (saveDisplayStyle &&
+				ArrayUtil.contains(displayViews, displayStyle)) {
+
+				portalPreferences.setValue(
+					PortletKeys.JOURNAL, "display-style", displayStyle);
+			}
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 	public static Map<Locale, String> getEmailArticleAddedBodyMap(

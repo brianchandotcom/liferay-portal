@@ -60,15 +60,7 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 	</div>
 
 	<div class="target-tag-container">
-		<span class="target-tag-label">
-			<liferay-ui:message key="into-this-tag" />
-		</span>
-
-		<span class="target-tag-msg">
-			<liferay-ui:message key="you-can-change-your-destination-tag" />
-		</span>
-
-		<aui:select cssClass="target-tag" label="" name="targetTagId">
+		<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagId">
 
 			<%
 			for (long mergeTagId : mergeTagIds) {

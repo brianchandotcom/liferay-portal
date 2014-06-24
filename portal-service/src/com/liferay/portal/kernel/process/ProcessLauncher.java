@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.DataInputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -80,9 +79,11 @@ public class ProcessLauncher {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			DataInputStream dataInputStream = new DataInputStream(System.in);
+			ObjectInputStream bootstrapObjectInputStream =
+				new ObjectInputStream(System.in);
 
-			String processCallableName = dataInputStream.readUTF();
+			String processCallableName =
+				(String)bootstrapObjectInputStream.readObject();
 
 			String logPrefixString =
 				StringPool.OPEN_BRACKET.concat(processCallableName).concat(
@@ -93,7 +94,7 @@ public class ProcessLauncher {
 			outProcessOutputStream.setLogPrefix(logPrefix);
 			errProcessOutputStream.setLogPrefix(logPrefix);
 
-			String classPath = dataInputStream.readUTF();
+			String classPath = (String)bootstrapObjectInputStream.readObject();
 
 			ClassLoader classLoader = new URLClassLoader(
 				ClassPathUtil.getClassPathURLs(classPath));
@@ -101,7 +102,8 @@ public class ProcessLauncher {
 			currentThread.setContextClassLoader(classLoader);
 
 			ObjectInputStream objectInputStream =
-				new ClassLoaderObjectInputStream(dataInputStream, classLoader);
+				new ClassLoaderObjectInputStream(
+					bootstrapObjectInputStream, classLoader);
 
 			ProcessCallable<?> processCallable =
 				(ProcessCallable<?>)objectInputStream.readObject();

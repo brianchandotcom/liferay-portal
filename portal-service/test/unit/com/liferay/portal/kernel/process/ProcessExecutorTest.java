@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
@@ -54,6 +55,8 @@ import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.channels.ServerSocketChannel;
 
@@ -61,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
@@ -815,6 +819,51 @@ public class ProcessExecutorTest {
 		executorService.awaitTermination(10, TimeUnit.SECONDS);
 
 		Assert.assertTrue(future.isCancelled());
+		Assert.assertTrue(future.isDone());
+	}
+
+	@Test
+	public void testLargeProcessCallable() throws Exception {
+		byte[] reallyLargePayload = new byte[100 * 1024 * 1024];
+
+		Random random = new Random();
+
+		random.nextBytes(reallyLargePayload);
+
+		EchoPayloadProcessCallable echoPayloadProcessCallable =
+			new EchoPayloadProcessCallable(reallyLargePayload);
+
+		Future<byte[]> future = ProcessExecutor.execute(
+			_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+			echoPayloadProcessCallable);
+
+		Assert.assertArrayEquals(reallyLargePayload, future.get());
+		Assert.assertFalse(future.isCancelled());
+		Assert.assertTrue(future.isDone());
+	}
+
+	@Test
+	public void testLargeRuntimeClassPath() throws Exception {
+		EchoRuntimeClassPathProcessCallable
+			echoRuntimeClassPathProcessCallable =
+				new EchoRuntimeClassPathProcessCallable();
+
+		char[] reallyLongFileNameChars = new char[10 * 1024 * 1024];
+
+		reallyLongFileNameChars[0] = CharPool.SLASH;
+
+		for (int i = 1; i < reallyLongFileNameChars.length; i++) {
+			reallyLongFileNameChars[i] = (char)('a' + (i % 26));
+		}
+
+		String reallyLongFileName = new String(reallyLongFileNameChars);
+
+		Future<String> future = ProcessExecutor.execute(
+			_classPath, reallyLongFileName, _createArguments(_JPDA_OPTIONS1),
+			echoRuntimeClassPathProcessCallable);
+
+		Assert.assertEquals(reallyLongFileName, future.get());
+		Assert.assertFalse(future.isCancelled());
 		Assert.assertTrue(future.isDone());
 	}
 
@@ -1693,6 +1742,62 @@ public class ProcessExecutorTest {
 		}
 
 		private static final long serialVersionUID = 1L;
+
+	}
+
+	private static class EchoPayloadProcessCallable
+		implements ProcessCallable<byte[]> {
+
+		public EchoPayloadProcessCallable(byte[] payload) {
+			_payload = payload;
+		}
+
+		@Override
+		public byte[] call() throws ProcessException {
+			return _payload;
+		}
+
+		private final byte[] _payload;
+
+	}
+
+	private static class EchoRuntimeClassPathProcessCallable
+		implements ProcessCallable<String> {
+
+		@Override
+		public String call() throws ProcessException {
+			Thread currentThread = Thread.currentThread();
+
+			URLClassLoader urlClassLoader =
+				(URLClassLoader)currentThread.getContextClassLoader();
+
+			URL[] urls = urlClassLoader.getURLs();
+
+			StringBundler sb = new StringBundler(urls.length * 2);
+
+			for (URL url : urls) {
+				String path = url.getPath();
+
+				int index = path.indexOf(":/");
+
+				if (index != -1) {
+					path = path.substring(index + 1);
+				}
+
+				if (path.endsWith(StringPool.SLASH)) {
+					path = path.substring(0, path.length() - 1);
+				}
+
+				sb.append(path);
+				sb.append(File.pathSeparator);
+			}
+
+			if (sb.index() > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			return sb.toString();
+		}
 
 	}
 

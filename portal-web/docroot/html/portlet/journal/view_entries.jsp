@@ -28,11 +28,10 @@ String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
+portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("displayStyle", displayStyle);
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
-
-ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, entryEnd / (entryEnd - entryStart), entryEnd - entryStart, portletURL);
+ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -444,22 +443,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	Liferay.fire(
-		'<portlet:namespace />pageLoaded',
-		{
-			pagination: {
-				name: 'entryPagination',
-				state: {
-					page: <%= (totalVar == 0) ? 0 : articleSearchContainer.getCur() %>,
-					rowsPerPage: <%= articleSearchContainer.getDelta() %>,
-					total: <%= totalVar %>
-				}
-			}
-		}
-	);
-</aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal.view_entries_jsp");
-%>
+<div class="article-entries-pagination">
+	<liferay-ui:search-paginator searchContainer="<%= articleSearchContainer %>" />
+</div>

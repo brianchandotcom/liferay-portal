@@ -444,29 +444,9 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 		</aui:form>
 	</div>
 
-	<%
-	request.setAttribute("view.jsp-total", String.valueOf(total));
-
-	request.setAttribute("view_entries.jsp-entryStart", String.valueOf(searchContainer.getStart()));
-	request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer.getEnd()));
-	%>
-
-	<aui:script>
-		Liferay.fire(
-			'<portlet:namespace />pageLoaded',
-			{
-				pagination: {
-					name: 'entryPagination',
-					state: {
-						page: <%= searchContainer.getCur() %>,
-						rowsPerPage: <%= searchContainer.getDelta() %>,
-						total: <%= total %>
-					}
-				},
-				src: Liferay.JOURNAL_SEARCH
-			}
-		);
-	</aui:script>
+	<div class="article-entries-pagination">
+		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+	</div>
 </liferay-util:buffer>
 
 <c:choose>

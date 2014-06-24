@@ -33,12 +33,6 @@ if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDE
 	}
 }
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
-
-int folderStart = ParamUtil.getInteger(request, "folderStart");
-int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
-
 int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED);
 
 boolean showSelectAll = false;
@@ -93,23 +87,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
 					<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 				</div>
-
-				<div class="article-entries-pagination"></div>
 			</aui:form>
 		</aui:col>
 	</aui:row>
 </div>
-
-<%
-int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
-int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
-
-entryEnd = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryEnd"), entryEnd);
-entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryStart"), entryStart);
-
-folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
-folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
-%>
 
 <aui:script>
 	Liferay.provide(
@@ -161,19 +142,6 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/journal/move_entry" /></portlet:renderURL>',
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletKeys.TRASH : StringPool.BLANK %>',
 				updateable: true
-			},
-			paginator: {
-				entriesTotal: <%= entriesTotal %>,
-				entryEnd: <%= entryEnd %>,
-				entryRowsPerPage: <%= entryEnd - entryStart %>,
-				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-				entryStart: <%= entryStart %>,
-				folderEnd: <%= folderEnd %>,
-				folderId: <%= folderId %>,
-				folderRowsPerPage: <%= folderEnd - folderStart %>,
-				folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-				folderStart: <%= folderStart %>,
-				foldersTotal: <%= foldersTotal %>
 			},
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',

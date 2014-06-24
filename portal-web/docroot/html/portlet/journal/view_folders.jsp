@@ -46,12 +46,6 @@ if (folder != null) {
 
 String structureId = ParamUtil.getString(request, "structureId");
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
-
-int folderStart = ParamUtil.getInteger(request, "folderStart");
-int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
-
 int total = 0;
 
 long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
@@ -67,7 +61,7 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", folderEnd / (folderEnd - folderStart), (folderEnd - folderStart), portletURL, null, null);
+	SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 searchContainer.setTotal(total);
 
@@ -116,10 +110,6 @@ else {
 					<liferay-portlet:renderURL varImpl="viewArticlesHomeURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="entryStart" value="0" />
-						<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-						<portlet:param name="folderStart" value="0" />
-						<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:app-view-navigation-entry
@@ -141,10 +131,6 @@ else {
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="navigation" value="recent" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="entryStart" value="0" />
-						<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-						<portlet:param name="folderStart" value="0" />
-						<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:app-view-navigation-entry
@@ -167,10 +153,6 @@ else {
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="navigation" value="mine" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:app-view-navigation-entry
@@ -196,10 +178,6 @@ else {
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="browseBy" value="structure" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:app-view-navigation-entry
@@ -224,10 +202,6 @@ else {
 					<liferay-portlet:renderURL varImpl="viewURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="structureId" value="<%= String.valueOf(0) %>" />
-						<portlet:param name="entryStart" value="0" />
-						<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-						<portlet:param name="folderStart" value="0" />
-						<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:app-view-navigation-entry
@@ -256,10 +230,6 @@ else {
 								<portlet:param name="browseBy" value="structure" />
 								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
-								<portlet:param name="entryStart" value="0" />
-								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-								<portlet:param name="folderStart" value="0" />
-								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
 							<liferay-ui:app-view-navigation-entry
@@ -289,10 +259,6 @@ else {
 					<liferay-portlet:renderURL varImpl="viewURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-						<portlet:param name="entryStart" value="0" />
-						<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-						<portlet:param name="folderStart" value="0" />
-						<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:app-view-navigation-entry
@@ -323,10 +289,6 @@ else {
 						<liferay-portlet:renderURL varImpl="viewURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:app-view-navigation-entry
@@ -348,25 +310,6 @@ else {
 	</div>
 </div>
 
-<%
-request.setAttribute("view_folders.jsp-total", String.valueOf(total));
-
-request.setAttribute("view_folders.jsp-folderEnd", searchContainer.getEnd());
-request.setAttribute("view_folders.jsp-folderStart", searchContainer.getStart());
-%>
-
-<aui:script>
-	Liferay.fire(
-		'<portlet:namespace />pageLoaded',
-		{
-			pagination: {
-				name: 'folderPagination',
-				state: {
-					page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
-					rowsPerPage: <%= searchContainer.getDelta() %>,
-					total: <%= total %>
-				}
-			}
-		}
-	);
-</aui:script>
+<div class="article-folders-pagination">
+	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+</div>

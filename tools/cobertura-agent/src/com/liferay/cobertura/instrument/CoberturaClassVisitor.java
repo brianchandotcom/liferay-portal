@@ -20,9 +20,6 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Shuyang Zhou
  */
@@ -52,10 +49,8 @@ public class CoberturaClassVisitor extends ClassVisitor {
 
 	@Override
 	public void visitEnd() {
-		if (_instrument && (_classData.getNumberOfValidLines() == 0) &&
-			_logger.isWarnEnabled()) {
-
-			_logger.warn(
+		if (_instrument && (_classData.getNumberOfValidLines() == 0)) {
+			System.err.println(
 				"No line number information found for class " +
 					_classData.getName() +
 						". Please recompile with debug info.");
@@ -85,9 +80,6 @@ public class CoberturaClassVisitor extends ClassVisitor {
 
 		_classData.setSourceFileName(source);
 	}
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		CoberturaClassVisitor.class);
 
 	private ClassData _classData;
 	private boolean _instrument;

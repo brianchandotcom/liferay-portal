@@ -120,16 +120,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(JournalUtil.getDisplayStyle(liferayPortletRequest)) %>',
-			folders: {
-				defaultParams: {
-					p_p_id: '<%= portletDisplay.getId() %>',
-					p_p_lifecycle: 0
-				},
-				defaultParentFolderId: '<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
-				'listViewConfig.useTransition': false,
-				mainUrl: '<%= mainURL %>',
-				strutsAction: '/journal/view'
-			},
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',

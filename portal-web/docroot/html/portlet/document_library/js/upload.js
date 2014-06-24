@@ -235,10 +235,6 @@ AUI.add(
 							AArray.invoke(instance._navigationOverlays, 'destroy');
 						}
 
-						if (instance._overlayManager) {
-							instance._overlayManager.destroy();
-						}
-
 						if (instance._uploader) {
 							instance._uploader.destroy();
 						}

@@ -24,11 +24,6 @@
 >
 
 	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("folder", true);
-	data.put("folder-id", curFolder.getFolderId());
-
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
 
 	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
@@ -39,14 +34,13 @@
 	rowURL.setParameter("redirect", currentURL);
 	rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 	rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+	rowURL.setParameter("displayStyle", displayStyle);
 	%>
 
 	<liferay-ui:icon
-		data="<%= data %>"
 		iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 		label="<%= true %>"
 		message="<%= curFolder.getName() %>"
-		method="get"
 		url="<%= rowURL.toString() %>"
 	/>
 </liferay-ui:search-container-column-text>

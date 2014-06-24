@@ -53,7 +53,6 @@ OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(or
 
 articleSearchContainer.setOrderByCol(orderByCol);
 articleSearchContainer.setOrderByComparator(orderByComparator);
-articleSearchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
 articleSearchContainer.setOrderByType(orderByType);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
@@ -342,6 +341,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+					tempRowURL.setParameter("displayStyle", displayStyle);
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 
@@ -424,8 +424,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
-						rowData.put("folder", true);
-						rowData.put("folder-id", curFolder.getFolderId());
 						rowData.put("title", curFolder.getName());
 
 						row.setData(rowData);

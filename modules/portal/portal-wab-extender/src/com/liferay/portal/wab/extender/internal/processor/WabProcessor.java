@@ -292,6 +292,17 @@ public class WabProcessor {
 		analyzer.setClasspath(files.toArray(new File[classPath.size()]));
 	}
 
+	protected void processBundleSymbolicName(Analyzer analyzer) {
+		String bundleSymbolicName = MapUtil.getString(
+			_parameters, Constants.BUNDLE_SYMBOLICNAME);
+
+		if (Validator.isNull(bundleSymbolicName)) {
+			bundleSymbolicName = _context.substring(1);
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
+	}
+
 	protected Set<String> processClass(
 		Source source, DependencyVisitor dependencyVisitor, String className) {
 
@@ -487,6 +498,8 @@ public class WabProcessor {
 		analyzer.setJar(_pluginDir);
 
 		processBundleClasspath(analyzer);
+
+		processBundleSymbolicName(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

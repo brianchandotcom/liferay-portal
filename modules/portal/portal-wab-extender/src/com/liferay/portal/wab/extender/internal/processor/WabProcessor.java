@@ -190,6 +190,10 @@ public class WabProcessor {
 		}
 	}
 
+	protected String getFileName(String className) {
+		return className.replace(CharPool.PERIOD, CharPool.SLASH) + ".class";
+	}
+
 	protected Manifest getManifest() throws IOException {
 		File manifestFile = getManifestFile();
 
@@ -286,6 +290,17 @@ public class WabProcessor {
 		Collection<File> files = classPath.values();
 
 		analyzer.setClasspath(files.toArray(new File[classPath.size()]));
+	}
+
+	protected void processBundleSymbolicName(Analyzer analyzer) {
+		String bundleSymbolicName = MapUtil.getString(
+			_parameters, Constants.BUNDLE_SYMBOLICNAME);
+
+		if (Validator.isNull(bundleSymbolicName)) {
+			bundleSymbolicName = _context.substring(1);
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
 	}
 
 	protected Set<String> processClass(
@@ -396,10 +411,6 @@ public class WabProcessor {
 		}
 	}
 
-	protected String getFileName(String className) {
-		return className.replace(CharPool.PERIOD, CharPool.SLASH) + ".class";
-	}
-
 	protected Set<String> processJSPDependencies(File file) throws IOException {
 		Source source = new ClassLoaderSource(_classLoader);
 
@@ -487,6 +498,8 @@ public class WabProcessor {
 		analyzer.setJar(_pluginDir);
 
 		processBundleClasspath(analyzer);
+
+		processBundleSymbolicName(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

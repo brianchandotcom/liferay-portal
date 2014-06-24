@@ -116,9 +116,9 @@ public class WabProcessor {
 
 		executeAutoDeployers(autoDeploymentContext);
 
-		PluginPackage pluginPackage = autoDeploymentContext.getPluginPackage();
+		_pluginPackage = autoDeploymentContext.getPluginPackage();
 
-		_context = pluginPackage.getContext();
+		_context = _pluginPackage.getContext();
 
 		File deployDir = autoDeploymentContext.getDeployDir();
 
@@ -304,6 +304,16 @@ public class WabProcessor {
 		}
 
 		analyzer.setProperty(Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
+	}
+
+	protected void processBundleVersion(Analyzer analyzer) {
+		_version = MapUtil.getString(_parameters, Constants.BUNDLE_VERSION);
+
+		if (Validator.isNull(_version)) {
+			_version = _pluginPackage.getVersion();
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_VERSION, _version);
 	}
 
 	protected Set<String> processClass(
@@ -507,6 +517,17 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processManifestVersion(Analyzer analyzer) {
+		String manifestVersion = MapUtil.getString(
+			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+
+		if (Validator.isNull(manifestVersion)) {
+			manifestVersion = "2";
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
+	}
+
 	protected Set<String> processReferencedDependencies(
 		Source source, String className) {
 
@@ -547,6 +568,12 @@ public class WabProcessor {
 		processBundleClasspath(analyzer);
 		processBundleSymbolicName(analyzer);
 		processExtraHeaders(analyzer);
+
+		// Order is important
+
+		processBundleVersion(analyzer);
+
+		processManifestVersion(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
@@ -561,6 +588,8 @@ public class WabProcessor {
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;
 	private File _pluginDir;
+	private PluginPackage _pluginPackage;
 	private String _servicePackageName;
+	private String _version;
 
 }

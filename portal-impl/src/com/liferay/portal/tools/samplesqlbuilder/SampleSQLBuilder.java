@@ -455,11 +455,11 @@ public class SampleSQLBuilder {
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
-	private volatile Exception _freemarkerException;
 
 	private String[] _csvFileNames;
 	private DataFactory _dataFactory;
 	private String _dbType;
+	private volatile Exception _freemarkerException;
 	private int _optimizeBufferSize;
 	private String _outputDir;
 	private String _script;

@@ -415,8 +415,6 @@
 
 		<antcall target="jar" />
 
-		<setup-jrebel />
-
 		<antcall target="print-current-time" />
 	</target>
 

@@ -957,10 +957,10 @@ public class JournalConverterImpl implements JournalConverter {
 			element.addAttribute("readOnly", "false");
 		}
 
+		element.add(metadataElement.detach());
+
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
-
-		element.add(metadataElement.detach());
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateJournalXSDDynamicElement(

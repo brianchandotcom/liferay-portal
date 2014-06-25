@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
+import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -71,6 +72,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.depend.DependencyVisitor;
@@ -401,8 +404,9 @@ public class WabProcessor {
 		return packageNames;
 	}
 
-	protected void processDeclarativeReferences() {
+	protected void processDeclarativeReferences() throws IOException {
 		processDefaultServletPackages();
+		processTldDependencies();
 	}
 
 	protected void processDefaultServletPackages() {
@@ -635,9 +639,9 @@ public class WabProcessor {
 				portletName;
 
 		XPath xPath = SAXReaderUtil.createXPath(
-			"x:init-param[x:name/text()='com.liferay.portal." +
-				"invokerPortletName']",
-			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+				"x:init-param[x:name/text()='com.liferay.portal." +
+						"invokerPortletName']",
+				"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
 
 		Element invokerPortletNameElement = (Element)xPath.selectSingleNode(
 			element);
@@ -703,6 +707,37 @@ public class WabProcessor {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void processTldDependencies() throws IOException {
+		File file = new File(_file, "WEB-INF/tld");
+
+		if (!file.exists() || !file.isDirectory()) {
+			return;
+		}
+
+		File[] files = file.listFiles(new FileFilter(".*\\.tld"));
+
+		for (File tldFile : files) {
+			String content = FileUtil.read(tldFile);
+
+			DependencyVisitor dependencyVisitor = new DependencyVisitor();
+
+			Matcher matcher = _tldPackagesPattern.matcher(content);
+
+			while (matcher.find()) {
+				String value = matcher.group(1).trim();
+
+				processClass(
+					new ClassLoaderSource(_classLoader), dependencyVisitor,
+					value.replace('.', '/') + ".class");
+			}
+
+			for (String global : dependencyVisitor.getGlobals()) {
+				_importPackageNames.add(
+					global.replaceAll(StringPool.SLASH, StringPool.PERIOD));
+			}
 		}
 	}
 
@@ -816,5 +851,7 @@ public class WabProcessor {
 	private File _pluginDir;
 	private PluginPackage _pluginPackage;
 	private String _servicePackageName;
+	private Pattern _tldPackagesPattern = Pattern.compile(
+		"<[^>]+?-class>\\p{Space}*?(.*?)\\p{Space}*?</[^>]+?-class>");
 
 }

@@ -40,17 +40,20 @@ public class ConcurrentAssertUtil {
 	public static void endAssert() {
 		_thread = null;
 
-		for (Map.Entry<Thread, String> entry :
-				_concurrentFailureMessages.entrySet()) {
+		try {
+			for (Map.Entry<Thread, String> entry :
+					_concurrentFailureMessages.entrySet()) {
 
-			Thread thread = entry.getKey();
+				Thread thread = entry.getKey();
 
-			Assert.fail(
-				"Thread " + thread + " caught concurrent failure: " +
-					entry.getValue());
+				Assert.fail(
+					"Thread " + thread + " caught concurrent failure: " +
+						entry.getValue());
+			}
 		}
-
-		_concurrentFailureMessages.clear();
+		finally {
+			_concurrentFailureMessages.clear();
+		}
 	}
 
 	public static void startAssert() {

@@ -517,7 +517,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
 
-	protected void setTrashEntryCleanCount(long value) throws Exception {
+	protected void setTrashEntryCleanCount(int value) throws Exception {
 		Field field = PropsValues.class.getField(
 			"TRASH_ENTRIES_MAX_CLEAN_COUNT");
 
@@ -546,7 +546,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 	private List<Long> _companies;
 	private List<Group> _groups;
 	private int _readCount = 10000;
-	private long _trashEntriesMaxCleanCount =
+	private int _trashEntriesMaxCleanCount =
 		PropsValues.TRASH_ENTRIES_MAX_CLEAN_COUNT;
 
 }

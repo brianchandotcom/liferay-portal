@@ -162,7 +162,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					return -1L;
 				}
 
-				long maxCleanCount = PropsValues.TRASH_ENTRIES_MAX_CLEAN_COUNT;
+				int maxCleanCount = PropsValues.TRASH_ENTRIES_MAX_CLEAN_COUNT;
 
 				_cleanCycleCounter++;
 
@@ -215,7 +215,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			}
 
 			private int _cleanCycleCounter = 0;
-			private long _counter = 0L;
+			private int _counter = 0;
 			private long _lastEntryId = 0L;
 		};
 

@@ -90,6 +90,10 @@ public class MapUtilTest {
 
 	}
 
+	public static class WhenFilteringByPredicateFilter {
+
+	}
+
 	@Test
 	public void testPredicateFilter() throws Exception {
 		Map<String, String> inputMap = new HashMap<String, String>();

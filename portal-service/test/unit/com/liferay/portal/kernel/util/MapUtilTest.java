@@ -28,6 +28,10 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class MapUtilTest {
 
+	public static class WhenCreatingAMapFromArray {
+
+	}
+
 	@Test
 	public void testFromArray() {
 		String[] array = new String[] {

@@ -14,6 +14,7 @@
 
 package com.liferay.registry.collections;
 
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -37,10 +38,17 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(
-				"(&(objectClass=" + clazz.getName() + ")" + filterString + ")"),
-			new ServiceReferenceServiceTrackerCustomizer());
+		if (filterString != null) {
+			Filter filter = registry.getFilter(
+				"(&(objectClass=" + clazz.getName() + ")" + filterString + ")");
+
+			_serviceTracker = registry.trackServices(
+				filter, new ServiceReferenceServiceTrackerCustomizer());
+		}
+		else {
+			_serviceTracker = registry.trackServices(
+				clazz, new ServiceReferenceServiceTrackerCustomizer());
+		}
 	}
 
 	@Override

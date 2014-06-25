@@ -88,7 +88,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.autoSaveTimeout = 3000;
 
-	config.bodyClass = 'html-editor <%= colorSchemeCssClass %> <%= HtmlUtil.escapeJS(cssClasses) %>';
+	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(colorSchemeCssClass) %> <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 	config.closeNoticeTimeout = 8000;
 

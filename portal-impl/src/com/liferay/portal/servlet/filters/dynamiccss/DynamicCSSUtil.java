@@ -150,7 +150,8 @@ public class DynamicCSSUtil {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
 		}
 
-		if (themeCssFastLoad && (cacheResourceURLConnection != null) &&
+		if ((themeCssFastLoad || !content.contains(_CSS_IMPORT_BEGIN)) &&
+			(cacheResourceURLConnection != null) &&
 			(resourceURLConnection != null) &&
 			(cacheResourceURLConnection.getLastModified() >=
 				resourceURLConnection.getLastModified())) {
@@ -173,9 +174,14 @@ public class DynamicCSSUtil {
 				content = propagateQueryString(content, queryString);
 			}
 
-			parsedContent = _parseSass(
-				servletContext, request, themeDisplay, theme, resourcePath,
-				content);
+			if (!themeCssFastLoad && _isImportsOnly(content)) {
+				parsedContent = content;
+			}
+			else {
+				parsedContent = _parseSass(
+					servletContext, request, themeDisplay, theme, resourcePath,
+					content);
+			}
 
 			if (PortalUtil.isRightToLeft(request) &&
 				!RTLCSSUtil.isExcludedPath(resourcePath)) {
@@ -396,6 +402,39 @@ public class DynamicCSSUtil {
 		}
 
 		return themeImagesPath;
+	}
+
+	private static boolean _isImportsOnly(String content) {
+		int pos = 0;
+
+		while (true) {
+			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
+			int importY = content.indexOf(
+				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
+
+			if ((importX == -1) || (importY == -1)) {
+				String substring = content.substring(pos);
+
+				substring = substring.trim();
+
+				if (substring.isEmpty()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+
+			String substring = content.substring(pos, importX);
+
+			substring = substring.trim();
+
+			if (!substring.isEmpty()) {
+				return false;
+			}
+
+			pos = importY + _CSS_IMPORT_END.length();
+		}
 	}
 
 	private static boolean _isThemeCssFastLoad(

@@ -87,7 +87,7 @@
 <!--DOCUMENTS_TABLE-->
 <tr>
 	<td>DOCUMENTS_TABLE_DOCUMENT</td>
-	<td>//tr[contains(.,'${key_documentTitle}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_documentTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

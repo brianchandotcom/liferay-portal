@@ -351,7 +351,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_ADD_CHILD_SITE" value1="Add Child Site" />
 
 		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${childSiteName2}" />
@@ -367,12 +367,12 @@
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
@@ -390,12 +390,12 @@
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
@@ -413,12 +413,12 @@
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${childSiteName2}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 	</command>
 
@@ -505,12 +505,12 @@
 
 		<var name="key_siteName" value="Liferay" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">

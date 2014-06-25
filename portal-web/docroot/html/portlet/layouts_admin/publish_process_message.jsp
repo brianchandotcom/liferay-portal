@@ -35,21 +35,31 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	<c:if test="<%= backgroundTaskStatus != null %>">
 
 		<%
-		double percentage = 100;
+		int percentage = 100;
 
 		long allModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+		long allPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCountersTotal"));
+		long currentPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
 
-		if (allModelAdditionCountersTotal > 0) {
-			percentage = Math.round((double)currentModelAdditionCountersTotal / allModelAdditionCountersTotal * 100);
+		long allProgressBarCountersTotal = allModelAdditionCountersTotal + allPortletAdditionCounter;
+		long currentProgressBarCountersTotal = currentModelAdditionCountersTotal + currentPortletAdditionCounter;
+
+		if (allProgressBarCountersTotal > 0) {
+			String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
+			int base = 100;
+
+			if (Validator.isNotNull(phase) && phase.equals(Constants.EXPORT)) {
+				base = 50;
+			}
+
+			percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * base);
 		}
 		%>
 
 		<div class="active progress progress-striped">
 			<div class="progress-bar" style="width: <%= percentage %>%;">
-				<c:if test="<%= allModelAdditionCountersTotal > 0 %>">
-					<%= currentModelAdditionCountersTotal %> / <%= allModelAdditionCountersTotal %>
-				</c:if>
+				<%= percentage + StringPool.PERCENT %>
 			</div>
 		</div>
 

@@ -299,11 +299,6 @@ public class LayoutImporter {
 		ManifestSummary manifestSummary =
 			ExportImportHelperUtil.getManifestSummary(portletDataContext);
 
-		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-				"layout", manifestSummary);
-		}
-
 		portletDataContext.setManifestSummary(manifestSummary);
 
 		// Layout and layout set prototype
@@ -443,12 +438,32 @@ public class LayoutImporter {
 				groupId, privateLayout, settings);
 		}
 
-		// Read asset tags, expando tables, locks, and permissions to make them
-		// available to the data handlers through the context
-
 		Element portletsElement = rootElement.element("portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
+
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			List<String> portletIds = new ArrayList();
+
+			for (Element portletElement : portletElements) {
+				String portletId = portletElement.attributeValue("portlet-id");
+
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					portletDataContext.getCompanyId(), portletId);
+
+				if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
+					continue;
+				}
+
+				portletIds.add(portletId);
+			}
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"layout", ArrayUtil.toStringArray(portletIds), manifestSummary);
+		}
+
+		// Read asset tags, expando tables, locks, and permissions to make them
+		// available to the data handlers through the context
 
 		if (importPermissions) {
 			for (Element portletElement : portletElements) {
@@ -594,6 +609,11 @@ public class LayoutImporter {
 
 			portletDataContext.setPlid(plid);
 			portletDataContext.setOldPlid(oldPlid);
+
+			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+					"portlet", portletId, manifestSummary);
+			}
 
 			Document portletDocument = SAXReaderUtil.read(
 				portletDataContext.getZipEntryAsString(portletPath));

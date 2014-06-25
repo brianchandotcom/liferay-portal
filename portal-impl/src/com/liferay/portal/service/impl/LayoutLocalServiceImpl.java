@@ -907,6 +907,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
+		taskContextMap.put(Constants.CMD, Constants.EXPORT);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());

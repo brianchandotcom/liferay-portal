@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -139,19 +138,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 				addUncheckedModelAdditionCount(
 					portletDataContext, portletDataHandlerControl);
-			}
-
-			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-				PortletDataContext clonePortletDataContext =
-					PortletDataContextFactoryUtil.clonePortletDataContext(
-						portletDataContext);
-
-				prepareManifestSummary(
-					clonePortletDataContext, portletPreferences);
-
-				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-					"portlet", portletId,
-					clonePortletDataContext.getManifestSummary());
 			}
 
 			return doExportData(

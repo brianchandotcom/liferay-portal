@@ -32,6 +32,7 @@ Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
 contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
+String colorSchemeCssClass = ParamUtil.getString(request, "colorSchemeCssClass");
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
@@ -87,7 +88,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.autoSaveTimeout = 3000;
 
-	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	config.bodyClass = 'html-editor <%= colorSchemeCssClass %> <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 	config.closeNoticeTimeout = 8000;
 

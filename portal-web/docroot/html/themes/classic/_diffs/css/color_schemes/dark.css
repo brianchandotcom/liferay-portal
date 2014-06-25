@@ -21,14 +21,36 @@
 		color: #009CEB;
 	}
 
-	legend, .portlet-wiki .portlet-body h3, .taglib-header {
+	label, .control-label, .panel .panel-toggle {
 		color: #E3E3E3;
+	}
+
+	legend, .portlet-wiki .portlet-body h3, .taglib-header, .form-control, input[type=text] {
+		color: #E3E3E3;
+	}
+
+	.form-control, input[type=text], .tagselector-content .textboxlistentry-holder, .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+		background: #555555;
+	}
+
+	.has-error {
+		label, .help-block {
+			color: #d46565;
+		}
+
+		.form-control {
+			border-color: #d46565;
+		}
 	}
 
 	.modal-content {
 		&, legend {
 			color: #555;
 		}
+	}
+
+	.panel, .html-editor, table td {
+		background: #363636;
 	}
 
 	/* ---------- Dockbar ---------- */

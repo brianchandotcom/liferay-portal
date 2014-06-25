@@ -92,57 +92,57 @@ public class MapUtilTest {
 
 	public static class WhenFilteringByPredicateFilter {
 
-	}
+		@Test
+		public void testPredicateFilter() throws Exception {
+			Map<String, String> inputMap = new HashMap<String, String>();
 
-	@Test
-	public void testPredicateFilter() throws Exception {
-		Map<String, String> inputMap = new HashMap<String, String>();
+			inputMap.put("1", "one");
+			inputMap.put("2", "two");
+			inputMap.put("3", "three");
+			inputMap.put("4", "four");
+			inputMap.put("5", "five");
 
-		inputMap.put("1", "one");
-		inputMap.put("2", "two");
-		inputMap.put("3", "three");
-		inputMap.put("4", "four");
-		inputMap.put("5", "five");
+			Map<String, String> outputMap = MapUtil.filter(
+				inputMap, new HashMap<String, String>(),
+				new PredicateFilter<String>() {
 
-		Map<String, String> outputMap = MapUtil.filter(
-			inputMap, new HashMap<String, String>(),
-			new PredicateFilter<String>() {
+					@Override
+					public boolean filter(String string) {
+						int value = GetterUtil.getInteger(string);
 
-				@Override
-				public boolean filter(String string) {
-					int value = GetterUtil.getInteger(string);
+						if ((value % 2) == 0) {
+							return true;
+						}
 
-					if ((value % 2) == 0) {
-						return true;
+						return false;
 					}
 
-					return false;
-				}
+				});
 
-			});
+			Assert.assertEquals(2, outputMap.size());
+			Assert.assertEquals("two", outputMap.get("2"));
+			Assert.assertEquals("four", outputMap.get("4"));
+		}
 
-		Assert.assertEquals(2, outputMap.size());
-		Assert.assertEquals("two", outputMap.get("2"));
-		Assert.assertEquals("four", outputMap.get("4"));
-	}
+		@Test
+		public void testPrefixPredicateFilter() throws Exception {
+			Map<String, String> inputMap = new HashMap<String, String>();
 
-	@Test
-	public void testPrefixPredicateFilter() throws Exception {
-		Map<String, String> inputMap = new HashMap<String, String>();
+			inputMap.put("x1", "one");
+			inputMap.put("2", "two");
+			inputMap.put("x3", "three");
+			inputMap.put("4", "four");
+			inputMap.put("x5", "five");
 
-		inputMap.put("x1", "one");
-		inputMap.put("2", "two");
-		inputMap.put("x3", "three");
-		inputMap.put("4", "four");
-		inputMap.put("x5", "five");
+			Map<String, String> outputMap = MapUtil.filter(
+				inputMap, new HashMap<String, String>(),
+				new PrefixPredicateFilter("x"));
 
-		Map<String, String> outputMap = MapUtil.filter(
-			inputMap, new HashMap<String, String>(),
-			new PrefixPredicateFilter("x"));
+			Assert.assertEquals(2, outputMap.size());
+			Assert.assertEquals("two", outputMap.get("2"));
+			Assert.assertEquals("four", outputMap.get("4"));
+		}
 
-		Assert.assertEquals(2, outputMap.size());
-		Assert.assertEquals("two", outputMap.get("2"));
-		Assert.assertEquals("four", outputMap.get("4"));
 	}
 
 }

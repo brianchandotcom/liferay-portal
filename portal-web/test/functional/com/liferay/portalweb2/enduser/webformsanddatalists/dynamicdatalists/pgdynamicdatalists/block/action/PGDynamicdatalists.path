@@ -159,12 +159,12 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a[contains(.,'Select List')]</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add List')]</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
 	<td></td>
 </tr>
 <tr>

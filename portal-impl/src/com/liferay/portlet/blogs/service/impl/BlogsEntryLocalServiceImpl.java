@@ -218,13 +218,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
-		// Asset
-
-		updateAsset(
-			userId, entry, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		// Message boards
 
 		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
@@ -243,7 +236,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(userId, entry, serviceContext);
+		entry = startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1105,13 +1098,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
-		// Asset
-
-		updateAsset(
-			userId, entry, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		// Workflow
 
 		boolean pingOldTrackbacks = false;
@@ -1130,7 +1116,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(userId, entry, serviceContext);
+		entry = startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1714,7 +1700,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void startWorkflowInstance(
+	protected BlogsEntry startWorkflowInstance(
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1739,10 +1725,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL);
 		workflowContext.put(WorkflowConstants.CONTEXT_USER_URL, userURL);
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			entry.getCompanyId(), entry.getGroupId(), userId,
-			BlogsEntry.class.getName(), entry.getEntryId(), entry,
-			serviceContext, workflowContext);
+		BlogsEntry updatedEntry =
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				entry.getCompanyId(), entry.getGroupId(), userId,
+				BlogsEntry.class.getName(), entry.getEntryId(), entry,
+				serviceContext, workflowContext);
+
+		// Asset
+
+		updateAsset(
+			userId, updatedEntry, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		return updatedEntry;
 	}
 
 	protected void validate(

@@ -477,6 +477,7 @@ public class TrashImpl implements Trash {
 	@Override
 	public boolean isTrashEnabled(long groupId) throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
 		return isTrashEnabled(group);
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portlet.trash.service;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -338,9 +337,7 @@ public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
-	protected void clearTrashEntries(List<TrashEntry> list)
-		throws SystemException {
-
+	protected void clearTrashEntries(List<TrashEntry> list) {
 		for (TrashEntry entry : list) {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());

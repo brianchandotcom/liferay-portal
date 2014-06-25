@@ -14,8 +14,6 @@
 
 package com.liferay.cobertura.instrument;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -59,9 +57,12 @@ public class InstrumentationAgent {
 				if (includeInnerClasses) {
 					Class<?>[] declaredClasses = clazz.getDeclaredClasses();
 
+					declaredClass:
 					for (Class<?> declaredClass : declaredClasses) {
-						if (ArrayUtil.contains(classes, declaredClass)) {
-							continue;
+						for (Class<?> clazz2 : classes) {
+							if (clazz2.equals(declaredClass)) {
+								continue declaredClass;
+							}
 						}
 
 						classData = projectData.getClassData(

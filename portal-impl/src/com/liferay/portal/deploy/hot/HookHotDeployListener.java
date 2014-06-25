@@ -512,20 +512,6 @@ public class HookHotDeployListener
 			StoreFactory.setInstance(null);
 		}
 
-		if (portalProperties.containsKey(
-				PropsKeys.LDAP_ATTRS_TRANSFORMER_IMPL)) {
-
-			String ldapAttClassName = portalProperties.getProperty(
-				PropsKeys.LDAP_ATTRS_TRANSFORMER_IMPL);
-
-			ServiceRegistration<?> serviceRegistration =
-				serviceRegistrations.remove(ldapAttClassName);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
-		}
-
 		if (portalProperties.containsKey(LOCK_LISTENERS)) {
 			LockListenerContainer lockListenerContainer =
 				_lockListenerContainerMap.remove(servletContextName);

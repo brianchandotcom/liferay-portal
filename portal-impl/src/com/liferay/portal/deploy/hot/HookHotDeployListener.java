@@ -140,7 +140,6 @@ import com.liferay.portal.security.pwd.ToolkitWrapper;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -414,9 +413,6 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		Map<Object, ServiceRegistration<?>> serviceRegistrations =
-			getServiceRegistrations(servletContextName);
-
 		PropsUtil.removeProperties(portalProperties);
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
@@ -448,18 +444,6 @@ public class HookHotDeployListener
 						"Unregistered asset query processor " +
 							assetQueryProcessorClassName);
 				}
-			}
-		}
-
-		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
-			String authTokenClassName = portalProperties.getProperty(
-				PropsKeys.AUTH_TOKEN_IMPL);
-
-			ServiceRegistration<?> serviceRegistration =
-				serviceRegistrations.remove(authTokenClassName);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
 			}
 		}
 
@@ -829,13 +813,6 @@ public class HookHotDeployListener
 			autoDeployListenersContainer.unregisterAutoDeployListeners();
 		}
 
-		AutoLoginsContainer autoLoginsContainer =
-			_autoLoginsContainerMap.remove(servletContextName);
-
-		if (autoLoginsContainer != null) {
-			autoLoginsContainer.unregisterAutoLogins();
-		}
-
 		CustomJspBag customJspBag = _customJspBagsMap.remove(
 			servletContextName);
 
@@ -903,6 +880,19 @@ public class HookHotDeployListener
 		}
 
 		unregisterClpMessageListeners(servletContext);
+
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.remove(servletContextName);
+
+		if (serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations.values()) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Hook for " + servletContextName + " was unregistered");
@@ -1173,9 +1163,10 @@ public class HookHotDeployListener
 			Properties portalProperties)
 		throws Exception {
 
-		AutoLoginsContainer autoLoginsContainer = new AutoLoginsContainer();
+		Registry registry = RegistryUtil.getRegistry();
 
-		_autoLoginsContainerMap.put(servletContextName, autoLoginsContainer);
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
 
 		String[] autoLoginClassNames = StringUtil.split(
 			portalProperties.getProperty(AUTO_LOGIN_HOOKS));
@@ -1184,7 +1175,10 @@ public class HookHotDeployListener
 			AutoLogin autoLogin = (AutoLogin)newInstance(
 				portletClassLoader, AutoLogin.class, autoLoginClassName);
 
-			autoLoginsContainer.registerAutoLogin(autoLogin);
+			ServiceRegistration<AutoLogin> serviceRegistration =
+				registry.registerService(AutoLogin.class, autoLogin);
+
+			serviceRegistrations.put(autoLoginClassName, serviceRegistration);
 		}
 	}
 
@@ -2882,8 +2876,6 @@ public class HookHotDeployListener
 	private Map<String, AutoDeployListenersContainer>
 		_autoDeployListenersContainerMap =
 			new HashMap<String, AutoDeployListenersContainer>();
-	private Map<String, AutoLoginsContainer> _autoLoginsContainerMap =
-		new HashMap<String, AutoLoginsContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
 	private Map<String, DLFileEntryProcessorContainer>
@@ -3074,24 +3066,6 @@ public class HookHotDeployListener
 
 		private List<AutoDeployListener> _autoDeployListeners =
 			new ArrayList<AutoDeployListener>();
-
-	}
-
-	private class AutoLoginsContainer {
-
-		public void registerAutoLogin(AutoLogin autoLogin) {
-			AutoLoginFilter.registerAutoLogin(autoLogin);
-
-			_autoLogins.add(autoLogin);
-		}
-
-		public void unregisterAutoLogins() {
-			for (AutoLogin autoLogin : _autoLogins) {
-				AutoLoginFilter.unregisterAutoLogin(autoLogin);
-			}
-		}
-
-		private List<AutoLogin> _autoLogins = new ArrayList<AutoLogin>();
 
 	}
 

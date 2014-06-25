@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +33,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.login.util.LoginUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -45,25 +49,18 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  * @author Raymond Augé
  */
 public class AutoLoginFilter extends BasePortalFilter {
 
-	public static void registerAutoLogin(AutoLogin autoLogin) {
-		_autoLogins.add(autoLogin);
-	}
-
-	public static void unregisterAutoLogin(AutoLogin autoLogin) {
-		_autoLogins.remove(autoLogin);
-	}
-
 	public AutoLoginFilter() {
-		for (String autoLoginClassName : PropsValues.AUTO_LOGIN_HOOKS) {
-			AutoLogin autoLogin = (AutoLogin)InstancePool.get(
-				autoLoginClassName);
+		Registry registry = RegistryUtil.getRegistry();
 
-			_autoLogins.add(autoLogin);
-		}
+		_serviceTracker = registry.trackServices(
+			AutoLogin.class, new AutoLoginServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	protected String getLoginRemoteUser(
@@ -273,5 +270,40 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 	private static List<AutoLogin> _autoLogins =
 		new CopyOnWriteArrayList<AutoLogin>();
+	private ServiceTracker<?, AutoLogin> _serviceTracker;
+
+	private class AutoLoginServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<AutoLogin, AutoLogin> {
+
+		@Override
+		public AutoLogin addingService(
+			ServiceReference<AutoLogin> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AutoLogin autoLogin = registry.getService(serviceReference);
+
+			_autoLogins.add(autoLogin);
+
+			return autoLogin;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_autoLogins.remove(autoLogin);
+		}
+
+	}
 
 }

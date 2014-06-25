@@ -407,6 +407,9 @@ public class WabProcessor {
 	protected void processDeclarativeReferences() throws IOException {
 		processDefaultServletPackages();
 		processTldDependencies();
+
+		// TODO
+
 	}
 
 	protected void processDefaultServletPackages() {

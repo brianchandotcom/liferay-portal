@@ -91,6 +91,30 @@
 		</if>
 	</command>
 
+	<command name="viewAutocompleteMenuNull">
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+
+		<if>
+			<isset var="recipientNameList" />
+			<then>
+				<for list="${recipientNameList}" param="recipientName">
+					<var name="key_recipientName" value="${recipientName}" />
+
+					<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+					<execute action="SOMessagesAdd#assertElementNotPresent" locator-key1="TO_FIELD_DROPDOWN_LIST" />
+				</for>
+			</then>
+			<else>
+				<var name="key_recipientName" value="${recipientName}" />
+
+				<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+				<execute action="SOMessagesAdd#assertElementNotPresent" locator-key1="TO_FIELD_DROPDOWN_LIST" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewMessage">
 		<execute macro="SOMessages#viewMessageList" />
 

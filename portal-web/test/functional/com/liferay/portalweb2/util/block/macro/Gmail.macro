@@ -35,7 +35,7 @@
 				<execute action="Gmail#pause" locator1="5000" />
 			</then>
 			<else>
-				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" value1="${userEmailAddress}" />
+				<execute action="Gmail#assertElementPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
 			</else>
 		</if>
 	</command>
@@ -90,5 +90,44 @@
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
+	</command>
+
+	<command name="viewSocialOfficeMessageMail">
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE" value1="${senderName} sent you a message on Liferay" />
+		<execute action="Gmail#pause" locator1="3000" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY" value1="${senderName} sent you a message." />
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY" value1="${messageBody}" />
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK" />
+
+		<execute action="SOMessages#selectWindow" locator-key1="MESSAGES_POP_UP_WINDOW" />
+
+		<if>
+			<isset var="partialMessageBody" />
+			<then>
+				<var name="key_messageBody" value="${partialMessageBody}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageBody}" />
+			</else>
+		</if>
+
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+
+		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
+
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_ATTACHMENT" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessages#close" locator-key1="MESSAGES_POP_UP_WINDOW" />
 	</command>
 </definition>

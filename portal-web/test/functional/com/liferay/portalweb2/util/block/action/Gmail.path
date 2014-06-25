@@ -47,7 +47,7 @@
 <!--GMAIL_NORMAL_MODE-->
 <tr>
 	<td>GMAIL_NORMAL_MODE_USER_SCREENNAME</td>
-	<td>//div/a[@title='${key_userEmailAddress}']</td>
+	<td>//div/a[contains(@title,'${key_userEmailAddress}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,6 +113,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'sent you a message')]/td[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -146,6 +151,26 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY</td>
+	<td>//tr[contains(.,'message')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT</td>
+	<td>//tr[contains(.,'message')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY</td>
+	<td>//tr[contains(.,'message')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK</td>
+	<td>//tr[contains(.,'message')]//td/div[@class='msg']//a[contains(.,'messages')]</td>
 	<td></td>
 </tr>
 <tr>

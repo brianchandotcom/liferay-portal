@@ -448,7 +448,9 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				(classPK <= 0)) {
+
 				return;
 			}
 

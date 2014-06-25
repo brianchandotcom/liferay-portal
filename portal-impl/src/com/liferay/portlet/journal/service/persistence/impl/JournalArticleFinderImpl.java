@@ -770,7 +770,7 @@ public class JournalArticleFinderImpl
 						"(structureId IS NULL))");
 			}
 
-			if (inlineSQLHelper) {
+			if ((groupId > 0) && inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
 					"JournalArticle.resourcePrimKey", groupId);
@@ -1130,7 +1130,7 @@ public class JournalArticleFinderImpl
 							"(JournalArticle.structureId IS NULL))");
 			}
 
-			if (inlineSQLHelper) {
+			if ((groupId > 0) && inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
 					"JournalArticle.resourcePrimKey", groupId);

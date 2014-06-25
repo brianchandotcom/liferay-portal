@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>BOOLEAN_CHECKBOX</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//input[2]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label/input</td>
 	<td></td>
 </tr>
 <tr>

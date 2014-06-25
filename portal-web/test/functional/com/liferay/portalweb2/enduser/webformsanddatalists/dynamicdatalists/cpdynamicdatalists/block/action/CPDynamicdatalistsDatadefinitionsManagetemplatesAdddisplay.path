@@ -87,62 +87,62 @@
 <!--DATA_LIST_RECORD_FIELDS-->
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_BOOLEAN</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Boolean')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Boolean')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_DATE</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Date')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_DECIMAL</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Decimal')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Decimal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_DOCUMENTS_AND_MEDIA</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Documents and Media')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Documents and Media')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_HTML</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'HTML')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'HTML')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_INTEGER</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Integer')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Interger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_LINK_TO_PAGE</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Link to Page')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Link to Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_NUMBER</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Number')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Number')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_RADIO</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Radio')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Radio')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_SELECT</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Select')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_TEXT</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Text')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_TEXT_BOX</td>
-	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Text Box')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Text Box')]</td>
 	<td></td>
 </tr>
 </tbody>

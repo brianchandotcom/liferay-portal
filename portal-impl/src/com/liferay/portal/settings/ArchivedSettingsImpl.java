@@ -65,7 +65,7 @@ public class ArchivedSettingsImpl
 
 	@Override
 	public Collection<String> getModifiedKeys() {
-		ModifiableSettings modifiableSettings = getModifiableSettings();
+		ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 		return modifiableSettings.getModifiedKeys();
 	}
@@ -82,14 +82,14 @@ public class ArchivedSettingsImpl
 
 	@Override
 	public void reset(String key) {
-		ModifiableSettings modifiableSettings = getModifiableSettings();
+		ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 		modifiableSettings.reset(key);
 	}
 
 	@Override
 	public ModifiableSettings setValue(String key, String value) {
-		ModifiableSettings modifiableSettings = getModifiableSettings();
+		ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 		modifiableSettings.setValue(key, value);
 
@@ -98,7 +98,7 @@ public class ArchivedSettingsImpl
 
 	@Override
 	public ModifiableSettings setValues(String key, String[] values) {
-		ModifiableSettings modifiableSettings = getModifiableSettings();
+		ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 		modifiableSettings.setValues(key, values);
 
@@ -107,7 +107,7 @@ public class ArchivedSettingsImpl
 
 	@Override
 	public void store() throws IOException, ValidatorException {
-		ModifiableSettings modifiableSettings = getModifiableSettings();
+		ModifiableSettings modifiableSettings = _getModifiableSettings();
 
 		modifiableSettings.store();
 	}

@@ -48,7 +48,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		updatePortletPreferences();
 	}
 
-	protected long getCompanyId(long userId) throws Exception {
+	protected long getCompanyId(String query, long id) throws Exception {
 		long companyId = 0;
 
 		Connection con = null;
@@ -58,9 +58,9 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(_GET_USER);
+			ps = con.prepareStatement(query);
 
-			ps.setLong(1, userId);
+			ps.setLong(1, id);
 
 			rs = ps.executeQuery();
 
@@ -269,7 +269,19 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					}
 				}
 				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-					companyId = getCompanyId(ownerId);
+					companyId = getCompanyId(_GET_USER, ownerId);
+				}
+				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+					companyId = getCompanyId(_GET_PORTLET_ITEM, ownerId);
+				}
+				else if (ownerType ==
+							PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
+
+					companyId = getCompanyId(_GET_ORGANIZATION, ownerId);
+				}
+				else {
+					throw new UnsupportedOperationException(
+						"Unsupported owner type " + ownerType);
 				}
 
 				if (companyId > 0) {
@@ -341,6 +353,12 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	private static final String _GET_LAYOUT_UUID =
 		"select uuid_ from Layout where groupId = ? and privateLayout = ? " +
 			"and layoutId = ?";
+
+	private static final String _GET_ORGANIZATION =
+		"select * from Organization_ where organizationId = ?";
+
+	private static final String _GET_PORTLET_ITEM =
+		"select * from PortletItem where portletItemId = ?";
 
 	private static final String _GET_USER =
 		"select * from User_ where userId = ?";

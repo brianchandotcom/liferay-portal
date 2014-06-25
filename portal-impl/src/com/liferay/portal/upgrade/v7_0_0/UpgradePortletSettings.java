@@ -308,6 +308,9 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		}
 
 		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
+
+		resetPortletPreferencesValues(
+			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, serviceKeys);
 	}
 
 	protected void upgradeMainPortlet(
@@ -334,6 +337,9 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		}
 
 		resetPortletPreferencesValues(portletId, ownerType, serviceKeys);
+
+		resetPortletPreferencesValues(
+			portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, serviceKeys);
 	}
 
 	private PortletPreferencesRow getPortletPreferencesRow(ResultSet rs)

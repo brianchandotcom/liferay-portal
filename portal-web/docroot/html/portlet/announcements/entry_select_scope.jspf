@@ -41,7 +41,7 @@ boolean hasDistributionScope = false;
 					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
 
 			<%
 				}
@@ -64,7 +64,7 @@ boolean hasDistributionScope = false;
 					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" localizeLabel="<%= false %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
 
 			<%
 				}

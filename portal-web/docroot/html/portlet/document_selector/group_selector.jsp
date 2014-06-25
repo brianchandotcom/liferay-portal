@@ -26,7 +26,7 @@ String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 %>
 
-<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
 
 	<%
 	String refererPortletName = ParamUtil.getString(request, "refererPortletName");
@@ -45,6 +45,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 
 		<liferay-ui:icon
 			iconCssClass="<%= browsableScopeGroup.getIconCssClass() %>"
+			localizeMessage="<%= false %>"
 			message="<%= HtmlUtil.escape(browsableScopeGroup.getDescriptiveName(locale)) %>"
 			url="<%= selectGroupURL.toString() %>"
 		/>

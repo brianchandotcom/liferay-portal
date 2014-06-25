@@ -59,7 +59,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 
 <aui:fieldset>
 	<aui:field-wrapper label="scope" name="scopeId">
-		<liferay-ui:icon-menu direction="down" icon="<%= group.getIconURL(themeDisplay) %>" message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu direction="down" icon="<%= group.getIconURL(themeDisplay) %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" showWhenSingleIcon="<%= true %>">
 
 			<%
 			for (Group availableGroup : availableGroups) {
@@ -90,6 +90,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				<liferay-ui:icon
 					iconCssClass="<%= availableGroup.getIconCssClass() %>"
 					id='<%= "scope" + availableGroup.getGroupId() %>'
+					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>"
 					method="post"
 					url="<%= setScopeURL %>"

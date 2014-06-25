@@ -25,7 +25,7 @@
 			collapsed: <%= collapsed %>,
 			collapsible: <%= collapsible %>,
 			contentBox: '#<%= id %>',
-			headerContent: '<liferay-ui:message key="<%= label %>" />'
+			headerContent: '<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />'
 
 			<c:if test="<%= toolTags != null %>">
 				,icons: [

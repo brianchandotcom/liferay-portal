@@ -49,6 +49,10 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public boolean getSelected() {
 		return _selected;
 	}
@@ -89,6 +93,12 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("label", label);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setSelected(boolean selected) {
 		_selected = selected;
 
@@ -119,6 +129,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		_data = null;
 		_disabled = false;
 		_label = null;
+		_localizeLabel = true;
 		_selected = false;
 		_style = null;
 		_useModelValue = true;
@@ -141,6 +152,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "style", _style);
 		setNamespacedAttribute(request, "useModelValue", _useModelValue);
@@ -159,6 +171,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 	private java.util.Map<java.lang.String, java.lang.Object> _data = null;
 	private boolean _disabled = false;
 	private java.lang.Object _label = null;
+	private boolean _localizeLabel = true;
 	private boolean _selected = false;
 	private java.lang.String _style = null;
 	private boolean _useModelValue = true;

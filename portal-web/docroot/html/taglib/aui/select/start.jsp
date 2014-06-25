@@ -19,7 +19,7 @@
 <div class="<%= controlGroupCssClass %>">
 	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 		<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
-			<liferay-ui:message key="<%= label %>" />
+			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 			<c:if test="<%= required && showRequiredLabel %>">
 				<span class="label-required"><liferay-ui:message key="required" /></span>

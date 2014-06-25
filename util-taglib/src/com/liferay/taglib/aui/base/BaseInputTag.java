@@ -125,6 +125,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public java.lang.String getLanguageId() {
 		return _languageId;
 	}
@@ -347,6 +351,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("label", label);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setLanguageId(java.lang.String languageId) {
 		_languageId = languageId;
 
@@ -498,6 +508,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_inlineField = false;
 		_inlineLabel = null;
 		_label = null;
+		_localizeLabel = true;
 		_languageId = null;
 		_last = false;
 		_localized = false;
@@ -551,6 +562,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "languageId", _languageId);
 		setNamespacedAttribute(request, "last", _last);
 		setNamespacedAttribute(request, "localized", _localized);
@@ -602,6 +614,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _inlineField = false;
 	private java.lang.String _inlineLabel = null;
 	private java.lang.String _label = null;
+	private boolean _localizeLabel = true;
 	private java.lang.String _languageId = null;
 	private boolean _last = false;
 	private boolean _localized = false;

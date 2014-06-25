@@ -20,7 +20,7 @@
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<legend class="fieldset-legend">
 			<span class="legend">
-				<liferay-ui:message key="<%= label %>" />
+				<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 					<liferay-ui:icon-help message="<%= helpMessage %>" />

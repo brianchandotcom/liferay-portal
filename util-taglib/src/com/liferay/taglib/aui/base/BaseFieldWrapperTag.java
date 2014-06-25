@@ -65,6 +65,10 @@ public class BaseFieldWrapperTag extends com.liferay.taglib.util.IncludeTag {
 		return _last;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public java.lang.String getName() {
 		return _name;
 	}
@@ -121,6 +125,12 @@ public class BaseFieldWrapperTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("last", last);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setName(java.lang.String name) {
 		_name = name;
 
@@ -143,6 +153,7 @@ public class BaseFieldWrapperTag extends com.liferay.taglib.util.IncludeTag {
 		_inlineLabel = null;
 		_label = null;
 		_last = false;
+		_localizeLabel = true;
 		_name = null;
 		_required = false;
 	}
@@ -167,6 +178,7 @@ public class BaseFieldWrapperTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "last", _last);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "required", _required);
 	}
@@ -187,6 +199,7 @@ public class BaseFieldWrapperTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _inlineLabel = null;
 	private java.lang.String _label = null;
 	private boolean _last = false;
+	private boolean _localizeLabel = true;
 	private java.lang.String _name = null;
 	private boolean _required = false;
 

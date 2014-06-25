@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/input/init.jsp" %>
 
 <liferay-util:buffer var="labelContent">
-	<liferay-ui:message key="<%= label %>" />
+	<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 	<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
 		<span class="label-required"><liferay-ui:message key="required" /></span>

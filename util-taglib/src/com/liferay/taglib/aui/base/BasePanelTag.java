@@ -49,6 +49,10 @@ public class BasePanelTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public void setCollapsed(boolean collapsed) {
 		_collapsed = collapsed;
 
@@ -73,12 +77,19 @@ public class BasePanelTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("label", label);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_collapsed = false;
 		_collapsible = false;
 		_id = null;
 		_label = null;
+		_localizeLabel = true;
 	}
 
 	@Override
@@ -97,6 +108,7 @@ public class BasePanelTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "collapsible", _collapsible);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:panel:";
@@ -111,5 +123,6 @@ public class BasePanelTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _collapsible = false;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
+	private boolean _localizeLabel = true;
 
 }

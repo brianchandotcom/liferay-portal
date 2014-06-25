@@ -93,6 +93,10 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		return _listTypeFieldName;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public boolean getMultiple() {
 		return _multiple;
 	}
@@ -235,6 +239,12 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("listTypeFieldName", listTypeFieldName);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setMultiple(boolean multiple) {
 		_multiple = multiple;
 
@@ -330,6 +340,7 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		_last = false;
 		_listType = null;
 		_listTypeFieldName = null;
+		_localizeLabel = true;
 		_multiple = false;
 		_name = null;
 		_onChange = null;
@@ -372,6 +383,7 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "last", _last);
 		setNamespacedAttribute(request, "listType", _listType);
 		setNamespacedAttribute(request, "listTypeFieldName", _listTypeFieldName);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "multiple", _multiple);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onChange", _onChange);
@@ -410,6 +422,7 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _last = false;
 	private java.lang.String _listType = null;
 	private java.lang.String _listTypeFieldName = null;
+	private boolean _localizeLabel = true;
 	private boolean _multiple = false;
 	private java.lang.String _name = null;
 	private java.lang.String _onChange = null;

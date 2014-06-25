@@ -401,6 +401,25 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processDeclarativeReferences() {
+		processDefaultServletPackages();
+	}
+
+	protected void processDefaultServletPackages() {
+		for (String value :
+				PropsValues.
+					MODULE_FRAMEWORK_WEB_EXTENDER_DEFAULT_SERVLET_PACKAGES) {
+
+			int pos = value.indexOf(StringPool.SEMICOLON);
+
+			if (pos != -1) {
+				value = value.substring(0, pos);
+			}
+
+			_importPackageNames.add(value.trim());
+		}
+	}
+
 	protected void processExtraHeaders(Analyzer analyzer) {
 		String bundleSymbolicName = analyzer.getProperty(
 			Constants.BUNDLE_SYMBOLICNAME);
@@ -778,6 +797,8 @@ public class WabProcessor {
 		processPortletXML();
 		processWebXML("WEB-INF/web.xml");
 		processWebXML("WEB-INF/liferay-web.xml");
+
+		processDeclarativeReferences();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

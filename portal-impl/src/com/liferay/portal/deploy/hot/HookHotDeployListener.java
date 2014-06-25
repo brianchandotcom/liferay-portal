@@ -414,9 +414,6 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		Map<Object, ServiceRegistration<?>> serviceRegistrations =
-			getServiceRegistrations(servletContextName);
-
 		PropsUtil.removeProperties(portalProperties);
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
@@ -448,18 +445,6 @@ public class HookHotDeployListener
 						"Unregistered asset query processor " +
 							assetQueryProcessorClassName);
 				}
-			}
-		}
-
-		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
-			String authTokenClassName = portalProperties.getProperty(
-				PropsKeys.AUTH_TOKEN_IMPL);
-
-			ServiceRegistration<?> serviceRegistration =
-				serviceRegistrations.remove(authTokenClassName);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
 			}
 		}
 
@@ -792,11 +777,6 @@ public class HookHotDeployListener
 
 		String servletContextName = servletContext.getServletContextName();
 
-		Map<Object, ServiceRegistration<?>> serviceRegistrations =
-			getServiceRegistrations(servletContextName);
-
-		ServiceRegistration<?> serviceRegistration = null;
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
@@ -916,6 +896,19 @@ public class HookHotDeployListener
 		}
 
 		unregisterClpMessageListeners(servletContext);
+
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.remove(servletContextName);
+
+		if (serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations.values()) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Hook for " + servletContextName + " was unregistered");
@@ -1189,9 +1182,7 @@ public class HookHotDeployListener
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<Object, ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrations.get(servletContextName);
-
-		ServiceRegistration<AutoLogin> serviceRegistration = null;
+			getServiceRegistrations(servletContextName);
 
 		String[] autoLoginClassNames = StringUtil.split(
 			portalProperties.getProperty(AUTO_LOGIN_HOOKS));

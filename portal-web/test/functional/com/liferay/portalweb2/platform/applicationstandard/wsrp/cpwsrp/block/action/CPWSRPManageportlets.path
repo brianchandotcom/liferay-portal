@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_PORTLET_BUTTON</td>
-	<td>//button[@type='button']</td>
+	<td>//a[contains(.,'Add Portlet')]</td>
 	<td></td>
 </tr>
 <tr>

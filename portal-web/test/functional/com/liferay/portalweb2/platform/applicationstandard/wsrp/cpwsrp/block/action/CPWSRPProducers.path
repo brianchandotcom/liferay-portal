@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_PRODUCER_BUTTON</td>
-	<td>//button[@type='button']</td>
+	<td>//a[contains(.,'Add Producer')]</td>
 	<td></td>
 </tr>
 <tr>

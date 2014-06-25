@@ -65,8 +65,8 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[@type='button']</td>
-	<td>Cancel</td>
+	<td>//a[contains(@class,'btn-cancel')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

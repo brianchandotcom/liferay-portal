@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-sharepoint" basedir="." default="clean-sharepoint-repository" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="clean-sharepoint-repository">
+		<ssh-execute>perl C:/Windows/resetsharepointrepo.pl</ssh-execute>
+	</target>
+</project>

@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sampsa Sohlman
+ * @author Manuel de la Peña
  */
 @RunWith(Enclosed.class)
 public class MapUtilTest {

@@ -380,8 +380,7 @@
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
-
-		<execute action="CPSites#pause" locator1="5000" />
+		<execute action="CPSitepages#pause" locator1="5000" />
 
 		<if>
 			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />

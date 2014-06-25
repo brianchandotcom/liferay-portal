@@ -319,6 +319,12 @@ public class DDMTemplateStagedModelDataHandler
 				}
 			}
 
+			String content =
+				ExportImportHelperUtil.replaceImportContentReferences(
+					portletDataContext, template, template.getScript());
+
+			template.setScript(content);
+
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(template);
 

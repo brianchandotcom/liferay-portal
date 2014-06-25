@@ -422,6 +422,8 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
+						rowData.put("folder", true);
+						rowData.put("folder-id", curFolder.getFolderId());
 						rowData.put("title", curFolder.getName());
 
 						row.setData(rowData);

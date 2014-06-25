@@ -1686,6 +1686,13 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>();
+
+		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
+			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
+		}
+
 		int oldStatus = fileVersion.getStatus();
 
 		dlFileEntryLocalService.updateStatus(
@@ -1711,18 +1718,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		int oldDLFileVersionStatus = WorkflowConstants.STATUS_ANY;
-
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>();
-
 		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
 
-		oldDLFileVersionStatus = oldDLFileVersion.getStatus();
-
-		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
-			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
-		}
+		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
 
 		for (DLFileVersion curDLFileVersion : dlFileVersions) {
 			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);

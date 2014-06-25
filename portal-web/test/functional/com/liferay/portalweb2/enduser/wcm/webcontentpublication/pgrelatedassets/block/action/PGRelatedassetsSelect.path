@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SEARCH_ADVANCED_MENULIST</td>
-	<td>//div[@class='advanced-search']/a</td>
+	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>

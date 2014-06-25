@@ -707,26 +707,26 @@
 		<if>
 			<isset var="userScreenNameSearchValue" />
 			<then>
-				<execute action="CPSitememberships#type" locator-key1="USER_SEARCH_FIELD" value1="${userScreenNameSearchValue}" />
+				<execute action="CPSitemembershipsUsers#type" locator-key1="USER_SEARCH_FIELD" value1="${userScreenNameSearchValue}" />
 			</then>
 			<elseif>
 				<isset var="userFirstNameSearchValue" />
 				<then>
-					<execute action="CPSitememberships#type" locator-key1="USER_SEARCH_FIELD" value1="${userFirstNameSearchValue}" />
+					<execute action="CPSitemembershipsUsers#type" locator-key1="USER_SEARCH_FIELD" value1="${userFirstNameSearchValue}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="userLastNameSearchValue" />
 				<then>
-					<execute action="CPSitememberships#type" locator-key1="USER_SEARCH_FIELD" value1="${userLastNameSearchValue}" />
+					<execute action="CPSitemembershipsUsers#type" locator-key1="USER_SEARCH_FIELD" value1="${userLastNameSearchValue}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="CPSitememberships#type" locator-key1="USER_SEARCH_FIELD" value1="${userEmailAddressSearchValue}" />
+				<execute action="CPSitemembershipsUsers#type" locator-key1="USER_SEARCH_FIELD" value1="${userEmailAddressSearchValue}" />
 			</else>
 		</if>
 
-		<execute action="CPSitememberships#assertClick" locator-key1="USER_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSitemembershipsUsers#assertClick" locator-key1="USER_SEARCH_BUTTON" value1="Search" />
 
 		<execute macro="Site#viewMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />

@@ -140,7 +140,7 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
-			<var name="childPageName" value="true" />
+			<var name="childSitepageName" value="true" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page2 Name" />

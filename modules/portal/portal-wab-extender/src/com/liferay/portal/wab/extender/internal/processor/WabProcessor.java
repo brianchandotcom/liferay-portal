@@ -528,6 +528,52 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processLiferayPortletXML() throws IOException {
+		File file = new File(_file, "WEB-INF/liferay-portlet.xml");
+
+		if (!file.exists()) {
+			return;
+		}
+
+		String content = FileUtil.read(file);
+
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(content);
+		}
+		catch (DocumentException de) {
+			throw new IOException(de);
+		}
+
+		Element rootElement = document.getRootElement();
+
+		for (Element element : rootElement.elements("portlet")) {
+			Element strutsPathElement = element.element("struts-path");
+
+			if (strutsPathElement == null) {
+				continue;
+			}
+
+			String strutsPath = strutsPathElement.getTextTrim();
+
+			if (!strutsPath.startsWith(StringPool.SLASH)) {
+				strutsPath = StringPool.SLASH.concat(strutsPath);
+			}
+
+			strutsPathElement.setText(_MODULE + _context + strutsPath);
+		}
+
+		try {
+			content = DDMXMLUtil.formatXML(document);
+
+			FileUtil.write(file, content);
+		}
+		catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
+
 	protected void processManifestVersion(Analyzer analyzer) {
 		String manifestVersion = MapUtil.getString(
 			_parameters, Constants.BUNDLE_MANIFESTVERSION);
@@ -581,8 +627,7 @@ public class WabProcessor {
 			element.elementText("portlet-name"));
 
 		String invokerPortletName =
-			Portal.PATH_MODULE.substring(1) + _context + StringPool.SLASH +
-				portletName;
+			_MODULE + _context + StringPool.SLASH + portletName;
 
 		XPath xPath = SAXReaderUtil.createXPath(
 			"x:init-param[x:name/text()='com.liferay.portal." +
@@ -752,7 +797,10 @@ public class WabProcessor {
 
 		processWebXML("WEB-INF/web.xml");
 		processWebXML("WEB-INF/liferay-web.xml");
+		processLiferayPortletXML();
 	}
+
+	private static final String _MODULE = Portal.PATH_MODULE.substring(1);
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 

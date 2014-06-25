@@ -40,6 +40,7 @@ public class AttributesTransformerFactory {
 	private static AttributesTransformerFactory _instance =
 		new AttributesTransformerFactory();
 
-	private ServiceTracker<?, AttributesTransformer> _serviceTracker;
+	private ServiceTracker<AttributesTransformer, AttributesTransformer>
+		_serviceTracker;
 
 }

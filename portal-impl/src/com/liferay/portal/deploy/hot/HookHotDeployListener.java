@@ -1884,11 +1884,11 @@ public class HookHotDeployListener
 					attributesTransformerClassName);
 
 			ServiceRegistration<AttributesTransformer> serviceRegistration =
-			registry.registerService(AttributesTransformer.class,
-				attributesTransformer);
+				registry.registerService(
+					AttributesTransformer.class, attributesTransformer);
 
-			serviceRegistrations.put(attributesTransformerClassName,
-				serviceRegistration);
+			serviceRegistrations.put(
+				attributesTransformerClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(LOCK_LISTENERS)) {

@@ -35,7 +35,12 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +49,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  * @author Raymond Augé
  */
 public class AutoLoginFilter extends BasePortalFilter {
@@ -51,7 +57,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 	public AutoLoginFilter() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(AutoLogin.class);
+		_serviceTracker = registry.trackServices(
+			AutoLogin.class, new AutoLoginServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -191,8 +198,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 		if (!PropsValues.AUTH_LOGIN_DISABLED &&
 			(remoteUser == null) && (jUserName == null)) {
 
-			for (Object autoLoginObj : _serviceTracker.getServices()) {
-				AutoLogin autoLogin = (AutoLogin)autoLoginObj;
+			for (AutoLogin autoLogin : _autoLogins) {
 				try {
 					String[] credentials = autoLogin.login(request, response);
 
@@ -262,6 +268,42 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(AutoLoginFilter.class);
 
+	private static List<AutoLogin> _autoLogins =
+		new CopyOnWriteArrayList<AutoLogin>();
 	private ServiceTracker<?, AutoLogin> _serviceTracker;
+
+	private class AutoLoginServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<AutoLogin, AutoLogin> {
+
+		@Override
+		public AutoLogin addingService(
+			ServiceReference<AutoLogin> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AutoLogin autoLogin = registry.getService(serviceReference);
+
+			_autoLogins.add(autoLogin);
+
+			return autoLogin;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_autoLogins.remove(autoLogin);
+		}
+
+	}
 
 }

@@ -955,7 +955,6 @@
 			</then>
 		</if>
 
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
 		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DELETE" value1="Delete" />
 	</command>
 

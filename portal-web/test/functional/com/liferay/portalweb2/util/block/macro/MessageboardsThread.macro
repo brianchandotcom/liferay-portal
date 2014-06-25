@@ -653,6 +653,10 @@
 			</then>
 		</while>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 

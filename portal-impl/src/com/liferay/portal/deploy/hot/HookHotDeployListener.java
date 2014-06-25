@@ -577,18 +577,6 @@ public class HookHotDeployListener
 			}
 		}
 
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_GENERATOR)) {
-
-			EmailAddressGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR)) {
-
-			EmailAddressValidatorFactory.setInstance(null);
-		}
-
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
 			FullNameGeneratorFactory.setInstance(null);
 		}
@@ -2073,7 +2061,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressGenerator.class,
 					emailAddressGeneratorClassName);
 
-			EmailAddressGeneratorFactory.setInstance(emailAddressGenerator);
+			ServiceRegistration<EmailAddressGenerator> serviceRegistration =
+	                registry.registerService(
+	                    EmailAddressGenerator.class, emailAddressGenerator);
+
+	            serviceRegistrations.put(
+	                emailAddressGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2088,7 +2081,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressValidator.class,
 					emailAddressValidatorClassName);
 
-			EmailAddressValidatorFactory.setInstance(emailAddressValidator);
+			ServiceRegistration<EmailAddressValidator> serviceRegistration =
+	                registry.registerService(
+	                    EmailAddressValidator.class, emailAddressValidator);
+
+	            serviceRegistrations.put(
+	            		emailAddressValidatorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {

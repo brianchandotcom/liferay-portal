@@ -16,55 +16,36 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class EmailAddressValidatorFactory {
 
 	public static EmailAddressValidator getInstance() {
-		return _emailAddressValidator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(
-		EmailAddressValidator emailAddressValidator) {
+	private EmailAddressValidatorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(emailAddressValidator));
-		}
+		_serviceTracker = registry.trackServices(
+			EmailAddressValidator.class);
 
-		if (emailAddressValidator == null) {
-			_emailAddressValidator = _originalEmailAddressValidator;
-		}
-		else {
-			_emailAddressValidator = emailAddressValidator;
-		}
-	}
-
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalEmailAddressValidator =
-			(EmailAddressValidator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR);
-
-		_emailAddressValidator = _originalEmailAddressValidator;
+		_serviceTracker.open();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EmailAddressValidatorFactory.class);
 
-	private static volatile EmailAddressValidator _emailAddressValidator;
-	private static EmailAddressValidator _originalEmailAddressValidator;
+	private static EmailAddressValidatorFactory _instance =
+		new EmailAddressValidatorFactory();
+
+	private ServiceTracker<?, EmailAddressValidator> _serviceTracker;
 
 }

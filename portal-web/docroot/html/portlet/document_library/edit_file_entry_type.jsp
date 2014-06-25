@@ -29,7 +29,7 @@ DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_D
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
-String script = BeanParamUtil.getString(ddmStructure, request, "xsd");
+String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
 JSONArray scriptJSONArray = null;
 

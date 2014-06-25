@@ -408,8 +408,42 @@ public class WabProcessor {
 		processDefaultServletPackages();
 		processTLDDependencies();
 
-		// TODO
+		processXmlDependencies(
+			"WEB-INF/web.xml",
+			new String[] {
+				"//x:filter-class", "//x:listener-class","//x:servlet-class"
+			}, "x","http://java.sun.com/xml/ns/j2ee");
 
+		processXmlDependencies(
+			"WEB-INF/portlet.xml",
+			new String[] {
+				"//x:filter-class", "//x:listener-class", "//x:portlet-class",
+				"//x:resource-bundle"
+			}, "x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+
+		processXmlDependencies(
+			"WEB-INF/liferay-portlet.xml",
+			new String[] {
+				"//configuration-action-class", "//indexer-class",
+				"//open-search-class", "//portlet-url-class",
+				"//friendly-url-mapper-class", "//url-encoder-class",
+				"//portlet-data-handler-class",
+				"//portlet-layout-listener-class", "//poller-processor-class",
+				"//pop-message-listener-class",
+				"//social-activity-interpreter-class",
+				"//social-request-interpreter-class", "//webdav-storage-class",
+				"//xml-rpc-method-class", "//control-panel-entry-class",
+				"//asset-renderer-factory", "//atom-collection-adapter",
+				"//custom-attributes-display", "//permission-propagator",
+				"//workflow-handler"
+			}, null, null);
+
+		processXmlDependencies(
+			"WEB-INF/liferay-hook.xml",
+			new String[] {
+				"//indexer-post-processor-impl", "//service-impl",
+				"//servlet-filter-impl", "//struts-action-impl"
+			}, null, null);
 	}
 
 	protected void processDefaultServletPackages() {
@@ -806,6 +840,45 @@ public class WabProcessor {
 		}
 
 		formatDocument(file, document);
+	}
+
+	protected void processXmlDependencies(
+			String path, String[] xpaths, String prefix, String namespace)
+		throws IOException {
+
+		File file = new File(_file, path);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Document document = readDocument(file);
+
+		Element rootElement = document.getRootElement();
+
+		DependencyVisitor dependencyVisitor = new DependencyVisitor();
+
+		for (String xpath : xpaths) {
+			XPath xPath = SAXReaderUtil.createXPath(xpath, prefix, namespace);
+
+			List<Node> nodes = xPath.selectNodes(rootElement);
+
+			for (Node node : nodes) {
+				String textNode = node.getText();
+
+				textNode = textNode.trim();
+
+				processClass(
+					new ClassLoaderSource(_classLoader), dependencyVisitor,
+					textNode.replace('.', '/') + ".class");
+			}
+		}
+
+		for (String global : dependencyVisitor.getGlobals()) {
+			_importPackageNames.add(
+				global.replaceAll(
+					StringPool.SLASH, StringPool.PERIOD));
+		}
 	}
 
 	protected Document readDocument(File file) throws IOException {

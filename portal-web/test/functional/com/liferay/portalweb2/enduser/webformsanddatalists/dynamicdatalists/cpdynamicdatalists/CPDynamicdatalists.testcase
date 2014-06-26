@@ -225,72 +225,62 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Liferay" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Company" />
 			<var name="fieldName" value="company" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="test@liferay.com" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Email" />
 			<var name="fieldName" value="email" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="First Name" />
 			<var name="fieldName" value="firstName" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="GTalk" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Instant Messenger Service" />
 			<var name="fieldName" value="imService" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="testliferay" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Instant Messenger" />
 			<var name="fieldName" value="imUserName" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="QA Engineer" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Job Title" />
 			<var name="fieldName" value="jobTitle" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Last Name" />
 			<var name="fieldName" value="lastName" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Notes" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Notes" />
 			<var name="fieldName" value="notes" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="(123) 456-7890" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Phone (Mobile)" />
 			<var name="fieldName" value="phoneMobile" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="(123) 111-2222" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Phone (Office)" />
 			<var name="fieldName" value="phoneOffice" />
 		</execute>
@@ -333,52 +323,45 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="Document 4 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldNumber">
 			<var name="ddlRecordFieldData" value="10" />
-			<var name="field" value="Number" />
 			<var name="fieldFieldLabel" value="Cost" />
 			<var name="fieldName" value="cost" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test Description" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="description" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Date" />
 			<var name="fieldName" value="eventDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Company Party" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Event Name" />
 			<var name="fieldName" value="eventName" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="12:00 pm" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Time" />
 			<var name="fieldName" value="eventTime" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Room 8" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Location" />
 			<var name="fieldName" value="location" />
 		</execute>
@@ -421,44 +404,38 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test Description" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="description" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Liferay Portal" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Item" />
 			<var name="fieldName" value="item" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Los Angeles" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Location" />
 			<var name="fieldName" value="location" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Purchase Date" />
 			<var name="fieldName" value="purchaseDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldNumber">
 			<var name="ddlRecordFieldData" value="12000" />
-			<var name="field" value="Number" />
 			<var name="fieldFieldLabel" value="Purchase Price" />
 			<var name="fieldName" value="purchasePrice" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldNumber">
 			<var name="ddlRecordFieldData" value="100" />
-			<var name="field" value="Number" />
 			<var name="fieldFieldLabel" value="Quantity" />
 			<var name="fieldName" value="quantity" />
 		</execute>
@@ -501,66 +478,57 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Assigned To" />
 			<var name="fieldName" value="assignedTo" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="Document 3 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Comment" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Comments" />
 			<var name="fieldName" value="comments" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test Description" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="description" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Due Date" />
 			<var name="fieldName" value="dueDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="LPS-90000" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Issue ID" />
 			<var name="fieldName" value="issueId" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Minor" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Severity" />
 			<var name="fieldName" value="severity" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Open" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Status" />
 			<var name="fieldName" value="status" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Minor Issue" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Title" />
 			<var name="fieldName" value="title" />
 		</execute>
@@ -603,52 +571,45 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="Document 2 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Author" />
 			<var name="fieldName" value="author" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test Description" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="description" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="20 Minutes" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Meeting Duration" />
 			<var name="fieldName" value="duration" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Meeting Date" />
 			<var name="fieldName" value="meetingDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Minutes Details" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Minutes" />
 			<var name="fieldName" value="minutes" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="First Meeting" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Title" />
 			<var name="fieldName" value="title" />
 		</execute>
@@ -691,73 +652,63 @@
 			<var name="ddlListName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Assigned To" />
 			<var name="fieldName" value="assignedTo" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="Document 1 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Comment" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Comments" />
 			<var name="fieldName" value="comments" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test Description" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="description" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="End Date" />
 			<var name="fieldName" value="endDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldInteger">
 			<var name="ddlRecordFieldData" value="7" />
-			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="% Complete" />
 			<var name="fieldName" value="percentComplete" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Major" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Severity" />
 			<var name="fieldName" value="severity" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2017" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Start Date" />
 			<var name="fieldName" value="startDate" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="Pending" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Status" />
 			<var name="fieldName" value="status" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Test" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Title" />
 			<var name="fieldName" value="title" />
 		</execute>
@@ -833,9 +784,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -918,9 +868,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1002,9 +951,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDecimal">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1087,10 +1035,9 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="document" value="${document}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1172,9 +1119,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldHTML">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1256,9 +1202,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldInteger">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1344,9 +1289,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldLinkToPage">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1428,9 +1372,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldNumber">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1512,9 +1455,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldRadio">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1596,9 +1538,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1680,9 +1621,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1764,9 +1704,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -2419,9 +2358,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -2515,9 +2453,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -2543,7 +2480,6 @@
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="true" />
-		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
 		<var name="fieldNameEdit" value="Boolean_Edit" />
@@ -2617,9 +2553,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldNameEdit}" />
 		</execute>
@@ -2710,9 +2645,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldShowLabel" value="${fieldShowLabel}" />
@@ -3169,9 +3103,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="field" value="${field}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
@@ -3185,9 +3118,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Record Text Edited" />
-			<var name="field" value="${field}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
@@ -3254,9 +3186,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Record Text" />
-			<var name="field" value="${field}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
@@ -3270,9 +3201,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Record Text Edited" />
-			<var name="field" value="${field}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
@@ -3537,9 +3467,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -3703,9 +3632,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>

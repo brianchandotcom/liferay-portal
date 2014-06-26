@@ -83,7 +83,7 @@
 <!--PAGE_TREE-->
 <tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
-	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/span[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,7 +121,6 @@
 	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[3]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

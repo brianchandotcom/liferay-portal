@@ -119,9 +119,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -156,9 +155,8 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -382,17 +380,15 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
-			<var name="field" value="${field1}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
 			<var name="fieldName" value="${fieldName1}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
 			<var name="document" value="${document}" />
-			<var name="field" value="${field2}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
 			<var name="fieldName" value="${fieldName2}" />
 		</execute>
@@ -682,9 +678,8 @@
 			<var name="ddlListName" value="DDL List Name" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Text" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text" />
 			<var name="fieldName" value="Text" />
 		</execute>
@@ -799,9 +794,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -986,73 +980,63 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="true" />
-			<var name="field" value="Boolean" />
 			<var name="fieldFieldLabel" value="Employee" />
 			<var name="fieldName" value="Employee" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDate">
 			<var name="ddlRecordFieldData" value="04/01/2015" />
-			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Start Date" />
 			<var name="fieldName" value="Start_Date" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDecimal">
 			<var name="ddlRecordFieldData" value="35000" />
-			<var name="field" value="Decimal" />
 			<var name="fieldFieldLabel" value="Salary" />
 			<var name="fieldName" value="Salary" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMedia">
 			<var name="ddlRecordFieldData" value="Document Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Resume" />
 			<var name="fieldName" value="Resume" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldInteger">
 			<var name="ddlRecordFieldData" value="30" />
-			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="Age" />
 			<var name="fieldName" value="Age" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldNumber">
 			<var name="ddlRecordFieldData" value="40" />
-			<var name="field" value="Number" />
 			<var name="fieldFieldLabel" value="Weekly Hours" />
 			<var name="fieldName" value="Weekly_Hours" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldRadio">
 			<var name="ddlRecordFieldData" value="QA Engineer" />
-			<var name="field" value="Radio" />
 			<var name="fieldFieldLabel" value="Department" />
 			<var name="fieldName" value="Department" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldSelect">
 			<var name="ddlRecordFieldData" value="5+" />
-			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Years Worked" />
 			<var name="fieldName" value="Years_Worked" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Joe Engineer" />
-			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Name" />
 			<var name="fieldName" value="Name" />
 		</execute>
 
-		<execute macro="DDLRecord#populateField">
+		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Joe Engineer works in QA" />
-			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Description" />
 			<var name="fieldName" value="Description" />
 		</execute>
@@ -1082,7 +1066,6 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[12]" value1="Status" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
-
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="true" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="30" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="QA Engineer" />

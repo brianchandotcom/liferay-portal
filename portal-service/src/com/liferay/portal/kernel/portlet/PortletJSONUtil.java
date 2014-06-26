@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +27,9 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +37,7 @@ import java.util.Set;
 import javax.portlet.MimeResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Raymond Augé
@@ -228,6 +234,74 @@ public class PortletJSONUtil {
 
 		jsonObject.put("portletHTML", portletHTML);
 		jsonObject.put("refresh", !portlet.isAjaxable());
+	}
+
+	public static void writeFooterPaths(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		JSONArray footerCssPathsJSONArray = jsonObject.getJSONArray(
+			"footerCssPaths");
+		JSONArray footerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
+			"footerJavaScriptPaths");
+
+		if ((footerCssPathsJSONArray.length() == 0) &&
+			(footerJavaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		PrintWriter printWriter = response.getWriter();
+
+		for (int i = 0; i < footerCssPathsJSONArray.length(); i++) {
+			String value = footerCssPathsJSONArray.getString(i);
+
+			printWriter.print("<link href=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		for (int i = 0; i < footerJavaScriptPathsJSONArray.length(); i++) {
+			String value = footerJavaScriptPathsJSONArray.getString(i);
+
+			printWriter.print("<script src=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" type=\"text/javascript\"></script>");
+		}
+	}
+
+	public static void writeHeaderPaths(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		JSONArray headerCssPathsJSONArray = jsonObject.getJSONArray(
+			"headerCssPaths");
+		JSONArray headerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
+			"headerJavaScriptPaths");
+
+		if ((headerCssPathsJSONArray.length() == 0) &&
+			(headerJavaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		PrintWriter printWriter = response.getWriter();
+
+		for (int i = 0; i < headerCssPathsJSONArray.length(); i++) {
+			String value = headerCssPathsJSONArray.getString(i);
+
+			printWriter.print("<link href=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		for (int i = 0; i < headerJavaScriptPathsJSONArray.length(); i++) {
+			String value = headerJavaScriptPathsJSONArray.getString(i);
+
+			printWriter.print("<script src=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" type=\"text/javascript\"></script>");
+		}
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {

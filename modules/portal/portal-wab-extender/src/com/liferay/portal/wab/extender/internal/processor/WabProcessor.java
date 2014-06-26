@@ -57,9 +57,11 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.URI;
 
@@ -1006,6 +1008,19 @@ public class WabProcessor {
 		}
 	}
 
+	protected void saveManifest(Manifest manifest) throws IOException {
+		File file = getManifestFile();
+
+		OutputStream outputStream = new FileOutputStream(file);
+
+		try {
+			manifest.write(outputStream);
+		}
+		finally {
+			outputStream.close();
+		}
+	}
+
 	protected void transformToOSGiBundle() throws IOException {
 		Analyzer analyzer = new Analyzer();
 
@@ -1045,6 +1060,8 @@ public class WabProcessor {
 
 		processManifestVersion(manifest);
 		processWebContextPath(manifest);
+
+		saveManifest(manifest);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

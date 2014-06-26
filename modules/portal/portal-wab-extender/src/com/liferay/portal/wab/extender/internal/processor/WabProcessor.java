@@ -1006,6 +1006,18 @@ public class WabProcessor {
 		processPackageNames(analyzer);
 
 		processRequiredDeploymentContexts(analyzer);
+
+		Manifest manifest = null;
+
+		try {
+			manifest = analyzer.calcManifest();
+		}
+		catch (Exception e) {
+			throw new IOException("Unexpected error calculating Manifest", e);
+		}
+		finally {
+			analyzer.close();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

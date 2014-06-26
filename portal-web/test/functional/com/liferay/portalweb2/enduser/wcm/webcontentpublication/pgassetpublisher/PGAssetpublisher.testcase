@@ -421,7 +421,7 @@
 
 		<var name="key_structureName" value="${structure1Name}" />
 
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -447,7 +447,7 @@
 
 		<var name="key_structureName" value="${structure2Name}" />
 
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">

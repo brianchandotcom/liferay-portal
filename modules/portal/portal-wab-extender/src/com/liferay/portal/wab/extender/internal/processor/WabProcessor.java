@@ -57,9 +57,11 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.URI;
 
@@ -124,12 +126,7 @@ public class WabProcessor {
 	}
 
 	protected File autoDeploy() {
-		String webContextpath = MapUtil.getString(
-			_parameters, "Web-ContextPath");
-
-		if (!webContextpath.startsWith(StringPool.SLASH)) {
-			webContextpath = StringPool.SLASH.concat(webContextpath);
-		}
+		String webContextpath = getWebContextPath();
 
 		AutoDeploymentContext autoDeploymentContext =
 			buildAutoDeploymentContext(webContextpath);
@@ -279,6 +276,17 @@ public class WabProcessor {
 		}
 	}
 
+	protected String getWebContextPath() {
+		String webContextpath = MapUtil.getString(
+			_parameters, "Web-ContextPath");
+
+		if (!webContextpath.startsWith(StringPool.SLASH)) {
+			webContextpath = StringPool.SLASH.concat(webContextpath);
+		}
+
+		return webContextpath;
+	}
+
 	protected boolean isValidOSGiBundle() {
 		Manifest manifest = null;
 
@@ -324,6 +332,17 @@ public class WabProcessor {
 		Collection<File> files = classPath.values();
 
 		analyzer.setClasspath(files.toArray(new File[classPath.size()]));
+	}
+
+	protected void processBundleManifestVersion(Analyzer analyzer) {
+		String manifestVersion = MapUtil.getString(
+			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+
+		if (Validator.isNull(manifestVersion)) {
+			manifestVersion = "2";
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
 	}
 
 	protected void processBundleSymbolicName(Analyzer analyzer) {
@@ -689,15 +708,16 @@ public class WabProcessor {
 		formatDocument(file, document);
 	}
 
-	protected void processManifestVersion(Analyzer analyzer) {
-		String manifestVersion = MapUtil.getString(
-			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+	protected void processManifestVersion(Manifest manifest) {
+		Attributes attributes = manifest.getMainAttributes();
 
-		if (Validator.isNull(manifestVersion)) {
-			manifestVersion = "2";
+		Object manifestVersion = attributes.get(
+			Attributes.Name.MANIFEST_VERSION.toString());
+
+		if (manifestVersion == null) {
+			attributes.putValue(
+				Attributes.Name.MANIFEST_VERSION.toString(), "1.0");
 		}
-
-		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
 	}
 
 	protected void processPackageNames(Analyzer analyzer) {
@@ -869,6 +889,12 @@ public class WabProcessor {
 		}
 	}
 
+	protected void processWebContextPath(Manifest manifest) {
+		Attributes attributes = manifest.getMainAttributes();
+
+		attributes.putValue("Web-ContextPath", getWebContextPath());
+	}
+
 	protected boolean processWebXML(Element element, Class<?> clazz) {
 		String elementText = element.getTextTrim();
 
@@ -982,6 +1008,19 @@ public class WabProcessor {
 		}
 	}
 
+	protected void saveManifest(Manifest manifest) throws IOException {
+		File file = getManifestFile();
+
+		OutputStream outputStream = new FileOutputStream(file);
+
+		try {
+			manifest.write(outputStream);
+		}
+		finally {
+			outputStream.close();
+		}
+	}
+
 	protected void transformToOSGiBundle() throws IOException {
 		Analyzer analyzer = new Analyzer();
 
@@ -994,7 +1033,7 @@ public class WabProcessor {
 
 		processBundleVersion(analyzer);
 
-		processManifestVersion(analyzer);
+		processBundleManifestVersion(analyzer);
 
 		processLiferayPortletXML();
 		processPortletXML();
@@ -1006,6 +1045,23 @@ public class WabProcessor {
 		processPackageNames(analyzer);
 
 		processRequiredDeploymentContexts(analyzer);
+
+		Manifest manifest = null;
+
+		try {
+			manifest = analyzer.calcManifest();
+		}
+		catch (Exception e) {
+			throw new IOException("Unexpected error calculating Manifest", e);
+		}
+		finally {
+			analyzer.close();
+		}
+
+		processManifestVersion(manifest);
+		processWebContextPath(manifest);
+
+		saveManifest(manifest);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

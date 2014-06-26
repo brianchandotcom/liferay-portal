@@ -92,7 +92,6 @@ import java.util.zip.ZipOutputStream;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.depend.DependencyVisitor;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 
 /**
@@ -102,10 +101,8 @@ import org.osgi.framework.Constants;
 public class WabProcessor {
 
 	public WabProcessor(
-		BundleContext bundleContext, ClassLoader classLoader, File file,
-		Map<String, String[]> parameters) {
+		ClassLoader classLoader, File file, Map<String, String[]> parameters) {
 
-		_bundleContext = bundleContext;
 		_classLoader = classLoader;
 		_file = file;
 		_parameters = parameters;

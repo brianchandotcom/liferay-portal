@@ -78,9 +78,11 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.objectweb.asm.ClassReader;
@@ -116,6 +118,26 @@ public class WabProcessor {
 
 		if (!isValidOSGiBundle()) {
 			transformToOSGiBundle();
+		}
+
+		File file = _file.getParentFile();
+
+		File outputFile = new File(file, "output.zip");
+
+		JarOutputStream jarOutputStream = new JarOutputStream(
+			new FileOutputStream(outputFile));
+
+		try {
+			writeFile(
+				getManifestFile(), jarOutputStream, _ignoredResources,
+				"META-INF/MANIFEST.MF");
+
+			writeJarPaths(
+				_pluginDir, _pluginDir.toURI(), jarOutputStream,
+				_ignoredResources);
+		}
+		finally {
+			jarOutputStream.close();
 		}
 
 		// TODO
@@ -1070,6 +1092,44 @@ public class WabProcessor {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	protected void writeJarPaths(
+			File file, URI uri, JarOutputStream jarOutputStream,
+			Set<String> paths)
+		throws IOException {
+
+		for (File f : file.listFiles()) {
+			final URI relativize = uri.relativize(f.toURI());
+
+			String path = relativize.getPath();
+
+			if (f.isDirectory()) {
+				jarOutputStream.putNextEntry(new ZipEntry(path));
+
+				jarOutputStream.closeEntry();
+
+				writeJarPaths(f, uri, jarOutputStream, paths);
+
+				continue;
+			}
+
+			if (ArrayUtil.contains(
+					PropsValues.MODULE_FRAMEWORK_WEB_EXTENDER_EXCLUDED_PATHS,
+					path)) {
+
+				continue;
+			}
+
+			if (path.startsWith("WEB-INF/lib/") &&
+				path.endsWith("-service.jar") &&
+				!path.endsWith(_context.concat("-service.jar"))) {
+
+				continue;
+			}
+
+			writeFile(f, jarOutputStream, paths, path);
 		}
 	}
 

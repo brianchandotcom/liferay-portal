@@ -274,6 +274,7 @@
 				<classpath mode="compile">lib/development/jargs.jar</classpath>
 				<classpath mode="compile">lib/development/jarjar.jar</classpath>
 				<classpath mode="compile">lib/development/jasper.jar</classpath>
+				<classpath mode="compile">lib/development/java-client.jar</classpath>
 				<classpath mode="compile">lib/development/jaxb-api.jar</classpath>
 				<classpath mode="compile">lib/development/jbi_rt.jar</classpath>
 				<classpath mode="compile">lib/development/jetty-server.jar</classpath>

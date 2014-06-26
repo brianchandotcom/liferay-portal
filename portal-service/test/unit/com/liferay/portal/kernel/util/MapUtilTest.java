@@ -90,6 +90,25 @@ public class MapUtilTest {
 		}
 
 		@Test
+		public void testParamsTypeBooleanInvalidValue() throws Exception {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:boolean"});
+
+			Assert.assertTrue(map.size() == 1);
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+
+			map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Boolean.class.getName()});
+
+			Assert.assertTrue(map.size() == 1);
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+		}
+
+		@Test
 		public void testParamsTypeComposite() throws Exception {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Byte.class.getName()});
@@ -132,6 +151,23 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Double);
 		}
 
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeDoubleInvalidCompositeValue()
+			throws Exception {
+
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Double.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeDoubleInvalidValue() throws Exception {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:double"});
+
+			Assert.fail();
+		}
+
 		@Test
 		public void testParamsTypeInteger() throws Exception {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
@@ -149,6 +185,23 @@ public class MapUtilTest {
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1));
 			Assert.assertTrue(map.get("one") instanceof Integer);
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeIntegerInvalidCompositeValue()
+			throws Exception {
+
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Integer.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeIntegerInvalidValue() throws Exception {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:int"});
+
+			Assert.fail();
 		}
 
 		@Test
@@ -170,6 +223,23 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Long);
 		}
 
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeLongInvalidCompositeValue()
+			throws Exception {
+
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Long.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeLongInvalidValue() throws Exception {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:long"});
+
+			Assert.fail();
+		}
+
 		@Test
 		public void testParamsTypeShort() throws Exception {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
@@ -187,6 +257,23 @@ public class MapUtilTest {
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((short)1));
 			Assert.assertTrue(map.get("one") instanceof Short);
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeShortInvalidCompositeValue()
+			throws Exception {
+
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Short.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void testParamsTypeShortInvalidValue() throws Exception {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:short"});
+
+			Assert.fail();
 		}
 
 		@Test

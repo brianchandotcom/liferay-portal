@@ -1289,7 +1289,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailAssetType" value="Updated" />
 			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
 			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
@@ -1741,5 +1741,110 @@
 				<var name="roleName" value="Owner" />
 			</execute>
 		</for>
+	</command>
+
+	<command name="ViewWebSiteNotificationForNewBlogsEntry" priority="5">
+		<property name="portlet.plugins.includes" value="notifications-portlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="contentBody" value="Blogs Entry Title" />
+			<var name="notificationCount" value="1" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#gotoContent">
+			<var name="contentBody" value="Blogs Entry Title" />
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTitlePG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="ViewWebSiteNotificationForUpdatedBlogsEntry" priority="5">
+		<property name="portlet.plugins.includes" value="notifications-portlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#viewEditedContent">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="contentBody" value="Blogs Entry Title Edit" />
+			<var name="notificationCount" value="1" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#gotoContent">
+			<var name="contentBody" value="Blogs Entry Title Edit" />
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewTitlePG">
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
 	</command>
 </definition>

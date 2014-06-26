@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,8 +68,11 @@ import java.io.OutputStream;
 
 import java.net.URI;
 
+import java.text.Format;
+
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -140,7 +144,9 @@ public class WabProcessor {
 			jarOutputStream.close();
 		}
 
-		// TODO
+		if (PropsValues.MODULE_FRAMEWORK_WEB_EXTENDER_GENERATED_WABS_STORE) {
+			storeGeneratedWab(outputFile);
+		}
 
 		return null;
 	}
@@ -1033,6 +1039,35 @@ public class WabProcessor {
 		catch (DocumentException de) {
 			throw new IOException(de);
 		}
+	}
+
+	protected void storeGeneratedWab(File file) throws IOException {
+		String name = _file.getName();
+
+		String extension = FileUtil.getExtension(name);
+
+		int index = name.lastIndexOf(StringPool.PERIOD);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(name.substring(0, index));
+		sb.append(StringPool.DASH);
+
+		Format simpleDateFormat =
+			FastDateFormatFactoryUtil.getSimpleDateFormat(
+				PropsValues.INDEX_DATE_FORMAT_PATTERN);
+
+		sb.append(simpleDateFormat.format(new Date()));
+		sb.append(StringPool.PERIOD);
+		sb.append(extension);
+
+		File destination = new File(
+			PropsValues.
+				MODULE_FRAMEWORK_WEB_EXTENDER_GENERATED_WABS_STORE_DIR);
+
+		destination.mkdirs();
+
+		FileUtil.copyFile(file, new File(destination, sb.toString()));
 	}
 
 	protected void transformToOSGiBundle() throws IOException {

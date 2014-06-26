@@ -29,6 +29,10 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class MapUtilTest {
 
+	public static class WhenCreatingALinkedHashMapFromArray {
+
+	}
+
 	public static class WhenCreatingAMapFromArray {
 
 		@Test

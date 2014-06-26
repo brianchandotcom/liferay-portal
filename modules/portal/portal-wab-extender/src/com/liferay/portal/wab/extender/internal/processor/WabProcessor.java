@@ -332,6 +332,17 @@ public class WabProcessor {
 		analyzer.setClasspath(files.toArray(new File[classPath.size()]));
 	}
 
+	protected void processBundleManifestVersion(Analyzer analyzer) {
+		String manifestVersion = MapUtil.getString(
+			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+
+		if (Validator.isNull(manifestVersion)) {
+			manifestVersion = "2";
+		}
+
+		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
+	}
+
 	protected void processBundleSymbolicName(Analyzer analyzer) {
 		String bundleSymbolicName = MapUtil.getString(
 			_parameters, Constants.BUNDLE_SYMBOLICNAME);
@@ -1006,7 +1017,7 @@ public class WabProcessor {
 
 		processBundleVersion(analyzer);
 
-		processManifestVersion(analyzer);
+		processBundleManifestVersion(analyzer);
 
 		processLiferayPortletXML();
 		processPortletXML();

@@ -28,7 +28,7 @@ AUI.add(
 							instance.ns(STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX)
 						];
 
-						var displayStyle = config.displayStyle;
+						var displayStyle = A.clone(config.displayStyle);
 
 						var displayStyleCSSClass = 'entry-display-style';
 
@@ -38,34 +38,39 @@ AUI.add(
 
 						var portletContainerId = instance.ns('journalContainer');
 
-						var selectConfig = config.select;
-
-						selectConfig.checkBoxesId = checkBoxesId;
-						selectConfig.displayStyle = displayStyle;
-						selectConfig.displayStyleCSSClass = displayStyleCSSClass;
-						selectConfig.displayStyleToolbar = displayStyleToolbar;
-						selectConfig.folderContainer = instance.byId('folderContainer');
-						selectConfig.namespace = namespace;
-						selectConfig.portletContainerId = portletContainerId;
-						selectConfig.selector = 'entry-selector';
+						var selectConfig = A.merge(
+							config.select,
+							{
+								checkBoxesId: checkBoxesId,
+								displayStyle: displayStyle,
+								displayStyleCSSClass: displayStyleCSSClass,
+								displayStyleToolbar: displayStyleToolbar,
+								folderContainer: instance.byId('folderContainer'),
+								namespace: namespace,
+								portletContainerId: portletContainerId,
+								selector: 'entry-selector'
+							}
+						);
 
 						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
 
-						var moveConfig = config.move;
-
-						moveConfig.processEntryIds = {
-							checkBoxesIds: checkBoxesId,
-							entryIds: [
-								instance.ns('articleIds'),
-								instance.ns('folderIds')
-							]
-						};
-
-						moveConfig.displayStyleCSSClass = displayStyleCSSClass;
-						moveConfig.draggableCSSClass = '.entry-link';
-						moveConfig.namespace = namespace;
-						moveConfig.portletContainerId = portletContainerId;
-						moveConfig.portletGroup = 'journal';
+						var moveConfig = A.merge(
+							config.move,
+							{
+								displayStyleCSSClass: displayStyleCSSClass,
+								draggableCSSClass: '.entry-link',
+								namespace: namespace,
+								portletContainerId: portletContainerId,
+								portletGroup: 'journal',
+								processEntryIds: {
+									checkBoxesIds: checkBoxesId,
+									entryIds: [
+										instance.ns('articleIds'),
+										instance.ns('folderIds')
+									]
+								}
+							}
+						);
 
 						instance._appViewMove = new Liferay.AppViewMove(moveConfig);
 					},

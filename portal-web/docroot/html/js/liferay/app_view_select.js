@@ -24,8 +24,6 @@ AUI.add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
-		var STR_ACTIVE = 'active';
-
 		var STR_CLICK = 'click';
 
 		var STR_DISPLAY_STYLE = 'displayStyle';

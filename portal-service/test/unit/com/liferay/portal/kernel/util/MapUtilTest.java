@@ -93,7 +93,7 @@ public class MapUtilTest {
 	public static class WhenFilteringByPredicateFilter {
 
 		@Test
-		public void testPredicateFilter() throws Exception {
+		public void testSuceed() throws Exception {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("1", "one");
@@ -125,7 +125,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testPrefixPredicateFilter() throws Exception {
+		public void testWithPrefix() throws Exception {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("x1", "one");

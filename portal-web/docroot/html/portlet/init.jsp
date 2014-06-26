@@ -22,9 +22,7 @@
 PortletMode portletMode = liferayPortletRequest.getPortletMode();
 WindowState windowState = liferayPortletRequest.getWindowState();
 
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
+String currentURL = PortalUtil.getCurrentPortletURL(liferayPortletRequest, liferayPortletResponse);
 //String currentURL = PortalUtil.getCurrentURL(request);
 %>
 

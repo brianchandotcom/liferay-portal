@@ -44,14 +44,18 @@ public class DocumentSelectorUtil {
 	}
 
 	public static String[] getMimeTypes(HttpServletRequest request) {
+		Set<String> mimeTypes = _getMimeTypes(getType(request));
+
+		return ArrayUtil.toStringArray(mimeTypes.toArray());
+	}
+
+	public static String getType(HttpServletRequest request) {
+		String type = ParamUtil.getString(request, "type");
+
 		HttpServletRequest originalRequest =
 			PortalUtil.getOriginalServletRequest(request);
 
-		String type = ParamUtil.getString(originalRequest, "Type");
-
-		Set<String> mimeTypes = _getMimeTypes(type);
-
-		return ArrayUtil.toStringArray(mimeTypes.toArray());
+		return ParamUtil.getString(originalRequest, "Type", type);
 	}
 
 	private static Set<String> _getMimeTypes(String type) {

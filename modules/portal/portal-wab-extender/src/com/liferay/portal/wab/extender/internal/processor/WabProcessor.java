@@ -659,7 +659,7 @@ public class WabProcessor {
 	}
 
 	protected void processLiferayPortletXML() throws IOException {
-		File file = new File(_file, "WEB-INF/liferay-portlet.xml");
+		File file = new File(_pluginDir, "WEB-INF/liferay-portlet.xml");
 
 		if (!file.exists()) {
 			return;
@@ -707,7 +707,7 @@ public class WabProcessor {
 
 	protected void processPortletXML() throws IOException {
 		File file = new File(
-			_file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
+			_pluginDir, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
 
 		if (!file.exists()) {
 			return;
@@ -837,7 +837,7 @@ public class WabProcessor {
 	}
 
 	protected void processTLDDependencies() throws IOException {
-		File dir = new File(_file, "WEB-INF/tld");
+		File dir = new File(_pluginDir, "WEB-INF/tld");
 
 		if (!dir.exists() || !dir.isDirectory()) {
 			return;
@@ -898,7 +898,7 @@ public class WabProcessor {
 	}
 
 	protected void processWebXML(String path) throws IOException {
-		File file = new File(_file, path);
+		File file = new File(_pluginDir, path);
 
 		if (!file.exists()) {
 			return;
@@ -936,7 +936,7 @@ public class WabProcessor {
 			String namespace)
 		throws IOException {
 
-		File file = new File(_file, fileName);
+		File file = new File(_pluginDir, fileName);
 
 		if (!file.exists()) {
 			return;

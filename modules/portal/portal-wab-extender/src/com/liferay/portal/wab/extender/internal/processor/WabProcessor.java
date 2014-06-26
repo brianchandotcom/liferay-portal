@@ -124,12 +124,7 @@ public class WabProcessor {
 	}
 
 	protected File autoDeploy() {
-		String webContextpath = MapUtil.getString(
-			_parameters, "Web-ContextPath");
-
-		if (!webContextpath.startsWith(StringPool.SLASH)) {
-			webContextpath = StringPool.SLASH.concat(webContextpath);
-		}
+		String webContextpath = getWebContextPath();
 
 		AutoDeploymentContext autoDeploymentContext =
 			buildAutoDeploymentContext(webContextpath);
@@ -277,6 +272,17 @@ public class WabProcessor {
 		catch (IOException ioe) {
 			return new Properties();
 		}
+	}
+
+	protected String getWebContextPath() {
+		String webContextpath = MapUtil.getString(
+			_parameters, "Web-ContextPath");
+
+		if (!webContextpath.startsWith(StringPool.SLASH)) {
+			webContextpath = StringPool.SLASH.concat(webContextpath);
+		}
+
+		return webContextpath;
 	}
 
 	protected boolean isValidOSGiBundle() {
@@ -869,6 +875,12 @@ public class WabProcessor {
 		}
 	}
 
+	protected void processWebContextPath(Manifest manifest) {
+		Attributes attributes = manifest.getMainAttributes();
+
+		attributes.putValue("Web-ContextPath", getWebContextPath());
+	}
+
 	protected boolean processWebXML(Element element, Class<?> clazz) {
 		String elementText = element.getTextTrim();
 
@@ -1018,6 +1030,8 @@ public class WabProcessor {
 		finally {
 			analyzer.close();
 		}
+
+		processWebContextPath(manifest);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

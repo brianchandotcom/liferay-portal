@@ -148,7 +148,7 @@ public class WabProcessor {
 			storeGeneratedWab(outputFile);
 		}
 
-		return null;
+		return new FileInputStream(outputFile);
 	}
 
 	protected void addElement(Element element, String name, String text) {

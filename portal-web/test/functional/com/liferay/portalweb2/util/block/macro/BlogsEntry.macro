@@ -1372,6 +1372,10 @@
 		</if>
 	</command>
 
+	<command name="viewTitlePG">
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+	</command>
+
 	<command name="viewViewCountCP">
 		<var name="key_portletName" value="Blogs" />
 

@@ -20,8 +20,6 @@ import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;
 import org.parboiled.Rule;
 import org.parboiled.common.ArrayBuilder;
 
-import org.pegdown.Parser;
-
 /**
  * Provides rules for parsing pictures with captions, "side-bars", and in-line
  * images.

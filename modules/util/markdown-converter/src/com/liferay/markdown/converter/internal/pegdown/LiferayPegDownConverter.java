@@ -15,7 +15,6 @@
 package com.liferay.markdown.converter.internal.pegdown;
 
 import com.liferay.markdown.converter.MarkdownConverter;
-import org.pegdown.LiferayParser;
 import com.liferay.markdown.converter.internal.pegdown.processor.LiferayPegDownProcessor;
 
 import java.io.IOException;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import org.parboiled.Parboiled;
 
 import org.pegdown.Extensions;
+import org.pegdown.LiferayParser;
 import org.pegdown.LinkRenderer;
 
 /**

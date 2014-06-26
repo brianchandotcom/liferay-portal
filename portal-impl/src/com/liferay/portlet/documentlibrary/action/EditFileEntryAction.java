@@ -378,20 +378,22 @@ public class EditFileEntryAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
+			String extension = FileUtil.getExtension(selectedFileName);
+
 			int pos = selectedFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
 
 			if (pos != -1) {
-				int periodPos = selectedFileName.lastIndexOf(StringPool.PERIOD);
-
-				if (periodPos == -1) {
-					periodPos = selectedFileName.length();
+				if (Validator.isNotNull(extension)) {
+					selectedFileName = FileUtil.stripExtension(
+						selectedFileName);
 				}
 
-				String tempRandomSuffix = selectedFileName.substring(
-					pos, periodPos);
+				selectedFileName = selectedFileName.substring(0, pos);
 
-				selectedFileName = StringUtil.replace(
-					selectedFileName, tempRandomSuffix, StringPool.BLANK);
+				if (Validator.isNotNull(extension)) {
+					selectedFileName =
+						selectedFileName + StringPool.PERIOD + extension;
+				}
 			}
 
 			while (true) {
@@ -405,8 +407,6 @@ public class EditFileEntryAction extends PortletAction {
 					sb.append(FileUtil.stripExtension(selectedFileName));
 					sb.append(StringPool.DASH);
 					sb.append(StringUtil.randomString());
-
-					String extension = FileUtil.getExtension(selectedFileName);
 
 					if (Validator.isNotNull(extension)) {
 						sb.append(StringPool.PERIOD);

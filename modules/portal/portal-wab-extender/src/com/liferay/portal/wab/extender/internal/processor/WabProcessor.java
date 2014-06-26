@@ -1205,7 +1205,6 @@ public class WabProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 
-	private BundleContext _bundleContext;
 	private String _bundleVersion;
 	private ClassLoader _classLoader;
 	private String _context;

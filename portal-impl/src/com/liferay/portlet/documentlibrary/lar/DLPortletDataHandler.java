@@ -347,7 +347,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				Map<Long, Long> folderIds =
 					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class);
+						Folder.class + ".folderIdsAndRepositoryEntryIds");
 
 				rootFolderId = MapUtil.getLong(
 					folderIds, rootFolderId, rootFolderId);

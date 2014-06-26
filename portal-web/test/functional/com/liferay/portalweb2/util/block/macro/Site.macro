@@ -855,7 +855,7 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
-		<execute action="CPSitesChild#assertElementPresent" locator-key1="SITE_TABLE_ACTIONS" />
+		<execute action="CPSites#assertVisible" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_CHILD_SITE" value1="This site has 1 child site." />
 
 		<var name="key_childSiteName" value="${childSiteName}" />

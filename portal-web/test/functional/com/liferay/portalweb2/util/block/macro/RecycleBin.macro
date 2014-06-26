@@ -33,7 +33,7 @@
 		<var name="key_assetName" value="${documentName}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_FOLDER_DOCUMENT_NAME" value1="${documentName}" />
-		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_FOLDER_ACTIONS" value1="Actions" />
+		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_FOLDER_ACTIONS" />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
 		<execute action="CPRecyclebin#selectFrame" locator-key1="RECYCLE_BIN_FOLDER_WARNING_IFRAME" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original folder does not exist anymore. Choose a different folder to restore ${documentName}." />

@@ -248,7 +248,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteWebDAVProps((WebDAVProps)persistedModel);
+		return webDAVPropsLocalService.deleteWebDAVProps((WebDAVProps)persistedModel);
 	}
 
 	@Override

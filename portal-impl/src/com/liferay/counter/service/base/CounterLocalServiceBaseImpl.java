@@ -223,7 +223,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteCounter((Counter)persistedModel);
+		return counterLocalService.deleteCounter((Counter)persistedModel);
 	}
 
 	@Override

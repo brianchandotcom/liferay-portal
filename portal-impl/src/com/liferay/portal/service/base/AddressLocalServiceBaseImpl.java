@@ -330,7 +330,7 @@ public abstract class AddressLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAddress((Address)persistedModel);
+		return addressLocalService.deleteAddress((Address)persistedModel);
 	}
 
 	@Override

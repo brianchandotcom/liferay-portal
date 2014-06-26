@@ -250,7 +250,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAssetTagStats((AssetTagStats)persistedModel);
+		return assetTagStatsLocalService.deleteAssetTagStats((AssetTagStats)persistedModel);
 	}
 
 	@Override

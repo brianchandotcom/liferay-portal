@@ -261,7 +261,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSCProductEntry((SCProductEntry)persistedModel);
+		return scProductEntryLocalService.deleteSCProductEntry((SCProductEntry)persistedModel);
 	}
 
 	@Override

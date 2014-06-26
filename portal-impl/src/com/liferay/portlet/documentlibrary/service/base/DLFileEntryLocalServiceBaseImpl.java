@@ -377,7 +377,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLFileEntry((DLFileEntry)persistedModel);
+		return dlFileEntryLocalService.deleteDLFileEntry((DLFileEntry)persistedModel);
 	}
 
 	@Override

@@ -249,7 +249,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteResourceAction((ResourceAction)persistedModel);
+		return resourceActionLocalService.deleteResourceAction((ResourceAction)persistedModel);
 	}
 
 	@Override

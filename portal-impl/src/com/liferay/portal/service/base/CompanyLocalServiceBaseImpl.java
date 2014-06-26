@@ -262,7 +262,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteCompany((Company)persistedModel);
+		return companyLocalService.deleteCompany((Company)persistedModel);
 	}
 
 	@Override

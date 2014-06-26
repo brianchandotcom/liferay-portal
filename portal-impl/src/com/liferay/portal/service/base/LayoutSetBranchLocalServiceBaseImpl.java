@@ -255,7 +255,7 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLayoutSetBranch((LayoutSetBranch)persistedModel);
+		return layoutSetBranchLocalService.deleteLayoutSetBranch((LayoutSetBranch)persistedModel);
 	}
 
 	@Override

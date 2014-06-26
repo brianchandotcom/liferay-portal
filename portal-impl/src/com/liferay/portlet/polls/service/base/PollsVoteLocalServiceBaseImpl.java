@@ -335,7 +335,7 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePollsVote((PollsVote)persistedModel);
+		return pollsVoteLocalService.deletePollsVote((PollsVote)persistedModel);
 	}
 
 	@Override

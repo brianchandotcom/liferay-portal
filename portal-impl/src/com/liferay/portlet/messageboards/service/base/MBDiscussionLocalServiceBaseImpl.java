@@ -356,7 +356,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBDiscussion((MBDiscussion)persistedModel);
+		return mbDiscussionLocalService.deleteMBDiscussion((MBDiscussion)persistedModel);
 	}
 
 	@Override

@@ -253,7 +253,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePortletPreferences((PortletPreferences)persistedModel);
+		return portletPreferencesLocalService.deletePortletPreferences((PortletPreferences)persistedModel);
 	}
 
 	@Override

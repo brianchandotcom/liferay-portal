@@ -364,7 +364,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteRepository((Repository)persistedModel);
+		return repositoryLocalService.deleteRepository((Repository)persistedModel);
 	}
 
 	@Override

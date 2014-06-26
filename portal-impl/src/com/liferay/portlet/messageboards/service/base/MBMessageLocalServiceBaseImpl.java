@@ -386,7 +386,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBMessage((MBMessage)persistedModel);
+		return mbMessageLocalService.deleteMBMessage((MBMessage)persistedModel);
 	}
 
 	@Override

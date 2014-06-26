@@ -337,7 +337,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBThreadFlag((MBThreadFlag)persistedModel);
+		return mbThreadFlagLocalService.deleteMBThreadFlag((MBThreadFlag)persistedModel);
 	}
 
 	@Override

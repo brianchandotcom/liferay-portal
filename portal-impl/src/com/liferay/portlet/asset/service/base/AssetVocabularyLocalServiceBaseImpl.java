@@ -345,7 +345,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAssetVocabulary((AssetVocabulary)persistedModel);
+		return assetVocabularyLocalService.deleteAssetVocabulary((AssetVocabulary)persistedModel);
 	}
 
 	@Override

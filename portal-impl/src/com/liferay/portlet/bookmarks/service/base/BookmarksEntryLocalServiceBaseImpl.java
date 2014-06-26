@@ -369,7 +369,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteBookmarksEntry((BookmarksEntry)persistedModel);
+		return bookmarksEntryLocalService.deleteBookmarksEntry((BookmarksEntry)persistedModel);
 	}
 
 	@Override

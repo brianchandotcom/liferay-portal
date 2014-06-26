@@ -247,7 +247,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteBrowserTracker((BrowserTracker)persistedModel);
+		return browserTrackerLocalService.deleteBrowserTracker((BrowserTracker)persistedModel);
 	}
 
 	@Override

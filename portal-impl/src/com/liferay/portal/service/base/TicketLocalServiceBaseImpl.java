@@ -243,7 +243,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteTicket((Ticket)persistedModel);
+		return ticketLocalService.deleteTicket((Ticket)persistedModel);
 	}
 
 	@Override

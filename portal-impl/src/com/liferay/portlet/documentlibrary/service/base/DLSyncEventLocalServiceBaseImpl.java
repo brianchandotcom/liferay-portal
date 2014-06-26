@@ -248,7 +248,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLSyncEvent((DLSyncEvent)persistedModel);
+		return dlSyncEventLocalService.deleteDLSyncEvent((DLSyncEvent)persistedModel);
 	}
 
 	@Override

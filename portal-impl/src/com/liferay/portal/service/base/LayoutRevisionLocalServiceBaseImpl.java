@@ -260,7 +260,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLayoutRevision((LayoutRevision)persistedModel);
+		return layoutRevisionLocalService.deleteLayoutRevision((LayoutRevision)persistedModel);
 	}
 
 	@Override

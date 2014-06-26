@@ -255,7 +255,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteResourceBlockPermission((ResourceBlockPermission)persistedModel);
+		return resourceBlockPermissionLocalService.deleteResourceBlockPermission((ResourceBlockPermission)persistedModel);
 	}
 
 	@Override

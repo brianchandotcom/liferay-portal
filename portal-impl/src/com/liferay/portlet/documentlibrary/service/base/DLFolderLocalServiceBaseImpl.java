@@ -360,7 +360,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLFolder((DLFolder)persistedModel);
+		return dlFolderLocalService.deleteDLFolder((DLFolder)persistedModel);
 	}
 
 	@Override

@@ -252,7 +252,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLFileRank((DLFileRank)persistedModel);
+		return dlFileRankLocalService.deleteDLFileRank((DLFileRank)persistedModel);
 	}
 
 	@Override

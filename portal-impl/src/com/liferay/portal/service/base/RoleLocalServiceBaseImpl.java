@@ -352,7 +352,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteRole((Role)persistedModel);
+		return roleLocalService.deleteRole((Role)persistedModel);
 	}
 
 	@Override

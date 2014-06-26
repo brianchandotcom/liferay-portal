@@ -343,7 +343,7 @@ public abstract class MDRRuleGroupLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMDRRuleGroup((MDRRuleGroup)persistedModel);
+		return mdrRuleGroupLocalService.deleteMDRRuleGroup((MDRRuleGroup)persistedModel);
 	}
 
 	@Override

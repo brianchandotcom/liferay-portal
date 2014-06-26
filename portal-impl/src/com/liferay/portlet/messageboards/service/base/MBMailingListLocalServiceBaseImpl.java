@@ -338,7 +338,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBMailingList((MBMailingList)persistedModel);
+		return mbMailingListLocalService.deleteMBMailingList((MBMailingList)persistedModel);
 	}
 
 	@Override

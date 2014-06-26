@@ -277,7 +277,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAssetEntry((AssetEntry)persistedModel);
+		return assetEntryLocalService.deleteAssetEntry((AssetEntry)persistedModel);
 	}
 
 	@Override

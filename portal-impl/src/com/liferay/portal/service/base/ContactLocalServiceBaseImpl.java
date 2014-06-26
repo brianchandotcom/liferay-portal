@@ -250,7 +250,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteContact((Contact)persistedModel);
+		return contactLocalService.deleteContact((Contact)persistedModel);
 	}
 
 	@Override

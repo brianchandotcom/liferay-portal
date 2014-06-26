@@ -255,7 +255,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSocialActivitySetting((SocialActivitySetting)persistedModel);
+		return socialActivitySettingLocalService.deleteSocialActivitySetting((SocialActivitySetting)persistedModel);
 	}
 
 	@Override

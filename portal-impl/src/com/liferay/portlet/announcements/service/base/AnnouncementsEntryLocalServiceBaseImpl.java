@@ -351,7 +351,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAnnouncementsEntry((AnnouncementsEntry)persistedModel);
+		return announcementsEntryLocalService.deleteAnnouncementsEntry((AnnouncementsEntry)persistedModel);
 	}
 
 	@Override

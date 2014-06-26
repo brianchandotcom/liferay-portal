@@ -352,7 +352,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLFileVersion((DLFileVersion)persistedModel);
+		return dlFileVersionLocalService.deleteDLFileVersion((DLFileVersion)persistedModel);
 	}
 
 	@Override

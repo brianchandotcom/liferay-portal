@@ -254,7 +254,7 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteShoppingItem((ShoppingItem)persistedModel);
+		return shoppingItemLocalService.deleteShoppingItem((ShoppingItem)persistedModel);
 	}
 
 	@Override

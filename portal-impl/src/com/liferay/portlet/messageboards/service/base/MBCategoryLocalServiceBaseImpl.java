@@ -364,7 +364,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBCategory((MBCategory)persistedModel);
+		return mbCategoryLocalService.deleteMBCategory((MBCategory)persistedModel);
 	}
 
 	@Override

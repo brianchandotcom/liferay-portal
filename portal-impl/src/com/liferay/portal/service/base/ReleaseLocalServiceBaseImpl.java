@@ -242,7 +242,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteRelease((Release)persistedModel);
+		return releaseLocalService.deleteRelease((Release)persistedModel);
 	}
 
 	@Override

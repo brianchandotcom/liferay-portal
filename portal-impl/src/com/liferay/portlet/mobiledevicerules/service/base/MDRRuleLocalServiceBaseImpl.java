@@ -333,7 +333,7 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMDRRule((MDRRule)persistedModel);
+		return mdrRuleLocalService.deleteMDRRule((MDRRule)persistedModel);
 	}
 
 	@Override

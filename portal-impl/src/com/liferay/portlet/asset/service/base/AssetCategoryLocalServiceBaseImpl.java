@@ -348,7 +348,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAssetCategory((AssetCategory)persistedModel);
+		return assetCategoryLocalService.deleteAssetCategory((AssetCategory)persistedModel);
 	}
 
 	@Override

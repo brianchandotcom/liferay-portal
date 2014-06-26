@@ -255,7 +255,7 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSCFrameworkVersion((SCFrameworkVersion)persistedModel);
+		return scFrameworkVersionLocalService.deleteSCFrameworkVersion((SCFrameworkVersion)persistedModel);
 	}
 
 	@Override

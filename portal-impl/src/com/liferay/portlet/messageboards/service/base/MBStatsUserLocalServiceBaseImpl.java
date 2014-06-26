@@ -256,7 +256,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBStatsUser((MBStatsUser)persistedModel);
+		return mbStatsUserLocalService.deleteMBStatsUser((MBStatsUser)persistedModel);
 	}
 
 	@Override

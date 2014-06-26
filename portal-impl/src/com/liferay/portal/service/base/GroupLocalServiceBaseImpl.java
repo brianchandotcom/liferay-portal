@@ -316,7 +316,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteGroup((Group)persistedModel);
+		return groupLocalService.deleteGroup((Group)persistedModel);
 	}
 
 	@Override

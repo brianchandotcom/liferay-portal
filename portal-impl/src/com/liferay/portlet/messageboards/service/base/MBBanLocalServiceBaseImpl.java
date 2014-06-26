@@ -331,7 +331,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBBan((MBBan)persistedModel);
+		return mbBanLocalService.deleteMBBan((MBBan)persistedModel);
 	}
 
 	@Override

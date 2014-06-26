@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -75,9 +77,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.JarEntry;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipOutputStream;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.depend.DependencyVisitor;
@@ -756,9 +760,9 @@ public class WabProcessor {
 				portletName;
 
 		XPath xPath = SAXReaderUtil.createXPath(
-			"x:init-param[x:name/text()='com.liferay.portal." +
-				"invokerPortletName']",
-			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+				"x:init-param[x:name/text()='com.liferay.portal." +
+						"invokerPortletName']",
+				"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
 
 		Element invokerPortletNameElement = (Element)xPath.selectSingleNode(
 			element);
@@ -1009,19 +1013,6 @@ public class WabProcessor {
 		}
 	}
 
-	protected void writeManifest(Manifest manifest) throws IOException {
-		File file = getManifestFile();
-
-		OutputStream outputStream = new FileOutputStream(file);
-
-		try {
-			manifest.write(outputStream);
-		}
-		finally {
-			outputStream.close();
-		}
-	}
-
 	protected void transformToOSGiBundle() throws IOException {
 		Analyzer analyzer = new Analyzer();
 
@@ -1063,6 +1054,58 @@ public class WabProcessor {
 		processWebContextPath(manifest);
 
 		writeManifest(manifest);
+	}
+
+	protected void writeFile(
+			File file, ZipOutputStream zipOutputStream, Set<String> paths,
+			String path)
+		throws FileNotFoundException {
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = new FileInputStream(file);
+
+			writePath(inputStream, zipOutputStream, paths, path);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	protected void writeManifest(Manifest manifest) throws IOException {
+		File file = getManifestFile();
+
+		OutputStream outputStream = new FileOutputStream(file);
+
+		try {
+			manifest.write(outputStream);
+		}
+		finally {
+			outputStream.close();
+		}
+	}
+
+	protected void writePath(
+		InputStream inputStream, ZipOutputStream zipOutputStream,
+		Set<String> paths, String path) {
+
+		if (paths.contains(path)) {
+			return;
+		}
+
+		paths.add(path);
+
+		try {
+			zipOutputStream.putNextEntry(new JarEntry(path));
+
+			StreamUtil.transfer(inputStream, zipOutputStream, false);
+
+			zipOutputStream.closeEntry();
+		}
+		catch (IOException ioe) {
+			_log.error(ioe);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

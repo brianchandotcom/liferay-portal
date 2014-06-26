@@ -706,15 +706,16 @@ public class WabProcessor {
 		formatDocument(file, document);
 	}
 
-	protected void processManifestVersion(Analyzer analyzer) {
-		String manifestVersion = MapUtil.getString(
-			_parameters, Constants.BUNDLE_MANIFESTVERSION);
+	protected void processManifestVersion(Manifest manifest) {
+		Attributes attributes = manifest.getMainAttributes();
 
-		if (Validator.isNull(manifestVersion)) {
-			manifestVersion = "2";
+		Object manifestVersion = attributes.get(
+			Attributes.Name.MANIFEST_VERSION.toString());
+
+		if (manifestVersion == null) {
+			attributes.putValue(
+				Attributes.Name.MANIFEST_VERSION.toString(), "1.0");
 		}
-
-		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
 	}
 
 	protected void processPackageNames(Analyzer analyzer) {
@@ -1042,6 +1043,7 @@ public class WabProcessor {
 			analyzer.close();
 		}
 
+		processManifestVersion(manifest);
 		processWebContextPath(manifest);
 	}
 

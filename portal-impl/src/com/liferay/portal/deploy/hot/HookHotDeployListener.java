@@ -109,9 +109,7 @@ import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
-import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.security.auth.EmailAddressValidator;
-import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
@@ -2062,11 +2060,11 @@ public class HookHotDeployListener
 					emailAddressGeneratorClassName);
 
 			ServiceRegistration<EmailAddressGenerator> serviceRegistration =
-	                registry.registerService(
-	                    EmailAddressGenerator.class, emailAddressGenerator);
+				registry.registerService(
+					EmailAddressGenerator.class, emailAddressGenerator);
 
-	            serviceRegistrations.put(
-	                emailAddressGeneratorClassName, serviceRegistration);
+			serviceRegistrations.put(
+				emailAddressGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2082,11 +2080,11 @@ public class HookHotDeployListener
 					emailAddressValidatorClassName);
 
 			ServiceRegistration<EmailAddressValidator> serviceRegistration =
-	                registry.registerService(
-	                    EmailAddressValidator.class, emailAddressValidator);
+				registry.registerService(
+					EmailAddressValidator.class, emailAddressValidator);
 
-	            serviceRegistrations.put(
-	            		emailAddressValidatorClassName, serviceRegistration);
+			serviceRegistrations.put(
+				emailAddressValidatorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {

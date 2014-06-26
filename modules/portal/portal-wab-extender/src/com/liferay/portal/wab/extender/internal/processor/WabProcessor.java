@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -463,6 +464,31 @@ public class WabProcessor {
 		}
 	}
 
+	protected void processExportPackageNames(Analyzer analyzer)
+		throws IOException {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(StringUtil.merge(_exportPackageNames.toArray()));
+
+		if (Validator.isNotNull(_servicePackageName)) {
+			sb.append(StringPool.COMMA);
+			sb.append(StringPool.EXCLAMATION);
+			sb.append(_servicePackageName);
+			sb.append(".model.impl.*,!");
+			sb.append(_servicePackageName);
+			sb.append(".service.base.*,!");
+			sb.append(_servicePackageName);
+			sb.append(".service.impl.*,!");
+			sb.append(_servicePackageName);
+			sb.append(".service.http.*,");
+			sb.append(_servicePackageName);
+			sb.append(".*");
+		}
+
+		analyzer.setProperty(Constants.EXPORT_PACKAGE, sb.toString());
+	}
+
 	protected void processExtraHeaders(Analyzer analyzer) {
 		String bundleSymbolicName = analyzer.getProperty(
 			Constants.BUNDLE_SYMBOLICNAME);
@@ -557,6 +583,35 @@ public class WabProcessor {
 		}
 	}
 
+	protected void processImportPackageNames(Analyzer analyzer)
+		throws IOException {
+
+		String packageName = MapUtil.getString(
+			_parameters, Constants.IMPORT_PACKAGE);
+
+		if (Validator.isNotNull(packageName)) {
+			analyzer.setProperty(Constants.IMPORT_PACKAGE, packageName);
+		}
+		else {
+			StringBundler sb = new StringBundler(
+				(_importPackageNames.size() * 3) + 1);
+
+			for (String _importPackageName : _importPackageNames) {
+				if (Validator.isNull(_importPackageName)) {
+					continue;
+				}
+
+				sb.append(_importPackageName);
+				sb.append(";resolution:=\"optional\"");
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append("*;resolution:=\"optional\"");
+
+			analyzer.setProperty(Constants.IMPORT_PACKAGE, sb.toString());
+		}
+	}
+
 	protected Set<String> processJSPDependencies(File file) throws IOException {
 		Source source = new ClassLoaderSource(_classLoader);
 
@@ -646,6 +701,11 @@ public class WabProcessor {
 		}
 
 		analyzer.setProperty(Constants.BUNDLE_MANIFESTVERSION, manifestVersion);
+	}
+
+	protected void processPackageNames(Analyzer analyzer) throws IOException {
+		processExportPackageNames(analyzer);
+		processImportPackageNames(analyzer);
 	}
 
 	protected void processPortletXML() throws IOException {
@@ -915,6 +975,8 @@ public class WabProcessor {
 		processWebXML("WEB-INF/liferay-web.xml");
 
 		processDeclarativeReferences();
+
+		processPackageNames(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

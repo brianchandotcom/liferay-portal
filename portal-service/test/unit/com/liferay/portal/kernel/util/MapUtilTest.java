@@ -31,7 +31,7 @@ public class MapUtilTest {
 	public static class WhenCreatingAMapFromArray {
 
 		@Test
-		public void testFromArray() {
+		public void testSucceed() {
 			String[] array = new String[] {
 				PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
 				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS,
@@ -69,7 +69,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testFromArrayWithOddLength() {
+		public void testWithOddLength() {
 			try {
 				MapUtil.fromArray(new String[] {"one", "two", "three"});
 
@@ -82,7 +82,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testFromArrayWithZeroLength() {
+		public void testWithZeroLength() {
 			Map<String, String> map = MapUtil.fromArray(new String[] {});
 
 			Assert.assertTrue(map.isEmpty());

@@ -111,7 +111,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 						for (int i = 0; i < ShoppingOrderConstants.STATUSES.length; i++) {
 						%>
 
-							<aui:option label="<%= ShoppingOrderConstants.STATUSES[i] %>" selected="<%= ShoppingUtil.getPpPaymentStatus(ShoppingOrderConstants.STATUSES[i]).equals(order.getPpPaymentStatus()) %>" useModelValue="false" />
+							<aui:option label="<%= ShoppingOrderConstants.STATUSES[i] %>" selected="<%= ShoppingUtil.getPpPaymentStatus(ShoppingOrderConstants.STATUSES[i]).equals(order.getPpPaymentStatus()) %>" useModelValue="<%= false %>" />
 
 						<%
 						}

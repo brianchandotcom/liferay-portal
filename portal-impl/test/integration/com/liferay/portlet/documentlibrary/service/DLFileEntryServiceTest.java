@@ -57,7 +57,77 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testCopyFileEntryWithExtension() throws PortalException {
+	public void testCopyFileEntryWithExtensionInFolderToFolder()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		String sourceFileName = RandomTestUtil.randomString().concat(".pdf");
+		String fileEntryTitle = RandomTestUtil.randomString();
+
+		DLFileEntry originalDLFileEntry =
+			DLFileEntryLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
+				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
+				serviceContext);
+
+		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		DLFileEntryServiceUtil.copyFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			serviceContext);
+	}
+
+	@Test
+	public void testCopyFileEntryWithExtensionInFolderToRootFolder()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		String sourceFileName = RandomTestUtil.randomString().concat(".pdf");
+		String fileEntryTitle = RandomTestUtil.randomString();
+
+		DLFileEntry originalDLFileEntry =
+			DLFileEntryLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
+				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
+				serviceContext);
+
+		DLFileEntryServiceUtil.copyFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			originalDLFileEntry.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
+
+	@Test
+	public void testCopyFileEntryWithExtensionInRootFolderToFolder()
+		throws PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -87,7 +157,77 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testCopyFileEntryWithoutExtension() throws PortalException {
+	public void testCopyFileEntryWithoutExtensionInFolderToFolder()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		String sourceFileName = RandomTestUtil.randomString();
+		String fileEntryTitle = RandomTestUtil.randomString();
+
+		DLFileEntry originalDLFileEntry =
+			DLFileEntryLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
+				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
+				serviceContext);
+
+		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		DLFileEntryServiceUtil.copyFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			serviceContext);
+	}
+
+	@Test
+	public void testCopyFileEntryWithoutExtensionInFolderToRootFolder()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLFolder folder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		String sourceFileName = RandomTestUtil.randomString();
+		String fileEntryTitle = RandomTestUtil.randomString();
+
+		DLFileEntry originalDLFileEntry =
+			DLFileEntryLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
+				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
+				serviceContext);
+
+		DLFileEntryServiceUtil.copyFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			originalDLFileEntry.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
+
+	@Test
+	public void testCopyFileEntryWithoutExtensionInRootFolderToFolder()
+		throws PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

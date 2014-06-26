@@ -792,6 +792,34 @@ public class WabProcessor {
 		return packageNames;
 	}
 
+	protected void processRequiredDeploymentContexts(Analyzer analyzer) {
+		List<String> requiredDeploymentContexts =
+			_pluginPackage.getRequiredDeploymentContexts();
+
+		if (Validator.isNull(requiredDeploymentContexts)) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(
+			6 * requiredDeploymentContexts.size());
+
+		for (String requiredDeploymentContext : requiredDeploymentContexts) {
+			sb.append(requiredDeploymentContext);
+			sb.append(StringPool.SEMICOLON);
+			sb.append(Constants.BUNDLE_VERSION_ATTRIBUTE);
+			sb.append(StringPool.EQUAL);
+			sb.append(_bundleVersion);
+			sb.append(StringPool.COMMA);
+		}
+
+		String requiredBundles = sb.toString();
+
+		requiredBundles = requiredBundles.substring(
+			0, requiredBundles.length() - 1);
+
+		analyzer.setProperty(Constants.REQUIRE_BUNDLE, requiredBundles);
+	}
+
 	protected void processServicePackageName(File file) {
 		try {
 			Document document = SAXReaderUtil.read(file);
@@ -973,6 +1001,8 @@ public class WabProcessor {
 		processDeclarativeReferences();
 
 		processPackageNames(analyzer);
+
+		processRequiredDeploymentContexts(analyzer);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);

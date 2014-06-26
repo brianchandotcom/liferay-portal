@@ -31,7 +31,7 @@
 <!--SELECT_VERSION_TABLE-->
 <tr>
 	<td>SELECT_VERSION_VERSION_NEW</td>
-	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'1.1')]/td[1]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionNew}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

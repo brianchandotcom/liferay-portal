@@ -14,16 +14,13 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
-		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-		<var name="wikiNodeName" value="Main" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -32,22 +29,27 @@
 
 		<execute macro="WikiPage#viewFrontPageCP">
 			<var name="portletName" value="Wiki" />
-			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 	</command>
 
 	<command name="AddWikiNode" priority="5">
-		<var name="wikiNodeDescription" value="Wiki Node Description" />
-		<var name="wikiNodeName" value="Wiki Node Name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="0" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 	</command>
 
@@ -57,7 +59,6 @@
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="Wiki Node Description" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
@@ -75,7 +76,8 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="2" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
@@ -86,20 +88,14 @@
 	</command>
 
 	<command name="CompareVersionsWikiPage" priority="5">
-		<var name="wikiNodeName" value="Main" />
-		<var name="wikiPageContent" value="Wiki Page Content" />
-		<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
-		<var name="wikiPageTitle" value="Wiki Page Title" />
-		<var name="wikiPageVersionDiff" value="Edit" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPage#addCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -107,8 +103,9 @@
 		</execute>
 
 		<execute macro="WikiPage#editPageCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -116,66 +113,68 @@
 		</execute>
 
 		<execute macro="WikiPage#compareVersionsCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageVersionDiff" value="${wikiPageVersionDiff}" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageVersionDiff" value="Edit" />
 			<var name="wikiPageVersionNew" value="1.1" />
 			<var name="wikiPageVersionOld" value="1.0" />
 		</execute>
 	</command>
 
 	<command name="DeleteWikiNode" priority="5">
-		<var name="wikiNodeDescription" value="Wiki Node Description" />
-		<var name="wikiNodeName" value="Wiki Node Name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
 		<execute macro="WikiNode#deleteCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#viewNoCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 	</command>
 
 	<command name="EditWikiNode" priority="5">
-		<var name="wikiNodeDescription" value="Wiki Node Description" />
-		<var name="wikiNodeDescriptionEdit" value="Wiki Node Description Edit" />
-		<var name="wikiNodeName" value="Wiki Node Name" />
-		<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
 		<execute macro="WikiNode#editCP">
-			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
-			<var name="wikiNodeDescriptionEdit" value="${wikiNodeDescriptionEdit}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiNodeNameEdit" value="${wikiNodeNameEdit}" />
+			<var name="wikiNodeName" value="Wiki Node Name" />
+			<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="0" />
+			<var name="wikiNodeName" value="Wiki Node Name Edit" />
 		</execute>
 	</command>
 
 	<command name="MoveToRecycleBinFrontPage" priority="5">
-		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-		<var name="wikiNodeName" value="Main" />
-		<var name="wikiPageTitle" value="FrontPage" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -183,9 +182,9 @@
 		</execute>
 
 		<execute macro="WikiPage#moveToRecycleBinCP">
-			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -193,8 +192,8 @@
 		</execute>
 
 		<execute macro="WikiPage#viewFrontPageDefaultCP">
-			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 	</command>
 </definition>

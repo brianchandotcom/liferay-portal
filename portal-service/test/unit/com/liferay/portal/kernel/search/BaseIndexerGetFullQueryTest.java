@@ -24,13 +24,11 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
+import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -42,7 +40,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -53,8 +50,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareOnlyThisForTest( {
-	BooleanQueryFactoryUtil.class, IndexerRegistryUtil.class,
-	SearchEngineUtil.class
+	BooleanQueryFactoryUtil.class, SearchEngineUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class BaseIndexerGetFullQueryTest extends PowerMockito {
@@ -155,19 +151,6 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpIndexerRegistryUtil() throws Exception {
-		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		List<Indexer> indexers = Arrays.<Indexer>asList(
-			new DLFileEntryIndexer(), new MBMessageIndexer());
-
-		PowerMockito.when(
-			IndexerRegistryUtil.class, "getIndexers"
-		).thenReturn(
-			indexers
-		);
-	}
-
 	protected void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -189,34 +172,12 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 	}
 
 	protected void setUpRegistryUtil() throws Exception {
-		Registry registry = mock(Registry.class);
-
-		when(
-			registry.setRegistry(registry)
-		).thenReturn(
-			registry
-		);
-
-		when(
-			registry.getRegistry()
-		).thenReturn(
-			registry
-		);
-
-		ServiceTracker<Object, Object> serviceTracker = mock(
-			ServiceTracker.class);
-
-		when(
-			registry.trackServices(
-				(Class<Object>)Matchers.any(),
-				(ServiceTrackerCustomizer<Object, Object>)Matchers.any())
-		).thenReturn(
-			serviceTracker
-		);
+		Registry registry = new BasicRegistryImpl();
 
 		RegistryUtil.setRegistry(registry);
 
-		setUpIndexerRegistryUtil();
+		registry.registerService(Indexer.class, new DLFileEntryIndexer());
+		registry.registerService(Indexer.class, new MBMessageIndexer());
 	}
 
 	protected void setUpSearchEngineUtil() {

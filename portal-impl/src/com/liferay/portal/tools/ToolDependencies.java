@@ -47,6 +47,9 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 /**
  * @author Raymond Augé
@@ -55,6 +58,8 @@ public class ToolDependencies {
 
 	public static void wireBasic() {
 		InitUtil.init();
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		DigesterUtil digesterUtil = new DigesterUtil();
 

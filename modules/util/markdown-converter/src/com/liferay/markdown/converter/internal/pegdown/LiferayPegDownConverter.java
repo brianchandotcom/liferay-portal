@@ -15,7 +15,7 @@
 package com.liferay.markdown.converter.internal.pegdown;
 
 import com.liferay.markdown.converter.MarkdownConverter;
-import com.liferay.markdown.converter.internal.pegdown.parser.LiferayParser;
+import org.pegdown.LiferayParser;
 import com.liferay.markdown.converter.internal.pegdown.processor.LiferayPegDownProcessor;
 
 import java.io.IOException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.markdown.converter.internal.pegdown.parser;
+package org.pegdown;
 
 import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;

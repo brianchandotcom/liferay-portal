@@ -24,13 +24,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORMAT_DROPDOWN</td>
-	<td>//select[@class='aui-field-select']</td>
+	<td>//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@class, 'field input-large lfr-input-text')]</td>
+	<td>//input[contains(@class,'lfr-input-text')]</td>
 	<td></td>
 </tr>
 <tr>

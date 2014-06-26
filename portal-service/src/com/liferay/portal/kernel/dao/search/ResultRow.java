@@ -35,13 +35,13 @@ public interface ResultRow {
 		int index, String align, String valign, int colspan, String name,
 		String href);
 
-	public void
-		addButton(String align, String valign, String name, String href);
-
 	public void addButton(String name, String href);
 
 	public void addButton(
 		String align, String valign, int colspan, String name, String href);
+
+	public void addButton(
+		String align, String valign, String name, String href);
 
 	public void addDate(Date date);
 
@@ -93,10 +93,18 @@ public interface ResultRow {
 	public void addStatus(int status);
 
 	public void addStatus(
+		int index, int status, long statusByUserId, Date statusDate,
+		String href);
+
+	public void addStatus(
 		int index, int status, String href, ServletContext servletContext,
 		HttpServletRequest request, HttpServletResponse response);
 
 	public void addStatus(int status, long statusByUserId, Date statusDate);
+
+	public void addStatus(
+		int status, long statusByUserId, Date statusDate,
+		PortletURL portletURL);
 
 	public void addStatus(
 		int status, long statusByUserId, Date statusDate, String href);
@@ -104,16 +112,6 @@ public interface ResultRow {
 	public void addStatus(int status, PortletURL portletURL);
 
 	public void addStatus(int status, String href);
-
-	public void
-		addStatus(
-			int index, int status, long statusByUserId, Date statusDate,
-			String href);
-
-	public void
-		addStatus(
-			int status, long statusByUserId, Date statusDate,
-			PortletURL portletURL);
 
 	public void addText(int index, String name);
 

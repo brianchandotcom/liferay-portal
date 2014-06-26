@@ -237,7 +237,6 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 				new String[] {_PORTLET_IDS[0], _PORTLET_IDS[0] + "_test"},
 				new String[] {_PORTLET_IDS[1], _PORTLET_IDS[1] + "_test"},
 				new String[] {_PORTLET_IDS[2], _PORTLET_IDS[2] + "_test"},
-				new String[] {_PORTLET_IDS[3], _PORTLET_IDS[3] + "_test"}
 			};
 		}
 
@@ -256,7 +255,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	private static final String _INSTANCE_ID = "_INSTANCE_LhZwzy867qfr";
 
 	private static final String[] _PORTLET_IDS = {
-		"7", "20", "47", "71"
+		"20", "47", "71"
 	};
 
 	private boolean _testInstanceable = true;

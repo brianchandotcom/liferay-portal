@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_INTEGER</td>
-	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Interger')]</td>
+	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Integer')]</td>
 	<td></td>
 </tr>
 <tr>

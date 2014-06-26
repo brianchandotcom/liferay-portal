@@ -552,6 +552,9 @@ public interface Portal {
 
 	public String getCurrentCompleteURL(HttpServletRequest request);
 
+	public String getCurrentPortletURL(
+		PortletRequest portletRequest, PortletResponse portletResponse);
+
 	public String getCurrentURL(HttpServletRequest request);
 
 	public String getCurrentURL(PortletRequest portletRequest);

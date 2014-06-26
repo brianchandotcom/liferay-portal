@@ -43,6 +43,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
+import com.liferay.portlet.trash.service.persistence.TrashEntryFinder;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
 
@@ -355,6 +356,24 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	public void setTrashEntryPersistence(
 		TrashEntryPersistence trashEntryPersistence) {
 		this.trashEntryPersistence = trashEntryPersistence;
+	}
+
+	/**
+	 * Returns the trash entry finder.
+	 *
+	 * @return the trash entry finder
+	 */
+	public TrashEntryFinder getTrashEntryFinder() {
+		return trashEntryFinder;
+	}
+
+	/**
+	 * Sets the trash entry finder.
+	 *
+	 * @param trashEntryFinder the trash entry finder
+	 */
+	public void setTrashEntryFinder(TrashEntryFinder trashEntryFinder) {
+		this.trashEntryFinder = trashEntryFinder;
 	}
 
 	/**
@@ -744,6 +763,8 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
+	@BeanReference(type = TrashEntryFinder.class)
+	protected TrashEntryFinder trashEntryFinder;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)

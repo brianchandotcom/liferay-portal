@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util.test;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -32,11 +33,13 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Alberto Chaparro
  * @author Manuel de la Peña
+ * @author Sampsa Sohlman
  */
 public class UserTestUtil {
 
@@ -212,6 +215,20 @@ public class UserTestUtil {
 		else {
 			return addUser(screenName, false, new long[] {groupId});
 		}
+	}
+
+	public static User getAdminUser(long companyId) throws PortalException {
+		Role role = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		List<User> users = UserLocalServiceUtil.getRoleUsers(
+			role.getRoleId(), 0, 2);
+
+		if (!users.isEmpty()) {
+			return users.get(0);
+		}
+
+		return null;
 	}
 
 }

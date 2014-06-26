@@ -226,29 +226,29 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PANEL-->
+<!--DIALOG_BOX-->
 <tr>
-	<td>PANEL_DUE_DATE</td>
+	<td>DIALOG_BOX_DUE_DATE</td>
 	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDate')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PANEL_DUE_DATE_TIME</td>
+	<td>DIALOG_BOX_DUE_DATE_TIME</td>
 	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDateTime')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PANEL_COMMENT_FIELD</td>
+	<td>DIALOG_BOX_COMMENT_FIELD</td>
 	<td>//textarea[@id='_153_comment']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PANEL_OK_BUTTON</td>
+	<td>DIALOG_BOX_OK_BUTTON</td>
 	<td>//button[.='OK']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PANEL_CANCEL_BUTTON</td>
+	<td>DIALOG_BOX_CANCEL_BUTTON</td>
 	<td>//button[.='Cancel']</td>
 	<td></td>
 </tr>

@@ -1,0 +1,152 @@
+<definition>
+	<command name="approveProcess">
+		<var name="key_processName" value="${processName}" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
+		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKaleoforms#pause" locator1="1000" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="Approved" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
+		<execute action="PGKaleoforms#pause" locator1="1000" />
+	</command>
+
+	<command name="assignProcessToMe">
+		<var name="key_processName" value="${processName}" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
+	</command>
+
+	<command name="populateFieldDate">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldDocumentsAndMedia">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#assertClick" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
+
+		<execute action="CPDynamicdatalistsListAddrecordSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<var name="key_documentTitle" value="${ddlRecordFieldData}" />
+
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
+
+		<execute action="PGKaleoformsSubmitnew#selectFrame" value1="relative=top" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldSelect">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#select" locator-key1="NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldTextBox">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="rejectProcess">
+		<var name="key_processName" value="${processName}" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
+		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="$Rejected" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
+	</command>
+
+	<command name="saveNewProcess">
+		<execute action="PGKaleoformsSubmitnew#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="submitNewProcess">
+		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW" value1="Submit New" />
+
+		<var name="key_processName" value="${processName}" />
+
+		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW_MENULIST_PROCESS" value1="${processName}" />
+
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_TITLE" value1="New ${processName}" />
+	</command>
+
+	<command name="viewMyCompletedRequests">
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
+
+		<var name="key_processName" value="${processName}" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="Approved" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="State Approved" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinition}" />
+	</command>
+
+	<command name="viewMyCompletedRequestsField">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewMyCompletedRequestsTasks">
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_TASK" value1="Review" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_COMPLETED" value1="Yes" />
+	</command>
+
+	<command name="viewNoCompletedRequests">
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_INFO_MESSAGE" value1="There are no completed publications requested by me." />
+	</command>
+
+	<command name="viewNoTasks">
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_INFO_MESSAGE" value1="There are no tasks." />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no tasks." />
+	</command>
+</definition>

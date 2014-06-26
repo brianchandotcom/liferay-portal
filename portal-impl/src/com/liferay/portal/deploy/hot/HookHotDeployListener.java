@@ -2113,11 +2113,11 @@ public class HookHotDeployListener
 					screenNameGeneratorClassName);
 
 			ServiceRegistration<ScreenNameGenerator> serviceRegistration =
-					registry.registerService(
-						ScreenNameGenerator.class, screenNameGenerator);
+				registry.registerService(
+					ScreenNameGenerator.class, screenNameGenerator);
 
-			serviceRegistrations.put(screenNameGeneratorClassName,
-				serviceRegistration);
+			serviceRegistrations.put(
+				screenNameGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2132,11 +2132,11 @@ public class HookHotDeployListener
 					screenNameValidatorClassName);
 
 			ServiceRegistration<ScreenNameValidator> serviceRegistration =
-					registry.registerService(
-						ScreenNameValidator.class, screenNameValidator);
+				registry.registerService(
+					ScreenNameValidator.class, screenNameValidator);
 
-			serviceRegistrations.put(screenNameValidatorClassName,
-				serviceRegistration);
+			serviceRegistrations.put(
+				screenNameValidatorClassName, serviceRegistration);
 		}
 
 		Set<String> liferayFilterClassNames =

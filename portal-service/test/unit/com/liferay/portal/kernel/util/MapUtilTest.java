@@ -36,7 +36,7 @@ public class MapUtilTest {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[] {"one,1"}, ",");
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue("1"));
 		}
@@ -46,7 +46,7 @@ public class MapUtilTest {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue("1"));
 		}
@@ -75,7 +75,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:true:boolean"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(true));
 			Assert.assertTrue(map.get("one") instanceof Boolean);
@@ -83,7 +83,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:true:" + Boolean.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(true));
 			Assert.assertTrue(map.get("one") instanceof Boolean);
@@ -94,7 +94,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:boolean"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(false));
 			Assert.assertTrue(map.get("one") instanceof Boolean);
@@ -102,7 +102,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Boolean.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(false));
 			Assert.assertTrue(map.get("one") instanceof Boolean);
@@ -113,7 +113,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Byte.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((byte)1));
 			Assert.assertTrue(map.get("one") instanceof Byte);
@@ -121,7 +121,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Float.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((float)1));
 			Assert.assertTrue(map.get("one") instanceof Float);
@@ -129,7 +129,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Object.class.getName()});
 
-			Assert.assertTrue(map.size() == 0);
+			Assert.assertEquals(0, map.size());
 		}
 
 		@Test
@@ -137,7 +137,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1.0:double"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1.0d));
 			Assert.assertTrue(map.get("one") instanceof Double);
@@ -145,7 +145,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1.0:" + Double.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1.0d));
 			Assert.assertTrue(map.get("one") instanceof Double);
@@ -173,7 +173,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:int"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1));
 			Assert.assertTrue(map.get("one") instanceof Integer);
@@ -181,7 +181,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Integer.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1));
 			Assert.assertTrue(map.get("one") instanceof Integer);
@@ -209,7 +209,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:long"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1l));
 			Assert.assertTrue(map.get("one") instanceof Long);
@@ -217,7 +217,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Long.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue(1l));
 			Assert.assertTrue(map.get("one") instanceof Long);
@@ -245,7 +245,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:short"});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((short)1));
 			Assert.assertTrue(map.get("one") instanceof Short);
@@ -253,7 +253,7 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Short.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((short)1));
 			Assert.assertTrue(map.get("one") instanceof Short);
@@ -281,7 +281,7 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:X:" + String.class.getName()});
 
-			Assert.assertTrue(map.size() == 1);
+			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue("X"));
 			Assert.assertTrue(map.get("one") instanceof String);

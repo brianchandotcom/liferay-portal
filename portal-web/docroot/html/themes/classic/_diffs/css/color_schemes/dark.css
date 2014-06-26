@@ -19,7 +19,7 @@
 		color: #009CEB;
 	}
 
-	label, legend, .panel .panel-toggle, .portlet-wiki .portlet-body h3, .taglib-header {
+	label, legend, .control-label, .panel .panel-toggle, .portlet-wiki .portlet-body h3, .taglib-header {
 		color: #E3E3E3;
 	}
 

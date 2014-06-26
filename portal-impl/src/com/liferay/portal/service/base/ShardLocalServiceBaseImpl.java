@@ -243,7 +243,7 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteShard((Shard)persistedModel);
+		return shardLocalService.deleteShard((Shard)persistedModel);
 	}
 
 	@Override

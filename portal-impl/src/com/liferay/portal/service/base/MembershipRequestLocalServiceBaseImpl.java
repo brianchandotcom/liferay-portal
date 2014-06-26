@@ -259,7 +259,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMembershipRequest((MembershipRequest)persistedModel);
+		return membershipRequestLocalService.deleteMembershipRequest((MembershipRequest)persistedModel);
 	}
 
 	@Override

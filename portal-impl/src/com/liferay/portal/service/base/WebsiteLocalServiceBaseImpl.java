@@ -329,7 +329,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteWebsite((Website)persistedModel);
+		return websiteLocalService.deleteWebsite((Website)persistedModel);
 	}
 
 	@Override

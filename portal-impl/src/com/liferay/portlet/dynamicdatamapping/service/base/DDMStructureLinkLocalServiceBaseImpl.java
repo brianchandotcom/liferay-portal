@@ -250,7 +250,7 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDDMStructureLink((DDMStructureLink)persistedModel);
+		return ddmStructureLinkLocalService.deleteDDMStructureLink((DDMStructureLink)persistedModel);
 	}
 
 	@Override

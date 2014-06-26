@@ -253,7 +253,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteBlogsStatsUser((BlogsStatsUser)persistedModel);
+		return blogsStatsUserLocalService.deleteBlogsStatsUser((BlogsStatsUser)persistedModel);
 	}
 
 	@Override

@@ -363,7 +363,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteUser((User)persistedModel);
+		return userLocalService.deleteUser((User)persistedModel);
 	}
 
 	@Override

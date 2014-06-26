@@ -251,7 +251,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePluginSetting((PluginSetting)persistedModel);
+		return pluginSettingLocalService.deletePluginSetting((PluginSetting)persistedModel);
 	}
 
 	@Override

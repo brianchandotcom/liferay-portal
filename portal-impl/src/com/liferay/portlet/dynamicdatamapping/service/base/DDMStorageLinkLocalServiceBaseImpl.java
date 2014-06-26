@@ -248,7 +248,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDDMStorageLink((DDMStorageLink)persistedModel);
+		return ddmStorageLinkLocalService.deleteDDMStorageLink((DDMStorageLink)persistedModel);
 	}
 
 	@Override

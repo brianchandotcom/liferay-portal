@@ -250,7 +250,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteAnnouncementsFlag((AnnouncementsFlag)persistedModel);
+		return announcementsFlagLocalService.deleteAnnouncementsFlag((AnnouncementsFlag)persistedModel);
 	}
 
 	@Override

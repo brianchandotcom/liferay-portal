@@ -249,7 +249,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteVirtualHost((VirtualHost)persistedModel);
+		return virtualHostLocalService.deleteVirtualHost((VirtualHost)persistedModel);
 	}
 
 	@Override

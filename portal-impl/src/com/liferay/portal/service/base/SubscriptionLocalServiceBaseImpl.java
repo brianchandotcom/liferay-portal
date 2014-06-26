@@ -259,7 +259,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSubscription((Subscription)persistedModel);
+		return subscriptionLocalService.deleteSubscription((Subscription)persistedModel);
 	}
 
 	@Override

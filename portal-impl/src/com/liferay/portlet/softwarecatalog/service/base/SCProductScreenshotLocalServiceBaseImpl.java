@@ -253,7 +253,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSCProductScreenshot((SCProductScreenshot)persistedModel);
+		return scProductScreenshotLocalService.deleteSCProductScreenshot((SCProductScreenshot)persistedModel);
 	}
 
 	@Override

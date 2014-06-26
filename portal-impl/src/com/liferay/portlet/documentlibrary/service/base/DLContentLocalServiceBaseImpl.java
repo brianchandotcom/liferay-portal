@@ -247,7 +247,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLContent((DLContent)persistedModel);
+		return dlContentLocalService.deleteDLContent((DLContent)persistedModel);
 	}
 
 	@Override

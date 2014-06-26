@@ -263,7 +263,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteUserGroupGroupRole((UserGroupGroupRole)persistedModel);
+		return userGroupGroupRoleLocalService.deleteUserGroupGroupRole((UserGroupGroupRole)persistedModel);
 	}
 
 	@Override

@@ -257,7 +257,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLock((Lock)persistedModel);
+		return lockLocalService.deleteLock((Lock)persistedModel);
 	}
 
 	@Override

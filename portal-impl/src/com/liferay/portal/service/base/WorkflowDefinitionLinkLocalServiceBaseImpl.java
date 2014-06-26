@@ -257,7 +257,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteWorkflowDefinitionLink((WorkflowDefinitionLink)persistedModel);
+		return workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink((WorkflowDefinitionLink)persistedModel);
 	}
 
 	@Override

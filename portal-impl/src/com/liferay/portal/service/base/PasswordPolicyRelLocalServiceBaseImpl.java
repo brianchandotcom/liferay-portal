@@ -250,7 +250,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePasswordPolicyRel((PasswordPolicyRel)persistedModel);
+		return passwordPolicyRelLocalService.deletePasswordPolicyRel((PasswordPolicyRel)persistedModel);
 	}
 
 	@Override

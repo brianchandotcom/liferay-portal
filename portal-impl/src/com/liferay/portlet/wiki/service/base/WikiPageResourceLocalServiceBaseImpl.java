@@ -250,7 +250,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteWikiPageResource((WikiPageResource)persistedModel);
+		return wikiPageResourceLocalService.deleteWikiPageResource((WikiPageResource)persistedModel);
 	}
 
 	@Override

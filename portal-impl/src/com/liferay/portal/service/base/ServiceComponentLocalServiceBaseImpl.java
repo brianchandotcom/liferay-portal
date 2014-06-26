@@ -249,7 +249,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteServiceComponent((ServiceComponent)persistedModel);
+		return serviceComponentLocalService.deleteServiceComponent((ServiceComponent)persistedModel);
 	}
 
 	@Override

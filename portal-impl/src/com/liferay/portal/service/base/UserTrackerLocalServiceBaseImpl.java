@@ -248,7 +248,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteUserTracker((UserTracker)persistedModel);
+		return userTrackerLocalService.deleteUserTracker((UserTracker)persistedModel);
 	}
 
 	@Override

@@ -247,7 +247,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteUserIdMapper((UserIdMapper)persistedModel);
+		return userIdMapperLocalService.deleteUserIdMapper((UserIdMapper)persistedModel);
 	}
 
 	@Override

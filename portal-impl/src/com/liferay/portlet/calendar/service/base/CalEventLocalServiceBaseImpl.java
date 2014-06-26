@@ -349,7 +349,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteCalEvent((CalEvent)persistedModel);
+		return calEventLocalService.deleteCalEvent((CalEvent)persistedModel);
 	}
 
 	@Override

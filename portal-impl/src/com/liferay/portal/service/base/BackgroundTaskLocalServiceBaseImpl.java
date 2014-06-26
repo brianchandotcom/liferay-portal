@@ -253,7 +253,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteBackgroundTask((BackgroundTask)persistedModel);
+		return backgroundTaskLocalService.deleteBackgroundTask((BackgroundTask)persistedModel);
 	}
 
 	@Override

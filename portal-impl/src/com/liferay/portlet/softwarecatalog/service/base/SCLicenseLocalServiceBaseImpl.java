@@ -246,7 +246,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteSCLicense((SCLicense)persistedModel);
+		return scLicenseLocalService.deleteSCLicense((SCLicense)persistedModel);
 	}
 
 	@Override

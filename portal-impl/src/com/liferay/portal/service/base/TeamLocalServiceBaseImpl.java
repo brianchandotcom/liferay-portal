@@ -250,7 +250,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteTeam((Team)persistedModel);
+		return teamLocalService.deleteTeam((Team)persistedModel);
 	}
 
 	@Override

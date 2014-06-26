@@ -500,7 +500,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Override
 		public PersistedModel deletePersistedModel(PersistedModel persistedModel) throws PortalException {
-			return delete${entity.name}((${entity.name})persistedModel);
+			return ${entity.varName}LocalService.delete${entity.name}((${entity.name})persistedModel);
 		}
 
 		@Override

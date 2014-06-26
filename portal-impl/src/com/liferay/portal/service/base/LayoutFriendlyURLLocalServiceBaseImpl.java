@@ -339,7 +339,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
+		return layoutFriendlyURLLocalService.deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
 	}
 
 	@Override

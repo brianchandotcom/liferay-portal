@@ -250,7 +250,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePortletItem((PortletItem)persistedModel);
+		return portletItemLocalService.deletePortletItem((PortletItem)persistedModel);
 	}
 
 	@Override

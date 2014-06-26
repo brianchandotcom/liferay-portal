@@ -331,7 +331,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLayoutSetPrototype((LayoutSetPrototype)persistedModel);
+		return layoutSetPrototypeLocalService.deleteLayoutSetPrototype((LayoutSetPrototype)persistedModel);
 	}
 
 	@Override

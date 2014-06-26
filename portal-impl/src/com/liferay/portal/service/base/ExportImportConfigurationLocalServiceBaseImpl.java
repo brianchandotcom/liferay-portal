@@ -259,7 +259,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteExportImportConfiguration((ExportImportConfiguration)persistedModel);
+		return exportImportConfigurationLocalService.deleteExportImportConfiguration((ExportImportConfiguration)persistedModel);
 	}
 
 	@Override

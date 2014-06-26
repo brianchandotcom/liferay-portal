@@ -364,7 +364,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMBThread((MBThread)persistedModel);
+		return mbThreadLocalService.deleteMBThread((MBThread)persistedModel);
 	}
 
 	@Override

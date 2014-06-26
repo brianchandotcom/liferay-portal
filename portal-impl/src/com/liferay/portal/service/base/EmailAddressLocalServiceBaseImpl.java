@@ -335,7 +335,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteEmailAddress((EmailAddress)persistedModel);
+		return emailAddressLocalService.deleteEmailAddress((EmailAddress)persistedModel);
 	}
 
 	@Override

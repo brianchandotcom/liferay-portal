@@ -255,7 +255,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteUserNotificationDelivery((UserNotificationDelivery)persistedModel);
+		return userNotificationDeliveryLocalService.deleteUserNotificationDelivery((UserNotificationDelivery)persistedModel);
 	}
 
 	@Override

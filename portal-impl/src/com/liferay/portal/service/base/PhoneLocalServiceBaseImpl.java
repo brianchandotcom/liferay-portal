@@ -329,7 +329,7 @@ public abstract class PhoneLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deletePhone((Phone)persistedModel);
+		return phoneLocalService.deletePhone((Phone)persistedModel);
 	}
 
 	@Override

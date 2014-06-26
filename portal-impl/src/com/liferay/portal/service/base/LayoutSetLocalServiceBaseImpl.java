@@ -253,7 +253,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteLayoutSet((LayoutSet)persistedModel);
+		return layoutSetLocalService.deleteLayoutSet((LayoutSet)persistedModel);
 	}
 
 	@Override

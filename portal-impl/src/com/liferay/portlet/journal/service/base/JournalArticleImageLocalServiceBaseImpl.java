@@ -251,7 +251,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteJournalArticleImage((JournalArticleImage)persistedModel);
+		return journalArticleImageLocalService.deleteJournalArticleImage((JournalArticleImage)persistedModel);
 	}
 
 	@Override

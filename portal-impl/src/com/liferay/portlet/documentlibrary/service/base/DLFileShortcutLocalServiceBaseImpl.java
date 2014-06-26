@@ -358,7 +358,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDLFileShortcut((DLFileShortcut)persistedModel);
+		return dlFileShortcutLocalService.deleteDLFileShortcut((DLFileShortcut)persistedModel);
 	}
 
 	@Override

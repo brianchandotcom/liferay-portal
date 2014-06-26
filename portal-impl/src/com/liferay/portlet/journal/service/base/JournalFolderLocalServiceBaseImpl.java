@@ -369,7 +369,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteJournalFolder((JournalFolder)persistedModel);
+		return journalFolderLocalService.deleteJournalFolder((JournalFolder)persistedModel);
 	}
 
 	@Override

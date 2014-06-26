@@ -347,7 +347,7 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteMDRAction((MDRAction)persistedModel);
+		return mdrActionLocalService.deleteMDRAction((MDRAction)persistedModel);
 	}
 
 	@Override

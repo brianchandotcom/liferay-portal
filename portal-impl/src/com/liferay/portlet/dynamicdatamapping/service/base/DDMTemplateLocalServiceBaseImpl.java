@@ -357,7 +357,7 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDDMTemplate((DDMTemplate)persistedModel);
+		return ddmTemplateLocalService.deleteDDMTemplate((DDMTemplate)persistedModel);
 	}
 
 	@Override

@@ -349,7 +349,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteOrganization((Organization)persistedModel);
+		return organizationLocalService.deleteOrganization((Organization)persistedModel);
 	}
 
 	@Override

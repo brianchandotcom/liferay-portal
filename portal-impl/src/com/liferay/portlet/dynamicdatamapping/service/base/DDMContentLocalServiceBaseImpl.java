@@ -335,7 +335,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDDMContent((DDMContent)persistedModel);
+		return ddmContentLocalService.deleteDDMContent((DDMContent)persistedModel);
 	}
 
 	@Override

@@ -342,7 +342,7 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteDDLRecord((DDLRecord)persistedModel);
+		return ddlRecordLocalService.deleteDDLRecord((DDLRecord)persistedModel);
 	}
 
 	@Override

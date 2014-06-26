@@ -252,7 +252,7 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return deleteExpandoRow((ExpandoRow)persistedModel);
+		return expandoRowLocalService.deleteExpandoRow((ExpandoRow)persistedModel);
 	}
 
 	@Override

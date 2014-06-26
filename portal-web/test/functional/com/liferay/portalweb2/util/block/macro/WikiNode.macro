@@ -15,6 +15,31 @@
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_NUMBER_OF_PAGES" value1="0" />
 	</command>
 
+	<command name="addMainCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="Main" />
+
+		<if>
+			<condition action="CPWiki#isElementNotPresent" locator-key1="WIKI_NODE_TABLE_WIKI" value1="Main" />
+			<then>
+				<execute action="CPWiki#assertClick" locator-key1="ADD_WIKI_BUTTON" value1="Add Wiki" />
+
+				<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="Main" />
+				<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="Main Node Description" />
+				<execute action="CPWikiAddwiki#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+				<var name="key_wikiNodeName" value="Main" />
+
+				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="Main" />
+				<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_NUMBER_OF_PAGES" value1="0" />
+			</then>
+		</if>
+	</command>
+
 	<command name="deleteCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
@@ -57,9 +82,9 @@
 		</execute>
 
 		<while>
-			<condition action="CPWiki#isElementPresent" locator1="xpath=(//a[@title='Actions'])[2]" />
+			<condition action="CPWiki#isElementPresent" locator-key1="WIKI_NODE_TABLE_ACTIONS_GENERIC_2" />
 			<then>
-				<execute action="CPWiki#assertClick" locator1="xpath=(//a[@title='Actions'])[2]" value1="Actions" />
+				<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS_GENERIC_2" />
 				<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
 				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />

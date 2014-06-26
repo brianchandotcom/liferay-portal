@@ -473,11 +473,6 @@
 			<bean class="com.liferay.portal.util.MultiValueMapFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil" class="com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil">
-		<property name="orderByComparatorFactory">
-			<bean class="com.liferay.portal.util.OrderByComparatorFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.util.PrefsPropsUtil" class="com.liferay.portal.kernel.util.PrefsPropsUtil">
 		<property name="prefsProps">
 			<bean class="com.liferay.portal.util.PrefsPropsImpl" />

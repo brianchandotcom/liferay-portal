@@ -152,6 +152,34 @@ public class ClpSerializer {
 					if (oldModelClassName.equals("${packagePath}.model.impl.${entity.name}Impl")) {
 						return translateOutput${entity.name}(oldModel);
 					}
+					else if (oldModelClassName.endsWith("Clp")) {
+						try {
+							Method getClpSerializerClassMethod = oldModelClass.getMethod("getClpSerializerClass");
+
+							Class<?> originalClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+							ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+							Class<?> oldModelModelClass = (Class<?>)oldModel.getModelClass();
+
+							Method getMethod = oldModelClass.getMethod("get" + oldModelModelClass.getSimpleName() + "RemoteModel");
+
+							Object remoteModel = getMethod.invoke(oldModel);
+
+							Class<?> newClpSerializerClass = classLoader.loadClass(originalClpSerializerClass.getName());
+
+							Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput", BaseModel.class);
+
+							BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null, remoteModel);
+
+							return newModel;
+						}
+						catch (Throwable t) {
+							if (_log.isInfoEnabled()) {
+								_log.info("Cannot translate " + oldModelClassName);
+						}
+				}
+					}
 				</#if>
 			</#list>
 		</#if>

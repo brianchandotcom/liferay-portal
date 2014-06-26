@@ -69,17 +69,7 @@ public class DLFileEntryServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
-		String sourceFileName = RandomTestUtil.randomString().concat(".pdf");
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
-				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), true);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
@@ -89,7 +79,7 @@ public class DLFileEntryServiceTest {
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
 			serviceContext);
 	}
 
@@ -106,21 +96,11 @@ public class DLFileEntryServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
-		String sourceFileName = RandomTestUtil.randomString().concat(".pdf");
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
-				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), true);
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(),
+			dlFileEntry.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
@@ -131,18 +111,8 @@ public class DLFileEntryServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		String sourceFileName = RandomTestUtil.randomString().concat(".pdf");
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				sourceFileName, null, fileEntryTitle,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
@@ -152,7 +122,7 @@ public class DLFileEntryServiceTest {
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
 			serviceContext);
 	}
 
@@ -169,17 +139,7 @@ public class DLFileEntryServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
-		String sourceFileName = RandomTestUtil.randomString();
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
-				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), false);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
@@ -189,7 +149,7 @@ public class DLFileEntryServiceTest {
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
 			serviceContext);
 	}
 
@@ -206,21 +166,11 @@ public class DLFileEntryServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
-		String sourceFileName = RandomTestUtil.randomString();
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), folder.getFolderId(), sourceFileName, null,
-				fileEntryTitle, RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(folder.getFolderId(), false);
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(),
+			dlFileEntry.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
@@ -231,18 +181,8 @@ public class DLFileEntryServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		String sourceFileName = RandomTestUtil.randomString();
-		String fileEntryTitle = RandomTestUtil.randomString();
-
-		DLFileEntry originalDLFileEntry =
-			DLFileEntryLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				sourceFileName, null, fileEntryTitle,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				null, null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
-				serviceContext);
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
 
 		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
@@ -252,7 +192,30 @@ public class DLFileEntryServiceTest {
 
 		DLFileEntryServiceUtil.copyFileEntry(
 			group.getGroupId(), group.getGroupId(),
-			originalDLFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			serviceContext);
+	}
+
+	protected DLFileEntry addDLFileEntry(long folderId, boolean appendExtension)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		String sourceFileName = RandomTestUtil.randomString();
+
+		if (appendExtension) {
+			sourceFileName.concat(".pdf");
+		}
+
+		String fileEntryTitle = RandomTestUtil.randomString();
+
+		return  DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			folderId, sourceFileName, null, fileEntryTitle,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, new ByteArrayInputStream(CONTENT.getBytes()), 0,
 			serviceContext);
 	}
 

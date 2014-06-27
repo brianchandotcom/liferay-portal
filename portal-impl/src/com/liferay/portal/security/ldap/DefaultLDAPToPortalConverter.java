@@ -126,10 +126,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 
 		if (!autoScreenName && Validator.isNull(screenName)) {
-			throw new UserScreenNameException(
-				"Screen name cannot be null for " +
-					ContactConstants.getFullName(
-						firstName, middleName, lastName));
+			throw new UserScreenNameException.MustNotBeNull(
+				ContactConstants.getFullName(firstName, middleName, lastName));
 		}
 
 		if (Validator.isNull(emailAddress) &&

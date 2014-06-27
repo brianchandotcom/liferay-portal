@@ -488,14 +488,14 @@ public class WabProcessor {
 				"x:filter-class", "x:listener-class", "x:portlet-class",
 				"x:resource-bundle"
 			},
-			"x", "http:java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
 
 		processXMLDependencies(
 			"WEB-INF/web.xml",
 			new String[] {
 				"x:filter-class", "x:listener-class","x:servlet-class"
 			},
-			"x", "http:java.sun.com/xml/ns/j2ee");
+			"x", "http://java.sun.com/xml/ns/j2ee");
 	}
 
 	protected void processDefaultServletPackages() {
@@ -592,9 +592,9 @@ public class WabProcessor {
 				continue;
 			}
 
-			uri = uri.relativize(file.toURI());
+			URI relativizedURI = uri.relativize(file.toURI());
 
-			String path = uri.getPath();
+			String path = relativizedURI.getPath();
 
 			if (ArrayUtil.contains(
 					PropsValues.MODULE_FRAMEWORK_WEB_EXTENDER_EXCLUDED_PATHS,

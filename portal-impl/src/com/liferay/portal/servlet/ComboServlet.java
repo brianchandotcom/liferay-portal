@@ -44,6 +44,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletConfigFactoryUtil;
@@ -58,7 +59,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -97,14 +97,14 @@ public class ComboServlet extends HttpServlet {
 		}
 	}
 
-	protected static String getModuleContextPath(String modulePath) {
+	protected static String getModulePortletId(String modulePath) {
 		int index = modulePath.indexOf(CharPool.COLON);
 
 		if (index > 0) {
 			return modulePath.substring(0, index);
 		}
 
-		return StringPool.BLANK;
+		return PortletKeys.PORTAL;
 	}
 
 	protected static String getResourcePath(String modulePath) {
@@ -243,12 +243,17 @@ public class ComboServlet extends HttpServlet {
 
 	protected byte[] getResourceContent(
 			HttpServletRequest request, HttpServletResponse response,
-			URL resourceURL, String resourcePath, String minifierType)
+			URL resourceURL, String modulePath, String minifierType)
 		throws IOException {
 
-		String moduleContextPath = getModuleContextPath(resourcePath);
+		String portletId = getModulePortletId(modulePath);
+		String resourcePath = getResourcePath(modulePath);
 
-		resourcePath = moduleContextPath.concat(getResourcePath(resourcePath));
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		String moduleContextPath = portlet.getContextPath();
+
+		resourcePath = moduleContextPath.concat(resourcePath);
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);
@@ -328,7 +333,7 @@ public class ComboServlet extends HttpServlet {
 				}
 				else if (minifierType.equals("js")) {
 					stringFileContent = translate(
-						request, moduleContextPath, stringFileContent);
+						request, portletId, stringFileContent);
 
 					stringFileContent = MinifierUtil.minifyJavaScript(
 						resourcePath, stringFileContent);
@@ -352,18 +357,25 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected URL getResourceURL(String modulePath) throws Exception {
-		String moduleContextPath = getModuleContextPath(modulePath);
-
-		ServletContext servletContext = getServletContext(moduleContextPath);
-
+		String portletId = getModulePortletId(modulePath);
 		String resourcePath = getResourcePath(modulePath);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		if (portlet.isUndeployedPortlet()) {
+			return null;
+		}
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		ServletContext servletContext = portletApp.getServletContext();
 
 		URL url = servletContext.getResource(resourcePath);
 
 		if (url == null) {
 			throw new ServletException(
-				"Resource " + resourcePath + " does not exist in " +
-					moduleContextPath);
+				"Resource " + resourcePath + " does not exist in '" +
+					portlet.getContextPath() + "'");
 		}
 
 		return url;
@@ -387,7 +399,7 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected String translate(
-		HttpServletRequest request, String contextPath,
+		HttpServletRequest request, String portletId,
 		String stringFileContent) {
 
 		String languageId = LanguageUtil.getLanguageId(request);
@@ -397,18 +409,7 @@ public class ComboServlet extends HttpServlet {
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
 			locale);
 
-		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
-			contextPath);
-
-		Portlet portlet = null;
-
-		if ((portletApp != null) && portletApp.isWARFile()) {
-			List<Portlet> portlets = portletApp.getPortlets();
-
-			if (!portlets.isEmpty()) {
-				portlet = portlets.get(0);
-			}
-		}
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		if (portlet != null) {
 			PortletConfig portletConfig = PortletConfigFactoryUtil.create(

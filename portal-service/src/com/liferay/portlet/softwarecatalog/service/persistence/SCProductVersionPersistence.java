@@ -79,7 +79,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findByProductEntryId(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator);
 
 	/**
 	* Returns the first s c product version in the ordered set where productEntryId = &#63;.
@@ -91,7 +91,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion findByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator);
 
 	/**
 	* Returns the last s c product version in the ordered set where productEntryId = &#63;.
@@ -115,7 +115,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion findByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator);
 
 	/**
 	* Returns the s c product versions before and after the current s c product version in the ordered set where productEntryId = &#63;.
@@ -140,7 +140,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion[] findByProductEntryId_PrevAndNext(
 		long productVersionId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 
 	/**
@@ -304,7 +304,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator);
 
 	/**
 	* Removes all the s c product versions from the database.
@@ -365,7 +365,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCFrameworkVersions(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the number of s c framework versions associated with the s c product version.

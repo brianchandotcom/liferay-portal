@@ -154,7 +154,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,7 +274,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mbCategory != null) {
@@ -302,7 +303,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +323,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mbCategory != null) {
@@ -350,7 +352,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -378,7 +380,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByUuid_PrevAndNext(long categoryId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
 		Session session = null;
@@ -408,7 +411,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByUuid_PrevAndNext(Session session,
 		MBCategory mbCategory, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -934,7 +937,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1064,7 +1067,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1097,7 +1101,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1119,7 +1123,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1152,7 +1157,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1181,7 +1186,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByUuid_C_PrevAndNext(long categoryId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -1212,7 +1217,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByUuid_C_PrevAndNext(Session session,
 		MBCategory mbCategory, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1487,7 +1492,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1593,7 +1598,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (mbCategory != null) {
@@ -1621,7 +1627,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1641,7 +1647,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (mbCategory != null) {
@@ -1669,7 +1676,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1697,7 +1704,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByGroupId_PrevAndNext(long categoryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -1728,7 +1735,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByGroupId_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1875,7 +1882,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1965,7 +1972,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(categoryId, groupId,
@@ -2001,7 +2008,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory filterGetByGroupId_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2320,7 +2327,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2426,7 +2433,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2455,7 +2463,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2476,7 +2484,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2505,7 +2514,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2533,7 +2542,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -2564,7 +2573,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByCompanyId_PrevAndNext(Session session,
 		MBCategory mbCategory, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2806,7 +2815,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByG_P(long groupId, long parentCategoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2922,7 +2931,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_P_First(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_P_First(groupId, parentCategoryId,
 				orderByComparator);
 
@@ -2955,7 +2965,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_P_First(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByG_P(groupId, parentCategoryId, 0, 1,
 				orderByComparator);
 
@@ -2977,7 +2987,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_P_Last(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_P_Last(groupId, parentCategoryId,
 				orderByComparator);
 
@@ -3010,7 +3021,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_P_Last(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByG_P(groupId, parentCategoryId);
 
 		if (count == 0) {
@@ -3039,7 +3050,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByG_P_PrevAndNext(long categoryId, long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
+		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -3070,7 +3081,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByG_P_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3226,7 +3237,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByG_P(long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentCategoryId, start, end,
 				orderByComparator);
@@ -3322,7 +3333,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] filterFindByG_P_PrevAndNext(long categoryId,
-		long groupId, long parentCategoryId, OrderByComparator orderByComparator)
+		long groupId, long parentCategoryId,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(categoryId, groupId, parentCategoryId,
@@ -3358,7 +3370,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory filterGetByG_P_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3550,7 +3562,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByG_P(long groupId,
 		long[] parentCategoryIds, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentCategoryIds, start, end,
 				orderByComparator);
@@ -3696,7 +3708,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByG_P(long groupId, long[] parentCategoryIds,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
@@ -4163,7 +4175,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByG_S(long groupId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4279,7 +4291,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_S_First(groupId, status,
 				orderByComparator);
 
@@ -4312,7 +4325,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByG_S(groupId, status, 0, 1,
 				orderByComparator);
 
@@ -4334,7 +4347,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_S_Last(groupId, status,
 				orderByComparator);
 
@@ -4367,7 +4381,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByG_S(groupId, status);
 
 		if (count == 0) {
@@ -4396,7 +4410,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByG_S_PrevAndNext(long categoryId, long groupId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -4427,7 +4441,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByG_S_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4582,7 +4596,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> filterFindByG_S(long groupId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_S(groupId, status, start, end, orderByComparator);
 		}
@@ -4677,7 +4691,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] filterFindByG_S_PrevAndNext(long categoryId,
-		long groupId, int status, OrderByComparator orderByComparator)
+		long groupId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_S_PrevAndNext(categoryId, groupId, status,
@@ -4713,7 +4728,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory filterGetByG_S_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5051,7 +5066,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5167,7 +5182,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByC_S_First(companyId, status,
 				orderByComparator);
 
@@ -5200,7 +5216,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByC_S(companyId, status, 0, 1,
 				orderByComparator);
 
@@ -5222,7 +5238,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByC_S_Last(companyId, status,
 				orderByComparator);
 
@@ -5255,7 +5272,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
@@ -5284,7 +5301,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByC_S_PrevAndNext(long categoryId, long companyId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -5315,7 +5332,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByC_S_PrevAndNext(Session session,
 		MBCategory mbCategory, long companyId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5583,7 +5600,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByG_P_S(long groupId, long parentCategoryId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5705,7 +5723,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_P_S_First(long groupId, long parentCategoryId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_P_S_First(groupId, parentCategoryId,
 				status, orderByComparator);
@@ -5743,7 +5761,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_P_S_First(long groupId, long parentCategoryId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByG_P_S(groupId, parentCategoryId, status,
 				0, 1, orderByComparator);
 
@@ -5766,7 +5784,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByG_P_S_Last(long groupId, long parentCategoryId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByG_P_S_Last(groupId, parentCategoryId,
 				status, orderByComparator);
@@ -5804,7 +5822,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByG_P_S_Last(long groupId, long parentCategoryId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByG_P_S(groupId, parentCategoryId, status);
 
 		if (count == 0) {
@@ -5834,7 +5852,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory[] findByG_P_S_PrevAndNext(long categoryId, long groupId,
-		long parentCategoryId, int status, OrderByComparator orderByComparator)
+		long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = findByPrimaryKey(categoryId);
 
@@ -5865,7 +5884,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory getByG_P_S_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, long parentCategoryId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6030,7 +6049,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByG_P_S(long groupId,
 		long parentCategoryId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentCategoryId, status, start, end,
 				orderByComparator);
@@ -6132,7 +6151,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public MBCategory[] filterFindByG_P_S_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, int status,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<MBCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S_PrevAndNext(categoryId, groupId,
 				parentCategoryId, status, orderByComparator);
@@ -6167,7 +6187,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	protected MBCategory filterGetByG_P_S_PrevAndNext(Session session,
 		MBCategory mbCategory, long groupId, long parentCategoryId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6367,7 +6387,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByG_P_S(long groupId,
 		long[] parentCategoryIds, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentCategoryIds, status, start, end,
 				orderByComparator);
@@ -6523,7 +6543,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findByG_P_S(long groupId, long[] parentCategoryIds,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
 		}
@@ -7026,7 +7047,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> findByNotC_G_P(long categoryId, long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7140,7 +7161,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByNotC_G_P_First(long categoryId, long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
+		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByNotC_G_P_First(categoryId, groupId,
 				parentCategoryId, orderByComparator);
@@ -7178,7 +7199,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByNotC_G_P_First(long categoryId, long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator) {
+		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByNotC_G_P(categoryId, groupId,
 				parentCategoryId, 0, 1, orderByComparator);
 
@@ -7201,7 +7222,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByNotC_G_P_Last(long categoryId, long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
+		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByNotC_G_P_Last(categoryId, groupId,
 				parentCategoryId, orderByComparator);
@@ -7239,7 +7260,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByNotC_G_P_Last(long categoryId, long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator) {
+		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByNotC_G_P(categoryId, groupId, parentCategoryId);
 
 		if (count == 0) {
@@ -7310,7 +7331,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByNotC_G_P(long categoryId, long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByNotC_G_P(categoryId, groupId, parentCategoryId, start,
 				end, orderByComparator);
@@ -7452,7 +7473,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByNotC_G_P(long[] categoryIds,
 		long groupId, long[] parentCategoryIds, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByNotC_G_P(categoryIds, groupId, parentCategoryIds,
 				start, end, orderByComparator);
@@ -7625,7 +7646,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> findByNotC_G_P(long[] categoryIds, long groupId,
 		long[] parentCategoryIds, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
@@ -8186,7 +8207,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> findByNotC_G_P_S(long categoryId, long groupId,
 		long parentCategoryId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8306,7 +8327,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByNotC_G_P_S_First(long categoryId, long groupId,
-		long parentCategoryId, int status, OrderByComparator orderByComparator)
+		long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByNotC_G_P_S_First(categoryId, groupId,
 				parentCategoryId, status, orderByComparator);
@@ -8348,7 +8370,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByNotC_G_P_S_First(long categoryId, long groupId,
-		long parentCategoryId, int status, OrderByComparator orderByComparator) {
+		long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator) {
 		List<MBCategory> list = findByNotC_G_P_S(categoryId, groupId,
 				parentCategoryId, status, 0, 1, orderByComparator);
 
@@ -8372,7 +8395,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory findByNotC_G_P_S_Last(long categoryId, long groupId,
-		long parentCategoryId, int status, OrderByComparator orderByComparator)
+		long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		MBCategory mbCategory = fetchByNotC_G_P_S_Last(categoryId, groupId,
 				parentCategoryId, status, orderByComparator);
@@ -8414,7 +8438,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public MBCategory fetchByNotC_G_P_S_Last(long categoryId, long groupId,
-		long parentCategoryId, int status, OrderByComparator orderByComparator) {
+		long parentCategoryId, int status,
+		OrderByComparator<MBCategory> orderByComparator) {
 		int count = countByNotC_G_P_S(categoryId, groupId, parentCategoryId,
 				status);
 
@@ -8489,7 +8514,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByNotC_G_P_S(long categoryId,
 		long groupId, long parentCategoryId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByNotC_G_P_S(categoryId, groupId, parentCategoryId,
 				status, start, end, orderByComparator);
@@ -8638,7 +8663,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> filterFindByNotC_G_P_S(long[] categoryIds,
 		long groupId, long[] parentCategoryIds, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByNotC_G_P_S(categoryIds, groupId, parentCategoryIds,
 				status, start, end, orderByComparator);
@@ -8820,7 +8845,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public List<MBCategory> findByNotC_G_P_S(long[] categoryIds, long groupId,
 		long[] parentCategoryIds, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		if (categoryIds == null) {
 			categoryIds = new long[0];
 		}
@@ -10062,7 +10087,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	@Override
 	public List<MBCategory> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

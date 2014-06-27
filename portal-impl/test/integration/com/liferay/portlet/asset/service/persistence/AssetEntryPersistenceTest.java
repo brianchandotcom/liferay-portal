@@ -369,7 +369,7 @@ public class AssetEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetEntry", "entryId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

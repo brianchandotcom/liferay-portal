@@ -175,7 +175,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public List<WorkflowInstanceLink> findByG_C_C_C(long groupId,
 		long companyId, long classNameId, long classPK, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -304,7 +304,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink findByG_C_C_C_First(long groupId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_C_First(groupId,
 				companyId, classNameId, classPK, orderByComparator);
@@ -347,7 +347,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink fetchByG_C_C_C_First(long groupId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
 		List<WorkflowInstanceLink> list = findByG_C_C_C(groupId, companyId,
 				classNameId, classPK, 0, 1, orderByComparator);
 
@@ -372,7 +372,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink findByG_C_C_C_Last(long groupId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 		WorkflowInstanceLink workflowInstanceLink = fetchByG_C_C_C_Last(groupId,
 				companyId, classNameId, classPK, orderByComparator);
@@ -415,7 +415,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink fetchByG_C_C_C_Last(long groupId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
 		int count = countByG_C_C_C(groupId, companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -447,7 +447,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink[] findByG_C_C_C_PrevAndNext(
 		long workflowInstanceLinkId, long groupId, long companyId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
+		long classNameId, long classPK,
+		OrderByComparator<WorkflowInstanceLink> orderByComparator)
 		throws NoSuchWorkflowInstanceLinkException {
 		WorkflowInstanceLink workflowInstanceLink = findByPrimaryKey(workflowInstanceLinkId);
 
@@ -481,7 +482,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	protected WorkflowInstanceLink getByG_C_C_C_PrevAndNext(Session session,
 		WorkflowInstanceLink workflowInstanceLink, long groupId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WorkflowInstanceLink> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1204,7 +1206,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 */
 	@Override
 	public List<WorkflowInstanceLink> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstanceLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

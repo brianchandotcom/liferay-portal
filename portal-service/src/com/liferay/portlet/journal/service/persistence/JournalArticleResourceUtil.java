@@ -88,7 +88,7 @@ public class JournalArticleResourceUtil {
 	 */
 	public static List<JournalArticleResource> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,7 +168,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -182,7 +182,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -196,7 +196,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -210,7 +210,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -225,7 +225,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(resourcePrimKey, uuid,
@@ -357,7 +357,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -386,7 +386,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -400,7 +400,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -414,7 +414,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -429,7 +429,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleResource[] findByGroupId_PrevAndNext(
 		long resourcePrimKey, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(resourcePrimKey, groupId,
@@ -635,7 +635,7 @@ public class JournalArticleResourceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

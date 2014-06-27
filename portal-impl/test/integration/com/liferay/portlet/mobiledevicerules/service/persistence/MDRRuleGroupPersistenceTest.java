@@ -279,7 +279,7 @@ public class MDRRuleGroupPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MDRRuleGroup> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MDRRuleGroup", "uuid",
 			true, "ruleGroupId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

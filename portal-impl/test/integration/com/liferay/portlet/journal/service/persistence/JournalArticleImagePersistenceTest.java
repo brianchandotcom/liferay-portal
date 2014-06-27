@@ -260,7 +260,7 @@ public class JournalArticleImagePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<JournalArticleImage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticleImage",
 			"articleImageId", true, "groupId", true, "articleId", true,
 			"version", true, "elInstanceId", true, "elName", true,

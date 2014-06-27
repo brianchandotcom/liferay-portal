@@ -136,8 +136,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,8 +153,8 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -174,9 +173,8 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}

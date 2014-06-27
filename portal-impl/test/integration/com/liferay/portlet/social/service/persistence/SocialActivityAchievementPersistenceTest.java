@@ -279,7 +279,7 @@ public class SocialActivityAchievementPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialActivityAchievement> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityAchievement",
 			"activityAchievementId", true, "groupId", true, "companyId", true,
 			"userId", true, "createDate", true, "name", true, "firstInGroup",

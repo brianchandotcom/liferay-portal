@@ -148,7 +148,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public List<ExpandoRow> findByTableId(long tableId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,7 +254,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow findByTableId_First(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = fetchByTableId_First(tableId, orderByComparator);
 
 		if (expandoRow != null) {
@@ -282,7 +283,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow fetchByTableId_First(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		List<ExpandoRow> list = findByTableId(tableId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -302,7 +303,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow findByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = fetchByTableId_Last(tableId, orderByComparator);
 
 		if (expandoRow != null) {
@@ -330,7 +332,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow fetchByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		int count = countByTableId(tableId);
 
 		if (count == 0) {
@@ -358,7 +360,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow[] findByTableId_PrevAndNext(long rowId, long tableId,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = findByPrimaryKey(rowId);
 
 		Session session = null;
@@ -388,7 +391,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 	protected ExpandoRow getByTableId_PrevAndNext(Session session,
 		ExpandoRow expandoRow, long tableId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoRow> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -620,7 +623,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public List<ExpandoRow> findByClassPK(long classPK, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -726,7 +729,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow findByClassPK_First(long classPK,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = fetchByClassPK_First(classPK, orderByComparator);
 
 		if (expandoRow != null) {
@@ -754,7 +758,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow fetchByClassPK_First(long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		List<ExpandoRow> list = findByClassPK(classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -774,7 +778,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow findByClassPK_Last(long classPK,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = fetchByClassPK_Last(classPK, orderByComparator);
 
 		if (expandoRow != null) {
@@ -802,7 +807,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow fetchByClassPK_Last(long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		int count = countByClassPK(classPK);
 
 		if (count == 0) {
@@ -830,7 +835,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow[] findByClassPK_PrevAndNext(long rowId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchRowException {
+		OrderByComparator<ExpandoRow> orderByComparator)
+		throws NoSuchRowException {
 		ExpandoRow expandoRow = findByPrimaryKey(rowId);
 
 		Session session = null;
@@ -860,7 +866,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 	protected ExpandoRow getByClassPK_PrevAndNext(Session session,
 		ExpandoRow expandoRow, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoRow> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1821,7 +1827,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public List<ExpandoRow> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

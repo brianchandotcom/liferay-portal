@@ -92,8 +92,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _roleLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -111,8 +110,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _roleLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -132,11 +130,10 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _roleLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -353,7 +350,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getGroupRoles(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator) {
 		return _roleLocalService.getGroupRoles(groupId, start, end,
 			orderByComparator);
 	}
@@ -459,7 +456,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getUserRoles(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator) {
 		return _roleLocalService.getUserRoles(userId, start, end,
 			orderByComparator);
 	}

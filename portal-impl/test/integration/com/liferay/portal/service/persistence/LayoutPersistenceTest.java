@@ -495,7 +495,7 @@ public class LayoutPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Layout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Layout", "mvccVersion",
 			true, "uuid", true, "plid", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,

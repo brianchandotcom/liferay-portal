@@ -88,7 +88,7 @@ public class SCFrameworkVersionUtil {
 	 */
 	public static List<SCFrameworkVersion> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -153,7 +153,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -168,7 +168,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -182,7 +182,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -196,7 +196,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -210,7 +210,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -225,7 +225,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(frameworkVersionId, groupId,
@@ -275,7 +275,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -291,7 +291,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(frameworkVersionId,
@@ -370,7 +370,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -385,7 +385,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -400,7 +400,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -415,7 +415,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -430,7 +430,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -446,7 +446,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByCompanyId_PrevAndNext(
 		long frameworkVersionId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(frameworkVersionId, companyId,
@@ -518,7 +518,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByG_A(
 		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_A(groupId, active, start, end, orderByComparator);
 	}
@@ -534,7 +534,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_First(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_First(groupId, active, orderByComparator);
@@ -550,7 +550,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_First(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_First(groupId, active, orderByComparator);
 	}
@@ -566,7 +566,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_Last(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_Last(groupId, active, orderByComparator);
@@ -582,7 +582,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_Last(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_Last(groupId, active, orderByComparator);
 	}
@@ -599,7 +599,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_PrevAndNext(frameworkVersionId, groupId, active,
@@ -652,7 +652,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByG_A(
 		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A(groupId, active, start, end,
 			orderByComparator);
@@ -670,7 +670,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .filterFindByG_A_PrevAndNext(frameworkVersionId, groupId,
@@ -826,7 +826,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -899,7 +899,7 @@ public class SCFrameworkVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .getSCProductVersions(pk, start, end, orderByComparator);
 	}

@@ -259,7 +259,7 @@ public class PortletItemPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<PortletItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortletItem",
 			"mvccVersion", true, "portletItemId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

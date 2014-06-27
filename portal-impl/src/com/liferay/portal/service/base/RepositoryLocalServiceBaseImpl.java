@@ -158,8 +158,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return repositoryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -176,8 +175,8 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return repositoryPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -196,9 +195,8 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return repositoryPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}

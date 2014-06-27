@@ -194,7 +194,7 @@ public class ClassNamePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ClassName> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ClassName_", "mvccVersion",
 			true, "classNameId", true, "value", true);
 	}

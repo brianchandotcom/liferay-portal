@@ -95,8 +95,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +113,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +133,10 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -338,7 +335,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId,
 			start, end, orderByComparator);
 	}

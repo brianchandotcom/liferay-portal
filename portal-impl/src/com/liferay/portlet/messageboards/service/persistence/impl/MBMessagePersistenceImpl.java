@@ -159,7 +159,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -279,7 +279,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mbMessage != null) {
@@ -307,7 +308,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -327,7 +328,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mbMessage != null) {
@@ -355,7 +357,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -383,7 +385,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByUuid_PrevAndNext(long messageId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -412,8 +415,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	protected MBMessage getByUuid_PrevAndNext(Session session,
-		MBMessage mbMessage, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		MBMessage mbMessage, String uuid,
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -938,7 +941,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1068,7 +1071,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1101,7 +1105,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1123,7 +1127,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1156,7 +1161,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1185,7 +1190,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByUuid_C_PrevAndNext(long messageId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -1216,7 +1221,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByUuid_C_PrevAndNext(Session session,
 		MBMessage mbMessage, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1490,7 +1495,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1596,7 +1601,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -1624,7 +1630,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1644,7 +1650,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -1672,7 +1679,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1700,7 +1707,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByGroupId_PrevAndNext(long messageId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -1729,8 +1737,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	protected MBMessage getByGroupId_PrevAndNext(Session session,
-		MBMessage mbMessage, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		MBMessage mbMessage, long groupId,
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1877,7 +1885,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1967,7 +1975,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] filterFindByGroupId_PrevAndNext(long messageId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(messageId, groupId,
@@ -2002,8 +2010,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	protected MBMessage filterGetByGroupId_PrevAndNext(Session session,
-		MBMessage mbMessage, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		MBMessage mbMessage, long groupId,
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2321,7 +2329,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2427,7 +2435,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2456,7 +2465,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2477,7 +2486,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -2505,7 +2515,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2533,7 +2543,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByCompanyId_PrevAndNext(long messageId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -2564,7 +2574,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByCompanyId_PrevAndNext(Session session,
 		MBMessage mbMessage, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2798,7 +2808,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByThreadId(long threadId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2904,7 +2914,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByThreadId_First(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByThreadId_First(threadId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -2932,7 +2943,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByThreadId_First(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByThreadId(threadId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2952,7 +2963,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByThreadId_Last(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByThreadId_Last(threadId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -2980,7 +2992,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByThreadId_Last(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByThreadId(threadId);
 
 		if (count == 0) {
@@ -3008,7 +3020,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByThreadId_PrevAndNext(long messageId,
-		long threadId, OrderByComparator orderByComparator)
+		long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -3039,7 +3051,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByThreadId_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3274,7 +3286,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByThreadReplies(long threadId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3380,7 +3392,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByThreadReplies_First(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByThreadReplies_First(threadId,
 				orderByComparator);
 
@@ -3409,7 +3422,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByThreadReplies_First(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByThreadReplies(threadId, 0, 1,
 				orderByComparator);
 
@@ -3430,7 +3443,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByThreadReplies_Last(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByThreadReplies_Last(threadId,
 				orderByComparator);
 
@@ -3459,7 +3473,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByThreadReplies_Last(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByThreadReplies(threadId);
 
 		if (count == 0) {
@@ -3487,7 +3501,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByThreadReplies_PrevAndNext(long messageId,
-		long threadId, OrderByComparator orderByComparator)
+		long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -3518,7 +3532,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByThreadReplies_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3751,7 +3765,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3857,7 +3871,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUserId_First(userId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -3885,7 +3900,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3905,7 +3920,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByUserId_Last(userId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -3933,7 +3949,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -3961,7 +3977,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByUserId_PrevAndNext(long messageId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -3990,8 +4007,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	protected MBMessage getByUserId_PrevAndNext(Session session,
-		MBMessage mbMessage, long userId, OrderByComparator orderByComparator,
-		boolean previous) {
+		MBMessage mbMessage, long userId,
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4229,7 +4246,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_U(long groupId, long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4345,7 +4362,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_U_First(long groupId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_U_First(groupId, userId,
 				orderByComparator);
 
@@ -4378,7 +4396,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_U_First(long groupId, long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_U(groupId, userId, 0, 1,
 				orderByComparator);
 
@@ -4400,7 +4418,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_U_Last(long groupId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_U_Last(groupId, userId, orderByComparator);
 
 		if (mbMessage != null) {
@@ -4432,7 +4451,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_U_Last(long groupId, long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_U(groupId, userId);
 
 		if (count == 0) {
@@ -4461,7 +4480,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_U_PrevAndNext(long messageId, long groupId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -4492,7 +4511,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_U_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4647,7 +4666,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_U(long groupId, long userId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U(groupId, userId, start, end, orderByComparator);
 		}
@@ -4742,7 +4761,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] filterFindByG_U_PrevAndNext(long messageId,
-		long groupId, long userId, OrderByComparator orderByComparator)
+		long groupId, long userId,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_PrevAndNext(messageId, groupId, userId,
@@ -4778,7 +4798,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_U_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5115,7 +5135,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_C(long groupId, long categoryId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5231,7 +5251,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_First(groupId, categoryId,
 				orderByComparator);
 
@@ -5264,7 +5285,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_C(groupId, categoryId, 0, 1,
 				orderByComparator);
 
@@ -5286,7 +5307,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_Last(groupId, categoryId,
 				orderByComparator);
 
@@ -5319,7 +5341,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_C(groupId, categoryId);
 
 		if (count == 0) {
@@ -5348,7 +5370,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_C_PrevAndNext(long messageId, long groupId,
-		long categoryId, OrderByComparator orderByComparator)
+		long categoryId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -5379,7 +5401,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_C_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5534,7 +5556,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_C(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C(groupId, categoryId, start, end, orderByComparator);
 		}
@@ -5629,7 +5651,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] filterFindByG_C_PrevAndNext(long messageId,
-		long groupId, long categoryId, OrderByComparator orderByComparator)
+		long groupId, long categoryId,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(messageId, groupId, categoryId,
@@ -5665,7 +5688,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_C_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6002,7 +6025,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_S(long groupId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6118,7 +6141,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_S_First(groupId, status,
 				orderByComparator);
 
@@ -6151,7 +6175,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_S(groupId, status, 0, 1,
 				orderByComparator);
 
@@ -6173,7 +6197,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_S_Last(groupId, status, orderByComparator);
 
 		if (mbMessage != null) {
@@ -6205,7 +6230,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_S(groupId, status);
 
 		if (count == 0) {
@@ -6234,7 +6259,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_S_PrevAndNext(long messageId, long groupId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -6265,7 +6290,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6420,7 +6445,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_S(long groupId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_S(groupId, status, start, end, orderByComparator);
 		}
@@ -6515,7 +6540,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] filterFindByG_S_PrevAndNext(long messageId,
-		long groupId, int status, OrderByComparator orderByComparator)
+		long groupId, int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_S_PrevAndNext(messageId, groupId, status,
@@ -6551,7 +6576,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6888,7 +6913,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7004,7 +7029,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_S_First(companyId, status,
 				orderByComparator);
 
@@ -7037,7 +7063,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByC_S(companyId, status, 0, 1,
 				orderByComparator);
 
@@ -7059,7 +7085,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_S_Last(companyId, status,
 				orderByComparator);
 
@@ -7092,7 +7119,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
@@ -7121,7 +7148,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByC_S_PrevAndNext(long messageId, long companyId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -7152,7 +7179,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByC_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long companyId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7405,7 +7432,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByU_C(long userId, long classNameId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7521,7 +7548,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_First(long userId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_First(userId, classNameId,
 				orderByComparator);
 
@@ -7554,7 +7582,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_First(long userId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByU_C(userId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -7576,7 +7604,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_Last(long userId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_Last(userId, classNameId,
 				orderByComparator);
 
@@ -7609,7 +7638,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_Last(long userId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByU_C(userId, classNameId);
 
 		if (count == 0) {
@@ -7638,7 +7667,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByU_C_PrevAndNext(long messageId, long userId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -7669,7 +7698,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByU_C_PrevAndNext(Session session,
 		MBMessage mbMessage, long userId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7828,7 +7857,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByU_C(long userId, long[] classNameIds,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
@@ -8168,7 +8197,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByC_C(long classNameId, long classPK, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8284,7 +8313,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_C_First(classNameId, classPK,
 				orderByComparator);
 
@@ -8317,7 +8347,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -8339,7 +8369,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_C_Last(classNameId, classPK,
 				orderByComparator);
 
@@ -8372,7 +8403,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
@@ -8401,7 +8432,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByC_C_PrevAndNext(long messageId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -8432,7 +8463,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByC_C_PrevAndNext(Session session,
 		MBMessage mbMessage, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -8681,7 +8712,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByT_P(long threadId, long parentMessageId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8797,7 +8828,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_P_First(long threadId, long parentMessageId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_P_First(threadId, parentMessageId,
 				orderByComparator);
 
@@ -8830,7 +8862,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_P_First(long threadId, long parentMessageId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByT_P(threadId, parentMessageId, 0, 1,
 				orderByComparator);
 
@@ -8852,7 +8884,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_P_Last(long threadId, long parentMessageId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_P_Last(threadId, parentMessageId,
 				orderByComparator);
 
@@ -8885,7 +8918,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_P_Last(long threadId, long parentMessageId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByT_P(threadId, parentMessageId);
 
 		if (count == 0) {
@@ -8914,7 +8947,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByT_P_PrevAndNext(long messageId, long threadId,
-		long parentMessageId, OrderByComparator orderByComparator)
+		long parentMessageId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -8945,7 +8978,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByT_P_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId, long parentMessageId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9194,7 +9227,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByT_A(long threadId, boolean answer, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9310,7 +9343,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_A_First(long threadId, boolean answer,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_A_First(threadId, answer,
 				orderByComparator);
 
@@ -9343,7 +9377,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_A_First(long threadId, boolean answer,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByT_A(threadId, answer, 0, 1,
 				orderByComparator);
 
@@ -9365,7 +9399,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_A_Last(long threadId, boolean answer,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_A_Last(threadId, answer,
 				orderByComparator);
 
@@ -9398,7 +9433,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_A_Last(long threadId, boolean answer,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByT_A(threadId, answer);
 
 		if (count == 0) {
@@ -9427,7 +9462,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByT_A_PrevAndNext(long messageId, long threadId,
-		boolean answer, OrderByComparator orderByComparator)
+		boolean answer, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -9458,7 +9493,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByT_A_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId, boolean answer,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9707,7 +9742,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByT_S(long threadId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9823,7 +9858,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_S_First(long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_S_First(threadId, status,
 				orderByComparator);
 
@@ -9856,7 +9892,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_S_First(long threadId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByT_S(threadId, status, 0, 1,
 				orderByComparator);
 
@@ -9878,7 +9914,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByT_S_Last(long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByT_S_Last(threadId, status,
 				orderByComparator);
 
@@ -9911,7 +9948,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByT_S_Last(long threadId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByT_S(threadId, status);
 
 		if (count == 0) {
@@ -9940,7 +9977,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByT_S_PrevAndNext(long messageId, long threadId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -9971,7 +10008,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByT_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -10220,7 +10257,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByTR_S(long threadId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10336,7 +10373,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByTR_S_First(long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByTR_S_First(threadId, status,
 				orderByComparator);
 
@@ -10369,7 +10407,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByTR_S_First(long threadId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByTR_S(threadId, status, 0, 1,
 				orderByComparator);
 
@@ -10391,7 +10429,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByTR_S_Last(long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByTR_S_Last(threadId, status,
 				orderByComparator);
 
@@ -10424,7 +10463,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByTR_S_Last(long threadId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByTR_S(threadId, status);
 
 		if (count == 0) {
@@ -10453,7 +10492,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByTR_S_PrevAndNext(long messageId, long threadId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -10484,7 +10523,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByTR_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long threadId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -10744,7 +10783,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_U_S(long groupId, long userId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10866,7 +10905,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_U_S_First(long groupId, long userId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_U_S_First(groupId, userId, status,
 				orderByComparator);
 
@@ -10903,7 +10943,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_U_S_First(long groupId, long userId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_U_S(groupId, userId, status, 0, 1,
 				orderByComparator);
 
@@ -10926,7 +10966,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_U_S_Last(long groupId, long userId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_U_S_Last(groupId, userId, status,
 				orderByComparator);
 
@@ -10963,7 +11004,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_U_S_Last(long groupId, long userId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_U_S(groupId, userId, status);
 
 		if (count == 0) {
@@ -10993,7 +11034,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_U_S_PrevAndNext(long messageId, long groupId,
-		long userId, int status, OrderByComparator orderByComparator)
+		long userId, int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -11024,7 +11065,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_U_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long userId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -11187,7 +11228,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_U_S(long groupId, long userId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_S(groupId, userId, status, start, end,
 				orderByComparator);
@@ -11289,7 +11331,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] filterFindByG_U_S_PrevAndNext(long messageId,
 		long groupId, long userId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_S_PrevAndNext(messageId, groupId, userId, status,
 				orderByComparator);
@@ -11324,7 +11367,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_U_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long userId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -11686,7 +11729,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_C_T(long groupId, long categoryId,
-		long threadId, int start, int end, OrderByComparator orderByComparator) {
+		long threadId, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -11808,7 +11852,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_First(long groupId, long categoryId,
-		long threadId, OrderByComparator orderByComparator)
+		long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_First(groupId, categoryId, threadId,
 				orderByComparator);
@@ -11846,7 +11890,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_First(long groupId, long categoryId,
-		long threadId, OrderByComparator orderByComparator) {
+		long threadId, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_C_T(groupId, categoryId, threadId, 0, 1,
 				orderByComparator);
 
@@ -11869,7 +11913,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_Last(long groupId, long categoryId,
-		long threadId, OrderByComparator orderByComparator)
+		long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_Last(groupId, categoryId, threadId,
 				orderByComparator);
@@ -11907,7 +11951,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_Last(long groupId, long categoryId,
-		long threadId, OrderByComparator orderByComparator) {
+		long threadId, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_C_T(groupId, categoryId, threadId);
 
 		if (count == 0) {
@@ -11937,7 +11981,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_C_T_PrevAndNext(long messageId, long groupId,
-		long categoryId, long threadId, OrderByComparator orderByComparator)
+		long categoryId, long threadId,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -11968,7 +12013,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_C_T_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -12131,7 +12176,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_C_T(long groupId, long categoryId,
-		long threadId, int start, int end, OrderByComparator orderByComparator) {
+		long threadId, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T(groupId, categoryId, threadId, start, end,
 				orderByComparator);
@@ -12233,7 +12279,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] filterFindByG_C_T_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T_PrevAndNext(messageId, groupId, categoryId,
 				threadId, orderByComparator);
@@ -12268,7 +12315,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_C_T_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -12632,7 +12679,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByG_C_S(long groupId, long categoryId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -12754,7 +12802,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_S_First(long groupId, long categoryId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_S_First(groupId, categoryId, status,
 				orderByComparator);
@@ -12792,7 +12840,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_S_First(long groupId, long categoryId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_C_S(groupId, categoryId, status, 0, 1,
 				orderByComparator);
 
@@ -12815,7 +12863,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_S_Last(long groupId, long categoryId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_S_Last(groupId, categoryId, status,
 				orderByComparator);
@@ -12853,7 +12901,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_S_Last(long groupId, long categoryId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_C_S(groupId, categoryId, status);
 
 		if (count == 0) {
@@ -12883,7 +12931,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByG_C_S_PrevAndNext(long messageId, long groupId,
-		long categoryId, int status, OrderByComparator orderByComparator)
+		long categoryId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -12914,7 +12963,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_C_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -13077,7 +13126,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> filterFindByG_C_S(long groupId, long categoryId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_S(groupId, categoryId, status, start, end,
 				orderByComparator);
@@ -13179,7 +13229,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] filterFindByG_C_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_S_PrevAndNext(messageId, groupId, categoryId,
 				status, orderByComparator);
@@ -13214,7 +13265,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_C_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -13576,7 +13627,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByU_C_C(long userId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -13698,7 +13750,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_C_First(long userId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_C_First(userId, classNameId, classPK,
 				orderByComparator);
@@ -13736,7 +13788,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_C_First(long userId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByU_C_C(userId, classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -13759,7 +13811,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_C_Last(long userId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_C_Last(userId, classNameId, classPK,
 				orderByComparator);
@@ -13797,7 +13849,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_C_Last(long userId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByU_C_C(userId, classNameId, classPK);
 
 		if (count == 0) {
@@ -13827,7 +13879,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByU_C_C_PrevAndNext(long messageId, long userId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
+		long classNameId, long classPK,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -13858,7 +13911,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByU_C_C_PrevAndNext(Session session,
 		MBMessage mbMessage, long userId, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -14136,7 +14189,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByU_C_S(long userId, long classNameId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -14258,7 +14312,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_S_First(long userId, long classNameId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_S_First(userId, classNameId, status,
 				orderByComparator);
@@ -14296,7 +14350,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_S_First(long userId, long classNameId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByU_C_S(userId, classNameId, status, 0, 1,
 				orderByComparator);
 
@@ -14319,7 +14373,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_S_Last(long userId, long classNameId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_S_Last(userId, classNameId, status,
 				orderByComparator);
@@ -14357,7 +14411,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_S_Last(long userId, long classNameId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByU_C_S(userId, classNameId, status);
 
 		if (count == 0) {
@@ -14387,7 +14441,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage[] findByU_C_S_PrevAndNext(long messageId, long userId,
-		long classNameId, int status, OrderByComparator orderByComparator)
+		long classNameId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
@@ -14418,7 +14473,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByU_C_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long userId, long classNameId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -14585,7 +14640,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByU_C_S(long userId, long[] classNameIds,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (classNameIds == null) {
 			classNameIds = new long[0];
 		}
@@ -14960,7 +15016,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findByC_C_S(long classNameId, long classPK,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -15082,7 +15139,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_C_S_First(long classNameId, long classPK,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_C_S_First(classNameId, classPK, status,
 				orderByComparator);
@@ -15120,7 +15177,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_C_S_First(long classNameId, long classPK,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByC_C_S(classNameId, classPK, status, 0, 1,
 				orderByComparator);
 
@@ -15143,7 +15200,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByC_C_S_Last(long classNameId, long classPK,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByC_C_S_Last(classNameId, classPK, status,
 				orderByComparator);
@@ -15181,7 +15238,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByC_C_S_Last(long classNameId, long classPK,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByC_C_S(classNameId, classPK, status);
 
 		if (count == 0) {
@@ -15212,7 +15269,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] findByC_C_S_PrevAndNext(long messageId,
 		long classNameId, long classPK, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -15242,7 +15300,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByC_C_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long classNameId, long classPK, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMessage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -15521,7 +15579,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public List<MBMessage> findByG_C_T_A(long groupId, long categoryId,
 		long threadId, boolean answer, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -15649,7 +15707,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_A_First(long groupId, long categoryId,
-		long threadId, boolean answer, OrderByComparator orderByComparator)
+		long threadId, boolean answer,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_A_First(groupId, categoryId,
 				threadId, answer, orderByComparator);
@@ -15691,7 +15750,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_A_First(long groupId, long categoryId,
-		long threadId, boolean answer, OrderByComparator orderByComparator) {
+		long threadId, boolean answer,
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_C_T_A(groupId, categoryId, threadId,
 				answer, 0, 1, orderByComparator);
 
@@ -15715,7 +15775,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_A_Last(long groupId, long categoryId,
-		long threadId, boolean answer, OrderByComparator orderByComparator)
+		long threadId, boolean answer,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_A_Last(groupId, categoryId,
 				threadId, answer, orderByComparator);
@@ -15757,7 +15818,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_A_Last(long groupId, long categoryId,
-		long threadId, boolean answer, OrderByComparator orderByComparator) {
+		long threadId, boolean answer,
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_C_T_A(groupId, categoryId, threadId, answer);
 
 		if (count == 0) {
@@ -15789,7 +15851,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] findByG_C_T_A_PrevAndNext(long messageId, long groupId,
 		long categoryId, long threadId, boolean answer,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -15819,7 +15882,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_C_T_A_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		boolean answer, OrderByComparator orderByComparator, boolean previous) {
+		boolean answer, OrderByComparator<MBMessage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -15991,7 +16055,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public List<MBMessage> filterFindByG_C_T_A(long groupId, long categoryId,
 		long threadId, boolean answer, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T_A(groupId, categoryId, threadId, answer, start,
 				end, orderByComparator);
@@ -16098,7 +16162,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] filterFindByG_C_T_A_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, boolean answer,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T_A_PrevAndNext(messageId, groupId, categoryId,
 				threadId, answer, orderByComparator);
@@ -16135,7 +16200,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_C_T_A_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		boolean answer, OrderByComparator orderByComparator, boolean previous) {
+		boolean answer, OrderByComparator<MBMessage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -16526,7 +16592,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public List<MBMessage> findByG_C_T_S(long groupId, long categoryId,
 		long threadId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -16654,7 +16720,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_S_First(long groupId, long categoryId,
-		long threadId, int status, OrderByComparator orderByComparator)
+		long threadId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_S_First(groupId, categoryId,
 				threadId, status, orderByComparator);
@@ -16696,7 +16763,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_S_First(long groupId, long categoryId,
-		long threadId, int status, OrderByComparator orderByComparator) {
+		long threadId, int status,
+		OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByG_C_T_S(groupId, categoryId, threadId,
 				status, 0, 1, orderByComparator);
 
@@ -16720,7 +16788,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByG_C_T_S_Last(long groupId, long categoryId,
-		long threadId, int status, OrderByComparator orderByComparator)
+		long threadId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByG_C_T_S_Last(groupId, categoryId,
 				threadId, status, orderByComparator);
@@ -16762,7 +16831,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByG_C_T_S_Last(long groupId, long categoryId,
-		long threadId, int status, OrderByComparator orderByComparator) {
+		long threadId, int status,
+		OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByG_C_T_S(groupId, categoryId, threadId, status);
 
 		if (count == 0) {
@@ -16794,7 +16864,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] findByG_C_T_S_PrevAndNext(long messageId, long groupId,
 		long categoryId, long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -16824,7 +16895,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByG_C_T_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<MBMessage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -16996,7 +17068,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public List<MBMessage> filterFindByG_C_T_S(long groupId, long categoryId,
 		long threadId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T_S(groupId, categoryId, threadId, status, start,
 				end, orderByComparator);
@@ -17103,7 +17175,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] filterFindByG_C_T_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_T_S_PrevAndNext(messageId, groupId, categoryId,
 				threadId, status, orderByComparator);
@@ -17140,7 +17213,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage filterGetByG_C_T_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long groupId, long categoryId, long threadId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<MBMessage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -17531,7 +17605,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public List<MBMessage> findByU_C_C_S(long userId, long classNameId,
 		long classPK, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -17659,7 +17733,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_C_S_First(long userId, long classNameId,
-		long classPK, int status, OrderByComparator orderByComparator)
+		long classPK, int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_C_S_First(userId, classNameId,
 				classPK, status, orderByComparator);
@@ -17701,7 +17775,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_C_S_First(long userId, long classNameId,
-		long classPK, int status, OrderByComparator orderByComparator) {
+		long classPK, int status, OrderByComparator<MBMessage> orderByComparator) {
 		List<MBMessage> list = findByU_C_C_S(userId, classNameId, classPK,
 				status, 0, 1, orderByComparator);
 
@@ -17725,7 +17799,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage findByU_C_C_S_Last(long userId, long classNameId,
-		long classPK, int status, OrderByComparator orderByComparator)
+		long classPK, int status, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 		MBMessage mbMessage = fetchByU_C_C_S_Last(userId, classNameId, classPK,
 				status, orderByComparator);
@@ -17767,7 +17841,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public MBMessage fetchByU_C_C_S_Last(long userId, long classNameId,
-		long classPK, int status, OrderByComparator orderByComparator) {
+		long classPK, int status, OrderByComparator<MBMessage> orderByComparator) {
 		int count = countByU_C_C_S(userId, classNameId, classPK, status);
 
 		if (count == 0) {
@@ -17799,7 +17873,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage[] findByU_C_C_S_PrevAndNext(long messageId, long userId,
 		long classNameId, long classPK, int status,
-		OrderByComparator orderByComparator) throws NoSuchMessageException {
+		OrderByComparator<MBMessage> orderByComparator)
+		throws NoSuchMessageException {
 		MBMessage mbMessage = findByPrimaryKey(messageId);
 
 		Session session = null;
@@ -17829,7 +17904,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	protected MBMessage getByU_C_C_S_PrevAndNext(Session session,
 		MBMessage mbMessage, long userId, long classNameId, long classPK,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<MBMessage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -19172,7 +19248,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	@Override
 	public List<MBMessage> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMessage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

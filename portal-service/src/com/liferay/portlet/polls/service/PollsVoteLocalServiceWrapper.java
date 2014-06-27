@@ -94,8 +94,7 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _pollsVoteLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -113,8 +112,7 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _pollsVoteLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -134,11 +132,10 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _pollsVoteLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}

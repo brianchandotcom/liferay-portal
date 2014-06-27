@@ -79,7 +79,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByUuid_PrevAndNext(
 		long relationId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -200,7 +200,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -213,7 +213,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -226,7 +226,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -239,7 +239,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -252,7 +252,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByUuid_C_PrevAndNext(
 		long relationId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -325,7 +325,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where companyId = &#63;.
@@ -337,7 +337,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -349,7 +349,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where companyId = &#63;.
@@ -361,7 +361,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -373,7 +373,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63;.
@@ -386,7 +386,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByCompanyId_PrevAndNext(
 		long relationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -443,7 +443,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByUserId1(
 		long userId1, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63;.
@@ -455,7 +455,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUserId1_First(
 		long userId1,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -467,7 +467,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUserId1_First(
 		long userId1,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where userId1 = &#63;.
@@ -479,7 +479,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUserId1_Last(
 		long userId1,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -491,7 +491,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUserId1_Last(
 		long userId1,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63;.
@@ -504,7 +504,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByUserId1_PrevAndNext(
 		long relationId, long userId1,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -561,7 +561,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByUserId2(
 		long userId2, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where userId2 = &#63;.
@@ -573,7 +573,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUserId2_First(
 		long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -585,7 +585,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUserId2_First(
 		long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where userId2 = &#63;.
@@ -597,7 +597,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByUserId2_Last(
 		long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -609,7 +609,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByUserId2_Last(
 		long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63;.
@@ -622,7 +622,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByUserId2_PrevAndNext(
 		long relationId, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -679,7 +679,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByType(
 		int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where type = &#63;.
@@ -691,7 +691,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByType_First(
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -703,7 +703,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByType_First(
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where type = &#63;.
@@ -715,7 +715,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByType_Last(
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -727,7 +727,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByType_Last(
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where type = &#63;.
@@ -740,7 +740,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByType_PrevAndNext(
 		long relationId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -800,7 +800,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByC_T(
 		long companyId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where companyId = &#63; and type = &#63;.
@@ -813,7 +813,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByC_T_First(
 		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -826,7 +826,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByC_T_First(
 		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
@@ -839,7 +839,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByC_T_Last(
 		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -852,7 +852,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByC_T_Last(
 		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63; and type = &#63;.
@@ -866,7 +866,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByC_T_PrevAndNext(
 		long relationId, long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -928,7 +928,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByU1_U2(
 		long userId1, long userId2, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
@@ -941,7 +941,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU1_U2_First(
 		long userId1, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -954,7 +954,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU1_U2_First(
 		long userId1, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
@@ -967,7 +967,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU1_U2_Last(
 		long userId1, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -980,7 +980,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU1_U2_Last(
 		long userId1, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
@@ -994,7 +994,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByU1_U2_PrevAndNext(
 		long relationId, long userId1, long userId2,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1056,7 +1056,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByU1_T(
 		long userId1, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where userId1 = &#63; and type = &#63;.
@@ -1069,7 +1069,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU1_T_First(
 		long userId1, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1082,7 +1082,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU1_T_First(
 		long userId1, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where userId1 = &#63; and type = &#63;.
@@ -1095,7 +1095,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU1_T_Last(
 		long userId1, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1108,7 +1108,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU1_T_Last(
 		long userId1, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and type = &#63;.
@@ -1122,7 +1122,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByU1_T_PrevAndNext(
 		long relationId, long userId1, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1184,7 +1184,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findByU2_T(
 		long userId2, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the first social relation in the ordered set where userId2 = &#63; and type = &#63;.
@@ -1197,7 +1197,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU2_T_First(
 		long userId2, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1210,7 +1210,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU2_T_First(
 		long userId2, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the last social relation in the ordered set where userId2 = &#63; and type = &#63;.
@@ -1223,7 +1223,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation findByU2_T_Last(
 		long userId2, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1236,7 +1236,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation fetchByU2_T_Last(
 		long userId2, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63; and type = &#63;.
@@ -1250,7 +1250,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public com.liferay.portlet.social.model.SocialRelation[] findByU2_T_PrevAndNext(
 		long relationId, long userId2, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
@@ -1426,7 +1426,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialRelation> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRelation> orderByComparator);
 
 	/**
 	* Removes all the social relations from the database.

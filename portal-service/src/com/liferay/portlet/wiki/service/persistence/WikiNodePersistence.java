@@ -79,7 +79,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -103,7 +103,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -127,7 +127,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByUuid_PrevAndNext(
 		long nodeId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -253,7 +253,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -279,7 +279,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -305,7 +305,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByUuid_C_PrevAndNext(
 		long nodeId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -378,7 +378,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -402,7 +402,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -426,7 +426,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByGroupId_PrevAndNext(
 		long nodeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -481,7 +481,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] filterFindByGroupId_PrevAndNext(
 		long nodeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -559,7 +559,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where companyId = &#63;.
@@ -571,7 +571,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -583,7 +583,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where companyId = &#63;.
@@ -595,7 +595,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -607,7 +607,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
@@ -620,7 +620,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByCompanyId_PrevAndNext(
 		long nodeId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -733,7 +733,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -746,7 +746,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -759,7 +759,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -772,7 +772,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -785,7 +785,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -799,7 +799,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByG_S_PrevAndNext(
 		long nodeId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -844,7 +844,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> filterFindByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
@@ -858,7 +858,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] filterFindByG_S_PrevAndNext(
 		long nodeId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -929,7 +929,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -942,7 +942,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -955,7 +955,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -968,7 +968,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode findByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -981,7 +981,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode fetchByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -995,7 +995,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public com.liferay.portlet.wiki.model.WikiNode[] findByC_S_PrevAndNext(
 		long nodeId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchNodeException;
 
 	/**
@@ -1109,7 +1109,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiNode> orderByComparator);
 
 	/**
 	* Removes all the wiki nodes from the database.

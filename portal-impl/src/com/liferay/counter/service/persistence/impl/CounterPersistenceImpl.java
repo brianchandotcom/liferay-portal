@@ -549,7 +549,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public List<Counter> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Counter> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

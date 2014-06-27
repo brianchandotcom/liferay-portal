@@ -79,7 +79,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the first journal article resource in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -103,7 +103,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the last journal article resource in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -127,7 +127,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the journal article resources before and after the current journal article resource in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -250,7 +250,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the first journal article resource in the ordered set where groupId = &#63;.
@@ -262,7 +262,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -274,7 +274,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the last journal article resource in the ordered set where groupId = &#63;.
@@ -286,7 +286,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -298,7 +298,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the journal article resources before and after the current journal article resource in the ordered set where groupId = &#63;.
@@ -311,7 +311,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public com.liferay.portlet.journal.model.JournalArticleResource[] findByGroupId_PrevAndNext(
 		long resourcePrimKey, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	/**
@@ -480,7 +480,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator);
 
 	/**
 	* Removes all the journal article resources from the database.

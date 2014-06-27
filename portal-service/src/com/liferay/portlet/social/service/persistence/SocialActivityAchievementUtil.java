@@ -89,7 +89,7 @@ public class SocialActivityAchievementUtil {
 	 */
 	public static List<SocialActivityAchievement> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -155,7 +155,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -170,7 +170,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -184,7 +184,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -198,7 +198,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -227,7 +227,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement[] findByGroupId_PrevAndNext(
 		long activityAchievementId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityAchievementId, groupId,
@@ -299,7 +299,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByG_U(groupId, userId, start, end, orderByComparator);
 	}
@@ -315,7 +315,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
@@ -331,7 +331,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -347,7 +347,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
@@ -363,7 +363,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -380,7 +380,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement[] findByG_U_PrevAndNext(
 		long activityAchievementId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(activityAchievementId, groupId,
@@ -454,7 +454,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findByG_N(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByG_N(groupId, name, start, end, orderByComparator);
 	}
@@ -470,7 +470,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_N_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_First(groupId, name, orderByComparator);
 	}
@@ -485,7 +485,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_N_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_N_First(groupId, name, orderByComparator);
 	}
@@ -501,7 +501,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_N_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_Last(groupId, name, orderByComparator);
 	}
@@ -516,7 +516,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_N_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence().fetchByG_N_Last(groupId, name, orderByComparator);
 	}
 
@@ -532,7 +532,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement[] findByG_N_PrevAndNext(
 		long activityAchievementId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_N_PrevAndNext(activityAchievementId, groupId, name,
@@ -606,7 +606,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findByG_F(
 		long groupId, boolean firstInGroup, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, firstInGroup, start, end,
 			orderByComparator);
@@ -623,7 +623,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_F_First(
 		long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_First(groupId, firstInGroup, orderByComparator);
@@ -639,7 +639,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_F_First(
 		long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_First(groupId, firstInGroup, orderByComparator);
 	}
@@ -655,7 +655,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_F_Last(
 		long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, firstInGroup, orderByComparator);
@@ -671,7 +671,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_F_Last(
 		long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_Last(groupId, firstInGroup, orderByComparator);
 	}
@@ -688,7 +688,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement[] findByG_F_PrevAndNext(
 		long activityAchievementId, long groupId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(activityAchievementId, groupId,
@@ -837,7 +837,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findByG_U_F(
 		long groupId, long userId, boolean firstInGroup, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_F(groupId, userId, firstInGroup, start, end,
 			orderByComparator);
@@ -855,7 +855,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_U_F_First(
 		long groupId, long userId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_First(groupId, userId, firstInGroup,
@@ -873,7 +873,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_U_F_First(
 		long groupId, long userId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_First(groupId, userId, firstInGroup,
 			orderByComparator);
@@ -891,7 +891,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement findByG_U_F_Last(
 		long groupId, long userId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_Last(groupId, userId, firstInGroup,
@@ -909,7 +909,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchByG_U_F_Last(
 		long groupId, long userId, boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_Last(groupId, userId, firstInGroup,
 			orderByComparator);
@@ -929,7 +929,7 @@ public class SocialActivityAchievementUtil {
 	public static com.liferay.portlet.social.model.SocialActivityAchievement[] findByG_U_F_PrevAndNext(
 		long activityAchievementId, long groupId, long userId,
 		boolean firstInGroup,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_PrevAndNext(activityAchievementId, groupId,
@@ -1078,7 +1078,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityAchievement> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

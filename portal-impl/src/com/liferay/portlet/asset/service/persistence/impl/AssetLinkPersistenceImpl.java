@@ -148,7 +148,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findByE1(long entryId1, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,7 +254,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE1_First(long entryId1,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE1_First(entryId1, orderByComparator);
 
 		if (assetLink != null) {
@@ -282,7 +283,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE1_First(long entryId1,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		List<AssetLink> list = findByE1(entryId1, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -302,7 +303,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE1_Last(long entryId1,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE1_Last(entryId1, orderByComparator);
 
 		if (assetLink != null) {
@@ -330,7 +332,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE1_Last(long entryId1,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		int count = countByE1(entryId1);
 
 		if (count == 0) {
@@ -358,7 +360,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink[] findByE1_PrevAndNext(long linkId, long entryId1,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = findByPrimaryKey(linkId);
 
 		Session session = null;
@@ -388,7 +391,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	protected AssetLink getByE1_PrevAndNext(Session session,
 		AssetLink assetLink, long entryId1,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -620,7 +623,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findByE2(long entryId2, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -726,7 +729,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE2_First(long entryId2,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE2_First(entryId2, orderByComparator);
 
 		if (assetLink != null) {
@@ -754,7 +758,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE2_First(long entryId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		List<AssetLink> list = findByE2(entryId2, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -774,7 +778,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE2_Last(long entryId2,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE2_Last(entryId2, orderByComparator);
 
 		if (assetLink != null) {
@@ -802,7 +807,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE2_Last(long entryId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		int count = countByE2(entryId2);
 
 		if (count == 0) {
@@ -830,7 +835,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink[] findByE2_PrevAndNext(long linkId, long entryId2,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = findByPrimaryKey(linkId);
 
 		Session session = null;
@@ -860,7 +866,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	protected AssetLink getByE2_PrevAndNext(Session session,
 		AssetLink assetLink, long entryId2,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1098,7 +1104,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findByE_E(long entryId1, long entryId2, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1214,7 +1220,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE_E_First(long entryId1, long entryId2,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE_E_First(entryId1, entryId2,
 				orderByComparator);
 
@@ -1247,7 +1254,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE_E_First(long entryId1, long entryId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		List<AssetLink> list = findByE_E(entryId1, entryId2, 0, 1,
 				orderByComparator);
 
@@ -1269,7 +1276,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE_E_Last(long entryId1, long entryId2,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE_E_Last(entryId1, entryId2,
 				orderByComparator);
 
@@ -1302,7 +1310,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE_E_Last(long entryId1, long entryId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		int count = countByE_E(entryId1, entryId2);
 
 		if (count == 0) {
@@ -1331,7 +1339,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink[] findByE_E_PrevAndNext(long linkId, long entryId1,
-		long entryId2, OrderByComparator orderByComparator)
+		long entryId2, OrderByComparator<AssetLink> orderByComparator)
 		throws NoSuchLinkException {
 		AssetLink assetLink = findByPrimaryKey(linkId);
 
@@ -1362,7 +1370,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	protected AssetLink getByE_E_PrevAndNext(Session session,
 		AssetLink assetLink, long entryId1, long entryId2,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1611,7 +1619,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findByE1_T(long entryId1, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1727,7 +1735,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE1_T_First(long entryId1, int type,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE1_T_First(entryId1, type,
 				orderByComparator);
 
@@ -1760,7 +1769,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE1_T_First(long entryId1, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		List<AssetLink> list = findByE1_T(entryId1, type, 0, 1,
 				orderByComparator);
 
@@ -1782,7 +1791,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE1_T_Last(long entryId1, int type,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE1_T_Last(entryId1, type, orderByComparator);
 
 		if (assetLink != null) {
@@ -1814,7 +1824,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE1_T_Last(long entryId1, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		int count = countByE1_T(entryId1, type);
 
 		if (count == 0) {
@@ -1843,7 +1853,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink[] findByE1_T_PrevAndNext(long linkId, long entryId1,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<AssetLink> orderByComparator)
 		throws NoSuchLinkException {
 		AssetLink assetLink = findByPrimaryKey(linkId);
 
@@ -1874,7 +1884,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	protected AssetLink getByE1_T_PrevAndNext(Session session,
 		AssetLink assetLink, long entryId1, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2123,7 +2133,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findByE2_T(long entryId2, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2239,7 +2249,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE2_T_First(long entryId2, int type,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE2_T_First(entryId2, type,
 				orderByComparator);
 
@@ -2272,7 +2283,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE2_T_First(long entryId2, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		List<AssetLink> list = findByE2_T(entryId2, type, 0, 1,
 				orderByComparator);
 
@@ -2294,7 +2305,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink findByE2_T_Last(long entryId2, int type,
-		OrderByComparator orderByComparator) throws NoSuchLinkException {
+		OrderByComparator<AssetLink> orderByComparator)
+		throws NoSuchLinkException {
 		AssetLink assetLink = fetchByE2_T_Last(entryId2, type, orderByComparator);
 
 		if (assetLink != null) {
@@ -2326,7 +2338,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByE2_T_Last(long entryId2, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		int count = countByE2_T(entryId2, type);
 
 		if (count == 0) {
@@ -2355,7 +2367,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink[] findByE2_T_PrevAndNext(long linkId, long entryId2,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<AssetLink> orderByComparator)
 		throws NoSuchLinkException {
 		AssetLink assetLink = findByPrimaryKey(linkId);
 
@@ -2386,7 +2398,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	protected AssetLink getByE2_T_PrevAndNext(Session session,
 		AssetLink assetLink, long entryId2, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3458,7 +3470,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public List<AssetLink> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

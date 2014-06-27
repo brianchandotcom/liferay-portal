@@ -426,7 +426,7 @@ public class CalEventPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<CalEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CalEvent", "uuid", true,
 			"eventId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

@@ -87,7 +87,7 @@ public class CalEventUtil {
 	 */
 	public static List<CalEvent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,7 +165,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -179,7 +179,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -193,7 +193,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -207,7 +207,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -222,7 +222,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_PrevAndNext(
 		long eventId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(eventId, uuid, orderByComparator);
@@ -356,7 +356,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -388,7 +388,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -404,7 +404,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -420,7 +420,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -437,7 +437,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_C_PrevAndNext(
 		long eventId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(eventId, uuid, companyId,
@@ -508,7 +508,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -523,7 +523,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -538,7 +538,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -553,7 +553,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -568,7 +568,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -584,7 +584,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByCompanyId_PrevAndNext(
 		long eventId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(eventId, companyId,
@@ -653,7 +653,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -668,7 +668,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -682,7 +682,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -696,7 +696,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -710,7 +710,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -725,7 +725,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByGroupId_PrevAndNext(
 		long eventId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(eventId, groupId,
@@ -775,7 +775,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -791,7 +791,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByGroupId_PrevAndNext(
 		long eventId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(eventId, groupId,
@@ -870,7 +870,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
 		int remindBy, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByNotRemindBy(remindBy, start, end, orderByComparator);
 	}
@@ -885,7 +885,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_First(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_First(remindBy, orderByComparator);
@@ -900,7 +900,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_First(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_First(remindBy, orderByComparator);
 	}
@@ -915,7 +915,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_Last(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_Last(remindBy, orderByComparator);
@@ -930,7 +930,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_Last(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_Last(remindBy, orderByComparator);
 	}
@@ -946,7 +946,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByNotRemindBy_PrevAndNext(
 		long eventId, int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_PrevAndNext(eventId, remindBy,
@@ -1018,7 +1018,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -1034,7 +1034,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_First(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
@@ -1049,7 +1049,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_First(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_First(groupId, type, orderByComparator);
 	}
@@ -1065,7 +1065,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_Last(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
@@ -1080,7 +1080,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_Last(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().fetchByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -1096,7 +1096,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(eventId, groupId, type,
@@ -1149,7 +1149,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -1166,7 +1166,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_T_PrevAndNext(eventId, groupId, type,
@@ -1219,7 +1219,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T(groupId, types, start, end,
 			orderByComparator);
@@ -1275,7 +1275,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, types, start, end, orderByComparator);
 	}
@@ -1380,7 +1380,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_R(groupId, repeating, start, end, orderByComparator);
 	}
@@ -1396,7 +1396,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_First(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_First(groupId, repeating, orderByComparator);
@@ -1412,7 +1412,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_First(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_First(groupId, repeating, orderByComparator);
 	}
@@ -1428,7 +1428,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_Last(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_Last(groupId, repeating, orderByComparator);
@@ -1444,7 +1444,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_Last(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_Last(groupId, repeating, orderByComparator);
 	}
@@ -1461,7 +1461,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_PrevAndNext(eventId, groupId, repeating,
@@ -1514,7 +1514,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_R(groupId, repeating, start, end,
 			orderByComparator);
@@ -1532,7 +1532,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_R_PrevAndNext(eventId, groupId, repeating,
@@ -1622,7 +1622,7 @@ public class CalEventUtil {
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, type, repeating, start, end,
 			orderByComparator);
@@ -1640,7 +1640,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_First(groupId, type, repeating,
@@ -1658,7 +1658,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_First(groupId, type, repeating,
 			orderByComparator);
@@ -1676,7 +1676,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_Last(groupId, type, repeating, orderByComparator);
@@ -1693,7 +1693,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_Last(groupId, type, repeating,
 			orderByComparator);
@@ -1712,7 +1712,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_PrevAndNext(eventId, groupId, type, repeating,
@@ -1771,7 +1771,7 @@ public class CalEventUtil {
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, type, repeating, start, end,
 			orderByComparator);
@@ -1790,7 +1790,7 @@ public class CalEventUtil {
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_T_R_PrevAndNext(eventId, groupId, type,
@@ -1849,7 +1849,7 @@ public class CalEventUtil {
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, types, repeating, start, end,
 			orderByComparator);
@@ -1911,7 +1911,7 @@ public class CalEventUtil {
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, types, repeating, start, end,
 			orderByComparator);
@@ -2096,7 +2096,7 @@ public class CalEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

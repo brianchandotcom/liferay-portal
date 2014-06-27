@@ -555,7 +555,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 */
 	@Override
 	public List<ClusterGroup> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ClusterGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

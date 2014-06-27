@@ -154,7 +154,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public List<SocialActivitySet> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet[] findByGroupId_PrevAndNext(long activitySetId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
@@ -398,7 +400,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByGroupId_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialActivitySet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -633,7 +635,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public List<SocialActivitySet> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -739,7 +741,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -768,7 +771,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -789,7 +792,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -818,7 +822,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -846,7 +850,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet[] findByUserId_PrevAndNext(long activitySetId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
@@ -877,7 +881,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByUserId_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialActivitySet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1129,7 +1133,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public List<SocialActivitySet> findByG_U_T(long groupId, long userId,
-		int type, int start, int end, OrderByComparator orderByComparator) {
+		int type, int start, int end,
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1251,7 +1256,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByG_U_T_First(long groupId, long userId,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByG_U_T_First(groupId,
 				userId, type, orderByComparator);
@@ -1289,7 +1294,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByG_U_T_First(long groupId, long userId,
-		int type, OrderByComparator orderByComparator) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByG_U_T(groupId, userId, type, 0, 1,
 				orderByComparator);
 
@@ -1312,7 +1317,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByG_U_T_Last(long groupId, long userId,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByG_U_T_Last(groupId,
 				userId, type, orderByComparator);
@@ -1350,7 +1355,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByG_U_T_Last(long groupId, long userId,
-		int type, OrderByComparator orderByComparator) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByG_U_T(groupId, userId, type);
 
 		if (count == 0) {
@@ -1380,7 +1385,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet[] findByG_U_T_PrevAndNext(long activitySetId,
-		long groupId, long userId, int type, OrderByComparator orderByComparator)
+		long groupId, long userId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
@@ -1411,7 +1417,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByG_U_T_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long groupId, long userId,
-		int type, OrderByComparator orderByComparator, boolean previous) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1685,7 +1692,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public List<SocialActivitySet> findByC_C_T(long classNameId, long classPK,
-		int type, int start, int end, OrderByComparator orderByComparator) {
+		int type, int start, int end,
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1807,7 +1815,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByC_C_T_First(long classNameId, long classPK,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByC_C_T_First(classNameId,
 				classPK, type, orderByComparator);
@@ -1845,7 +1853,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByC_C_T_First(long classNameId, long classPK,
-		int type, OrderByComparator orderByComparator) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByC_C_T(classNameId, classPK, type,
 				0, 1, orderByComparator);
 
@@ -1868,7 +1876,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByC_C_T_Last(long classNameId, long classPK,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByC_C_T_Last(classNameId,
 				classPK, type, orderByComparator);
@@ -1906,7 +1914,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByC_C_T_Last(long classNameId, long classPK,
-		int type, OrderByComparator orderByComparator) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByC_C_T(classNameId, classPK, type);
 
 		if (count == 0) {
@@ -1937,7 +1945,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public SocialActivitySet[] findByC_C_T_PrevAndNext(long activitySetId,
 		long classNameId, long classPK, int type,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
 		Session session = null;
@@ -1967,7 +1976,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByC_C_T_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long classNameId, long classPK,
-		int type, OrderByComparator orderByComparator, boolean previous) {
+		int type, OrderByComparator<SocialActivitySet> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2248,7 +2258,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public List<SocialActivitySet> findByG_U_C_T(long groupId, long userId,
 		long classNameId, int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2376,7 +2386,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByG_U_C_T_First(long groupId, long userId,
-		long classNameId, int type, OrderByComparator orderByComparator)
+		long classNameId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByG_U_C_T_First(groupId,
 				userId, classNameId, type, orderByComparator);
@@ -2418,7 +2429,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByG_U_C_T_First(long groupId, long userId,
-		long classNameId, int type, OrderByComparator orderByComparator) {
+		long classNameId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByG_U_C_T(groupId, userId,
 				classNameId, type, 0, 1, orderByComparator);
 
@@ -2442,7 +2454,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByG_U_C_T_Last(long groupId, long userId,
-		long classNameId, int type, OrderByComparator orderByComparator)
+		long classNameId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByG_U_C_T_Last(groupId,
 				userId, classNameId, type, orderByComparator);
@@ -2484,7 +2497,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByG_U_C_T_Last(long groupId, long userId,
-		long classNameId, int type, OrderByComparator orderByComparator) {
+		long classNameId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByG_U_C_T(groupId, userId, classNameId, type);
 
 		if (count == 0) {
@@ -2516,7 +2530,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public SocialActivitySet[] findByG_U_C_T_PrevAndNext(long activitySetId,
 		long groupId, long userId, long classNameId, int type,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
 		Session session = null;
@@ -2546,8 +2561,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByG_U_C_T_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long groupId, long userId,
-		long classNameId, int type, OrderByComparator orderByComparator,
-		boolean previous) {
+		long classNameId, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2842,7 +2857,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public List<SocialActivitySet> findByU_C_C_T(long userId, long classNameId,
 		long classPK, int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2970,7 +2985,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByU_C_C_T_First(long userId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator)
+		long classPK, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByU_C_C_T_First(userId,
 				classNameId, classPK, type, orderByComparator);
@@ -3013,7 +3029,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public SocialActivitySet fetchByU_C_C_T_First(long userId,
 		long classNameId, long classPK, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		List<SocialActivitySet> list = findByU_C_C_T(userId, classNameId,
 				classPK, type, 0, 1, orderByComparator);
 
@@ -3037,7 +3053,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet findByU_C_C_T_Last(long userId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator)
+		long classPK, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator)
 		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = fetchByU_C_C_T_Last(userId,
 				classNameId, classPK, type, orderByComparator);
@@ -3079,7 +3096,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public SocialActivitySet fetchByU_C_C_T_Last(long userId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator) {
+		long classPK, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		int count = countByU_C_C_T(userId, classNameId, classPK, type);
 
 		if (count == 0) {
@@ -3111,7 +3129,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	@Override
 	public SocialActivitySet[] findByU_C_C_T_PrevAndNext(long activitySetId,
 		long userId, long classNameId, long classPK, int type,
-		OrderByComparator orderByComparator) throws NoSuchActivitySetException {
+		OrderByComparator<SocialActivitySet> orderByComparator)
+		throws NoSuchActivitySetException {
 		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
 
 		Session session = null;
@@ -3141,8 +3160,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	protected SocialActivitySet getByU_C_C_T_PrevAndNext(Session session,
 		SocialActivitySet socialActivitySet, long userId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator,
-		boolean previous) {
+		long classPK, int type,
+		OrderByComparator<SocialActivitySet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3965,7 +3984,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	 */
 	@Override
 	public List<SocialActivitySet> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

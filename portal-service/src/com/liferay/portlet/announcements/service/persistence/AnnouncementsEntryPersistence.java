@@ -79,7 +79,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -182,7 +182,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63;.
@@ -195,7 +195,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -263,7 +263,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -276,7 +276,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -289,7 +289,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -302,7 +302,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -315,7 +315,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -329,7 +329,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -374,7 +374,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -388,7 +388,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -456,7 +456,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where userId = &#63;.
@@ -468,7 +468,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -480,7 +480,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where userId = &#63;.
@@ -492,7 +492,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -504,7 +504,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where userId = &#63;.
@@ -517,7 +517,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUserId_PrevAndNext(
 		long entryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -559,7 +559,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where userId = &#63;.
@@ -572,7 +572,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUserId_PrevAndNext(
 		long entryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -640,7 +640,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -653,7 +653,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -666,7 +666,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -679,7 +679,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -692,7 +692,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -706,7 +706,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -751,7 +751,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -765,7 +765,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -839,7 +839,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -853,7 +853,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_A_First(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -867,7 +867,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_A_First(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -881,7 +881,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_A_Last(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -895,7 +895,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_A_Last(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -910,7 +910,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByC_C_A_PrevAndNext(
 		long entryId, long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -958,7 +958,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -973,7 +973,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(
 		long entryId, long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
@@ -1103,7 +1103,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsEntry> orderByComparator);
 
 	/**
 	* Removes all the announcements entries from the database.

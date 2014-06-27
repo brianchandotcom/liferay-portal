@@ -157,7 +157,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -277,7 +277,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -306,7 +307,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		List<AnnouncementsEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -326,7 +327,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_Last(uuid,
 				orderByComparator);
 
@@ -355,7 +357,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -383,7 +385,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
@@ -414,7 +416,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry getByUuid_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -575,7 +578,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid(String uuid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -680,7 +683,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
@@ -715,7 +718,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry filterGetByUuid_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1087,7 +1091,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1217,7 +1222,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_C_First(uuid,
 				companyId, orderByComparator);
 
@@ -1250,7 +1256,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		List<AnnouncementsEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1272,7 +1278,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_C_Last(uuid,
 				companyId, orderByComparator);
 
@@ -1305,7 +1312,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1334,7 +1341,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
@@ -1365,7 +1373,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry getByUuid_C_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1535,7 +1544,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
-		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		long companyId, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1645,7 +1655,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(long entryId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(entryId, uuid, companyId,
@@ -1682,7 +1693,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry filterGetByUuid_C_PrevAndNext(
 		Session session, AnnouncementsEntry announcementsEntry, String uuid,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2064,7 +2077,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2170,7 +2183,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -2199,7 +2213,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		List<AnnouncementsEntry> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -2220,7 +2234,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -2249,7 +2264,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -2277,7 +2292,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUserId_PrevAndNext(long entryId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
@@ -2308,7 +2323,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry getByUserId_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2456,7 +2472,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUserId(userId, start, end, orderByComparator);
 		}
@@ -2547,7 +2563,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(long entryId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUserId_PrevAndNext(entryId, userId, orderByComparator);
@@ -2582,7 +2598,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry filterGetByUserId_PrevAndNext(
 		Session session, AnnouncementsEntry announcementsEntry, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2906,7 +2923,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3022,7 +3040,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_First(classNameId,
 				classPK, orderByComparator);
 
@@ -3055,7 +3074,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		List<AnnouncementsEntry> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -3077,7 +3096,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_Last(classNameId,
 				classPK, orderByComparator);
 
@@ -3110,7 +3130,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
@@ -3139,7 +3159,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] findByC_C_PrevAndNext(long entryId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
@@ -3170,7 +3191,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry getByC_C_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3326,7 +3348,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C(long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C(classNameId, classPK, start, end, orderByComparator);
 		}
@@ -3422,7 +3445,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(long entryId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_PrevAndNext(entryId, classNameId, classPK,
@@ -3458,7 +3482,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry filterGetByC_C_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3810,7 +3835,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C_A(long classNameId, long classPK,
-		boolean alert, int start, int end, OrderByComparator orderByComparator) {
+		boolean alert, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3932,7 +3958,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_First(long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator)
+		boolean alert, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_A_First(classNameId,
 				classPK, alert, orderByComparator);
@@ -3970,7 +3996,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_A_First(long classNameId,
-		long classPK, boolean alert, OrderByComparator orderByComparator) {
+		long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		List<AnnouncementsEntry> list = findByC_C_A(classNameId, classPK,
 				alert, 0, 1, orderByComparator);
 
@@ -3993,7 +4020,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_Last(long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator)
+		boolean alert, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_A_Last(classNameId,
 				classPK, alert, orderByComparator);
@@ -4031,7 +4058,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_A_Last(long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator) {
+		boolean alert, OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		int count = countByC_C_A(classNameId, classPK, alert);
 
 		if (count == 0) {
@@ -4062,7 +4089,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -4092,7 +4120,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry getByC_C_A_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator, boolean previous) {
+		boolean alert, OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4256,7 +4285,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C_A(long classNameId,
 		long classPK, boolean alert, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_A(classNameId, classPK, alert, start, end,
 				orderByComparator);
@@ -4359,7 +4388,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_A_PrevAndNext(entryId, classNameId, classPK,
 				alert, orderByComparator);
@@ -4396,7 +4426,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	protected AnnouncementsEntry filterGetByC_C_A_PrevAndNext(Session session,
 		AnnouncementsEntry announcementsEntry, long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator, boolean previous) {
+		boolean alert, OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5284,7 +5315,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public List<AnnouncementsEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

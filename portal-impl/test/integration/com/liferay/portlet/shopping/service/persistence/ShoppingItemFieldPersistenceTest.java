@@ -197,7 +197,7 @@ public class ShoppingItemFieldPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ShoppingItemField> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingItemField",
 			"itemFieldId", true, "itemId", true, "name", true, "values", true,
 			"description", true);

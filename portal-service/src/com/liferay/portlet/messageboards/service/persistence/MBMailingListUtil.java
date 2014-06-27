@@ -88,7 +88,7 @@ public class MBMailingListUtil {
 	 */
 	public static List<MBMailingList> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class MBMailingListUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_PrevAndNext(
 		long mailingListId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(mailingListId, uuid,
@@ -358,7 +358,7 @@ public class MBMailingListUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -374,7 +374,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -390,7 +390,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -406,7 +406,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -422,7 +422,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_C_PrevAndNext(
 		long mailingListId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(mailingListId, uuid, companyId,
@@ -510,7 +510,7 @@ public class MBMailingListUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -525,7 +525,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
@@ -539,7 +539,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -553,7 +553,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
@@ -567,7 +567,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -582,7 +582,7 @@ public class MBMailingListUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByActive_PrevAndNext(
 		long mailingListId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(mailingListId, active,
@@ -789,7 +789,7 @@ public class MBMailingListUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -364,7 +364,7 @@ public class DLFileShortcutPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLFileShortcut> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileShortcut", "uuid",
 			true, "fileShortcutId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

@@ -148,7 +148,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public List<MBStatsUser> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,7 +254,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchStatsUserException {
+		OrderByComparator<MBStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -283,7 +284,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		List<MBStatsUser> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -303,7 +304,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchStatsUserException {
+		OrderByComparator<MBStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (mbStatsUser != null) {
@@ -331,7 +333,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -359,7 +361,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser[] findByGroupId_PrevAndNext(long statsUserId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<MBStatsUser> orderByComparator)
 		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = findByPrimaryKey(statsUserId);
 
@@ -390,7 +392,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	protected MBStatsUser getByGroupId_PrevAndNext(Session session,
 		MBStatsUser mbStatsUser, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBStatsUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -623,7 +625,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public List<MBStatsUser> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -729,7 +731,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchStatsUserException {
+		OrderByComparator<MBStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByUserId_First(userId, orderByComparator);
 
 		if (mbStatsUser != null) {
@@ -757,7 +760,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		List<MBStatsUser> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -777,7 +780,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchStatsUserException {
+		OrderByComparator<MBStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByUserId_Last(userId, orderByComparator);
 
 		if (mbStatsUser != null) {
@@ -805,7 +809,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -833,7 +837,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser[] findByUserId_PrevAndNext(long statsUserId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<MBStatsUser> orderByComparator)
 		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = findByPrimaryKey(statsUserId);
 
@@ -864,7 +868,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	protected MBStatsUser getByUserId_PrevAndNext(Session session,
 		MBStatsUser mbStatsUser, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBStatsUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1331,7 +1335,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	@Override
 	public List<MBStatsUser> findByG_NotU_NotM(long groupId, long userId,
 		int messageCount, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1445,7 +1449,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByG_NotU_NotM_First(long groupId, long userId,
-		int messageCount, OrderByComparator orderByComparator)
+		int messageCount, OrderByComparator<MBStatsUser> orderByComparator)
 		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByG_NotU_NotM_First(groupId, userId,
 				messageCount, orderByComparator);
@@ -1483,7 +1487,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByG_NotU_NotM_First(long groupId, long userId,
-		int messageCount, OrderByComparator orderByComparator) {
+		int messageCount, OrderByComparator<MBStatsUser> orderByComparator) {
 		List<MBStatsUser> list = findByG_NotU_NotM(groupId, userId,
 				messageCount, 0, 1, orderByComparator);
 
@@ -1506,7 +1510,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser findByG_NotU_NotM_Last(long groupId, long userId,
-		int messageCount, OrderByComparator orderByComparator)
+		int messageCount, OrderByComparator<MBStatsUser> orderByComparator)
 		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = fetchByG_NotU_NotM_Last(groupId, userId,
 				messageCount, orderByComparator);
@@ -1544,7 +1548,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByG_NotU_NotM_Last(long groupId, long userId,
-		int messageCount, OrderByComparator orderByComparator) {
+		int messageCount, OrderByComparator<MBStatsUser> orderByComparator) {
 		int count = countByG_NotU_NotM(groupId, userId, messageCount);
 
 		if (count == 0) {
@@ -1575,7 +1579,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	@Override
 	public MBStatsUser[] findByG_NotU_NotM_PrevAndNext(long statsUserId,
 		long groupId, long userId, int messageCount,
-		OrderByComparator orderByComparator) throws NoSuchStatsUserException {
+		OrderByComparator<MBStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
 		MBStatsUser mbStatsUser = findByPrimaryKey(statsUserId);
 
 		Session session = null;
@@ -1605,7 +1610,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	protected MBStatsUser getByG_NotU_NotM_PrevAndNext(Session session,
 		MBStatsUser mbStatsUser, long groupId, long userId, int messageCount,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBStatsUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2367,7 +2372,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public List<MBStatsUser> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -147,7 +147,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public List<Subscription> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -253,7 +253,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchSubscriptionException {
+		OrderByComparator<Subscription> orderByComparator)
+		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -282,7 +283,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		List<Subscription> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -302,7 +303,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchSubscriptionException {
+		OrderByComparator<Subscription> orderByComparator)
+		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByUserId_Last(userId, orderByComparator);
 
 		if (subscription != null) {
@@ -330,7 +332,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -358,7 +360,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription[] findByUserId_PrevAndNext(long subscriptionId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 		Subscription subscription = findByPrimaryKey(subscriptionId);
 
@@ -389,7 +391,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	protected Subscription getByUserId_PrevAndNext(Session session,
 		Subscription subscription, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Subscription> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -626,7 +628,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public List<Subscription> findByU_C(long userId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Subscription> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -742,7 +744,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByU_C_First(long userId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchSubscriptionException {
+		OrderByComparator<Subscription> orderByComparator)
+		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByU_C_First(userId, classNameId,
 				orderByComparator);
 
@@ -775,7 +778,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByU_C_First(long userId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		List<Subscription> list = findByU_C(userId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -797,7 +800,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByU_C_Last(long userId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchSubscriptionException {
+		OrderByComparator<Subscription> orderByComparator)
+		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByU_C_Last(userId, classNameId,
 				orderByComparator);
 
@@ -830,7 +834,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByU_C_Last(long userId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		int count = countByU_C(userId, classNameId);
 
 		if (count == 0) {
@@ -859,7 +863,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription[] findByU_C_PrevAndNext(long subscriptionId,
-		long userId, long classNameId, OrderByComparator orderByComparator)
+		long userId, long classNameId,
+		OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 		Subscription subscription = findByPrimaryKey(subscriptionId);
 
@@ -890,7 +895,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	protected Subscription getByU_C_PrevAndNext(Session session,
 		Subscription subscription, long userId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Subscription> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1147,7 +1152,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public List<Subscription> findByC_C_C(long companyId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<Subscription> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1269,7 +1275,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByC_C_C_First(companyId, classNameId,
 				classPK, orderByComparator);
@@ -1307,7 +1313,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Subscription> orderByComparator) {
 		List<Subscription> list = findByC_C_C(companyId, classNameId, classPK,
 				0, 1, orderByComparator);
 
@@ -1330,7 +1336,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription findByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Subscription> orderByComparator)
 		throws NoSuchSubscriptionException {
 		Subscription subscription = fetchByC_C_C_Last(companyId, classNameId,
 				classPK, orderByComparator);
@@ -1368,7 +1374,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public Subscription fetchByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Subscription> orderByComparator) {
 		int count = countByC_C_C(companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -1399,7 +1405,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	@Override
 	public Subscription[] findByC_C_C_PrevAndNext(long subscriptionId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchSubscriptionException {
+		OrderByComparator<Subscription> orderByComparator)
+		throws NoSuchSubscriptionException {
 		Subscription subscription = findByPrimaryKey(subscriptionId);
 
 		Session session = null;
@@ -1429,7 +1436,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	protected Subscription getByC_C_C_PrevAndNext(Session session,
 		Subscription subscription, long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator, boolean previous) {
+		long classPK, OrderByComparator<Subscription> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1729,7 +1737,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	@Override
 	public List<Subscription> findByC_U_C_C(long companyId, long userId,
 		long classNameId, long[] classPKs, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		if (classPKs == null) {
 			classPKs = new long[0];
 		}
@@ -2856,7 +2864,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public List<Subscription> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Subscription> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

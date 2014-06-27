@@ -131,8 +131,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -149,8 +148,8 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -169,9 +168,8 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}

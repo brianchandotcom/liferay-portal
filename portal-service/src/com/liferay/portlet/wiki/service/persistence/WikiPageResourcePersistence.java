@@ -79,7 +79,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPageResource> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator);
 
 	/**
 	* Returns the first wiki page resource in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public com.liferay.portlet.wiki.model.WikiPageResource findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException;
 
 	/**
@@ -103,7 +103,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public com.liferay.portlet.wiki.model.WikiPageResource fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator);
 
 	/**
 	* Returns the last wiki page resource in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public com.liferay.portlet.wiki.model.WikiPageResource findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException;
 
 	/**
@@ -127,7 +127,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public com.liferay.portlet.wiki.model.WikiPageResource fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator);
 
 	/**
 	* Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public com.liferay.portlet.wiki.model.WikiPageResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException;
 
 	/**
@@ -309,7 +309,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPageResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator);
 
 	/**
 	* Removes all the wiki page resources from the database.

@@ -96,8 +96,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _dlFileEntryTypeLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +114,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _dlFileEntryTypeLocalService.dynamicQuery(dynamicQuery, start,
@@ -137,11 +135,10 @@ public class DLFileEntryTypeLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _dlFileEntryTypeLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -407,7 +404,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
 		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return _dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(folderId,
 			start, end, orderByComparator);
 	}
@@ -524,7 +521,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId,
 			start, end, orderByComparator);
 	}

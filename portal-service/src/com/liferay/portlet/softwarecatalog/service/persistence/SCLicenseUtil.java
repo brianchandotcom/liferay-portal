@@ -88,7 +88,7 @@ public class SCLicenseUtil {
 	 */
 	public static List<SCLicense> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense[] findByActive_PrevAndNext(
 		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(licenseId, active,
@@ -274,7 +274,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .filterFindByActive(active, start, end, orderByComparator);
 	}
@@ -290,7 +290,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByActive_PrevAndNext(
 		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .filterFindByActive_PrevAndNext(licenseId, active,
@@ -372,7 +372,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByA_R(
 		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .findByA_R(active, recommended, start, end, orderByComparator);
 	}
@@ -388,7 +388,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_First(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .findByA_R_First(active, recommended, orderByComparator);
@@ -404,7 +404,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_First(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .fetchByA_R_First(active, recommended, orderByComparator);
 	}
@@ -420,7 +420,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_Last(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .findByA_R_Last(active, recommended, orderByComparator);
@@ -436,7 +436,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_Last(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .fetchByA_R_Last(active, recommended, orderByComparator);
 	}
@@ -453,7 +453,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense[] findByA_R_PrevAndNext(
 		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .findByA_R_PrevAndNext(licenseId, active, recommended,
@@ -506,7 +506,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByA_R(
 		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence()
 				   .filterFindByA_R(active, recommended, start, end,
 			orderByComparator);
@@ -524,7 +524,7 @@ public class SCLicenseUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByA_R_PrevAndNext(
 		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException {
 		return getPersistence()
 				   .filterFindByA_R_PrevAndNext(licenseId, active, recommended,
@@ -680,7 +680,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -753,7 +753,7 @@ public class SCLicenseUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .getSCProductEntries(pk, start, end, orderByComparator);
 	}

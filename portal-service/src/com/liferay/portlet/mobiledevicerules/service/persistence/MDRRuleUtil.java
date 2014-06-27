@@ -87,7 +87,7 @@ public class MDRRuleUtil {
 	 */
 	public static List<MDRRule> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -150,7 +150,7 @@ public class MDRRuleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -164,7 +164,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -178,7 +178,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -192,7 +192,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -206,7 +206,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,7 +221,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_PrevAndNext(
 		long ruleId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(ruleId, uuid, orderByComparator);
@@ -355,7 +355,7 @@ public class MDRRuleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -371,7 +371,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -387,7 +387,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -403,7 +403,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -419,7 +419,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -436,7 +436,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_C_PrevAndNext(
 		long ruleId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(ruleId, uuid, companyId,
@@ -507,7 +507,7 @@ public class MDRRuleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByRuleGroupId(
 		long ruleGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .findByRuleGroupId(ruleGroupId, start, end, orderByComparator);
 	}
@@ -522,7 +522,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_First(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_First(ruleGroupId, orderByComparator);
@@ -537,7 +537,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_First(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupId_First(ruleGroupId, orderByComparator);
 	}
@@ -552,7 +552,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_Last(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_Last(ruleGroupId, orderByComparator);
@@ -567,7 +567,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_Last(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupId_Last(ruleGroupId, orderByComparator);
 	}
@@ -583,7 +583,7 @@ public class MDRRuleUtil {
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByRuleGroupId_PrevAndNext(
 		long ruleId, long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_PrevAndNext(ruleId, ruleGroupId,
@@ -726,7 +726,7 @@ public class MDRRuleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -79,7 +79,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where userId = &#63;.
@@ -91,7 +91,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where userId = &#63;.
@@ -115,7 +115,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where userId = &#63;.
@@ -140,7 +140,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByUserId_PrevAndNext(
 		long fileRankId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -197,7 +197,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where fileEntryId = &#63;.
@@ -209,7 +209,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByFileEntryId_First(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -221,7 +221,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_First(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where fileEntryId = &#63;.
@@ -233,7 +233,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByFileEntryId_Last(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -245,7 +245,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByFileEntryId_Last(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where fileEntryId = &#63;.
@@ -258,7 +258,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByFileEntryId_PrevAndNext(
 		long fileRankId, long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -318,7 +318,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -331,7 +331,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -344,7 +344,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -357,7 +357,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -370,7 +370,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63;.
@@ -384,7 +384,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByG_U_PrevAndNext(
 		long fileRankId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -449,7 +449,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByG_U_A(
 		long groupId, long userId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the first document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -463,7 +463,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_A_First(
 		long groupId, long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -477,7 +477,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_First(
 		long groupId, long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the last document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -491,7 +491,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank findByG_U_A_Last(
 		long groupId, long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -505,7 +505,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchByG_U_A_Last(
 		long groupId, long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Returns the document library file ranks before and after the current document library file rank in the ordered set where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -520,7 +520,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank[] findByG_U_A_PrevAndNext(
 		long fileRankId, long groupId, long userId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	/**
@@ -698,7 +698,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileRank> orderByComparator);
 
 	/**
 	* Removes all the document library file ranks from the database.

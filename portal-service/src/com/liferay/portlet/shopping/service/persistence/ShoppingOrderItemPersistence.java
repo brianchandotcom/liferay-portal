@@ -79,7 +79,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrderItem> findByOrderId(
 		long orderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator);
 
 	/**
 	* Returns the first shopping order item in the ordered set where orderId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem findByOrderId_First(
 		long orderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderItemException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem fetchByOrderId_First(
 		long orderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator);
 
 	/**
 	* Returns the last shopping order item in the ordered set where orderId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem findByOrderId_Last(
 		long orderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderItemException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem fetchByOrderId_Last(
 		long orderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator);
 
 	/**
 	* Returns the shopping order items before and after the current shopping order item in the ordered set where orderId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem[] findByOrderId_PrevAndNext(
 		long orderItemId, long orderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderItemException;
 
 	/**
@@ -256,7 +256,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrderItem> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrderItem> orderByComparator);
 
 	/**
 	* Removes all the shopping order items from the database.

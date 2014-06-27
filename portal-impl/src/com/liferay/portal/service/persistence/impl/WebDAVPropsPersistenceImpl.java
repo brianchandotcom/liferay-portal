@@ -845,7 +845,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 */
 	@Override
 	public List<WebDAVProps> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WebDAVProps> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

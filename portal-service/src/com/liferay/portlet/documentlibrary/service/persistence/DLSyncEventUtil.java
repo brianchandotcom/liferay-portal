@@ -88,7 +88,7 @@ public class DLSyncEventUtil {
 	 */
 	public static List<DLSyncEvent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLSyncEvent> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class DLSyncEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
 		long modifiedTime, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator) {
 		return getPersistence()
 				   .findByModifiedTime(modifiedTime, start, end,
 			orderByComparator);
@@ -168,7 +168,7 @@ public class DLSyncEventUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_First(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_First(modifiedTime, orderByComparator);
@@ -183,7 +183,7 @@ public class DLSyncEventUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_First(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByModifiedTime_First(modifiedTime, orderByComparator);
 	}
@@ -198,7 +198,7 @@ public class DLSyncEventUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_Last(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_Last(modifiedTime, orderByComparator);
@@ -213,7 +213,7 @@ public class DLSyncEventUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_Last(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByModifiedTime_Last(modifiedTime, orderByComparator);
 	}
@@ -229,7 +229,7 @@ public class DLSyncEventUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent[] findByModifiedTime_PrevAndNext(
 		long syncEventId, long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_PrevAndNext(syncEventId, modifiedTime,
@@ -430,7 +430,7 @@ public class DLSyncEventUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

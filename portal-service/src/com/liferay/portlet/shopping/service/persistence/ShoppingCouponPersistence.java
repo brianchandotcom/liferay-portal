@@ -79,7 +79,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the first shopping coupon in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the last shopping coupon in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the shopping coupons before and after the current shopping coupon in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCoupon[] findByGroupId_PrevAndNext(
 		long couponId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -304,7 +304,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
 
 	/**
 	* Removes all the shopping coupons from the database.

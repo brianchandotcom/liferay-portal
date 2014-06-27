@@ -79,7 +79,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -103,7 +103,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -127,7 +127,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByUuid_PrevAndNext(
 		long voteId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -253,7 +253,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -279,7 +279,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -305,7 +305,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByUuid_C_PrevAndNext(
 		long voteId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -378,7 +378,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByQuestionId(
 		long questionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where questionId = &#63;.
@@ -390,7 +390,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByQuestionId_First(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -402,7 +402,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_First(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where questionId = &#63;.
@@ -414,7 +414,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByQuestionId_Last(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -426,7 +426,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_Last(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63;.
@@ -439,7 +439,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByQuestionId_PrevAndNext(
 		long voteId, long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -496,7 +496,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByChoiceId(
 		long choiceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where choiceId = &#63;.
@@ -508,7 +508,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByChoiceId_First(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -520,7 +520,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_First(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where choiceId = &#63;.
@@ -532,7 +532,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByChoiceId_Last(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -544,7 +544,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_Last(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where choiceId = &#63;.
@@ -557,7 +557,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByChoiceId_PrevAndNext(
 		long voteId, long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
@@ -722,7 +722,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsVote> orderByComparator);
 
 	/**
 	* Removes all the polls votes from the database.

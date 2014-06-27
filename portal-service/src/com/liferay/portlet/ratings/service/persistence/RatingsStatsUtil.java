@@ -88,7 +88,7 @@ public class RatingsStatsUtil {
 	 */
 	public static List<RatingsStats> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsStats> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -288,7 +288,7 @@ public class RatingsStatsUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsStats> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

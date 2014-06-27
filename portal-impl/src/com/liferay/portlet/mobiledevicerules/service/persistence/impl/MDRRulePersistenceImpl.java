@@ -149,7 +149,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public List<MDRRule> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mdrRule != null) {
@@ -297,7 +298,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		List<MDRRule> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mdrRule != null) {
@@ -345,7 +347,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule[] findByUuid_PrevAndNext(long ruleId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = findByPrimaryKey(ruleId);
 
 		Session session = null;
@@ -402,7 +405,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	}
 
 	protected MDRRule getByUuid_PrevAndNext(Session session, MDRRule mdrRule,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<MDRRule> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -926,7 +930,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public List<MDRRule> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MDRRule> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1056,7 +1060,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (mdrRule != null) {
@@ -1088,7 +1093,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		List<MDRRule> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1110,7 +1115,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (mdrRule != null) {
@@ -1142,7 +1148,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1171,7 +1177,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule[] findByUuid_C_PrevAndNext(long ruleId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException {
 		MDRRule mdrRule = findByPrimaryKey(ruleId);
 
@@ -1201,8 +1207,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	}
 
 	protected MDRRule getByUuid_C_PrevAndNext(Session session, MDRRule mdrRule,
-		String uuid, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		String uuid, long companyId,
+		OrderByComparator<MDRRule> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1477,7 +1483,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public List<MDRRule> findByRuleGroupId(long ruleGroupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MDRRule> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1583,7 +1589,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByRuleGroupId_First(long ruleGroupId,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByRuleGroupId_First(ruleGroupId,
 				orderByComparator);
 
@@ -1612,7 +1619,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByRuleGroupId_First(long ruleGroupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		List<MDRRule> list = findByRuleGroupId(ruleGroupId, 0, 1,
 				orderByComparator);
 
@@ -1633,7 +1640,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule findByRuleGroupId_Last(long ruleGroupId,
-		OrderByComparator orderByComparator) throws NoSuchRuleException {
+		OrderByComparator<MDRRule> orderByComparator)
+		throws NoSuchRuleException {
 		MDRRule mdrRule = fetchByRuleGroupId_Last(ruleGroupId, orderByComparator);
 
 		if (mdrRule != null) {
@@ -1661,7 +1669,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule fetchByRuleGroupId_Last(long ruleGroupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		int count = countByRuleGroupId(ruleGroupId);
 
 		if (count == 0) {
@@ -1689,7 +1697,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public MDRRule[] findByRuleGroupId_PrevAndNext(long ruleId,
-		long ruleGroupId, OrderByComparator orderByComparator)
+		long ruleGroupId, OrderByComparator<MDRRule> orderByComparator)
 		throws NoSuchRuleException {
 		MDRRule mdrRule = findByPrimaryKey(ruleId);
 
@@ -1719,8 +1727,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	}
 
 	protected MDRRule getByRuleGroupId_PrevAndNext(Session session,
-		MDRRule mdrRule, long ruleGroupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		MDRRule mdrRule, long ruleGroupId,
+		OrderByComparator<MDRRule> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2488,7 +2496,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	@Override
 	public List<MDRRule> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRule> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

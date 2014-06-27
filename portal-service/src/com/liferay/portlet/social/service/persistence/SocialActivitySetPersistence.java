@@ -79,7 +79,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByGroupId_PrevAndNext(
 		long activitySetId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -197,7 +197,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where userId = &#63;.
@@ -209,7 +209,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -221,7 +221,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where userId = &#63;.
@@ -233,7 +233,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -245,7 +245,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where userId = &#63;.
@@ -258,7 +258,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByUserId_PrevAndNext(
 		long activitySetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -321,7 +321,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByG_U_T(
 		long groupId, long userId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
@@ -335,7 +335,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByG_U_T_First(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -349,7 +349,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_First(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
@@ -363,7 +363,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByG_U_T_Last(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -377,7 +377,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_Last(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
@@ -392,7 +392,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByG_U_T_PrevAndNext(
 		long activitySetId, long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -459,7 +459,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -473,7 +473,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByC_C_T_First(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -487,7 +487,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_First(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -501,7 +501,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByC_C_T_Last(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -515,7 +515,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_Last(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -530,7 +530,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByC_C_T_PrevAndNext(
 		long activitySetId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -602,7 +602,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByG_U_C_T(
 		long groupId, long userId, long classNameId, int type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
@@ -617,7 +617,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByG_U_C_T_First(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -632,7 +632,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_C_T_First(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
@@ -647,7 +647,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByG_U_C_T_Last(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -662,7 +662,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_C_T_Last(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
@@ -679,7 +679,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByG_U_C_T_PrevAndNext(
 		long activitySetId, long groupId, long userId, long classNameId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -755,7 +755,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByU_C_C_T(
 		long userId, long classNameId, long classPK, int type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the first social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -770,7 +770,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByU_C_C_T_First(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -785,7 +785,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_First(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the last social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -800,7 +800,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet findByU_C_C_T_Last(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -815,7 +815,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_Last(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Returns the social activity sets before and after the current social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -832,7 +832,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	public com.liferay.portlet.social.model.SocialActivitySet[] findByU_C_C_T_PrevAndNext(
 		long activitySetId, long userId, long classNameId, long classPK,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException;
 
 	/**
@@ -956,7 +956,7 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator);
 
 	/**
 	* Removes all the social activity sets from the database.

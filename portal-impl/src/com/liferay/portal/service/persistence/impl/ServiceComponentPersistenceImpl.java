@@ -156,7 +156,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public List<ServiceComponent> findByBuildNamespace(String buildNamespace,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -281,7 +282,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public ServiceComponent findByBuildNamespace_First(String buildNamespace,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException {
 		ServiceComponent serviceComponent = fetchByBuildNamespace_First(buildNamespace,
 				orderByComparator);
@@ -311,7 +312,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public ServiceComponent fetchByBuildNamespace_First(String buildNamespace,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		List<ServiceComponent> list = findByBuildNamespace(buildNamespace, 0,
 				1, orderByComparator);
 
@@ -332,7 +333,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public ServiceComponent findByBuildNamespace_Last(String buildNamespace,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException {
 		ServiceComponent serviceComponent = fetchByBuildNamespace_Last(buildNamespace,
 				orderByComparator);
@@ -362,7 +363,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public ServiceComponent fetchByBuildNamespace_Last(String buildNamespace,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		int count = countByBuildNamespace(buildNamespace);
 
 		if (count == 0) {
@@ -391,7 +392,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	@Override
 	public ServiceComponent[] findByBuildNamespace_PrevAndNext(
 		long serviceComponentId, String buildNamespace,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws NoSuchServiceComponentException {
 		ServiceComponent serviceComponent = findByPrimaryKey(serviceComponentId);
 
@@ -422,8 +423,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	protected ServiceComponent getByBuildNamespace_PrevAndNext(
 		Session session, ServiceComponent serviceComponent,
-		String buildNamespace, OrderByComparator orderByComparator,
-		boolean previous) {
+		String buildNamespace,
+		OrderByComparator<ServiceComponent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1454,7 +1455,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public List<ServiceComponent> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

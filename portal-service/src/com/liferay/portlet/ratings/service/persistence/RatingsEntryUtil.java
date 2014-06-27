@@ -88,7 +88,7 @@ public class RatingsEntryUtil {
 	 */
 	public static List<RatingsEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class RatingsEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
@@ -294,7 +294,7 @@ public class RatingsEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -310,7 +310,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -326,7 +326,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -342,7 +342,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -358,7 +358,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -375,7 +375,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
@@ -449,7 +449,7 @@ public class RatingsEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -466,7 +466,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -482,7 +482,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -498,7 +498,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -514,7 +514,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -531,7 +531,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(entryId, classNameId, classPK,
@@ -678,7 +678,7 @@ public class RatingsEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C_S(
 		long classNameId, long classPK, double score, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_S(classNameId, classPK, score, start, end,
 			orderByComparator);
@@ -696,7 +696,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_S_First(
 		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, score,
@@ -714,7 +714,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_First(
 		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_First(classNameId, classPK, score,
 			orderByComparator);
@@ -732,7 +732,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_S_Last(
 		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, score,
@@ -750,7 +750,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_Last(
 		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_Last(classNameId, classPK, score,
 			orderByComparator);
@@ -769,7 +769,7 @@ public class RatingsEntryUtil {
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByC_C_S_PrevAndNext(
 		long entryId, long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(entryId, classNameId, classPK,
@@ -915,7 +915,7 @@ public class RatingsEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

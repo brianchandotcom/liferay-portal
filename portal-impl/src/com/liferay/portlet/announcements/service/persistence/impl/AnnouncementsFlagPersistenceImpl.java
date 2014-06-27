@@ -154,7 +154,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public List<AnnouncementsFlag> findByEntryId(long entryId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AnnouncementsFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_First(long entryId,
-		OrderByComparator orderByComparator) throws NoSuchFlagException {
+		OrderByComparator<AnnouncementsFlag> orderByComparator)
+		throws NoSuchFlagException {
 		AnnouncementsFlag announcementsFlag = fetchByEntryId_First(entryId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag fetchByEntryId_First(long entryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 		List<AnnouncementsFlag> list = findByEntryId(entryId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
-		OrderByComparator orderByComparator) throws NoSuchFlagException {
+		OrderByComparator<AnnouncementsFlag> orderByComparator)
+		throws NoSuchFlagException {
 		AnnouncementsFlag announcementsFlag = fetchByEntryId_Last(entryId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag fetchByEntryId_Last(long entryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 		int count = countByEntryId(entryId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
-		long entryId, OrderByComparator orderByComparator)
+		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
 		AnnouncementsFlag announcementsFlag = findByPrimaryKey(flagId);
 
@@ -398,7 +400,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	protected AnnouncementsFlag getByEntryId_PrevAndNext(Session session,
 		AnnouncementsFlag announcementsFlag, long entryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1386,7 +1388,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public List<AnnouncementsFlag> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

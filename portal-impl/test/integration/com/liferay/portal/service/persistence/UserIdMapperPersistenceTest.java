@@ -233,7 +233,7 @@ public class UserIdMapperPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<UserIdMapper> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserIdMapper",
 			"mvccVersion", true, "userIdMapperId", true, "userId", true,
 			"type", true, "description", true, "externalUserId", true);

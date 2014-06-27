@@ -79,7 +79,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_PrevAndNext(
 		long vocabularyId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -253,7 +253,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -279,7 +279,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -305,7 +305,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_C_PrevAndNext(
 		long vocabularyId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -378,7 +378,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -402,7 +402,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -426,7 +426,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] findByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -481,7 +481,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -536,7 +536,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns all the asset vocabularies where groupId = any &#63;.
@@ -581,7 +581,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Removes all the asset vocabularies where groupId = &#63; from the database.
@@ -661,7 +661,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
@@ -673,7 +673,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -685,7 +685,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
@@ -697,7 +697,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -709,7 +709,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where companyId = &#63;.
@@ -722,7 +722,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] findByCompanyId_PrevAndNext(
 		long vocabularyId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -835,7 +835,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_LikeN(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -848,7 +848,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -861,7 +861,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -874,7 +874,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -887,7 +887,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -901,7 +901,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] findByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -946,7 +946,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_LikeN(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -960,7 +960,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -1087,7 +1087,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
 
 	/**
 	* Removes all the asset vocabularies from the database.

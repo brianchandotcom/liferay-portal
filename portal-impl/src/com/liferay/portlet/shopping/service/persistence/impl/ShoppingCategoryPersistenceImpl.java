@@ -155,7 +155,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public List<ShoppingCategory> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ShoppingCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,7 +261,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<ShoppingCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -290,7 +291,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		List<ShoppingCategory> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -311,7 +312,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<ShoppingCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -340,7 +342,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -368,7 +370,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory[] findByGroupId_PrevAndNext(long categoryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<ShoppingCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = findByPrimaryKey(categoryId);
 
@@ -399,7 +401,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	protected ShoppingCategory getByGroupId_PrevAndNext(Session session,
 		ShoppingCategory shoppingCategory, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -547,7 +549,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ShoppingCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -638,7 +640,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<ShoppingCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(categoryId, groupId,
@@ -674,7 +676,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	protected ShoppingCategory filterGetByGroupId_PrevAndNext(Session session,
 		ShoppingCategory shoppingCategory, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -998,7 +1000,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public List<ShoppingCategory> findByG_P(long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1114,7 +1116,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory findByG_P_First(long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
+		long parentCategoryId,
+		OrderByComparator<ShoppingCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByG_P_First(groupId,
 				parentCategoryId, orderByComparator);
@@ -1148,7 +1151,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory fetchByG_P_First(long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator) {
+		long parentCategoryId,
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		List<ShoppingCategory> list = findByG_P(groupId, parentCategoryId, 0,
 				1, orderByComparator);
 
@@ -1170,7 +1174,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory findByG_P_Last(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator) throws NoSuchCategoryException {
+		OrderByComparator<ShoppingCategory> orderByComparator)
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByG_P_Last(groupId,
 				parentCategoryId, orderByComparator);
 
@@ -1203,7 +1208,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory fetchByG_P_Last(long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator) {
+		long parentCategoryId,
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		int count = countByG_P(groupId, parentCategoryId);
 
 		if (count == 0) {
@@ -1232,7 +1238,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory[] findByG_P_PrevAndNext(long categoryId,
-		long groupId, long parentCategoryId, OrderByComparator orderByComparator)
+		long groupId, long parentCategoryId,
+		OrderByComparator<ShoppingCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = findByPrimaryKey(categoryId);
 
@@ -1263,7 +1270,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	protected ShoppingCategory getByG_P_PrevAndNext(Session session,
 		ShoppingCategory shoppingCategory, long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1420,7 +1427,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public List<ShoppingCategory> filterFindByG_P(long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentCategoryId, start, end,
 				orderByComparator);
@@ -1517,7 +1524,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByG_P_PrevAndNext(long categoryId,
-		long groupId, long parentCategoryId, OrderByComparator orderByComparator)
+		long groupId, long parentCategoryId,
+		OrderByComparator<ShoppingCategory> orderByComparator)
 		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(categoryId, groupId, parentCategoryId,
@@ -1553,7 +1561,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	protected ShoppingCategory filterGetByG_P_PrevAndNext(Session session,
 		ShoppingCategory shoppingCategory, long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCategory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2346,7 +2354,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	@Override
 	public List<ShoppingCategory> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCategory> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

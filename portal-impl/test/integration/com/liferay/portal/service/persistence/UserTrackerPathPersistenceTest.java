@@ -199,7 +199,7 @@ public class UserTrackerPathPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<UserTrackerPath> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserTrackerPath",
 			"mvccVersion", true, "userTrackerPathId", true, "userTrackerId",
 			true, "path", true, "pathDate", true);

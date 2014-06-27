@@ -276,7 +276,7 @@ public class LayoutSetPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<LayoutSet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutSet", "mvccVersion",
 			true, "layoutSetId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "privateLayout", true,

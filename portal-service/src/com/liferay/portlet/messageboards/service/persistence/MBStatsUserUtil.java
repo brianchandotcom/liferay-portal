@@ -88,7 +88,7 @@ public class MBStatsUserUtil {
 	 */
 	public static List<MBStatsUser> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class MBStatsUserUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser[] findByGroupId_PrevAndNext(
 		long statsUserId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(statsUserId, groupId,
@@ -293,7 +293,7 @@ public class MBStatsUserUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -322,7 +322,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -336,7 +336,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -350,7 +350,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -365,7 +365,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser[] findByUserId_PrevAndNext(
 		long statsUserId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(statsUserId, userId,
@@ -504,7 +504,7 @@ public class MBStatsUserUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> findByG_NotU_NotM(
 		long groupId, long userId, int messageCount, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .findByG_NotU_NotM(groupId, userId, messageCount, start,
 			end, orderByComparator);
@@ -522,7 +522,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByG_NotU_NotM_First(
 		long groupId, long userId, int messageCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_First(groupId, userId, messageCount,
@@ -540,7 +540,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByG_NotU_NotM_First(
 		long groupId, long userId, int messageCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotU_NotM_First(groupId, userId, messageCount,
 			orderByComparator);
@@ -558,7 +558,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser findByG_NotU_NotM_Last(
 		long groupId, long userId, int messageCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_Last(groupId, userId, messageCount,
@@ -576,7 +576,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser fetchByG_NotU_NotM_Last(
 		long groupId, long userId, int messageCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotU_NotM_Last(groupId, userId, messageCount,
 			orderByComparator);
@@ -595,7 +595,7 @@ public class MBStatsUserUtil {
 	*/
 	public static com.liferay.portlet.messageboards.model.MBStatsUser[] findByG_NotU_NotM_PrevAndNext(
 		long statsUserId, long groupId, long userId, int messageCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_PrevAndNext(statsUserId, groupId, userId,
@@ -744,7 +744,7 @@ public class MBStatsUserUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBStatsUser> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

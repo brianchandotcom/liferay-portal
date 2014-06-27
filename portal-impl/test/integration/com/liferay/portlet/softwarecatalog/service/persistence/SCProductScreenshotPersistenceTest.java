@@ -245,7 +245,7 @@ public class SCProductScreenshotPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SCProductScreenshot> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductScreenshot",
 			"productScreenshotId", true, "companyId", true, "groupId", true,
 			"productEntryId", true, "thumbnailId", true, "fullImageId", true,

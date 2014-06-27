@@ -87,7 +87,7 @@ public class CounterUtil {
 	 */
 	public static List<Counter> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Counter> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -223,7 +223,7 @@ public class CounterUtil {
 	*/
 	public static java.util.List<com.liferay.counter.model.Counter> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.counter.model.Counter> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

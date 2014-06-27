@@ -251,7 +251,7 @@ public class ShoppingCartPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ShoppingCart> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingCart", "cartId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

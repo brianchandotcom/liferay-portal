@@ -149,7 +149,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public List<DDMContent> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByUuid_First(uuid, orderByComparator);
 
 		if (ddmContent != null) {
@@ -297,7 +298,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		List<DDMContent> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ddmContent != null) {
@@ -345,7 +347,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent[] findByUuid_PrevAndNext(long contentId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = findByPrimaryKey(contentId);
 
 		Session session = null;
@@ -403,7 +406,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	protected DDMContent getByUuid_PrevAndNext(Session session,
 		DDMContent ddmContent, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -927,7 +930,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public List<DDMContent> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMContent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1057,7 +1060,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1090,7 +1094,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		List<DDMContent> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1112,7 +1116,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1145,7 +1150,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1174,7 +1179,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent[] findByUuid_C_PrevAndNext(long contentId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 		DDMContent ddmContent = findByPrimaryKey(contentId);
 
@@ -1205,7 +1210,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	protected DDMContent getByUuid_C_PrevAndNext(Session session,
 		DDMContent ddmContent, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1478,7 +1483,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public List<DDMContent> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1584,7 +1589,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (ddmContent != null) {
@@ -1612,7 +1618,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		List<DDMContent> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1632,7 +1638,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (ddmContent != null) {
@@ -1660,7 +1667,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1688,7 +1695,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent[] findByGroupId_PrevAndNext(long contentId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = findByPrimaryKey(contentId);
 
 		Session session = null;
@@ -1718,7 +1726,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	protected DDMContent getByGroupId_PrevAndNext(Session session,
 		DDMContent ddmContent, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1952,7 +1960,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public List<DDMContent> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2058,7 +2066,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2087,7 +2096,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		List<DDMContent> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2108,7 +2117,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchContentException {
+		OrderByComparator<DDMContent> orderByComparator)
+		throws NoSuchContentException {
 		DDMContent ddmContent = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2137,7 +2147,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2165,7 +2175,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public DDMContent[] findByCompanyId_PrevAndNext(long contentId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<DDMContent> orderByComparator)
 		throws NoSuchContentException {
 		DDMContent ddmContent = findByPrimaryKey(contentId);
 
@@ -2196,7 +2206,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	protected DDMContent getByCompanyId_PrevAndNext(Session session,
 		DDMContent ddmContent, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2991,7 +3001,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	@Override
 	public List<DDMContent> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMContent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -160,7 +160,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByResourceBlockId(long resourceBlockId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -270,7 +270,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByResourceBlockId_First(long resourceBlockId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByResourceBlockId_First(resourceBlockId,
 				orderByComparator);
 
@@ -299,7 +300,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByResourceBlockId_First(long resourceBlockId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByResourceBlockId(resourceBlockId, 0,
 				1, orderByComparator);
 
@@ -320,7 +321,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByResourceBlockId_Last(long resourceBlockId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByResourceBlockId_Last(resourceBlockId,
 				orderByComparator);
 
@@ -349,7 +351,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByResourceBlockId_Last(long resourceBlockId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByResourceBlockId(resourceBlockId);
 
 		if (count == 0) {
@@ -377,7 +379,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByResourceBlockId_PrevAndNext(long folderId,
-		long resourceBlockId, OrderByComparator orderByComparator)
+		long resourceBlockId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -408,7 +411,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByResourceBlockId_PrevAndNext(
 		Session session, BookmarksFolder bookmarksFolder, long resourceBlockId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -644,7 +647,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -764,7 +767,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -793,7 +797,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -813,7 +817,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByUuid_Last(uuid,
 				orderByComparator);
 
@@ -842,7 +847,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -870,7 +875,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByUuid_PrevAndNext(long folderId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -900,7 +906,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByUuid_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1429,7 +1435,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1559,7 +1565,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1592,7 +1599,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1614,7 +1621,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1647,7 +1655,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1676,7 +1684,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByUuid_C_PrevAndNext(long folderId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -1707,7 +1716,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByUuid_C_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1984,7 +1993,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2090,7 +2099,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -2119,7 +2129,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -2140,7 +2150,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -2169,7 +2180,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -2197,7 +2208,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByGroupId_PrevAndNext(long folderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -2228,7 +2239,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByGroupId_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2376,7 +2387,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -2441,7 +2452,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] filterFindByGroupId_PrevAndNext(long folderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(folderId, groupId,
@@ -2477,7 +2488,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder filterGetByGroupId_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2765,7 +2776,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2871,7 +2882,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2900,7 +2912,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2921,7 +2933,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2950,7 +2963,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2978,7 +2991,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByCompanyId_PrevAndNext(long folderId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -3009,7 +3022,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByCompanyId_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3249,7 +3262,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByG_P(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3365,7 +3378,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_First(groupId,
 				parentFolderId, orderByComparator);
 
@@ -3398,7 +3412,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByG_P(groupId, parentFolderId, 0, 1,
 				orderByComparator);
 
@@ -3420,7 +3434,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_Last(groupId,
 				parentFolderId, orderByComparator);
 
@@ -3453,7 +3468,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByG_P(groupId, parentFolderId);
 
 		if (count == 0) {
@@ -3482,7 +3497,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByG_P_PrevAndNext(long folderId, long groupId,
-		long parentFolderId, OrderByComparator orderByComparator)
+		long parentFolderId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -3513,7 +3529,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByG_P_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3670,7 +3686,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public List<BookmarksFolder> filterFindByG_P(long groupId,
 		long parentFolderId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentFolderId, start, end,
 				orderByComparator);
@@ -3741,7 +3757,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] filterFindByG_P_PrevAndNext(long folderId,
-		long groupId, long parentFolderId, OrderByComparator orderByComparator)
+		long groupId, long parentFolderId,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
@@ -3777,7 +3794,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder filterGetByG_P_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4074,7 +4091,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByC_NotS(long companyId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4182,7 +4199,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByC_NotS_First(companyId,
 				status, orderByComparator);
 
@@ -4215,7 +4233,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByC_NotS(companyId, status, 0, 1,
 				orderByComparator);
 
@@ -4237,7 +4255,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByC_NotS_Last(companyId, status,
 				orderByComparator);
 
@@ -4270,7 +4289,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByC_NotS(companyId, status);
 
 		if (count == 0) {
@@ -4299,7 +4318,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder[] findByC_NotS_PrevAndNext(long folderId,
-		long companyId, int status, OrderByComparator orderByComparator)
+		long companyId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
@@ -4330,7 +4350,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByC_NotS_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long companyId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<BookmarksFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4588,7 +4608,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public List<BookmarksFolder> findByF_C_P_NotS(long folderId,
 		long companyId, long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4709,7 +4729,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder findByF_C_P_NotS_First(long folderId,
 		long companyId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByF_C_P_NotS_First(folderId,
 				companyId, parentFolderId, status, orderByComparator);
 
@@ -4751,7 +4772,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder fetchByF_C_P_NotS_First(long folderId,
 		long companyId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByF_C_P_NotS(folderId, companyId,
 				parentFolderId, status, 0, 1, orderByComparator);
 
@@ -4775,7 +4796,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByF_C_P_NotS_Last(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByF_C_P_NotS_Last(folderId,
 				companyId, parentFolderId, status, orderByComparator);
@@ -4818,7 +4840,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder fetchByF_C_P_NotS_Last(long folderId,
 		long companyId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByF_C_P_NotS(folderId, companyId, parentFolderId,
 				status);
 
@@ -5011,7 +5033,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findByG_P_S(long groupId, long parentFolderId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5133,7 +5156,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_S_First(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_S_First(groupId,
 				parentFolderId, status, orderByComparator);
@@ -5171,7 +5194,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_S_First(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByG_P_S(groupId, parentFolderId,
 				status, 0, 1, orderByComparator);
 
@@ -5194,7 +5218,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_S_Last(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_S_Last(groupId,
 				parentFolderId, status, orderByComparator);
@@ -5232,7 +5256,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_S_Last(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByG_P_S(groupId, parentFolderId, status);
 
 		if (count == 0) {
@@ -5263,7 +5287,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder[] findByG_P_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -5293,7 +5318,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByG_P_S_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<BookmarksFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5458,7 +5484,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public List<BookmarksFolder> filterFindByG_P_S(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentFolderId, status, start, end,
 				orderByComparator);
@@ -5535,7 +5561,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder[] filterFindByG_P_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S_PrevAndNext(folderId, groupId, parentFolderId,
 				status, orderByComparator);
@@ -5570,7 +5597,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder filterGetByG_P_S_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<BookmarksFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5894,7 +5922,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public List<BookmarksFolder> findByG_P_NotS(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6008,7 +6036,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_NotS_First(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_NotS_First(groupId,
 				parentFolderId, status, orderByComparator);
@@ -6046,7 +6075,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_NotS_First(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		List<BookmarksFolder> list = findByG_P_NotS(groupId, parentFolderId,
 				status, 0, 1, orderByComparator);
 
@@ -6069,7 +6099,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder findByG_P_NotS_Last(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator)
 		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = fetchByG_P_NotS_Last(groupId,
 				parentFolderId, status, orderByComparator);
@@ -6107,7 +6138,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public BookmarksFolder fetchByG_P_NotS_Last(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		int count = countByG_P_NotS(groupId, parentFolderId, status);
 
 		if (count == 0) {
@@ -6138,7 +6170,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder[] findByG_P_NotS_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		BookmarksFolder bookmarksFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -6168,7 +6201,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder getByG_P_NotS_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<BookmarksFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6333,7 +6367,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public List<BookmarksFolder> filterFindByG_P_NotS(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_NotS(groupId, parentFolderId, status, start, end,
 				orderByComparator);
@@ -6410,7 +6444,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder[] filterFindByG_P_NotS_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<BookmarksFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_NotS_PrevAndNext(folderId, groupId,
 				parentFolderId, status, orderByComparator);
@@ -6447,7 +6482,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 	protected BookmarksFolder filterGetByG_P_NotS_PrevAndNext(Session session,
 		BookmarksFolder bookmarksFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<BookmarksFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7400,7 +7436,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public List<BookmarksFolder> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

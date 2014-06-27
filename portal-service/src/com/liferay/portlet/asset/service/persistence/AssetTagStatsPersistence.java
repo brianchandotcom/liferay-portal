@@ -79,7 +79,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findByTagId(
 		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the first asset tag stats in the ordered set where tagId = &#63;.
@@ -91,7 +91,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats findByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the last asset tag stats in the ordered set where tagId = &#63;.
@@ -115,7 +115,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats findByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the asset tag statses before and after the current asset tag stats in the ordered set where tagId = &#63;.
@@ -140,7 +140,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats[] findByTagId_PrevAndNext(
 		long tagStatsId, long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -197,7 +197,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the first asset tag stats in the ordered set where classNameId = &#63;.
@@ -209,7 +209,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats findByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -221,7 +221,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the last asset tag stats in the ordered set where classNameId = &#63;.
@@ -233,7 +233,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats findByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -245,7 +245,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Returns the asset tag statses before and after the current asset tag stats in the ordered set where classNameId = &#63;.
@@ -258,7 +258,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public com.liferay.portlet.asset.model.AssetTagStats[] findByClassNameId_PrevAndNext(
 		long tagStatsId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
@@ -425,7 +425,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator);
 
 	/**
 	* Removes all the asset tag statses from the database.

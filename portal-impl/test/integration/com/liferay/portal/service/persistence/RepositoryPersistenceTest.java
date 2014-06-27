@@ -303,7 +303,7 @@ public class RepositoryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Repository> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Repository", "mvccVersion",
 			true, "uuid", true, "repositoryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

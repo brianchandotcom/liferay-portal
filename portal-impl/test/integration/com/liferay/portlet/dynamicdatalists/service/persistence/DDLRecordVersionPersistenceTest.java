@@ -269,7 +269,7 @@ public class DDLRecordVersionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDLRecordVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDLRecordVersion",
 			"recordVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

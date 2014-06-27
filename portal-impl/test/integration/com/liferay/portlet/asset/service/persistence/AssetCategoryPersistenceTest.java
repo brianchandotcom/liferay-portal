@@ -457,7 +457,7 @@ public class AssetCategoryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetCategory", "uuid",
 			true, "categoryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

@@ -227,7 +227,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<WorkflowInstanceLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WorkflowInstanceLink",
 			"mvccVersion", true, "workflowInstanceLinkId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,

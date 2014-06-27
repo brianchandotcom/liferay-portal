@@ -151,7 +151,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByTableId(long tableId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -257,7 +257,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByTableId_First(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByTableId_First(tableId,
 				orderByComparator);
 
@@ -286,7 +287,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByTableId_First(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByTableId(tableId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -306,7 +307,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByTableId_Last(tableId,
 				orderByComparator);
 
@@ -335,7 +337,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByTableId(tableId);
 
 		if (count == 0) {
@@ -363,7 +365,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByTableId_PrevAndNext(long valueId, long tableId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
 		Session session = null;
@@ -393,7 +396,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByTableId_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long tableId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -628,7 +631,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByColumnId(long columnId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -734,7 +737,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByColumnId_First(long columnId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByColumnId_First(columnId,
 				orderByComparator);
 
@@ -763,7 +767,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByColumnId_First(long columnId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByColumnId(columnId, 0, 1,
 				orderByComparator);
 
@@ -784,7 +788,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByColumnId_Last(long columnId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByColumnId_Last(columnId,
 				orderByComparator);
 
@@ -813,7 +818,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByColumnId_Last(long columnId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByColumnId(columnId);
 
 		if (count == 0) {
@@ -841,7 +846,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByColumnId_PrevAndNext(long valueId,
-		long columnId, OrderByComparator orderByComparator)
+		long columnId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -872,7 +877,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByColumnId_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long columnId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1105,7 +1110,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByRowId(long rowId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1211,7 +1216,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByRowId_First(long rowId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByRowId_First(rowId, orderByComparator);
 
 		if (expandoValue != null) {
@@ -1239,7 +1245,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByRowId_First(long rowId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByRowId(rowId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1259,7 +1265,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByRowId_Last(long rowId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByRowId_Last(rowId, orderByComparator);
 
 		if (expandoValue != null) {
@@ -1287,7 +1294,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByRowId_Last(long rowId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByRowId(rowId);
 
 		if (count == 0) {
@@ -1315,7 +1322,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByRowId_PrevAndNext(long valueId, long rowId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
 		Session session = null;
@@ -1345,7 +1353,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByRowId_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long rowId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1583,7 +1591,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByT_C(long tableId, long columnId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1699,7 +1707,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_C_First(long tableId, long columnId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_C_First(tableId, columnId,
 				orderByComparator);
 
@@ -1732,7 +1741,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_C_First(long tableId, long columnId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByT_C(tableId, columnId, 0, 1,
 				orderByComparator);
 
@@ -1754,7 +1763,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_C_Last(long tableId, long columnId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_C_Last(tableId, columnId,
 				orderByComparator);
 
@@ -1787,7 +1797,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_C_Last(long tableId, long columnId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByT_C(tableId, columnId);
 
 		if (count == 0) {
@@ -1816,7 +1826,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByT_C_PrevAndNext(long valueId, long tableId,
-		long columnId, OrderByComparator orderByComparator)
+		long columnId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -1847,7 +1857,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByT_C_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long tableId, long columnId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2097,7 +2107,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByT_CPK(long tableId, long classPK,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2213,7 +2223,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_CPK_First(long tableId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_CPK_First(tableId, classPK,
 				orderByComparator);
 
@@ -2246,7 +2257,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_CPK_First(long tableId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByT_CPK(tableId, classPK, 0, 1,
 				orderByComparator);
 
@@ -2268,7 +2279,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_CPK_Last(long tableId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_CPK_Last(tableId, classPK,
 				orderByComparator);
 
@@ -2301,7 +2313,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_CPK_Last(long tableId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByT_CPK(tableId, classPK);
 
 		if (count == 0) {
@@ -2330,7 +2342,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByT_CPK_PrevAndNext(long valueId, long tableId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -2361,7 +2373,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByT_CPK_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long tableId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2610,7 +2622,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByT_R(long tableId, long rowId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2726,7 +2738,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_R_First(long tableId, long rowId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_R_First(tableId, rowId,
 				orderByComparator);
 
@@ -2759,7 +2772,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_R_First(long tableId, long rowId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByT_R(tableId, rowId, 0, 1,
 				orderByComparator);
 
@@ -2781,7 +2794,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_R_Last(long tableId, long rowId,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_R_Last(tableId, rowId,
 				orderByComparator);
 
@@ -2814,7 +2828,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_R_Last(long tableId, long rowId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByT_R(tableId, rowId);
 
 		if (count == 0) {
@@ -2843,7 +2857,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByT_R_PrevAndNext(long valueId, long tableId,
-		long rowId, OrderByComparator orderByComparator)
+		long rowId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -2874,7 +2888,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByT_R_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long tableId, long rowId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3350,7 +3364,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3466,7 +3480,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByC_C_First(classNameId, classPK,
 				orderByComparator);
 
@@ -3499,7 +3514,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -3521,7 +3536,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchValueException {
+		OrderByComparator<ExpandoValue> orderByComparator)
+		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByC_C_Last(classNameId, classPK,
 				orderByComparator);
 
@@ -3554,7 +3570,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
@@ -3583,7 +3599,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByC_C_PrevAndNext(long valueId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -3614,7 +3630,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByC_C_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4124,7 +4140,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findByT_C_D(long tableId, long columnId,
-		String data, int start, int end, OrderByComparator orderByComparator) {
+		String data, int start, int end,
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4260,7 +4277,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_C_D_First(long tableId, long columnId,
-		String data, OrderByComparator orderByComparator)
+		String data, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_C_D_First(tableId, columnId, data,
 				orderByComparator);
@@ -4298,7 +4315,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_C_D_First(long tableId, long columnId,
-		String data, OrderByComparator orderByComparator) {
+		String data, OrderByComparator<ExpandoValue> orderByComparator) {
 		List<ExpandoValue> list = findByT_C_D(tableId, columnId, data, 0, 1,
 				orderByComparator);
 
@@ -4321,7 +4338,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue findByT_C_D_Last(long tableId, long columnId,
-		String data, OrderByComparator orderByComparator)
+		String data, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = fetchByT_C_D_Last(tableId, columnId, data,
 				orderByComparator);
@@ -4359,7 +4376,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByT_C_D_Last(long tableId, long columnId,
-		String data, OrderByComparator orderByComparator) {
+		String data, OrderByComparator<ExpandoValue> orderByComparator) {
 		int count = countByT_C_D(tableId, columnId, data);
 
 		if (count == 0) {
@@ -4389,7 +4406,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue[] findByT_C_D_PrevAndNext(long valueId, long tableId,
-		long columnId, String data, OrderByComparator orderByComparator)
+		long columnId, String data,
+		OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
@@ -4420,7 +4438,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	protected ExpandoValue getByT_C_D_PrevAndNext(Session session,
 		ExpandoValue expandoValue, long tableId, long columnId, String data,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoValue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5388,7 +5406,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public List<ExpandoValue> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

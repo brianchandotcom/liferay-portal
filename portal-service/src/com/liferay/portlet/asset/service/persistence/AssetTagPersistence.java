@@ -79,7 +79,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the last asset tag in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the asset tags before and after the current asset tag in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag[] findByGroupId_PrevAndNext(
 		long tagId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
@@ -182,7 +182,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the asset tags before and after the current asset tag in the ordered set of asset tags that the user has permission to view where groupId = &#63;.
@@ -195,7 +195,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag[] filterFindByGroupId_PrevAndNext(
 		long tagId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
@@ -368,7 +368,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Removes all the asset tags from the database.
@@ -429,7 +429,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the number of asset entries associated with the asset tag.

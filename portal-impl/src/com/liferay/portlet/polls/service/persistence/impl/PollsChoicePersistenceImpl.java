@@ -151,7 +151,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public List<PollsChoice> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -271,7 +271,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_First(uuid, orderByComparator);
 
 		if (pollsChoice != null) {
@@ -299,7 +300,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		List<PollsChoice> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -319,7 +320,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (pollsChoice != null) {
@@ -347,7 +349,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -375,7 +377,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice[] findByUuid_PrevAndNext(long choiceId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
 		Session session = null;
@@ -405,7 +408,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	protected PollsChoice getByUuid_PrevAndNext(Session session,
 		PollsChoice pollsChoice, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PollsChoice> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -931,7 +934,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public List<PollsChoice> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<PollsChoice> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1061,7 +1064,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1094,7 +1098,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		List<PollsChoice> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1116,7 +1120,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1149,7 +1154,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1178,7 +1183,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice[] findByUuid_C_PrevAndNext(long choiceId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<PollsChoice> orderByComparator)
 		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
@@ -1209,7 +1214,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	protected PollsChoice getByUuid_C_PrevAndNext(Session session,
 		PollsChoice pollsChoice, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PollsChoice> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1486,7 +1491,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public List<PollsChoice> findByQuestionId(long questionId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<PollsChoice> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1592,7 +1597,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByQuestionId_First(long questionId,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByQuestionId_First(questionId,
 				orderByComparator);
 
@@ -1621,7 +1627,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByQuestionId_First(long questionId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		List<PollsChoice> list = findByQuestionId(questionId, 0, 1,
 				orderByComparator);
 
@@ -1642,7 +1648,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice findByQuestionId_Last(long questionId,
-		OrderByComparator orderByComparator) throws NoSuchChoiceException {
+		OrderByComparator<PollsChoice> orderByComparator)
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByQuestionId_Last(questionId,
 				orderByComparator);
 
@@ -1671,7 +1678,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByQuestionId_Last(long questionId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		int count = countByQuestionId(questionId);
 
 		if (count == 0) {
@@ -1699,7 +1706,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice[] findByQuestionId_PrevAndNext(long choiceId,
-		long questionId, OrderByComparator orderByComparator)
+		long questionId, OrderByComparator<PollsChoice> orderByComparator)
 		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
@@ -1730,7 +1737,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	protected PollsChoice getByQuestionId_PrevAndNext(Session session,
 		PollsChoice pollsChoice, long questionId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PollsChoice> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2806,7 +2813,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public List<PollsChoice> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

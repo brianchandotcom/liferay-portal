@@ -272,7 +272,7 @@ public class DLContentPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLContent", "contentId",
 			true, "groupId", true, "companyId", true, "repositoryId", true,
 			"path", true, "version", true, "size", true);

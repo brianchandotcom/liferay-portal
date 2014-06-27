@@ -88,7 +88,7 @@ public class SocialActivityCounterUtil {
 	 */
 	public static List<SocialActivityCounter> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -169,7 +169,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -183,7 +183,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -197,7 +197,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -211,7 +211,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -226,7 +226,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter[] findByGroupId_PrevAndNext(
 		long activityCounterId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityCounterId, groupId,
@@ -298,7 +298,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -315,7 +315,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -331,7 +331,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -347,7 +347,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -363,7 +363,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -380,7 +380,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter[] findByC_C_PrevAndNext(
 		long activityCounterId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityCounterId, classNameId,
@@ -465,7 +465,7 @@ public class SocialActivityCounterUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findByG_C_C_O(
 		long groupId, long classNameId, long classPK, int ownerType, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C_O(groupId, classNameId, classPK, ownerType,
 			start, end, orderByComparator);
@@ -484,7 +484,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByG_C_C_O_First(
 		long groupId, long classNameId, long classPK, int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_First(groupId, classNameId, classPK,
@@ -503,7 +503,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByG_C_C_O_First(
 		long groupId, long classNameId, long classPK, int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_O_First(groupId, classNameId, classPK,
 			ownerType, orderByComparator);
@@ -522,7 +522,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter findByG_C_C_O_Last(
 		long groupId, long classNameId, long classPK, int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_Last(groupId, classNameId, classPK,
@@ -541,7 +541,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByG_C_C_O_Last(
 		long groupId, long classNameId, long classPK, int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_O_Last(groupId, classNameId, classPK,
 			ownerType, orderByComparator);
@@ -562,7 +562,7 @@ public class SocialActivityCounterUtil {
 	public static com.liferay.portlet.social.model.SocialActivityCounter[] findByG_C_C_O_PrevAndNext(
 		long activityCounterId, long groupId, long classNameId, long classPK,
 		int ownerType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_PrevAndNext(activityCounterId, groupId,
@@ -911,7 +911,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityCounter> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -280,7 +280,7 @@ public class RatingsEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<RatingsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RatingsEntry", "uuid",
 			true, "entryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

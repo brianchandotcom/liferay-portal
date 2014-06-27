@@ -169,7 +169,7 @@ public class CounterPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Counter> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Counter", "name", true,
 			"currentId", true);
 	}

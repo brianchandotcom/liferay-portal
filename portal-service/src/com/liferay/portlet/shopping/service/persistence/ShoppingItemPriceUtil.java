@@ -88,7 +88,7 @@ public class ShoppingItemPriceUtil {
 	 */
 	public static List<ShoppingItemPrice> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItemPrice> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> findByItemId(
 		long itemId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator) {
 		return getPersistence()
 				   .findByItemId(itemId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemPrice findByItemId_First(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemPriceException {
 		return getPersistence().findByItemId_First(itemId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemPrice fetchByItemId_First(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator) {
 		return getPersistence().fetchByItemId_First(itemId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemPrice findByItemId_Last(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemPriceException {
 		return getPersistence().findByItemId_Last(itemId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemPrice fetchByItemId_Last(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator) {
 		return getPersistence().fetchByItemId_Last(itemId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemPrice[] findByItemId_PrevAndNext(
 		long itemPriceId, long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemPriceException {
 		return getPersistence()
 				   .findByItemId_PrevAndNext(itemPriceId, itemId,
@@ -367,7 +367,7 @@ public class ShoppingItemPriceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemPrice> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -1631,10 +1631,15 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="viewSpecificEntry" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">
@@ -1649,10 +1654,15 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 			<var name="viewSpecificEntry" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">

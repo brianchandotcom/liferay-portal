@@ -39,39 +39,23 @@
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
-		<var name="entryContent1" value="Blogs Entry1 Content" />
-		<var name="entryContent2" value="Blogs Entry2 Content" />
-		<var name="entryContent3" value="Blogs Entry3 Content" />
-		<var name="entryTitle1" value="Blogs Entry1 Title" />
-		<var name="entryTitle2" value="Blogs Entry2 Title" />
-		<var name="entryTitle3" value="Blogs Entry3 Title" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -79,67 +63,86 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent3}" />
-			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent3}" />
-			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryContent" value="Blogs Entry2 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry3 Content" />
+			<var name="entryTitle" value="Blogs Entry3 Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry3 Content" />
+			<var name="entryTitle" value="Blogs Entry3 Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry3 Content" />
+			<var name="entryTitle" value="Blogs Entry3 Title" />
 		</execute>
 	</command>
 
 	<command name="AddBlogsEntry" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="AddBlogsEntryComment" priority="5">
-		<var name="entryComment" value="Blogs Entry Comment" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#addPG">
-			<var name="entryComment" value="${entryComment}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="AddBlogsEntryContentNull" priority="5">
-		<var name="entryContent" value="" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="" />
 			<var name="entryInvalidContent" value="true" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -147,21 +150,18 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="AddBlogsEntryScheduled" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addScheduledPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -169,7 +169,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewScheduledPG">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
@@ -182,6 +182,11 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -208,6 +213,11 @@
 			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryValidTitleLength}" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryTitle" value="${entryValidTitleLength}" />
 		</execute>
@@ -222,6 +232,11 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -309,6 +324,11 @@
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -324,6 +344,11 @@
 
 		<execute macro="BlogsEntry#viewNoPG">
 			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
@@ -345,6 +370,11 @@
 
 		<execute macro="BlogsEntry#viewNoPG">
 			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
@@ -1289,7 +1319,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Updated" />
+			<var name="gmailAssetType" value="Blogs" />
 			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
 			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
@@ -1566,6 +1596,11 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -1605,6 +1640,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
@@ -1655,6 +1695,11 @@
 
 		<execute macro="BlogsEntry#viewNoPG">
 			<var name="entryTitle" value="${entryContent1}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
@@ -1743,7 +1788,7 @@
 		</for>
 	</command>
 
-	<command name="ViewWebSiteNotificationForNewBlogsEntry" priority="5">
+	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="5">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoPG">
@@ -1785,12 +1830,18 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewTitlePG">
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
-	<command name="ViewWebSiteNotificationForUpdatedBlogsEntry" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="5">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoPG">
@@ -1843,7 +1894,13 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewTitlePG">
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
 			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 	</command>

@@ -35,6 +35,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import javax.xml.XMLConstants;
 
 /**
@@ -155,6 +157,11 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public String getServletContextName() {
 		return _servletContextName;
 	}
@@ -180,13 +187,17 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
-	public void setContextPath(String contextPath) {
-		_contextPath = contextPath;
+	public void setDefaultNamespace(String defaultNamespace) {
+		_defaultNamespace = defaultNamespace;
 	}
 
 	@Override
-	public void setDefaultNamespace(String defaultNamespace) {
-		_defaultNamespace = defaultNamespace;
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+
+		// Make sure the path is correct
+
+		_contextPath = _servletContext.getContextPath();
 	}
 
 	@Override
@@ -235,6 +246,7 @@ public class PortletAppImpl implements PortletApp {
 		_publicRenderParametersByIdentifier =
 			new HashMap<String, PublicRenderParameter>();
 	private String _servletContextName = StringPool.BLANK;
+	private ServletContext _servletContext;
 	private Set<String> _servletURLPatterns = new LinkedHashSet<String>();
 	private Map<String, SpriteImage> _spriteImagesMap =
 		new HashMap<String, SpriteImage>();

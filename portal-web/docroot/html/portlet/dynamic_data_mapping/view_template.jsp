@@ -204,6 +204,18 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 				/>
 			</c:if>
 
+			<c:if test='<%= !excludedColumnNames.contains("scope") %>'>
+
+				<%
+				Group group = GroupLocalServiceUtil.getGroup(template.getGroupId());
+				%>
+
+				<liferay-ui:search-container-column-text
+					name="scope"
+					value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+				/>
+			</c:if>
+
 			<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
 				<liferay-ui:search-container-column-date
 					href="<%= rowHREF %>"

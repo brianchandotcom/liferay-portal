@@ -141,6 +141,15 @@ portletURL.setParameter("tabs1", tabs1);
 				/>
 			</c:if>
 
+			<%
+			Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="scope"
+				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+			/>
+
 			<liferay-ui:search-container-column-date
 				href="<%= rowHREF %>"
 				name="modified-date"

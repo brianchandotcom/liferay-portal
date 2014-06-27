@@ -22,11 +22,14 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -123,40 +126,50 @@ public class SocialActivityServiceTest {
 			deleteGuestPermission(fileEntry);
 		}
 
+		long userId = PrincipalThreadLocal.getUserId();
+
 		ServiceTestUtil.setUser(_user);
 
-		Assert.assertEquals(
-			8,
-			SocialActivityServiceUtil.getGroupActivitiesCount(
-				_group.getGroupId()));
+		try {
+			Assert.assertEquals(
+				8,
+				SocialActivityServiceUtil.getGroupActivitiesCount(
+					_group.getGroupId()));
 
-		List<SocialActivity> activities =
-			SocialActivityServiceUtil.getGroupActivities(
-				_group.getGroupId(), 0, 2);
+			List<SocialActivity> activities =
+				SocialActivityServiceUtil.getGroupActivities(
+					_group.getGroupId(), 0, 2);
 
-		Assert.assertEquals(2, activities.size());
+			Assert.assertEquals(2, activities.size());
 
-		int index = 3;
+			int index = 3;
 
-		for (SocialActivity activity : activities) {
-			String title = String.valueOf(index);
+			for (SocialActivity activity : activities) {
+				String title = String.valueOf(index);
 
-			Assert.assertEquals(title, activity.getExtraDataValue("title"));
+				Assert.assertEquals(title, activity.getExtraDataValue("title"));
 
-			index--;
+				index--;
+			}
+
+			activities = SocialActivityServiceUtil.getGroupActivities(
+				_group.getGroupId(), 2, 4);
+
+			Assert.assertEquals(2, activities.size());
+
+			for (SocialActivity activity : activities) {
+				String title = String.valueOf(index);
+
+				Assert.assertEquals(title, activity.getExtraDataValue("title"));
+
+				index--;
+			}
 		}
+		finally {
+			User user = UserLocalServiceUtil.getUser(userId);
 
-		activities = SocialActivityServiceUtil.getGroupActivities(
-			_group.getGroupId(), 2, 4);
+			ServiceTestUtil.setUser(user);
 
-		Assert.assertEquals(2, activities.size());
-
-		for (SocialActivity activity : activities) {
-			String title = String.valueOf(index);
-
-			Assert.assertEquals(title, activity.getExtraDataValue("title"));
-
-			index--;
 		}
 	}
 

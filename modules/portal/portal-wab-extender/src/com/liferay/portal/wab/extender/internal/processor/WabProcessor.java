@@ -488,14 +488,14 @@ public class WabProcessor {
 				"x:filter-class", "x:listener-class", "x:portlet-class",
 				"x:resource-bundle"
 			},
-			"x", "http:java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
 
 		processXMLDependencies(
 			"WEB-INF/web.xml",
 			new String[] {
 				"x:filter-class", "x:listener-class","x:servlet-class"
 			},
-			"x", "http:java.sun.com/xml/ns/j2ee");
+			"x", "http://java.sun.com/xml/ns/j2ee");
 	}
 
 	protected void processDefaultServletPackages() {

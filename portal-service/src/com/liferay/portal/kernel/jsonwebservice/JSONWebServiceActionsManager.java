@@ -31,7 +31,8 @@ public interface JSONWebServiceActionsManager {
 	public Set<String> getContextPaths();
 
 	public JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request);
+			HttpServletRequest request)
+		throws NoSuchJSONWebServiceException;
 
 	public JSONWebServiceAction getJSONWebServiceAction(
 			HttpServletRequest request, String path, String method,

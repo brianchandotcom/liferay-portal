@@ -75,7 +75,8 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request) {
+			HttpServletRequest request)
+		throws NoSuchJSONWebServiceException {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 
@@ -130,7 +131,7 @@ public class JSONWebServiceActionsManagerImpl
 				jsonWebServiceActionParameters.getParameterNames());
 
 		if (jsonWebServiceActionConfigIndex == -1) {
-			throw new RuntimeException(
+			throw new NoSuchJSONWebServiceException(
 				"No JSON web service action associated with path " + path +
 					" and method " + method + " for /" + contextPath);
 		}

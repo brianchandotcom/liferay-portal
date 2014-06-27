@@ -151,7 +151,8 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	}
 
 	protected JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request) {
+			HttpServletRequest request)
+		throws NoSuchJSONWebServiceException {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 

@@ -24,9 +24,7 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
@@ -761,13 +759,6 @@ public class HookHotDeployListener
 			authVerifierConfigurationContainer.unregisterConfigurations();
 		}
 
-		AutoDeployListenersContainer autoDeployListenersContainer =
-			_autoDeployListenersContainerMap.remove(servletContextName);
-
-		if (autoDeployListenersContainer != null) {
-			autoDeployListenersContainer.unregisterAutoDeployListeners();
-		}
-
 		CustomJspBag customJspBag = _customJspBagsMap.remove(
 			servletContextName);
 
@@ -1103,11 +1094,10 @@ public class HookHotDeployListener
 			return;
 		}
 
-		AutoDeployListenersContainer autoDeployListenersContainer =
-			new AutoDeployListenersContainer();
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
 
-		_autoDeployListenersContainerMap.put(
-			servletContextName, autoDeployListenersContainer);
+		Registry registry = RegistryUtil.getRegistry();
 
 		for (String autoDeployListenerClassName :
 				autoDeployListenerClassNames) {
@@ -1117,8 +1107,12 @@ public class HookHotDeployListener
 					portletClassLoader, AutoDeployListener.class,
 					autoDeployListenerClassName);
 
-			autoDeployListenersContainer.registerAutoDeployListener(
-				autoDeployListener);
+			ServiceRegistration<AutoDeployListener> serviceRegistration =
+				registry.registerService(
+					AutoDeployListener.class, autoDeployListener);
+
+			serviceRegistrations.put(
+				autoDeployListenerClassName, serviceRegistration);
 		}
 	}
 
@@ -2865,9 +2859,6 @@ public class HookHotDeployListener
 	private Map<String, AuthVerifierConfigurationContainer>
 		_authVerifierConfigurationContainerMap =
 			new HashMap<String, AuthVerifierConfigurationContainer>();
-	private Map<String, AutoDeployListenersContainer>
-		_autoDeployListenersContainerMap =
-			new HashMap<String, AutoDeployListenersContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
 	private Map<String, DLFileEntryProcessorContainer>
@@ -2989,41 +2980,6 @@ public class HookHotDeployListener
 
 		private List<AuthVerifierConfiguration> _authVerifierConfigurations =
 			new ArrayList<AuthVerifierConfiguration>();
-
-	}
-
-	private class AutoDeployListenersContainer {
-
-		public void registerAutoDeployListener(
-			AutoDeployListener autoDeployListener) {
-
-			AutoDeployDir autoDeployDir = AutoDeployUtil.getDir(
-				AutoDeployDir.DEFAULT_NAME);
-
-			if (autoDeployDir == null) {
-				return;
-			}
-
-			autoDeployDir.registerListener(autoDeployListener);
-
-			_autoDeployListeners.add(autoDeployListener);
-		}
-
-		public void unregisterAutoDeployListeners() {
-			AutoDeployDir autoDeployDir = AutoDeployUtil.getDir(
-				AutoDeployDir.DEFAULT_NAME);
-
-			if (autoDeployDir == null) {
-				return;
-			}
-
-			for (AutoDeployListener autoDeployListener : _autoDeployListeners) {
-				autoDeployDir.unregisterListener(autoDeployListener);
-			}
-		}
-
-		private List<AutoDeployListener> _autoDeployListeners =
-			new ArrayList<AutoDeployListener>();
 
 	}
 

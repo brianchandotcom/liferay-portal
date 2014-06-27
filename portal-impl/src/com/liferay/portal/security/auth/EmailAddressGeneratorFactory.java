@@ -16,55 +16,36 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Amos Fong
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		return _emailAddressGenerator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(
-		EmailAddressGenerator emailAddressGenerator) {
+	private EmailAddressGeneratorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(emailAddressGenerator));
-		}
+		_serviceTracker = registry.trackServices(
+			EmailAddressGenerator.class);
 
-		if (emailAddressGenerator == null) {
-			_emailAddressGenerator = _originalEmailAddressGenerator;
-		}
-		else {
-			_emailAddressGenerator = emailAddressGenerator;
-		}
-	}
-
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalEmailAddressGenerator =
-			(EmailAddressGenerator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
-
-		_emailAddressGenerator = _originalEmailAddressGenerator;
+		_serviceTracker.open();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EmailAddressGeneratorFactory.class);
 
-	private static volatile EmailAddressGenerator _emailAddressGenerator;
-	private static EmailAddressGenerator _originalEmailAddressGenerator;
+	private static EmailAddressGeneratorFactory _instance =
+		new EmailAddressGeneratorFactory();
+	
+	private ServiceTracker<?, EmailAddressGenerator> _serviceTracker;
 
 }

@@ -109,9 +109,7 @@ import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
-import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.security.auth.EmailAddressValidator;
-import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
@@ -575,18 +573,6 @@ public class HookHotDeployListener
 			if (sanitizerContainer != null) {
 				sanitizerContainer.unregisterSanitizers();
 			}
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_GENERATOR)) {
-
-			EmailAddressGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR)) {
-
-			EmailAddressValidatorFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
@@ -2073,7 +2059,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressGenerator.class,
 					emailAddressGeneratorClassName);
 
-			EmailAddressGeneratorFactory.setInstance(emailAddressGenerator);
+			ServiceRegistration<EmailAddressGenerator> serviceRegistration =
+				registry.registerService(
+					EmailAddressGenerator.class, emailAddressGenerator);
+
+			serviceRegistrations.put(
+				emailAddressGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2088,7 +2079,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressValidator.class,
 					emailAddressValidatorClassName);
 
-			EmailAddressValidatorFactory.setInstance(emailAddressValidator);
+			ServiceRegistration<EmailAddressValidator> serviceRegistration =
+				registry.registerService(
+					EmailAddressValidator.class, emailAddressValidator);
+
+			serviceRegistrations.put(
+				emailAddressValidatorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {

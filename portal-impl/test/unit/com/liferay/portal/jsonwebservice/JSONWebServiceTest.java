@@ -326,7 +326,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
-	public void testNaming() {
+	public void testNaming() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/not-found");
 

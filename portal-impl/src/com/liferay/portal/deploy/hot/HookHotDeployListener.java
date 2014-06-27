@@ -15,7 +15,6 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.captcha.CaptchaImpl;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.InvokerAction;
 import com.liferay.portal.kernel.events.InvokerSessionAction;
 import com.liferay.portal.kernel.events.InvokerSimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
@@ -633,6 +633,9 @@ public class HookHotDeployListener
 
 		Element rootElement = document.getRootElement();
 
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
+
 		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
 
 		initPortalProperties(
@@ -686,27 +689,15 @@ public class HookHotDeployListener
 			}
 		}
 
-		EventsContainer eventsContainer = _eventsContainerMap.get(
-			servletContextName);
-
-		if (eventsContainer == null) {
-			eventsContainer = new EventsContainer();
-
-			_eventsContainerMap.put(servletContextName, eventsContainer);
-		}
-
 		List<Element> eventElements = rootElement.elements("event");
 
 		for (Element eventElement : eventElements) {
 			String eventName = eventElement.elementText("event-type");
 			String eventClassName = eventElement.elementText("event-class");
 
-			Object obj = initEvent(
-				eventName, eventClassName, portletClassLoader);
-
-			if (obj != null) {
-				eventsContainer.registerEvent(eventName, obj);
-			}
+			initEvent(
+				eventName, eventClassName, portletClassLoader,
+				serviceRegistrations);
 		}
 
 		// End backwards compatibility for 5.1.0
@@ -756,13 +747,6 @@ public class HookHotDeployListener
 
 		if (customJspBag != null) {
 			destroyCustomJspBag(servletContextName, customJspBag);
-		}
-
-		EventsContainer eventsContainer = _eventsContainerMap.remove(
-			servletContextName);
-
-		if (eventsContainer != null) {
-			eventsContainer.unregisterEvents();
 		}
 
 		HotDeployListenersContainer hotDeployListenersContainer =
@@ -1240,9 +1224,10 @@ public class HookHotDeployListener
 			servletContextName, pluginPackage.getName(), customJspBag);
 	}
 
-	protected Object initEvent(
+	protected void initEvent(
 			String eventName, String eventClassName,
-			ClassLoader portletClassLoader)
+			ClassLoader portletClassLoader,
+			Map<Object, ServiceRegistration<?>> serviceRegistrations)
 		throws Exception {
 
 		if (eventName.equals(APPLICATION_STARTUP_EVENTS)) {
@@ -1268,9 +1253,9 @@ public class HookHotDeployListener
 			finally {
 				CompanyThreadLocal.setCompanyId(companyId);
 			}
-
-			return null;
 		}
+
+		Registry registry = RegistryUtil.getRegistry();
 
 		if (_propsKeysEvents.contains(eventName)) {
 			Class<?> clazz = portletClassLoader.loadClass(eventClassName);
@@ -1279,9 +1264,15 @@ public class HookHotDeployListener
 
 			action = new InvokerAction(action, portletClassLoader);
 
-			EventsProcessorUtil.registerEvent(eventName, action);
+			Map<String, Object> properties = new HashMap<String, Object>();
 
-			return action;
+			properties.put("key", eventName);
+
+			ServiceRegistration<LifecycleAction> serviceRegistration =
+				registry.registerService(
+					LifecycleAction.class, action, properties);
+
+			serviceRegistrations.put(eventClassName, serviceRegistration);
 		}
 
 		if (_propsKeysSessionEvents.contains(eventName)) {
@@ -1292,12 +1283,16 @@ public class HookHotDeployListener
 			sessionAction = new InvokerSessionAction(
 				sessionAction, portletClassLoader);
 
-			EventsProcessorUtil.registerEvent(eventName, sessionAction);
+			Map<String, Object> properties = new HashMap<String, Object>();
 
-			return sessionAction;
+			properties.put("key", eventName);
+
+			ServiceRegistration<LifecycleAction> serviceRegistration =
+				registry.registerService(
+					LifecycleAction.class, sessionAction, properties);
+
+			serviceRegistrations.put(eventClassName, serviceRegistration);
 		}
-
-		return null;
 	}
 
 	protected void initEvents(
@@ -1305,9 +1300,8 @@ public class HookHotDeployListener
 			Properties portalProperties)
 		throws Exception {
 
-		EventsContainer eventsContainer = new EventsContainer();
-
-		_eventsContainerMap.put(servletContextName, eventsContainer);
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
 
 		for (Map.Entry<Object, Object> entry : portalProperties.entrySet()) {
 			String key = (String)entry.getKey();
@@ -1324,14 +1318,9 @@ public class HookHotDeployListener
 				(String)entry.getValue());
 
 			for (String eventClassName : eventClassNames) {
-				Object obj = initEvent(
-					eventName, eventClassName, portletClassLoader);
-
-				if (obj == null) {
-					continue;
-				}
-
-				eventsContainer.registerEvent(eventName, obj);
+				initEvent(
+					eventName, eventClassName, portletClassLoader,
+					serviceRegistrations);
 			}
 		}
 	}
@@ -2865,8 +2854,6 @@ public class HookHotDeployListener
 			new HashMap<String, DLFileEntryProcessorContainer>();
 	private Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
 		new HashMap<String, DLRepositoryContainer>();
-	private Map<String, EventsContainer> _eventsContainerMap =
-		new HashMap<String, EventsContainer>();
 	private Map<String, HotDeployListenersContainer>
 		_hotDeployListenersContainerMap =
 			new HashMap<String, HotDeployListenersContainer>();
@@ -3017,38 +3004,6 @@ public class HookHotDeployListener
 		}
 
 		private List<String> _classNames = new ArrayList<String>();
-
-	}
-
-	private class EventsContainer {
-
-		public void registerEvent(String eventName, Object event) {
-			List<Object> events = _eventsMap.get(eventName);
-
-			if (events == null) {
-				events = new ArrayList<Object>();
-
-				_eventsMap.put(eventName, events);
-			}
-
-			events.add(event);
-		}
-
-		public void unregisterEvents() {
-			for (Map.Entry<String, List<Object>> entry :
-					_eventsMap.entrySet()) {
-
-				String eventName = entry.getKey();
-				List<Object> events = entry.getValue();
-
-				for (Object event : events) {
-					EventsProcessorUtil.unregisterEvent(eventName, event);
-				}
-			}
-		}
-
-		private Map<String, List<Object>> _eventsMap =
-			new HashMap<String, List<Object>>();
 
 	}
 

@@ -8,7 +8,7 @@
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 
-		<case locator-key1="PANEL_OK_BUTTON">
+		<case locator-key1="DIALOG_BOX_OK_BUTTON">
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 	</command>
@@ -30,15 +30,15 @@
 	</command>
 
 	<command name="type">
-		<case locator-key1="PANEL_COMMENT_FIELD">
+		<case locator-key1="DIALOG_BOX_COMMENT_FIELD">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
 
-		<case locator-key1="PANEL_DUE_DATE">
+		<case locator-key1="DIALOG_BOX_DUE_DATE">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
 
-		<case locator-key1="PANEL_DUE_DATE_TIME">
+		<case locator-key1="DIALOG_BOX_DUE_DATE_TIME">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
 	</command>

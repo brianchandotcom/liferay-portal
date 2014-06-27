@@ -69,7 +69,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
 	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-	<aui:input name="xsd" type="hidden" />
+	<aui:input name="definition" type="hidden" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"

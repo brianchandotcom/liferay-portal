@@ -202,48 +202,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected List<String> addParameterTypes(
-		String line, List<String> parameterTypes) {
-
-		int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
-
-		if (x != -1) {
-			line = line.substring(x + 1);
-
-			if (Validator.isNull(line) ||
-				line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-
-				return parameterTypes;
-			}
-		}
-
-		for (x = 0;;) {
-			x = line.indexOf(StringPool.SPACE);
-
-			if (x == -1) {
-				return parameterTypes;
-			}
-
-			String parameterType = line.substring(0, x);
-
-			if (parameterType.equals("throws")) {
-				return parameterTypes;
-			}
-
-			parameterTypes.add(parameterType);
-
-			int y = line.indexOf(StringPool.COMMA);
-			int z = line.indexOf(StringPool.CLOSE_PARENTHESIS);
-
-			if ((y == -1) || ((z != -1) && (z < y))) {
-				return parameterTypes;
-			}
-
-			line = line.substring(y + 1);
-			line = line.trim();
-		}
-	}
-
 	protected void checkAnnotationForMethod(
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
 		int requiredMethodType, String fileName) {
@@ -1474,9 +1432,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int javaTermStartPosition = -1;
 		int javaTermType = -1;
 
-		boolean readParameterTypes = false;
-		List<String> parameterTypes = new ArrayList<String>();
-
 		int lastCommentOrAnnotationPos = -1;
 
 		String ifClause = StringPool.BLANK;
@@ -1701,8 +1656,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						if (Validator.isNotNull(javaTermName)) {
 							javaTerm = new JavaTerm(
-								javaTermName, javaTermType, parameterTypes,
-								javaTermContent, javaTermLineCount);
+								javaTermName, javaTermType, javaTermContent,
+								javaTermLineCount);
 
 							javaTerms.add(javaTerm);
 						}
@@ -1712,18 +1667,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					javaTermName = (String)tuple.getObject(0);
 					javaTermStartPosition = javaTermEndPosition;
 					javaTermType = (Integer)tuple.getObject(1);
-
-					if (Validator.isNotNull(javaTermName)) {
-						if (isInJavaTermTypeGroup(
-								javaTermType, TYPE_CONSTRUCTOR) ||
-							isInJavaTermTypeGroup(
-								javaTermType, TYPE_METHOD)) {
-
-							readParameterTypes = true;
-
-							parameterTypes = new ArrayList<String>();
-						}
-					}
 				}
 
 				lastCommentOrAnnotationPos = -1;
@@ -1731,27 +1674,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			else if (hasAnnotationCommentOrJavadoc(line)) {
 				if (lastCommentOrAnnotationPos == -1) {
 					lastCommentOrAnnotationPos = index;
-				}
-			}
-
-			if (readParameterTypes) {
-				parameterTypes = addParameterTypes(trimmedLine, parameterTypes);
-
-				String strippedLine = stripLine(
-					trimmedLine, CharPool.LESS_THAN, CharPool.GREATER_THAN);
-
-				if (strippedLine.contains(StringPool.COMMA) &&
-					!trimmedLine.endsWith(StringPool.COMMA) &&
-					!trimmedLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-					!trimmedLine.endsWith(StringPool.CLOSE_PARENTHESIS) &&
-					!trimmedLine.endsWith(StringPool.SEMICOLON)) {
-
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
-				}
-
-				if (trimmedLine.contains(StringPool.CLOSE_PARENTHESIS)) {
-					readParameterTypes = false;
 				}
 			}
 
@@ -2253,7 +2175,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					javaTermStartPosition, javaTermEndPosition);
 
 				javaTerm = new JavaTerm(
-					javaTermName, javaTermType, parameterTypes, javaTermContent,
+					javaTermName, javaTermType, javaTermContent,
 					javaTermLineCount);
 
 				javaTerms.add(javaTerm);

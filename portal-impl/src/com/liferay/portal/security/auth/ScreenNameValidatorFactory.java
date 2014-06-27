@@ -14,55 +14,32 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class ScreenNameValidatorFactory {
 
 	public static ScreenNameValidator getInstance() {
-		return _screenNameValidator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(ScreenNameValidator screenNameValidator) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(screenNameValidator));
-		}
+	private ScreenNameValidatorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (screenNameValidator == null) {
-			_screenNameValidator = _originalScreenNameValidator;
-		}
-		else {
-			_screenNameValidator = screenNameValidator;
-		}
+		_serviceTracker = registry.trackServices(ScreenNameValidator.class);
+
+		_serviceTracker.open();
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.USERS_SCREEN_NAME_VALIDATOR);
-		}
+	private static ScreenNameValidatorFactory _instance =
+		new ScreenNameValidatorFactory();
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalScreenNameValidator =
-			(ScreenNameValidator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_SCREEN_NAME_VALIDATOR);
-
-		_screenNameValidator = _originalScreenNameValidator;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreenNameValidatorFactory.class);
-
-	private static ScreenNameValidator _originalScreenNameValidator;
-	private static volatile ScreenNameValidator _screenNameValidator;
+	private ServiceTracker<?, ScreenNameValidator> _serviceTracker;
 
 }

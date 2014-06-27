@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
@@ -144,10 +145,22 @@ public class FolderStagedModelDataHandler
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {
 
+		Map<Long, Long> folderIdsAndRepositoryEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Folder.class + ".folderIdsAndRepositoryEntryIds");
+
 		if (!folder.isDefaultRepository()) {
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, folder, Repository.class,
 				folder.getRepositoryId());
+
+			Map<Long, Long> repositoryEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					RepositoryEntry.class);
+
+			folderIdsAndRepositoryEntryIds.put(
+				folder.getFolderId(),
+				repositoryEntryIds.get(folder.getFolderId()));
 
 			return;
 		}
@@ -222,6 +235,8 @@ public class FolderStagedModelDataHandler
 			folder, importedFolder, DLFolder.class);
 
 		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
+		folderIdsAndRepositoryEntryIds.put(
+			folder.getFolderId(), importedFolder.getFolderId());
 	}
 
 	@Override

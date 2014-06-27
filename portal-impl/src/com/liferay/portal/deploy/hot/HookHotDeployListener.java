@@ -109,17 +109,13 @@ import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
-import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.security.auth.EmailAddressValidator;
-import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
-import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
-import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -577,36 +573,12 @@ public class HookHotDeployListener
 			}
 		}
 
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_GENERATOR)) {
-
-			EmailAddressGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR)) {
-
-			EmailAddressValidatorFactory.setInstance(null);
-		}
-
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
 			FullNameGeneratorFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_VALIDATOR)) {
 			FullNameValidatorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_SCREEN_NAME_GENERATOR)) {
-
-			ScreenNameGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.USERS_SCREEN_NAME_VALIDATOR)) {
-
-			ScreenNameValidatorFactory.setInstance(null);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -2073,7 +2045,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressGenerator.class,
 					emailAddressGeneratorClassName);
 
-			EmailAddressGeneratorFactory.setInstance(emailAddressGenerator);
+			ServiceRegistration<EmailAddressGenerator> serviceRegistration =
+				registry.registerService(
+					EmailAddressGenerator.class, emailAddressGenerator);
+
+			serviceRegistrations.put(
+				emailAddressGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2088,7 +2065,12 @@ public class HookHotDeployListener
 					portletClassLoader, EmailAddressValidator.class,
 					emailAddressValidatorClassName);
 
-			EmailAddressValidatorFactory.setInstance(emailAddressValidator);
+			ServiceRegistration<EmailAddressValidator> serviceRegistration =
+				registry.registerService(
+					EmailAddressValidator.class, emailAddressValidator);
+
+			serviceRegistrations.put(
+				emailAddressValidatorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
@@ -2126,7 +2108,12 @@ public class HookHotDeployListener
 					portletClassLoader, ScreenNameGenerator.class,
 					screenNameGeneratorClassName);
 
-			ScreenNameGeneratorFactory.setInstance(screenNameGenerator);
+			ServiceRegistration<ScreenNameGenerator> serviceRegistration =
+				registry.registerService(
+					ScreenNameGenerator.class, screenNameGenerator);
+
+			serviceRegistrations.put(
+				screenNameGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(
@@ -2140,7 +2127,12 @@ public class HookHotDeployListener
 					portletClassLoader, ScreenNameValidator.class,
 					screenNameValidatorClassName);
 
-			ScreenNameValidatorFactory.setInstance(screenNameValidator);
+			ServiceRegistration<ScreenNameValidator> serviceRegistration =
+				registry.registerService(
+					ScreenNameValidator.class, screenNameValidator);
+
+			serviceRegistrations.put(
+				screenNameValidatorClassName, serviceRegistration);
 		}
 
 		Set<String> liferayFilterClassNames =

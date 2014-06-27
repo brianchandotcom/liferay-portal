@@ -61,12 +61,12 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationCheckboxes">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Guest Site" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Guest Site,Show Parent Sites,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Page" />
 		</execute>
 
@@ -92,7 +92,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Application,Show Guest Site,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Guest Site,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Current Site,Show Page,Show Parent Sites" />
 		</execute>
 
@@ -118,7 +118,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Guest Site,Show Page,Show Parent Sites" />
 		</execute>
 
@@ -142,7 +142,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
@@ -165,7 +165,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Application Breadcrumb" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
@@ -188,7 +188,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="uncheckSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
@@ -196,7 +196,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 			<var name="configureWithoutSave" value="true" />
 		</execute>
 

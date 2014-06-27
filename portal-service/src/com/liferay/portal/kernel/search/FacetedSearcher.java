@@ -88,6 +88,16 @@ public class FacetedSearcher extends BaseSearcher {
 				searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES, false);
 
 			searchQuery.addExactTerm(Field.ASSET_TAG_NAMES, keywords);
+
+			int groupId = GetterUtil.getInteger(
+				searchContext.getAttribute(Field.GROUP_ID));
+
+			if (groupId == 0) {
+				searchQuery.addTerm(
+					Field.STAGING_GROUP, "true", false,
+					BooleanClauseOccur.MUST_NOT);
+			}
+
 			searchQuery.addTerms(Field.KEYWORDS, keywords);
 		}
 

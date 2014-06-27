@@ -44,12 +44,6 @@ public class OrderByComparatorFactoryImplTest {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
-
-		OrderByComparatorFactoryUtil orderByComparatorFactoryUtil =
-			new OrderByComparatorFactoryUtil();
-
-		orderByComparatorFactoryUtil.setOrderByComparatorFactory(
-			new OrderByComparatorFactoryImpl());
 	}
 
 	@Test

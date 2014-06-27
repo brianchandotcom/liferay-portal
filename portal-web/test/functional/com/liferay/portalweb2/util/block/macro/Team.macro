@@ -3,6 +3,7 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<execute action="CPSiteteams#assertClick" locator-key1="ADD_TEAM_BUTTON" value1="Add Team" />
+		<execute action="CPSiteteams#pause" locator1="3000" />
 
 		<execute action="CPSiteteamsAddteam#type" locator-key1="NAME_FIELD" value1="${teamName}" />
 		<execute action="CPSiteteamsAddteam#type" locator-key1="DESCRIPTION_FIELD" value1="${teamDescription}" />

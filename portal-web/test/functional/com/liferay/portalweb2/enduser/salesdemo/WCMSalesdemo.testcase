@@ -102,7 +102,7 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="${pageName}" value="Sales Page" />
+			<var name="pageName" value="Sales Page" />
 		</execute>
 
 		<execute macro="Page#openURL" />

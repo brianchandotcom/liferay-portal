@@ -289,13 +289,23 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet deployRemotePortlet(Portlet portlet, String[] categoryNames)
 		throws PortalException {
 
+		return deployRemotePortlet(portlet, categoryNames, true);
+	}
+
+	@Override
+	public Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
+		throws PortalException {
+
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		portletsPool.put(portlet.getPortletId(), portlet);
 
-		PortletInstanceFactoryUtil.clear(portlet, false);
+		if (eagerDestroy) {
+			PortletInstanceFactoryUtil.clear(portlet, false);
 
-		PortletConfigFactoryUtil.destroy(portlet);
+			PortletConfigFactoryUtil.destroy(portlet);
+		}
 
 		clearCache();
 
@@ -683,6 +693,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		try {
+			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
+
+			portletApp.setContextPath(servletContext.getContextPath());
+
 			Set<String> servletURLPatterns = _readWebXML(xmls[4]);
 
 			Set<String> portletIds = _readPortletXML(
@@ -744,8 +758,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 
 			// Sprite images
-
-			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
 
 			_setSpriteImages(servletContext, portletApp, "/html/icons/");
 		}
@@ -2130,6 +2142,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletApp portletApp = _getPortletApp(servletContextName);
 
 		portletApp.addServletURLPatterns(servletURLPatterns);
+		portletApp.setContextPath(servletContext.getContextPath());
 
 		Set<String> userAttributes = portletApp.getUserAttributes();
 

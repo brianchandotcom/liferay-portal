@@ -24,6 +24,16 @@ import java.util.List;
  */
 public class ServiceTrackerMapFactory {
 
+	public static <S> ServiceTrackerMap<String, List<S>>
+		createListServiceTracker(Class<S> clazz, String propertyKey) {
+
+		return new ServiceTrackerMapImpl<String, S, List<S>>(
+			clazz,"(" + propertyKey + "=*)",
+			new PropertyServiceReferenceMapper<String>(propertyKey),
+			new ListServiceTrackerBucketFactory<S>(
+				new PropertyServiceReferenceComparator<S>("service.ranking")));
+	}
+
 	public static <K, S> ServiceTrackerMap<K, List<S>>
 		createListServiceTrackerMap(
 			Class<S> clazz, String filterString,
@@ -46,13 +56,13 @@ public class ServiceTrackerMapFactory {
 				new ListServiceTrackerBucketFactory<S>(comparator));
 	}
 
-	public static <S> ServiceTrackerMap<String, List<S>>
-		createListServiceTracker(Class<S> clazz, String propertyKey) {
+	public static <S> ServiceTrackerMap<String, S>
+		createObjectServiceTrackerMap(Class<S> clazz, String propertyKey) {
 
-		return new ServiceTrackerMapImpl<String, S, List<S>>(
-			clazz,"(" + propertyKey + "=*)",
+		return new ServiceTrackerMapImpl<String, S, S>(
+			clazz, "(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String>(propertyKey),
-			new ListServiceTrackerBucketFactory<S>(
+			new ObjectServiceTrackerBucketFactory<S>(
 				new PropertyServiceReferenceComparator<S>("service.ranking")));
 	}
 
@@ -74,16 +84,6 @@ public class ServiceTrackerMapFactory {
 		return new ServiceTrackerMapImpl<K, S, S>(
 			clazz, filterString, serviceReferenceMapper,
 			new ObjectServiceTrackerBucketFactory<S>(comparator));
-	}
-
-	public static <S> ServiceTrackerMap<String, S>
-		createObjectServiceTrackerMap(Class<S> clazz, String propertyKey) {
-
-		return new ServiceTrackerMapImpl<String, S, S>(
-			clazz, "(" + propertyKey + "=*)",
-			new PropertyServiceReferenceMapper<String>(propertyKey),
-			new ObjectServiceTrackerBucketFactory<S>(
-				new PropertyServiceReferenceComparator<S>("service.ranking")));
 	}
 
 	private static class PropertyServiceReferenceComparator <T>

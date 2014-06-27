@@ -317,6 +317,14 @@ public class PortletLocalServiceUtil {
 		return getService().deployRemotePortlet(portlet, categoryNames);
 	}
 
+	public static com.liferay.portal.model.Portlet deployRemotePortlet(
+		com.liferay.portal.model.Portlet portlet,
+		java.lang.String[] categoryNames, boolean eagerDestroy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deployRemotePortlet(portlet, categoryNames, eagerDestroy);
+	}
+
 	public static void destroyPortlet(com.liferay.portal.model.Portlet portlet) {
 		getService().destroyPortlet(portlet);
 	}

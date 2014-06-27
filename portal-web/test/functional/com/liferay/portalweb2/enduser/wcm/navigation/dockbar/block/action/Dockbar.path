@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>ADD_CONTENT_CONTENT_TITLE</td>
-	<td>//div[@class='add-content-details span8']/div[contains(.,'${key_assetTitle}')]</td>
+	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

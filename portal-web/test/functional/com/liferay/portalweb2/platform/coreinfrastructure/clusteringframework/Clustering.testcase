@@ -13,7 +13,7 @@
 	</tear-down>
 
 	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
-		<property name="app.server.bundle.suffixes" value="1" />
+		<property name="app.server.bundle.count" value="1" />
 
 		<execute macro="Page#assertnodePortPG">
 			<var name="nodePort" value="8080" />

@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.markdown.converter.factory;
+
+import com.liferay.markdown.converter.MarkdownConverter;
+import com.liferay.markdown.converter.internal.pegdown.factory.MarkdownConverterFactoryImpl;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-public interface OrderByComparatorFactory {
+public class MarkdownConverterFactoryUtil {
 
-	public OrderByComparator create(String tableName, Object... columns);
+	public static MarkdownConverter create() {
+		return _markdownConverterFactory.create();
+	}
+
+	private static MarkdownConverterFactory _markdownConverterFactory =
+		new MarkdownConverterFactoryImpl();
 
 }

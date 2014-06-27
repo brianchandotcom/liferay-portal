@@ -115,6 +115,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_MENU_NONE_MESSAGE</td>
+	<td>//div[contains(@class,'user-notification')]//li[@class='message']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_MENU_ENTRY</td>
 	<td>//div[contains(@class,'user-notification')]</td>
 	<td></td>
@@ -147,6 +152,11 @@
 <tr>
 	<td>NOTIFICATION_MENU_VIEW_ALL</td>
 	<td>//a[contains(text(),'View All Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_MARK_ALL_AS_READ</td>
+	<td>//a[contains(text(),'Mark All as Read')]</td>
 	<td></td>
 </tr>
 <tr>

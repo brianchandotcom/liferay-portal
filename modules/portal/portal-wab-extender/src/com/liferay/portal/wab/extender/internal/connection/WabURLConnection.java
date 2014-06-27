@@ -75,7 +75,7 @@ public class WabURLConnection extends URLConnection {
 
 		try {
 			WabProcessor wabProcessor = new WabProcessor(
-				_bundleContext, _classLoader, file, parameters);
+				_classLoader, file, parameters);
 
 			return wabProcessor.getInputStream();
 		}

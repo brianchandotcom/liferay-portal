@@ -41,21 +41,40 @@
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<if>
-				<isset property="app.server.bundle.suffixes" />
+				<isset property="app.server.bundle.count" />
 				<then>
-					<for list="${app.server.bundle.suffixes}" param="app.server.bundle.suffix">
-						<sequential>
-							<delete dir="${app.server.parent.dir}-@{app.server.bundle.suffix}" />
+					<var name="bundle.count" value="1" />
 
-							<copy todir="${app.server.parent.dir}-@{app.server.bundle.suffix}/${app.server.type}-${app.server.version}">
-								<fileset dir="${app.server.dir}" />
-							</copy>
+					<antelope:repeat count="${app.server.bundle.count}">
+						<delete dir="${app.server.parent.dir}-${bundle.count}" />
 
-							<copy todir="${app.server.parent.dir}-@{app.server.bundle.suffix}/osgi">
-								<fileset dir="${liferay.home}/osgi" />
-							</copy>
-						</sequential>
-					</for>
+						<copy todir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}">
+							<fileset dir="${app.server.dir}" />
+						</copy>
+
+						<if>
+	  					 	<available file="${liferay.home}/osgi" />
+							<then>
+								<copy todir="${app.server.parent.dir}-${bundle.count}/osgi">
+									<fileset dir="${liferay.home}/osgi" />
+								</copy>
+							</then>
+						</if>
+
+						<chmod perm="a+x">
+							<fileset dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin">
+								<include name="*.sh" />
+							</fileset>
+						</chmod>
+
+						<math
+							datatype="int"
+							operand1="${bundle.count}"
+							operand2="1"
+							operation="+"
+							result="bundle.count"
+						/>
+					</antelope:repeat>
 				</then>
 			</if>
 		</sequential>
@@ -158,30 +177,38 @@
 			/>
 
 			<if>
-				<isset property="app.server.bundle.suffixes" />
+				<isset property="app.server.bundle.count" />
 				<then>
-					<for list="${app.server.bundle.suffixes}" param="app.server.bundle.suffix">
-						<sequential>
-							<replaceregexp
-								file="${app.server.parent.dir}-@{app.server.bundle.suffix}/tomcat-${app.server.tomcat.version}/conf/server.xml"
-								flags="g"
-								match="=&quot;8(\d\d\d)&quot;"
-								replace="=&quot;@{app.server.bundle.suffix}\1&quot;"
-							/>
+					<var name="bundle.count" value="1" />
 
-							<replace
-								file="${app.server.parent.dir}-@{app.server.bundle.suffix}/tomcat-${app.server.tomcat.version}/conf/server.xml"
-								token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
-								value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;@{app.server.bundle.suffix}&quot;&gt;"
-							/>
+					<antelope:repeat count="${app.server.bundle.count}">
+						<replaceregexp
+							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/conf/server.xml"
+							flags="g"
+							match="=&quot;8(\d\d\d)&quot;"
+							replace="=&quot;${bundle.count}\1&quot;"
+						/>
 
-							<replace
-								file="${app.server.parent.dir}-@{app.server.bundle.suffix}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
-								token="liferay.home=${liferay.home}"
-								value="liferay.home=${app.server.parent.dir}-@{app.server.bundle.suffix}"
-							/>
-						</sequential>
-					</for>
+						<replace
+							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/conf/server.xml"
+							token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
+							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${bundle.count}&quot;&gt;"
+						/>
+
+						<replace
+							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+							token="liferay.home=${liferay.home}"
+							value="liferay.home=${app.server.parent.dir}-${bundle.count}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${bundle.count}"
+							operand2="1"
+							operation="+"
+							result="bundle.count"
+						/>
+					</antelope:repeat>
 				</then>
 			</if>
 		</sequential>
@@ -342,17 +369,25 @@
 	<macrodef name="start-additional-app-servers">
 		<sequential>
 			<if>
-				<isset property="app.server.bundle.suffixes" />
+				<isset property="app.server.bundle.count" />
 				<then>
-					<for list="${app.server.bundle.suffixes}" param="app.server.bundle.suffix">
-						<sequential>
-							<start-app-server
-								app.server.bin.dir="${app.server.parent.dir}-@{app.server.bundle.suffix}/${app.server.type}-${app.server.version}/bin"
-								app.server.http.url="http://localhost:@{app.server.bundle.suffix}080/web/guest"
-								liferay.home="${app.server.parent.dir}-@{app.server.bundle.suffix}"
-							/>
-						</sequential>
-					</for>
+					<var name="bundle.count" value="1" />
+
+					<antelope:repeat count="${app.server.bundle.count}">
+						<start-app-server
+							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
+							app.server.http.url="http://localhost:${bundle.count}080/web/guest"
+							liferay.home="${app.server.parent.dir}-${bundle.count}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${bundle.count}"
+							operand2="1"
+							operation="+"
+							result="bundle.count"
+						/>
+					</antelope:repeat>
 				</then>
 			</if>
 		</sequential>
@@ -419,15 +454,23 @@
 	<macrodef name="stop-additional-app-servers">
 		<sequential>
 			<if>
-				<isset property="app.server.bundle.suffixes" />
+				<isset property="app.server.bundle.count" />
 				<then>
-					<for list="${app.server.bundle.suffixes}" param="app.server.bundle.suffix">
-						<sequential>
-							<stop-app-server
-								app.server.bin.dir="${app.server.parent.dir}-@{app.server.bundle.suffix}/${app.server.type}-${app.server.version}/bin"
-							/>
-						</sequential>
-					</for>
+					<var name="bundle.count" value="1" />
+
+					<antelope:repeat count="${app.server.bundle.count}">
+						<stop-app-server
+							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${bundle.count}"
+							operand2="1"
+							operation="+"
+							result="bundle.count"
+						/>
+					</antelope:repeat>
 				</then>
 			</if>
 		</sequential>

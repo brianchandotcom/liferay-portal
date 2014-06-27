@@ -14,55 +14,32 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		return _screenNameGenerator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(ScreenNameGenerator screenNameGenerator) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(screenNameGenerator));
-		}
+	private ScreenNameGeneratorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (screenNameGenerator == null) {
-			_screenNameGenerator = _originalScreenNameGenerator;
-		}
-		else {
-			_screenNameGenerator = screenNameGenerator;
-		}
+		_serviceTracker = registry.trackServices(ScreenNameGenerator.class);
+
+		_serviceTracker.open();
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.USERS_SCREEN_NAME_GENERATOR);
-		}
+	private static ScreenNameGeneratorFactory _instance =
+		new ScreenNameGeneratorFactory();
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalScreenNameGenerator =
-			(ScreenNameGenerator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_SCREEN_NAME_GENERATOR);
-
-		_screenNameGenerator = _originalScreenNameGenerator;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		ScreenNameGeneratorFactory.class);
-
-	private static ScreenNameGenerator _originalScreenNameGenerator;
-	private static volatile ScreenNameGenerator _screenNameGenerator;
+	private ServiceTracker<?, ScreenNameGenerator> _serviceTracker;
 
 }

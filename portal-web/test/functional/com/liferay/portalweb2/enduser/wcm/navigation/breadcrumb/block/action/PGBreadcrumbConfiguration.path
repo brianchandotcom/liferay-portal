@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SHOW_SPECIFIC_CHECKBOX</td>
-	<td>//label[contains(.,'${key_checkSetupName}')]/input[2]</td>
+	<td>//label[contains(.,'${key_checkSetupName}')]/input</td>
 	<td></td>
 </tr>
 </tbody>

@@ -16,8 +16,6 @@ package com.liferay.portal.wab.extender.internal.handler;
 
 import com.liferay.portal.wab.extender.internal.connection.WabURLConnection;
 
-import java.io.IOException;
-
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -39,7 +37,7 @@ public class WabURLStreamHandlerService
 	}
 
 	@Override
-	public URLConnection openConnection(URL url) throws IOException {
+	public URLConnection openConnection(URL url) {
 		return new WabURLConnection(_bundleContext, _classLoader, url);
 	}
 

@@ -19,6 +19,7 @@
 	<command name="viewEditedContent">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 
+		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
@@ -28,6 +29,7 @@
 	<command name="viewNewContent">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 
+		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType}." />

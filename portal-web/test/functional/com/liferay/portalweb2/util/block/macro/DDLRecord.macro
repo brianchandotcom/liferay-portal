@@ -56,12 +56,12 @@
 	</command>
 
 	<command name="editPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editPGViaRecordView">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute action="PGDynamicdatalistsDisplayrecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
@@ -474,7 +474,7 @@
 				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 			</then>
 			<else>
-				<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 				<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 			</else>
 		</if>

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECT_VERSION_IFRAME</td>
-	<td>//iframe[contains(@id,'selectVersion')]</td>
+	<td>//iframe[contains(@id,'compareVersions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,27 +31,27 @@
 <!--SELECT_VERSION_TABLE-->
 <tr>
 	<td>SELECT_VERSION_VERSION_NEW</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]/td[1]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionNew}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_VERSION_DATE_NEW</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]/td[2]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionNew}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_VERSION_VERSION_OLD</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[1]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionOld}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_VERSION_DATE_OLD</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[2]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionOld}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_VERSION_CHOOSE_BUTTON_OLD</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[3]/button[contains(.,'Choose')]</td>
+	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr[contains(.,'${key_wikiPageVersionOld}')]/td[3]/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -25,22 +25,22 @@
 </tr>
 <tr>
 	<td>WIKI_NODE_SELECT</td>
-	<td>//select[@class='aui-field-select' and contains(@name,'nodeId')]</td>
+	<td>//select[contains(@id,'nodeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_SELECT</td>
-	<td>//select[@class='aui-field-select' and contains(@name,'title')]</td>
+	<td>//select[contains(@Id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[@type='submit' and contains(.,'Save')]</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -77,7 +77,7 @@
 <!--COMMENT-->
 <tr>
 	<td>COMMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 <tr>

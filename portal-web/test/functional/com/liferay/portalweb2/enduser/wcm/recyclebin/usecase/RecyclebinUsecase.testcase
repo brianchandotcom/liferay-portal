@@ -884,7 +884,6 @@
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="Wiki Node Description" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
@@ -956,6 +955,7 @@
 		</execute>
 
 		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="2" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 

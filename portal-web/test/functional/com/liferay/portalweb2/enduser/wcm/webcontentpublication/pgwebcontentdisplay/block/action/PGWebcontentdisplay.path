@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ALERT_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]/a</td>
 	<td></td>
 </tr>
 <tr>

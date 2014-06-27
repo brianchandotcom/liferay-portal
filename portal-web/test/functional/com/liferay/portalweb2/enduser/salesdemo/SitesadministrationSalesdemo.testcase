@@ -152,7 +152,7 @@
 		</execute>
 
 		<execute macro="Vimeo#addURL">
-			<var name="vimeoURL" value="//http://vimeo.com/45677716" />
+			<var name="vimeoURL" value="http://vimeo.com/45677716" />
 		</execute>
 
 		<execute action="Home#refresh" />

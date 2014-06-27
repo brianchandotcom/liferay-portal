@@ -111,9 +111,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressValidator;
 import com.liferay.portal.security.auth.FullNameGenerator;
-import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
-import com.liferay.portal.security.auth.FullNameValidatorFactory;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
@@ -571,14 +569,6 @@ public class HookHotDeployListener
 			if (sanitizerContainer != null) {
 				sanitizerContainer.unregisterSanitizers();
 			}
-		}
-
-		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
-			FullNameGeneratorFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_VALIDATOR)) {
-			FullNameValidatorFactory.setInstance(null);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -2082,7 +2072,12 @@ public class HookHotDeployListener
 					portletClassLoader, FullNameGenerator.class,
 					fullNameGeneratorClassName);
 
-			FullNameGeneratorFactory.setInstance(fullNameGenerator);
+			ServiceRegistration<FullNameGenerator> serviceRegistration =
+				registry.registerService(
+					FullNameGenerator.class, fullNameGenerator);
+
+			serviceRegistrations.put(
+				fullNameGeneratorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_VALIDATOR)) {
@@ -2094,7 +2089,12 @@ public class HookHotDeployListener
 					portletClassLoader, FullNameValidator.class,
 					fullNameValidatorClassName);
 
-			FullNameValidatorFactory.setInstance(fullNameValidator);
+			ServiceRegistration<FullNameValidator> serviceRegistration =
+				registry.registerService(
+					FullNameValidator.class, fullNameValidator);
+
+			serviceRegistrations.put(
+				fullNameValidatorClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(

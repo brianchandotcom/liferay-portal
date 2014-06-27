@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -28,40 +25,21 @@ import com.liferay.portal.util.PropsValues;
 public class FullNameGeneratorFactory {
 
 	public static FullNameGenerator getInstance() {
-		return _fullNameGenerator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(FullNameGenerator fullNameGenerator) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(fullNameGenerator));
-		}
+	private FullNameGeneratorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (fullNameGenerator == null) {
-			_fullNameGenerator = _originalFullNameGenerator;
-		}
-		else {
-			_fullNameGenerator = fullNameGenerator;
-		}
+		_serviceTracker = registry.trackServices(FullNameGenerator.class);
+
+		_serviceTracker.open();
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.USERS_FULL_NAME_GENERATOR);
-		}
+	private static FullNameGeneratorFactory _instance =
+		new FullNameGeneratorFactory();
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalFullNameGenerator =
-			(FullNameGenerator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_FULL_NAME_GENERATOR);
-
-		_fullNameGenerator = _originalFullNameGenerator;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		FullNameGeneratorFactory.class);
-
-	private static volatile FullNameGenerator _fullNameGenerator;
-	private static FullNameGenerator _originalFullNameGenerator;
+	private ServiceTracker<FullNameGenerator, FullNameGenerator>
+		_serviceTracker;
 
 }

@@ -604,11 +604,14 @@
 	<bean id="com.liferay.portal.security.auth.CASAutoLogin" class="com.liferay.portal.security.auth.CASAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />
+	<bean id="com.liferay.portal.security.auth.DefaultFullNameGenerator" class="com.liferay.portal.security.auth.DefaultFullNameGenerator" />
+	<bean id="com.liferay.portal.security.auth.DefaultFullNameValidator" class="com.liferay.portal.security.auth.DefaultFullNameValidator" />
 	<bean id="com.liferay.portal.security.auth.DefaultScreenNameGenerator" class="com.liferay.portal.security.auth.DefaultScreenNameGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultScreenNameValidator" class="com.liferay.portal.security.auth.DefaultScreenNameValidator" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" class="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.FacebookAutoLogin" class="com.liferay.portal.security.auth.FacebookAutoLogin" />
+	<bean id="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" class="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.LiberalEmailAddressValidator" class="com.liferay.portal.security.auth.LiberalEmailAddressValidator" />

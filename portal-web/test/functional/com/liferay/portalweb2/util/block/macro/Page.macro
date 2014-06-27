@@ -442,6 +442,22 @@
 		<execute action="Home#isElementPresent" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
+	<command name="localizedPageName">
+		<var name="key_localizationName" value="${localizationName}" />
+
+		<if>
+			<isset var="localizeNewPage" />
+			<then>
+				<execute action="Dockbar#click" locator-key1="ADD_PAGE_NAME_LOCALIZED" />
+				<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+			</then>
+			<else>
+				<execute action="Dockbar#click" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
+				<execute action="Dockbar#type" locator-key1="EDIT_NAME_FIELD" value1="${pageName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="openURL">
 		<if>
 			<equals arg1="${pageAccess}" arg2="Private" />

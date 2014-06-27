@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -669,20 +668,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getContextPath() {
-		if (!_portletApp.isWARFile()) {
-			return PortalUtil.getPathContext();
-		}
-
-		String servletContextName = _portletApp.getServletContextName();
-
-		if (ServletContextPool.containsKey(servletContextName)) {
-			ServletContext servletContext = ServletContextPool.get(
-				servletContextName);
-
-			return ContextPathUtil.getContextPath(servletContext);
-		}
-
-		return StringPool.SLASH.concat(servletContextName);
+		return _portletApp.getContextPath();
 	}
 
 	/**

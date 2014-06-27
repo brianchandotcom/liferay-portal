@@ -3,10 +3,6 @@
 
 /* ---------- Add/remove page ---------- */
 
-.mobile .modify-pages .lfr-nav-sortable > a > span {
-		padding-left: 28px;
-	}
-
 .modify-pages {
 	li {
 		position: relative;
@@ -60,16 +56,6 @@
 		width: 1em;
 	}
 
-	@include respond-to(desktop) {
-		.lfr-nav-sortable > a > span {
-			padding-left: 0;
-		}
-
-		.drag-handle {
-			display: none;
-		}
-	}
-
 	.lfr-nav-updateable {
 		.add-page-editor {
 			.add-page-editor-input {
@@ -117,6 +103,22 @@
 
 	.drag-handle {
 		display: none;
+	}
+}
+
+.touch .modify-pages {
+	.lfr-nav-sortable > a > span {
+		padding-left: 28px;
+	}
+
+	@include respond-to(desktop) {
+		.lfr-nav-sortable > a > span {
+			padding-left: 0;
+		}
+
+		.drag-handle {
+			display: none;
+		}
 	}
 }
 

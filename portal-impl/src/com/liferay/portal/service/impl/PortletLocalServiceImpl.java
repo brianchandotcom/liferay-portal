@@ -695,7 +695,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		try {
 			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
 
-			portletApp.setContextPath(servletContext.getContextPath());
+			portletApp.setServletContext(servletContext);
 
 			Set<String> servletURLPatterns = _readWebXML(xmls[4]);
 
@@ -2142,7 +2142,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletApp portletApp = _getPortletApp(servletContextName);
 
 		portletApp.addServletURLPatterns(servletURLPatterns);
-		portletApp.setContextPath(servletContext.getContextPath());
+		portletApp.setServletContext(servletContext);
 
 		Set<String> userAttributes = portletApp.getUserAttributes();
 

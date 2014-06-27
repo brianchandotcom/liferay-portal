@@ -286,16 +286,27 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Portlet deployRemotePortlet(Portlet portlet, String[] categoryNames)
+	public Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames)
+		throws PortalException {
+
+		return deployRemotePortlet(portlet, categoryNames, true);
+	}
+
+	@Override
+	public Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
 		throws PortalException {
 
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		portletsPool.put(portlet.getPortletId(), portlet);
 
-		PortletInstanceFactoryUtil.clear(portlet, false);
+		if (eagerDestroy) {
+			PortletInstanceFactoryUtil.clear(portlet, false);
 
-		PortletConfigFactoryUtil.destroy(portlet);
+			PortletConfigFactoryUtil.destroy(portlet);
+		}
 
 		clearCache();
 

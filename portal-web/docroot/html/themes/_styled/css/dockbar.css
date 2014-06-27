@@ -206,6 +206,10 @@ $editLayoutPanelWidth: 460px;
 								& > .nav-item-label {
 									display: block;
 								}
+
+								@include respond-to(desktop) {
+									font-weight: normal;
+								}
 							}
 						}
 					}

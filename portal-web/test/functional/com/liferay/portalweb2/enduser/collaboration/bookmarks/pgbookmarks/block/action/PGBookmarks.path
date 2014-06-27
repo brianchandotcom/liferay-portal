@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_ACTION_MENULIST_UNSUBSCRIBE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>

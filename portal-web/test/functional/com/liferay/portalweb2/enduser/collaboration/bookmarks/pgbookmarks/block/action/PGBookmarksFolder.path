@@ -72,17 +72,27 @@
 <!--FOLDER_MENU-->
 <tr>
 	<td>FOLDER_MENU_EDIT</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Edit')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>FOLDER_MENU_SUBSCRIBE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_UNSUBSCRIBE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Subfolder')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

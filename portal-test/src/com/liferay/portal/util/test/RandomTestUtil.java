@@ -95,20 +95,6 @@ public class RandomTestUtil {
 			return -value;
 		}
 	}
-	
-	public static UnicodeProperties randomUnicodeProperties(
-		int propertyCount, int keyLength, int valueLength) {
-		
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-		
-		for (int i = 0; i < propertyCount; i++) {
-			unicodeProperties.put(
-				RandomTestUtil.randomString(keyLength), 
-				RandomTestUtil.randomString(valueLength));
-		}
-		
-		return unicodeProperties;
-	}
 
 	public static String randomString() {
 		return StringUtil.randomString();
@@ -116,6 +102,20 @@ public class RandomTestUtil {
 
 	public static String randomString(int length) {
 		return StringUtil.randomString(length);
+	}
+
+	public static UnicodeProperties randomUnicodeProperties(
+		int propertyCount, int keyLength, int valueLength) {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		for (int i = 0; i < propertyCount; i++) {
+			unicodeProperties.put(
+				RandomTestUtil.randomString(keyLength),
+				RandomTestUtil.randomString(valueLength));
+		}
+
+		return unicodeProperties;
 	}
 
 	private static Random _random = new Random();

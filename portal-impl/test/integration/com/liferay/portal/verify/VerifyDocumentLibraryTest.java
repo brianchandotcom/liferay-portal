@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -33,6 +32,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,9 +53,9 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 
 		UnicodeProperties typeSettingsProperties =
 			_group.getParentLiveGroupTypeSettingsProperties();
-		
+
 		typeSettingsProperties.put("trashEntriesMaxAge", "0");
-		
+
 		_group = GroupLocalServiceUtil.updateGroup(_group);
 	}
 

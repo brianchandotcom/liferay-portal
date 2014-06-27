@@ -35,12 +35,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
-import org.hibernate.util.JDBCExceptionReporter;
-import org.junit.After;
 
+import org.hibernate.util.JDBCExceptionReporter;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,22 +70,27 @@ public class ResourceBlockLocalServiceTest {
 		preparedStatement.executeUpdate();
 
 		DataAccess.cleanUp(connection, preparedStatement);
-		
+
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-		
-		for (LoggingEvent loggingEvent: loggingEvents) {
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
 			String eventMessage = loggingEvent.getRenderedMessage();
-			
-			Assert.assertTrue(
-				eventMessage.startsWith("Duplicate entry") || 
-				eventMessage.equals("Deadlock found when trying to get lock; " + 
-					"try restarting transaction"));
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
 		}
 
 		_captureAppender.close();
@@ -268,8 +274,6 @@ public class ResourceBlockLocalServiceTest {
 		DataAccess.cleanUp(connection, preparedStatement, resultSet);
 	}
 
-	private CaptureAppender _captureAppender;
-
 	private static final long _ACTION_IDS = 12;
 
 	private static final long _COMPANY_ID = -1;
@@ -285,6 +289,8 @@ public class ResourceBlockLocalServiceTest {
 	private static final long _ROLE_ID = -1;
 
 	private static final int _THREAD_COUNT = 10;
+
+	private CaptureAppender _captureAppender;
 
 	private class MockPermissionedModel implements PermissionedModel {
 

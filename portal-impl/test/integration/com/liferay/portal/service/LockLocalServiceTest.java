@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
@@ -40,8 +41,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.LockAcquisitionException;
 import org.hibernate.util.JDBCExceptionReporter;
-import org.junit.After;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,18 +62,23 @@ public class LockLocalServiceTest {
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-		
-		for (LoggingEvent loggingEvent: loggingEvents) {
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
 			String eventMessage = loggingEvent.getRenderedMessage();
-			
-			Assert.assertTrue(
-				eventMessage.startsWith("Duplicate entry") || 
-				eventMessage.equals("Deadlock found when trying to get lock; " + 
-					"try restarting transaction"));
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
 		}
 
 		_captureAppender.close();
@@ -136,7 +142,7 @@ public class LockLocalServiceTest {
 
 		LockLocalServiceUtil.unlock(className, key, owner2);
 	}
-	
+
 	private CaptureAppender _captureAppender;
 
 	private class LockingJob implements Runnable {

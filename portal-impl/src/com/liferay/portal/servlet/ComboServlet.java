@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -379,23 +378,6 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		return url;
-	}
-
-	protected ServletContext getServletContext(String contextName)
-		throws ServletException {
-
-		if (Validator.isNull(contextName)) {
-			return getServletContext();
-		}
-
-		ServletContext servletContext = ServletContextPool.get(contextName);
-
-		if (servletContext != null) {
-			return servletContext;
-		}
-
-		throw new ServletException(
-			"Servlet context " + contextName + " does not exist");
 	}
 
 	protected String translate(

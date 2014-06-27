@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -63,19 +64,10 @@ public class ViewAction extends WebContentAction {
 					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
 		}
 
-		String articleId = ParamUtil.getString(renderRequest, "articleId");
-		String ddmTemplateKey = null;
-
-		if (Validator.isNull(articleId)) {
-			articleId = GetterUtil.getString(
-				portletPreferences.getValue("articleId", null));
-			ddmTemplateKey = GetterUtil.getString(
-				portletPreferences.getValue("ddmTemplateKey", null));
-		}
-		else {
-			ddmTemplateKey = ParamUtil.getString(
-				renderRequest, "ddmTemplateKey");
-		}
+		String articleId = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "articleId");
+		String ddmTemplateKey = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "ddmTemplateKey");
 
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;

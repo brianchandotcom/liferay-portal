@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.journalcontent.action.WebContentAction;
 
 import javax.portlet.PortletConfig;
@@ -28,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class ViewAction extends WebContentAction {
+public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(

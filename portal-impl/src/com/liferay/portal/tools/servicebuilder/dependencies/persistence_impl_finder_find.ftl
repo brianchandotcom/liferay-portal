@@ -161,7 +161,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	int start, int end, OrderByComparator orderByComparator) {
+	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -324,7 +324,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator orderByComparator) throws ${noSuchEntity}Exception {
+	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchBy${finder.name}_First(
 
 		<#list finderColsList as finderCol>
@@ -369,7 +369,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator orderByComparator) {
+	OrderByComparator<${entity.name}> orderByComparator) {
 		List<${entity.name}> list = findBy${finder.name}(
 
 		<#list finderColsList as finderCol>
@@ -402,7 +402,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator orderByComparator) throws ${noSuchEntity}Exception {
+	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchBy${finder.name}_Last(
 
 		<#list finderColsList as finderCol>
@@ -447,7 +447,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator orderByComparator) {
+	OrderByComparator<${entity.name}> orderByComparator) {
 		int count = countBy${finder.name}(
 
 		<#list finderColsList as finderCol>
@@ -498,7 +498,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			${finderCol.type} ${finderCol.name},
 		</#list>
 
-		OrderByComparator orderByComparator) throws ${noSuchEntity}Exception {
+		OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
 			${entity.name} ${entity.varName} = findByPrimaryKey(${entity.PKVarName});
 
 			Session session = null;
@@ -547,7 +547,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				${finderCol.type} ${finderCol.name},
 			</#list>
 
-			OrderByComparator orderByComparator, boolean previous) {
+			OrderByComparator<${entity.name}> orderByComparator, boolean previous) {
 
 			<#include "persistence_impl_get_by_prev_and_next_query.ftl">
 
@@ -664,7 +664,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			${finderCol.type} ${finderCol.name},
 		</#list>
 
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
 			if (!InlineSQLHelperUtil.isEnabled(<#if finder.hasColumn("groupId")>groupId</#if>)) {
 				return findBy${finder.name}(
 
@@ -793,7 +793,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				${finderCol.type} ${finderCol.name},
 			</#list>
 
-			OrderByComparator orderByComparator) throws ${noSuchEntity}Exception {
+			OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
 				if (!InlineSQLHelperUtil.isEnabled(<#if finder.hasColumn("groupId")>groupId</#if>)) {
 					return findBy${finder.name}_PrevAndNext(${entity.PKVarName},
 
@@ -852,7 +852,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					${finderCol.type} ${finderCol.name},
 				</#list>
 
-				OrderByComparator orderByComparator, boolean previous) {
+				OrderByComparator<${entity.name}> orderByComparator, boolean previous) {
 
 				<#if entity.isPermissionedModel()>
 					<#include "persistence_impl_get_by_prev_and_next_query.ftl">
@@ -1140,7 +1140,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				</#if>
 			</#list>
 
-			int start, int end, OrderByComparator orderByComparator) {
+			int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
 				if (!InlineSQLHelperUtil.isEnabled(
 					<#if finder.hasColumn("groupId")>
 						<#if finder.getColumn("groupId").hasArrayableOperator()>
@@ -1435,7 +1435,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
 			<#list finderColsList as finderCol>
 				<#if finderCol.hasArrayableOperator()>
 					if (${finderCol.names} == null) {

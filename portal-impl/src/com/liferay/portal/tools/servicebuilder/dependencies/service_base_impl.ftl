@@ -217,8 +217,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 * @return the matching rows
 		 */
 		@Override
-		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery) {
+		public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery);
 		}
 
@@ -235,8 +234,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 * @return the range of matching rows
 		 */
 		@Override
-		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+		public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end);
 		}
 
@@ -254,8 +252,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 * @return the ordered range of matching rows
 		 */
 		@Override
-		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end, OrderByComparator orderByComparator) {
+		public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start, int end, OrderByComparator<T> orderByComparator) {
 			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
 		}
 
@@ -791,7 +788,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				</#list>
 				 */
 				@Override
-				public List<${entity.name}> get${tempEntity.name}${entity.names}(${tempEntity.PKClassName} ${tempEntity.PKVarName}, int start, int end, OrderByComparator orderByComparator) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				public List<${entity.name}> get${tempEntity.name}${entity.names}(${tempEntity.PKClassName} ${tempEntity.PKVarName}, int start, int end, OrderByComparator<${entity.name}> orderByComparator) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
 					return ${tempEntity.varName}Persistence.get${entity.names}(${tempEntity.PKVarName}, start, end, orderByComparator);
 				}
 

@@ -46,12 +46,13 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 			<#assign parameters = method.parameters>
 
 			@Override
+			public
 
-			<#if method.name = "dynamicQuery" && (method.parameters?size != 0)>
-				@SuppressWarnings("rawtypes")
+			<#if method.name = "dynamicQuery" && (returnTypeName == "java.util.List<T>")>
+				<T>
 			</#if>
 
-			public ${returnTypeName} ${method.name}(
+			${returnTypeName} ${method.name}(
 
 			<#list parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}

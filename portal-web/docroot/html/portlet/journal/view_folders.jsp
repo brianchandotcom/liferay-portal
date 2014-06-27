@@ -111,7 +111,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry list-group-item folder"
+						cssClass="app-view-navigation-entry folder list-group-item"
 						href="<%= viewArticlesHomeURL %>"
 						iconCssClass="icon-home"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "home")) %>'
@@ -134,7 +134,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry list-group-item folder"
+						cssClass="app-view-navigation-entry folder list-group-item"
 						href="<%= viewRecentArticlesURL %>"
 						iconCssClass="icon-time"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "recent")) %>'
@@ -151,7 +151,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="app-view-navigation-entry list-group-item folder"
+							cssClass="app-view-navigation-entry folder list-group-item"
 							href="<%= viewMyArticlesURL %>"
 							iconCssClass="icon-user"
 							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "mine")) %>'
@@ -169,7 +169,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="app-view-navigation-entry list-group-item folder structure"
+							cssClass="app-view-navigation-entry folder list-group-item structure"
 							href="<%= filterDDMStructureArticlesURL %>"
 							iconCssClass="icon-th-large"
 							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "browse-by-structure")) %>'
@@ -186,7 +186,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry list-group-item folder"
+						cssClass="app-view-navigation-entry folder list-group-item"
 						href="<%= viewURL %>"
 						iconCssClass="icon-level-up"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "up")) %>'
@@ -211,7 +211,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry list-group-item folder structure"
+								cssClass="app-view-navigation-entry folder list-group-item structure"
 								href="<%= viewDDMStructureArticlesURL %>"
 								iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 								label="<%= ddmStructure.getName(locale) %>"
@@ -233,7 +233,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry list-group-item folder"
+						cssClass="app-view-navigation-entry folder list-group-item"
 						href="<%= viewURL %>"
 						iconCssClass="icon-level-up"
 						label='<%= LanguageUtil.get(request, "up") %>'
@@ -260,7 +260,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="app-view-navigation-entry list-group-item folder"
+							cssClass="app-view-navigation-entry folder list-group-item"
 							href="<%= viewURL %>"
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= curFolder.getName() %>"

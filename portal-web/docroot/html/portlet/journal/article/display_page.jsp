@@ -190,18 +190,18 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 											footer: [
 												{
 													disabled: true,
+													label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 													on: {
 														click: setDisplayPage
-													},
-													label: '<%= UnicodeLanguageUtil.get(request, "ok") %>'
+													}
 												},
 												{
+													label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
 													on: {
 														click: function() {
 															dialog.hide();
 														}
-													},
-													label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>'
+													}
 												}
 											]
 										}
@@ -221,14 +221,14 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(request, "public-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
 												tabContentId: publicPagesTabContentId,
 												tabId: publicPagesTabId
 											}
-										)
+										),
+										label: '<%= UnicodeLanguageUtil.get(request, "public-pages") %>'
 									}
 								);
 							</c:if>
@@ -236,14 +236,14 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(request, "private-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
 												tabContentId: privatePagesTabContentId,
 												tabId: privatePagesTabId
 											}
-										)
+										),
+										label: '<%= UnicodeLanguageUtil.get(request, "private-pages") %>'
 									}
 								);
 							</c:if>

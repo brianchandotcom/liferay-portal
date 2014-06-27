@@ -263,6 +263,11 @@ public interface PortletLocalService extends BaseLocalService,
 		java.lang.String[] categoryNames)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.model.Portlet deployRemotePortlet(
+		com.liferay.portal.model.Portlet portlet,
+		java.lang.String[] categoryNames, boolean eagerDestroy)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public void destroyPortlet(com.liferay.portal.model.Portlet portlet);
 
 	public void destroyRemotePortlet(com.liferay.portal.model.Portlet portlet);

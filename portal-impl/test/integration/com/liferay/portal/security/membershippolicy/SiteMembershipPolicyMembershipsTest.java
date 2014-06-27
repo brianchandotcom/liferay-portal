@@ -16,7 +16,6 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -291,10 +290,11 @@ public class SiteMembershipPolicyMembershipsTest
 	public void testVerifyWhenUpdatingGroupTypeSettings() throws Exception {
 		Group group = MembershipPolicyTestUtil.addGroup();
 
-		UnicodeProperties unicodeProperties = 
+		UnicodeProperties unicodeProperties =
 			RandomTestUtil.randomUnicodeProperties(10, 2, 2);
 
-		GroupServiceUtil.updateGroup(group.getGroupId(), unicodeProperties.toString());
+		GroupServiceUtil.updateGroup(
+			group.getGroupId(), unicodeProperties.toString());
 
 		Assert.assertTrue(isVerify());
 	}

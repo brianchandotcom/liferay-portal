@@ -29,11 +29,13 @@ import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.List;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.hibernate.util.JDBCExceptionReporter;
-import org.junit.After;
 
+import org.hibernate.util.JDBCExceptionReporter;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,14 +64,19 @@ public class OrganizationLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-		
-		for (LoggingEvent loggingEvent: loggingEvents) {
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
 			String eventMessage = loggingEvent.getRenderedMessage();
-			
-			Assert.assertTrue(
-				eventMessage.startsWith("Duplicate entry") || 
-				eventMessage.equals("Deadlock found when trying to get lock; " + 
-					"try restarting transaction"));
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
 		}
 
 		_captureAppender.close();
@@ -305,7 +312,7 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(
 			organizationB.getGroupId(), groupAA.getParentGroupId());
 	}
-	
+
 	private CaptureAppender _captureAppender;
 
 }

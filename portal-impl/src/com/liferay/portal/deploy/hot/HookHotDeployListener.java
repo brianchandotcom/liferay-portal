@@ -112,8 +112,6 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
-import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl;
-import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
@@ -523,19 +521,6 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {
 			com.liferay.mail.util.HookFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.MEMBERSHIP_POLICY_ORGANIZATIONS)) {
-
-			OrganizationMembershipPolicyFactoryImpl
-				organizationMembershipPolicyFactoryImpl =
-					(OrganizationMembershipPolicyFactoryImpl)
-						OrganizationMembershipPolicyFactoryUtil.
-							getOrganizationMembershipPolicyFactory();
-
-			organizationMembershipPolicyFactoryImpl.
-				setOrganizationMembershipPolicy(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {
@@ -1779,23 +1764,18 @@ public class HookHotDeployListener
 				portalProperties.getProperty(
 					PropsKeys.MEMBERSHIP_POLICY_ORGANIZATIONS);
 
-			OrganizationMembershipPolicyFactoryImpl
-				organizationMembershipPolicyFactoryImpl =
-					(OrganizationMembershipPolicyFactoryImpl)
-						OrganizationMembershipPolicyFactoryUtil.
-							getOrganizationMembershipPolicyFactory();
-
 			OrganizationMembershipPolicy organizationMembershipPolicy =
 				(OrganizationMembershipPolicy)newInstance(
 					portletClassLoader, OrganizationMembershipPolicy.class,
 					organizationMembershipPolicyClassName);
 
-			organizationMembershipPolicyFactoryImpl.
-				setOrganizationMembershipPolicy(organizationMembershipPolicy);
+			ServiceRegistration<OrganizationMembershipPolicy>
+			serviceRegistration = registry.registerService(
+					OrganizationMembershipPolicy.class,
+					organizationMembershipPolicy);
 
-			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
-				organizationMembershipPolicy.verifyPolicy();
-			}
+			serviceRegistrations.put(
+				organizationMembershipPolicyClassName, serviceRegistration);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {

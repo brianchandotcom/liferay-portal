@@ -55,7 +55,10 @@ pageContext.setAttribute("portletURL", portletURL);
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
 		<aui:select inlineField="<%= true %>" label="" name='<%= namespace + "groupId" %>' title="scope" useNamespace="<%= false %>">
-			<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
+			<c:if test="<%= !group.isStagingGroup() %>">
+				<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
+			</c:if>
+
 			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
 		</aui:select>
 

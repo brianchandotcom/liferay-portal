@@ -337,7 +337,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
-		if (content.equals(newContent)) {
+		if ((newContent == null) || content.equals(newContent)) {
 			return;
 		}
 

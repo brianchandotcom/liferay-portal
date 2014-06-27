@@ -64,8 +64,7 @@ public class BlogsEntryLocalServiceImplTest {
 		long userId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 
-		_blogsEntryLocalServiceImpl.addDiscussion(
-			_blogsEntry, userId, groupId);
+		_blogsEntryLocalServiceImpl.addDiscussion(_blogsEntry, userId, groupId);
 
 		Mockito.verify(
 			_commentManager
@@ -75,9 +74,7 @@ public class BlogsEntryLocalServiceImplTest {
 	}
 
 	@Test
-	public void testAddDiscussionWhenCommentsAreDisabled()
-		throws Exception {
-
+	public void testAddDiscussionWhenCommentsAreDisabled() throws Exception {
 		boolean value = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED;
 
 		Whitebox.setInternalState(

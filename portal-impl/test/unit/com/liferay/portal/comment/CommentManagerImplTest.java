@@ -47,6 +47,21 @@ public class CommentManagerImplTest extends Mockito {
 	}
 
 	@Test
+	public void testDefaultCommentManager() throws PortalException {
+		when(
+			_serviceTracker.isEmpty()
+		).thenReturn(
+			true
+		);
+
+		CommentManager defaultCommentManager = mock(CommentManager.class);
+
+		_commentManagerImpl.setDefaultCommentManager(defaultCommentManager);
+
+		testAllCallsAreDelegated(defaultCommentManager);
+	}
+
+	@Test
 	public void testRegistryCommentManager() throws PortalException {
 		CommentManager registryCommentManager = mock(CommentManager.class);
 
@@ -69,21 +84,6 @@ public class CommentManagerImplTest extends Mockito {
 		testAllCallsAreDelegated(registryCommentManager);
 
 		verifyZeroInteractions(defaultCommentManager);
-	}
-
-	@Test
-	public void testDefaultCommentManager() throws PortalException {
-		when(
-			_serviceTracker.isEmpty()
-		).thenReturn(
-			true
-		);
-
-		CommentManager defaultCommentManager = mock(CommentManager.class);
-
-		_commentManagerImpl.setDefaultCommentManager(defaultCommentManager);
-
-		testAllCallsAreDelegated(defaultCommentManager);
 	}
 
 	protected void setUpRegistryUtil() {

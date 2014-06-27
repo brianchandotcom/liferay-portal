@@ -1307,8 +1307,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected void addDiscussion(
-			BlogsEntry entry, long userId, long groupId)
+	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
 		throws PortalException {
 
 		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {

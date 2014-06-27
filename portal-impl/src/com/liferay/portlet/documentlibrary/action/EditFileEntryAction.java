@@ -307,7 +307,7 @@ public class EditFileEntryAction extends PortletAction {
 		List<KeyValuePair> invalidFileNameKVPs = new ArrayList<KeyValuePair>();
 
 		String[] selectedFileNames = ParamUtil.getParameterValues(
-			actionRequest, "selectedFileName");
+			actionRequest, "selectedFileName", new String[0], false);
 
 		for (String selectedFileName : selectedFileNames) {
 			addMultipleFileEntries(

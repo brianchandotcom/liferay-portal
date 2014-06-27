@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.impl.EmailAddressImpl;
 import com.liferay.portal.model.impl.EmailAddressModelImpl;
@@ -37,7 +35,7 @@ import org.junit.Test;
  * @author Wesley Gong
  * @see    ServiceBeanMethodInvocationFactoryImplTest
  */
-public class OrderByComparatorFactoryImplTest {
+public class OrderByComparatorFactoryUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -63,9 +61,10 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", false, "createDate",
-			true);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", false,
+				"createDate", true);
 
 		Collections.sort(actualList, obc);
 
@@ -91,9 +90,10 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", false, "createDate",
-			false);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", false,
+				"createDate", false);
 
 		Collections.sort(actualList, obc);
 
@@ -117,8 +117,9 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", true);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", true);
 
 		Collections.sort(actualList, obc);
 
@@ -142,8 +143,9 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", false);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", false);
 
 		Collections.sort(actualList, obc);
 
@@ -169,8 +171,9 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "companyId", true);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "companyId", true);
 
 		Collections.sort(actualList, obc);
 
@@ -196,8 +199,9 @@ public class OrderByComparatorFactoryImplTest {
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);
 
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "companyId", false);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "companyId", false);
 
 		Collections.sort(actualList, obc);
 
@@ -206,9 +210,10 @@ public class OrderByComparatorFactoryImplTest {
 
 	@Test
 	public void testGetOrderByMultipleColumns() throws Exception {
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", true, "createDate",
-			false);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", true, "createDate",
+				false);
 
 		Assert.assertEquals(
 			"EmailAddress.address ASC,EmailAddress.createDate DESC",
@@ -225,8 +230,9 @@ public class OrderByComparatorFactoryImplTest {
 
 	@Test
 	public void testGetOrderBySingleColumn() throws Exception {
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			EmailAddressModelImpl.TABLE_NAME, "address", true);
+		OrderByComparator<EmailAddress> obc =
+			OrderByComparatorFactoryUtil.create(
+				EmailAddressModelImpl.TABLE_NAME, "address", true);
 
 		Assert.assertEquals("EmailAddress.address ASC", obc.getOrderBy());
 

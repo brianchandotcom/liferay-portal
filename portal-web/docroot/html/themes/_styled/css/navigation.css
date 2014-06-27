@@ -3,6 +3,10 @@
 
 /* ---------- Add/remove page ---------- */
 
+.mobile .modify-pages .lfr-nav-sortable > a > span {
+		padding-left: 28px;
+	}
+
 .modify-pages {
 	li {
 		position: relative;
@@ -36,10 +40,6 @@
 		&:hover {
 			color: #B50303;
 		}
-	}
-
-	.lfr-nav-sortable > a > span {
-		padding-left: 28px;
 	}
 
 	.drag-handle {

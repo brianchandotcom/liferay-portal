@@ -683,6 +683,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		try {
+			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
+
+			portletApp.setContextPath(servletContext.getContextPath());
+
 			Set<String> servletURLPatterns = _readWebXML(xmls[4]);
 
 			Set<String> portletIds = _readPortletXML(
@@ -744,8 +748,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 
 			// Sprite images
-
-			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
 
 			_setSpriteImages(servletContext, portletApp, "/html/icons/");
 		}
@@ -2130,6 +2132,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletApp portletApp = _getPortletApp(servletContextName);
 
 		portletApp.addServletURLPatterns(servletURLPatterns);
+		portletApp.setContextPath(servletContext.getContextPath());
 
 		Set<String> userAttributes = portletApp.getUserAttributes();
 

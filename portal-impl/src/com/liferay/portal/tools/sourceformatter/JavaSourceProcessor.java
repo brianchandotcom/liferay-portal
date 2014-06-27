@@ -1361,6 +1361,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixSystemExceptions(newContent);
 
+		// LPS-47648
+
+		if (portalSource && fileName.contains("/test/integration/")) {
+			newContent = StringUtil.replace(
+				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
+		}
+
 		// LPS-47682
 
 		newContent = fixIncorrectParameterTypeForLanguageUtil(

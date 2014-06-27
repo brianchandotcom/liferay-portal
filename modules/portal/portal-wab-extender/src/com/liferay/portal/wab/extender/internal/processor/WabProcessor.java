@@ -592,9 +592,9 @@ public class WabProcessor {
 				continue;
 			}
 
-			uri = uri.relativize(file.toURI());
+			URI relativizedURI = uri.relativize(file.toURI());
 
-			String path = uri.getPath();
+			String path = relativizedURI.getPath();
 
 			if (ArrayUtil.contains(
 					PropsValues.MODULE_FRAMEWORK_WEB_EXTENDER_EXCLUDED_PATHS,

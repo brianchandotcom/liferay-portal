@@ -28,7 +28,7 @@
 	</command>
 
 	<command name="viewLocalizationOptionsEdit">
-		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_NAME_FIELD" />
+		<execute action="DockbarEdit#assertElementPresent" locator-key1="EDIT_NAME_FIELD" />
 		<execute action="DockbarEdit#assertElementPresent" locator-key1="DETAILS_FRIENDLY_URL_TITLE" />
 
 		<for list="${localizationOptions}" param="localizationOption">
@@ -40,7 +40,7 @@
 					<execute action="DockbarEdit#assertElementPresent" locator-key1="DETAILS_FRIENDLYURL_LOCALIZED" />
 				</then>
 				<else>
-					<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
+					<execute action="DockbarEdit#assertElementPresent" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
 				</else>
 			</if>
 		</for>

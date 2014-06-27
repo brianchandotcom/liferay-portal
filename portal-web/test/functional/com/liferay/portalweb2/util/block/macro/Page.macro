@@ -1,9 +1,28 @@
 <definition>
-	<command name="addFriendlyUrlPG">
+	<command name="addFriendlyURLLocalizedPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
 		<execute action="DockbarEdit#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
 		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
+	</command>
+
+	<command name="addLocalizedNamePG">
+		<var name="key_localizationName" value="${localizationName}" />
+
+		<if>
+			<equals arg1="${newPage}" arg2="true" />
+			<then>
+				<execute action="Dockbar#click" locator-key1="ADD_PAGE_NAME_LOCALIZED" />
+				<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+			</then>
+			<elseif>
+				<equals arg1="${newPage}" arg2="false" />
+				<then>
+					<execute action="DockbarEdit#click" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
+					<execute action="DockbarEdit#type" locator-key1="EDIT_NAME_FIELD" value1="${pageName}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="addPageTypePanelPG">
@@ -440,22 +459,6 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="Home#isElementPresent" locator-key1="PAGE" value1="${pageName}" />
-	</command>
-
-	<command name="localizedPageName">
-		<var name="key_localizationName" value="${localizationName}" />
-
-		<if>
-			<isset var="localizeNewPage" />
-			<then>
-				<execute action="Dockbar#click" locator-key1="ADD_PAGE_NAME_LOCALIZED" />
-				<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
-			</then>
-			<else>
-				<execute action="Dockbar#click" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
-				<execute action="Dockbar#type" locator-key1="EDIT_NAME_FIELD" value1="${pageName}" />
-			</else>
-		</if>
 	</command>
 
 	<command name="openURL">

@@ -180,7 +180,7 @@
 
 		<execute macro="Page#gotoEdit" />
 
-		<execute macro="Page#addFriendlyUrlPG">
+		<execute macro="Page#addFriendlyURLLocalizedPG">
 			<var name="friendlyUrlLocalized" value="de_DE" />
 			<var name="localizedFriendlyURL" value="/german" />
 		</execute>

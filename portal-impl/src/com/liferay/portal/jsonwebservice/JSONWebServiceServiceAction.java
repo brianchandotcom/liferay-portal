@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.InvocationTargetException;
@@ -81,6 +82,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				if (throwable instanceof SecurityException) {
 					status = HttpServletResponse.SC_FORBIDDEN;
 				}
+				else if (throwable instanceof PrincipalException) {
+					status = HttpServletResponse.SC_FORBIDDEN;
+				}
 				else {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				}
@@ -96,6 +100,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
 			else if (e instanceof SecurityException) {
+				status = HttpServletResponse.SC_FORBIDDEN;
+			}
+			else if (e instanceof PrincipalException) {
 				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {

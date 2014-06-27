@@ -28,6 +28,7 @@
 			</else>
 		</if>
 
+		<execute action="CPSitepages#pause" locator1="5000" />
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
@@ -70,6 +71,7 @@
 
 		<execute macro="SitePage#addCmd" />
 
+		<execute action="CPSitepages#pause" locator1="5000" />
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />

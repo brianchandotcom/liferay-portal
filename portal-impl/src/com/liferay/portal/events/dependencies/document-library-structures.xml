@@ -5,14 +5,14 @@
 		<name><![CDATA[Contract]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date18949" readOnly="false" required="false" showLabel="true" type="ddm-date" width="25">
+			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date18949" readOnly="false" required="false" showLabel="true" type="ddm-date" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Effective Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date20127" readOnly="false" required="false" showLabel="true" type="ddm-date" width="25">
+			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date20127" readOnly="false" required="false" showLabel="true" type="ddm-date" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Expiration Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -68,21 +68,21 @@
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text14822" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text14822" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Legal Reviewer]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text17700" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text17700" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Signing Authority]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text2087" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text2087" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Deal Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -211,14 +211,14 @@
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text2033" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text2033" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Banner Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="text" name="textarea2873" readOnly="false" required="false" showLabel="true" type="textarea" width="25">
+			<dynamic-element dataType="string" indexType="text" name="textarea2873" readOnly="false" required="false" showLabel="true" type="textarea" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -303,42 +303,42 @@
 		<name><![CDATA[Meeting Metadata]]></name>
 		<description><![CDATA[Metadata for meeting]]></description>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date3054" readOnly="false" required="false" showLabel="true" type="ddm-date" width="25">
+			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date3054" readOnly="false" required="false" showLabel="true" type="ddm-date" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text2217" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text2217" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Meeting Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text4569" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text4569" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Time]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text5638" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text5638" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Location]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="text" name="textarea6584" readOnly="false" required="false" showLabel="true" type="textarea" width="25">
+			<dynamic-element dataType="string" indexType="text" name="textarea6584" readOnly="false" required="false" showLabel="true" type="textarea" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="text" name="textarea7502" readOnly="false" required="false" showLabel="true" type="textarea" width="25">
+			<dynamic-element dataType="string" indexType="text" name="textarea7502" readOnly="false" required="false" showLabel="true" type="textarea" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Participants]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -351,14 +351,14 @@
 		<name><![CDATA[Online Training]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="string" indexType="keyword" name="text2082" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text2082" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Lesson Title]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text2979" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text2979" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Author]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -459,7 +459,7 @@
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="text1993" readOnly="false" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="keyword" name="text1993" readOnly="false" required="false" showLabel="true" type="text" width="small">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Prospect Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>

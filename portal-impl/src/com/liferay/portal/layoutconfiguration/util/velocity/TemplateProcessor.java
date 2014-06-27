@@ -199,9 +199,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
-		JSONObject jsonObject = null;
-
-		jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		PortletJSONUtil.populatePortletJSONObject(
 			_request, StringPool.BLANK, portlet, jsonObject);

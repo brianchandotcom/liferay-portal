@@ -159,6 +159,11 @@
 			<var name="subfolderName" value="Subfolder Name" />
 		</execute>
 
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
+		</execute>
+
 		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkURL" value="http://www.liferay.com/" />
@@ -191,6 +196,11 @@
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 			<var name="subfolderName" value="Subfolder Name" />
+		</execute>
+
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
 		<execute macro="Bookmark#viewPG">

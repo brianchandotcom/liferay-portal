@@ -47,6 +47,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
 		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
@@ -108,6 +113,11 @@
 
 		<execute macro="BookmarksFolder#gotoPG">
 			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 
 		<execute macro="Bookmark#viewPG">
@@ -429,7 +439,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebSiteNotificationForNewBookmarkInFolder" priority="5">
+	<command name="ViewWebsiteNotificationForNewBookmarkInFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -485,13 +495,18 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Bookmark#viewPGViaNotificationsPortlet">
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 	</command>
 
-	<command name="ViewWebSiteNotificationForUpdatedBookmarkInFolder" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedBookmarkInFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -562,7 +577,12 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Bookmark#viewPGViaNotificationsPortlet">
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Test Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name Edit" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>

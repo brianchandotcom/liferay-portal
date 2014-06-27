@@ -97,7 +97,6 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.sanitizer.SanitizerImpl;
 import com.liferay.portal.security.auth.AuthFailure;
-import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.AuthToken;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.AuthVerifier;
@@ -738,13 +737,6 @@ public class HookHotDeployListener
 			return;
 		}
 
-		AuthenticatorsContainer authenticatorsContainer =
-			_authenticatorsContainerMap.remove(servletContextName);
-
-		if (authenticatorsContainer != null) {
-			authenticatorsContainer.unregisterAuthenticators();
-		}
-
 		AuthPublicPathsContainer authPublicPathsContainer =
 			_authPublicPathsContainerMap.remove(servletContextName);
 
@@ -949,8 +941,11 @@ public class HookHotDeployListener
 
 	protected void initAuthenticators(
 			ClassLoader portletClassLoader, Properties portalProperties,
-			String key, AuthenticatorsContainer authenticatorsContainer)
+			String key,
+			Map<Object, ServiceRegistration<?>> serviceRegistrations)
 		throws Exception {
+
+		Registry registry = RegistryUtil.getRegistry();
 
 		String[] authenticatorClassNames = StringUtil.split(
 			portalProperties.getProperty(key));
@@ -960,7 +955,16 @@ public class HookHotDeployListener
 				portletClassLoader, Authenticator.class,
 				authenticatorClassName);
 
-			authenticatorsContainer.registerAuthenticator(key, authenticator);
+			Map<String, Object> properties = new HashMap<String, Object>();
+
+			properties.put("key", key);
+
+			ServiceRegistration<Authenticator> serviceRegistration =
+				registry.registerService(
+					Authenticator.class, authenticator, properties);
+
+			serviceRegistrations.put(
+				authenticatorClassName, serviceRegistration);
 		}
 	}
 
@@ -969,18 +973,15 @@ public class HookHotDeployListener
 			Properties portalProperties)
 		throws Exception {
 
-		AuthenticatorsContainer authenticatorsContainer =
-			new AuthenticatorsContainer();
-
-		_authenticatorsContainerMap.put(
-			servletContextName, authenticatorsContainer);
+		Map<Object, ServiceRegistration<?>> serviceRegistrations =
+			getServiceRegistrations(servletContextName);
 
 		initAuthenticators(
 			portletClassLoader, portalProperties, AUTH_PIPELINE_PRE,
-			authenticatorsContainer);
+			serviceRegistrations);
 		initAuthenticators(
 			portletClassLoader, portalProperties, AUTH_PIPELINE_POST,
-			authenticatorsContainer);
+			serviceRegistrations);
 	}
 
 	protected void initAuthFailures(
@@ -2852,8 +2853,6 @@ public class HookHotDeployListener
 	private static Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
 
-	private Map<String, AuthenticatorsContainer> _authenticatorsContainerMap =
-		new HashMap<String, AuthenticatorsContainer>();
 	private Map<String, AuthPublicPathsContainer> _authPublicPathsContainerMap =
 		new HashMap<String, AuthPublicPathsContainer>();
 	private Map<String, AuthVerifierConfigurationContainer>
@@ -2901,42 +2900,6 @@ public class HookHotDeployListener
 		new HashMap<String, ServletFiltersContainer>();
 	private Map<String, StrutsActionsContainer> _strutsActionsContainerMap =
 		new HashMap<String, StrutsActionsContainer>();
-
-	private class AuthenticatorsContainer {
-
-		public void registerAuthenticator(
-			String key, Authenticator authenticator) {
-
-			List<Authenticator> authenticators = _authenticators.get(key);
-
-			if (authenticators == null) {
-				authenticators = new ArrayList<Authenticator>();
-
-				_authenticators.put(key, authenticators);
-			}
-
-			AuthPipeline.registerAuthenticator(key, authenticator);
-
-			authenticators.add(authenticator);
-		}
-
-		public void unregisterAuthenticators() {
-			for (Map.Entry<String, List<Authenticator>> entry :
-					_authenticators.entrySet()) {
-
-				String key = entry.getKey();
-				List<Authenticator> authenticators = entry.getValue();
-
-				for (Authenticator authenticator : authenticators) {
-					AuthPipeline.unregisterAuthenticator(key, authenticator);
-				}
-			}
-		}
-
-		private Map<String, List<Authenticator>> _authenticators =
-			new HashMap<String, List<Authenticator>>();
-
-	}
 
 	private class AuthPublicPathsContainer {
 

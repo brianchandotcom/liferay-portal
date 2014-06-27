@@ -180,6 +180,11 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	@Override
+	public void setContextPath(String contextPath) {
+		_contextPath = contextPath;
+	}
+
+	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
 		_defaultNamespace = defaultNamespace;
 	}

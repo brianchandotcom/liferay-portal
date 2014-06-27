@@ -75,6 +75,8 @@ public interface PortletApp extends Serializable {
 
 	public boolean isWARFile();
 
+	public void setContextPath(String contextPath);
+
 	public void setDefaultNamespace(String defaultNamespace);
 
 	public void setSpriteImages(String spriteFileName, Properties properties);

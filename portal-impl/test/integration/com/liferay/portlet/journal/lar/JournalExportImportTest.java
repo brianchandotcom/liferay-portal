@@ -252,7 +252,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		throws PortalException {
 
 		JournalArticleResource importedArticleResource =
-			JournalArticleResourceUtil.fetchByUUID_G(uuid, groupId);
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
 
 		return JournalArticleLocalServiceUtil.getLatestArticle(
 			importedArticleResource.getResourcePrimKey());

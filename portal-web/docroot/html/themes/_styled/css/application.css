@@ -453,10 +453,11 @@
 
 	.modal-body {
 		overflow: auto;
-	}
 
-	.modal-body.dialog-iframe-bd {
-		overflow: visible;
+		&.dialog-iframe-bd {
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
 	}
 
 	.modal-hidden {

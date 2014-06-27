@@ -186,6 +186,7 @@ import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
@@ -1911,6 +1912,51 @@ public class PortalImpl implements Portal {
 		}
 
 		return currentCompleteURL;
+	}
+
+	@Override
+	public String getCurrentPortletURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		String currentPortletURL = (String)portletRequest.getAttribute(
+			WebKeys.CURRENT_PORTLET_URL);
+
+		if (currentPortletURL != null) {
+			return currentPortletURL;
+		}
+
+		currentPortletURL = String.valueOf(
+			getCurrentPortletURLObject(portletRequest, portletResponse));
+
+		portletRequest.setAttribute(
+			WebKeys.CURRENT_PORTLET_URL, currentPortletURL);
+
+		return currentPortletURL;
+	}
+
+	public PortletURL getCurrentPortletURLObject(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		PortletURL currentPortletURLObject =
+			(PortletURL)portletRequest.getAttribute(
+				WebKeys.CURRENT_PORTLET_URL_OBJECT);
+
+		if (currentPortletURLObject != null) {
+			return currentPortletURLObject;
+		}
+
+		LiferayPortletRequest liferayPortletRequest = getLiferayPortletRequest(
+			portletRequest);
+		LiferayPortletResponse liferayPortletResponse =
+			getLiferayPortletResponse(portletResponse);
+
+		currentPortletURLObject = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		portletRequest.setAttribute(
+			WebKeys.CURRENT_PORTLET_URL, currentPortletURLObject);
+
+		return currentPortletURLObject;
 	}
 
 	@Override

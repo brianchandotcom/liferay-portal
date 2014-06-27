@@ -1361,6 +1361,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixSystemExceptions(newContent);
 
+		// LPS-47682
+
+		newContent = fixIncorrectParameterTypeForLanguageUtil(
+			newContent, false, fileName);
+
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 

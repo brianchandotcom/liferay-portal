@@ -434,6 +434,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		checkXSS(fileName, newContent);
 
+		// LPS-47682
+
+		newContent = fixIncorrectParameterTypeForLanguageUtil(
+			newContent, true, fileName);
+
 		compareAndAutoFixContent(file, fileName, content, newContent);
 
 		return newContent;

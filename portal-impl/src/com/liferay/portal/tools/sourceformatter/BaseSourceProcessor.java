@@ -461,6 +461,54 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
 	}
 
+	protected String fixIncorrectParameterTypeForLanguageUtil(
+		String content, boolean autoFix, String fileName) {
+
+		if (portalSource) {
+			return content;
+		}
+
+		String expectedParameterType = "request";
+		String incorrectParameterType = "pageContext";
+
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+			mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
+
+			expectedParameterType = "pageContext";
+			incorrectParameterType = "request";
+		}
+
+		if (!content.contains(
+				"LanguageUtil.format(" + incorrectParameterType + ", ") &&
+			!content.contains(
+				"LanguageUtil.get(" + incorrectParameterType + ", ")) {
+
+			return content;
+		}
+
+		if (autoFix) {
+			content = StringUtil.replace(
+				content,
+				new String[] {
+					"LanguageUtil.format(" + incorrectParameterType + ", ",
+					"LanguageUtil.get(" + incorrectParameterType + ", "
+				},
+				new String[] {
+					"LanguageUtil.format(" + expectedParameterType + ", ",
+					"LanguageUtil.get(" + expectedParameterType + ", "
+				});
+		}
+		else {
+			processErrorMessage(
+				fileName,
+				"(Unicode)LanguageUtil.format/get methods require " +
+					expectedParameterType + " parameter instead of " +
+						incorrectParameterType + " " + fileName);
+		}
+
+		return content;
+	}
+
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 

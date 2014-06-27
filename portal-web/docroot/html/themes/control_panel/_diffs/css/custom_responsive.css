@@ -60,10 +60,6 @@
 								white-space: nowrap;
 								width: 100%;
 
-								&:only-child {
-									padding-top: 12px;
-								}
-
 								.lfr-icon-menu-text {
 									font-size: 18px;
 								}

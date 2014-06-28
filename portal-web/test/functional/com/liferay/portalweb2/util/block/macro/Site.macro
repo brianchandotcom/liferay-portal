@@ -700,7 +700,7 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertVisible" locator-key1="SITE_TABLE_ACTIONS" />
 	</command>
 
 	<command name="searchMemberCP">
@@ -844,7 +844,7 @@
 		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
 		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
-		<execute action="CPSitesChild#assertElementPresent" locator-key1="SITE_TABLE_ACTIONS" />
+		<execute action="CPSitesChildChild#assertVisible" locator-key1="SITE_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewChildCP">

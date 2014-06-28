@@ -63,9 +63,21 @@
 		</case>
 	</command>
 
+	<command name="assertNotVisible">
+		<case comparator="startsWith" locator1="//span[@data-title='">
+			<execute function="AssertVisible#pauseAssertVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="PAGE_INFO_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="assertVisible">
+		<case comparator="startsWith" locator1="//span[@data-title='">
+			<execute function="AssertVisible#pauseAssertVisible" />
 		</case>
 	</command>
 

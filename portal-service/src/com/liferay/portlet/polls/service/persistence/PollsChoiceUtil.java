@@ -88,7 +88,7 @@ public class PollsChoiceUtil {
 	 */
 	public static List<PollsChoice> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class PollsChoiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice[] findByUuid_PrevAndNext(
 		long choiceId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(choiceId, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class PollsChoiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice[] findByUuid_C_PrevAndNext(
 		long choiceId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(choiceId, uuid, companyId,
@@ -509,7 +509,7 @@ public class PollsChoiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> findByQuestionId(
 		long questionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .findByQuestionId(questionId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByQuestionId_First(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_First(questionId, orderByComparator);
@@ -539,7 +539,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByQuestionId_First(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .fetchByQuestionId_First(questionId, orderByComparator);
 	}
@@ -554,7 +554,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice findByQuestionId_Last(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_Last(questionId, orderByComparator);
@@ -569,7 +569,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice fetchByQuestionId_Last(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence()
 				   .fetchByQuestionId_Last(questionId, orderByComparator);
 	}
@@ -585,7 +585,7 @@ public class PollsChoiceUtil {
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice[] findByQuestionId_PrevAndNext(
 		long choiceId, long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator)
 		throws com.liferay.portlet.polls.NoSuchChoiceException {
 		return getPersistence()
 				   .findByQuestionId_PrevAndNext(choiceId, questionId,
@@ -789,7 +789,7 @@ public class PollsChoiceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.polls.model.PollsChoice> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

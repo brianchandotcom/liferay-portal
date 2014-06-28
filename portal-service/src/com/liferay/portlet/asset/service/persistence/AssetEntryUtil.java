@@ -88,7 +88,7 @@ public class AssetEntryUtil {
 	 */
 	public static List<AssetEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -182,7 +182,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -197,7 +197,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -212,7 +212,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -228,7 +228,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry[] findByCompanyId_PrevAndNext(
 		long entryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
@@ -297,7 +297,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByVisible(
 		boolean visible, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByVisible(visible, start, end, orderByComparator);
 	}
@@ -312,7 +312,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByVisible_First(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence().findByVisible_First(visible, orderByComparator);
 	}
@@ -326,7 +326,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByVisible_First(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence().fetchByVisible_First(visible, orderByComparator);
 	}
 
@@ -340,7 +340,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByVisible_Last(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence().findByVisible_Last(visible, orderByComparator);
 	}
@@ -354,7 +354,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByVisible_Last(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence().fetchByVisible_Last(visible, orderByComparator);
 	}
 
@@ -369,7 +369,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry[] findByVisible_PrevAndNext(
 		long entryId, boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByVisible_PrevAndNext(entryId, visible,
@@ -438,7 +438,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByPublishDate(
 		java.util.Date publishDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByPublishDate(publishDate, start, end, orderByComparator);
 	}
@@ -453,7 +453,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByPublishDate_First(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByPublishDate_First(publishDate, orderByComparator);
@@ -468,7 +468,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_First(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByPublishDate_First(publishDate, orderByComparator);
 	}
@@ -483,7 +483,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByPublishDate_Last(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByPublishDate_Last(publishDate, orderByComparator);
@@ -498,7 +498,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_Last(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByPublishDate_Last(publishDate, orderByComparator);
 	}
@@ -514,7 +514,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry[] findByPublishDate_PrevAndNext(
 		long entryId, java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByPublishDate_PrevAndNext(entryId, publishDate,
@@ -583,7 +583,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByExpirationDate(
 		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByExpirationDate(expirationDate, start, end,
 			orderByComparator);
@@ -599,7 +599,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByExpirationDate_First(expirationDate, orderByComparator);
@@ -614,7 +614,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -630,7 +630,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByExpirationDate_Last(expirationDate, orderByComparator);
@@ -645,7 +645,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByExpirationDate_Last(expirationDate, orderByComparator);
 	}
@@ -661,7 +661,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry[] findByExpirationDate_PrevAndNext(
 		long entryId, java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByExpirationDate_PrevAndNext(entryId, expirationDate,
@@ -730,7 +730,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByLayoutUuid(
 		java.lang.String layoutUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutUuid(layoutUuid, start, end, orderByComparator);
 	}
@@ -745,7 +745,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByLayoutUuid_First(layoutUuid, orderByComparator);
@@ -760,7 +760,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_First(layoutUuid, orderByComparator);
 	}
@@ -775,7 +775,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry findByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByLayoutUuid_Last(layoutUuid, orderByComparator);
@@ -790,7 +790,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry fetchByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_Last(layoutUuid, orderByComparator);
 	}
@@ -806,7 +806,7 @@ public class AssetEntryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry[] findByLayoutUuid_PrevAndNext(
 		long entryId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException {
 		return getPersistence()
 				   .findByLayoutUuid_PrevAndNext(entryId, layoutUuid,
@@ -1075,7 +1075,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -1148,7 +1148,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategories(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .getAssetCategories(pk, start, end, orderByComparator);
 	}
@@ -1351,7 +1351,7 @@ public class AssetEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence().getAssetTags(pk, start, end, orderByComparator);
 	}
 

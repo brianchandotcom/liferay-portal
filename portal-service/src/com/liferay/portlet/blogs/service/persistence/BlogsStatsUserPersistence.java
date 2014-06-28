@@ -79,7 +79,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the first blogs stats user in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -103,7 +103,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the last blogs stats user in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -127,7 +127,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser[] findByGroupId_PrevAndNext(
 		long statsUserId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -197,7 +197,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the first blogs stats user in the ordered set where userId = &#63;.
@@ -209,7 +209,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -221,7 +221,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the last blogs stats user in the ordered set where userId = &#63;.
@@ -233,7 +233,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -245,7 +245,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where userId = &#63;.
@@ -258,7 +258,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser[] findByUserId_PrevAndNext(
 		long statsUserId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -371,7 +371,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByG_NotE(
 		long groupId, int entryCount, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the first blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
@@ -384,7 +384,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByG_NotE_First(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -397,7 +397,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_NotE_First(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the last blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
@@ -410,7 +410,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByG_NotE_Last(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -423,7 +423,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_NotE_Last(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where groupId = &#63; and entryCount &ne; &#63;.
@@ -437,7 +437,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser[] findByG_NotE_PrevAndNext(
 		long statsUserId, long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -499,7 +499,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByC_NotE(
 		long companyId, int entryCount, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
@@ -512,7 +512,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByC_NotE_First(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -525,7 +525,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByC_NotE_First(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
@@ -538,7 +538,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByC_NotE_Last(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -551,7 +551,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByC_NotE_Last(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
@@ -565,7 +565,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser[] findByC_NotE_PrevAndNext(
 		long statsUserId, long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -627,7 +627,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByU_L(
 		long userId, java.util.Date lastPostDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the first blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
@@ -640,7 +640,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByU_L_First(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -653,7 +653,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByU_L_First(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the last blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
@@ -666,7 +666,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser findByU_L_Last(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -679,7 +679,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchByU_L_Last(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where userId = &#63; and lastPostDate = &#63;.
@@ -693,7 +693,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public com.liferay.portlet.blogs.model.BlogsStatsUser[] findByU_L_PrevAndNext(
 		long statsUserId, long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator)
 		throws com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	/**
@@ -811,7 +811,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> orderByComparator);
 
 	/**
 	* Removes all the blogs stats users from the database.

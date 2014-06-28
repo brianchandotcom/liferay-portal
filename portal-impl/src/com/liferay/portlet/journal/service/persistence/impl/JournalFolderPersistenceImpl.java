@@ -160,7 +160,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -280,7 +280,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByUuid_First(uuid, orderByComparator);
 
 		if (journalFolder != null) {
@@ -308,7 +309,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -328,7 +329,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (journalFolder != null) {
@@ -356,7 +358,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,7 +386,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByUuid_PrevAndNext(long folderId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -414,7 +417,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByUuid_PrevAndNext(Session session,
 		JournalFolder journalFolder, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -942,7 +945,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1072,7 +1075,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1105,7 +1109,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1127,7 +1131,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1160,7 +1165,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1189,7 +1194,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByUuid_C_PrevAndNext(long folderId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -1220,7 +1225,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByUuid_C_PrevAndNext(Session session,
 		JournalFolder journalFolder, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1496,7 +1501,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1602,7 +1607,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1631,7 +1637,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -1652,7 +1658,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -1681,7 +1688,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1709,7 +1716,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByGroupId_PrevAndNext(long folderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -1740,7 +1747,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByGroupId_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1888,7 +1895,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<JournalFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1979,7 +1986,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] filterFindByGroupId_PrevAndNext(long folderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(folderId, groupId,
@@ -2015,7 +2022,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder filterGetByGroupId_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2336,7 +2343,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2442,7 +2449,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2471,7 +2479,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2492,7 +2500,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2521,7 +2530,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2549,7 +2558,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByCompanyId_PrevAndNext(long folderId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -2580,7 +2589,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByCompanyId_PrevAndNext(Session session,
 		JournalFolder journalFolder, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2820,7 +2829,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByG_P(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2936,7 +2945,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_First(groupId, parentFolderId,
 				orderByComparator);
 
@@ -2969,7 +2979,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByG_P(groupId, parentFolderId, 0, 1,
 				orderByComparator);
 
@@ -2991,7 +3001,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_Last(groupId, parentFolderId,
 				orderByComparator);
 
@@ -3024,7 +3035,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByG_P(groupId, parentFolderId);
 
 		if (count == 0) {
@@ -3053,7 +3064,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByG_P_PrevAndNext(long folderId, long groupId,
-		long parentFolderId, OrderByComparator orderByComparator)
+		long parentFolderId, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -3084,7 +3095,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByG_P_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3240,7 +3251,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public List<JournalFolder> filterFindByG_P(long groupId,
 		long parentFolderId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentFolderId, start, end,
 				orderByComparator);
@@ -3337,7 +3348,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] filterFindByG_P_PrevAndNext(long folderId,
-		long groupId, long parentFolderId, OrderByComparator orderByComparator)
+		long groupId, long parentFolderId,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
@@ -3373,7 +3385,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder filterGetByG_P_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3967,7 +3979,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByC_NotS(long companyId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4075,7 +4087,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByC_NotS_First(companyId, status,
 				orderByComparator);
 
@@ -4108,7 +4121,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByC_NotS(companyId, status, 0, 1,
 				orderByComparator);
 
@@ -4130,7 +4143,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByC_NotS_Last(companyId, status,
 				orderByComparator);
 
@@ -4163,7 +4177,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByC_NotS(companyId, status);
 
 		if (count == 0) {
@@ -4192,7 +4206,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByC_NotS_PrevAndNext(long folderId,
-		long companyId, int status, OrderByComparator orderByComparator)
+		long companyId, int status,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -4223,7 +4238,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByC_NotS_PrevAndNext(Session session,
 		JournalFolder journalFolder, long companyId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<JournalFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4481,7 +4496,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public List<JournalFolder> findByF_C_P_NotS(long folderId, long companyId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4601,7 +4616,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByF_C_P_NotS_First(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByF_C_P_NotS_First(folderId,
 				companyId, parentFolderId, status, orderByComparator);
@@ -4643,7 +4659,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByF_C_P_NotS_First(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByF_C_P_NotS(folderId, companyId,
 				parentFolderId, status, 0, 1, orderByComparator);
 
@@ -4667,7 +4684,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByF_C_P_NotS_Last(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByF_C_P_NotS_Last(folderId,
 				companyId, parentFolderId, status, orderByComparator);
@@ -4709,7 +4727,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByF_C_P_NotS_Last(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByF_C_P_NotS(folderId, companyId, parentFolderId,
 				status);
 
@@ -5185,7 +5204,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findByG_P_S(long groupId, long parentFolderId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5307,7 +5327,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_S_First(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_S_First(groupId,
 				parentFolderId, status, orderByComparator);
@@ -5345,7 +5365,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_S_First(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByG_P_S(groupId, parentFolderId, status,
 				0, 1, orderByComparator);
 
@@ -5368,7 +5388,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_S_Last(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_S_Last(groupId,
 				parentFolderId, status, orderByComparator);
@@ -5406,7 +5426,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_S_Last(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByG_P_S(groupId, parentFolderId, status);
 
 		if (count == 0) {
@@ -5436,7 +5456,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder[] findByG_P_S_PrevAndNext(long folderId, long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
@@ -5467,7 +5488,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByG_P_S_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<JournalFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5632,7 +5654,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public List<JournalFolder> filterFindByG_P_S(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentFolderId, status, start, end,
 				orderByComparator);
@@ -5735,7 +5757,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public JournalFolder[] filterFindByG_P_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_S_PrevAndNext(folderId, groupId, parentFolderId,
 				status, orderByComparator);
@@ -5770,7 +5793,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder filterGetByG_P_S_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<JournalFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6127,7 +6151,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public List<JournalFolder> findByG_P_NotS(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6241,7 +6265,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_NotS_First(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_NotS_First(groupId,
 				parentFolderId, status, orderByComparator);
@@ -6279,7 +6304,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_NotS_First(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		List<JournalFolder> list = findByG_P_NotS(groupId, parentFolderId,
 				status, 0, 1, orderByComparator);
 
@@ -6302,7 +6328,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder findByG_P_NotS_Last(long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<JournalFolder> orderByComparator)
 		throws NoSuchFolderException {
 		JournalFolder journalFolder = fetchByG_P_NotS_Last(groupId,
 				parentFolderId, status, orderByComparator);
@@ -6340,7 +6366,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public JournalFolder fetchByG_P_NotS_Last(long groupId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<JournalFolder> orderByComparator) {
 		int count = countByG_P_NotS(groupId, parentFolderId, status);
 
 		if (count == 0) {
@@ -6371,7 +6398,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public JournalFolder[] findByG_P_NotS_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		JournalFolder journalFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -6401,7 +6429,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder getByG_P_NotS_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<JournalFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6566,7 +6595,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public List<JournalFolder> filterFindByG_P_NotS(long groupId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_NotS(groupId, parentFolderId, status, start, end,
 				orderByComparator);
@@ -6669,7 +6698,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public JournalFolder[] filterFindByG_P_NotS_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<JournalFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_NotS_PrevAndNext(folderId, groupId,
 				parentFolderId, status, orderByComparator);
@@ -6704,7 +6734,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	protected JournalFolder filterGetByG_P_NotS_PrevAndNext(Session session,
 		JournalFolder journalFolder, long groupId, long parentFolderId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<JournalFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7761,7 +7792,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<JournalFolder> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7946,7 +7977,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	@Override
 	public List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
 		return journalFolderToDDMStructureTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

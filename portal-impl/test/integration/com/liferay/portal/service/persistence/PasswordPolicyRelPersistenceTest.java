@@ -212,7 +212,7 @@ public class PasswordPolicyRelPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<PasswordPolicyRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PasswordPolicyRel",
 			"mvccVersion", true, "passwordPolicyRelId", true,
 			"passwordPolicyId", true, "classNameId", true, "classPK", true);

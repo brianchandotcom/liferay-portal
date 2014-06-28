@@ -96,8 +96,7 @@ public class SCProductVersionLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _scProductVersionLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +114,7 @@ public class SCProductVersionLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _scProductVersionLocalService.dynamicQuery(dynamicQuery, start,
@@ -137,11 +135,10 @@ public class SCProductVersionLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _scProductVersionLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -346,7 +343,7 @@ public class SCProductVersionLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCFrameworkVersionSCProductVersions(
 		long frameworkVersionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return _scProductVersionLocalService.getSCFrameworkVersionSCProductVersions(frameworkVersionId,
 			start, end, orderByComparator);
 	}

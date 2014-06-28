@@ -191,8 +191,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return groupPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -209,8 +208,8 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return groupPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -228,9 +227,8 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return groupPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -470,7 +468,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Group> getOrganizationGroups(long organizationId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Group> orderByComparator) {
 		return organizationPersistence.getGroups(organizationId, start, end,
 			orderByComparator);
 	}
@@ -595,7 +593,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Group> getRoleGroups(long roleId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Group> orderByComparator) {
 		return rolePersistence.getGroups(roleId, start, end, orderByComparator);
 	}
 
@@ -719,7 +717,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Group> getUserGroupGroups(long userGroupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Group> orderByComparator) {
 		return userGroupPersistence.getGroups(userGroupId, start, end,
 			orderByComparator);
 	}
@@ -845,7 +843,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Group> getUserGroups(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException {
+		OrderByComparator<Group> orderByComparator) throws PortalException {
 		return userPersistence.getGroups(userId, start, end, orderByComparator);
 	}
 

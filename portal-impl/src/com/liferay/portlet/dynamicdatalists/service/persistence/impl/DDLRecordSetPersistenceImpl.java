@@ -151,7 +151,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public List<DDLRecordSet> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -271,7 +271,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByUuid_First(uuid, orderByComparator);
 
 		if (ddlRecordSet != null) {
@@ -299,7 +300,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		List<DDLRecordSet> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -319,7 +320,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ddlRecordSet != null) {
@@ -347,7 +349,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -375,7 +377,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet[] findByUuid_PrevAndNext(long recordSetId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = findByPrimaryKey(recordSetId);
 
 		Session session = null;
@@ -405,7 +408,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	protected DDLRecordSet getByUuid_PrevAndNext(Session session,
 		DDLRecordSet ddlRecordSet, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordSet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -929,7 +932,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public List<DDLRecordSet> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDLRecordSet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1059,7 +1062,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1092,7 +1096,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		List<DDLRecordSet> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1114,7 +1118,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1147,7 +1152,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1176,7 +1181,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet[] findByUuid_C_PrevAndNext(long recordSetId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = findByPrimaryKey(recordSetId);
 
@@ -1207,7 +1213,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	protected DDLRecordSet getByUuid_C_PrevAndNext(Session session,
 		DDLRecordSet ddlRecordSet, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordSet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1480,7 +1486,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public List<DDLRecordSet> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1586,7 +1592,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1615,7 +1622,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		List<DDLRecordSet> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1635,7 +1642,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchRecordSetException {
+		OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -1664,7 +1672,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1692,7 +1700,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet[] findByGroupId_PrevAndNext(long recordSetId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 		DDLRecordSet ddlRecordSet = findByPrimaryKey(recordSetId);
 
@@ -1723,7 +1731,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	protected DDLRecordSet getByGroupId_PrevAndNext(Session session,
 		DDLRecordSet ddlRecordSet, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordSet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1871,7 +1879,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public List<DDLRecordSet> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDLRecordSet> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1962,7 +1970,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet[] filterFindByGroupId_PrevAndNext(long recordSetId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(recordSetId, groupId,
@@ -1998,7 +2006,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 	protected DDLRecordSet filterGetByGroupId_PrevAndNext(Session session,
 		DDLRecordSet ddlRecordSet, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordSet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3164,7 +3172,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public List<DDLRecordSet> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

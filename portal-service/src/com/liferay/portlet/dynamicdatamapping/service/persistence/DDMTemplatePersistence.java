@@ -79,7 +79,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByUuid_PrevAndNext(
 		long templateId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByUuid_C_PrevAndNext(
 		long templateId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -378,7 +378,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -402,7 +402,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -426,7 +426,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByGroupId_PrevAndNext(
 		long templateId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -481,7 +481,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByGroupId_PrevAndNext(
 		long templateId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -559,7 +559,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByClassPK(
 		long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where classPK = &#63;.
@@ -571,7 +571,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByClassPK_First(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -583,7 +583,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByClassPK_First(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where classPK = &#63;.
@@ -595,7 +595,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByClassPK_Last(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -607,7 +607,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByClassPK_Last(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where classPK = &#63;.
@@ -620,7 +620,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByClassPK_PrevAndNext(
 		long templateId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -677,7 +677,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
 		java.lang.String templateKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where templateKey = &#63;.
@@ -689,7 +689,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_First(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -701,7 +701,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_First(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where templateKey = &#63;.
@@ -713,7 +713,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_Last(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -725,7 +725,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_Last(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where templateKey = &#63;.
@@ -738,7 +738,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByTemplateKey_PrevAndNext(
 		long templateId, java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -795,7 +795,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByType(
 		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where type = &#63;.
@@ -807,7 +807,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -819,7 +819,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where type = &#63;.
@@ -831,7 +831,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -843,7 +843,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where type = &#63;.
@@ -856,7 +856,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByType_PrevAndNext(
 		long templateId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -913,7 +913,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByLanguage(
 		java.lang.String language, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where language = &#63;.
@@ -925,7 +925,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByLanguage_First(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -937,7 +937,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByLanguage_First(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where language = &#63;.
@@ -949,7 +949,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByLanguage_Last(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -961,7 +961,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByLanguage_Last(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where language = &#63;.
@@ -974,7 +974,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByLanguage_PrevAndNext(
 		long templateId, java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1082,7 +1082,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1095,7 +1095,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1108,7 +1108,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1121,7 +1121,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1134,7 +1134,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1148,7 +1148,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_PrevAndNext(
 		long templateId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1193,7 +1193,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63;.
@@ -1207,7 +1207,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_PrevAndNext(
 		long templateId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1278,7 +1278,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
 		long groupId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
@@ -1291,7 +1291,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_First(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1304,7 +1304,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_First(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
@@ -1317,7 +1317,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_Last(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1330,7 +1330,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_Last(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
@@ -1344,7 +1344,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_CPK_PrevAndNext(
 		long templateId, long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1389,7 +1389,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
 		long groupId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classPK = &#63;.
@@ -1403,7 +1403,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_CPK_PrevAndNext(
 		long templateId, long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1448,7 +1448,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
 		long[] groupIds, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns all the d d m templates where groupId = any &#63; and classPK = &#63;.
@@ -1496,7 +1496,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
 		long[] groupIds, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Removes all the d d m templates where groupId = &#63; and classPK = &#63; from the database.
@@ -1587,7 +1587,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1601,7 +1601,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1615,7 +1615,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1629,7 +1629,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1643,7 +1643,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1658,7 +1658,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1706,7 +1706,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1721,7 +1721,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -1769,7 +1769,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
 		long[] groupIds, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns all the d d m templates where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1820,7 +1820,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
 		long[] groupIds, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1979,7 +1979,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
 		long classNameId, long classPK, java.lang.String type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1993,7 +1993,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_First(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2007,7 +2007,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByC_C_T_First(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2021,7 +2021,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_Last(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2035,7 +2035,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByC_C_T_Last(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2050,7 +2050,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_C_T_PrevAndNext(
 		long templateId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2124,7 +2124,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2139,7 +2139,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2154,7 +2154,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2169,7 +2169,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2184,7 +2184,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2201,7 +2201,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2254,7 +2254,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -2271,7 +2271,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2363,7 +2363,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
@@ -2380,7 +2380,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_M_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2397,7 +2397,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_M_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
@@ -2414,7 +2414,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_M_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2431,7 +2431,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_M_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
@@ -2449,7 +2449,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2506,7 +2506,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
@@ -2524,7 +2524,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
@@ -2663,7 +2663,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator);
 
 	/**
 	* Removes all the d d m templates from the database.

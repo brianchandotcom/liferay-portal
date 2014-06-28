@@ -79,7 +79,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
 		long modifiedTime, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -91,7 +91,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_First(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_First(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -115,7 +115,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_Last(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_Last(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the d l sync events before and after the current d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -140,7 +140,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent[] findByModifiedTime_PrevAndNext(
 		long syncEventId, long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -304,7 +304,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
 
 	/**
 	* Removes all the d l sync events from the database.

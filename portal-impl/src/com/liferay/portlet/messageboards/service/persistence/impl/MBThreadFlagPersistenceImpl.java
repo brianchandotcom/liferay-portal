@@ -149,7 +149,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public List<MBThreadFlag> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mbThreadFlag != null) {
@@ -297,7 +298,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		List<MBThreadFlag> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mbThreadFlag != null) {
@@ -345,7 +347,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = findByPrimaryKey(threadFlagId);
 
@@ -404,7 +406,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	protected MBThreadFlag getByUuid_PrevAndNext(Session session,
 		MBThreadFlag mbThreadFlag, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBThreadFlag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -928,7 +930,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public List<MBThreadFlag> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1058,7 +1060,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1091,7 +1094,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		List<MBThreadFlag> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1113,7 +1116,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1146,7 +1150,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1175,7 +1179,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = findByPrimaryKey(threadFlagId);
 
@@ -1206,7 +1211,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	protected MBThreadFlag getByUuid_C_PrevAndNext(Session session,
 		MBThreadFlag mbThreadFlag, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBThreadFlag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1479,7 +1484,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public List<MBThreadFlag> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1585,7 +1590,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -1614,7 +1620,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		List<MBThreadFlag> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1634,7 +1640,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByUserId_Last(userId, orderByComparator);
 
 		if (mbThreadFlag != null) {
@@ -1662,7 +1669,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1690,7 +1697,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag[] findByUserId_PrevAndNext(long threadFlagId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = findByPrimaryKey(threadFlagId);
 
@@ -1721,7 +1728,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	protected MBThreadFlag getByUserId_PrevAndNext(Session session,
 		MBThreadFlag mbThreadFlag, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBThreadFlag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1954,7 +1961,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public List<MBThreadFlag> findByThreadId(long threadId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2060,7 +2067,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByThreadId_First(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByThreadId_First(threadId,
 				orderByComparator);
 
@@ -2089,7 +2097,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByThreadId_First(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		List<MBThreadFlag> list = findByThreadId(threadId, 0, 1,
 				orderByComparator);
 
@@ -2110,7 +2118,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag findByThreadId_Last(long threadId,
-		OrderByComparator orderByComparator) throws NoSuchThreadFlagException {
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = fetchByThreadId_Last(threadId,
 				orderByComparator);
 
@@ -2139,7 +2148,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByThreadId_Last(long threadId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		int count = countByThreadId(threadId);
 
 		if (count == 0) {
@@ -2167,7 +2176,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag[] findByThreadId_PrevAndNext(long threadFlagId,
-		long threadId, OrderByComparator orderByComparator)
+		long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException {
 		MBThreadFlag mbThreadFlag = findByPrimaryKey(threadFlagId);
 
@@ -2198,7 +2207,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	protected MBThreadFlag getByThreadId_PrevAndNext(Session session,
 		MBThreadFlag mbThreadFlag, long threadId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBThreadFlag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3257,7 +3266,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public List<MBThreadFlag> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBThreadFlag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

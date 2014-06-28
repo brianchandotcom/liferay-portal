@@ -131,8 +131,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return scLicensePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -149,8 +148,8 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return scLicensePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -169,9 +168,8 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return scLicensePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -394,7 +392,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<SCLicense> getSCProductEntrySCLicenses(long productEntryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<SCLicense> orderByComparator) {
 		return scProductEntryPersistence.getSCLicenses(productEntryId, start,
 			end, orderByComparator);
 	}

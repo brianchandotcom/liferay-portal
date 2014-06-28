@@ -135,8 +135,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return socialRelationPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,8 +152,8 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return socialRelationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -173,9 +172,8 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return socialRelationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}

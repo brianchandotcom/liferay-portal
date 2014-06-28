@@ -79,7 +79,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByUuid_PrevAndNext(
 		long structureId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByUuid_C_PrevAndNext(
 		long structureId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -378,7 +378,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -402,7 +402,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -426,7 +426,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByGroupId_PrevAndNext(
 		long structureId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -481,7 +481,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] filterFindByGroupId_PrevAndNext(
 		long structureId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -536,7 +536,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns all the d d m structures where groupId = any &#63;.
@@ -581,7 +581,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Removes all the d d m structures where groupId = &#63; from the database.
@@ -661,7 +661,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByParentStructureId(
 		long parentStructureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where parentStructureId = &#63;.
@@ -673,7 +673,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByParentStructureId_First(
 		long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -685,7 +685,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByParentStructureId_First(
 		long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where parentStructureId = &#63;.
@@ -697,7 +697,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByParentStructureId_Last(
 		long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -709,7 +709,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByParentStructureId_Last(
 		long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where parentStructureId = &#63;.
@@ -722,7 +722,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByParentStructureId_PrevAndNext(
 		long structureId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -779,7 +779,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where classNameId = &#63;.
@@ -791,7 +791,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -803,7 +803,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where classNameId = &#63;.
@@ -815,7 +815,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -827,7 +827,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where classNameId = &#63;.
@@ -840,7 +840,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByClassNameId_PrevAndNext(
 		long structureId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -897,7 +897,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByStructureKey(
 		java.lang.String structureKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where structureKey = &#63;.
@@ -909,7 +909,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByStructureKey_First(
 		java.lang.String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -921,7 +921,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByStructureKey_First(
 		java.lang.String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where structureKey = &#63;.
@@ -933,7 +933,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByStructureKey_Last(
 		java.lang.String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -945,7 +945,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByStructureKey_Last(
 		java.lang.String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where structureKey = &#63;.
@@ -958,7 +958,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByStructureKey_PrevAndNext(
 		long structureId, java.lang.String structureKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1018,7 +1018,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_P(
 		long groupId, long parentStructureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
@@ -1031,7 +1031,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_P_First(
 		long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1044,7 +1044,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_P_First(
 		long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
@@ -1057,7 +1057,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_P_Last(
 		long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1070,7 +1070,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_P_Last(
 		long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
@@ -1084,7 +1084,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByG_P_PrevAndNext(
 		long structureId, long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1129,7 +1129,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_P(
 		long groupId, long parentStructureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
@@ -1143,7 +1143,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] filterFindByG_P_PrevAndNext(
 		long structureId, long groupId, long parentStructureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1214,7 +1214,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1227,7 +1227,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1240,7 +1240,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1253,7 +1253,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1266,7 +1266,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -1280,7 +1280,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByG_C_PrevAndNext(
 		long structureId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1325,7 +1325,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
@@ -1339,7 +1339,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] filterFindByG_C_PrevAndNext(
 		long structureId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1384,7 +1384,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
 		long[] groupIds, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns all the d d m structures where groupId = any &#63; and classNameId = &#63;.
@@ -1432,7 +1432,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
 		long[] groupIds, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Removes all the d d m structures where groupId = &#63; and classNameId = &#63; from the database.
@@ -1520,7 +1520,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -1533,7 +1533,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1546,7 +1546,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -1559,7 +1559,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1572,7 +1572,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -1586,7 +1586,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByC_C_PrevAndNext(
 		long structureId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1713,7 +1713,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_N_D(
 		long groupId, java.lang.String name, java.lang.String description,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the first d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
@@ -1727,7 +1727,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_N_D_First(
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1741,7 +1741,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_N_D_First(
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the last d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
@@ -1755,7 +1755,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_N_D_Last(
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1769,7 +1769,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_N_D_Last(
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
@@ -1785,7 +1785,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByG_N_D_PrevAndNext(
 		long structureId, long groupId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1835,7 +1835,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_N_D(
 		long groupId, java.lang.String name, java.lang.String description,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
@@ -1851,7 +1851,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] filterFindByG_N_D_PrevAndNext(
 		long structureId, long groupId, java.lang.String name,
 		java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
@@ -1984,7 +1984,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Removes all the d d m structures from the database.
@@ -2045,7 +2045,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the number of document library file entry types associated with the d d m structure.
@@ -2211,7 +2211,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFolder> orderByComparator);
 
 	/**
 	* Returns the number of journal folders associated with the d d m structure.

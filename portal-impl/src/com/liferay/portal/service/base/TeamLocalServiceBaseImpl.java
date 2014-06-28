@@ -137,8 +137,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,8 +154,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -174,9 +173,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -389,7 +387,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Team> getUserTeams(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Team> orderByComparator) {
 		return userPersistence.getTeams(userId, start, end, orderByComparator);
 	}
 
@@ -513,7 +511,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Team> getUserGroupTeams(long userGroupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Team> orderByComparator) {
 		return userGroupPersistence.getTeams(userGroupId, start, end,
 			orderByComparator);
 	}

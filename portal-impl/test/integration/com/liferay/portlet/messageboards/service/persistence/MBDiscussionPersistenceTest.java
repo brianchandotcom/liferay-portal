@@ -298,7 +298,7 @@ public class MBDiscussionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBDiscussion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBDiscussion", "uuid",
 			true, "discussionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

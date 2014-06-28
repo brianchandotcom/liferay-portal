@@ -79,7 +79,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the first journal feed in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -103,7 +103,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the last journal feed in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -127,7 +127,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the journal feeds before and after the current journal feed in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed[] findByUuid_PrevAndNext(
 		long id, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -253,7 +253,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the first journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -279,7 +279,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the last journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -305,7 +305,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the journal feeds before and after the current journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed[] findByUuid_C_PrevAndNext(
 		long id, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -378,7 +378,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the first journal feed in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -402,7 +402,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the last journal feed in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -426,7 +426,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the journal feeds before and after the current journal feed in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed[] findByGroupId_PrevAndNext(
 		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -481,7 +481,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Returns the journal feeds before and after the current journal feed in the ordered set of journal feeds that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public com.liferay.portlet.journal.model.JournalFeed[] filterFindByGroupId_PrevAndNext(
 		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException;
 
 	/**
@@ -668,7 +668,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator);
 
 	/**
 	* Removes all the journal feeds from the database.

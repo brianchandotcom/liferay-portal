@@ -147,7 +147,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public List<ShoppingCart> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -253,7 +253,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -282,7 +283,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		List<ShoppingCart> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -302,7 +303,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -331,7 +333,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -359,7 +361,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart[] findByGroupId_PrevAndNext(long cartId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = findByPrimaryKey(cartId);
 
 		Session session = null;
@@ -389,7 +392,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 	protected ShoppingCart getByGroupId_PrevAndNext(Session session,
 		ShoppingCart shoppingCart, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCart> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -621,7 +624,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public List<ShoppingCart> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -727,7 +730,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -756,7 +760,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		List<ShoppingCart> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -776,7 +780,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = fetchByUserId_Last(userId, orderByComparator);
 
 		if (shoppingCart != null) {
@@ -804,7 +809,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -832,7 +837,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public ShoppingCart[] findByUserId_PrevAndNext(long cartId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchCartException {
+		OrderByComparator<ShoppingCart> orderByComparator)
+		throws NoSuchCartException {
 		ShoppingCart shoppingCart = findByPrimaryKey(cartId);
 
 		Session session = null;
@@ -862,7 +868,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 	protected ShoppingCart getByUserId_PrevAndNext(Session session,
 		ShoppingCart shoppingCart, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCart> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1833,7 +1839,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	@Override
 	public List<ShoppingCart> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCart> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

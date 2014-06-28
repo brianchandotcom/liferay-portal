@@ -150,8 +150,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return assetCategoryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -168,8 +167,8 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return assetCategoryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -188,9 +187,8 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return assetCategoryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -520,7 +518,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 */
 	@Override
 	public List<AssetCategory> getAssetEntryAssetCategories(long entryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetCategory> orderByComparator) {
 		return assetEntryPersistence.getAssetCategories(entryId, start, end,
 			orderByComparator);
 	}

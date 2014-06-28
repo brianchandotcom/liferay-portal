@@ -88,7 +88,7 @@ public class ExpandoRowUtil {
 	 */
 	public static List<ExpandoRow> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ExpandoRowUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence()
 				   .findByTableId(tableId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow findByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow fetchByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence().fetchByTableId_First(tableId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow findByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow fetchByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence().fetchByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow[] findByTableId_PrevAndNext(
 		long rowId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(rowId, tableId, orderByComparator);
@@ -292,7 +292,7 @@ public class ExpandoRowUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findByClassPK(
 		long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence()
 				   .findByClassPK(classPK, start, end, orderByComparator);
 	}
@@ -307,7 +307,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow findByClassPK_First(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence().findByClassPK_First(classPK, orderByComparator);
 	}
@@ -321,7 +321,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow fetchByClassPK_First(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence().fetchByClassPK_First(classPK, orderByComparator);
 	}
 
@@ -335,7 +335,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow findByClassPK_Last(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence().findByClassPK_Last(classPK, orderByComparator);
 	}
@@ -349,7 +349,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow fetchByClassPK_Last(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence().fetchByClassPK_Last(classPK, orderByComparator);
 	}
 
@@ -364,7 +364,7 @@ public class ExpandoRowUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoRow[] findByClassPK_PrevAndNext(
 		long rowId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchRowException {
 		return getPersistence()
 				   .findByClassPK_PrevAndNext(rowId, classPK, orderByComparator);
@@ -567,7 +567,7 @@ public class ExpandoRowUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoRow> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

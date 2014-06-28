@@ -239,7 +239,7 @@ public class MBStatsUserPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBStatsUser",
 			"statsUserId", true, "groupId", true, "userId", true,
 			"messageCount", true, "lastPostDate", true);

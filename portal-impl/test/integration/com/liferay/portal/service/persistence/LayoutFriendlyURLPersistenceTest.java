@@ -367,7 +367,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<LayoutFriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutFriendlyURL",
 			"mvccVersion", true, "uuid", true, "layoutFriendlyURLId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",

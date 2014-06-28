@@ -153,7 +153,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public List<ExpandoTable> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoTable> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public ExpandoTable findByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchTableException {
+		OrderByComparator<ExpandoTable> orderByComparator)
+		throws NoSuchTableException {
 		ExpandoTable expandoTable = fetchByC_C_First(companyId, classNameId,
 				orderByComparator);
 
@@ -302,7 +303,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public ExpandoTable fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoTable> orderByComparator) {
 		List<ExpandoTable> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -324,7 +325,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public ExpandoTable findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchTableException {
+		OrderByComparator<ExpandoTable> orderByComparator)
+		throws NoSuchTableException {
 		ExpandoTable expandoTable = fetchByC_C_Last(companyId, classNameId,
 				orderByComparator);
 
@@ -357,7 +359,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public ExpandoTable fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoTable> orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -386,7 +388,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public ExpandoTable[] findByC_C_PrevAndNext(long tableId, long companyId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<ExpandoTable> orderByComparator)
 		throws NoSuchTableException {
 		ExpandoTable expandoTable = findByPrimaryKey(tableId);
 
@@ -417,7 +419,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	protected ExpandoTable getByC_C_PrevAndNext(Session session,
 		ExpandoTable expandoTable, long companyId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoTable> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1443,7 +1445,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public List<ExpandoTable> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoTable> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

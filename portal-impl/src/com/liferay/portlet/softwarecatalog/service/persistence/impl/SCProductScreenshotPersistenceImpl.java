@@ -155,7 +155,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public List<SCProductScreenshot> findByProductEntryId(long productEntryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -265,7 +266,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public SCProductScreenshot findByProductEntryId_First(long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws NoSuchProductScreenshotException {
 		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_First(productEntryId,
 				orderByComparator);
@@ -295,7 +296,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public SCProductScreenshot fetchByProductEntryId_First(
-		long productEntryId, OrderByComparator orderByComparator) {
+		long productEntryId,
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
 				0, 1, orderByComparator);
 
@@ -316,7 +318,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public SCProductScreenshot findByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws NoSuchProductScreenshotException {
 		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_Last(productEntryId,
 				orderByComparator);
@@ -346,7 +348,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public SCProductScreenshot fetchByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		int count = countByProductEntryId(productEntryId);
 
 		if (count == 0) {
@@ -375,7 +377,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	@Override
 	public SCProductScreenshot[] findByProductEntryId_PrevAndNext(
 		long productScreenshotId, long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws NoSuchProductScreenshotException {
 		SCProductScreenshot scProductScreenshot = findByPrimaryKey(productScreenshotId);
 
@@ -407,7 +409,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 	protected SCProductScreenshot getByProductEntryId_PrevAndNext(
 		Session session, SCProductScreenshot scProductScreenshot,
-		long productEntryId, OrderByComparator orderByComparator,
+		long productEntryId,
+		OrderByComparator<SCProductScreenshot> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1888,7 +1891,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	@Override
 	public List<SCProductScreenshot> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

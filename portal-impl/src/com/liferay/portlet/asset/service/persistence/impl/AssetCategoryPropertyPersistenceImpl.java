@@ -157,7 +157,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public List<AssetCategoryProperty> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -263,7 +264,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -293,7 +294,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		List<AssetCategoryProperty> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -314,7 +315,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -344,7 +345,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -373,7 +374,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetCategoryProperty[] findByCompanyId_PrevAndNext(
 		long categoryPropertyId, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = findByPrimaryKey(categoryPropertyId);
 
@@ -404,7 +405,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 	protected AssetCategoryProperty getByCompanyId_PrevAndNext(
 		Session session, AssetCategoryProperty assetCategoryProperty,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId,
+		OrderByComparator<AssetCategoryProperty> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -642,7 +645,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public List<AssetCategoryProperty> findByCategoryId(long categoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -748,7 +752,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByCategoryId_First(long categoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByCategoryId_First(categoryId,
 				orderByComparator);
@@ -778,7 +782,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByCategoryId_First(long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		List<AssetCategoryProperty> list = findByCategoryId(categoryId, 0, 1,
 				orderByComparator);
 
@@ -799,7 +803,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByCategoryId_Last(long categoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByCategoryId_Last(categoryId,
 				orderByComparator);
@@ -829,7 +833,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByCategoryId_Last(long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		int count = countByCategoryId(categoryId);
 
 		if (count == 0) {
@@ -858,7 +862,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetCategoryProperty[] findByCategoryId_PrevAndNext(
 		long categoryPropertyId, long categoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = findByPrimaryKey(categoryPropertyId);
 
@@ -889,7 +893,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 	protected AssetCategoryProperty getByCategoryId_PrevAndNext(
 		Session session, AssetCategoryProperty assetCategoryProperty,
-		long categoryId, OrderByComparator orderByComparator, boolean previous) {
+		long categoryId,
+		OrderByComparator<AssetCategoryProperty> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1128,7 +1134,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public List<AssetCategoryProperty> findByC_K(long companyId, String key,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1258,7 +1265,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByC_K_First(long companyId, String key,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByC_K_First(companyId,
 				key, orderByComparator);
@@ -1292,7 +1299,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByC_K_First(long companyId, String key,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		List<AssetCategoryProperty> list = findByC_K(companyId, key, 0, 1,
 				orderByComparator);
 
@@ -1314,7 +1321,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty findByC_K_Last(long companyId, String key,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = fetchByC_K_Last(companyId,
 				key, orderByComparator);
@@ -1348,7 +1355,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public AssetCategoryProperty fetchByC_K_Last(long companyId, String key,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		int count = countByC_K(companyId, key);
 
 		if (count == 0) {
@@ -1378,7 +1385,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetCategoryProperty[] findByC_K_PrevAndNext(
 		long categoryPropertyId, long companyId, String key,
-		OrderByComparator orderByComparator)
+		OrderByComparator<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException {
 		AssetCategoryProperty assetCategoryProperty = findByPrimaryKey(categoryPropertyId);
 
@@ -1409,7 +1416,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 	protected AssetCategoryProperty getByC_K_PrevAndNext(Session session,
 		AssetCategoryProperty assetCategoryProperty, long companyId,
-		String key, OrderByComparator orderByComparator, boolean previous) {
+		String key, OrderByComparator<AssetCategoryProperty> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2498,7 +2506,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	@Override
 	public List<AssetCategoryProperty> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategoryProperty> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -95,8 +95,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +113,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +133,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -335,7 +332,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
 		long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId,
 			start, end, orderByComparator);
 	}
@@ -437,7 +434,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetTagAssetEntries(
 		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return _assetEntryLocalService.getAssetTagAssetEntries(tagId, start,
 			end, orderByComparator);
 	}

@@ -153,7 +153,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public List<WikiPageResource> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPageResource> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -273,7 +273,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPageResourceException {
+		OrderByComparator<WikiPageResource> orderByComparator)
+		throws NoSuchPageResourceException {
 		WikiPageResource wikiPageResource = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -302,7 +303,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPageResource> orderByComparator) {
 		List<WikiPageResource> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +323,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPageResourceException {
+		OrderByComparator<WikiPageResource> orderByComparator)
+		throws NoSuchPageResourceException {
 		WikiPageResource wikiPageResource = fetchByUuid_Last(uuid,
 				orderByComparator);
 
@@ -351,7 +353,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPageResource> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,7 +381,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource[] findByUuid_PrevAndNext(long resourcePrimKey,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException {
 		WikiPageResource wikiPageResource = findByPrimaryKey(resourcePrimKey);
 
@@ -410,7 +412,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	protected WikiPageResource getByUuid_PrevAndNext(Session session,
 		WikiPageResource wikiPageResource, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPageResource> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1436,7 +1438,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public List<WikiPageResource> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPageResource> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

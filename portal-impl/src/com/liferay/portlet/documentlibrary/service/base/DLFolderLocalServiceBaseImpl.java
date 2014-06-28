@@ -159,8 +159,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlFolderPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -177,8 +176,8 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return dlFolderPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -196,9 +195,8 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return dlFolderPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -536,7 +534,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		return dlFileEntryTypePersistence.getDLFolders(fileEntryTypeId, start,
 			end, orderByComparator);
 	}

@@ -661,7 +661,7 @@ public class MBMessagePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBMessage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBMessage", "uuid", true,
 			"messageId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

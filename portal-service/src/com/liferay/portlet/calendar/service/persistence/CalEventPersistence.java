@@ -79,7 +79,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -103,7 +103,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -127,7 +127,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByUuid_PrevAndNext(
 		long eventId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -253,7 +253,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -279,7 +279,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -305,7 +305,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByUuid_C_PrevAndNext(
 		long eventId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -378,7 +378,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where companyId = &#63;.
@@ -390,7 +390,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -402,7 +402,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where companyId = &#63;.
@@ -414,7 +414,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -426,7 +426,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where companyId = &#63;.
@@ -439,7 +439,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByCompanyId_PrevAndNext(
 		long eventId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -496,7 +496,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where groupId = &#63;.
@@ -508,7 +508,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -520,7 +520,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where groupId = &#63;.
@@ -532,7 +532,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -544,7 +544,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where groupId = &#63;.
@@ -557,7 +557,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByGroupId_PrevAndNext(
 		long eventId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -599,7 +599,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63;.
@@ -612,7 +612,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] filterFindByGroupId_PrevAndNext(
 		long eventId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -677,7 +677,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
 		int remindBy, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where remindBy &ne; &#63;.
@@ -689,7 +689,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_First(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -701,7 +701,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_First(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where remindBy &ne; &#63;.
@@ -713,7 +713,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_Last(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -725,7 +725,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_Last(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where remindBy &ne; &#63;.
@@ -738,7 +738,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByNotRemindBy_PrevAndNext(
 		long eventId, int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -798,7 +798,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where groupId = &#63; and type = &#63;.
@@ -811,7 +811,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_T_First(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -824,7 +824,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_T_First(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where groupId = &#63; and type = &#63;.
@@ -837,7 +837,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_T_Last(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -850,7 +850,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_T_Last(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and type = &#63;.
@@ -864,7 +864,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -909,7 +909,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and type = &#63;.
@@ -923,7 +923,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -968,7 +968,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns all the cal events where groupId = &#63; and type = any &#63;.
@@ -1016,7 +1016,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Removes all the cal events where groupId = &#63; and type = &#63; from the database.
@@ -1104,7 +1104,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where groupId = &#63; and repeating = &#63;.
@@ -1117,7 +1117,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_R_First(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1130,7 +1130,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_R_First(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where groupId = &#63; and repeating = &#63;.
@@ -1143,7 +1143,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_R_Last(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1156,7 +1156,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_R_Last(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and repeating = &#63;.
@@ -1170,7 +1170,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1215,7 +1215,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
@@ -1229,7 +1229,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1305,7 +1305,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the first cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
@@ -1319,7 +1319,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1333,7 +1333,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the last cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
@@ -1347,7 +1347,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent findByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1361,7 +1361,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set where groupId = &#63; and type = &#63; and repeating = &#63;.
@@ -1376,7 +1376,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] findByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1426,7 +1426,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
@@ -1441,7 +1441,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator)
 		throws com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
@@ -1491,7 +1491,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Returns all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
@@ -1544,7 +1544,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Removes all the cal events where groupId = &#63; and type = &#63; and repeating = &#63; from the database.
@@ -1695,7 +1695,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
 
 	/**
 	* Removes all the cal events from the database.

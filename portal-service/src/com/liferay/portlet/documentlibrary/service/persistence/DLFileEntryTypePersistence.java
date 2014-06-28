@@ -79,7 +79,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByUuid_PrevAndNext(
 		long fileEntryTypeId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByUuid_C_PrevAndNext(
 		long fileEntryTypeId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -378,7 +378,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the first document library file entry type in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -402,7 +402,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the last document library file entry type in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -426,7 +426,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByGroupId_PrevAndNext(
 		long fileEntryTypeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -481,7 +481,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the document library file entry types before and after the current document library file entry type in the ordered set of document library file entry types that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] filterFindByGroupId_PrevAndNext(
 		long fileEntryTypeId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
@@ -536,7 +536,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns all the document library file entry types where groupId = any &#63;.
@@ -581,7 +581,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Removes all the document library file entry types where groupId = &#63; from the database.
@@ -774,7 +774,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
 
 	/**
 	* Removes all the document library file entry types from the database.
@@ -835,7 +835,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator);
 
 	/**
 	* Returns the number of document library folders associated with the document library file entry type.
@@ -1001,7 +1001,7 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
 	/**
 	* Returns the number of d d m structures associated with the document library file entry type.

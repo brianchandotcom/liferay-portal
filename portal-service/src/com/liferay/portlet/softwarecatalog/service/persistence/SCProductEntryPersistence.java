@@ -79,7 +79,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the first s c product entry in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the last s c product entry in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the s c product entries before and after the current s c product entry in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -182,7 +182,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the s c product entries before and after the current s c product entry in the ordered set of s c product entries that the user has permission to view where groupId = &#63;.
@@ -195,7 +195,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -260,7 +260,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the first s c product entry in the ordered set where companyId = &#63;.
@@ -272,7 +272,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -284,7 +284,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the last s c product entry in the ordered set where companyId = &#63;.
@@ -296,7 +296,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -308,7 +308,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the s c product entries before and after the current s c product entry in the ordered set where companyId = &#63;.
@@ -321,7 +321,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByCompanyId_PrevAndNext(
 		long productEntryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -381,7 +381,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the first s c product entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -394,7 +394,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -407,7 +407,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the last s c product entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -420,7 +420,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -433,7 +433,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the s c product entries before and after the current s c product entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -447,7 +447,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByG_U_PrevAndNext(
 		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -492,7 +492,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the s c product entries before and after the current s c product entry in the ordered set of s c product entries that the user has permission to view where groupId = &#63; and userId = &#63;.
@@ -506,7 +506,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByG_U_PrevAndNext(
 		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
@@ -688,7 +688,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Removes all the s c product entries from the database.
@@ -749,7 +749,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the number of s c licenses associated with the s c product entry.

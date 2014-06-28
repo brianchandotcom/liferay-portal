@@ -90,8 +90,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -109,8 +108,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -130,11 +128,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}

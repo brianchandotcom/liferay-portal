@@ -79,7 +79,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the first d d l record in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the last d d l record in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the d d l records before and after the current d d l record in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByUuid_PrevAndNext(
 		long recordId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the first d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the last d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the d d l records before and after the current d d l record in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByUuid_C_PrevAndNext(
 		long recordId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -378,7 +378,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the first d d l record in the ordered set where companyId = &#63;.
@@ -390,7 +390,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -402,7 +402,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the last d d l record in the ordered set where companyId = &#63;.
@@ -414,7 +414,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -426,7 +426,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the d d l records before and after the current d d l record in the ordered set where companyId = &#63;.
@@ -439,7 +439,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByCompanyId_PrevAndNext(
 		long recordId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -496,7 +496,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByRecordSetId(
 		long recordSetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the first d d l record in the ordered set where recordSetId = &#63;.
@@ -508,7 +508,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByRecordSetId_First(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -520,7 +520,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByRecordSetId_First(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the last d d l record in the ordered set where recordSetId = &#63;.
@@ -532,7 +532,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByRecordSetId_Last(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -544,7 +544,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByRecordSetId_Last(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the d d l records before and after the current d d l record in the ordered set where recordSetId = &#63;.
@@ -557,7 +557,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByRecordSetId_PrevAndNext(
 		long recordId, long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -617,7 +617,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByR_U(
 		long recordSetId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the first d d l record in the ordered set where recordSetId = &#63; and userId = &#63;.
@@ -630,7 +630,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByR_U_First(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -643,7 +643,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByR_U_First(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the last d d l record in the ordered set where recordSetId = &#63; and userId = &#63;.
@@ -656,7 +656,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord findByR_U_Last(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -669,7 +669,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByR_U_Last(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Returns the d d l records before and after the current d d l record in the ordered set where recordSetId = &#63; and userId = &#63;.
@@ -683,7 +683,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByR_U_PrevAndNext(
 		long recordId, long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	/**
@@ -801,7 +801,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	/**
 	* Removes all the d d l records from the database.

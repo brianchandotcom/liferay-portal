@@ -88,7 +88,7 @@ public class DLFileVersionUtil {
 	 */
 	public static List<DLFileVersion> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByUuid_PrevAndNext(
 		long fileVersionId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileVersionId, uuid,
@@ -358,7 +358,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -374,7 +374,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -390,7 +390,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -406,7 +406,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -422,7 +422,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByUuid_C_PrevAndNext(
 		long fileVersionId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(fileVersionId, uuid, companyId,
@@ -510,7 +510,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -525,7 +525,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -540,7 +540,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -555,7 +555,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -570,7 +570,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -586,7 +586,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByCompanyId_PrevAndNext(
 		long fileVersionId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(fileVersionId, companyId,
@@ -655,7 +655,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByFileEntryId(fileEntryId, start, end, orderByComparator);
 	}
@@ -670,7 +670,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_First(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_First(fileEntryId, orderByComparator);
@@ -685,7 +685,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByFileEntryId_First(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByFileEntryId_First(fileEntryId, orderByComparator);
 	}
@@ -700,7 +700,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByFileEntryId_Last(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_Last(fileEntryId, orderByComparator);
@@ -715,7 +715,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByFileEntryId_Last(
 		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByFileEntryId_Last(fileEntryId, orderByComparator);
 	}
@@ -731,7 +731,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByFileEntryId_PrevAndNext(
 		long fileVersionId, long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByFileEntryId_PrevAndNext(fileVersionId, fileEntryId,
@@ -800,7 +800,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByMimeType(
 		java.lang.String mimeType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByMimeType(mimeType, start, end, orderByComparator);
 	}
@@ -815,7 +815,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByMimeType_First(
 		java.lang.String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_First(mimeType, orderByComparator);
 	}
@@ -829,7 +829,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByMimeType_First(
 		java.lang.String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByMimeType_First(mimeType, orderByComparator);
 	}
@@ -844,7 +844,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByMimeType_Last(
 		java.lang.String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence().findByMimeType_Last(mimeType, orderByComparator);
 	}
@@ -858,7 +858,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByMimeType_Last(
 		java.lang.String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().fetchByMimeType_Last(mimeType, orderByComparator);
 	}
 
@@ -873,7 +873,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByMimeType_PrevAndNext(
 		long fileVersionId, java.lang.String mimeType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByMimeType_PrevAndNext(fileVersionId, mimeType,
@@ -945,7 +945,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByC_NotS(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotS(companyId, status, start, end,
 			orderByComparator);
@@ -962,7 +962,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
@@ -978,7 +978,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -994,7 +994,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
@@ -1010,7 +1010,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1027,7 +1027,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByC_NotS_PrevAndNext(
 		long fileVersionId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(fileVersionId, companyId, status,
@@ -1165,7 +1165,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByF_S(
 		long fileEntryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByF_S(fileEntryId, status, start, end, orderByComparator);
 	}
@@ -1181,7 +1181,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_First(
 		long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_First(fileEntryId, status, orderByComparator);
@@ -1197,7 +1197,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_S_First(
 		long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_S_First(fileEntryId, status, orderByComparator);
 	}
@@ -1213,7 +1213,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByF_S_Last(
 		long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_Last(fileEntryId, status, orderByComparator);
@@ -1229,7 +1229,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByF_S_Last(
 		long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_S_Last(fileEntryId, status, orderByComparator);
 	}
@@ -1246,7 +1246,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByF_S_PrevAndNext(
 		long fileVersionId, long fileEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByF_S_PrevAndNext(fileVersionId, fileEntryId, status,
@@ -1324,7 +1324,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -1342,7 +1342,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_S_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_First(groupId, folderId, status,
@@ -1360,7 +1360,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_S_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_First(groupId, folderId, status,
 			orderByComparator);
@@ -1378,7 +1378,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_S_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_Last(groupId, folderId, status,
@@ -1396,7 +1396,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_S_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_Last(groupId, folderId, status,
 			orderByComparator);
@@ -1415,7 +1415,7 @@ public class DLFileVersionUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByG_F_S_PrevAndNext(
 		long fileVersionId, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_S_PrevAndNext(fileVersionId, groupId, folderId,
@@ -1501,7 +1501,7 @@ public class DLFileVersionUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByG_F_T_V(
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_T_V(groupId, folderId, title, version, start,
 			end, orderByComparator);
@@ -1521,7 +1521,7 @@ public class DLFileVersionUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_T_V_First(
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_First(groupId, folderId, title, version,
@@ -1541,7 +1541,7 @@ public class DLFileVersionUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_T_V_First(
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_First(groupId, folderId, title, version,
 			orderByComparator);
@@ -1561,7 +1561,7 @@ public class DLFileVersionUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion findByG_F_T_V_Last(
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_Last(groupId, folderId, title, version,
@@ -1581,7 +1581,7 @@ public class DLFileVersionUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByG_F_T_V_Last(
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_T_V_Last(groupId, folderId, title, version,
 			orderByComparator);
@@ -1602,7 +1602,7 @@ public class DLFileVersionUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByG_F_T_V_PrevAndNext(
 		long fileVersionId, long groupId, long folderId,
 		java.lang.String title, java.lang.String version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException {
 		return getPersistence()
 				   .findByG_F_T_V_PrevAndNext(fileVersionId, groupId, folderId,
@@ -1753,7 +1753,7 @@ public class DLFileVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

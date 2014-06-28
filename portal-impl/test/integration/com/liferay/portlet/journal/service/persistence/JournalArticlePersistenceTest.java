@@ -875,7 +875,7 @@ public class JournalArticlePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<JournalArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticle", "uuid",
 			true, "id", true, "resourcePrimKey", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

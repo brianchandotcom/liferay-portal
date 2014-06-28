@@ -299,7 +299,7 @@ public class SCProductEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SCProductEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductEntry",
 			"productEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

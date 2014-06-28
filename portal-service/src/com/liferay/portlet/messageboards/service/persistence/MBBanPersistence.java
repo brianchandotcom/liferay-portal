@@ -79,7 +79,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the first message boards ban in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the last message boards ban in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the message boards bans before and after the current message boards ban in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan[] findByUuid_PrevAndNext(
 		long banId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the first message boards ban in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the last message boards ban in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the message boards bans before and after the current message boards ban in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan[] findByUuid_C_PrevAndNext(
 		long banId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the first message boards ban in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the last message boards ban in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the message boards bans before and after the current message boards ban in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan[] findByGroupId_PrevAndNext(
 		long banId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -496,7 +496,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the first message boards ban in the ordered set where userId = &#63;.
@@ -508,7 +508,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -520,7 +520,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the last message boards ban in the ordered set where userId = &#63;.
@@ -532,7 +532,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -544,7 +544,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the message boards bans before and after the current message boards ban in the ordered set where userId = &#63;.
@@ -557,7 +557,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan[] findByUserId_PrevAndNext(
 		long banId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -614,7 +614,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findByBanUserId(
 		long banUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the first message boards ban in the ordered set where banUserId = &#63;.
@@ -626,7 +626,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByBanUserId_First(
 		long banUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -638,7 +638,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByBanUserId_First(
 		long banUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the last message boards ban in the ordered set where banUserId = &#63;.
@@ -650,7 +650,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan findByBanUserId_Last(
 		long banUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -662,7 +662,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan fetchByBanUserId_Last(
 		long banUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Returns the message boards bans before and after the current message boards ban in the ordered set where banUserId = &#63;.
@@ -675,7 +675,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBBan[] findByBanUserId_PrevAndNext(
 		long banId, long banUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchBanException;
 
 	/**
@@ -840,7 +840,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBBan> orderByComparator);
 
 	/**
 	* Removes all the message boards bans from the database.

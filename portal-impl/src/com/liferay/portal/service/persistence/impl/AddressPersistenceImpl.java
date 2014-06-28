@@ -149,7 +149,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUuid_First(uuid, orderByComparator);
 
 		if (address != null) {
@@ -297,7 +298,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (address != null) {
@@ -345,7 +347,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByUuid_PrevAndNext(long addressId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -402,7 +405,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	protected Address getByUuid_PrevAndNext(Session session, Address address,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<Address> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -671,7 +675,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -801,7 +805,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (address != null) {
@@ -833,7 +838,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -855,7 +860,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (address != null) {
@@ -887,7 +893,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -916,7 +922,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByUuid_C_PrevAndNext(long addressId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
@@ -946,8 +952,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	protected Address getByUuid_C_PrevAndNext(Session session, Address address,
-		String uuid, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		String uuid, long companyId,
+		OrderByComparator<Address> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1223,7 +1229,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1329,7 +1335,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (address != null) {
@@ -1357,7 +1364,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1377,7 +1384,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (address != null) {
@@ -1405,7 +1413,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1433,7 +1441,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByCompanyId_PrevAndNext(long addressId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
@@ -1463,8 +1471,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	protected Address getByCompanyId_PrevAndNext(Session session,
-		Address address, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		Address address, long companyId,
+		OrderByComparator<Address> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1697,7 +1705,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1803,7 +1811,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUserId_First(userId, orderByComparator);
 
 		if (address != null) {
@@ -1831,7 +1840,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1851,7 +1860,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByUserId_Last(userId, orderByComparator);
 
 		if (address != null) {
@@ -1879,7 +1889,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1907,7 +1917,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByUserId_PrevAndNext(long addressId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -1936,7 +1947,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	protected Address getByUserId_PrevAndNext(Session session, Address address,
-		long userId, OrderByComparator orderByComparator, boolean previous) {
+		long userId, OrderByComparator<Address> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2174,7 +2186,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByC_C(long companyId, long classNameId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2290,7 +2302,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByC_C_First(companyId, classNameId,
 				orderByComparator);
 
@@ -2323,7 +2336,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -2345,7 +2358,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = fetchByC_C_Last(companyId, classNameId,
 				orderByComparator);
 
@@ -2378,7 +2392,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -2407,7 +2421,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByC_C_PrevAndNext(long addressId, long companyId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
@@ -2437,8 +2451,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	protected Address getByC_C_PrevAndNext(Session session, Address address,
-		long companyId, long classNameId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long companyId, long classNameId,
+		OrderByComparator<Address> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2696,7 +2710,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findByC_C_C(long companyId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2818,7 +2833,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_First(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2856,7 +2871,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByC_C_C(companyId, classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -2879,7 +2894,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_Last(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2917,7 +2932,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Address> orderByComparator) {
 		int count = countByC_C_C(companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -2947,7 +2962,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address[] findByC_C_C_PrevAndNext(long addressId, long companyId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
+		long classNameId, long classPK,
+		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
@@ -2978,7 +2994,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 	protected Address getByC_C_C_PrevAndNext(Session session, Address address,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Address> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3257,7 +3273,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByC_C_C_M(long companyId, long classNameId,
 		long classPK, boolean mailing, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3385,7 +3401,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_M_First(long companyId, long classNameId,
-		long classPK, boolean mailing, OrderByComparator orderByComparator)
+		long classPK, boolean mailing,
+		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_M_First(companyId, classNameId, classPK,
 				mailing, orderByComparator);
@@ -3427,7 +3444,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_M_First(long companyId, long classNameId,
-		long classPK, boolean mailing, OrderByComparator orderByComparator) {
+		long classPK, boolean mailing,
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByC_C_C_M(companyId, classNameId, classPK,
 				mailing, 0, 1, orderByComparator);
 
@@ -3451,7 +3469,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_M_Last(long companyId, long classNameId,
-		long classPK, boolean mailing, OrderByComparator orderByComparator)
+		long classPK, boolean mailing,
+		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_M_Last(companyId, classNameId, classPK,
 				mailing, orderByComparator);
@@ -3493,7 +3512,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_M_Last(long companyId, long classNameId,
-		long classPK, boolean mailing, OrderByComparator orderByComparator) {
+		long classPK, boolean mailing,
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByC_C_C_M(companyId, classNameId, classPK, mailing);
 
 		if (count == 0) {
@@ -3525,7 +3545,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public Address[] findByC_C_C_M_PrevAndNext(long addressId, long companyId,
 		long classNameId, long classPK, boolean mailing,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -3555,7 +3576,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 	protected Address getByC_C_C_M_PrevAndNext(Session session,
 		Address address, long companyId, long classNameId, long classPK,
-		boolean mailing, OrderByComparator orderByComparator, boolean previous) {
+		boolean mailing, OrderByComparator<Address> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3849,7 +3871,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3977,7 +3999,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
+		long classPK, boolean primary,
+		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_P_First(companyId, classNameId, classPK,
 				primary, orderByComparator);
@@ -4019,7 +4042,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<Address> orderByComparator) {
 		List<Address> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, 0, 1, orderByComparator);
 
@@ -4043,7 +4067,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address findByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
+		long classPK, boolean primary,
+		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 		Address address = fetchByC_C_C_P_Last(companyId, classNameId, classPK,
 				primary, orderByComparator);
@@ -4085,7 +4110,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public Address fetchByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<Address> orderByComparator) {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
 
 		if (count == 0) {
@@ -4117,7 +4143,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public Address[] findByC_C_C_P_PrevAndNext(long addressId, long companyId,
 		long classNameId, long classPK, boolean primary,
-		OrderByComparator orderByComparator) throws NoSuchAddressException {
+		OrderByComparator<Address> orderByComparator)
+		throws NoSuchAddressException {
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -4147,7 +4174,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 	protected Address getByC_C_C_P_PrevAndNext(Session session,
 		Address address, long companyId, long classNameId, long classPK,
-		boolean primary, OrderByComparator orderByComparator, boolean previous) {
+		boolean primary, OrderByComparator<Address> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5016,7 +5044,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public List<Address> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Address> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

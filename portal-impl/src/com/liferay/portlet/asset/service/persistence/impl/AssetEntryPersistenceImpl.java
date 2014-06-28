@@ -159,7 +159,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -265,7 +265,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -294,7 +295,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -315,7 +316,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -344,7 +346,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -372,7 +374,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -403,7 +405,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByCompanyId_PrevAndNext(Session session,
 		AssetEntry assetEntry, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -635,7 +637,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByVisible(boolean visible, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -741,7 +743,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByVisible_First(boolean visible,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByVisible_First(visible, orderByComparator);
 
 		if (assetEntry != null) {
@@ -769,7 +772,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByVisible_First(boolean visible,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByVisible(visible, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -789,7 +792,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByVisible_Last(boolean visible,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByVisible_Last(visible, orderByComparator);
 
 		if (assetEntry != null) {
@@ -817,7 +821,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByVisible_Last(boolean visible,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByVisible(visible);
 
 		if (count == 0) {
@@ -845,7 +849,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByVisible_PrevAndNext(long entryId,
-		boolean visible, OrderByComparator orderByComparator)
+		boolean visible, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -876,7 +880,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByVisible_PrevAndNext(Session session,
 		AssetEntry assetEntry, boolean visible,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1111,7 +1115,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByPublishDate(Date publishDate, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1228,7 +1232,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByPublishDate_First(Date publishDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByPublishDate_First(publishDate,
 				orderByComparator);
 
@@ -1257,7 +1262,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByPublishDate_First(Date publishDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByPublishDate(publishDate, 0, 1,
 				orderByComparator);
 
@@ -1278,7 +1283,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByPublishDate_Last(Date publishDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByPublishDate_Last(publishDate,
 				orderByComparator);
 
@@ -1307,7 +1313,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByPublishDate_Last(Date publishDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByPublishDate(publishDate);
 
 		if (count == 0) {
@@ -1335,7 +1341,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByPublishDate_PrevAndNext(long entryId,
-		Date publishDate, OrderByComparator orderByComparator)
+		Date publishDate, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -1366,7 +1372,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByPublishDate_PrevAndNext(Session session,
 		AssetEntry assetEntry, Date publishDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1624,7 +1630,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByExpirationDate(Date expirationDate,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1746,7 +1752,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByExpirationDate_First(Date expirationDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByExpirationDate_First(expirationDate,
 				orderByComparator);
 
@@ -1775,7 +1782,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByExpirationDate_First(Date expirationDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByExpirationDate(expirationDate, 0, 1,
 				orderByComparator);
 
@@ -1796,7 +1803,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByExpirationDate_Last(Date expirationDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByExpirationDate_Last(expirationDate,
 				orderByComparator);
 
@@ -1825,7 +1833,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByExpirationDate_Last(Date expirationDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByExpirationDate(expirationDate);
 
 		if (count == 0) {
@@ -1853,7 +1861,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByExpirationDate_PrevAndNext(long entryId,
-		Date expirationDate, OrderByComparator orderByComparator)
+		Date expirationDate, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -1884,7 +1892,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByExpirationDate_PrevAndNext(Session session,
 		AssetEntry assetEntry, Date expirationDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2142,7 +2150,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByLayoutUuid(String layoutUuid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2262,7 +2270,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByLayoutUuid_First(String layoutUuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByLayoutUuid_First(layoutUuid,
 				orderByComparator);
 
@@ -2291,7 +2300,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByLayoutUuid_First(String layoutUuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByLayoutUuid(layoutUuid, 0, 1,
 				orderByComparator);
 
@@ -2312,7 +2321,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByLayoutUuid_Last(String layoutUuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByLayoutUuid_Last(layoutUuid,
 				orderByComparator);
 
@@ -2341,7 +2351,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByLayoutUuid_Last(String layoutUuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByLayoutUuid(layoutUuid);
 
 		if (count == 0) {
@@ -2369,7 +2379,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByLayoutUuid_PrevAndNext(long entryId,
-		String layoutUuid, OrderByComparator orderByComparator)
+		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -2400,7 +2410,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByLayoutUuid_PrevAndNext(Session session,
 		AssetEntry assetEntry, String layoutUuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3781,7 +3791,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3966,7 +3976,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategories(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return assetEntryToAssetCategoryTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
@@ -4241,7 +4252,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return assetEntryToAssetTagTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}

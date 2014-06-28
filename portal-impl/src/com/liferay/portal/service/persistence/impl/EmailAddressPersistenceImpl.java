@@ -149,7 +149,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUuid_First(uuid, orderByComparator);
 
 		if (emailAddress != null) {
@@ -297,7 +298,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (emailAddress != null) {
@@ -345,7 +347,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress[] findByUuid_PrevAndNext(long emailAddressId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
@@ -404,7 +406,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByUuid_PrevAndNext(Session session,
 		EmailAddress emailAddress, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -673,7 +675,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -803,7 +805,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -836,7 +839,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -858,7 +861,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -891,7 +895,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -920,7 +924,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress[] findByUuid_C_PrevAndNext(long emailAddressId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
@@ -951,7 +956,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByUuid_C_PrevAndNext(Session session,
 		EmailAddress emailAddress, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1227,7 +1232,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1333,7 +1338,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -1362,7 +1368,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -1383,7 +1389,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -1412,7 +1419,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1440,7 +1447,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress[] findByCompanyId_PrevAndNext(long emailAddressId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
@@ -1471,7 +1478,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByCompanyId_PrevAndNext(Session session,
 		EmailAddress emailAddress, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1704,7 +1711,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1810,7 +1817,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -1839,7 +1847,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1859,7 +1867,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByUserId_Last(userId, orderByComparator);
 
 		if (emailAddress != null) {
@@ -1887,7 +1896,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1915,7 +1924,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress[] findByUserId_PrevAndNext(long emailAddressId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
@@ -1946,7 +1955,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByUserId_PrevAndNext(Session session,
 		EmailAddress emailAddress, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2184,7 +2193,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2300,7 +2309,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_First(companyId, classNameId,
 				orderByComparator);
 
@@ -2333,7 +2343,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -2355,7 +2365,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_Last(companyId, classNameId,
 				orderByComparator);
 
@@ -2388,7 +2399,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -2417,7 +2428,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress[] findByC_C_PrevAndNext(long emailAddressId,
-		long companyId, long classNameId, OrderByComparator orderByComparator)
+		long companyId, long classNameId,
+		OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
@@ -2448,7 +2460,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByC_C_PrevAndNext(Session session,
 		EmailAddress emailAddress, long companyId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2706,7 +2718,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findByC_C_C(long companyId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2828,7 +2841,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_C_First(companyId, classNameId,
 				classPK, orderByComparator);
@@ -2866,7 +2879,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByC_C_C(companyId, classNameId, classPK,
 				0, 1, orderByComparator);
 
@@ -2889,7 +2902,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_C_Last(companyId, classNameId,
 				classPK, orderByComparator);
@@ -2927,7 +2940,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByC_C_C(companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -2958,7 +2971,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public EmailAddress[] findByC_C_C_PrevAndNext(long emailAddressId,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
 		Session session = null;
@@ -2988,7 +3002,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByC_C_C_PrevAndNext(Session session,
 		EmailAddress emailAddress, long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator, boolean previous) {
+		long classPK, OrderByComparator<EmailAddress> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3267,7 +3282,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public List<EmailAddress> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3395,7 +3410,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
+		long classPK, boolean primary,
+		OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_C_P_First(companyId,
 				classNameId, classPK, primary, orderByComparator);
@@ -3437,7 +3453,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<EmailAddress> orderByComparator) {
 		List<EmailAddress> list = findByC_C_C_P(companyId, classNameId,
 				classPK, primary, 0, 1, orderByComparator);
 
@@ -3461,7 +3478,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress findByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
+		long classPK, boolean primary,
+		OrderByComparator<EmailAddress> orderByComparator)
 		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = fetchByC_C_C_P_Last(companyId, classNameId,
 				classPK, primary, orderByComparator);
@@ -3503,7 +3521,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public EmailAddress fetchByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<EmailAddress> orderByComparator) {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
 
 		if (count == 0) {
@@ -3535,7 +3554,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public EmailAddress[] findByC_C_C_P_PrevAndNext(long emailAddressId,
 		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator orderByComparator) throws NoSuchEmailAddressException {
+		OrderByComparator<EmailAddress> orderByComparator)
+		throws NoSuchEmailAddressException {
 		EmailAddress emailAddress = findByPrimaryKey(emailAddressId);
 
 		Session session = null;
@@ -3567,8 +3587,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	protected EmailAddress getByC_C_C_P_PrevAndNext(Session session,
 		EmailAddress emailAddress, long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator,
-		boolean previous) {
+		long classPK, boolean primary,
+		OrderByComparator<EmailAddress> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4412,7 +4432,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public List<EmailAddress> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<EmailAddress> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

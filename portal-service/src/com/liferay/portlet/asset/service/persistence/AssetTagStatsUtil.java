@@ -88,7 +88,7 @@ public class AssetTagStatsUtil {
 	 */
 	public static List<AssetTagStats> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findByTagId(
 		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence().findByTagId(tagId, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats findByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence().findByTagId_First(tagId, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence().fetchByTagId_First(tagId, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats findByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence().findByTagId_Last(tagId, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats fetchByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence().fetchByTagId_Last(tagId, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats[] findByTagId_PrevAndNext(
 		long tagStatsId, long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByTagId_PrevAndNext(tagStatsId, tagId, orderByComparator);
@@ -291,7 +291,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence()
 				   .findByClassNameId(classNameId, start, end, orderByComparator);
 	}
@@ -306,7 +306,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats findByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
@@ -321,7 +321,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -336,7 +336,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats findByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
@@ -351,7 +351,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats fetchByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -367,7 +367,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTagStats[] findByClassNameId_PrevAndNext(
 		long tagStatsId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(tagStatsId, classNameId,
@@ -573,7 +573,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTagStats> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagStats> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

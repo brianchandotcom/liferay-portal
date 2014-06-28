@@ -151,8 +151,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return userGroupPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -169,8 +168,8 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return userGroupPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -189,9 +188,8 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return userGroupPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -485,7 +483,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<UserGroup> getGroupUserGroups(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		return groupPersistence.getUserGroups(groupId, start, end,
 			orderByComparator);
 	}
@@ -610,7 +608,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<UserGroup> getTeamUserGroups(long teamId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		return teamPersistence.getUserGroups(teamId, start, end,
 			orderByComparator);
 	}
@@ -735,7 +733,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<UserGroup> getUserUserGroups(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		return userPersistence.getUserGroups(userId, start, end,
 			orderByComparator);
 	}

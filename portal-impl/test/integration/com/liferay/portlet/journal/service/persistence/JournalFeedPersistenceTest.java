@@ -345,7 +345,7 @@ public class JournalFeedPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<JournalFeed> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalFeed", "uuid", true,
 			"id", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

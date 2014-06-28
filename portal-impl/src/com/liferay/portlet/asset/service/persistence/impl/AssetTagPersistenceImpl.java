@@ -156,7 +156,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public List<AssetTag> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -262,7 +262,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchTagException {
+		OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
 		AssetTag assetTag = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (assetTag != null) {
@@ -290,7 +291,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		List<AssetTag> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -310,7 +311,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchTagException {
+		OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
 		AssetTag assetTag = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (assetTag != null) {
@@ -338,7 +340,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -366,7 +368,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag[] findByGroupId_PrevAndNext(long tagId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchTagException {
+		OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
 		AssetTag assetTag = findByPrimaryKey(tagId);
 
 		Session session = null;
@@ -395,8 +398,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	}
 
 	protected AssetTag getByGroupId_PrevAndNext(Session session,
-		AssetTag assetTag, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		AssetTag assetTag, long groupId,
+		OrderByComparator<AssetTag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -543,7 +546,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public List<AssetTag> filterFindByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -633,7 +636,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public AssetTag[] filterFindByGroupId_PrevAndNext(long tagId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchTagException {
+		OrderByComparator<AssetTag> orderByComparator)
+		throws NoSuchTagException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(tagId, groupId, orderByComparator);
 		}
@@ -666,8 +670,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	}
 
 	protected AssetTag filterGetByGroupId_PrevAndNext(Session session,
-		AssetTag assetTag, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		AssetTag assetTag, long groupId,
+		OrderByComparator<AssetTag> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1734,7 +1738,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public List<AssetTag> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1919,7 +1923,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return assetTagToAssetEntryTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}

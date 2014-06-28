@@ -88,7 +88,7 @@ public class JournalArticleImageUtil {
 	 */
 	public static List<JournalArticleImage> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -153,7 +153,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -168,7 +168,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -182,7 +182,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -196,7 +196,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -210,7 +210,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -225,7 +225,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByGroupId_PrevAndNext(
 		long articleImageId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(articleImageId, groupId,
@@ -294,7 +294,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByTempImage(
 		boolean tempImage, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .findByTempImage(tempImage, start, end, orderByComparator);
 	}
@@ -309,7 +309,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByTempImage_First(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_First(tempImage, orderByComparator);
@@ -324,7 +324,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByTempImage_First(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .fetchByTempImage_First(tempImage, orderByComparator);
 	}
@@ -339,7 +339,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByTempImage_Last(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_Last(tempImage, orderByComparator);
@@ -354,7 +354,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByTempImage_Last(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .fetchByTempImage_Last(tempImage, orderByComparator);
 	}
@@ -370,7 +370,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByTempImage_PrevAndNext(
 		long articleImageId, boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_PrevAndNext(articleImageId, tempImage,
@@ -448,7 +448,7 @@ public class JournalArticleImageUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByG_A_V(
 		long groupId, java.lang.String articleId, double version, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .findByG_A_V(groupId, articleId, version, start, end,
 			orderByComparator);
@@ -466,7 +466,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByG_A_V_First(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_First(groupId, articleId, version,
@@ -484,7 +484,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_First(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_V_First(groupId, articleId, version,
 			orderByComparator);
@@ -502,7 +502,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByG_A_V_Last(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_Last(groupId, articleId, version,
@@ -520,7 +520,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_Last(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_V_Last(groupId, articleId, version,
 			orderByComparator);
@@ -540,7 +540,7 @@ public class JournalArticleImageUtil {
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByG_A_V_PrevAndNext(
 		long articleImageId, long groupId, java.lang.String articleId,
 		double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_PrevAndNext(articleImageId, groupId, articleId,
@@ -793,7 +793,7 @@ public class JournalArticleImageUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleImage> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -490,7 +490,7 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 		</#list>
 
-		protected OrderByComparator getOrderByComparator() {
+		protected OrderByComparator<${entity.name}> getOrderByComparator() {
 			return OrderByComparatorFactoryUtil.create(
 				"${entity.table}",
 

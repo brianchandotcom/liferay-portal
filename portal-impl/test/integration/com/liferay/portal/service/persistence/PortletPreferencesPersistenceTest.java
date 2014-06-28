@@ -310,7 +310,7 @@ public class PortletPreferencesPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<PortletPreferences> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortletPreferences",
 			"mvccVersion", true, "portletPreferencesId", true, "ownerId", true,
 			"ownerType", true, "plid", true, "portletId", true, "preferences",

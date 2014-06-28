@@ -92,8 +92,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _groupLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -111,8 +110,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _groupLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -132,11 +130,10 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _groupLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -350,7 +347,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return _groupLocalService.getOrganizationGroups(organizationId, start,
 			end, orderByComparator);
 	}
@@ -449,7 +446,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return _groupLocalService.getRoleGroups(roleId, start, end,
 			orderByComparator);
 	}
@@ -549,7 +546,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
 		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return _groupLocalService.getUserGroupGroups(userGroupId, start, end,
 			orderByComparator);
 	}
@@ -651,7 +648,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupLocalService.getUserGroups(userId, start, end,
 			orderByComparator);

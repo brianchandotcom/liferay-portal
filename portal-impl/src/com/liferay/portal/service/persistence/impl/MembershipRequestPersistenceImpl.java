@@ -152,7 +152,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public List<MembershipRequest> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MembershipRequest> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -258,7 +258,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByGroupId_First(groupId,
 				orderByComparator);
@@ -288,7 +288,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		List<MembershipRequest> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -309,7 +309,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByGroupId_Last(groupId,
 				orderByComparator);
@@ -339,7 +339,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -368,7 +368,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@Override
 	public MembershipRequest[] findByGroupId_PrevAndNext(
 		long membershipRequestId, long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = findByPrimaryKey(membershipRequestId);
 
@@ -399,7 +399,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	protected MembershipRequest getByGroupId_PrevAndNext(Session session,
 		MembershipRequest membershipRequest, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MembershipRequest> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -634,7 +634,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public List<MembershipRequest> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MembershipRequest> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -740,7 +740,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByUserId_First(userId,
 				orderByComparator);
@@ -770,7 +770,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		List<MembershipRequest> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -791,7 +791,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByUserId_Last(userId,
 				orderByComparator);
@@ -821,7 +821,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -850,7 +850,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@Override
 	public MembershipRequest[] findByUserId_PrevAndNext(
 		long membershipRequestId, long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = findByPrimaryKey(membershipRequestId);
 
@@ -881,7 +881,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	protected MembershipRequest getByUserId_PrevAndNext(Session session,
 		MembershipRequest membershipRequest, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MembershipRequest> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1121,7 +1121,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public List<MembershipRequest> findByG_S(long groupId, int statusId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1237,7 +1238,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByG_S_First(long groupId, int statusId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByG_S_First(groupId,
 				statusId, orderByComparator);
@@ -1271,7 +1272,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByG_S_First(long groupId, int statusId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		List<MembershipRequest> list = findByG_S(groupId, statusId, 0, 1,
 				orderByComparator);
 
@@ -1293,7 +1294,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByG_S_Last(long groupId, int statusId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByG_S_Last(groupId,
 				statusId, orderByComparator);
@@ -1327,7 +1328,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByG_S_Last(long groupId, int statusId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		int count = countByG_S(groupId, statusId);
 
 		if (count == 0) {
@@ -1356,7 +1357,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest[] findByG_S_PrevAndNext(long membershipRequestId,
-		long groupId, int statusId, OrderByComparator orderByComparator)
+		long groupId, int statusId,
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = findByPrimaryKey(membershipRequestId);
 
@@ -1387,7 +1389,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	protected MembershipRequest getByG_S_PrevAndNext(Session session,
 		MembershipRequest membershipRequest, long groupId, int statusId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MembershipRequest> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1650,7 +1652,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public List<MembershipRequest> findByG_U_S(long groupId, long userId,
-		int statusId, int start, int end, OrderByComparator orderByComparator) {
+		int statusId, int start, int end,
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1772,7 +1775,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByG_U_S_First(long groupId, long userId,
-		int statusId, OrderByComparator orderByComparator)
+		int statusId, OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByG_U_S_First(groupId,
 				userId, statusId, orderByComparator);
@@ -1810,7 +1813,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByG_U_S_First(long groupId, long userId,
-		int statusId, OrderByComparator orderByComparator) {
+		int statusId, OrderByComparator<MembershipRequest> orderByComparator) {
 		List<MembershipRequest> list = findByG_U_S(groupId, userId, statusId,
 				0, 1, orderByComparator);
 
@@ -1833,7 +1836,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest findByG_U_S_Last(long groupId, long userId,
-		int statusId, OrderByComparator orderByComparator)
+		int statusId, OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = fetchByG_U_S_Last(groupId,
 				userId, statusId, orderByComparator);
@@ -1871,7 +1874,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByG_U_S_Last(long groupId, long userId,
-		int statusId, OrderByComparator orderByComparator) {
+		int statusId, OrderByComparator<MembershipRequest> orderByComparator) {
 		int count = countByG_U_S(groupId, userId, statusId);
 
 		if (count == 0) {
@@ -1902,7 +1905,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@Override
 	public MembershipRequest[] findByG_U_S_PrevAndNext(
 		long membershipRequestId, long groupId, long userId, int statusId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<MembershipRequest> orderByComparator)
 		throws NoSuchMembershipRequestException {
 		MembershipRequest membershipRequest = findByPrimaryKey(membershipRequestId);
 
@@ -1933,7 +1936,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	protected MembershipRequest getByG_U_S_PrevAndNext(Session session,
 		MembershipRequest membershipRequest, long groupId, long userId,
-		int statusId, OrderByComparator orderByComparator, boolean previous) {
+		int statusId, OrderByComparator<MembershipRequest> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2690,7 +2694,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public List<MembershipRequest> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MembershipRequest> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

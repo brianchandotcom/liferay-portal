@@ -339,7 +339,7 @@ public class AssetVocabularyPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetVocabulary> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetVocabulary", "uuid",
 			true, "vocabularyId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

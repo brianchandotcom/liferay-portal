@@ -79,7 +79,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_PrevAndNext(
 		long discussionId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_C_PrevAndNext(
 		long discussionId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the first message boards discussion in the ordered set where classNameId = &#63;.
@@ -390,7 +390,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the last message boards discussion in the ordered set where classNameId = &#63;.
@@ -414,7 +414,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Returns the message boards discussions before and after the current message boards discussion in the ordered set where classNameId = &#63;.
@@ -439,7 +439,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion[] findByClassNameId_PrevAndNext(
 		long discussionId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
@@ -656,7 +656,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBDiscussion> orderByComparator);
 
 	/**
 	* Removes all the message boards discussions from the database.

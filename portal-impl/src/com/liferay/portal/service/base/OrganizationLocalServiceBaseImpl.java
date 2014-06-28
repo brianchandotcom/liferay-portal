@@ -167,8 +167,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -185,8 +184,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -205,9 +204,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -508,7 +506,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public List<Organization> getGroupOrganizations(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		return groupPersistence.getOrganizations(groupId, start, end,
 			orderByComparator);
 	}
@@ -638,7 +636,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public List<Organization> getUserOrganizations(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		return userPersistence.getOrganizations(userId, start, end,
 			orderByComparator);
 	}

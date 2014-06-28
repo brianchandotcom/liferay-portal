@@ -190,7 +190,7 @@ public class ListTypePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ListType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ListType", "mvccVersion",
 			true, "listTypeId", true, "name", true, "type", true);
 	}

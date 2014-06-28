@@ -262,7 +262,7 @@ public class MembershipRequestPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MembershipRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MembershipRequest",
 			"mvccVersion", true, "membershipRequestId", true, "groupId", true,
 			"companyId", true, "userId", true, "createDate", true, "comments",

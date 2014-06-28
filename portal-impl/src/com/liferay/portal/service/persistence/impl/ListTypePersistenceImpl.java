@@ -148,7 +148,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public List<ListType> findByType(String type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ListType> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -268,7 +268,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType findByType_First(String type,
-		OrderByComparator orderByComparator) throws NoSuchListTypeException {
+		OrderByComparator<ListType> orderByComparator)
+		throws NoSuchListTypeException {
 		ListType listType = fetchByType_First(type, orderByComparator);
 
 		if (listType != null) {
@@ -296,7 +297,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType fetchByType_First(String type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ListType> orderByComparator) {
 		List<ListType> list = findByType(type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -316,7 +317,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType findByType_Last(String type,
-		OrderByComparator orderByComparator) throws NoSuchListTypeException {
+		OrderByComparator<ListType> orderByComparator)
+		throws NoSuchListTypeException {
 		ListType listType = fetchByType_Last(type, orderByComparator);
 
 		if (listType != null) {
@@ -344,7 +346,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType fetchByType_Last(String type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ListType> orderByComparator) {
 		int count = countByType(type);
 
 		if (count == 0) {
@@ -372,7 +374,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType[] findByType_PrevAndNext(int listTypeId, String type,
-		OrderByComparator orderByComparator) throws NoSuchListTypeException {
+		OrderByComparator<ListType> orderByComparator)
+		throws NoSuchListTypeException {
 		ListType listType = findByPrimaryKey(listTypeId);
 
 		Session session = null;
@@ -401,8 +404,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	}
 
 	protected ListType getByType_PrevAndNext(Session session,
-		ListType listType, String type, OrderByComparator orderByComparator,
-		boolean previous) {
+		ListType listType, String type,
+		OrderByComparator<ListType> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1088,7 +1091,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public List<ListType> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ListType> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

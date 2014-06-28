@@ -150,7 +150,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findByPlid(long plid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -256,7 +256,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByPlid_First(long plid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByPlid_First(plid,
 				orderByComparator);
@@ -286,7 +286,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByPlid_First(long plid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByPlid(plid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -306,7 +306,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByPlid_Last(long plid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByPlid_Last(plid,
 				orderByComparator);
@@ -336,7 +336,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByPlid_Last(long plid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByPlid(plid);
 
 		if (count == 0) {
@@ -365,7 +365,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByPlid_PrevAndNext(
 		long portletPreferencesId, long plid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -396,7 +396,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByPlid_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, long plid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -633,7 +634,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findByPortletId(String portletId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -754,7 +756,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByPortletId_First(String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByPortletId_First(portletId,
 				orderByComparator);
@@ -784,7 +786,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByPortletId_First(String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByPortletId(portletId, 0, 1,
 				orderByComparator);
 
@@ -805,7 +807,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByPortletId_Last(String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByPortletId_Last(portletId,
 				orderByComparator);
@@ -835,7 +837,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByPortletId_Last(String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByPortletId(portletId);
 
 		if (count == 0) {
@@ -864,7 +866,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByPortletId_PrevAndNext(
 		long portletPreferencesId, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -895,7 +897,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByPortletId_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, String portletId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1164,7 +1167,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findByO_P(int ownerType, String portletId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1295,7 +1299,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_P_First(int ownerType, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_P_First(ownerType,
 				portletId, orderByComparator);
@@ -1329,7 +1333,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_P_First(int ownerType, String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByO_P(ownerType, portletId, 0, 1,
 				orderByComparator);
 
@@ -1351,7 +1355,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_P_Last(int ownerType, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_P_Last(ownerType,
 				portletId, orderByComparator);
@@ -1385,7 +1389,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_P_Last(int ownerType, String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByO_P(ownerType, portletId);
 
 		if (count == 0) {
@@ -1415,7 +1419,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByO_P_PrevAndNext(
 		long portletPreferencesId, int ownerType, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -1446,7 +1450,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByO_P_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, int ownerType, String portletId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1726,7 +1731,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findByP_P(long plid, String portletId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1857,7 +1863,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByP_P_First(long plid, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByP_P_First(plid,
 				portletId, orderByComparator);
@@ -1891,7 +1897,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByP_P_First(long plid, String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByP_P(plid, portletId, 0, 1,
 				orderByComparator);
 
@@ -1913,7 +1919,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByP_P_Last(long plid, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByP_P_Last(plid,
 				portletId, orderByComparator);
@@ -1947,7 +1953,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByP_P(plid, portletId);
 
 		if (count == 0) {
@@ -1977,7 +1983,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByP_P_PrevAndNext(
 		long portletPreferencesId, long plid, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -2008,7 +2014,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByP_P_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, long plid, String portletId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2300,7 +2307,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
-		long plid, int start, int end, OrderByComparator orderByComparator) {
+		long plid, int start, int end,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2422,7 +2430,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
+		long plid, OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_O_P_First(ownerId,
 				ownerType, plid, orderByComparator);
@@ -2460,7 +2468,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_O_P_First(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator) {
+		long plid, OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
 				0, 1, orderByComparator);
 
@@ -2483,7 +2491,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
+		long plid, OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_O_P_Last(ownerId,
 				ownerType, plid, orderByComparator);
@@ -2521,7 +2529,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_O_P_Last(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator) {
+		long plid, OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByO_O_P(ownerId, ownerType, plid);
 
 		if (count == 0) {
@@ -2552,7 +2560,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByO_O_P_PrevAndNext(
 		long portletPreferencesId, long ownerId, int ownerType, long plid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -2583,7 +2591,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByO_O_P_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator, boolean previous) {
+		long plid, OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2858,7 +2867,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public List<PortletPreferences> findByO_O_PI(long ownerId, int ownerType,
 		String portletId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2995,7 +3004,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_O_PI_First(long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator)
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_O_PI_First(ownerId,
 				ownerType, portletId, orderByComparator);
@@ -3033,7 +3043,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_O_PI_First(long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByO_O_PI(ownerId, ownerType,
 				portletId, 0, 1, orderByComparator);
 
@@ -3056,7 +3067,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_O_PI_Last(long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator)
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_O_PI_Last(ownerId,
 				ownerType, portletId, orderByComparator);
@@ -3094,7 +3106,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_O_PI_Last(long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByO_O_PI(ownerId, ownerType, portletId);
 
 		if (count == 0) {
@@ -3125,7 +3138,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByO_O_PI_PrevAndNext(
 		long portletPreferencesId, long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator)
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -3156,7 +3170,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByO_O_PI_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, long ownerId, int ownerType,
-		String portletId, OrderByComparator orderByComparator, boolean previous) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3460,7 +3476,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
 		String portletId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3597,7 +3613,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_P_P_First(ownerType,
 				plid, portletId, orderByComparator);
@@ -3635,7 +3652,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
 				0, 1, orderByComparator);
 
@@ -3658,7 +3676,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = fetchByO_P_P_Last(ownerType,
 				plid, portletId, orderByComparator);
@@ -3696,7 +3715,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		int count = countByO_P_P(ownerType, plid, portletId);
 
 		if (count == 0) {
@@ -3727,7 +3747,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences[] findByO_P_P_PrevAndNext(
 		long portletPreferencesId, int ownerType, long plid, String portletId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PortletPreferences> orderByComparator)
 		throws NoSuchPortletPreferencesException {
 		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
 
@@ -3758,7 +3778,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	protected PortletPreferences getByO_P_P_PrevAndNext(Session session,
 		PortletPreferences portletPreferences, int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator, boolean previous) {
+		String portletId,
+		OrderByComparator<PortletPreferences> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4996,7 +5018,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public List<PortletPreferences> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PortletPreferences> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

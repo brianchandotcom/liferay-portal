@@ -261,7 +261,7 @@ public class SCFrameworkVersionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SCFrameworkVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCFrameworkVersion",
 			"frameworkVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

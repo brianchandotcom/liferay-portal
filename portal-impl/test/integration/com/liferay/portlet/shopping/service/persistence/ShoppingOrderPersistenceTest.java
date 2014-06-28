@@ -443,7 +443,7 @@ public class ShoppingOrderPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ShoppingOrder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingOrder", "orderId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

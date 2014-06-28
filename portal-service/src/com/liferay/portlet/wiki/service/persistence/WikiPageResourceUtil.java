@@ -88,7 +88,7 @@ public class WikiPageResourceUtil {
 	 */
 	public static List<WikiPageResource> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPageResource> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPageResource> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPageResource findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPageResource fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPageResource findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPageResource fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPageResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator)
 		throws com.liferay.portlet.wiki.NoSuchPageResourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(resourcePrimKey, uuid,
@@ -429,7 +429,7 @@ public class WikiPageResourceUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPageResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPageResource> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

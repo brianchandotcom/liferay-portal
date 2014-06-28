@@ -79,7 +79,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the first shopping cart in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the last shopping cart in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the shopping carts before and after the current shopping cart in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart[] findByGroupId_PrevAndNext(
 		long cartId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -197,7 +197,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the first shopping cart in the ordered set where userId = &#63;.
@@ -209,7 +209,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -221,7 +221,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the last shopping cart in the ordered set where userId = &#63;.
@@ -233,7 +233,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -245,7 +245,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Returns the shopping carts before and after the current shopping cart in the ordered set where userId = &#63;.
@@ -258,7 +258,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCart[] findByUserId_PrevAndNext(
 		long cartId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCartException;
 
 	/**
@@ -424,7 +424,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCart> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCart> orderByComparator);
 
 	/**
 	* Removes all the shopping carts from the database.

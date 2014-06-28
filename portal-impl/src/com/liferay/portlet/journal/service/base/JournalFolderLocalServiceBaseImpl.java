@@ -163,8 +163,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -181,8 +180,8 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -201,9 +200,8 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -542,7 +540,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 */
 	@Override
 	public List<JournalFolder> getDDMStructureJournalFolders(long structureId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<JournalFolder> orderByComparator) {
 		return ddmStructurePersistence.getJournalFolders(structureId, start,
 			end, orderByComparator);
 	}

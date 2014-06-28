@@ -147,7 +147,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public List<TrashVersion> findByEntryId(long entryId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -253,7 +253,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion findByEntryId_First(long entryId,
-		OrderByComparator orderByComparator) throws NoSuchVersionException {
+		OrderByComparator<TrashVersion> orderByComparator)
+		throws NoSuchVersionException {
 		TrashVersion trashVersion = fetchByEntryId_First(entryId,
 				orderByComparator);
 
@@ -282,7 +283,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion fetchByEntryId_First(long entryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		List<TrashVersion> list = findByEntryId(entryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -302,7 +303,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion findByEntryId_Last(long entryId,
-		OrderByComparator orderByComparator) throws NoSuchVersionException {
+		OrderByComparator<TrashVersion> orderByComparator)
+		throws NoSuchVersionException {
 		TrashVersion trashVersion = fetchByEntryId_Last(entryId,
 				orderByComparator);
 
@@ -331,7 +333,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion fetchByEntryId_Last(long entryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		int count = countByEntryId(entryId);
 
 		if (count == 0) {
@@ -359,7 +361,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion[] findByEntryId_PrevAndNext(long versionId,
-		long entryId, OrderByComparator orderByComparator)
+		long entryId, OrderByComparator<TrashVersion> orderByComparator)
 		throws NoSuchVersionException {
 		TrashVersion trashVersion = findByPrimaryKey(versionId);
 
@@ -390,7 +392,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 	protected TrashVersion getByEntryId_PrevAndNext(Session session,
 		TrashVersion trashVersion, long entryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<TrashVersion> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -627,7 +629,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public List<TrashVersion> findByE_C(long entryId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<TrashVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -743,7 +745,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion findByE_C_First(long entryId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchVersionException {
+		OrderByComparator<TrashVersion> orderByComparator)
+		throws NoSuchVersionException {
 		TrashVersion trashVersion = fetchByE_C_First(entryId, classNameId,
 				orderByComparator);
 
@@ -776,7 +779,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion fetchByE_C_First(long entryId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		List<TrashVersion> list = findByE_C(entryId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -798,7 +801,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion findByE_C_Last(long entryId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchVersionException {
+		OrderByComparator<TrashVersion> orderByComparator)
+		throws NoSuchVersionException {
 		TrashVersion trashVersion = fetchByE_C_Last(entryId, classNameId,
 				orderByComparator);
 
@@ -831,7 +835,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion fetchByE_C_Last(long entryId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		int count = countByE_C(entryId, classNameId);
 
 		if (count == 0) {
@@ -860,7 +864,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion[] findByE_C_PrevAndNext(long versionId, long entryId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<TrashVersion> orderByComparator)
 		throws NoSuchVersionException {
 		TrashVersion trashVersion = findByPrimaryKey(versionId);
 
@@ -891,7 +895,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 	protected TrashVersion getByE_C_PrevAndNext(Session session,
 		TrashVersion trashVersion, long entryId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<TrashVersion> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2172,7 +2176,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public List<TrashVersion> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

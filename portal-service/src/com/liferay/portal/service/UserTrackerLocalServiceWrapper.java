@@ -93,8 +93,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userTrackerLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -112,8 +111,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _userTrackerLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -133,11 +131,10 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _userTrackerLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}

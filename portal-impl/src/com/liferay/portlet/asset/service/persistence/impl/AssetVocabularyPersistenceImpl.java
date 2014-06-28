@@ -158,7 +158,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -278,7 +278,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -307,7 +308,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		List<AssetVocabulary> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -327,7 +328,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByUuid_Last(uuid,
 				orderByComparator);
 
@@ -356,7 +358,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,7 +386,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] findByUuid_PrevAndNext(long vocabularyId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
 
@@ -415,7 +417,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary getByUuid_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -943,7 +945,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1073,7 +1075,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1106,7 +1109,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		List<AssetVocabulary> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1128,7 +1131,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1161,7 +1165,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1190,7 +1194,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] findByUuid_C_PrevAndNext(long vocabularyId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
 
@@ -1221,7 +1226,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary getByUuid_C_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1501,7 +1506,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1607,7 +1612,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1636,7 +1642,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		List<AssetVocabulary> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -1657,7 +1663,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -1686,7 +1693,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1714,7 +1721,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] findByGroupId_PrevAndNext(long vocabularyId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
 
@@ -1745,7 +1752,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary getByGroupId_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1893,7 +1900,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1984,7 +1991,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] filterFindByGroupId_PrevAndNext(
-		long vocabularyId, long groupId, OrderByComparator orderByComparator)
+		long vocabularyId, long groupId,
+		OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(vocabularyId, groupId,
@@ -2020,7 +2028,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary filterGetByGroupId_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2203,7 +2211,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> filterFindByGroupId(long[] groupIds,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return findByGroupId(groupIds, start, end, orderByComparator);
 		}
@@ -2340,7 +2348,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByGroupId(long[] groupIds, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -2767,7 +2775,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2873,7 +2881,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2902,7 +2911,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		List<AssetVocabulary> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2923,7 +2932,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2952,7 +2962,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2980,7 +2990,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] findByCompanyId_PrevAndNext(long vocabularyId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
 
@@ -3011,7 +3021,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary getByCompanyId_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3499,7 +3509,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findByG_LikeN(long groupId, String name,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3619,7 +3629,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByG_LikeN_First(long groupId, String name,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByG_LikeN_First(groupId, name,
 				orderByComparator);
 
@@ -3652,7 +3663,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByG_LikeN_First(long groupId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		List<AssetVocabulary> list = findByG_LikeN(groupId, name, 0, 1,
 				orderByComparator);
 
@@ -3674,7 +3685,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary findByG_LikeN_Last(long groupId, String name,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = fetchByG_LikeN_Last(groupId, name,
 				orderByComparator);
 
@@ -3707,7 +3719,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByG_LikeN_Last(long groupId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		int count = countByG_LikeN(groupId, name);
 
 		if (count == 0) {
@@ -3736,7 +3748,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary[] findByG_LikeN_PrevAndNext(long vocabularyId,
-		long groupId, String name, OrderByComparator orderByComparator)
+		long groupId, String name,
+		OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 		AssetVocabulary assetVocabulary = findByPrimaryKey(vocabularyId);
 
@@ -3767,7 +3780,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary getByG_LikeN_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, long groupId, String name,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3936,7 +3949,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> filterFindByG_LikeN(long groupId, String name,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetVocabulary> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_LikeN(groupId, name, start, end, orderByComparator);
 		}
@@ -4047,7 +4060,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, String name,
-		OrderByComparator orderByComparator) throws NoSuchVocabularyException {
+		OrderByComparator<AssetVocabulary> orderByComparator)
+		throws NoSuchVocabularyException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_LikeN_PrevAndNext(vocabularyId, groupId, name,
 				orderByComparator);
@@ -4082,7 +4096,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	protected AssetVocabulary filterGetByG_LikeN_PrevAndNext(Session session,
 		AssetVocabulary assetVocabulary, long groupId, String name,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetVocabulary> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5069,7 +5083,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public List<AssetVocabulary> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

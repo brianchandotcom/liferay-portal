@@ -88,7 +88,7 @@ public class TrashEntryUtil {
 	 */
 	public static List<TrashEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class TrashEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry[] findByGroupId_PrevAndNext(
 		long entryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(entryId, groupId,
@@ -293,7 +293,7 @@ public class TrashEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -323,7 +323,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -338,7 +338,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -353,7 +353,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -369,7 +369,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry[] findByCompanyId_PrevAndNext(
 		long entryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
@@ -441,7 +441,7 @@ public class TrashEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_LtCD(
 		long groupId, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtCD(groupId, createDate, start, end,
 			orderByComparator);
@@ -458,7 +458,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByG_LtCD_First(
 		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_First(groupId, createDate, orderByComparator);
@@ -474,7 +474,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_LtCD_First(
 		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_First(groupId, createDate, orderByComparator);
 	}
@@ -490,7 +490,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByG_LtCD_Last(
 		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_Last(groupId, createDate, orderByComparator);
@@ -506,7 +506,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_LtCD_Last(
 		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_Last(groupId, createDate, orderByComparator);
 	}
@@ -523,7 +523,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry[] findByG_LtCD_PrevAndNext(
 		long entryId, long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_PrevAndNext(entryId, groupId, createDate,
@@ -597,7 +597,7 @@ public class TrashEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -614,7 +614,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
@@ -630,7 +630,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -646,7 +646,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry findByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
@@ -662,7 +662,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -679,7 +679,7 @@ public class TrashEntryUtil {
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry[] findByG_C_PrevAndNext(
 		long entryId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(entryId, groupId, classNameId,
@@ -886,7 +886,7 @@ public class TrashEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

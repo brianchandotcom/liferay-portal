@@ -79,7 +79,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the first shopping order in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the last shopping order in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder[] findByGroupId_PrevAndNext(
 		long orderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -182,7 +182,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the shopping orders before and after the current shopping order in the ordered set of shopping orders that the user has permission to view where groupId = &#63;.
@@ -195,7 +195,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder[] filterFindByGroupId_PrevAndNext(
 		long orderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -364,7 +364,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findByG_U_PPPS(
 		long groupId, long userId, java.lang.String ppPaymentStatus, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the first shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -378,7 +378,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder findByG_U_PPPS_First(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -392,7 +392,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_First(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the last shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -406,7 +406,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder findByG_U_PPPS_Last(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -420,7 +420,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_Last(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the shopping orders before and after the current shopping order in the ordered set where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -436,7 +436,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	public com.liferay.portlet.shopping.model.ShoppingOrder[] findByG_U_PPPS_PrevAndNext(
 		long orderId, long groupId, long userId,
 		java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -486,7 +486,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> filterFindByG_U_PPPS(
 		long groupId, long userId, java.lang.String ppPaymentStatus, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Returns the shopping orders before and after the current shopping order in the ordered set of shopping orders that the user has permission to view where groupId = &#63; and userId = &#63; and ppPaymentStatus = &#63;.
@@ -502,7 +502,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	public com.liferay.portlet.shopping.model.ShoppingOrder[] filterFindByG_U_PPPS_PrevAndNext(
 		long orderId, long groupId, long userId,
 		java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException;
 
 	/**
@@ -632,7 +632,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator);
 
 	/**
 	* Removes all the shopping orders from the database.

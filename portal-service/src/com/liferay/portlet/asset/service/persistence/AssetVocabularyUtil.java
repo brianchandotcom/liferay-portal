@@ -88,7 +88,7 @@ public class AssetVocabularyUtil {
 	 */
 	public static List<AssetVocabulary> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_PrevAndNext(
 		long vocabularyId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(vocabularyId, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_C_PrevAndNext(
 		long vocabularyId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(vocabularyId, uuid, companyId,
@@ -509,7 +509,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -538,7 +538,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -552,7 +552,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -566,7 +566,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -581,7 +581,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] findByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(vocabularyId, groupId,
@@ -631,7 +631,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -647,7 +647,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(vocabularyId, groupId,
@@ -697,7 +697,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupIds, start, end, orderByComparator);
 	}
@@ -749,7 +749,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupIds, start, end, orderByComparator);
 	}
@@ -846,7 +846,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -861,7 +861,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -876,7 +876,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -891,7 +891,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -906,7 +906,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -922,7 +922,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] findByCompanyId_PrevAndNext(
 		long vocabularyId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(vocabularyId, companyId,
@@ -1057,7 +1057,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_LikeN(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN(groupId, name, start, end, orderByComparator);
 	}
@@ -1073,7 +1073,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_First(groupId, name, orderByComparator);
@@ -1089,7 +1089,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_First(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_First(groupId, name, orderByComparator);
 	}
@@ -1105,7 +1105,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_Last(groupId, name, orderByComparator);
@@ -1121,7 +1121,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_Last(
 		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_Last(groupId, name, orderByComparator);
 	}
@@ -1138,7 +1138,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] findByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_PrevAndNext(vocabularyId, groupId, name,
@@ -1191,7 +1191,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_LikeN(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN(groupId, name, start, end,
 			orderByComparator);
@@ -1209,7 +1209,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException {
 		return getPersistence()
 				   .filterFindByG_LikeN_PrevAndNext(vocabularyId, groupId,
@@ -1365,7 +1365,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

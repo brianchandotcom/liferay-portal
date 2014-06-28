@@ -154,7 +154,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public List<AnnouncementsDelivery> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchDeliveryException {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator)
+		throws NoSuchDeliveryException {
 		AnnouncementsDelivery announcementsDelivery = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		List<AnnouncementsDelivery> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchDeliveryException {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator)
+		throws NoSuchDeliveryException {
 		AnnouncementsDelivery announcementsDelivery = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery[] findByUserId_PrevAndNext(long deliveryId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
 		AnnouncementsDelivery announcementsDelivery = findByPrimaryKey(deliveryId);
 
@@ -398,7 +400,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 	protected AnnouncementsDelivery getByUserId_PrevAndNext(Session session,
 		AnnouncementsDelivery announcementsDelivery, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1397,7 +1400,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public List<AnnouncementsDelivery> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

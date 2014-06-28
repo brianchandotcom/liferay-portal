@@ -382,7 +382,7 @@ public class SocialRequestPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialRequest", "uuid",
 			true, "requestId", true, "groupId", true, "companyId", true,
 			"userId", true, "createDate", true, "modifiedDate", true,

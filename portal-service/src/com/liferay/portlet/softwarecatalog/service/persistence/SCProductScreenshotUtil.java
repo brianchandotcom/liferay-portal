@@ -88,7 +88,7 @@ public class SCProductScreenshotUtil {
 	 */
 	public static List<SCProductScreenshot> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -153,7 +153,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .findByProductEntryId(productEntryId, start, end,
 			orderByComparator);
@@ -169,7 +169,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_First(productEntryId, orderByComparator);
@@ -184,7 +184,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_First(productEntryId,
 			orderByComparator);
@@ -200,7 +200,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_Last(productEntryId, orderByComparator);
@@ -215,7 +215,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_Last(productEntryId, orderByComparator);
 	}
@@ -231,7 +231,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot[] findByProductEntryId_PrevAndNext(
 		long productScreenshotId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_PrevAndNext(productScreenshotId,
@@ -556,7 +556,7 @@ public class SCProductScreenshotUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

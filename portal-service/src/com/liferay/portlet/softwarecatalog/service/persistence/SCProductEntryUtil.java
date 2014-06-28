@@ -88,7 +88,7 @@ public class SCProductEntryUtil {
 	 */
 	public static List<SCProductEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(productEntryId, groupId,
@@ -274,7 +274,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -290,7 +290,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(productEntryId, groupId,
@@ -369,7 +369,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -384,7 +384,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -399,7 +399,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -414,7 +414,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -429,7 +429,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -445,7 +445,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByCompanyId_PrevAndNext(
 		long productEntryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(productEntryId, companyId,
@@ -517,7 +517,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U(groupId, userId, start, end, orderByComparator);
 	}
@@ -533,7 +533,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
@@ -549,7 +549,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -565,7 +565,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
@@ -581,7 +581,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -598,7 +598,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByG_U_PrevAndNext(
 		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(productEntryId, groupId, userId,
@@ -651,7 +651,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U(groupId, userId, start, end,
 			orderByComparator);
@@ -669,7 +669,7 @@ public class SCProductEntryUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByG_U_PrevAndNext(
 		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(productEntryId, groupId,
@@ -891,7 +891,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -964,7 +964,7 @@ public class SCProductEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence().getSCLicenses(pk, start, end, orderByComparator);
 	}
 

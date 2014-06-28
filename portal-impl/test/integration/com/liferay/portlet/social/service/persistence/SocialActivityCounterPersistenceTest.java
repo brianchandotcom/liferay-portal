@@ -296,7 +296,7 @@ public class SocialActivityCounterPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialActivityCounter> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityCounter",
 			"activityCounterId", true, "groupId", true, "companyId", true,
 			"classNameId", true, "classPK", true, "name", true, "ownerType",

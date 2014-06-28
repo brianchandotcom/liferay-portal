@@ -176,7 +176,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*/
 	public java.util.List<com.liferay.portal.model.Ticket> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Ticket> orderByComparator);
 
 	/**
 	* Removes all the tickets from the database.

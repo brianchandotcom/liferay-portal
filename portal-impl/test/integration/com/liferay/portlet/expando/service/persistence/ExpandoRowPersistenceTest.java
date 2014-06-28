@@ -226,7 +226,7 @@ public class ExpandoRowPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ExpandoRow> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoRow", "rowId", true,
 			"companyId", true, "modifiedDate", true, "tableId", true,
 			"classPK", true);

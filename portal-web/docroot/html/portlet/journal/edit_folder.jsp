@@ -75,12 +75,10 @@ if (workflowEnabled) {
 				<%
 				String parentFolderName = LanguageUtil.get(request, "home");
 
-				try {
-					JournalFolder parentFolder = JournalFolderServiceUtil.getFolder(parentFolderId);
+				JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(parentFolderId);
 
+				if (parentFolder != null) {
 					parentFolderName = parentFolder.getName();
-				}
-				catch (NoSuchFolderException nsfe) {
 				}
 				%>
 

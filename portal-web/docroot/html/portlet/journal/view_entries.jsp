@@ -19,22 +19,7 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.JOURNAL, "display-style", PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
-}
-else {
-	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
-
-	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
-		portalPreferences.setValue(PortletKeys.JOURNAL, "display-style", displayStyle);
-	}
-}
-
-if (!ArrayUtil.contains(displayViews, displayStyle)) {
-	displayStyle = displayViews[0];
-}
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
 
 long ddmStructureId = 0;
 
@@ -43,11 +28,10 @@ String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
+portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("displayStyle", displayStyle);
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
-
-ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, entryEnd / (entryEnd - entryStart), entryEnd - entryStart, portletURL);
+ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -69,7 +53,6 @@ OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(or
 
 articleSearchContainer.setOrderByCol(orderByCol);
 articleSearchContainer.setOrderByComparator(orderByComparator);
-articleSearchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
 articleSearchContainer.setOrderByType(orderByType);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
@@ -85,14 +68,12 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.
 	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
 
 	<%
-	try {
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
+	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
 
+	if (ddmStructure != null) {
 		ddmStructureId = ddmStructure.getStructureId();
 
 		ddmStructureName = ddmStructure.getName(locale);
-	}
-	catch (NoSuchStructureException nsse) {
 	}
 	%>
 
@@ -358,6 +339,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 					tempRowURL.setParameter("redirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+					tempRowURL.setParameter("displayStyle", displayStyle);
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 
@@ -459,22 +441,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	Liferay.fire(
-		'<portlet:namespace />pageLoaded',
-		{
-			pagination: {
-				name: 'entryPagination',
-				state: {
-					page: <%= (totalVar == 0) ? 0 : articleSearchContainer.getCur() %>,
-					rowsPerPage: <%= articleSearchContainer.getDelta() %>,
-					total: <%= totalVar %>
-				}
-			}
-		}
-	);
-</aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal.view_entries_jsp");
-%>
+<div class="article-entries-pagination">
+	<liferay-ui:search-paginator searchContainer="<%= articleSearchContainer %>" />
+</div>

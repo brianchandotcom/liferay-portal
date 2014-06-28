@@ -68,12 +68,10 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 		classPK = article.getResourcePrimKey();
 
 		if (!article.isApproved() && (article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
-			try {
-				AssetEntryLocalServiceUtil.getEntry(JournalArticle.class.getName(), article.getPrimaryKey());
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getPrimaryKey());
 
+			if (assetEntry != null) {
 				classPK = article.getPrimaryKey();
-			}
-			catch (NoSuchEntryException nsee) {
 			}
 		}
 	}

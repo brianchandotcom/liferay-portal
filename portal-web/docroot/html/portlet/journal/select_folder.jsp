@@ -100,19 +100,14 @@ if (folder != null) {
 			int foldersCount = 0;
 			int articlesCount = 0;
 
-			try {
-				List<Long> subfolderIds = JournalFolderServiceUtil.getSubfolderIds(scopeGroupId, curFolder.getFolderId(), false);
+			List<Long> subfolderIds = JournalFolderServiceUtil.getSubfolderIds(scopeGroupId, curFolder.getFolderId(), false);
 
-				foldersCount = subfolderIds.size();
+			foldersCount = subfolderIds.size();
 
-				subfolderIds.clear();
-				subfolderIds.add(curFolder.getFolderId());
+			subfolderIds.clear();
+			subfolderIds.add(curFolder.getFolderId());
 
-				articlesCount = JournalArticleServiceUtil.getFoldersAndArticlesCount(scopeGroupId, subfolderIds);
-			}
-			catch (com.liferay.portal.kernel.repository.RepositoryException re) {
-				rowURL = null;
-			}
+			articlesCount = JournalArticleServiceUtil.getFoldersAndArticlesCount(scopeGroupId, subfolderIds);
 			%>
 
 			<liferay-ui:search-container-column-text

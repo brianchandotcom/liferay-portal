@@ -79,6 +79,12 @@ public class JournalFolderServiceUtil {
 		getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchFolder(folderId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

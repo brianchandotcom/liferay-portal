@@ -75,6 +75,11 @@ public interface JournalFolderService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException;

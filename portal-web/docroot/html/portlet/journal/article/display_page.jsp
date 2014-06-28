@@ -43,21 +43,16 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		String layoutBreadcrumb = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutUuid)) {
-			try {
-				selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
+			selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
 
+			if (selLayout != null) {
 				layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 			}
-			catch (NoSuchLayoutException nsle) {
-			}
+			else {
+				selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
 
-			if (selLayout == null) {
-				try {
-					selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
-
+				if (selLayout != null) {
 					layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
-				}
-				catch (NoSuchLayoutException nsle) {
 				}
 			}
 		}
@@ -195,18 +190,18 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 											footer: [
 												{
 													disabled: true,
+													label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 													on: {
 														click: setDisplayPage
-													},
-													label: '<%= UnicodeLanguageUtil.get(request, "ok") %>'
+													}
 												},
 												{
+													label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
 													on: {
 														click: function() {
 															dialog.hide();
 														}
-													},
-													label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>'
+													}
 												}
 											]
 										}
@@ -226,14 +221,14 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(request, "public-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
 												tabContentId: publicPagesTabContentId,
 												tabId: publicPagesTabId
 											}
-										)
+										),
+										label: '<%= UnicodeLanguageUtil.get(request, "public-pages") %>'
 									}
 								);
 							</c:if>
@@ -241,14 +236,14 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 								tabs.push(
 									{
-										label: '<%= UnicodeLanguageUtil.get(request, "private-pages") %>',
 										content: Lang.sub(
 											TPL_TAB_CONTENT,
 											{
 												tabContentId: privatePagesTabContentId,
 												tabId: privatePagesTabId
 											}
-										)
+										),
+										label: '<%= UnicodeLanguageUtil.get(request, "private-pages") %>'
 									}
 								);
 							</c:if>
@@ -575,13 +570,10 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		<c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
 
 			<%
-			Layout defaultDisplayLayout = null;
+			Layout defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, false);
 
-			try {
-				defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, false);
-			}
-			catch (NoSuchLayoutException nsle) {
-				defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
+			if (defaultDisplayLayout == null) {
+				defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
 			}
 
 			defaultDisplayLayout = defaultDisplayLayout.toEscapedModel();

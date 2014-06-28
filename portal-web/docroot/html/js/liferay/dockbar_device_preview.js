@@ -428,7 +428,8 @@ AUI.add(
 												'resize:start': A.bind('_onResizeStart', instance),
 												'visibleChange': A.bind('_onDialogVisibleChange', instance)
 											}
-										)
+										),
+										instance.on('destroy', A.bind('destroy', dialogWindow))
 									);
 								}
 							);

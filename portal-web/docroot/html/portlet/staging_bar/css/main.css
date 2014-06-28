@@ -28,7 +28,7 @@
 	.row .layout-revision-info {
 		float: right;
 		line-height: 16px;
-		padding-left: 5px;
+		margin: 5px 0;
 
 		&.incomplete {
 			float: none;
@@ -88,12 +88,7 @@
 		}
 
 		@include respond-to(phone, tablet) {
-			a.taglib-icon {
-				&, &:active, &:focus, &:hover {
-					padding-left: 5px;
-					padding-right: 5px;
-				}
-			}
+			padding-left: 20px;
 		}
 	}
 
@@ -107,16 +102,21 @@
 		font-weight: 300;
 	}
 
-	.page-variations-options, .site-pages-variation-options, .staging-details {
-		padding: 0 5px;
-	}
-
 	.staging-details {
 		line-height: 20px;
+		padding: 0 20px;
 	}
 
 	.staging-toggle .variations-options {
 		position: relative;
+
+		@include respond-to (tablet) {
+			padding: 0;
+		}
+
+		@include respond-to(phone) {
+			padding: 0 10px;
+		}
 
 		.staging-variation-selector {
 			display: block;
@@ -156,9 +156,11 @@
 			bottom: 5px;
 			position: absolute;
 
-			@include respond-to(phone, tablet) {
-				bottom: inherit;
-				display: inline-block;
+			@include respond-to(tablet) {
+				bottom: 10px;
+			}
+
+			@include respond-to(phone) {
 				position: static;
 			}
 		}

@@ -399,12 +399,22 @@ $editLayoutPanelWidth: 460px;
 			}
 
 			> li.staging-toggle {
+				@include respond-to(phone, tablet) {
+					padding: 10px;
+				}
+
 				&.active a, > a {
 					color: #555;
 				}
 
 				> a {
+					line-height: 27px;
+					margin: 0 5px 0 0;
 					padding: 4px 10px;
+
+					&:focus, &:hover {
+						background-color: #2FA4F5;
+					}
 				}
 			}
 
@@ -1353,7 +1363,7 @@ $editLayoutPanelWidth: 460px;
 
 		.portlet-staging-bar .layout-revision-actions {
 			a.taglib-icon {
-				padding: 9px 15px;
+				padding: 9px 10px;
 			}
 
 			[class^="icon-"] {
@@ -1369,12 +1379,6 @@ $editLayoutPanelWidth: 460px;
 				margin: 0;
 				padding: 10px;
 			}
-		}
-	}
-
-	@include respond-to(phone) {
-		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
-			margin-left: -5px;
 		}
 	}
 }

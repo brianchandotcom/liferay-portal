@@ -254,9 +254,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 
 	private static final String _INSTANCE_ID = "_INSTANCE_LhZwzy867qfr";
 
-	private static final String[] _PORTLET_IDS = {
-		"20", "47", "71"
-	};
+	private static final String[] _PORTLET_IDS = {"20", "47", "71"};
 
 	private boolean _testInstanceable = true;
 

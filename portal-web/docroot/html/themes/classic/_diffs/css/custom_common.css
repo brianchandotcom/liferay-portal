@@ -562,18 +562,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 				vertical-align: text-bottom;
 			}
 
-			span.divider {
-				color: #999;
-				font-weight: bold;
-			}
-
 			&.last {
 				a {
 					color: #676767;
-				}
-
-				span.divider {
-					display: none;
 				}
 			}
 		}

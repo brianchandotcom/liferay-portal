@@ -42,7 +42,6 @@ import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -108,8 +107,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_users[i] = user;
 		}
-
-		LockLocalServiceUtil.unlock("className", "key");
 
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			JDBCExceptionReporter.class.getName(), Level.ERROR);

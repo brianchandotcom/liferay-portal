@@ -55,8 +55,6 @@ public class OrganizationLocalServiceTest {
 
 	@Before
 	public void setUp() {
-		LockLocalServiceUtil.unlock("className", "key");
-
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}

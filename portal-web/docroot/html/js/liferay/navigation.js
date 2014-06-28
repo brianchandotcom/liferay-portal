@@ -815,7 +815,7 @@ AUI.add(
 
 								var newTitle = oldTitle.replace(regex, pageTitle);
 
-								doc.set('title', newTitle);
+								doc.attr('title', newTitle);
 							};
 						}
 						else {

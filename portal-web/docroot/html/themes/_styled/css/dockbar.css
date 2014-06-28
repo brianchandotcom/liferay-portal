@@ -14,7 +14,7 @@ $editLayoutPanelWidth: 460px;
 			left: 0;
 			position: absolute;
 			right: 0;
-			top: -5px;
+			top: 0;
 			z-index: 301;
 
 			&.open {

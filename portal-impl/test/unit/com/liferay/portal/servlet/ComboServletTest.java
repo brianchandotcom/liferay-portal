@@ -100,11 +100,11 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if ("75".equals(args[0])) {
-						return _75Portlet;
+					if (PortletKeys.ACTIVITIES.equals(args[0])) {
+						return _activitiesPortlet;
 					}
 					else if (PortletKeys.PORTAL.equals(args[0])) {
-						return _portletPortal;
+						return _portalPortlet;
 					}
 
 					return _portletUndeployed;
@@ -141,19 +141,19 @@ public class ComboServletTest extends PowerMockito {
 		);
 
 		when(
-			_portletAppPortal.getServletContext()
+			_portalPortletApp.getServletContext()
 		).thenReturn(
 			_portalServletContext
 		);
 
 		when(
-			_portletPortal.getPortletApp()
+			_portalPortlet.getPortletApp()
 		).thenReturn(
-			_portletAppPortal
+			_portalPortletApp
 		);
 
 		when(
-			_portletPortal.getRootPortletId()
+			_portalPortlet.getRootPortletId()
 		).thenReturn(
 			PortletKeys.PORTAL
 		);
@@ -169,19 +169,19 @@ public class ComboServletTest extends PowerMockito {
 		);
 
 		when(
-			_75PortletApp.getServletContext()
+			_activitiesPortletApp.getServletContext()
 		).thenReturn(
 			_pluginServletContext
 		);
 
 		when(
-			_75Portlet.getPortletApp()
+			_activitiesPortlet.getPortletApp()
 		).thenReturn(
-			_75PortletApp
+			_activitiesPortletApp
 		);
 
 		when(
-			_75Portlet.getRootPortletId()
+			_activitiesPortlet.getRootPortletId()
 		).thenReturn(
 			"75"
 		);
@@ -221,23 +221,23 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Mock
-	private Portlet _75Portlet;
+	private Portlet _activitiesPortlet;
 
 	@Mock
-	private PortletApp _75PortletApp;
+	private PortletApp _activitiesPortletApp;
 
 	private ComboServlet _comboServlet;
 	private MockServletContext _pluginServletContext;
 	private MockServletContext _portalServletContext;
 
 	@Mock
-	private PortletApp _portletAppPortal;
+	private PortletApp _portalPortletApp;
 
 	@Mock
 	private PortletLocalService _portletLocalService;
 
 	@Mock
-	private Portlet _portletPortal;
+	private Portlet _portalPortlet;
 
 	@Mock
 	private Portlet _portletUndeployed;

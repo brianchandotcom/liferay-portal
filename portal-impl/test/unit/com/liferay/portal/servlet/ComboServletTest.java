@@ -201,15 +201,6 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetResourceWithPortletId() throws Exception {
-		_comboServlet.getResourceURL("75:/js/javascript.js");
-
-		verify(_pluginServletContext);
-
-		_pluginServletContext.getResource("/js/javascript.js");
-	}
-
-	@Test
 	public void testGetResourceWithoutPortletId() throws Exception {
 		String path = "/js/javascript.js";
 
@@ -220,27 +211,36 @@ public class ComboServletTest extends PowerMockito {
 		_portalServletContext.getResource(path);
 	}
 
-	private ComboServlet _comboServlet;
-	private MockServletContext _pluginServletContext;
-	private MockServletContext _portalServletContext;
+	@Test
+	public void testGetResourceWithPortletId() throws Exception {
+		_comboServlet.getResourceURL("75:/js/javascript.js");
 
-	@Mock
-	private Portlet _portletPortal;
+		verify(_pluginServletContext);
+
+		_pluginServletContext.getResource("/js/javascript.js");
+	}
 
 	@Mock
 	private Portlet _75Portlet;
 
 	@Mock
-	private Portlet _portletUndeployed;
+	private PortletApp _75PortletApp;
+
+	private ComboServlet _comboServlet;
+	private MockServletContext _pluginServletContext;
+	private MockServletContext _portalServletContext;
 
 	@Mock
 	private PortletApp _portletAppPortal;
 
 	@Mock
-	private PortletApp _75PortletApp;
+	private PortletLocalService _portletLocalService;
 
 	@Mock
-	private PortletLocalService _portletLocalService;
+	private Portlet _portletPortal;
+
+	@Mock
+	private Portlet _portletUndeployed;
 
 	@Rule
 	private TemporaryFolder _temporaryFolder = new TemporaryFolder();

@@ -431,7 +431,7 @@ public class ComboServlet extends HttpServlet {
 
 		return validModuleExtension;
 	}
-	
+
 	private static final String _CSS_EXTENSION = "css";
 
 	private static final String _CSS_MINIFIED_SUFFIX = "-min.css";
@@ -441,13 +441,13 @@ public class ComboServlet extends HttpServlet {
 
 	private static final String _JAVASCRIPT_MINIFIED_SUFFIX = "-min.js";
 
+	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
+
 	private static PortalCache<String, byte[][]> _bytesArrayPortalCache =
 		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
 	private static PortalCache<String, FileContentBag>
-		_fileContentBagPortalCache =
-			SingleVMPoolUtil.getCache(FileContentBag.class.getName());
-
-	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
+		_fileContentBagPortalCache = SingleVMPoolUtil.getCache(
+			FileContentBag.class.getName());
 
 	private Set<String> _protectedParameters = SetUtil.fromArray(
 		new String[] {

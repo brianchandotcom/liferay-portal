@@ -27,7 +27,7 @@ import org.junit.Test;
 public class ModulePathContainerTest {
 
 	@Test
-	public void testModulePathWithNoContext() {
+	public void testModulePathWithNoContextPath() {
 		String modulePath = "/js/javascript.js";
 
 		Assert.assertEquals(
@@ -48,7 +48,7 @@ public class ModulePathContainerTest {
 	}
 
 	@Test
-	public void testModulePathWithPortletIdAndNoResource() {
+	public void testModulePathWithPortletIdAndNoResourcePath() {
 		String modulePath = PortletKeys.ACTIVITIES + ":";
 
 		Assert.assertEquals(

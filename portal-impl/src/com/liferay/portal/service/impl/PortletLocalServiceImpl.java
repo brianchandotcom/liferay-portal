@@ -15,8 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.PortletIdException;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -197,10 +195,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Skip
 	public void clearCache() {
 
-		// Clear the ComboServlet cache
+		// Refresh the combo servlet cache
 
-		_comboServletBytesCache.removeAll();
-		_comboServletFilesCache.removeAll();
+		ComboServlet.clearCache();
 
 		// Refresh security path to portlet id mapping for all portlets
 
@@ -2408,10 +2405,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);
 
-	private static PortalCache<String, ?> _comboServletBytesCache =
-		SingleVMPoolUtil.getCache(ComboServlet.COMBO_SERVLET_BYTES_CACHE_KEY);
-	private static PortalCache<String, ?> _comboServletFilesCache =
-		SingleVMPoolUtil.getCache(ComboServlet.COMBO_SERVLET_FILES_CACHE_KEY);
 	private static Map<Long, Map<String, Portlet>> _companyPortletsPool =
 		new ConcurrentHashMap<Long, Map<String, Portlet>>();
 	private static Map<String, PortletApp> _portletAppsPool =

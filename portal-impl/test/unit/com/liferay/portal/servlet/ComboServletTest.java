@@ -101,7 +101,7 @@ public class ComboServletTest extends PowerMockito {
 					Object[] args = invocation.getArguments();
 
 					if ("75".equals(args[0])) {
-						return _portlet75;
+						return _75Portlet;
 					}
 					else if (PortletKeys.PORTAL.equals(args[0])) {
 						return _portletPortal;
@@ -169,19 +169,19 @@ public class ComboServletTest extends PowerMockito {
 		);
 
 		when(
-			_portletApp75.getServletContext()
+			_75PortletApp.getServletContext()
 		).thenReturn(
 			_pluginServletContext
 		);
 
 		when(
-			_portlet75.getPortletApp()
+			_75Portlet.getPortletApp()
 		).thenReturn(
-			_portletApp75
+			_75PortletApp
 		);
 
 		when(
-			_portlet75.getRootPortletId()
+			_75Portlet.getRootPortletId()
 		).thenReturn(
 			"75"
 		);
@@ -228,7 +228,7 @@ public class ComboServletTest extends PowerMockito {
 	private Portlet _portletPortal;
 
 	@Mock
-	private Portlet _portlet75;
+	private Portlet _75Portlet;
 
 	@Mock
 	private Portlet _portletUndeployed;
@@ -237,7 +237,7 @@ public class ComboServletTest extends PowerMockito {
 	private PortletApp _portletAppPortal;
 
 	@Mock
-	private PortletApp _portletApp75;
+	private PortletApp _75PortletApp;
 
 	@Mock
 	private PortletLocalService _portletLocalService;

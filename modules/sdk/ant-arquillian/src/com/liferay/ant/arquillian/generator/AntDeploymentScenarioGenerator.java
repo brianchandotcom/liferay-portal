@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.ant.arquilian.generator;
+package com.liferay.ant.arquillian.generator;
 
-import com.liferay.ant.arquilian.WebArchiveBuilder;
+import com.liferay.ant.arquillian.WebArchiveBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

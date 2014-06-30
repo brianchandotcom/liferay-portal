@@ -1,1 +1,1 @@
-com.liferay.ant.arquilian.extension.AntDeploymentScenarioExtension
+com.liferay.ant.arquillian.extension.AntDeploymentScenarioExtension

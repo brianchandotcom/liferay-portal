@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.ant.arquilian.extension;
+package com.liferay.ant.arquillian.extension;
 
-import com.liferay.ant.arquilian.generator.AntDeploymentScenarioGenerator;
+import com.liferay.ant.arquillian.generator.AntDeploymentScenarioGenerator;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.spi.LoadableExtension;

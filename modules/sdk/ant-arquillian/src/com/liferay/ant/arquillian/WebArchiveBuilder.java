@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.arquilian;
+package com.liferay.ant.arquillian;
 
 import java.io.File;
 

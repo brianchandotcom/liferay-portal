@@ -79,10 +79,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			if (e instanceof InvocationTargetException) {
 				Throwable throwable = e.getCause();
 
-				if (throwable instanceof SecurityException) {
-					status = HttpServletResponse.SC_FORBIDDEN;
-				}
-				else if (throwable instanceof PrincipalException) {
+				if (throwable instanceof PrincipalException ||
+					throwable instanceof SecurityException) {
+
 					status = HttpServletResponse.SC_FORBIDDEN;
 				}
 				else {
@@ -99,10 +98,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			if (e instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
-			else if (e instanceof SecurityException) {
-				status = HttpServletResponse.SC_FORBIDDEN;
-			}
-			else if (e instanceof PrincipalException) {
+			else if (e instanceof PrincipalException ||
+					 e instanceof SecurityException) {
+
 				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {

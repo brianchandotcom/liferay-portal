@@ -115,8 +115,6 @@ import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicy;
-import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl;
-import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil;
@@ -536,15 +534,6 @@ public class HookHotDeployListener
 
 			organizationMembershipPolicyFactoryImpl.
 				setOrganizationMembershipPolicy(null);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {
-			RoleMembershipPolicyFactoryImpl roleMembershipPolicyFactoryImpl =
-				(RoleMembershipPolicyFactoryImpl)
-					RoleMembershipPolicyFactoryUtil.
-						getRoleMembershipPolicyFactory();
-
-			roleMembershipPolicyFactoryImpl.setRoleMembershipPolicy(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_SITES)) {
@@ -1802,18 +1791,14 @@ public class HookHotDeployListener
 			String roleMembershipPolicyClassName = portalProperties.getProperty(
 				PropsKeys.MEMBERSHIP_POLICY_ROLES);
 
-			RoleMembershipPolicyFactoryImpl roleMembershipPolicyFactoryImpl =
-				(RoleMembershipPolicyFactoryImpl)
-					RoleMembershipPolicyFactoryUtil.
-						getRoleMembershipPolicyFactory();
-
 			RoleMembershipPolicy roleMembershipPolicy =
 				(RoleMembershipPolicy)newInstance(
 					portletClassLoader, RoleMembershipPolicy.class,
 					roleMembershipPolicyClassName);
 
-			roleMembershipPolicyFactoryImpl.setRoleMembershipPolicy(
-				roleMembershipPolicy);
+			registerService(
+					servletContextName, roleMembershipPolicyClassName,
+					RoleMembershipPolicy.class, roleMembershipPolicy);
 
 			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				roleMembershipPolicy.verifyPolicy();

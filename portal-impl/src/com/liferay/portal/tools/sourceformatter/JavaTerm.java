@@ -14,20 +14,23 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
 public class JavaTerm {
 
-	public JavaTerm(
-		String name, int type, List<String> parameterTypes, String content,
-		int lineCount) {
-
+	public JavaTerm(String name, int type, String content, int lineCount) {
 		_name = name;
 		_type = type;
-		_parameterTypes = parameterTypes;
 		_content = content;
 		_lineCount = lineCount;
 	}
@@ -45,7 +48,57 @@ public class JavaTerm {
 	}
 
 	public List<String> getParameterTypes() {
-		return _parameterTypes;
+		if (_parameterTypes != null) {
+			return _parameterTypes;
+		}
+
+		_parameterTypes = new ArrayList<String>();
+
+		if (!JavaSourceProcessor.isInJavaTermTypeGroup(
+				_type, JavaSourceProcessor.TYPE_CONSTRUCTOR) &&
+			!JavaSourceProcessor.isInJavaTermTypeGroup(
+				_type, JavaSourceProcessor.TYPE_METHOD)) {
+
+			return _parameterTypes;
+		}
+
+		Matcher matcher = _parameterTypesPattern.matcher(_content);
+
+		if (!matcher.find()) {
+			return _parameterTypes;
+		}
+
+		String parameters = matcher.group(3);
+
+		if (Validator.isNull(parameters)) {
+			return _parameterTypes;
+		}
+
+		parameters = StringUtil.replace(
+			parameters, new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		for (int x = 0;;) {
+			parameters = StringUtil.trim(parameters);
+
+			x = parameters.indexOf(StringPool.SPACE);
+
+			if (x == -1) {
+				return _parameterTypes;
+			}
+
+			String parameterType = parameters.substring(0, x);
+
+			_parameterTypes.add(parameterType);
+
+			int y = parameters.indexOf(StringPool.COMMA);
+
+			if (y == -1) {
+				return _parameterTypes;
+			}
+
+			parameters = parameters.substring(y + 1);
+		}
 	}
 
 	public int getType() {
@@ -76,6 +129,8 @@ public class JavaTerm {
 	private int _lineCount;
 	private String _name;
 	private List<String> _parameterTypes;
+	private Pattern _parameterTypesPattern = Pattern.compile(
+		"\t(private |protected |public )([\\s\\S]*?)\\(([\\s\\S]*?)\\)");
 	private int _type;
 
 }

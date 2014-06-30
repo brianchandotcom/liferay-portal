@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="polls-api" />
+	<property name="plugin.name" value="com.liferay.portlet.polls.service" />
+
+	<property name="service.input.file" value="service.xml" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/apps" />
+
+	<target name="build-service">
+		<build-service
+			service.api.dir="../polls-api/src"
+			service.auto.namespace.tables="false"
+			service.hbm.file.name="module-hbm.xml"
+			service.spring.file.name="spring/liferay-services.xml"
+			service.sql.dir="src/META-INF/sql"
+			service.test.dir="../polls-test/test/integration"
+		/>
+	</target>
+</project>

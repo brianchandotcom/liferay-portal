@@ -390,15 +390,15 @@ public class PollsChoicePersistenceTest {
 		ActionableDynamicQuery actionableDynamicQuery = PollsChoiceLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
-				@Override
-				public void performAction(Object object) {
-					PollsChoice pollsChoice = (PollsChoice)object;
+			@Override
+			public void performAction(Object object) {
+				PollsChoice pollsChoice = (PollsChoice)object;
 
-					Assert.assertNotNull(pollsChoice);
+				Assert.assertNotNull(pollsChoice);
 
-					count.increment();
-				}
-			});
+				count.increment();
+			}
+		});
 
 		actionableDynamicQuery.performActions();
 
@@ -411,10 +411,10 @@ public class PollsChoicePersistenceTest {
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
-				PollsChoice.class.getClassLoader());
+			PollsChoice.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId",
-				newPollsChoice.getChoiceId()));
+			newPollsChoice.getChoiceId()));
 
 		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -428,10 +428,10 @@ public class PollsChoicePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
-				PollsChoice.class.getClassLoader());
+			PollsChoice.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("choiceId",
-				RandomTestUtil.nextLong()));
+			RandomTestUtil.nextLong()));
 
 		List<PollsChoice> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -444,14 +444,14 @@ public class PollsChoicePersistenceTest {
 		PollsChoice newPollsChoice = addPollsChoice();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
-				PollsChoice.class.getClassLoader());
+			PollsChoice.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("choiceId"));
 
 		Object newChoiceId = newPollsChoice.getChoiceId();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("choiceId",
-				new Object[] { newChoiceId }));
+			new Object[] { newChoiceId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -465,12 +465,12 @@ public class PollsChoicePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsChoice.class,
-				PollsChoice.class.getClassLoader());
+			PollsChoice.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("choiceId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("choiceId",
-				new Object[] { RandomTestUtil.nextLong() }));
+			new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -490,16 +490,16 @@ public class PollsChoicePersistenceTest {
 		PollsChoiceModelImpl existingPollsChoiceModelImpl = (PollsChoiceModelImpl)_persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingPollsChoiceModelImpl.getUuid(),
-				existingPollsChoiceModelImpl.getOriginalUuid()));
+			existingPollsChoiceModelImpl.getUuid(),
+			existingPollsChoiceModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingPollsChoiceModelImpl.getGroupId(),
 			existingPollsChoiceModelImpl.getOriginalGroupId());
 
 		Assert.assertEquals(existingPollsChoiceModelImpl.getQuestionId(),
 			existingPollsChoiceModelImpl.getOriginalQuestionId());
 		Assert.assertTrue(Validator.equals(
-				existingPollsChoiceModelImpl.getName(),
-				existingPollsChoiceModelImpl.getOriginalName()));
+			existingPollsChoiceModelImpl.getName(),
+			existingPollsChoiceModelImpl.getOriginalName()));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {

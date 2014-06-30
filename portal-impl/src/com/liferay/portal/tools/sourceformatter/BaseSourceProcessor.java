@@ -931,16 +931,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
-		if (absolutePath.contains("/ant-bnd/") ||
-			absolutePath.contains("/osgi-util/") ||
-			absolutePath.contains("/registry-api/") ||
-			absolutePath.contains("/sync-engine-shared/")) {
+		if (_runOutsidePortalExclusions == null) {
+			_runOutsidePortalExclusions = getExclusions(
+				"run.outside.portal.excludes");
+		}
 
-			return true;
+		for (String runOutsidePortalExclusions : _runOutsidePortalExclusions) {
+			if (absolutePath.contains(runOutsidePortalExclusions)) {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
@@ -1494,5 +1496,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;
 	private Properties _properties;
+	private List<String> _runOutsidePortalExclusions;
 
 }

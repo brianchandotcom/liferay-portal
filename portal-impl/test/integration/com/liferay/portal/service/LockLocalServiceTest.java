@@ -57,10 +57,10 @@ public class LockLocalServiceTest {
 
 	@Before
 	public void setUp() {
-		LockLocalServiceUtil.unlock("className", "key");
-
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			JDBCExceptionReporter.class.getName(), Level.ERROR);
+
+		LockLocalServiceUtil.unlock("className", "key");
 	}
 
 	@After

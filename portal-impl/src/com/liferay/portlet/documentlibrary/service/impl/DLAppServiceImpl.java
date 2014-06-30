@@ -1695,7 +1695,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getGroupFileEntries(
 			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, start,
-			end, new RepositoryModelModifiedDateComparator());
+			end, new RepositoryModelModifiedDateComparator<FileEntry>());
 	}
 
 	/**
@@ -1769,7 +1769,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getGroupFileEntries(
 			groupId, userId, rootFolderId, start, end,
-			new RepositoryModelModifiedDateComparator());
+			new RepositoryModelModifiedDateComparator<FileEntry>());
 	}
 
 	/**

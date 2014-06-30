@@ -871,7 +871,7 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public OrderByComparator getRepositoryModelOrderByComparator(
+	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = true;
@@ -880,25 +880,27 @@ public class DLImpl implements DL {
 			orderByAsc = false;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<T> orderByComparator = null;
 
 		if (orderByCol.equals("creationDate")) {
-			orderByComparator = new RepositoryModelCreateDateComparator(
+			orderByComparator = new RepositoryModelCreateDateComparator<T>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("downloads")) {
-			orderByComparator = new RepositoryModelReadCountComparator(
+			orderByComparator = new RepositoryModelReadCountComparator<T>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator(
+			orderByComparator = new RepositoryModelModifiedDateComparator<T>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("size")) {
-			orderByComparator = new RepositoryModelSizeComparator(orderByAsc);
+			orderByComparator = new RepositoryModelSizeComparator<T>(
+				orderByAsc);
 		}
 		else {
-			orderByComparator = new RepositoryModelNameComparator(orderByAsc);
+			orderByComparator = new RepositoryModelNameComparator<T>(
+				orderByAsc);
 		}
 
 		return orderByComparator;

@@ -19,6 +19,8 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 
@@ -100,6 +102,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 
 		<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 			<liferay-util:param name="redirect" value="<%= currentURL %>" />
+			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		</liferay-util:include>

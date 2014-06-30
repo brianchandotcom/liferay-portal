@@ -1,0 +1,4 @@
+Bundle-Name: Polls Tests
+Bundle-SymbolicName: com.liferay.portlet.polls.test
+Bundle-Version: 1.0.0
+Include-Resource: classes

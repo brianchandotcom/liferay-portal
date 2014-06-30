@@ -187,6 +187,18 @@
 		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="subscribePG">
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_MENULIST_SUBSCRIBE" value1="Subscribe" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />

@@ -825,6 +825,13 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
 	</command>
 
+	<command name="viewPGViaNotifications">
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
 	<command name="viewRatingPG">
 		<if>
 			<equals arg1="${ratingType}" arg2="Positive" />

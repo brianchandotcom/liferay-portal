@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_PANEL_COMPONENT_TREE_ARROW</td>
-	<td>//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea icon-plus')]</td>
+	<td>//div[contains(.,'${key_componentName}')]/span[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
-
-import java.io.Serializable;
+package com.liferay.portlet.dynamicdatamapping.storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,38 +21,33 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * @author Marcellus Tavares
  * @author Pablo Carvalho
  */
-public class DDMForm implements Serializable {
+public class DDMFormValues {
 
-	public void addAvailableLocale(Locale locale) {
-		_availableLocales.add(locale);
+	public void addDDMFormFieldValue(DDMFormFieldValue ddmFormFieldValue) {
+		_ddmFormFieldValues.add(ddmFormFieldValue);
 	}
 
 	public List<Locale> getAvailableLocales() {
 		return _availableLocales;
 	}
 
-	public List<DDMFormField> getDDMFormFields() {
-		return _ddmFormFields;
+	public List<DDMFormFieldValue> getDDMFormFieldValues() {
+		return _ddmFormFieldValues;
 	}
 
-	public Map<String, DDMFormField> getDDMFormFieldsMap(
-		boolean includeNestedDDMFormFields) {
+	public Map<String, DDMFormFieldValue> getDDMFormFieldValuesMap() {
+		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap =
+			new HashMap<String, DDMFormFieldValue>();
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			new HashMap<String, DDMFormField>();
-
-		for (DDMFormField ddmFormField : _ddmFormFields) {
-			ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
-
-			if (includeNestedDDMFormFields) {
-				ddmFormFieldsMap.putAll(
-					ddmFormField.getNestedDDMFormFieldsMap());
-			}
+		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
+			ddmFormFieldValuesMap.put(
+				ddmFormFieldValue.getName(), ddmFormFieldValue);
 		}
 
-		return ddmFormFieldsMap;
+		return ddmFormFieldValuesMap;
 	}
 
 	public Locale getDefaultLocale() {
@@ -65,8 +58,10 @@ public class DDMForm implements Serializable {
 		_availableLocales = availableLocales;
 	}
 
-	public void setDDMFormFields(List<DDMFormField> ddmFormFields) {
-		_ddmFormFields = ddmFormFields;
+	public void setDDMFormFieldValues(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		_ddmFormFieldValues = ddmFormFieldValues;
 	}
 
 	public void setDefaultLocale(Locale defaultLocale) {
@@ -74,7 +69,8 @@ public class DDMForm implements Serializable {
 	}
 
 	private List<Locale> _availableLocales;
-	private List<DDMFormField> _ddmFormFields = new ArrayList<DDMFormField>();
+	private List<DDMFormFieldValue> _ddmFormFieldValues =
+		new ArrayList<DDMFormFieldValue>();
 	private Locale _defaultLocale;
 
 }

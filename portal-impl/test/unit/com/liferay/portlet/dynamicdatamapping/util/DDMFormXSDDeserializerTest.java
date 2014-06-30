@@ -15,12 +15,26 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+
+import org.junit.Before;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Pablo Carvalho
  */
+@PrepareForTest({LocaleUtil.class})
 public class DDMFormXSDDeserializerTest extends BaseDDMFormDeserializer {
+
+	@Before
+	public void setUp() {
+		setUpDDMFormXSDDeserializerUtil();
+		setUpHtmlUtil();
+		setUpLocaleUtil();
+		setUpSAXReaderUtil();
+	}
 
 	@Override
 	protected DDMForm deserialize(String serializedDDMForm)

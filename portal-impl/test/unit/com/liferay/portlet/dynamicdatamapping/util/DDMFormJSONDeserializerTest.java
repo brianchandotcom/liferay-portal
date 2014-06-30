@@ -15,12 +15,25 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+
+import org.junit.Before;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest({LocaleUtil.class})
 public class DDMFormJSONDeserializerTest extends BaseDDMFormDeserializer {
+
+	@Before
+	public void setUp() {
+		setUpDDMFormJSONDeserializerUtil();
+		setUpLocaleUtil();
+		setUpJSONFactoryUtil();
+	}
 
 	@Override
 	protected DDMForm deserialize(String serializedDDMForm)
@@ -37,6 +50,14 @@ public class DDMFormJSONDeserializerTest extends BaseDDMFormDeserializer {
 	@Override
 	protected String getTestFileExtension() {
 		return ".json";
+	}
+
+	protected void setUpDDMFormJSONDeserializerUtil() {
+		DDMFormJSONDeserializerUtil ddmFormJSONDeserializerUtil =
+			new DDMFormJSONDeserializerUtil();
+
+		ddmFormJSONDeserializerUtil.setDDMFormJSONDeserializer(
+			new DDMFormJSONDeserializerImpl());
 	}
 
 }

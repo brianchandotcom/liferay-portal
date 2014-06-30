@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
@@ -25,18 +26,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.powermock.core.classloader.annotations.PrepareForTest;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Pablo Carvalho
  */
+@PrepareForTest({LocalizationUtil.class})
 public class DDMXSDImplTest extends BaseDDMTest {
 
 	@Before
-	@Override
 	public void setUp() {
-		super.setUp();
+		setUpLocalizationUtil();
+		setUpSAXReaderUtil();
 
 		_document = createSampleDocument();
 

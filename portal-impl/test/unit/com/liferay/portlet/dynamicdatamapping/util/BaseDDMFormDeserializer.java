@@ -149,9 +149,7 @@ public abstract class BaseDDMFormDeserializer extends BaseDDMTest {
 	protected void testDefaultLocale(DDMForm ddmForm) {
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		Assert.assertEquals("en_US", defaultLanguageId);
+		Assert.assertEquals(LocaleUtil.US, defaultLocale);
 	}
 
 	protected void testDocumentLibraryDDMFormField(DDMFormField ddmFormField) {

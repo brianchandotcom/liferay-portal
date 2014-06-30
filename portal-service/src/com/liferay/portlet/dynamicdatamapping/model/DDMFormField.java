@@ -60,18 +60,18 @@ public class DDMFormField implements Serializable {
 	}
 
 	public Map<String, DDMFormField> getNestedDDMFormFieldsMap() {
-		Map<String, DDMFormField> ddmFormfieldsMap =
+		Map<String, DDMFormField> nestedDDMFormFieldsMap =
 			new HashMap<String, DDMFormField>();
 
 		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
-			ddmFormfieldsMap.put(
+			nestedDDMFormFieldsMap.put(
 				nestedDDMFormField.getName(), nestedDDMFormField);
 
-			ddmFormfieldsMap.putAll(
+			nestedDDMFormFieldsMap.putAll(
 				nestedDDMFormField.getNestedDDMFormFieldsMap());
 		}
 
-		return ddmFormfieldsMap;
+		return nestedDDMFormFieldsMap;
 	}
 
 	public LocalizedValue getPredefinedValue() {

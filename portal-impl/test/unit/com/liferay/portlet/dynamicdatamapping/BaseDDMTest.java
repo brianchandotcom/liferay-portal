@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -35,8 +36,6 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
 
@@ -46,47 +45,21 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pablo Carvalho
  * @author Miguel Angelo Caldas Gallindo
  */
-@PrepareForTest(
-	{
-		DDMFormJSONDeserializerUtil.class, DDMFormXSDDeserializerUtil.class,
-		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		HtmlUtil.class, JSONFactoryUtil.class, LocaleUtil.class,
-		LocalizationUtil.class, PropsUtil.class, SAXReaderUtil.class
-	})
 @RunWith(PowerMockRunner.class)
-public class BaseDDMTest extends PowerMockito {
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
-		setUpDDMFormJSONDeserializer();
-		setUpDDMFormXSDDeserializer();
-		setUpDDMStructureLocalServiceUtil();
-		setUpDDMTemplateLocalServiceUtil();
-		setUpHtmlUtil();
-		setUpJSONFactoryUtil();
-		setUpLocaleUtil();
-		setUpLocalizationUtil();
-		setUpPropsUtil();
-		setUpSAXReaderUtil();
-	}
+public abstract class BaseDDMTest extends PowerMockito {
 
 	protected Element addTextElement(
 		Element element, String name, String label, boolean localizable) {
@@ -201,24 +174,12 @@ public class BaseDDMTest extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpDDMFormJSONDeserializer() {
-		spy(DDMFormJSONDeserializerUtil.class);
+	protected void setUpDDMFormXSDDeserializerUtil() {
+		DDMFormXSDDeserializerUtil ddmFormXSDDeserializerUtil =
+			new DDMFormXSDDeserializerUtil();
 
-		when(
-			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
-		).thenReturn(
-			new DDMFormJSONDeserializerImpl()
-		);
-	}
-
-	protected void setUpDDMFormXSDDeserializer() {
-		spy(DDMFormXSDDeserializerUtil.class);
-
-		when(
-			DDMFormXSDDeserializerUtil.getDDMFormXSDDeserializer()
-		).thenReturn(
-			new DDMFormXSDDeserializerImpl()
-		);
+		ddmFormXSDDeserializerUtil.setDDMFormXSDDeserializer(
+			new DDMFormXSDDeserializerImpl());
 	}
 
 	protected void setUpDDMStructureLocalServiceUtil() {
@@ -268,27 +229,35 @@ public class BaseDDMTest extends PowerMockito {
 	}
 
 	protected void setUpHtmlUtil() {
-		spy(HtmlUtil.class);
+		HtmlUtil htmlUtil = new HtmlUtil();
 
-		when(
-			HtmlUtil.getHtml()
-		).thenReturn(
-			new HtmlImpl()
-		);
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	protected void setUpJSONFactoryUtil() {
-		spy(JSONFactoryUtil.class);
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	protected void setUpLanguageUtil() {
+		mockStatic(LanguageUtil.class);
 
 		when(
-			JSONFactoryUtil.getJSONFactory()
+			LanguageUtil.isAvailableLanguageCode("en_US")
 		).thenReturn(
-			new JSONFactoryImpl()
+			true
+		);
+
+		when(
+			LanguageUtil.isAvailableLanguageCode("pt_BR")
+		).thenReturn(
+			true
 		);
 	}
 
 	protected void setUpLocaleUtil() {
-		spy(LocaleUtil.class);
+		mockStatic(LocaleUtil.class);
 
 		when(
 			LocaleUtil.fromLanguageId("en_US")
@@ -300,6 +269,18 @@ public class BaseDDMTest extends PowerMockito {
 			LocaleUtil.fromLanguageId("pt_BR")
 		).thenReturn(
 			LocaleUtil.BRAZIL
+		);
+
+		when(
+			LocaleUtil.toLanguageId(LocaleUtil.US)
+		).thenReturn(
+			"en_US"
+		);
+
+		when(
+			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)
+		).thenReturn(
+			"pt_BR"
 		);
 	}
 
@@ -351,13 +332,9 @@ public class BaseDDMTest extends PowerMockito {
 	}
 
 	protected void setUpSAXReaderUtil() {
-		spy(SAXReaderUtil.class);
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		when(
-			SAXReaderUtil.getSAXReader()
-		).thenReturn(
-			new SAXReaderImpl()
-		);
+		saxReaderUtil.setSAXReader(new SAXReaderImpl());
 	}
 
 	private Map<Long, DDMStructure> _structures =

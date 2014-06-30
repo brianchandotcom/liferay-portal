@@ -14,9 +14,15 @@
 
 package com.liferay.ant.arquilian.generator;
 
+import com.liferay.ant.arquilian.WebArchiveBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.impl.client.deployment.AnnotationDeploymentScenarioGenerator;
 import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
  * @author Carlos Sierra Andrés
@@ -26,7 +32,28 @@ public class AntDeploymentScenarioGenerator
 
 	@Override
 	public List<DeploymentDescription> generate(TestClass testClass) {
-	
+		List<DeploymentDescription> defaultDeploymentDescriptions =
+			super.generate(testClass);
+
+		if ((defaultDeploymentDescriptions != null) &&
+			(defaultDeploymentDescriptions.size() > 0)) {
+
+			return defaultDeploymentDescriptions;
+		}
+
+		ArrayList<DeploymentDescription> deploymentDescriptions =
+			new ArrayList<DeploymentDescription>();
+
+		WebArchive webArchive = WebArchiveBuilder.build();
+
+		DeploymentDescription deploymentDescription = new DeploymentDescription(
+			webArchive.getName(), webArchive);
+
+		deploymentDescription.shouldBeTestable(true);
+
+		deploymentDescriptions.add(deploymentDescription);
+
+		return deploymentDescriptions;
 	}
 
 }

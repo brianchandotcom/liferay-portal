@@ -24,7 +24,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByTableNameWithPeriodReturnsDecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column"), "table.");
 
@@ -34,7 +34,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithBlankTableNameReturnsUndecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column1, column2"), "");
 
@@ -44,7 +44,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithMultipleColumnNamesReturnsDecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column1, column2"), "table");
 
@@ -55,7 +55,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithMultipleTableNameReturnsNewTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("table1.column1, column2"),
 				"table2");
@@ -67,7 +67,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithNullTableNameReturnsUndecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column1, column2"), null);
 
@@ -77,7 +77,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithSingleColumnNameReturnsDecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column"), "table");
 
@@ -87,7 +87,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithSingleTableNameReturnsNewTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("table1.column1"), "table2");
 
@@ -97,7 +97,7 @@ public class TableNameOrderByComparatorTest {
 
 	@Test
 	public void testGetOrderByWithSortDirectionReturnsDecoratedTableName() {
-		TableNameOrderByComparator tableNameOrderByComparator =
+		TableNameOrderByComparator<?> tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("column ASC"), "table");
 
@@ -105,7 +105,7 @@ public class TableNameOrderByComparatorTest {
 			"table.column ASC", tableNameOrderByComparator.getOrderBy());
 	}
 
-	private class TestGetOrderByComparator extends OrderByComparator {
+	private class TestGetOrderByComparator extends OrderByComparator<Object> {
 
 		public TestGetOrderByComparator(String orderBy) {
 			_orderBy = orderBy;

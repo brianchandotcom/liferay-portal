@@ -139,8 +139,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(DynamicQuery dynamicQuery);
+	public <T> List<T> findWithDynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	 * Performs a dynamic query on the database and returns a range of the
@@ -164,8 +163,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         com.liferay.portal.kernel.dao.orm.Query,
 	 *         com.liferay.portal.kernel.dao.orm.Dialect, int, int)
 	 */
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
+	public <T> List<T> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
@@ -189,10 +187,9 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
+	public<T> List<T> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator);
+		OrderByComparator<T> orderByComparator);
 
 	public void flush();
 

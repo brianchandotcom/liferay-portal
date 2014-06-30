@@ -296,7 +296,7 @@ public class SearchContainer<R> {
 		return _orderByColParam;
 	}
 
-	public OrderByComparator getOrderByComparator() {
+	public OrderByComparator<R> getOrderByComparator() {
 		return _orderByComparator;
 	}
 
@@ -438,7 +438,7 @@ public class SearchContainer<R> {
 		_orderByColParam = orderByColParam;
 	}
 
-	public void setOrderByComparator(OrderByComparator orderByComparator) {
+	public void setOrderByComparator(OrderByComparator<R> orderByComparator) {
 		_orderByComparator = orderByComparator;
 	}
 
@@ -543,7 +543,7 @@ public class SearchContainer<R> {
 	private Map<String, String> _orderableHeaders;
 	private String _orderByCol;
 	private String _orderByColParam = DEFAULT_ORDER_BY_COL_PARAM;
-	private OrderByComparator _orderByComparator;
+	private OrderByComparator<R> _orderByComparator;
 	private String _orderByJS;
 	private String _orderByType;
 	private String _orderByTypeParam = DEFAULT_ORDER_BY_TYPE_PARAM;

@@ -133,8 +133,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		Session session = null;
 
 		try {
@@ -153,8 +152,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
+	public <T> List<T> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		Session session = null;
@@ -177,10 +175,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
+	public <T> List<T> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<T> orderByComparator) {
 
 		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
 
@@ -417,14 +414,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<T> orderByComparator) {
 
 		appendOrderByComparator(query, entityAlias, orderByComparator, false);
 	}
 
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
-		OrderByComparator orderByComparator, boolean sqlQuery) {
+		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
 
 		query.append(ORDER_BY_CLAUSE);
 

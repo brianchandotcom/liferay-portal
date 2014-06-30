@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.model.BaseModel;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 public class OrderByComparatorFactoryUtil {
 
-	public static OrderByComparator create(
+	public static <T extends BaseModel<T>> OrderByComparator<T> create(
 		String tableName, Object... columns) {
 
 		if ((columns.length == 0) || ((columns.length % 2) != 0)) {
@@ -33,13 +34,14 @@ public class OrderByComparatorFactoryUtil {
 				"Columns length is not an even number");
 		}
 
-		return new DefaultOrderByComparator(tableName, columns);
+		return new DefaultOrderByComparator<T>(tableName, columns);
 	}
 
-	protected static class DefaultOrderByComparator extends OrderByComparator {
+	protected static class DefaultOrderByComparator<T extends BaseModel<T>>
+		extends OrderByComparator<T> {
 
 		@Override
-		public int compare(Object object1, Object object2) {
+		public int compare(T object1, T object2) {
 			for (int i = 0; i < _columns.length; i += 2) {
 				String columnName = String.valueOf(_columns[i]);
 				boolean columnAscending = Boolean.valueOf(

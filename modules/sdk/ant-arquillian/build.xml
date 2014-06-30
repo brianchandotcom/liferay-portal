@@ -3,6 +3,7 @@
 
 <project>
 	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.ant.arquillian/lib" />
+	<property name="ivy.resolve.transitive.dependencies" value="true" />
 	<property name="plugin.full.version" value="1.0.0" />
 	<property name="plugin.name" value="com.liferay.ant.arquillian" />
 

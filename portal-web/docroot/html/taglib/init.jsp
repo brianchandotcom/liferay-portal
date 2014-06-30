@@ -36,9 +36,7 @@ if ((portletResponse != null) && auiFormUseNamespace) {
 String currentURL = null;
 
 if ((portletRequest != null) && (portletResponse != null)) {
-	PortletURL currentURLObj = PortletURLUtil.getCurrent(PortalUtil.getLiferayPortletRequest(portletRequest), PortalUtil.getLiferayPortletResponse(portletResponse));
-
-	currentURL = currentURLObj.toString();
+	currentURL = PortalUtil.getCurrentPortletURL(portletRequest, portletResponse);
 }
 else {
 	currentURL = PortalUtil.getCurrentURL(request);

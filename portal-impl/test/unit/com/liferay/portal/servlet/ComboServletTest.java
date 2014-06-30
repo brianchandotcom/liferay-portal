@@ -213,7 +213,8 @@ public class ComboServletTest extends PowerMockito {
 
 	@Test
 	public void testGetResourceWithPortletId() throws Exception {
-		_comboServlet.getResourceURL("75:/js/javascript.js");
+		_comboServlet.getResourceURL(
+			PortletKeys.ACTIVITIES + ":/js/javascript.js");
 
 		verify(_pluginServletContext);
 

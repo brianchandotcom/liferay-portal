@@ -3,8 +3,7 @@ AUI.add(
 	function(A) {
 		var Surface = Liferay.Surface;
 
-		Liferay.once(
-			'domready',
+		A.ready(
 			function() {
 				Surface.app = new A.SurfaceApp(
 					{
@@ -133,6 +132,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-base', 'liferay-surface']
+		requires: ['liferay-surface']
 	}
 );

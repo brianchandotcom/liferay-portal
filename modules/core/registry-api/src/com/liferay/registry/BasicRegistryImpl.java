@@ -631,19 +631,6 @@ public class BasicRegistryImpl implements Registry {
 
 	}
 
-	private class LowerCaseKeyTreeMap extends TreeMap<String, Object> {
-
-		public LowerCaseKeyTreeMap() {
-			super();
-		}
-
-		@Override
-		public Object put(String key, Object value) {
-			return super.put(key.toLowerCase(), value);
-		}
-
-	}
-
 	private class BasicServiceTracker<S, T> implements ServiceTracker<S, T> {
 
 		public BasicServiceTracker(Filter filter) {
@@ -858,6 +845,19 @@ public class BasicRegistryImpl implements Registry {
 		private AtomicInteger _stateCounter = new AtomicInteger();
 		private NavigableMap<ServiceReference<S>, T> _trackedServices =
 			new ConcurrentSkipListMap<ServiceReference<S>, T>();
+
+	}
+
+	private class LowerCaseKeyTreeMap extends TreeMap<String, Object> {
+
+		public LowerCaseKeyTreeMap() {
+			super();
+		}
+
+		@Override
+		public Object put(String key, Object value) {
+			return super.put(key.toLowerCase(), value);
+		}
 
 	}
 

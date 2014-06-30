@@ -68,8 +68,8 @@ public class OrganizationLocalServiceTest {
 
 			if (eventMessage.startsWith("Duplicate entry") ||
 				eventMessage.equals(
-						"Deadlock found when trying to get lock; try " +
-							"restarting transaction")) {
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction")) {
 
 				continue;
 			}

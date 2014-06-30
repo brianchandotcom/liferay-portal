@@ -95,6 +95,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			JDBCExceptionReporter.class.getName(), Level.ERROR);
+
 		_fileEntry = DLAppTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId(),
 			"Test DLAppService.txt");
@@ -107,9 +110,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_users[i] = user;
 		}
-
-		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}
 
 	@After

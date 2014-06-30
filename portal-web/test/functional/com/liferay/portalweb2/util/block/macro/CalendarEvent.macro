@@ -625,7 +625,6 @@
 		<var name="key_eventComment" value="${eventCommentEdit}" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventCommentEdit}" />
-
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 

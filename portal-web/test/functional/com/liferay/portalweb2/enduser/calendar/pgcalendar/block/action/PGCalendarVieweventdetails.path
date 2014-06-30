@@ -252,21 +252,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_COMMENT_FIELD</td>
-	<td>//textarea[contains(@id,'postReplyBody')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_SUBMIT_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Submit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_CANCEL_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENTS_COMMENT_DELETE</td>
 	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//li/span/a/span[contains(.,'Delete')]</td>
 	<td></td>

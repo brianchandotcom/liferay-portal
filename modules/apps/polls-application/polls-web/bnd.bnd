@@ -1,0 +1,48 @@
+Bundle-Version: 1.0.0
+Bundle-SymbolicName: com.liferay.portlet.polls.web-portlet
+Bundle-Name: Polls Web
+Import-Package: \
+	${bnd.jsp.support.imports},\
+	\
+	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.xml,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.servlet.*,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.util,\
+	com.liferay.portal.lar,\
+	com.liferay.portal.model,\
+	com.liferay.portal.security.permission,\
+	com.liferay.portal.servlet.jsp.compiler.jsp,\
+	com.liferay.portal.service,\
+	com.liferay.portal.service.permission,\
+	com.liferay.portal.struts,\
+	com.liferay.portal.theme,\
+	com.liferay.portal.webserver,\
+	\
+	com.liferay.portlet.polls,\
+	com.liferay.portlet.polls.*,\
+	com.liferay.portlet.polls.constants,\
+	com.liferay.portlet.polls.lar,\
+	com.liferay.portlet.polls.service.permission,\
+	\
+	org.apache.struts.action,\
+	org.apache.struts.action.*,\
+	org.apache.struts.config,\
+	org.apache.struts.config.*,\
+	org.apache.struts.util,\
+	\
+	javax.portlet,\
+	javax.portlet.*,\
+	*
+Include-Resource:\
+	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
+	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions
+Web-ContextPath: /polls-web
+-donotcopy=(docroot/WEB-INF/src|.*\.java|.*\.jar)
+-wab: docroot
+-wablib:\
+	${app.server.lib.portal.dir}/util-java.jar,\
+	${app.server.lib.portal.dir}/util-taglib.jar

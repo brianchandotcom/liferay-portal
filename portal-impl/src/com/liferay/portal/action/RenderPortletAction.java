@@ -74,11 +74,12 @@ public class RenderPortletAction extends Action {
 			request, "p_p_static_start");
 
 		Boolean boundary = null;
-		Boolean decorate = null;
 
 		if (boundaryParam != null) {
 			boundary = GetterUtil.getBoolean(boundaryParam);
 		}
+
+		Boolean decorate = null;
 
 		if (decorateParam != null) {
 			decorate = GetterUtil.getBoolean(decorateParam);

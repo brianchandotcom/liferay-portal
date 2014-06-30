@@ -846,7 +846,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/spring-instrument.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -858,7 +858,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/spring-instrument-tomcat.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -870,7 +870,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/spring-test.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3205,7 +3205,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-aop.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3232,7 +3232,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-beans.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3243,12 +3243,12 @@
 		</licenses>
 		<comments>
 			3.0.3 included a public patch from SPR-7441. That patch is no longer needed
-			since 3.0.7 includes a different fix.
+			since 3.2.9 includes a different fix.
 		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/spring-context.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3260,7 +3260,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-context-support.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3272,7 +3272,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-core.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3284,7 +3284,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-expression.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3296,7 +3296,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-jdbc.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3308,7 +3308,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-jms.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3320,7 +3320,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-orm.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3332,7 +3332,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-oxm.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3344,7 +3344,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-transaction.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3356,7 +3356,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-web.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3392,7 +3392,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-web-servlet.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>
@@ -3404,7 +3404,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/spring-web-struts.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>

@@ -2233,6 +2233,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			line = line.substring(0, pos);
 		}
 
+		pos = line.indexOf(StringPool.LESS_THAN);
+
+		if (pos != -1) {
+			line = line.substring(0, pos);
+		}
+
 		line = line.trim();
 
 		pos = line.lastIndexOf(StringPool.SPACE);

@@ -1,0 +1,5 @@
+Bundle-Name: Polls API
+Bundle-SymbolicName: com.liferay.portal.polls.api
+Bundle-Version: 1.0.0
+Export-Package: *
+Include-Resource: classes

@@ -1228,7 +1228,8 @@ public class DLFileEntryLocalServiceImpl
 		long groupId, int start, int end) {
 
 		return getGroupFileEntries(
-			groupId, start, end, new RepositoryModelModifiedDateComparator());
+			groupId, start, end,
+			new RepositoryModelModifiedDateComparator<DLFileEntry>());
 	}
 
 	@Override
@@ -1244,7 +1245,7 @@ public class DLFileEntryLocalServiceImpl
 
 		return getGroupFileEntries(
 			groupId, userId, start, end,
-			new RepositoryModelModifiedDateComparator());
+			new RepositoryModelModifiedDateComparator<DLFileEntry>());
 	}
 
 	@Override

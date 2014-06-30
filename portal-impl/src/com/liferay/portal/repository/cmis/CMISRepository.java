@@ -2138,7 +2138,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected <E> List<E> subList(
-		List<E> list, int start, int end, OrderByComparator obc) {
+		List<E> list, int start, int end, OrderByComparator<E> obc) {
 
 		if ((obc != null) &&
 			((obc instanceof RepositoryModelCreateDateComparator) ||

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -33,6 +34,11 @@ import org.junit.Test;
  * @author Miguel Angelo Caldas Gallindo
  */
 public class DDMXMLImplTest extends BaseDDMTest {
+
+	@Before
+	public void setUp() {
+		setUpSAXReaderUtil();
+	}
 
 	@Test
 	public void testUpdateContentDefaultLocale() throws Exception {

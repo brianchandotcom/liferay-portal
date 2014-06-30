@@ -19,22 +19,17 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMFormJSONSerializerUtil.class})
 public class DDMFormJSONSerializerTest extends BaseDDMFormSerializer {
 
 	@Before
-	@Override
 	public void setUp() {
-		super.setUp();
-
 		setUpDDMFormToJSONSerializerUtil();
+		setUpJSONFactoryUtil();
 	}
 
 	@Test
@@ -49,16 +44,11 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializer {
 	}
 
 	protected void setUpDDMFormToJSONSerializerUtil() {
-		spy(DDMFormJSONSerializerUtil.class);
+		DDMFormJSONSerializerUtil ddmFormJSONSerializerUtil =
+			new DDMFormJSONSerializerUtil();
 
-		when(
-			DDMFormJSONSerializerUtil.getDDMFormJSONSerializer()
-		).thenReturn(
-			_ddmFormJSONSerializer
-		);
+		ddmFormJSONSerializerUtil.setDDMFormJSONSerializer(
+			new DDMFormJSONSerializerImpl());
 	}
-
-	private DDMFormJSONSerializer _ddmFormJSONSerializer =
-		new DDMFormJSONSerializerImpl();
 
 }

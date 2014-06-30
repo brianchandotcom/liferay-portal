@@ -216,7 +216,8 @@
 				"pt_BR": ""
 			},
 			"type": "ddm-link-to-page"
-		}, {
+		},
+		{
 
 			"dataType": "number",
 			"fieldNamespace": "ddm",

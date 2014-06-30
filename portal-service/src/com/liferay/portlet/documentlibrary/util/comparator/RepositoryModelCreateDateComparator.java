@@ -27,8 +27,8 @@ import java.util.Date;
 /**
  * @author Alexander Chow
  */
-public class RepositoryModelCreateDateComparator
-	extends OrderByComparator<Date> {
+public class RepositoryModelCreateDateComparator<T>
+	extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
@@ -45,7 +45,10 @@ public class RepositoryModelCreateDateComparator
 	}
 
 	@Override
-	public int compare(Date createDate1, Date createDate2) {
+	public int compare(T t1, T t2 ) {
+		Date createDate1 = getCreateDate(t1);
+		Date createDate2 = getCreateDate(t2);
+
 		int value = DateUtil.compareTo(createDate1, createDate2);
 
 		if (_ascending) {

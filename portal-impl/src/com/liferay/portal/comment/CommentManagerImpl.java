@@ -17,18 +17,32 @@ package com.liferay.portal.comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author André de Oliveira
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class CommentManagerImpl implements CommentManager {
+
+	public CommentManagerImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Class<?> clazz = getClass();
+
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + CommentManager.class.getName() +
+				")(!(objectClass=" + clazz.getName() + ")))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
 
 	@Override
 	public long addComment(
@@ -37,27 +51,57 @@ public class CommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		MBMessageDisplay mbMessageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
+		CommentManager commentManager = getCommentManager();
 
-		MBThread mbThread = mbMessageDisplay.getThread();
+		return commentManager.addComment(
+			userId, groupId, className, classPK, userName, subject, body,
+			serviceContextFunction);
+	}
 
-		ServiceContext serviceContext = serviceContextFunction.apply(
-			MBMessage.class.getName());
+	@Override
+	public void addDiscussion(
+			long userId, long groupId, String className, long classPK,
+			String userName)
+		throws PortalException {
 
-		MBMessage mbMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, userName, groupId, className, classPK,
-			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
-			serviceContext);
+		CommentManager commentManager = getCommentManager();
 
-		return mbMessage.getMessageId();
+		commentManager.addDiscussion(
+			userId, groupId, className, classPK, userName);
 	}
 
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
-		MBMessageLocalServiceUtil.deleteDiscussionMessage(commentId);
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.deleteComment(commentId);
 	}
+
+	@Override
+	public void deleteDiscussion(String className, long classPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.deleteDiscussion(className, classPK);
+	}
+
+	protected CommentManager getCommentManager() {
+		if (_serviceTracker.isEmpty()) {
+			return _defaultCommentManager;
+		}
+
+		return _serviceTracker.getService();
+	}
+
+	protected void setDefaultCommentManager(
+		CommentManager defaultCommentManager) {
+
+		_defaultCommentManager = defaultCommentManager;
+	}
+
+	private CommentManager _defaultCommentManager =
+		new DummyCommentManagerImpl();
+	private ServiceTracker<CommentManager, CommentManager> _serviceTracker;
 
 }

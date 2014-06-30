@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import java.io.IOException;
 
@@ -38,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({PortalSocketPermission.class})
+@PrepareForTest({BlogsUtil.class, PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
 public class LinkbackConsumerImplTest extends PowerMockito {
 
@@ -46,7 +47,8 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpHttp();
+		setUpBlogsUtil();
+		setUpHttpUtil();
 
 		_linkbackConsumer = new LinkbackConsumerImpl();
 
@@ -57,45 +59,18 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	public void testDeleteCommentIfBlogEntryURLNotInReferrer()
 		throws Exception {
 
+		String url = RandomTestUtil.randomString();
+
 		Mockito.when(
-			_http.URLtoString("__url__")
+			_http.URLtoString(url)
 		).thenReturn(
-			"__URLtoString_not_containing_entryURL__"
-		);
-
-		long commentId = RandomTestUtil.randomLong();
-
-		_linkbackConsumer.addNewTrackback(commentId, "__url__", "__entryUrl__");
-
-		_linkbackConsumer.verifyNewTrackbacks();
-
-		Mockito.verify(
-			_commentManager
-		).deleteComment(
-			commentId
-		);
-
-		Mockito.verify(
-			_http
-		).URLtoString(
-			"__url__"
-		);
-	}
-
-	@Test
-	public void testDeleteCommentIfReferrerIsUnreachable() throws Exception {
-		Mockito.doThrow(
-			IOException.class
-		).when(
-			_http
-		).URLtoString(
-			"__PROBLEM_URL__"
+			RandomTestUtil.randomString()
 		);
 
 		long commentId = RandomTestUtil.randomLong();
 
 		_linkbackConsumer.addNewTrackback(
-			commentId, "__PROBLEM_URL__", "__entryUrl__");
+			commentId, url, RandomTestUtil.randomString());
 
 		_linkbackConsumer.verifyNewTrackbacks();
 
@@ -108,7 +83,39 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 		Mockito.verify(
 			_http
 		).URLtoString(
-			"__PROBLEM_URL__"
+			url
+		);
+	}
+
+	@Test
+	public void testDeleteCommentIfReferrerIsUnreachable() throws Exception {
+		String url = RandomTestUtil.randomString();
+
+		Mockito.doThrow(
+			IOException.class
+		).when(
+			_http
+		).URLtoString(
+			url
+		);
+
+		long commentId = RandomTestUtil.randomLong();
+
+		_linkbackConsumer.addNewTrackback(
+			commentId, url, RandomTestUtil.randomString());
+
+		_linkbackConsumer.verifyNewTrackbacks();
+
+		Mockito.verify(
+			_commentManager
+		).deleteComment(
+			commentId
+		);
+
+		Mockito.verify(
+			_http
+		).URLtoString(
+			url
 		);
 	}
 
@@ -116,14 +123,16 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	public void testPreserveCommentIfBlogEntryURLIsInReferrer()
 		throws Exception {
 
+		String url = RandomTestUtil.randomString();
+
 		Mockito.when(
-			_http.URLtoString("__url__")
+			_http.URLtoString(url)
 		).thenReturn(
 			"__URLtoString_containing_**entryUrl**__"
 		);
 
 		_linkbackConsumer.addNewTrackback(
-			RandomTestUtil.randomLong(), "__url__", "**entryUrl**");
+			RandomTestUtil.randomLong(), url, "**entryUrl**");
 
 		_linkbackConsumer.verifyNewTrackbacks();
 
@@ -132,11 +141,15 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 		Mockito.verify(
 			_http
 		).URLtoString(
-			"__url__"
+			url
 		);
 	}
 
-	protected void setUpHttp() {
+	protected void setUpBlogsUtil() {
+		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
+	}
+
+	protected void setUpHttpUtil() {
 		mockStatic(PortalSocketPermission.class, new DoesNothing());
 
 		HttpUtil httpUtil = new HttpUtil();

@@ -14,16 +14,12 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.kernel.comment.CommentManager;
-
 /**
  * @author André de Oliveira
  */
 public interface LinkbackConsumer {
 
 	public void addNewTrackback(long commentId, String url, String entryURL);
-
-	public void setCommentManager(CommentManager commentManager);
 
 	public void verifyNewTrackbacks();
 

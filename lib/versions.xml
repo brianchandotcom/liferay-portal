@@ -3378,9 +3378,21 @@
 			</license>
 		</licenses>
 	</library>
+        <library>
+                <file-name>lib/portal/spring-web-mvc.jar</file-name>
+                <version>3.2.9</version>
+                <project-name>Spring</project-name>
+                <project-url>http://www.springframework.org</project-url>
+                <licenses>
+                        <license>
+                                <license-name>Apache License 2.0</license-name>
+                                <license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+                        </license>
+                </licenses>
+        </library>
 	<library>
 		<file-name>lib/portal/spring-web-portlet.jar</file-name>
-		<version>3.0.7</version>
+		<version>3.2.9</version>
 		<project-name>Spring</project-name>
 		<project-url>http://www.springframework.org</project-url>
 		<licenses>

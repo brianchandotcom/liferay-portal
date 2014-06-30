@@ -56,6 +56,8 @@ import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,6 +81,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 			for (String[] model : _MODELS) {
 				verifyModel(role, model[0], model[1], model[2]);
+			}
+
+			for (ModelResource modelResource : _modelResources) {
+				verifyModel(
+					role, modelResource.getName(), modelResource.getModelName(),
+					modelResource.getPkColumnName());
 			}
 
 			verifyLayout(role);
@@ -299,5 +307,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
+
+	private ServiceTrackerList<ModelResource> _modelResources =
+		ServiceTrackerCollections.list(ModelResource.class);
 
 }

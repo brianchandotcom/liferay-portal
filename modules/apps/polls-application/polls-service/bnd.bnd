@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Polls Services
+Bundle-SymbolicName: com.liferay.polls.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.polls.configurator,\
+	com.liferay.polls.lar
+Include-Resource: classes
+Liferay-Service: true
+Require-Capability :\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(Version=1.0))"
+Spring-Context: META-INF/spring/*.xml

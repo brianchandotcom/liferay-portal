@@ -20,6 +20,7 @@
 		<dependency name="ant" org="org.apache.ant" rev="1.9.3" />
 		<dependency name="arquillian-container-test-impl-base" org="org.jboss.arquillian.container" rev="1.1.2.Final" />
 		<dependency name="arquillian-container-test-spi" org="org.jboss.arquillian.container" rev="1.1.2.Final" />
+		<dependency name="ecj" org="org.eclipse.jdt.core.compiler" rev="3.7.2" />
 		<dependency name="shrinkwrap-api" org="org.jboss.shrinkwrap" rev="1.2.1" />
 	</dependencies>
 </ivy-module>

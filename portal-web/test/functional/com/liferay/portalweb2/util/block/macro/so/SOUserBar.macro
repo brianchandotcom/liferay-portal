@@ -416,7 +416,12 @@
 				<if>
 					<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_ENTRY" />
 					<then>
-						<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
+						<if>
+							<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
+							<then>
+								<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
+							</then>
+						</if>
 					</then>
 				</if>
 

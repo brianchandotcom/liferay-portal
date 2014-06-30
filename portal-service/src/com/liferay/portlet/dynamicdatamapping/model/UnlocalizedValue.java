@@ -22,21 +22,17 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
-public class LocalizedValue implements Value {
+public class UnlocalizedValue implements Value {
 
-	public LocalizedValue() {
-		this(LocaleUtil.getDefault());
-	}
-
-	public LocalizedValue(Locale defaultLocale) {
-		setDefaultLocale(defaultLocale);
+	public UnlocalizedValue(String value) {
+		_values.put(LocaleUtil.ROOT, value);
 	}
 
 	@Override
 	public void addValue(Locale locale, String value) {
-		_values.put(locale, value);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -46,18 +42,12 @@ public class LocalizedValue implements Value {
 
 	@Override
 	public Locale getDefaultLocale() {
-		return _defaultLocale;
+		return LocaleUtil.ROOT;
 	}
 
 	@Override
 	public String getValue(Locale locale) {
-		String value = _values.get(locale);
-
-		if (value == null) {
-			value = _values.get(_defaultLocale);
-		}
-
-		return value;
+		return _values.get(LocaleUtil.ROOT);
 	}
 
 	@Override
@@ -67,15 +57,14 @@ public class LocalizedValue implements Value {
 
 	@Override
 	public boolean isLocalized() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public void setDefaultLocale(Locale defaultLocale) {
-		_defaultLocale = defaultLocale;
+		throw new UnsupportedOperationException();
 	}
 
-	private Locale _defaultLocale;
 	private Map<Locale, String> _values = new HashMap<Locale, String>();
 
 }

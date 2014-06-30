@@ -15,6 +15,8 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -28,7 +30,14 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.List;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
+import org.hibernate.util.JDBCExceptionReporter;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,6 +52,33 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class OrganizationLocalServiceTest {
+
+	@Before
+	public void setUp() {
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			JDBCExceptionReporter.class.getName(), Level.ERROR);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
+			String eventMessage = loggingEvent.getRenderedMessage();
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
+		}
+
+		_captureAppender.close();
+	}
 
 	@Test
 	public void testAddOrganization() throws Exception {
@@ -274,5 +310,7 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(
 			organizationB.getGroupId(), groupAA.getParentGroupId());
 	}
+
+	private CaptureAppender _captureAppender;
 
 }

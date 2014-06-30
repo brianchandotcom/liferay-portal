@@ -17,6 +17,8 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -34,6 +36,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
+import org.hibernate.util.JDBCExceptionReporter;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +70,30 @@ public class ResourceBlockLocalServiceTest {
 		preparedStatement.executeUpdate();
 
 		DataAccess.cleanUp(connection, preparedStatement);
+
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			JDBCExceptionReporter.class.getName(), Level.ERROR);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
+			String eventMessage = loggingEvent.getRenderedMessage();
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
+		}
+
+		_captureAppender.close();
 	}
 
 	@Test
@@ -257,6 +289,8 @@ public class ResourceBlockLocalServiceTest {
 	private static final long _ROLE_ID = -1;
 
 	private static final int _THREAD_COUNT = 10;
+
+	private CaptureAppender _captureAppender;
 
 	private class MockPermissionedModel implements PermissionedModel {
 

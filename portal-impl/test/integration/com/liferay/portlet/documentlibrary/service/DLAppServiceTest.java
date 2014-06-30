@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
@@ -64,6 +66,11 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
+import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -100,6 +107,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_users[i] = user;
 		}
+
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}
 
 	@After
@@ -108,6 +118,24 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		if (_fileEntry != null) {
 			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}
+
+		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
+			String eventMessage = loggingEvent.getRenderedMessage();
+
+			if (eventMessage.startsWith("Duplicate entry") ||
+				eventMessage.equals(
+						"Deadlock found when trying to get lock; try " +
+							"restarting transaction")) {
+
+				continue;
+			}
+
+			Assert.fail(eventMessage);
+		}
+
+		_captureAppender.close();
 
 		super.tearDown();
 	}
@@ -609,6 +637,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
 
+	private CaptureAppender _captureAppender;
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
 

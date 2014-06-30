@@ -356,6 +356,10 @@
 		<priority value="FATAL" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper">
+		<priority value="FATAL" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.upgrade">
 		<priority value="INFO" />
 	</category>

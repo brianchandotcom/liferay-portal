@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>EVENT_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>
@@ -197,6 +202,11 @@
 </tr>
 <!--COMMENTS-->
 <tr>
+	<td>COMMENTS_SUCCESS</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_BE_THE_FIRST</td>
 	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first.')]</td>
 	<td></td>
@@ -239,6 +249,46 @@
 <tr>
 	<td>COMMENTS_BODY</td>
 	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_eventComment}')]/div[@class='lfr-discussion-message'] | //div[contains(@class,'lfr-discussion') and contains(.,'${key_eventComment}')]//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_FIELD</td>
+	<td>//textarea[contains(@id,'postReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBMIT_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_DELETE</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//li/span/a/span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//li/span/a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_BODY_FIELD</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//textarea[contains(@id,'editReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_CANCEL_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//button[contains(@class,'btn') and contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
 <tr>

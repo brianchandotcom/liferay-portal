@@ -85,7 +85,15 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+		<if>
+			<contains string="${pageName}" substring="&apos;" />			
+			<then>
+				<execute action="Home#assertClick" locator-key1="PAGE_QUOTES" value1="${pageName}" />
+			</then>
+			<else>
+				<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addWithWorkflowPG">

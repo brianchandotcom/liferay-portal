@@ -509,6 +509,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void resizeWindow(String value) throws Exception {
+	}
+
+	@Override
 	public void saveScreenshot() throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;

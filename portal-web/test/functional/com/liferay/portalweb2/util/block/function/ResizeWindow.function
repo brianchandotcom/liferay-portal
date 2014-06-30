@@ -1,0 +1,5 @@
+<definition>
+	<command name="resizeWindow">
+		<execute selenium="resizeWindow" />
+	</command>
+</definition>

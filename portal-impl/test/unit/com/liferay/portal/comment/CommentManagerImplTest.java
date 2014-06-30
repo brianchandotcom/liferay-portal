@@ -115,61 +115,54 @@ public class CommentManagerImplTest extends Mockito {
 	protected void testAllCallsAreDelegated(CommentManager commentManager)
 		throws PortalException {
 
+		String body = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+		long commentId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		String subject = RandomTestUtil.randomString();
+		long userId = RandomTestUtil.randomLong();
+		String userName = RandomTestUtil.randomString();
+
 		when(
 			commentManager.addComment(
-				_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME,
-				_SUBJECT, _BODY, _serviceContextFunction)
+				userId, groupId, className, classPK, userName, subject, body,
+				_serviceContextFunction)
 		).thenReturn(
-			_COMMENT_ID
+			commentId
 		);
 
 		Assert.assertEquals(
-			_COMMENT_ID,
+			commentId,
 			_commentManagerImpl.addComment(
-				_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME,
-				_SUBJECT, _BODY, _serviceContextFunction));
+				userId, groupId, className, classPK, userName, subject, body,
+				_serviceContextFunction));
 
 		_commentManagerImpl.addDiscussion(
-			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME);
+			userId, groupId, className, classPK, userName);
 
 		Mockito.verify(
 			commentManager
 		).addDiscussion(
-			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME
+			userId, groupId, className, classPK, userName
 		);
 
-		_commentManagerImpl.deleteComment(_COMMENT_ID);
+		_commentManagerImpl.deleteComment(commentId);
 
 		Mockito.verify(
 			commentManager
 		).deleteComment(
-			_COMMENT_ID
+			commentId
 		);
 
-		_commentManagerImpl.deleteDiscussion(_CLASS_NAME, _CLASS_PK);
+		_commentManagerImpl.deleteDiscussion(className, classPK);
 
 		Mockito.verify(
 			commentManager
 		).deleteDiscussion(
-			_CLASS_NAME, _CLASS_PK
+			className, classPK
 		);
 	}
-
-	private static final String _BODY = RandomTestUtil.randomString();
-
-	private static final String _CLASS_NAME = RandomTestUtil.randomString();
-
-	private static final long _CLASS_PK = RandomTestUtil.randomLong();
-
-	private static final long _COMMENT_ID = RandomTestUtil.randomLong();
-
-	private static final long _GROUP_ID = RandomTestUtil.randomLong();
-
-	private static final String _SUBJECT = RandomTestUtil.randomString();
-
-	private static final long _USER_ID = RandomTestUtil.randomLong();
-
-	private static final String _USER_NAME = RandomTestUtil.randomString();
 
 	private CommentManagerImpl _commentManagerImpl;
 

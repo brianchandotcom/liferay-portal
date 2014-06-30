@@ -28,35 +28,28 @@ public class DummyCommentManagerImplTest {
 
 	@Test
 	public void testAllCallsDoNothing() throws PortalException {
+		String body = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+		long commentId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		String subject = RandomTestUtil.randomString();
+		long userId = RandomTestUtil.randomLong();
+		String userName = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
 			0,
 			_commentManager.addComment(
-				_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME,
-				_SUBJECT, _BODY, null));
+				userId, groupId, className, classPK, userName, subject, body,
+				null));
 
 		_commentManager.addDiscussion(
-			_USER_ID, _GROUP_ID, _CLASS_NAME, _CLASS_PK, _USER_NAME);
+			userId, groupId, className, classPK, userName);
 
-		_commentManager.deleteComment(_COMMENT_ID);
+		_commentManager.deleteComment(commentId);
 
-		_commentManager.deleteDiscussion(_CLASS_NAME, _CLASS_PK);
+		_commentManager.deleteDiscussion(className, classPK);
 	}
-
-	private static final String _BODY = RandomTestUtil.randomString();
-
-	private static final String _CLASS_NAME = RandomTestUtil.randomString();
-
-	private static final long _CLASS_PK = RandomTestUtil.randomLong();
-
-	private static final long _COMMENT_ID = RandomTestUtil.randomLong();
-
-	private static final long _GROUP_ID = RandomTestUtil.randomLong();
-
-	private static final String _SUBJECT = RandomTestUtil.randomString();
-
-	private static final long _USER_ID = RandomTestUtil.randomLong();
-
-	private static final String _USER_NAME = RandomTestUtil.randomString();
 
 	private CommentManager _commentManager = new DummyCommentManagerImpl();
 

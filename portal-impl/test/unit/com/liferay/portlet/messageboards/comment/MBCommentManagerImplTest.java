@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -42,7 +41,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpMessageBoards();
+		setUpMBCommentManagerImpl();
 		setUpServiceContext();
 	}
 
@@ -72,48 +71,48 @@ public class MBCommentManagerImplTest extends Mockito {
 			threadId
 		);
 
-		long userId = RandomTestUtil.randomLong();
-		long groupId = RandomTestUtil.randomLong();
-		String className = BlogsEntry.class.getName();
+		String body = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		String subject = RandomTestUtil.randomString();
+		long userId = RandomTestUtil.randomLong();
+		String userName = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			mbMessageId,
 			_mbCommentManagerImpl.addComment(
-				userId, groupId, className, classPK, "__blogName__",
-				"__title__", "__body__", _serviceContextFunction));
+				userId, groupId, _CLASS_NAME, classPK, userName, subject, body,
+				_serviceContextFunction));
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			Matchers.eq(userId), Matchers.eq("__blogName__"),
-			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
-			Matchers.eq(threadId), Matchers.eq(rootMessageId),
-			Matchers.eq("__title__"), Matchers.eq("__body__"),
-			Matchers.same(_serviceContext)
+			userId, userName, groupId, _CLASS_NAME, classPK, threadId,
+			rootMessageId, subject, body, _serviceContext
 		);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).getDiscussionMessageDisplay(
-			userId, groupId, className, classPK,
+			userId, groupId, _CLASS_NAME, classPK,
 			WorkflowConstants.STATUS_APPROVED
 		);
 	}
 
 	@Test
 	public void testAddDiscussion() throws Exception {
-		long userId = RandomTestUtil.randomLong();
-		long groupId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		long userId = RandomTestUtil.randomLong();
+		String userName = RandomTestUtil.randomString();
 
 		_mbCommentManagerImpl.addDiscussion(
-			userId, groupId, "__ClassName__", classPK, "__UserName__");
+			userId, groupId, _CLASS_NAME, classPK, userName);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			userId, "__UserName__", groupId, "__ClassName__", classPK,
+			userId, userName, groupId, _CLASS_NAME, classPK,
 			WorkflowConstants.ACTION_PUBLISH);
 	}
 
@@ -134,16 +133,16 @@ public class MBCommentManagerImplTest extends Mockito {
 	public void testDeleteDiscussion() throws Exception {
 		long classPK = RandomTestUtil.randomLong();
 
-		_mbCommentManagerImpl.deleteDiscussion("__ClassName__", classPK);
+		_mbCommentManagerImpl.deleteDiscussion(_CLASS_NAME, classPK);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).deleteDiscussionMessages(
-			"__ClassName__", classPK
+			_CLASS_NAME, classPK
 		);
 	}
 
-	protected void setUpMessageBoards() throws Exception {
+	protected void setUpMBCommentManagerImpl() throws Exception {
 		when(
 			_mbMessageDisplay.getThread()
 		).thenReturn(
@@ -164,7 +163,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		when(
 			_mbMessageLocalService.getDiscussionMessageDisplay(
 				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.eq(BlogsEntry.class.getName()), Matchers.anyLong(),
+				Matchers.eq(_CLASS_NAME), Matchers.anyLong(),
 				Matchers.eq(WorkflowConstants.STATUS_APPROVED)
 			)
 		).thenReturn(
@@ -181,6 +180,8 @@ public class MBCommentManagerImplTest extends Mockito {
 			_serviceContext
 		);
 	}
+
+	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
 	private MBCommentManagerImpl _mbCommentManagerImpl =
 		new MBCommentManagerImpl();

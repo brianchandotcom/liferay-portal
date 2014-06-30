@@ -53,9 +53,9 @@ public class TrackbackImplTest extends PowerMockito {
 		MockitoAnnotations.initMocks(this);
 
 		setUpBlogsUtil();
-		setUpPortal();
+		setUpPortalUtil();
 		setUpThemeDisplay();
-		setUpUserLocalService();
+		setUpUserLocalServiceUtil();
 	}
 
 	@Test
@@ -76,22 +76,28 @@ public class TrackbackImplTest extends PowerMockito {
 			groupId
 		);
 
+		String urlTitle = RandomTestUtil.randomString();
+
 		when(
 			_blogsEntry.getUrlTitle()
 		).thenReturn(
-			"__UrlTitle__"
+			urlTitle
 		);
+
+		String layoutFullURL = RandomTestUtil.randomString();
 
 		when(
 			_portal.getLayoutFullURL(_themeDisplay)
 		).thenReturn(
-			"__LayoutFullURL__"
+			layoutFullURL
 		);
+
+		String readMore = RandomTestUtil.randomString();
 
 		when(
 			_themeDisplay.translate("read-more")
 		).thenReturn(
-			"__read-more__"
+			readMore
 		);
 
 		long userId = RandomTestUtil.randomLong();
@@ -120,26 +126,30 @@ public class TrackbackImplTest extends PowerMockito {
 		trackback.setCommentManager(_commentManager);
 		trackback.setLinkbackConsumer(_linkbackConsumer);
 
+		String blogName = RandomTestUtil.randomString();
+		String excerpt = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+		String url = RandomTestUtil.randomString();
+
 		trackback.addTrackback(
-			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
-			"__blogName__", "__title__", _serviceContextFunction
+			_blogsEntry, _themeDisplay, excerpt, url, blogName, title,
+			_serviceContextFunction
 		);
 
 		Mockito.verify(
 			_commentManager
 		).addComment(
-			Matchers.eq(userId), Matchers.eq(groupId),
-			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(entryId),
-			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
-			Matchers.eq(
-				"[...] __excerpt__ [...] [url=__url__]__read-more__[/url]"),
-			Matchers.same(_serviceContextFunction)
+			userId, groupId, BlogsEntry.class.getName(), entryId, blogName,
+			title,
+			"[...] " + excerpt + " [...] [url=" + url + "]" + readMore +
+				"[/url]",
+			_serviceContextFunction
 		);
 
 		Mockito.verify(
 			_linkbackConsumer
 		).addNewTrackback(
-			commentId, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
+			commentId, url, layoutFullURL + "/-/blogs/" + urlTitle
 		);
 	}
 
@@ -157,7 +167,7 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortal() {
+	protected void setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
@@ -167,7 +177,7 @@ public class TrackbackImplTest extends PowerMockito {
 		_themeDisplay = PowerMockito.mock(ThemeDisplay.class);
 	}
 
-	protected void setUpUserLocalService() {
+	protected void setUpUserLocalServiceUtil() {
 		mockStatic(UserLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(

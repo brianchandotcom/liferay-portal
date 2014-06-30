@@ -55,10 +55,12 @@ public class BlogsEntryLocalServiceImplTest {
 			entryId
 		);
 
+		String userName = RandomTestUtil.randomString();
+
 		Mockito.when(
 			_blogsEntry.getUserName()
 		).thenReturn(
-			"__UserName__"
+			userName
 		);
 
 		long userId = RandomTestUtil.randomLong();
@@ -69,8 +71,7 @@ public class BlogsEntryLocalServiceImplTest {
 		Mockito.verify(
 			_commentManager
 		).addDiscussion(
-			userId, groupId, BlogsEntry.class.getName(), entryId,
-			"__UserName__");
+			userId, groupId, BlogsEntry.class.getName(), entryId, userName);
 	}
 
 	@Test

@@ -33,7 +33,7 @@ public class MapUtilTest {
 	public static class WhenCreatingALinkedHashMapFromArray {
 
 		@Test
-		public void testDelimiterCustom() throws Exception {
+		public void testDelimiterCustom() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[] {"one,1"}, ",");
 
@@ -43,7 +43,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testDelimiterDefault() throws Exception {
+		public void testDelimiterDefault() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1"});
 
@@ -53,7 +53,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsInvalid() throws Exception {
+		public void testParamsInvalid() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one"});
 
@@ -65,14 +65,14 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsNull() throws Exception {
+		public void testParamsNull() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(null);
 
 			Assert.assertTrue(map.isEmpty());
 		}
 
 		@Test
-		public void testParamsTypeBoolean() throws Exception {
+		public void testParamsTypeBoolean() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:true:boolean"});
 
@@ -91,7 +91,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsTypeBooleanInvalidValue() throws Exception {
+		public void testParamsTypeBooleanInvalidValue() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:boolean"});
 
@@ -110,7 +110,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsTypeComposite() throws Exception {
+		public void testParamsTypeComposite() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:" + Byte.class.getName()});
 
@@ -134,7 +134,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsTypeDouble() throws Exception {
+		public void testParamsTypeDouble() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1.0:double"});
 
@@ -153,9 +153,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidCompositeValue()
-			throws Exception {
-
+		public void testParamsTypeDoubleInvalidCompositeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Double.class.getName()});
 
@@ -163,14 +161,14 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidValue() throws Exception {
+		public void testParamsTypeDoubleInvalidValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:double"});
 
 			Assert.fail();
 		}
 
 		@Test
-		public void testParamsTypeInteger() throws Exception {
+		public void testParamsTypeInteger() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:int"});
 
@@ -189,9 +187,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidCompositeValue()
-			throws Exception {
-
+		public void testParamsTypeIntegerInvalidCompositeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Integer.class.getName()});
 
@@ -199,14 +195,14 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidValue() throws Exception {
+		public void testParamsTypeIntegerInvalidValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:int"});
 
 			Assert.fail();
 		}
 
 		@Test
-		public void testParamsTypeLong() throws Exception {
+		public void testParamsTypeLong() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:long"});
 
@@ -225,9 +221,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidCompositeValue()
-			throws Exception {
-
+		public void testParamsTypeLongInvalidCompositeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Long.class.getName()});
 
@@ -235,14 +229,14 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidValue() throws Exception {
+		public void testParamsTypeLongInvalidValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:long"});
 
 			Assert.fail();
 		}
 
 		@Test
-		public void testParamsTypeShort() throws Exception {
+		public void testParamsTypeShort() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:short"});
 
@@ -261,9 +255,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidCompositeValue()
-			throws Exception {
-
+		public void testParamsTypeShortInvalidCompositeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Short.class.getName()});
 
@@ -271,14 +263,14 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidValue() throws Exception {
+		public void testParamsTypeShortInvalidValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:short"});
 
 			Assert.fail();
 		}
 
 		@Test
-		public void testParamsTypeString() throws Exception {
+		public void testParamsTypeString() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:X:" + String.class.getName()});
 
@@ -289,7 +281,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsZeroLength() throws Exception {
+		public void testParamsZeroLength() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
 
 			Assert.assertTrue(map.isEmpty());
@@ -362,7 +354,7 @@ public class MapUtilTest {
 	public static class WhenFilteringByPredicateFilter {
 
 		@Test
-		public void testSuceed() throws Exception {
+		public void testSuceed() {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("1", "one");
@@ -394,7 +386,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testWithPrefix() throws Exception {
+		public void testWithPrefix() {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("x1", "one");

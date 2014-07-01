@@ -20,6 +20,7 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Resource;
 import aQute.bnd.osgi.Verifier;
 import aQute.bnd.version.Version;
 
@@ -597,6 +598,52 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
+	private String _calculateExportsFromContents(Jar jar) {
+		StringBundler sb = new StringBundler();
+
+		String delimiter = StringPool.BLANK;
+
+		Map<String, Map<String, Resource>> directories = jar.getDirectories();
+
+		for (String directory : directories.keySet()) {
+			if (directory.equals("META-INF") ||
+				directory.startsWith("META-INF/")) {
+
+				continue;
+			}
+
+			if (directory.equals("OSGI-OPT") ||
+				directory.startsWith("OSGI-OPT/")) {
+
+				continue;
+			}
+
+			if (directory.equals(StringPool.SLASH)) {
+				continue;
+			}
+
+			if (directory.endsWith(StringPool.SLASH)) {
+				directory = directory.substring(0, directory.length() - 1);
+			}
+
+			if (directory.endsWith(StringPool.SLASH)) {
+				directory = directory.substring(0, directory.length() - 1);
+			}
+
+			String className = directory.replace(
+				StringPool.SLASH, StringPool.PERIOD);
+
+			if (directories.get(directory) != null) {
+				sb.append(delimiter);
+				sb.append(className);
+
+				delimiter = StringPool.COMMA;
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private Manifest _calculateManifest(URL url, Manifest manifest) {
 		Analyzer analyzer = new Analyzer();
 
@@ -640,7 +687,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			analyzer.setProperty(
 				Analyzer.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
 
-			String exportPackage = analyzer.calculateExportsFromContents(jar);
+			String exportPackage = _calculateExportsFromContents(jar);
 
 			analyzer.setProperty(Analyzer.EXPORT_PACKAGE, exportPackage);
 
@@ -1086,12 +1133,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Parameters parameters = OSGiHeader.parseHeader(exportPackage);
 
 		for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
-			Attrs attrs = entry.getValue();
-
-			if (attrs.isEmpty()) {
-				continue;
-			}
-
 			String key = entry.getKey();
 
 			List<URL> urls = _extraPackageMap.get(key);

@@ -583,11 +583,12 @@ public class ShoppingItemLocalServiceImpl
 		return StringUtil.replace(
 			value,
 			new String[] {
-				"\"", "&", "'", ".", "=", "|"
+				StringPool.AMPERSAND, StringPool.APOSTROPHE, StringPool.EQUAL,
+				StringPool.PIPE, StringPool.QUOTE
 			},
 			new String[] {
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
+				StringPool.BLANK, StringPool.BLANK
 			}
 		);
 	}

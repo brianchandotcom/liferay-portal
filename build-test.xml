@@ -2864,9 +2864,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 	<target name="record-git-commit-bottom-ext-jsp">
 		<var name="bottom.ext.jsp" value="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-ext.jsp" />
-		<var name="copyright.txt" value="${project.dir}/portal-impl/src/com/liferay/portal/tools/servicebuilder/dependencies/copyright.txt" />
 
-		<loadfile property="copyright.content" srcFile="${copyright.txt}"/>
+		<loadfile property="copyright.content" srcFile="${project.dir}/portal-impl/src/com/liferay/portal/tools/servicebuilder/dependencies/copyright.txt" />
 
 		<concat append="no" destfile="${bottom.ext.jsp}" overwrite="yes"><![CDATA[<%--
 ${copyright.content}

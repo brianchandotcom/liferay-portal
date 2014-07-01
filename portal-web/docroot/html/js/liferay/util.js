@@ -542,6 +542,49 @@
 			return !!(window.Array && object.constructor == window.Array);
 		},
 
+		inBrowserView: function(node, win, nodeRegion) {
+			var DOM = A.DOM;
+
+			if (!win) {
+				win = window;
+			}
+
+			if (!nodeRegion) {
+				nodeRegion = node.get('region');
+			}
+
+			var winRegion = DOM.viewportRegion(win);
+
+			var viewable = (
+				nodeRegion.left >= winRegion.left &&
+				nodeRegion.right <= winRegion.right &&
+				nodeRegion.top >= winRegion.top &&
+				nodeRegion.bottom <= winRegion.bottom
+			);
+
+			if (viewable) {
+				var frameEl = win.frameElement;
+
+				if (frameEl) {
+					var frameXY = DOM.getXY(frameEl);
+
+					var xOffset = frameXY[0] - DOM.docScrollX(win);
+
+					nodeRegion.left = nodeRegion.left + xOffset;
+					nodeRegion.right = nodeRegion.right + xOffset;
+
+					var yOffset = frameXY[1] - DOM.docScrollY(win);
+
+					nodeRegion.top = nodeRegion.top + yOffset;
+					nodeRegion.bottom = nodeRegion.bottom + yOffset;
+
+					return Util.inBrowserView(node, win.parent, nodeRegion);
+				}
+			}
+
+			return viewable;
+		},
+
 		isEditorPresent: function(editorImpl) {
 			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 		},
@@ -1327,10 +1370,12 @@
 			if (!interacting) {
 				el = A.one(el);
 
-				try {
-					el.focus();
-				}
-				catch (e) {
+				if (Util.inBrowserView(el)) {
+					try {
+						el.focus();
+					}
+					catch (e) {
+					}
 				}
 			}
 		},

@@ -88,7 +88,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				}
 
-				_log.error(throwable, throwable);
+				_log.error(_getThrowableMessage(throwable));
 
 				response.setStatus(status);
 
@@ -107,7 +107,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
-			_log.error(e, e);
+			_log.error(_getThrowableMessage(e));
 
 			response.setStatus(status);
 
@@ -176,6 +176,16 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	@Override
 	protected String getReroutePath() {
 		return _REROUTE_PATH;
+	}
+
+	private String _getThrowableMessage(Throwable throwable) {
+		String message = throwable.getMessage();
+
+		if (message != null) {
+			return message;
+		}
+
+		return throwable.toString();
 	}
 
 	private static final String _REROUTE_PATH = "/jsonws";

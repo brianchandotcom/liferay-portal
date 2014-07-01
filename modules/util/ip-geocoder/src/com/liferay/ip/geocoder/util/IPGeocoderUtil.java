@@ -16,10 +16,12 @@ package com.liferay.ip.geocoder.util;
 
 import com.liferay.ip.geocoder.model.IPInfo;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.maxmind.geoip.Location;
+import com.maxmind.geoip.LookupService;
+
+import java.io.IOException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,43 +29,32 @@ import com.liferay.portal.kernel.util.GetterUtil;
 public class IPGeocoderUtil {
 
 	public static IPInfo getIPInfo(String ipAddress) throws PortalException {
-		Object response = MessageBusUtil.sendSynchronousMessage(
-			DestinationNames.IP_GEOCODER, ipAddress);
-
-		if (!(response instanceof JSONObject)) {
-			return null;
+		if (_lookupService == null) {
+			_init();
 		}
 
-		JSONObject ipInfoJSON = (JSONObject)response;
+		Location location = _lookupService.getLocation(ipAddress);
 
-		if (ipInfoJSON == null) {
-			return null;
-		}
-
-		String city = GetterUtil.getString(ipInfoJSON.getString("city"));
-		String countryName = GetterUtil.getString(
-			ipInfoJSON.getString("countryName"));
-		String countryCode = GetterUtil.getString(
-			ipInfoJSON.getString("countryCode"));
-		float latitude = GetterUtil.getFloat(ipInfoJSON.getString("latitude"));
-		float longitude = GetterUtil.getFloat(
-			ipInfoJSON.getString("longitude"));
-		String postalCode = GetterUtil.getString(
-			ipInfoJSON.getString("postalCode"));
-		String region = GetterUtil.getString(ipInfoJSON.getString("region"));
-
-		IPInfo ipInfo = new IPInfo();
-
-		ipInfo.setCity(city);
-		ipInfo.setCountryCode(countryCode);
-		ipInfo.setCountryName(countryName);
-		ipInfo.setIpAddress(ipAddress);
-		ipInfo.setLatitude(latitude);
-		ipInfo.setLongitude(longitude);
-		ipInfo.setPostalCode(postalCode);
-		ipInfo.setRegion(region);
-
-		return ipInfo;
+		return new IPInfo(ipAddress, location);
 	}
+
+	private static void _init() {
+		try {
+			if (_lookupService == null) {
+				_lookupService = new LookupService(
+					GEO_DATA_LOCATION, LookupService.GEOIP_MEMORY_CACHE);
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe.getMessage());
+		}
+	}
+
+	private static String GEO_DATA_LOCATION =
+		"/usr/local/share/GeoIP/GeoIPCity.dat";
+
+	private static Log _log = LogFactoryUtil.getLog(IPGeocoderUtil.class);
+
+	private static LookupService _lookupService;
 
 }

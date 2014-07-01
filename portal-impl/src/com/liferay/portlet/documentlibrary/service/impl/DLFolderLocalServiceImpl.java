@@ -401,7 +401,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.findFE_FS_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -426,7 +426,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.countFE_FS_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -552,7 +552,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, String[] mimeTypes,
-		boolean includeMountFolders, QueryDefinition<Object> queryDefinition) {
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.findF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
@@ -596,7 +596,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, String[] mimeTypes,
-		boolean includeMountFolders, QueryDefinition<Object> queryDefinition) {
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.countF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);

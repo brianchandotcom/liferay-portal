@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ip.geocoder.util;
+package com.liferay.ip.geocoder.internal;
 
 import com.liferay.ip.geocoder.model.IPInfo;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class IPGeocoderUtil {
+public class IPGeocoderServiceImpl {
 
 	public static IPInfo getIPInfo(String ipAddress) throws PortalException {
 		if (_lookupService == null) {
@@ -53,7 +53,7 @@ public class IPGeocoderUtil {
 	private static String GEO_DATA_LOCATION =
 		"/usr/local/share/GeoIP/GeoIPCity.dat";
 
-	private static Log _log = LogFactoryUtil.getLog(IPGeocoderUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(IPGeocoderServiceImpl.class);
 
 	private static LookupService _lookupService;
 

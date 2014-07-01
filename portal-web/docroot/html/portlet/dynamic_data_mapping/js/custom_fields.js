@@ -38,6 +38,14 @@ AUI.add(
 
 		var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
 
+		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
+
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
+
+		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
+			return (/^[\w\-]+$/).test(value);
+		};
+
 		var applyStyles = function(node, styleContent) {
 			var styles = styleContent.replace(/\n/g, STR_BLANK).split(';');
 
@@ -422,13 +430,33 @@ AUI.add(
 				'true': Liferay.Language.get('yes')
 			};
 
+			AArray.each(
+				model,
+				function(item, index) {
+					if(item.attributeName == 'name'){
+						item.editor = new A.TextCellEditor({
+							                    validator: {
+								                    rules: {
+								                        value: {
+								                            required: true,
+								                            structureFieldName: true
+								                        }
+								                    }
+							                }
+							            });
+					}
+				}
+			);
+
+
 			return model.concat(
 				[
 					{
 						attributeName: 'indexType',
 						editor: new A.RadioCellEditor(
 							{
-								options: indexTypeOptions
+								options: indexTypeOptions,
+
 							}
 						),
 						formatter: function(val) {

@@ -81,31 +81,12 @@ public class DDMFormValuesJSONDeserializerImpl
 
 		ddmFormFieldValue.setName(jsonObject.getString("name"));
 
-		setDDMFormFieldValueValues(
-			jsonObject.getJSONArray("values"), ddmFormFieldValue);
+		setDDMFormFieldValueValue(jsonObject, ddmFormFieldValue);
 
 		setNestedDDMFormFieldValues(
 			jsonObject.getJSONArray("nestedFieldValues"), ddmFormFieldValue);
 
 		return ddmFormFieldValue;
-	}
-
-	protected LocalizedValue getDDMFormFieldValueLocalizedValue(
-		JSONObject jsonObject) {
-
-		LocalizedValue localizedValue = new LocalizedValue();
-
-		Iterator<String> itr = jsonObject.keys();
-
-		while (itr.hasNext()) {
-			String languageId = itr.next();
-
-			localizedValue.addValue(
-				LocaleUtil.fromLanguageId(languageId),
-				jsonObject.getString(languageId));
-		}
-
-		return localizedValue;
 	}
 
 	protected List<DDMFormFieldValue> getDDMFormFieldValues(
@@ -124,25 +105,30 @@ public class DDMFormValuesJSONDeserializerImpl
 		return ddmFormFieldValues;
 	}
 
-	protected List<Value> getValues(JSONArray jsonArray) {
-		List<Value> values = new ArrayList<Value>();
+	protected LocalizedValue getLocalizedValue(JSONObject jsonObject) {
+		LocalizedValue localizedValue = new LocalizedValue();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		Iterator<String> itr = jsonObject.keys();
 
-			Value value = null;
+		while (itr.hasNext()) {
+			String languageId = itr.next();
 
-			if (isLocalized(jsonObject)) {
-				value = getDDMFormFieldValueLocalizedValue(jsonObject);
-			}
-			else {
-				value = new UnlocalizedValue(jsonArray.getString(i));
-			}
-
-			values.add(value);
+			localizedValue.addValue(
+				LocaleUtil.fromLanguageId(languageId),
+				jsonObject.getString(languageId));
 		}
 
-		return values;
+		return localizedValue;
+	}
+
+	protected Value getValue(JSONObject jsonObject) {
+		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
+
+		if (isLocalized(valueJSONObject)) {
+			return getLocalizedValue(valueJSONObject);
+		}
+
+		return new UnlocalizedValue(jsonObject.getString("value"));
 	}
 
 	protected boolean isLocalized(JSONObject jsonObject) {
@@ -166,13 +152,9 @@ public class DDMFormValuesJSONDeserializerImpl
 	protected void setDDMFormFieldValueLocalizedValueDefaultLocale(
 		DDMFormFieldValue ddmFormFieldValue, Locale defaultLocale) {
 
-		List<Value> values = ddmFormFieldValue.getValues();
+		Value value = ddmFormFieldValue.getValue();
 
-		for (Value value : values) {
-			if (!value.isLocalized()) {
-				break;
-			}
-
+		if ((value != null) && value.isLocalized()) {
 			value.setDefaultLocale(defaultLocale);
 		}
 
@@ -193,16 +175,18 @@ public class DDMFormValuesJSONDeserializerImpl
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
 	}
 
-	protected void setDDMFormFieldValueValues(
-		JSONArray jsonArray, DDMFormFieldValue ddmFormFieldValue) {
+	protected void setDDMFormFieldValueValue(
+		JSONObject jsonObject, DDMFormFieldValue ddmFormFieldValue) {
 
-		if ((jsonArray == null) || (jsonArray.length() == 0)) {
+		String valueString = jsonObject.getString("value", null);
+
+		if (valueString == null) {
 			return;
 		}
 
-		List<Value> values = getValues(jsonArray);
+		Value value = getValue(jsonObject);
 
-		ddmFormFieldValue.setValues(values);
+		ddmFormFieldValue.setValue(value);
 	}
 
 	protected void setDDMFormLocalizedValuesDefaultLocale(

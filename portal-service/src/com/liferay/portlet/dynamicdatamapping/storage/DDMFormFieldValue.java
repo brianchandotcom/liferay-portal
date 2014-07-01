@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.util.ArrayList;
@@ -27,10 +26,6 @@ import java.util.Map;
  * @author Pablo Carvalho
  */
 public class DDMFormFieldValue {
-
-	public void addValue(LocalizedValue value) {
-		_values.add(value);
-	}
 
 	public String getName() {
 		return _name;
@@ -54,12 +49,8 @@ public class DDMFormFieldValue {
 		return nestedDDMFormFieldValuesMap;
 	}
 
-	public Value getValue(int index) {
-		return _values.get(index);
-	}
-
-	public List<Value> getValues() {
-		return _values;
+	public Value getValue() {
+		return _value;
 	}
 
 	public void setName(String name) {
@@ -72,13 +63,13 @@ public class DDMFormFieldValue {
 		_nestedDDMFormFieldValues = nestedDDMFormFieldValues;
 	}
 
-	public void setValues(List<Value> values) {
-		_values = values;
+	public void setValue(Value value) {
+		_value = value;
 	}
 
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
 		new ArrayList<DDMFormFieldValue>();
-	private List<Value> _values = new ArrayList<Value>();
+	private Value _value;
 
 }

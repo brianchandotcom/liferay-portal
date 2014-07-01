@@ -70,14 +70,14 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 			DDMFormFieldValue separatorDDMFormFieldValue =
 				ddmFormFieldValues.get(i);
 
-			testSeparatorDDMFormFieldValueValues(separatorDDMFormFieldValue);
+			testSeparatorDDMFormFieldValueValue(separatorDDMFormFieldValue);
 
 			List<DDMFormFieldValue> separatorNestedDDMFormFieldValues =
 				separatorDDMFormFieldValue.getNestedDDMFormFieldValues();
 
 			Assert.assertEquals(1, separatorNestedDDMFormFieldValues.size());
 
-			testTextBoxDDMFormFieldValue(
+			testTextDDMFormFieldValue(
 				separatorNestedDDMFormFieldValues.get(0), "Content " + i,
 				"Conteudo " + i);
 		}
@@ -95,9 +95,12 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(3, ddmFormFieldValues.size());
 
-		testTextDDMFormFieldValue(ddmFormFieldValues.get(0));
+		for (int i = 0; i < ddmFormFieldValues.size(); i++) {
+			testTextDDMFormFieldValue(
+				ddmFormFieldValues.get(i), "Name " + i, "Nome " + i);
+		}
 	}
 
 	@Test
@@ -142,7 +145,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 		DDMFormFieldValue booleanDDMFormFieldValue = ddmFormFieldValuesMap.get(
 			"Boolean2282");
 
-		Value booleanValue = booleanDDMFormFieldValue.getValue(0);
+		Value booleanValue = booleanDDMFormFieldValue.getValue();
 
 		Assert.assertFalse(booleanValue.isLocalized());
 		Assert.assertEquals("false", booleanValue.getValue(LocaleUtil.US));
@@ -151,8 +154,8 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 		DDMFormFieldValue documentLibraryDDMFormFieldValue =
 			ddmFormFieldValuesMap.get("Documents_and_Media4036");
 
-		Value documentLibraryValue = documentLibraryDDMFormFieldValue.getValue(
-			0);
+		Value documentLibraryValue =
+			documentLibraryDDMFormFieldValue.getValue();
 
 		Assert.assertFalse(documentLibraryValue.isLocalized());
 
@@ -208,7 +211,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		Assert.assertEquals("false", value.getValue(LocaleUtil.US));
 		Assert.assertEquals("true", value.getValue(LocaleUtil.BRAZIL));
@@ -232,7 +235,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 		expectedJSONObject.put("uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc");
 		expectedJSONObject.put("version", 1.0);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getValue(LocaleUtil.US),
@@ -248,7 +251,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -274,7 +277,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		Assert.assertEquals(
 			"<p>This is a test</p>", value.getValue(LocaleUtil.US));
@@ -288,7 +291,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -315,7 +318,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -344,7 +347,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		Value value = ddmFormFieldValue.getValue(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		JSONArray expectedJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -364,45 +367,24 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 			false);
 	}
 
-	protected void testSeparatorDDMFormFieldValueValues(
+	protected void testSeparatorDDMFormFieldValueValue(
 		DDMFormFieldValue ddmFormFieldValue) {
 
-		List<Value> values = ddmFormFieldValue.getValues();
+		Value value = ddmFormFieldValue.getValue();
 
-		Assert.assertEquals(0, values.size());
+		Assert.assertNull(value);
 	}
 
-	protected void testTextBoxDDMFormFieldValue(
+	protected void testTextDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue, String expected_en_US,
 		String expected_pt_BR) {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
-		List<Value> values = ddmFormFieldValue.getValues();
-
-		Assert.assertEquals(1, values.size());
-
-		Value value = values.get(0);
+		Value value = ddmFormFieldValue.getValue();
 
 		Assert.assertEquals(expected_en_US, value.getValue(LocaleUtil.US));
 		Assert.assertEquals(expected_pt_BR, value.getValue(LocaleUtil.BRAZIL));
-	}
-
-	protected void testTextDDMFormFieldValue(
-		DDMFormFieldValue ddmFormFieldValue) {
-
-		Assert.assertNotNull(ddmFormFieldValue);
-
-		List<Value> values = ddmFormFieldValue.getValues();
-
-		Assert.assertEquals(3, values.size());
-
-		for (int i = 0; i < values.size(); i++) {
-			Value value = values.get(i);
-
-			Assert.assertEquals("Name " + i, value.getValue(LocaleUtil.US));
-			Assert.assertEquals("Nome " + i, value.getValue(LocaleUtil.BRAZIL));
-		}
 	}
 
 }

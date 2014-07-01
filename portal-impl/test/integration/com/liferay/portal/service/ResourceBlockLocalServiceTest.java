@@ -21,6 +21,9 @@ import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.log.ExpectedLog;
+import com.liferay.portal.test.log.ExpectedLogs;
+import com.liferay.portal.test.log.ExpectedType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +36,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
+
+import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,6 +69,18 @@ public class ResourceBlockLocalServiceTest {
 		DataAccess.cleanUp(connection, preparedStatement);
 	}
 
+	@ExpectedLogs(
+		loggerClass = JDBCExceptionReporter.class, level = "ERROR",
+		expectedLogs = {
+			@ExpectedLog(
+				expectedType = ExpectedType.EXACT, expectedLog =
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction"),
+			@ExpectedLog(
+				expectedType = ExpectedType.PREFIX,
+				expectedLog = "Duplicate entry ")
+		}
+	)
 	@Test
 	public void testConcurrentAccessing() throws Exception {
 		PermissionedModel permissionedModel = new MockPermissionedModel();
@@ -133,6 +150,14 @@ public class ResourceBlockLocalServiceTest {
 		_assertNoSuchResourceBlock(_RESOURCE_BLOCK_ID);
 	}
 
+	@ExpectedLogs(
+		loggerClass = JDBCExceptionReporter.class, level = "ERROR",
+		expectedLogs = {
+			@ExpectedLog(
+				expectedType = ExpectedType.PREFIX,
+				expectedLog = "Duplicate entry ")
+		}
+	)
 	@Test
 	public void testConcurrentUpdateResourceBlockId() throws Exception {
 		PermissionedModel permissionedModel = new MockPermissionedModel();

@@ -41,7 +41,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.HashMap;
@@ -252,7 +251,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		throws PortalException {
 
 		JournalArticleResource importedArticleResource =
-			JournalArticleResourceUtil.fetchByUUID_G(uuid, groupId);
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
 
 		return JournalArticleLocalServiceUtil.getLatestArticle(
 			importedArticleResource.getResourcePrimKey());

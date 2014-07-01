@@ -236,8 +236,6 @@
 		<execute action="PGBookmarks#click" locator-key1="FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON" />
 		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_ACTION_MENULIST_SUBSCRIBE" value1="Subscribe" />
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGBookmarks#click" locator-key1="FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDER_ACTION_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 
 	<command name="tearDownCP">

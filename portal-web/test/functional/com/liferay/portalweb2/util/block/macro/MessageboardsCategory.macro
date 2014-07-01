@@ -194,9 +194,6 @@
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_MENULIST_SUBSCRIBE" value1="Subscribe" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 
 	<command name="tearDownCP">

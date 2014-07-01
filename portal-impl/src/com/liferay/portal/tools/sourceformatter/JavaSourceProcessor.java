@@ -1409,7 +1409,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		newContent = applyDiamondOperator(newContent);
+		//newContent = applyDiamondOperator(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);

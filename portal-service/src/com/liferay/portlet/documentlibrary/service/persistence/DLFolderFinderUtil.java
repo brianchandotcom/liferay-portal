@@ -26,45 +26,45 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 public class DLFolderFinderUtil {
 	public static int countF_FE_FS_ByG_F_M_M(long groupId, long folderId,
 		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .countF_FE_FS_ByG_F_M_M(groupId, folderId, mimeTypes,
 			includeMountFolders, queryDefinition);
 	}
 
 	public static int countFE_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder().countFE_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static int countFE_FS_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder().countFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static int filterCountF_FE_FS_ByG_F_M_M(long groupId, long folderId,
 		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterCountF_FE_FS_ByG_F_M_M(groupId, folderId, mimeTypes,
 			includeMountFolders, queryDefinition);
 	}
 
 	public static int filterCountFE_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterCountFE_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static int filterCountFE_FS_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterCountFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static int filterCountFE_FS_ByG_F_M(long groupId, long folderId,
 		java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterCountFE_FS_ByG_F_M(groupId, folderId, mimeTypes,
 			queryDefinition);
@@ -73,7 +73,7 @@ public class DLFolderFinderUtil {
 	public static java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterFindF_FE_FS_ByG_F_M_M(groupId, folderId, mimeTypes,
 			includeMountFolders, queryDefinition);
@@ -81,7 +81,7 @@ public class DLFolderFinderUtil {
 
 	public static java.util.List<java.lang.Object> filterFindFE_FS_ByG_F(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterFindFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
@@ -93,7 +93,7 @@ public class DLFolderFinderUtil {
 	public static java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .findF_FE_FS_ByG_F_M_M(groupId, folderId, mimeTypes,
 			includeMountFolders, queryDefinition);
@@ -101,7 +101,7 @@ public class DLFolderFinderUtil {
 
 	public static java.util.List<java.lang.Object> findFE_FS_ByG_F(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder().findFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
 

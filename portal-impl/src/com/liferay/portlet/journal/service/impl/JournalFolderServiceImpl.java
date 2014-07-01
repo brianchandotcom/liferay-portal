@@ -146,10 +146,10 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<Object> obc) {
+		OrderByComparator<?> obc) {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
-			status, start, end, obc);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			status, start, end, (OrderByComparator<Object>)obc);
 
 		return journalFolderFinder.filterFindF_A_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -158,10 +158,11 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator<Object> obc) {
+		OrderByComparator<?> obc) {
 
 		return getFoldersAndArticles(
-			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);
+			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end,
+			(OrderByComparator<Object>)obc);
 	}
 
 	@Override

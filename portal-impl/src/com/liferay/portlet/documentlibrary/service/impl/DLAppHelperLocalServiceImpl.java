@@ -569,7 +569,7 @@ public class DLAppHelperLocalServiceImpl
 
 				// Folders, file entries, and file shortcuts
 
-				QueryDefinition<Object> queryDefinition =
+				QueryDefinition<?> queryDefinition =
 					new QueryDefinition<Object>(WorkflowConstants.STATUS_ANY);
 
 				List<Object> foldersAndFileEntriesAndFileShortcuts =
@@ -999,7 +999,7 @@ public class DLAppHelperLocalServiceImpl
 
 				// Folders, file entries, and file shortcuts
 
-				QueryDefinition<Object> queryDefinition =
+				QueryDefinition<?> queryDefinition =
 					new QueryDefinition<Object>(
 						WorkflowConstants.STATUS_IN_TRASH);
 
@@ -1163,7 +1163,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Folders, file entries, and file shortcuts
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
@@ -1821,8 +1821,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Folders, file entries, and file shortcuts
 
-			QueryDefinition<Object> queryDefinition =
-				new QueryDefinition<Object>(WorkflowConstants.STATUS_IN_TRASH);
+			QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+				WorkflowConstants.STATUS_IN_TRASH);
 
 			List<Object> foldersAndFileEntriesAndFileShortcuts =
 				dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
@@ -1883,7 +1883,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Folders, file entries, and file shortcuts
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			WorkflowConstants.STATUS_ANY);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =

@@ -17,12 +17,13 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.log.CaptureAppender;
-import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.log.ExpectedLog;
+import com.liferay.portal.test.log.ExpectedLogs;
+import com.liferay.portal.test.log.ExpectedType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,12 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
-
 import org.hibernate.util.JDBCExceptionReporter;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,32 +67,20 @@ public class ResourceBlockLocalServiceTest {
 		preparedStatement.executeUpdate();
 
 		DataAccess.cleanUp(connection, preparedStatement);
-
-		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-			JDBCExceptionReporter.class.getName(), Level.ERROR);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-
-		for (LoggingEvent loggingEvent : loggingEvents) {
-			String eventMessage = loggingEvent.getRenderedMessage();
-
-			if (eventMessage.startsWith("Duplicate entry") ||
-				eventMessage.equals(
-						"Deadlock found when trying to get lock; try " +
-							"restarting transaction")) {
-
-				continue;
-			}
-
-			Assert.fail(eventMessage);
+	@ExpectedLogs(
+		loggerClass = JDBCExceptionReporter.class, level = "ERROR",
+		expectedLogs = {
+			@ExpectedLog(
+				expectedType = ExpectedType.EXACT, expectedLog =
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction"),
+			@ExpectedLog(
+				expectedType = ExpectedType.PREFIX,
+				expectedLog = "Duplicate entry ")
 		}
-
-		_captureAppender.close();
-	}
-
+	)
 	@Test
 	public void testConcurrentAccessing() throws Exception {
 		PermissionedModel permissionedModel = new MockPermissionedModel();
@@ -165,6 +150,14 @@ public class ResourceBlockLocalServiceTest {
 		_assertNoSuchResourceBlock(_RESOURCE_BLOCK_ID);
 	}
 
+	@ExpectedLogs(
+		loggerClass = JDBCExceptionReporter.class, level = "ERROR",
+		expectedLogs = {
+			@ExpectedLog(
+				expectedType = ExpectedType.PREFIX,
+				expectedLog = "Duplicate entry ")
+		}
+	)
 	@Test
 	public void testConcurrentUpdateResourceBlockId() throws Exception {
 		PermissionedModel permissionedModel = new MockPermissionedModel();
@@ -289,8 +282,6 @@ public class ResourceBlockLocalServiceTest {
 	private static final long _ROLE_ID = -1;
 
 	private static final int _THREAD_COUNT = 10;
-
-	private CaptureAppender _captureAppender;
 
 	private class MockPermissionedModel implements PermissionedModel {
 

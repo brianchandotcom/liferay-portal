@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -29,9 +30,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 import org.tukaani.xz.XZInputStream;
 
@@ -39,16 +44,26 @@ import org.tukaani.xz.XZInputStream;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-@Component(service = IPGeocoderService.class)
+@Component(
+	name = IPGeocoderServiceImpl.SERVICE_NAME,
+	service = IPGeocoderService.class,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	property = {
+		"ip.geocoderservice.file.location=",
+		"ip.geocoderservice.file.url=http://cdn.files.liferay.com/mirrors/" +
+			"geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.xz"
+	})
 public class IPGeocoderServiceImpl implements IPGeocoderService {
 
+	public static final String SERVICE_NAME = "IPGeocoderService";
+
 	@Activate
-	public void activate() {
-		_init();
+	public void activate(final Map<String, String> properties) {
+		_init(properties);
 	}
 
 	@Deactivate
-	public void deactivate() {
+	public void deactivate(final Map<String, String> properties) {
 		_lookupService = null;
 	}
 
@@ -63,13 +78,22 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 		}
 	}
 
+	@Modified
+	public void modified(final Map<String, String> properties) {
+		if (properties.containsKey("ip.geocoderservice.file.location") ||
+			properties.containsKey("ip.geocoderservice.file.url")) {
+
+			_lookupService = null;
+
+			_init(properties);
+		}
+	}
+
 	protected String getIPGeocoderFile(
 			String path, String url, boolean forceDownload)
 		throws IOException {
 
-		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
-
-		File file = new File(tmpDir + path);
+		File file = new File(path);
 
 		if (!file.exists() || forceDownload) {
 			synchronized (this) {
@@ -78,6 +102,8 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 				}
 
 				byte[] bytes = HttpUtil.URLtoByteArray(url);
+
+				String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
 				File tarFile = new File(tmpDir + GEO_DATA_TAR_FILE_NAME);
 
@@ -91,15 +117,28 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 		return FileUtil.getAbsolutePath(file);
 	}
 
-	private void _init() {
-		try {
-			if (_lookupService == null) {
-				String ipGeocoderFile = getIPGeocoderFile(
-					GEO_DATA_FILE_NAME, GEO_DATA_URL, false);
+	private void _init(Map<String, String> properties) {
+		if (_lookupService != null) {
+			return;
+		}
 
-				_lookupService = new LookupService(
-					ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
-			}
+		String fileLocation = properties.get(
+			"ip.geocoderservice.file.location");
+
+		if (Validator.isNull(fileLocation)) {
+			fileLocation =
+				SystemProperties.get(SystemProperties.TMP_DIR) +
+					"/liferay/GeoIP/GeoIPCity.dat";
+		}
+
+		String fileURL = properties.get("ip.geocoderservice.file.url");
+
+		try {
+			String ipGeocoderFile = getIPGeocoderFile(
+				fileLocation, fileURL, false);
+
+			_lookupService = new LookupService(
+				ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe.getMessage());
@@ -109,14 +148,8 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 	private static Log _log = LogFactoryUtil.getLog(
 		IPGeocoderServiceImpl.class);
 
-	private static String GEO_DATA_FILE_NAME ="/liferay/GeoIP/GeoIPCity.dat";
-
 	private static String GEO_DATA_TAR_FILE_NAME =
 		"/liferay/GeoIP/GeoIPCity.dat.xz";
-
-	private static String GEO_DATA_URL =
-		"http://cdn.files.liferay.com/mirrors/" +
-			"geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.xz";
 
 	private static LookupService _lookupService;
 

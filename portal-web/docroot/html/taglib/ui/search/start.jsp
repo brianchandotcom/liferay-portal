@@ -64,7 +64,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		<liferay-ui:icon
 			iconCssClass="icon-search"
-			onClick='<%= "submitForm(document." + randomNamespace + namespace + "fm);" %>'
+			onClick='<%= randomNamespace + namespace + "search()" %>'
 			url="javascript:;"
 		/>
 	</aui:fieldset>

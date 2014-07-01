@@ -134,6 +134,9 @@ public class EditArticleAction extends PortletAction {
 
 				throw new PortalException(uploadException.getCause());
 			}
+			else if(Validator.isNull(cmd)) {
+				return;
+			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.PREVIEW) ||
 					 cmd.equals(Constants.TRANSLATE) ||

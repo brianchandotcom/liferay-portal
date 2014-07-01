@@ -665,8 +665,12 @@ public class FileEntryStagedModelDataHandler
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check workflow status for " +
-						DLFileEntry.class.getName());
+					"Unable to check workflow status  for file entry " +
+						fileEntry.getFileEntryId());
+			}
+
+			if(_log.isDebugEnabled()) {
+				_log.debug(e, e);
 			}
 		}
 
@@ -689,8 +693,12 @@ public class FileEntryStagedModelDataHandler
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to check trash status for " +
-							DLFileEntry.class.getName());
+						"Unable to check trash status for file entry " +
+							fileEntry.getFileEntryId());
+				}
+
+				if(_log.isDebugEnabled()) {
+					_log.debug(e, e);
 				}
 			}
 		}

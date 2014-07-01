@@ -61,6 +61,11 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-comments";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}

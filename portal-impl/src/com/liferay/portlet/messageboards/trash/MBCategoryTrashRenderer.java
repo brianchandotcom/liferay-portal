@@ -48,6 +48,11 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-comments";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/category.png";
 	}

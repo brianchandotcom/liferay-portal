@@ -25,6 +25,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Locale;
 
@@ -57,6 +58,11 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	@Override
 	public long getClassPK() {
 		return _fileShortcut.getPrimaryKey();
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return DLUtil.getFileIconCssClass(_fileEntry.getExtension());
 	}
 
 	@Override

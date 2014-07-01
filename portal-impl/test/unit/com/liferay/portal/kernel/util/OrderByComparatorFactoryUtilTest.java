@@ -245,7 +245,7 @@ public class OrderByComparatorFactoryUtilTest {
 	@Test
 	public void testInvalidColumns() throws Exception {
 		try {
-			OrderByComparatorFactoryUtil.create(
+			OrderByComparatorFactoryUtil.<EmailAddress>create(
 				EmailAddressModelImpl.TABLE_NAME);
 
 			Assert.fail();
@@ -254,7 +254,7 @@ public class OrderByComparatorFactoryUtilTest {
 		}
 
 		try {
-			OrderByComparatorFactoryUtil.create(
+			OrderByComparatorFactoryUtil.<EmailAddress>create(
 				EmailAddressModelImpl.TABLE_NAME, "address");
 
 			Assert.fail();
@@ -263,7 +263,7 @@ public class OrderByComparatorFactoryUtilTest {
 		}
 
 		try {
-			OrderByComparatorFactoryUtil.create(
+			OrderByComparatorFactoryUtil.<EmailAddress>create(
 				EmailAddressModelImpl.TABLE_NAME, "address", true,
 				"createDate");
 

@@ -331,6 +331,7 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
+			<var name="localizedBasicWebContent" value="Contenido web básico" />
 			<var name="localizedTitle" value="true" />
 			<var name="lowercaseLanguageCode" value="es" />
 			<var name="webContentContent" value="${webContentContent}" />

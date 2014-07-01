@@ -1477,6 +1477,8 @@
 	</command>
 
 	<command name="ViewAuthorChangeViaAP" priority="3">
+		<var name="roleName" value="WC Author" />
+
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Author" />
@@ -1487,7 +1489,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="WC Author" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1496,6 +1498,7 @@
 
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

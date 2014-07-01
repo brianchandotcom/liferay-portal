@@ -29,18 +29,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTEXT_PATH_SELECT</td>
+	<td>//select[@id='contextPath']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADDRESS</td>
-	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PANEL_HEADING-->
+<tr>
+	<td>PANEL_HEADING_ADDRESS</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'Address')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WIKI_PAGE</td>
-	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div</td>
+	<td>PANEL_HEADING_ANNOUNCEMENTS_DELIVERY</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'AnnouncementsDelivery')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_USER</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_WIKI_PAGE</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'WikiPage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,6 +70,11 @@
 	<td></td>
 </tr>
 <!--ADDRESS-->
+<tr>
+	<td>ADDRESS</td>
+	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ADDRESS_ADD_ADDRESS</td>
 	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
@@ -59,7 +85,28 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER-->
+<tr>
+	<td>USER_UPDATE_PASSWORD</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SET_ROLE_USERS</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'set-role-users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE</td>
+	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div</td>
+	<td></td>
+</tr>
 <tr>
 	<td>WIKI_PAGE_ADD_PAGE</td>
 	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div/ul/li/a[contains(.,'add-page')]</td>

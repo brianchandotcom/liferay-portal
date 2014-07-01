@@ -377,7 +377,7 @@
 		<var name="key_displaySettings" value="${displaySettings}" />
 
 		<if>
-			<condition action="CPSitesettings#isTextEqual" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+			<condition action="CPSitesettings#isElementPresent" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 			<then>
 				<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 			</then>

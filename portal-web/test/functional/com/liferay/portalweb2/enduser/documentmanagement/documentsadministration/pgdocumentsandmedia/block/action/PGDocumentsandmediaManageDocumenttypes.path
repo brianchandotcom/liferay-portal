@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES_IFRAME</td>
-	<td>//iframe[@id='_20_openFileEntryTypeView_iframe_']</td>
+	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

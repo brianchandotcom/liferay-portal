@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BASIC_WEB_CONTENT_LOCALIZED</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_localizedBasicWebContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALERT_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]/a</td>
 	<td></td>

@@ -39,62 +39,34 @@
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
-		</execute>
+		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="BlogsEntry#addPG">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
 
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
 
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
-		</execute>
+			<execute macro="BlogsEntry#gotoPG">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry3 Content" />
-			<var name="entryTitle" value="Blogs Entry3 Title" />
-		</execute>
+			<execute macro="BlogsEntry#viewPG">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddBlogsEntry" priority="5">
@@ -1786,122 +1758,5 @@
 				<var name="roleName" value="Owner" />
 			</execute>
 		</for>
-	</command>
-
-	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="5">
-		<property name="portlet.plugins.includes" value="notifications-portlet" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#subscribePG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#viewCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title" />
-			<var name="notificationCount" value="1" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
-			<var name="contentBody" value="Blogs Entry Title" />
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-	</command>
-
-	<command name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="5">
-		<property name="portlet.plugins.includes" value="notifications-portlet" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#subscribePG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#editPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#viewCount">
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#viewEditedContent">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title Edit" />
-			<var name="notificationCount" value="1" />
-			<var name="user" value="Test Test" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
-			<var name="contentBody" value="Blogs Entry Title Edit" />
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
-		</execute>
 	</command>
 </definition>

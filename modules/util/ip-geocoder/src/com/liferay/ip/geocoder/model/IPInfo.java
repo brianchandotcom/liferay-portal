@@ -14,6 +14,8 @@
 
 package com.liferay.ip.geocoder.model;
 
+import com.maxmind.geoip.Location;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -29,6 +31,20 @@ public class IPInfo {
 		_ipAddress = ipAddress;
 		_latitude = latitude;
 		_longitude = longitude;
+	}
+
+	public IPInfo(String ipAddress, Location location) {
+		_ipAddress = ipAddress;
+
+		if (location != null) {
+			_city = location.city;
+			_countryCode = location.countryCode;
+			_countryName = location.countryName;
+			_latitude = location.latitude;
+			_longitude = location.longitude;
+			_postalCode = location.postalCode;
+			_region = location.region;
+		}
 	}
 
 	public String getCity() {

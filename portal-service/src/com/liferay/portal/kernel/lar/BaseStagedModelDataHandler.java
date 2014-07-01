@@ -521,7 +521,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			stagedModelType.getClassName());
 
-		long classPK = -1;
+		long classPK = 0;
 
 		if (trashHandler != null) {
 			try {
@@ -547,7 +547,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 							classPK);
 				}
 
-				if(_log.isDebugEnabled()) {
+				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
 			}

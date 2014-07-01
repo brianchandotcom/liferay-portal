@@ -460,7 +460,7 @@ public class FolderStagedModelDataHandler
 							folder.getFolderId());
 				}
 
-				if(_log.isDebugEnabled()) {
+				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
 			}

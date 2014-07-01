@@ -669,7 +669,7 @@ public class FileEntryStagedModelDataHandler
 						fileEntry.getFileEntryId());
 			}
 
-			if(_log.isDebugEnabled()) {
+			if (_log.isDebugEnabled()) {
 				_log.debug(e, e);
 			}
 		}
@@ -697,7 +697,7 @@ public class FileEntryStagedModelDataHandler
 							fileEntry.getFileEntryId());
 				}
 
-				if(_log.isDebugEnabled()) {
+				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
 			}

@@ -521,10 +521,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
-		int start, int end, OrderByComparator<Object> obc) {
+		int start, int end, OrderByComparator<?> obc) {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
-			status, start, end, obc);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			status, start, end, (OrderByComparator<Object>)obc);
 
 		return getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, null, includeMountFolders, queryDefinition);
@@ -540,10 +540,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, String[] mimeTypes,
 		boolean includeMountFolders, int start, int end,
-		OrderByComparator<Object> obc) {
+		OrderByComparator<?> obc) {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
-			status, start, end, obc);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			status, start, end, (OrderByComparator<Object>)obc);
 
 		return getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);

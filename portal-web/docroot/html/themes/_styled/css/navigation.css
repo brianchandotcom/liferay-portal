@@ -130,6 +130,22 @@
 
 /* ---------- General navigation ---------- */
 
+.aui .navbar-nav {
+	.lfr-nav-sortable {
+		float: none;
+
+		@include respond-to(desktop) {
+			float: left;
+		}
+	}
+}
+
+.aui #navigation [role=menubar] {
+	@include respond-to(tablet) {
+		float: none;
+	}
+}
+
 .navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
 	padding: 11px 14px;
 

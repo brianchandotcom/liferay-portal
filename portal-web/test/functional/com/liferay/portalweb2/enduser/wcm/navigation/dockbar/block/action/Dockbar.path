@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_MESSAGE</td>
-	<td>//div[@id='_145_devicePreviewContainer']/div[@class='alert']</td>
+	<td>//div[@id='_145_devicePreviewContainer']/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
 <tr>

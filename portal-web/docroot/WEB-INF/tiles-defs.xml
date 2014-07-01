@@ -536,6 +536,10 @@
 
 	<definition name="portlet.document_selector" extends="portlet" />
 
+	<definition name="portlet.document_selector.edit_file_entry" extends="portlet.document_selector">
+		<put name="portlet_content" value="/portlet/document_selector/edit_file_entry.jsp" />
+	</definition>
+
 	<definition name="portlet.document_selector.view" extends="portlet.document_selector">
 		<put name="portlet_content" value="/portlet/document_selector/view.jsp" />
 	</definition>

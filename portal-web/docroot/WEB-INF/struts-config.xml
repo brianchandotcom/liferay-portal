@@ -587,6 +587,10 @@
 
 		<!-- Document Selector -->
 
+		<action path="/document_selector/edit_file_entry" type="com.liferay.portlet.documentselector.action.EditFileEntryAction">
+			<forward name="portlet.document_selector.edit_file_entry" path="portlet.document_selector.edit_file_entry" />
+		</action>
+
 		<action path="/document_selector/view" forward="portlet.document_selector.view" />
 
 		<!-- Dynamic Data List Display -->

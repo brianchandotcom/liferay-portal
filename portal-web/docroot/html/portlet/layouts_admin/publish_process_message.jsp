@@ -45,12 +45,16 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		long allProgressBarCountersTotal = allModelAdditionCountersTotal + allPortletAdditionCounter;
 		long currentProgressBarCountersTotal = currentModelAdditionCountersTotal + currentPortletAdditionCounter;
 
+		Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+		String cmd = (String)taskContextMap.get(Constants.CMD);
+
 		if (allProgressBarCountersTotal > 0) {
 			int base = 100;
 
 			String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
 
-			if (Validator.isNotNull(phase) && phase.equals(Constants.EXPORT)) {
+			if (Validator.isNotNull(phase) && phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
 				base = 50;
 			}
 
@@ -60,7 +64,9 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 		<div class="active progress progress-striped">
 			<div class="progress-bar" style="width: <%= percentage %>%;">
-				<%= percentage + StringPool.PERCENT %>
+				<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
+					<%= percentage + StringPool.PERCENT %>
+				</c:if>
 			</div>
 		</div>
 
@@ -69,27 +75,30 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
 		%>
 
-		<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+		<c:choose>
+			<c:when test="<%= Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
+				<div class="progress-current-item">
+					<strong><liferay-ui:message key="the-publication-is-processing-on-the-remote-site,-please-wait" /></strong>
+				</div>
+			</c:when>
+			<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
 
-			<%
-			String messageKey = "exporting";
+				<%
+				String messageKey = "exporting";
 
-			Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+				if (Validator.equals(cmd, Constants.IMPORT)) {
+					messageKey = "importing";
+				}
+				else if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) || Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+					messageKey = "publishing";
+				}
+				%>
 
-			String cmd = (String)taskContextMap.get(Constants.CMD);
-
-			if (Validator.equals(cmd, Constants.IMPORT)) {
-				messageKey = "importing";
-			}
-			else if (Validator.equals(cmd, Constants.PUBLISH)) {
-				messageKey = "publishing";
-			}
-			%>
-
-			<div class="progress-current-item">
-				<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
-			</div>
-		</c:if>
+				<div class="progress-current-item">
+					<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
+				</div>
+			</c:when>
+		</c:choose>
 	</c:if>
 </c:if>
 

@@ -1407,6 +1407,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName);
 		}
 
+		// LPS-48153
+
 		newContent = applyDiamondOperator(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(

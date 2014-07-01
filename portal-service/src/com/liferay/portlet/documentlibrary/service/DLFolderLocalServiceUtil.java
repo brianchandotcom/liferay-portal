@@ -501,7 +501,7 @@ public class DLFolderLocalServiceUtil {
 
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
 		return getService()
 				   .getFileEntriesAndFileShortcuts(groupId, folderId,
 			queryDefinition);
@@ -522,7 +522,7 @@ public class DLFolderLocalServiceUtil {
 
 	public static int getFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
 		return getService()
 				   .getFileEntriesAndFileShortcutsCount(groupId, folderId,
 			queryDefinition);
@@ -584,7 +584,7 @@ public class DLFolderLocalServiceUtil {
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
 			status, includeMountFolders, start, end, obc);
@@ -599,7 +599,7 @@ public class DLFolderLocalServiceUtil {
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
 			status, mimeTypes, includeMountFolders, start, end, obc);
@@ -608,7 +608,7 @@ public class DLFolderLocalServiceUtil {
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
 			mimeTypes, includeMountFolders, queryDefinition);
@@ -644,7 +644,7 @@ public class DLFolderLocalServiceUtil {
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition) {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, mimeTypes, includeMountFolders, queryDefinition);

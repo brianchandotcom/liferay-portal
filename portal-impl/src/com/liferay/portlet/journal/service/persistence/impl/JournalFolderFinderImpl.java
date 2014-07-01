@@ -63,21 +63,21 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public int countF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition) {
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
 
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	@Override
 	public int filterCountF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition) {
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
 
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
 	public List<Object> filterFindF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition) {
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
@@ -107,13 +107,13 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public List<Object> findF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition) {
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition) {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition,
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -178,7 +178,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected List<Object> doFindF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition queryDefinition,
+		long groupId, long folderId, QueryDefinition<Object> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -265,7 +265,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected String getArticlesSQL(
-		String id, long groupId, QueryDefinition queryDefinition,
+		String id, long groupId, QueryDefinition<Object> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		String sql = CustomSQLUtil.get(
@@ -304,7 +304,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected String getFoldersSQL(
-		String id, long groupId, QueryDefinition queryDefinition,
+		String id, long groupId, QueryDefinition<Object> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		String sql = CustomSQLUtil.get(

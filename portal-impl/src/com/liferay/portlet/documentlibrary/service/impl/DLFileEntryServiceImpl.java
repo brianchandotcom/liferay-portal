@@ -309,8 +309,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, false, start, end, obc);
+		QueryDefinition<DLFileEntry> queryDefinition =
+			new QueryDefinition<DLFileEntry>(status, false, start, end, obc);
 
 		return dlFileEntryFinder.filterFindByG_F(
 			groupId, folderIds, queryDefinition);
@@ -353,8 +353,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_IN_TRASH, true, start, end, obc);
+		QueryDefinition<DLFileEntry> queryDefinition =
+			new QueryDefinition<DLFileEntry>(
+				WorkflowConstants.STATUS_IN_TRASH, true, start, end, obc);
 
 		return dlFileEntryFinder.filterFindByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes, queryDefinition);
@@ -373,7 +374,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		folderIds.add(folderId);
 
 		return dlFileEntryFinder.filterCountByG_F(
-			groupId, folderIds, new QueryDefinition(status));
+			groupId, folderIds, new QueryDefinition<DLFileEntry>(status));
 	}
 
 	@Override
@@ -394,7 +395,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryFinder.filterCountByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes,
-			new QueryDefinition(WorkflowConstants.STATUS_ANY));
+			new QueryDefinition<DLFileEntry>(WorkflowConstants.STATUS_ANY));
 	}
 
 	@Override
@@ -446,7 +447,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getFoldersFileEntriesCount(
 		long groupId, List<Long> folderIds, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<DLFileEntry> queryDefinition =
+			new QueryDefinition<DLFileEntry>(status);
 
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
 			return dlFileEntryFinder.filterCountByG_F(
@@ -504,8 +506,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			repositoryIds.add(repositoryId);
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
+		QueryDefinition<DLFileEntry> queryDefinition =
+			new QueryDefinition<DLFileEntry>(status, start, end, obc);
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFileEntryFinder.filterFindByG_U_R_F_M(
@@ -572,7 +574,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFileEntryFinder.filterCountByG_U_R_F_M(
 				groupId, userId, repositoryIds, new ArrayList<Long>(),
-				mimeTypes, new QueryDefinition(status));
+				mimeTypes, new QueryDefinition<DLFileEntry>(status));
 		}
 
 		List<Long> folderIds = dlFolderService.getFolderIds(
@@ -584,7 +586,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryFinder.filterCountByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
-			new QueryDefinition(status));
+			new QueryDefinition<DLFileEntry>(status));
 	}
 
 	@Override

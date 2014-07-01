@@ -25,19 +25,19 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @ProviderType
 public class BookmarksFolderFinderUtil {
 	public static int countF_E_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder().countF_E_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static int filterCountF_E_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterCountF_E_ByG_F(groupId, folderId, queryDefinition);
 	}
 
 	public static java.util.List<java.lang.Object> filterFindBF_E_ByG_F(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder()
 				   .filterFindBF_E_ByG_F(groupId, folderId, queryDefinition);
 	}
@@ -48,7 +48,7 @@ public class BookmarksFolderFinderUtil {
 
 	public static java.util.List<java.lang.Object> findF_E_ByG_F(long groupId,
 		long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getFinder().findF_E_ByG_F(groupId, folderId, queryDefinition);
 	}
 

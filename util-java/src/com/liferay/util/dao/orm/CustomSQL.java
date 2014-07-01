@@ -118,12 +118,12 @@ public class CustomSQL {
 		return _sqlPool.get(id);
 	}
 
-	public String get(String id, QueryDefinition queryDefinition) {
+	public String get(String id, QueryDefinition<?> queryDefinition) {
 		return get(id, queryDefinition, StringPool.BLANK);
 	}
 
 	public String get(
-		String id, QueryDefinition queryDefinition, String tableName) {
+		String id, QueryDefinition<?> queryDefinition, String tableName) {
 
 		String sql = get(id);
 

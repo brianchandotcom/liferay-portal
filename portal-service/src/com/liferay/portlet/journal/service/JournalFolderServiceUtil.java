@@ -125,7 +125,7 @@ public class JournalFolderServiceUtil {
 
 	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
 		return getService()
 				   .getFoldersAndArticles(groupId, folderId, status, start,
 			end, obc);
@@ -133,7 +133,7 @@ public class JournalFolderServiceUtil {
 
 	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
 		return getService()
 				   .getFoldersAndArticles(groupId, folderId, start, end, obc);
 	}

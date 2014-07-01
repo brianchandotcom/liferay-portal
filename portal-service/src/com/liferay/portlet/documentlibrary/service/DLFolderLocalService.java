@@ -412,7 +412,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
@@ -426,7 +426,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
@@ -474,7 +474,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
@@ -486,13 +486,13 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
@@ -519,7 +519,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);

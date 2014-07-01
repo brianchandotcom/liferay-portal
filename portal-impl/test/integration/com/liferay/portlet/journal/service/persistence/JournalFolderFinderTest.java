@@ -79,7 +79,7 @@ public class JournalFolderFinderTest {
 
 	@Test
 	public void testCountF_A_ByG_F() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -105,7 +105,7 @@ public class JournalFolderFinderTest {
 
 	@Test
 	public void testFindF_A_ByG_F() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 

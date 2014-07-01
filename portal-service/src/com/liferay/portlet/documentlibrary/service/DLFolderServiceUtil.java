@@ -148,7 +148,7 @@ public class DLFolderServiceUtil {
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
@@ -158,7 +158,7 @@ public class DLFolderServiceUtil {
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,

@@ -128,8 +128,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		boolean listNotExhausted = true;
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+		QueryDefinition<BlogsEntry> queryDefinition =
+			new QueryDefinition<BlogsEntry>(
+				status, false, 0, 0, new EntryDisplayDateComparator());
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -293,8 +294,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		boolean listNotExhausted = true;
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+		QueryDefinition<BlogsEntry> queryDefinition =
+			new QueryDefinition<BlogsEntry>(
+				status, false, 0, 0, new EntryDisplayDateComparator());
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -336,8 +338,9 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		boolean listNotExhausted = true;
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+		QueryDefinition<BlogsEntry> queryDefinition =
+			new QueryDefinition<BlogsEntry>(
+				status, false, 0, 0, new EntryDisplayDateComparator());
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);

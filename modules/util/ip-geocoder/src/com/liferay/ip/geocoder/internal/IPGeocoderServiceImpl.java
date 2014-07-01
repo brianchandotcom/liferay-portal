@@ -15,27 +15,45 @@
 package com.liferay.ip.geocoder.internal;
 
 import com.liferay.ip.geocoder.model.IPInfo;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.ip.geocoder.service.IPGeocoderService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
+
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 import java.io.IOException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class IPGeocoderServiceImpl {
+@Component(service = IPGeocoderService.class)
+public class IPGeocoderServiceImpl implements IPGeocoderService {
 
-	public static IPInfo getIPInfo(String ipAddress) throws PortalException {
-		if (_lookupService == null) {
-			_init();
+	@Activate
+	public void activate() {
+		_init();
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_lookupService = null;
+	}
+
+
+	public IPInfo getIPInfo(String ipAddress) {
+		if (_lookupService != null) {
+			Location location = _lookupService.getLocation(ipAddress);
+
+			return new IPInfo(ipAddress, location);
 		}
-
-		Location location = _lookupService.getLocation(ipAddress);
-
-		return new IPInfo(ipAddress, location);
+		else {
+			return null;
+		}
 	}
 
 	private static void _init() {

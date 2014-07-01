@@ -98,7 +98,7 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testCountF_FE_FS_ByG_F_M_M() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -153,7 +153,7 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testCountFE_ByG_F() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -179,7 +179,7 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testCountFE_FS_ByG_F() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -212,7 +212,7 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testCountFE_FS_ByG_F_M() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -269,7 +269,7 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testFindF_FE_FS_ByG_F_M_M() throws Exception {
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 

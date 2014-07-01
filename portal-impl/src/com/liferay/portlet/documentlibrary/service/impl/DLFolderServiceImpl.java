@@ -94,7 +94,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, null);
 
 		return dlFolderFinder.filterFindFE_FS_ByG_F(
@@ -112,7 +112,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status);
 
 		return dlFolderFinder.filterCountFE_FS_ByG_F(
@@ -130,7 +130,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status);
 
 		return dlFolderFinder.filterCountFE_FS_ByG_F_M(
@@ -264,7 +264,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status);
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
@@ -283,7 +283,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status);
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(

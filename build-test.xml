@@ -2863,11 +2863,19 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="record-git-commit-bottom-ext-jsp">
-		<var name="bottom.ext.jsp" value="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-ext.jsp" />
+		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
+			<arg line="rev-parse HEAD" />
+		</exec>
+
+		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.current.date">
+			<arg line="log -1 --pretty=format:%cd HEAD" />
+		</exec>
 
 		<loadfile property="copyright.content" srcFile="${project.dir}/portal-impl/src/com/liferay/portal/tools/servicebuilder/dependencies/copyright.txt" />
 
-		<concat append="no" destfile="${bottom.ext.jsp}" overwrite="yes"><![CDATA[<%--
+		<var name="bottom.ext.jsp" value="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-ext.jsp" />
+
+		<echo file="${bottom.ext.jsp}"><![CDATA[<%--
 ${copyright.content}
 --%>
 
@@ -2879,21 +2887,9 @@ String ppstate = ParamUtil.getString(request, "p_p_state", "normal");
 if (ppstate.equals("normal")) {
 %>
 <div id='currentHead' class='alert alert-info' style='margin: 2em'>
-	Commit <a href='https://github.com/liferay/liferay-portal/commit/@@commit@@' target='_blank'>@@commit@@ - @@date@@</a>
+	Commit <a href='https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}' target='_blank'>${git.commit.portal.rev.parse} - ${git.commit.portal.current.date}</a>
 </div>
-<% } %>]]>
-</concat>
-
-		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
-			<arg line="rev-parse HEAD" />
-		</exec>
-
-		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.current.date">
-			<arg line="log -1 --pretty=format:%cd HEAD" />
-		</exec>
-
-		<replace file="${bottom.ext.jsp}" token="@@commit@@" value="${git.commit.portal.rev.parse}" />
-		<replace file="${bottom.ext.jsp}" token="@@date@@" value="${git.commit.portal.current.date}" />
+<% } %>]]></echo>
 
 		<echo>${bottom.ext.jsp} has been updated for testing purpose.</echo>
 	</target>

@@ -2896,10 +2896,7 @@ if (ppstate.equals("normal")) {
 		<replace file="${bottom.ext.jsp}" token="@@commit@@" value="${git.commit.portal.rev.parse}" />
 		<replace file="${bottom.ext.jsp}" token="@@date@@" value="${git.commit.portal.current.date}" />
 
-		<loadfile property="bottom.ext.content" srcFile="${bottom.ext.jsp}"/>
-
-		<echo>${bottom.ext.jsp} has been updated for testing purpose with this content:</echo>
-		<echo>${bottom.ext.content}</echo>
+		<echo>${bottom.ext.jsp} has been updated for testing purpose.</echo>
 	</target>
 
 	<target name="record-test-package-names">

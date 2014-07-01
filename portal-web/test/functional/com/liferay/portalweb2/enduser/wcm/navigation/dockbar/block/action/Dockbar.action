@@ -26,26 +26,6 @@
 			<execute function="AssertClick#assertTextClickAtClickDockbar" />
 		</case>
 
-		<case comparator="startsWith" locator-key1="EDIT_">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="USER_MY_DASHBOARD">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="USER_MY_ACCOUNT">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="USER_NAME">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case comparator="startsWith" locator-key1="ADMIN_SITE_ADMINISTRATION">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
 		<case comparator="contains" locator1="//span[@data-title=">
 			<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" />
 		</case>
@@ -100,14 +80,6 @@
 
 		<case locator-key1="PREVIEW">
 			<execute function="Click#clickAtSidebarClickAt" />
-		</case>
-
-		<case locator-key1="USER_NAME">
-			<execute function="Click#clickAt" />
-		</case>
-
-		<case locator-key1="USER_SIGN_OUT">
-			<execute function="Click#clickAtAndWait" />
 		</case>
 
 		<case comparator="startsWith" locator1="//span[@data-title='">

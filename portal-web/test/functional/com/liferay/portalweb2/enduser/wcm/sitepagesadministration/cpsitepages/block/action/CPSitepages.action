@@ -5,12 +5,6 @@
 		</case>
 	</command>
 
-	<command name="assertClick">
-		<case locator-key1="STAGING_BUTTON">
-			<execute function="AssertClick#assertTextClickAt" />
-		</case>
-	</command>
-
 	<command name="assertElementPresent">
 		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
 			<execute function="AssertElementPresent#assertElementPresent" />
@@ -26,10 +20,6 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" />
-		</case>
-
 		<case locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

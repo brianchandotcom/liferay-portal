@@ -1,14 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="DELETE_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="MARK_AS_UNREAD_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK">
 			<execute function="AssertTextEquals#assertPartialText" />

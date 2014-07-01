@@ -1,18 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="TAB_MENTIONS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="TAB_TAG_VALUE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="TAB_TIMELINE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="MICROBLOGS_ENTRY_AUTHOR">
 			<execute function="AssertTextEquals#assertPartialText" />
@@ -26,10 +12,6 @@
 
 		<case locator-key1="MICROBLOGS_ENTRY_EDIT_LINK">
 			<execute function="Click#makeVisibleClickAt" />
-		</case>
-
-		<case locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG">
-			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
 

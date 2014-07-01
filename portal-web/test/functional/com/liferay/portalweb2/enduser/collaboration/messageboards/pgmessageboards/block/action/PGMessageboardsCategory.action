@@ -1,26 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="NAVIGATION_MY_POSTS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="POST_NEW_THREAD_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="THREAD_MENULIST_RECYCLE_BIN">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case  locator-key1="THREAD_TABLE_ACTIONS">
-			<execute function="AssertClick#assertTextClickAt" />
-		</case>
-
-		<case locator-key1="THREAD_TABLE_THREAD">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="INFO_MESSAGE_THREAD">
 			<execute function="AssertTextEquals#assertText" />

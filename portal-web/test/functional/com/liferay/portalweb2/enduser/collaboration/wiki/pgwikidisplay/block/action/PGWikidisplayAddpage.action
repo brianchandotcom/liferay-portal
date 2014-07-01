@@ -3,17 +3,5 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
-
-		<case locator-key1="FORMAT_DROPDOWN">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="NAVIGATION_FRONTPAGE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
 	</command>
 </definition>

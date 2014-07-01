@@ -1,18 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="DEACTIVATE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="DELETE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="close">
 		<default>
 			<execute function="Close#closeWindow" />

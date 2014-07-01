@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-</definition>

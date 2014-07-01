@@ -240,38 +240,18 @@ public class PortletJSONUtil {
 			HttpServletResponse response, JSONObject jsonObject)
 		throws IOException {
 
-		JSONArray footerCssPathsJSONArray = jsonObject.getJSONArray(
-			"footerCssPaths");
-		JSONArray footerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"footerJavaScriptPaths");
-
-		if ((footerCssPathsJSONArray.length() == 0) &&
-			(footerJavaScriptPathsJSONArray.length() == 0)) {
-
-			return;
-		}
-
 		writePaths(
-			response, footerCssPathsJSONArray, footerJavaScriptPathsJSONArray);
+			response, jsonObject.getJSONArray("footerCssPaths"),
+				jsonObject.getJSONArray("footerJavaScriptPaths"));
 	}
 
 	public static void writeHeaderPaths(
 			HttpServletResponse response, JSONObject jsonObject)
 		throws IOException {
 
-		JSONArray headerCssPathsJSONArray = jsonObject.getJSONArray(
-			"headerCssPaths");
-		JSONArray headerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"headerJavaScriptPaths");
-
-		if ((headerCssPathsJSONArray.length() == 0) &&
-			(headerJavaScriptPathsJSONArray.length() == 0)) {
-
-			return;
-		}
-
 		writePaths(
-			response, headerCssPathsJSONArray, headerJavaScriptPathsJSONArray);
+				response, jsonObject.getJSONArray("headerCssPaths"),
+				jsonObject.getJSONArray("headerJavaScriptPaths"));
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {
@@ -288,6 +268,12 @@ public class PortletJSONUtil {
 			HttpServletResponse response, JSONArray cssPathsJSONArray,
 			JSONArray javaScriptPathsJSONArray)
 		throws IOException {
+
+		if ((cssPathsJSONArray.length() == 0) &&
+				(javaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
 
 		PrintWriter printWriter = response.getWriter();
 

@@ -86,7 +86,7 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<if>
-			<contains string="${pageName}" substring="&apos;" />			
+			<contains string="${pageName}" substring="&apos;" />
 			<then>
 				<execute action="Home#assertClick" locator-key1="PAGE_WITH_QUOTES" value1="${pageName}" />
 			</then>

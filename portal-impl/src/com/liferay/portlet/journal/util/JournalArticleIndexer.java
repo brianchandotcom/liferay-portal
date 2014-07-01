@@ -401,20 +401,18 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
 
-		JournalArticle latestIndexableArticle =
+		JournalArticle latestArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				article.getResourcePrimKey(),
 				new int[] {
 					WorkflowConstants.STATUS_IN_TRASH,
 					WorkflowConstants.STATUS_APPROVED});
 
-		if ((latestIndexableArticle != null) &&
-			(!latestIndexableArticle.isIndexable())) {
-
+		if ((latestArticle != null) && !latestArticle.isIndexable()) {
 			document.addKeyword("head", false);
 		}
-		else if ((latestIndexableArticle != null) &&
-				 (article.getId() == latestIndexableArticle.getId())) {
+		else if ((latestArticle != null) &&
+				 (article.getId() == latestArticle.getId())) {
 
 			document.addKeyword("head", true);
 		}

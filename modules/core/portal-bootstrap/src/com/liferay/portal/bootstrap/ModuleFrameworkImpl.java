@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -1193,15 +1192,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		List<String> names = new ArrayList<String>(interfaces.size());
 
-		for (Class<?> interfaceClass : interfaces) {
-			if (ArrayUtil.contains(
-					PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES,
-					interfaceClass.getName())) {
+		a: for (Class<?> interfaceClass : interfaces) {
+			String interfaceClassName = interfaceClass.getName();
 
-				continue;
+			for (String ignoredClass :
+					PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
+
+				if (ignoredClass.equals(interfaceClassName) ||
+					(ignoredClass.endsWith(StringPool.STAR) &&
+					 interfaceClassName.startsWith(
+						 ignoredClass.substring(
+							 0, ignoredClass.length() - 1)))) {
+
+					continue a;
+				}
 			}
 
-			names.add(interfaceClass.getName());
+			names.add(interfaceClassName);
 		}
 
 		if (names.isEmpty()) {

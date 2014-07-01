@@ -665,7 +665,7 @@ public class FileEntryStagedModelDataHandler
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check workflow status  for file entry " +
+					"Unable to check workflow status for file entry " +
 						fileEntry.getFileEntryId());
 			}
 

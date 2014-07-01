@@ -456,7 +456,7 @@ public class FolderStagedModelDataHandler
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to check trash status  for folder " +
+						"Unable to check trash status for folder " +
 							folder.getFolderId());
 				}
 

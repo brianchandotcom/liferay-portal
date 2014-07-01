@@ -1965,7 +1965,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
 		long resourcePrimKey, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByR_ST(resourcePrimKey, statuses, start, end,
 			orderByComparator);

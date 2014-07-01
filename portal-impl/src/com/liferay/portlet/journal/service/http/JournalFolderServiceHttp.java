@@ -374,7 +374,7 @@ public class JournalFolderServiceHttp {
 	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersAndArticles",
@@ -403,8 +403,7 @@ public class JournalFolderServiceHttp {
 
 	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
+		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersAndArticles",

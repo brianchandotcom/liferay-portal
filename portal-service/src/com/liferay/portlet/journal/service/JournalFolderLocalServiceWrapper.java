@@ -583,7 +583,7 @@ public class JournalFolderLocalServiceWrapper
 	@Override
 	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<java.lang.Object> obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return _journalFolderLocalService.getFoldersAndArticles(groupId,
 			folderId, start, end, obc);
 	}

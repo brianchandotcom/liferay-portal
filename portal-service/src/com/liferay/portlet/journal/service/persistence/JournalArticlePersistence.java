@@ -1566,7 +1566,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
 		long resourcePrimKey, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator);
 
 	/**
 	* Removes all the journal articles where resourcePrimKey = &#63; and status = &#63; from the database.

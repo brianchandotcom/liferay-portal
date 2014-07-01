@@ -6630,7 +6630,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public List<JournalArticle> findByR_ST(long resourcePrimKey,
-		int[] statuses, int start, int end, OrderByComparator orderByComparator) {
+		int[] statuses, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
 		if (statuses == null) {
 			statuses = new int[0];
 		}

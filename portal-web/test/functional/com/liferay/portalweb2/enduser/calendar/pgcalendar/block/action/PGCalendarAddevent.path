@@ -183,8 +183,29 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS_PERMISSIONS-->
+<tr>
 	<td>DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT</td>
 	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_MORE_OPTIONS_LINK</td>
+	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_HIDE_OPTIONS_LINK</td>
+	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
 	<td></td>
 </tr>
 <tr>

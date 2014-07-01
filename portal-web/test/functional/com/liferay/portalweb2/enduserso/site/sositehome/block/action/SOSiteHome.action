@@ -18,6 +18,14 @@
 	</command>
 
 	<command name="assertElementNotPresent">
+		<case locator-key1="ANNOUNCEMENTS_NAVIGATION_NEXT">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="ANNOUNCEMENTS_NAVIGATION_PREVIOUS">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
 		<case locator-key1="RSS_OPTIONS">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>

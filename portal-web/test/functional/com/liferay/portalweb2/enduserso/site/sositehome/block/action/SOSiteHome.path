@@ -122,37 +122,47 @@
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_ACTION</td>
-	<td>//div[@class='entry-action']</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-action']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_AUTHOR</td>
-	<td>//div[@class='entry-action']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-action']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_TITLE</td>
-	<td>//div[@class='entry-body']/div[@class='title']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_TITLE_LINK</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div[@class='title']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_CONTENT</td>
-	<td>//div[@class='entry-content']</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_EDIT_LINK</td>
-	<td>//span[@class='action edit-entry']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action edit-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_DELETE_LINK</td>
-	<td>//span[@class='action delete-entry']</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action delete-entry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK</td>
+	<td>//span[@class='action delete-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_MARK_LINK</td>
-	<td>//span[@class='action control-entry']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action control-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -169,6 +179,26 @@
 	<td>ANNOUNCEMENTS_ENTRY_EXPANDED</td>
 	<td>//div[contains(@class,'content-expande')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_RESULTS</td>
+	<td>//div[@class='navigation']/span[contains(.,'results')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_NEXT</td>
+	<td>//div[@class='navigation']//a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_PREVIOUS</td>
+	<td>//div[@class='navigation']//a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_IMAGE_LIFERAY</td>
+	<td>//img[@alt='Liferay']</td>
+	<td>Liferay</td>
 </tr>
 <tr>
 	<td></td>
@@ -323,52 +353,52 @@
 </tr>
 <tr>
 	<td>RSS_FEED_TITLE</td>
-	<td>//div[contains(.,'${feedTitle}')]/div[@class='feed-title']</td>
+	<td>//div[contains(.,'${key_feedTitle}')]/div[@class='feed-title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_PUBLISHED_DATE</td>
-	<td>//div[contains(.,'${feedTitle}')]/div[contains(@class,'feed-published-date')]</td>
+	<td>//div[contains(.,'${key_feedTitle}')]/div[contains(@class,'feed-published-date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_DESCRIPTION</td>
-	<td>//div[contains(.,'${feedTitle}')]/div[@class='feed-description']</td>
+	<td>//div[contains(.,'${key_feedTitle}')]/div[@class='feed-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_IMAGE</td>
-	<td>//a[contains(@title,'${feedTitle}')]/img</td>
+	<td>//a[contains(@title,'${key_feedTitle}')]/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_TITLE_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/span[@class='feed-entry-title'])[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/span[@class='feed-entry-title'])[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_EXPAND_BUTTON_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/img)[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/img)[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_DATE_AND_TIME_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/div[@class='feed-date'])[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/div[@class='feed-date'])[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_AUTHOR_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/span[@class='feed-entry-author'])[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/span[@class='feed-entry-author'])[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_CONTENT_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')])[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')])[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RSS_FEED_ENTRY_CONTENT_READ_MORE_INCREMENT</td>
-	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/a)[${feedEntryNumber}]</td>
+	<td>xPath=(//div[contains(.,'${key_feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/a)[${key_feedEntryNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -446,6 +476,16 @@
 <tr>
 	<td>EVENTS_DISPLAY_NO_EVENTS_MESSAGE</td>
 	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NAVIGATION_NEXT</td>
+	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NAVIGATION_PREVIOUS</td>
+	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//a[contains(.,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>

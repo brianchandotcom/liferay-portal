@@ -995,9 +995,7 @@
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl">
-		<property name="MBMessageLocalService" ref="com.liferay.portlet.messageboards.service.MBMessageLocalService" />
-	</bean>
+	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
 		<property name="MDRPermission">
 			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />

@@ -89,7 +89,12 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				}
 
-				_log.error(getThrowableMessage(throwable));
+				if (_log.isDebugEnabled()) {
+					_log.debug(getThrowableMessage(throwable), throwable);
+				}
+				else {
+					_log.error(getThrowableMessage(throwable));
+				}
 
 				response.setStatus(status);
 
@@ -108,7 +113,12 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
-			_log.error(getThrowableMessage(e));
+			if (_log.isDebugEnabled()) {
+				_log.debug(getThrowableMessage(e), e);
+			}
+			else {
+				_log.error(getThrowableMessage(e));
+			}
 
 			response.setStatus(status);
 

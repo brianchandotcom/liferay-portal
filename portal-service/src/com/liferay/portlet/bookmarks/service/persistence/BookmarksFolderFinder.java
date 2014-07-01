@@ -22,18 +22,18 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface BookmarksFolderFinder {
 	public int countF_E_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public int filterCountF_E_ByG_F(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<java.lang.Object> filterFindBF_E_ByG_F(long groupId,
 		long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByNoAssets();
 
 	public java.util.List<java.lang.Object> findF_E_ByG_F(long groupId,
 		long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 }

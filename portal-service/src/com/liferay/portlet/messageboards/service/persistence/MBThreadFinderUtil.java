@@ -124,7 +124,7 @@ public class MBThreadFinderUtil {
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition) {
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
 		return getFinder().findByG_C(groupId, categoryId, queryDefinition);
 	}
 

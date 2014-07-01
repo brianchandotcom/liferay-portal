@@ -383,11 +383,6 @@ public class EditFileEntryAction extends PortletAction {
 			int pos = selectedFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
 
 			if (pos != -1) {
-				if (Validator.isNotNull(extension)) {
-					selectedFileName = FileUtil.stripExtension(
-						selectedFileName);
-				}
-
 				selectedFileName = selectedFileName.substring(0, pos);
 
 				if (Validator.isNotNull(extension)) {

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 
 import java.util.List;
@@ -103,7 +104,9 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_CONTENT, summary.getContent());
-		Assert.assertEquals(200, summary.getMaxContentLength());
+		Assert.assertEquals(
+			SearchResultUtil.SUMMARY_MAX_CONTENT_LENGTH,
+			summary.getMaxContentLength());
 		Assert.assertSame(portletURL, summary.getPortletURL());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
@@ -142,7 +145,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testTwoDocumentsWithSameEntryKey() {
-		String className = "__className__";
+		String className = RandomTestUtil.randomString();
 
 		Document documentA = SearchTestUtil.createDocument(className);
 		Document documentB = SearchTestUtil.createDocument(className);

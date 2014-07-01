@@ -33,7 +33,7 @@ import javax.portlet.PortletURL;
 public class SearchTestUtil {
 
 	public static final String ATTACHMENT_OWNER_CLASS_NAME =
-		"com.liferay.AttachmentOwner";
+		RandomTestUtil.randomString();
 
 	public static final long ATTACHMENT_OWNER_CLASS_NAME_ID =
 		RandomTestUtil.randomLong();
@@ -43,10 +43,9 @@ public class SearchTestUtil {
 
 	public static final long ENTRY_CLASS_PK = RandomTestUtil.randomLong();
 
-	public static final String SUMMARY_CONTENT =
-		"A long time ago, in a galaxy far, far away...";
+	public static final String SUMMARY_CONTENT = RandomTestUtil.randomString();
 
-	public static final String SUMMARY_TITLE = "S.R. Wars";
+	public static final String SUMMARY_TITLE = RandomTestUtil.randomString();
 
 	public static Document createAttachmentDocument(String entryClassName) {
 		return createAttachmentDocument(entryClassName, ENTRY_CLASS_PK);

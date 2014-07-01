@@ -26,10 +26,8 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.registry.Registry;
+import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 
@@ -37,7 +35,6 @@ import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -81,13 +78,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected void doSetUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpFastDateFormatFactory();
-		setUpPortal();
-		setUpProps();
-		setUpRegistries();
+		setUpFastDateFormatFactoryUtil();
+		setUpPortalUtil();
+		setUpPropsUtil();
+		setUpRegistryUtil();
 	}
 
-	protected void setUpFastDateFormatFactory() {
+	protected void setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -95,7 +92,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 			mock(FastDateFormatFactory.class));
 	}
 
-	protected void setUpPortal() {
+	protected void setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(portal);
@@ -107,37 +104,12 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpProps() {
+	protected void setUpPropsUtil() {
 		PropsUtil.setProps(props);
 	}
 
-	protected void setUpRegistries() {
-		Registry registry = mock(Registry.class);
-
-		when(
-			registry.getRegistry()
-		).thenReturn(
-			registry
-		);
-
-		when(
-			registry.setRegistry(registry)
-		).thenReturn(
-			registry
-		);
-
-		ServiceTracker<Object, Object> serviceTracker = mock(
-			ServiceTracker.class);
-
-		when(
-			registry.trackServices(
-				(Class<Object>)Matchers.any(),
-				(ServiceTrackerCustomizer<Object, Object>)Matchers.any())
-		).thenReturn(
-			serviceTracker
-		);
-
-		RegistryUtil.setRegistry(registry);
+	protected void setUpRegistryUtil() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		mockStatic(
 			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);

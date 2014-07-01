@@ -49,7 +49,7 @@ public class SearchResultUtilMBMessageTest
 	public void setUp() {
 		doSetUp();
 
-		setUpMBMessage();
+		setUpMBMessageLocalServiceUtil();
 	}
 
 	@Test
@@ -199,7 +199,7 @@ public class SearchResultUtilMBMessageTest
 		return SearchTestUtil.createDocument(MBMESSAGE_CLASS_NAME);
 	}
 
-	protected void setUpMBMessage() {
+	protected void setUpMBMessageLocalServiceUtil() {
 		mockStatic(MBMessageLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(

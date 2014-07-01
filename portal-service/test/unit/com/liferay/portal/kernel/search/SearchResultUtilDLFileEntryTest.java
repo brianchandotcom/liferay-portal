@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -60,7 +61,7 @@ public class SearchResultUtilDLFileEntryTest
 	public void setUp() throws Exception {
 		doSetUp();
 
-		setUpDLApp();
+		setUpDLAppLocalServiceUtil();
 	}
 
 	@Test
@@ -115,8 +116,10 @@ public class SearchResultUtilDLFileEntryTest
 			new IndexerRegistryGetIndexer()
 		);
 
-		Summary summary = new Summary(
-			null, "FileEntry Title", "FileEntry Content", null);
+		String title = RandomTestUtil.randomString();
+		String content = RandomTestUtil.randomString();
+
+		Summary summary = new Summary(null, title, content, null);
 
 		doReturn(
 			summary
@@ -195,16 +198,16 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		Summary summaryFromResult = searchResult.getSummary();
+		Summary searchResultSummary = searchResult.getSummary();
 
 		Assert.assertNotSame(
 			"Summary in searchResult is not the same one returned by Indexer",
-			summary, summaryFromResult);
+			summary, searchResultSummary);
 
 		Assert.assertEquals(
-			SearchTestUtil.SUMMARY_CONTENT, summaryFromResult.getContent());
+			SearchTestUtil.SUMMARY_CONTENT, searchResultSummary.getContent());
 		Assert.assertEquals(
-			SearchTestUtil.SUMMARY_TITLE, summaryFromResult.getTitle());
+			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
@@ -212,18 +215,18 @@ public class SearchResultUtilDLFileEntryTest
 
 		Tuple tuple = fileEntryTuples.get(0);
 
-		FileEntry fileEntryFromTuple = (FileEntry)tuple.getObject(0);
+		FileEntry tupleFileEntry = (FileEntry)tuple.getObject(0);
 
-		Summary summaryFromTuple = (Summary)tuple.getObject(1);
+		Summary tupleSummary = (Summary)tuple.getObject(1);
 
-		Assert.assertSame(fileEntry, fileEntryFromTuple);
+		Assert.assertSame(fileEntry, tupleFileEntry);
 
 		Assert.assertSame(
 			"Summary in tuple must be the same one returned by Indexer",
-			summary, summaryFromTuple);
+			summary, tupleSummary);
 
-		Assert.assertEquals("FileEntry Content", summaryFromTuple.getContent());
-		Assert.assertEquals("FileEntry Title", summaryFromTuple.getTitle());
+		Assert.assertEquals(content, tupleSummary.getContent());
+		Assert.assertEquals(title, tupleSummary.getTitle());
 
 		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
@@ -299,7 +302,9 @@ public class SearchResultUtilDLFileEntryTest
 
 		Document document = createDLFileEntryAttachmentDocument();
 
-		document.add(new Field(Field.SNIPPET, "__snippet__"));
+		String snippet = RandomTestUtil.randomString();
+
+		document.add(new Field(Field.SNIPPET, snippet));
 
 		SearchResult searchResult =
 			assertThatSearchSingleDocumentReturnsOneSearchResult(document);
@@ -322,7 +327,7 @@ public class SearchResultUtilDLFileEntryTest
 		Mockito.verify(
 			indexer
 		).getSummary(
-			document, "__snippet__", portletURL, null, null
+			document, snippet, portletURL, null, null
 		);
 
 		assertThatFileEntryTuplesIsEmpty(searchResult);
@@ -352,7 +357,7 @@ public class SearchResultUtilDLFileEntryTest
 		return SearchTestUtil.createDocument(DLFILEENTRY_CLASS_NAME);
 	}
 
-	protected void setUpDLApp() {
+	protected void setUpDLAppLocalServiceUtil() {
 		mockStatic(DLAppLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(

@@ -22,7 +22,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author André de Oliveira
@@ -39,7 +39,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		MBMessageDisplay mbMessageDisplay =
-			_mbMessageLocalService.getDiscussionMessageDisplay(
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -48,7 +48,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, userName, groupId, className, classPK,
 			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
 			serviceContext);
@@ -62,29 +62,21 @@ public class MBCommentManagerImpl implements CommentManager {
 			String userName)
 		throws PortalException {
 
-		_mbMessageLocalService.addDiscussionMessage(
+		MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, userName, groupId, className, classPK,
 			WorkflowConstants.ACTION_PUBLISH);
 	}
 
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
-		_mbMessageLocalService.deleteDiscussionMessage(commentId);
+		MBMessageLocalServiceUtil.deleteDiscussionMessage(commentId);
 	}
 
 	@Override
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 
-		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+		MBMessageLocalServiceUtil.deleteDiscussionMessages(className, classPK);
 	}
-
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	private MBMessageLocalService _mbMessageLocalService;
 
 }

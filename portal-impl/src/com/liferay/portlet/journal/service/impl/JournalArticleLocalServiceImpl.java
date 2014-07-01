@@ -1380,6 +1380,22 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses) {
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		List<JournalArticle> list = journalArticlePersistence.findByR_ST(
+			resourcePrimKey, statuses, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchLatestArticle(
 		long groupId, String articleId, int status) {
 
 		OrderByComparator<JournalArticle> orderByComparator =

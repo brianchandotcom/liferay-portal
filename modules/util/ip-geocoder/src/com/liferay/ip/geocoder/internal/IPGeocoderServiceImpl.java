@@ -18,18 +18,26 @@ import com.liferay.ip.geocoder.model.IPInfo;
 import com.liferay.ip.geocoder.service.IPGeocoderService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-import java.io.IOException;
+import org.tukaani.xz.XZInputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
 @Component(service = IPGeocoderService.class)
 public class IPGeocoderServiceImpl implements IPGeocoderService {
@@ -44,7 +52,6 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 		_lookupService = null;
 	}
 
-
 	public IPInfo getIPInfo(String ipAddress) {
 		if (_lookupService != null) {
 			Location location = _lookupService.getLocation(ipAddress);
@@ -56,11 +63,42 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 		}
 	}
 
-	private static void _init() {
+	protected String getIPGeocoderFile(
+			String path, String url, boolean forceDownload)
+		throws IOException {
+
+		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
+
+		File file = new File(tmpDir + path);
+
+		if (!file.exists() || forceDownload) {
+			synchronized (this) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Downloading Geolocation Data from " + url);
+				}
+
+				byte[] bytes = HttpUtil.URLtoByteArray(url);
+
+				File tarFile = new File(tmpDir + GEO_DATA_TAR_FILE_NAME);
+
+				FileUtil.write(tarFile, bytes);
+
+				FileUtil.write(
+					file, new XZInputStream(new FileInputStream(tarFile)));
+			}
+		}
+
+		return FileUtil.getAbsolutePath(file);
+	}
+
+	private void _init() {
 		try {
 			if (_lookupService == null) {
+				String ipGeocoderFile = getIPGeocoderFile(
+					GEO_DATA_FILE_NAME, GEO_DATA_URL, false);
+
 				_lookupService = new LookupService(
-					GEO_DATA_LOCATION, LookupService.GEOIP_MEMORY_CACHE);
+					ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
 			}
 		}
 		catch (IOException ioe) {
@@ -68,10 +106,17 @@ public class IPGeocoderServiceImpl implements IPGeocoderService {
 		}
 	}
 
-	private static String GEO_DATA_LOCATION =
-		"/usr/local/share/GeoIP/GeoIPCity.dat";
+	private static Log _log = LogFactoryUtil.getLog(
+		IPGeocoderServiceImpl.class);
 
-	private static Log _log = LogFactoryUtil.getLog(IPGeocoderServiceImpl.class);
+	private static String GEO_DATA_FILE_NAME ="/liferay/GeoIP/GeoIPCity.dat";
+
+	private static String GEO_DATA_TAR_FILE_NAME =
+		"/liferay/GeoIP/GeoIPCity.dat.xz";
+
+	private static String GEO_DATA_URL =
+		"http://cdn.files.liferay.com/mirrors/" +
+			"geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.xz";
 
 	private static LookupService _lookupService;
 

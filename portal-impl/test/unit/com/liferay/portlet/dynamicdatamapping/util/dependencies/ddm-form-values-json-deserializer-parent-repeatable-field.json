@@ -7,12 +7,10 @@
 			"nestedFieldValues": [
 				{
 					"name": "Text_Box6748",
-					"values": [
-						{
-							"en_US": "Content 0",
-							"pt_BR": "Conteudo 0"
-						}
-					]
+					"value": {
+						"en_US": "Content 0",
+						"pt_BR": "Conteudo 0"
+					}
 				}
 			]
 		},
@@ -21,12 +19,10 @@
 			"nestedFieldValues": [
 				{
 					"name": "Text_Box6748",
-					"values": [
-						{
-							"en_US": "Content 1",
-							"pt_BR": "Conteudo 1"
-						}
-					]
+					"value": {
+						"en_US": "Content 1",
+						"pt_BR": "Conteudo 1"
+					}
 				}
 			]
 		},
@@ -35,12 +31,10 @@
 			"nestedFieldValues": [
 				{
 					"name": "Text_Box6748",
-					"values": [
-						{
-							"en_US": "Content 2",
-							"pt_BR": "Conteudo 2"
-						}
-					]
+					"value": {
+						"en_US": "Content 2",
+						"pt_BR": "Conteudo 2"
+					}
 				}
 			]
 		}

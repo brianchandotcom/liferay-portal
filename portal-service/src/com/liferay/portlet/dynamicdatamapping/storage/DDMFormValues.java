@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portlet.dynamicdatamapping.model.Value;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,13 +40,21 @@ public class DDMFormValues {
 		return _ddmFormFieldValues;
 	}
 
-	public Map<String, DDMFormFieldValue> getDDMFormFieldValuesMap() {
-		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap =
-			new HashMap<String, DDMFormFieldValue>();
+	public Map<String, List<Value>> getDDMFormFieldValuesMap() {
+		Map<String, List<Value>> ddmFormFieldValuesMap =
+			new HashMap<String, List<Value>>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
-			ddmFormFieldValuesMap.put(
-				ddmFormFieldValue.getName(), ddmFormFieldValue);
+			List<Value> values = ddmFormFieldValuesMap.get(
+				ddmFormFieldValue.getName());
+
+			if (values == null) {
+				values = new ArrayList<Value>();
+
+				ddmFormFieldValuesMap.put(ddmFormFieldValue.getName(), values);
+			}
+
+			values.add(ddmFormFieldValue.getValue());
 		}
 
 		return ddmFormFieldValuesMap;

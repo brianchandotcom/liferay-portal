@@ -572,7 +572,8 @@ public class MBThreadFinderImpl
 
 	@Override
 	public List<MBThread> findByG_C(
-		long groupId, long categoryId, QueryDefinition queryDefinition) {
+		long groupId, long categoryId,
+		QueryDefinition<MBThread> queryDefinition) {
 
 		return doFindByG_C(groupId, categoryId, queryDefinition, false);
 	}

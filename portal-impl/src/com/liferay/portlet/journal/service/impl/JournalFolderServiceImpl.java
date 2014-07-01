@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
@@ -145,9 +146,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<?> obc) {
+		OrderByComparator<Object> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, obc);
 
 		return journalFolderFinder.filterFindF_A_ByG_F(
@@ -157,7 +158,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator<?> obc) {
+		OrderByComparator<Object> obc) {
 
 		return getFoldersAndArticles(
 			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);
@@ -167,7 +168,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public int getFoldersAndArticlesCount(
 		long groupId, List<Long> folderIds, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status);
 
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
 			return journalArticleFinder.filterCountByG_F(
@@ -200,7 +202,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		long groupId, long folderId, int status) {
 
 		return journalFolderFinder.filterCountF_A_ByG_F(
-			groupId, folderId, new QueryDefinition(status));
+			groupId, folderId, new QueryDefinition<Object>(status));
 	}
 
 	@Override

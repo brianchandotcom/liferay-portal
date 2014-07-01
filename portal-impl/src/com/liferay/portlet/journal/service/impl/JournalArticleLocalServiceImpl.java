@@ -2679,8 +2679,8 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getNotInTrashArticlesCount(long groupId, long folderId) {
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(WorkflowConstants.STATUS_ANY);
 
 		List<Long> folderIds = new ArrayList<Long>();
 
@@ -3383,8 +3383,8 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> search(
 		long groupId, List<Long> folderIds, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, null);
 
 		return journalArticleFinder.findByG_F(
 			groupId, folderIds, queryDefinition);
@@ -3549,8 +3549,8 @@ public class JournalArticleLocalServiceImpl
 		int status, Date reviewDate, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, obc);
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -3633,8 +3633,8 @@ public class JournalArticleLocalServiceImpl
 		int status, Date reviewDate, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, obc);
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -3841,7 +3841,8 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, List<Long> folderIds, int status) {
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status);
 
 		return journalArticleFinder.countByG_F(
 			groupId, folderIds, queryDefinition);
@@ -3969,7 +3970,7 @@ public class JournalArticleLocalServiceImpl
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
-			new QueryDefinition(status));
+			new QueryDefinition<JournalArticle>(status));
 	}
 
 	/**
@@ -4033,7 +4034,7 @@ public class JournalArticleLocalServiceImpl
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, ddmStructureKeys,
 			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-			andOperator, new QueryDefinition(status));
+			andOperator, new QueryDefinition<JournalArticle>(status));
 	}
 
 	@Override
@@ -5345,7 +5346,8 @@ public class JournalArticleLocalServiceImpl
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 				new Date(
 					expirationDate.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
-				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+				new QueryDefinition<JournalArticle>(
+					WorkflowConstants.STATUS_APPROVED));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expiring " + articles.size() + " articles");

@@ -60,13 +60,13 @@ public class BlogsEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_statusAnyQueryDefinition = new QueryDefinition(
+		_statusAnyQueryDefinition = new QueryDefinition<BlogsEntry>(
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
-		_statusApprovedQueryDefinition = new QueryDefinition(
+		_statusApprovedQueryDefinition = new QueryDefinition<BlogsEntry>(
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
-		_statusInTrashQueryDefinition = new QueryDefinition(
+		_statusInTrashQueryDefinition = new QueryDefinition<BlogsEntry>(
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 		_user = TestPropsValues.getUser();
@@ -484,7 +484,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetCompanyEntries(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -511,7 +512,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetCompanyEntriesCount(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -533,7 +535,8 @@ public class BlogsEntryLocalServiceTest {
 			boolean statusInTrash, boolean displayDate)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -575,7 +578,8 @@ public class BlogsEntryLocalServiceTest {
 			boolean statusInTrash, boolean displayDate)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -612,7 +616,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetGroupUserEntries(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -641,7 +646,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetGroupUserEntriesCount(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -664,7 +670,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetOrganizationEntries(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -695,7 +702,8 @@ public class BlogsEntryLocalServiceTest {
 	protected void testGetOrganizationEntriesCount(boolean statusInTrash)
 		throws Exception {
 
-		QueryDefinition queryDefinition = _statusInTrashQueryDefinition;
+		QueryDefinition<BlogsEntry> queryDefinition =
+			_statusInTrashQueryDefinition;
 
 		if (!statusInTrash) {
 			queryDefinition = _statusAnyQueryDefinition;
@@ -722,9 +730,9 @@ public class BlogsEntryLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private QueryDefinition _statusAnyQueryDefinition;
-	private QueryDefinition _statusApprovedQueryDefinition;
-	private QueryDefinition _statusInTrashQueryDefinition;
+	private QueryDefinition<BlogsEntry> _statusAnyQueryDefinition;
+	private QueryDefinition<BlogsEntry> _statusApprovedQueryDefinition;
+	private QueryDefinition<BlogsEntry> _statusInTrashQueryDefinition;
 	private User _user;
 
 }

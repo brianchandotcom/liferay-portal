@@ -94,7 +94,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, null);
 
 		return dlFolderFinder.filterFindFE_FS_ByG_F(
@@ -112,7 +112,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return dlFolderFinder.filterCountFE_FS_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -129,7 +130,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return dlFolderFinder.filterCountFE_FS_ByG_F_M(
 			groupId, folderId, mimeTypes, queryDefinition);
@@ -214,7 +216,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<?> obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		if (!DLFolderPermission.contains(
@@ -223,7 +225,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, obc);
 
 		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
@@ -234,7 +236,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<?> obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		if (!DLFolderPermission.contains(
@@ -243,7 +245,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, obc);
 
 		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
@@ -262,7 +264,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, null, includeMountFolders, queryDefinition);
@@ -280,7 +283,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			return 0;
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);

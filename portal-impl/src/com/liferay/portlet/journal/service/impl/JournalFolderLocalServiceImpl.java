@@ -317,7 +317,7 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndArticles(long groupId, long folderId) {
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			WorkflowConstants.STATUS_ANY);
 
 		return journalFolderFinder.findF_A_ByG_F(
@@ -328,7 +328,8 @@ public class JournalFolderLocalServiceImpl
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return journalFolderFinder.findF_A_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -337,9 +338,9 @@ public class JournalFolderLocalServiceImpl
 	@Override
 	public List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator<?> obc) {
+		OrderByComparator<Object> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>(
 			WorkflowConstants.STATUS_ANY, start, end, obc);
 
 		return journalFolderFinder.findF_A_ByG_F(
@@ -350,7 +351,8 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(
 		long groupId, List<Long> folderIds, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status);
 
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
 			return journalArticleFinder.countByG_F(
@@ -376,7 +378,7 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(long groupId, long folderId) {
 		return journalFolderFinder.countF_A_ByG_F(
 			groupId, folderId,
-			new QueryDefinition(WorkflowConstants.STATUS_ANY));
+			new QueryDefinition<Object>(WorkflowConstants.STATUS_ANY));
 	}
 
 	@Override
@@ -384,7 +386,7 @@ public class JournalFolderLocalServiceImpl
 		long groupId, long folderId, int status) {
 
 		return journalFolderFinder.countF_A_ByG_F(
-			groupId, folderId, new QueryDefinition(status));
+			groupId, folderId, new QueryDefinition<Object>(status));
 	}
 
 	@Override

@@ -663,14 +663,13 @@ public class FileEntryStagedModelDataHandler
 			throw pde;
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+			else if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to check workflow status for file entry " +
 						fileEntry.getFileEntryId());
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
 			}
 		}
 
@@ -691,14 +690,13 @@ public class FileEntryStagedModelDataHandler
 				throw pde;
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for file entry " +
 							fileEntry.getFileEntryId());
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
 				}
 			}
 		}

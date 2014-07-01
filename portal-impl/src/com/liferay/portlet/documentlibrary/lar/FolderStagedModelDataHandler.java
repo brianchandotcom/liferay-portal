@@ -454,14 +454,13 @@ public class FolderStagedModelDataHandler
 				throw pde;
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for folder " +
 							folder.getFolderId());
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
 				}
 			}
 		}

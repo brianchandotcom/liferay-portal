@@ -121,25 +121,6 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void shouldReturnMapWithParamsTypeBooleanInvalidValue() {
-			Map<String, Object> map = MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:boolean"});
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(false));
-			Assert.assertTrue(map.get("one") instanceof Boolean);
-
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Boolean.class.getName()});
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(false));
-			Assert.assertTrue(map.get("one") instanceof Boolean);
-		}
-
-		@Test
 		public void shouldReturnMapWithParamsTypeComposite() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[]{"one:1:" + Byte.class.getName()});
@@ -309,6 +290,26 @@ public class MapUtilTest {
 
 			Assert.fail();
 		}
+
+		@Test
+		public void shouldReturnMapWithBoolean() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:boolean"});
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+
+			map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Boolean.class.getName()});
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+		}
+
 	}
 
 	public static class WhenCreatingAMapFromArray {

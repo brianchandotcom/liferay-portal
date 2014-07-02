@@ -27,7 +27,7 @@ else {
 	orderByType = portalPreferences.getValue(PortletKeys.BOOKMARKS, "entries-order-by-type", "asc");
 }
 
-OrderByComparator orderByComparator = BookmarksUtil.getEntryOrderByComparator(orderByCol, orderByType);
+OrderByComparator<BookmarksEntry> orderByComparator = BookmarksUtil.getEntryOrderByComparator(orderByCol, orderByType);
 %>
 
 <liferay-ui:search-container

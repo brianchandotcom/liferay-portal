@@ -28,6 +28,7 @@
 
 		&.show-asset-title .asset-content {
 			margin-right: 10px;
+			overflow-x: auto;
 		}
 
 		&.no-title .asset-user-actions{

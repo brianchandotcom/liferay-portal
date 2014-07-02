@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 
@@ -88,7 +89,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				}
 
-				_log.error(throwable, throwable);
+				_log.error(_getThrowableMessage(throwable));
 
 				response.setStatus(status);
 
@@ -107,7 +108,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
-			_log.error(e, e);
+			_log.error(_getThrowableMessage(e));
 
 			response.setStatus(status);
 
@@ -176,6 +177,16 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	@Override
 	protected String getReroutePath() {
 		return _REROUTE_PATH;
+	}
+
+	private String _getThrowableMessage(Throwable throwable) {
+		String message = throwable.getMessage();
+
+		if (Validator.isNotNull(message)) {
+			return message;
+		}
+
+		return throwable.toString();
 	}
 
 	private static final String _REROUTE_PATH = "/jsonws";

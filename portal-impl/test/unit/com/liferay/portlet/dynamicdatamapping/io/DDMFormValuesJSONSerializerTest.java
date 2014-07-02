@@ -134,9 +134,9 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTest {
 	protected Value createHTMLValue(int index) {
 		Value value = new LocalizedValue();
 
-		value.addValue(LocaleUtil.US, "<p>This is a test " + index + "</p>");
+		value.addValue(LocaleUtil.US, "<p>This is a test. " + index + "</p>");
 		value.addValue(
-			LocaleUtil.BRAZIL, "<p>Isto e um teste " + index + "</p>");
+			LocaleUtil.BRAZIL, "<p>Isto e um teste. " + index + "</p>");
 
 		return value;
 	}
@@ -164,7 +164,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTest {
 	protected Value createImageValue(int index) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("alt", "This is a image description" + index);
+		jsonObject.put("alt", "This is a image description. " + index);
 		jsonObject.put("data", "base64Value" + index);
 
 		return new UnlocalizedValue(jsonObject.toString());

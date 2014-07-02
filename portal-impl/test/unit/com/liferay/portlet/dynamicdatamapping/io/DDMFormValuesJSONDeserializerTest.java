@@ -268,9 +268,9 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 		Value value = values.get(0);
 
 		Assert.assertEquals(
-			"<p>This is a test</p>", value.getValue(LocaleUtil.US));
+			"<p>This is a test.</p>", value.getValue(LocaleUtil.US));
 		Assert.assertEquals(
-			"<p>Isto e um teste</p>", value.getValue(LocaleUtil.BRAZIL));
+			"<p>Isto e um teste.</p>", value.getValue(LocaleUtil.BRAZIL));
 	}
 
 	protected void testImageDDMFormFieldValueValues(List<Value> values)
@@ -280,7 +280,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("alt", "This is a image description");
+		expectedJSONObject.put("alt", "This is a image description.");
 		expectedJSONObject.put("data", "base64Value");
 
 		JSONAssert.assertEquals(
@@ -289,7 +289,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 
 		expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("alt", "Isto e uma descricao de imagem");
+		expectedJSONObject.put("alt", "Isto e uma descricao de imagem.");
 		expectedJSONObject.put("data", "valorEmBase64");
 
 		JSONAssert.assertEquals(

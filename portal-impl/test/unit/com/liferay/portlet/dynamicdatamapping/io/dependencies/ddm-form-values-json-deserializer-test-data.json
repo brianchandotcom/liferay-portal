@@ -26,15 +26,15 @@
 		{
 			"name": "HTML4512",
 			"value": {
-				"en_US": "<p>This is a test<\/p>",
-				"pt_BR": "<p>Isto e um teste<\/p>"
+				"en_US": "<p>This is a test.<\/p>",
+				"pt_BR": "<p>Isto e um teste.<\/p>"
 			}
 		},
 		{
 			"name": "Image4751",
 			"value": {
-				"en_US": "{\"alt\":\"This is a image description\",\"data\":\"base64Value\"}",
-				"pt_BR": "{\"alt\":\"Isto e uma descricao de imagem\",\"data\":\"valorEmBase64\"}"
+				"en_US": "{\"alt\":\"This is a image description.\",\"data\":\"base64Value\"}",
+				"pt_BR": "{\"alt\":\"Isto e uma descricao de imagem.\",\"data\":\"valorEmBase64\"}"
 			}
 		},
 		{

@@ -54,7 +54,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 			String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
 
-			if (Validator.isNotNull(phase) && phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+			if (phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
 				base = 50;
 			}
 

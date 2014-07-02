@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/polls_display/init.jsp" %>
 
 <%
-PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
+PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_QUESTION);
 %>
 
 <c:choose>

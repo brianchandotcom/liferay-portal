@@ -309,7 +309,7 @@ portletURL.setParameter("tabs1", tabs1);
 			orderByType = portalPreferences.getValue(PortletKeys.SOFTWARE_CATALOG, "product-entries-order-by-type", "desc");
 		}
 
-		OrderByComparator orderByComparator = SCUtil.getProductEntryOrderByComparator(orderByCol, orderByType);
+		OrderByComparator<SCProductEntry> orderByComparator = SCUtil.getProductEntryOrderByComparator(orderByCol, orderByType);
 
 		List<String> headerNames = new ArrayList<String>();
 

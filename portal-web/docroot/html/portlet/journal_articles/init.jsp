@@ -27,7 +27,7 @@ int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", S
 String orderByCol = portletPreferences.getValue("orderByCol", StringPool.BLANK);
 String orderByType = portletPreferences.getValue("orderByType", StringPool.BLANK);
 
-OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
+OrderByComparator<JournalArticle> orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
 
 DDMStructure ddmStructure = null;
 

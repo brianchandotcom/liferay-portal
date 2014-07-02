@@ -709,7 +709,7 @@ public class CustomSQL {
 		return StringUtil.replace(sql, oldSql.toString(), newSql.toString());
 	}
 
-	public String replaceOrderBy(String sql, OrderByComparator obc) {
+	public String replaceOrderBy(String sql, OrderByComparator<?> obc) {
 		if (obc == null) {
 			return sql;
 		}

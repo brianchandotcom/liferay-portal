@@ -132,8 +132,8 @@ public class InputDateTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-date:monthValue", String.valueOf(_monthValue));
 		request.setAttribute("liferay-ui:input-date:name", _name);
-		request.setAttribute("liferay-ui:input-date:nullable",
-			String.valueOf(_nullable));
+		request.setAttribute(
+			"liferay-ui:input-date:nullable", String.valueOf(_nullable));
 		request.setAttribute("liferay-ui:input-date:yearParam", _yearParam);
 		request.setAttribute(
 			"liferay-ui:input-date:yearValue", String.valueOf(_yearValue));

@@ -78,21 +78,18 @@
 		@include word-break(break-all);
 
 		@include respond-to(phone, tablet) {
-			font-size: 18px;
-			padding: 8px;
+			padding: 10px;
 		}
 	}
 
 	.input-localized-content {
 		clear: both;
-		left: 0;
 		padding-top: 10px;
 		position: absolute;
 		top: 100%;
 	}
 
 	.input-localized-input {
-		display: block;
 		float: left;
 	}
 }

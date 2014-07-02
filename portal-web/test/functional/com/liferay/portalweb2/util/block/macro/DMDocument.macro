@@ -305,6 +305,21 @@
 		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addWithWorkflowCP">
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+
+		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
 	<command name="cancelCheckoutPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -1652,5 +1667,15 @@
 				</then>
 			</elseif>
 		</if>
+	</command>
+
+	<command name="viewWithWorkflowCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="${workflowStatus}" />
 	</command>
 </definition>

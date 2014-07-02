@@ -30,14 +30,14 @@ import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerImpl;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

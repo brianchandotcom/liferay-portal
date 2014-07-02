@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util;
+package com.liferay.portlet.dynamicdatamapping.io;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormJSONSerializer {
+public interface DDMFormValuesJSONSerializer {
 
-	public String serialize(DDMForm ddmForm);
+	public String serialize(DDMFormValues ddmFormValues);
 
 }

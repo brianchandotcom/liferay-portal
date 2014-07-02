@@ -12,35 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util;
+package com.liferay.portlet.dynamicdatamapping.io;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
- * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
-public class DDMFormXSDSerializerUtil {
+public class DDMFormJSONSerializerUtil {
 
-	public static DDMFormXSDSerializer getDDMFormXSDSerializer() {
+	public static DDMFormJSONSerializer getDDMFormJSONSerializer() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			DDMFormXSDSerializerUtil.class);
+			DDMFormJSONSerializerUtil.class);
 
-		return _ddmFormXSDSerializer;
+		return _ddmFormJSONSerializer;
 	}
 
 	public static String serialize(DDMForm ddmForm) {
-		return getDDMFormXSDSerializer().serialize(ddmForm);
+		return getDDMFormJSONSerializer().serialize(ddmForm);
 	}
 
-	public void setDDMFormXSDSerializer(
-		DDMFormXSDSerializer ddmFormXSDSerializer) {
+	public void setDDMFormJSONSerializer(
+		DDMFormJSONSerializer ddmFormJSONSerializer) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_ddmFormXSDSerializer = ddmFormXSDSerializer;
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 	}
 
-	private static DDMFormXSDSerializer _ddmFormXSDSerializer;
+	private static DDMFormJSONSerializer _ddmFormJSONSerializer;
 
 }

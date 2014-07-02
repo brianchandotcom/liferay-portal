@@ -122,7 +122,7 @@ portletURL.setParameter("type", type);
 
 					<c:if test="<%= fileEntryTypes.isEmpty() %>">
 						<liferay-portlet:renderURL var="editFileEntryURL">
-							<portlet:param name="struts_action" value="/document_selector/edit_file_entry" />
+							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -145,7 +145,7 @@ portletURL.setParameter("type", type);
 					%>
 
 						<liferay-portlet:renderURL var="addFileEntryTypeURL">
-							<portlet:param name="struts_action" value="/document_selector/edit_file_entry" />
+							<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />

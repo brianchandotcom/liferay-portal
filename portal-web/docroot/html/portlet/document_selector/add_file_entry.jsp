@@ -50,7 +50,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 />
 
 <portlet:actionURL var="editFileEntryURL">
-	<portlet:param name="struts_action" value="/document_selector/edit_file_entry" />
+	<portlet:param name="struts_action" value="/document_selector/add_file_entry" />
 	<portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
 	<portlet:param name="type" value="<%= DocumentSelectorUtil.getType(request) %>" />
 </portlet:actionURL>
@@ -260,5 +260,5 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-fil
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_selector.edit_file_entry_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_selector.add_file_entry_jsp");
 %>

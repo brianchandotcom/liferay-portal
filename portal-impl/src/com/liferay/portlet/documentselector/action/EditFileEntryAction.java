@@ -137,7 +137,7 @@ public class EditFileEntryAction extends PortletAction {
 			}
 		}
 
-		String forward = "portlet.document_selector.edit_file_entry";
+		String forward = "portlet.document_selector.add_file_entry";
 
 		return actionMapping.findForward(getForward(renderRequest, forward));
 	}

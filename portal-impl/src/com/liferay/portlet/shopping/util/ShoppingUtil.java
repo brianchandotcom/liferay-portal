@@ -852,7 +852,7 @@ public class ShoppingUtil {
 		return GetterUtil.getLong(itemId);
 	}
 
-	public static OrderByComparator getItemOrderByComparator(
+	public static OrderByComparator<ShoppingItem> getItemOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -861,7 +861,7 @@ public class ShoppingUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<ShoppingItem> orderByComparator = null;
 
 		if (orderByCol.equals("min-qty")) {
 			orderByComparator = new ItemMinQuantityComparator(orderByAsc);
@@ -874,9 +874,6 @@ public class ShoppingUtil {
 		}
 		else if (orderByCol.equals("sku")) {
 			orderByComparator = new ItemSKUComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("order-date")) {
-			orderByComparator = new OrderDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;

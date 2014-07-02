@@ -29,16 +29,28 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
 public class ServiceTrackerCollectionTest {
+
+	@Before
+	public void setUp() throws BundleException {
+		_bundle.start();
+
+		_registry = RegistryUtil.getRegistry();
+	}
 
 	@Test
 	public void testClass() {
@@ -536,7 +548,10 @@ public class ServiceTrackerCollectionTest {
 		return new InterfaceOne() {};
 	}
 
-	private Registry _registry = RegistryUtil.getRegistry();
+	@ArquillianResource
+	private Bundle _bundle;
+
+	private Registry _registry;
 
 	private class MockServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> {

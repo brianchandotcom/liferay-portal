@@ -29,6 +29,7 @@ import java.util.SortedMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +38,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Raymond Augé
@@ -46,10 +47,10 @@ import org.osgi.framework.FrameworkUtil;
 public class RegistryTest {
 
 	@Before
-	public void setUp() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	public void setUp() throws BundleException {
+		_bundle.start();
 
-		_bundleContext = bundle.getBundleContext();
+		_registry = RegistryUtil.getRegistry();
 	}
 
 	@Test
@@ -704,8 +705,13 @@ public class RegistryTest {
 		return new InterfaceOne() {};
 	}
 
+	@ArquillianResource
+	private Bundle _bundle;
+
+	@ArquillianResource
 	private BundleContext _bundleContext;
-	private Registry _registry = RegistryUtil.getRegistry();
+
+	private Registry _registry;
 
 	private class MockServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<InterfaceOne, TrackedOne> {

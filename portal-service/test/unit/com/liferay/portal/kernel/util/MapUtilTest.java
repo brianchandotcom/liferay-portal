@@ -176,7 +176,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidCompositeValue() {
+		public void shouldFailWithInvalidCompositeDoubleParamsTypeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Double.class.getName()});
 
@@ -184,7 +184,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidValue() {
+		public void shouldFailWithInvalidDoubleParamsTypeValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:double"});
 
 			Assert.fail();
@@ -210,7 +210,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidCompositeValue() {
+		public void shouldFailWithInvalidCompositeIntegerParamsTypeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Integer.class.getName()});
 
@@ -218,7 +218,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidValue() {
+		public void shouldFailWithInvalidIntegerParamsTypeValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:int"});
 
 			Assert.fail();
@@ -244,7 +244,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidCompositeValue() {
+		public void shouldFailWithInvalidCompositeLongParamsTypeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Long.class.getName()});
 
@@ -252,7 +252,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidValue() {
+		public void shouldFailWithInvalidLongParamsTypeValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:long"});
 
 			Assert.fail();
@@ -278,7 +278,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidCompositeValue() {
+		public void shouldFailWithInvalidCompositeShortParamsTypeValue() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Short.class.getName()});
 
@@ -286,7 +286,7 @@ public class MapUtilTest {
 		}
 
 		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidValue() {
+		public void shouldFailWithInvalidShortParamsTypeValue() {
 			MapUtil.toLinkedHashMap(new String[]{"one:foo:short"});
 
 			Assert.fail();

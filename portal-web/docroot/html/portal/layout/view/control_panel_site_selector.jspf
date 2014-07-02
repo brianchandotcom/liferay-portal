@@ -63,15 +63,15 @@ boolean singlePageApplication = PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_E
 			}
 
 			for (Group manageableSiteGroup : manageableSiteGroups) {
-				String cssSelected = StringPool.BLANK;
+				String cssClass = "site-group";
 
 				if (singlePageApplication && (siteGroup.getGroupId() == manageableSiteGroup.getGroupId())) {
-					cssSelected = "selected";
+					cssClass += " selected";
 				}
 			%>
 
 				<liferay-ui:icon
-					cssClass='<%= "site-group " + cssSelected %>'
+					cssClass='<%= cssClass %>'
 					iconCssClass="<%= manageableSiteGroup.getIconCssClass() %>"
 					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"

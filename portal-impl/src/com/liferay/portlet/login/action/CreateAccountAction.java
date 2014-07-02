@@ -22,8 +22,6 @@ import com.liferay.portal.ContactFirstNameException;
 import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
 import com.liferay.portal.DuplicateOpenIdException;
-import com.liferay.portal.DuplicateUserEmailAddressException;
-import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.NoSuchCountryException;
@@ -129,8 +127,8 @@ public class CreateAccountAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof DuplicateUserEmailAddressException ||
-				e instanceof DuplicateUserScreenNameException) {
+			if (e instanceof UserEmailAddressException.MustNotBeDuplicate ||
+				e instanceof UserScreenNameException.MustNotBeDuplicate) {
 
 				String emailAddress = ParamUtil.getString(
 					actionRequest, "emailAddress");

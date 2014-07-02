@@ -14,7 +14,6 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
@@ -65,8 +64,7 @@ public class UpdateEmailAddressAction extends Action {
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
-			if (e instanceof DuplicateUserEmailAddressException ||
-				e instanceof ReservedUserEmailAddressException ||
+			if (e instanceof ReservedUserEmailAddressException ||
 				e instanceof UserEmailAddressException) {
 
 				SessionErrors.add(request, e.getClass());

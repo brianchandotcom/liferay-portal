@@ -60,11 +60,59 @@ public class UserScreenNameException extends PortalException {
 
 	public static class MustBeAlphaNumeric extends UserScreenNameException {
 
-		public MustBeAlphaNumeric(char ... validSpecialChars) {
+		public MustBeAlphaNumeric(
+			long userId, String screenName, char ... validSpecialChars) {
+
 			super(
-				"Screen name must be alphanumeric or one the following " +
-					"special characters: " + new String(validSpecialChars));
+				"Screen name " + screenName + " for user " + userId + " is " +
+					" not valid because it must be alphanumeric or one the " +
+						"following special characters: " +
+							new String(validSpecialChars));
+
+			_userId = userId;
+			_screenName = screenName;
+			_validSpecialChars = validSpecialChars;
 		}
+
+		public String getScreenName() {
+			return _screenName;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		public char[] getValidSpecialChars() {
+			return _validSpecialChars;
+		}
+
+		private String _screenName;
+		private long _userId;
+		private char[] _validSpecialChars;
+
+	}
+
+	public static class MustNotBeDuplicate extends UserScreenNameException {
+
+		public MustNotBeDuplicate(long userId, String screenName) {
+			super(
+				"Screen name " + screenName + " cannot be set for " +
+					" user " + userId + " because it is already being used");
+
+			_userId = userId;
+			_screenName = screenName;
+		}
+
+		public String getScreenName() {
+			return _screenName;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private String _screenName;
+		private long _userId;
 
 	}
 
@@ -78,27 +126,50 @@ public class UserScreenNameException extends PortalException {
 			super("Screen name must not be null for the full name " + fullName);
 		}
 
+		public MustNotBeNull(long userId) {
+			super("Screen name must not be null for the user " + userId);
+		}
 	}
 
 	public static class MustNotBeNumeric extends UserScreenNameException {
 
-		public MustNotBeNumeric(String screenName) {
+		public MustNotBeNumeric(long userId, String screenName) {
 			super(
-				"Screen name " + screenName + " is numeric but the portal " +
-					"property \"" + PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC +
-						"\" is disabled");
+				"Screen name " + screenName + " for user " + userId + " is " +
+					"numeric but the portal property \"" +
+						PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC +
+							"\" is disabled");
+
+			_userId = userId;
+			_screenName = screenName;
 		}
+
+		public String getScreenName() {
+			return _screenName;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
+		private String _screenName;
+		private long _userId;
 
 	}
 
 	public static class MustNotBeReservedForAnonymous
 		extends UserScreenNameException {
 
-		public MustNotBeReservedForAnonymous(String[] reservedScreenNames) {
+		public MustNotBeReservedForAnonymous(
+			long userId, String screenName, String[] reservedScreenNames) {
 			super(
-				"Screen name must not be a reserved name for anonymous users " +
-					"such as: " + StringUtil.merge(reservedScreenNames));
+				"Screen name " + screenName + " for user " + userId + " is " +
+					"not valid because it must not be a reserved name for " +
+						"anonymous users such as: " +
+							StringUtil.merge(reservedScreenNames));
 
+			_userId = userId;
+			_screenName = screenName;
 			_reservedScreenNames = reservedScreenNames;
 		}
 
@@ -106,17 +177,28 @@ public class UserScreenNameException extends PortalException {
 			return _reservedScreenNames;
 		}
 
+		public String getScreenName() {
+			return _screenName;
+		}
+
+		public long getUserId() {
+			return _userId;
+		}
+
 		private String[] _reservedScreenNames;
+		private final String _screenName;
+		private final long _userId;
 
 	}
 
 	public static class MustNotBeUsedByGroup extends UserScreenNameException {
 
-		public MustNotBeUsedByGroup(String screenName, Group group) {
+		public MustNotBeUsedByGroup(long userId, String screenName, Group group) {
 			super(
-				"Screen name " + screenName + " is already used by group " +
-					group.getGroupId());
+				"Screen name " + screenName + " for user " + userId + " is " +
+					"already used by group " + group.getGroupId());
 
+			_userId = userId;
 			_screenName = screenName;
 			_group = group;
 		}
@@ -129,8 +211,13 @@ public class UserScreenNameException extends PortalException {
 			return _screenName;
 		}
 
+		public long getUserId() {
+			return _userId;
+		}
+
 		private Group _group;
 		private String _screenName;
+		private long _userId;
 
 	}
 
@@ -138,13 +225,14 @@ public class UserScreenNameException extends PortalException {
 		extends UserScreenNameException {
 
 		public MustProduceValidFriendlyURL(
-			String screenName, int exceptionType) {
+			long userId, String screenName, int exceptionType) {
 
 			super(
-				"Screen name " + screenName +
+				"Screen name " + screenName + " for user " + userId +
 					" does not produce a valid friendly URL",
 				new GroupFriendlyURLException(exceptionType));
 
+			_userId = userId;
 			_screenName = screenName;
 			_exceptionType = exceptionType;
 		}
@@ -159,18 +247,22 @@ public class UserScreenNameException extends PortalException {
 
 		private int _exceptionType;
 		private String _screenName;
+		private long _userId;
 
 	}
 
 	public static class MustValidate extends UserScreenNameException {
 
 		public MustValidate(
-			String screenName, ScreenNameValidator screenNameValidator) {
+			long userId, String screenName,
+			ScreenNameValidator screenNameValidator) {
 
 			super(
-				"Screen name " + screenName + " does not validate with " +
-					ClassUtil.getClassName(screenNameValidator));
+				"Screen name " + screenName + " for user " + userId + " does " +
+					"not validate with " +
+						ClassUtil.getClassName(screenNameValidator));
 
+			_userId = userId;
 			_screenName = screenName;
 			_screenNameValidator = screenNameValidator;
 		}
@@ -183,8 +275,13 @@ public class UserScreenNameException extends PortalException {
 			return _screenNameValidator;
 		}
 
+		public long getUserId() {
+			return _userId;
+		}
+
 		private String _screenName;
 		private ScreenNameValidator _screenNameValidator;
+		private long _userId;
 
 	}
 

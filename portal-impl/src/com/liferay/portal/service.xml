@@ -3345,10 +3345,7 @@
 		<exception>DuplicatePasswordPolicy</exception>
 		<exception>DuplicateRole</exception>
 		<exception>DuplicateTeam</exception>
-		<exception>DuplicateUserEmailAddress</exception>
 		<exception>DuplicateUserGroup</exception>
-		<exception>DuplicateUserId</exception>
-		<exception>DuplicateUserScreenName</exception>
 		<exception>EmailAddress</exception>
 		<exception>ExpiredLock</exception>
 		<exception>GroupFriendlyURL</exception>

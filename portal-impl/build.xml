@@ -1275,12 +1275,6 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-wsdd-portlet-polls">
-		<antcall target="build-wsdd">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/polls/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-wsdd-portlet-ratings">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/ratings/service.xml" />

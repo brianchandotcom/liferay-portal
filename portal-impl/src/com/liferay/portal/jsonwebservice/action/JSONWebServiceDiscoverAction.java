@@ -396,7 +396,12 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				sb.append(StringPool.COMMA);
 			}
 
-			sb.append(_formatType(genericType, null, returnType));
+			if (genericType == null) {
+				sb.append(StringPool.STAR);
+			}
+			else {
+				sb.append(_formatType(genericType, null, returnType));
+			}
 		}
 
 		sb.append(StringPool.GREATER_THAN);

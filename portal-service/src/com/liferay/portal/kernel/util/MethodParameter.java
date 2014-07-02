@@ -101,7 +101,9 @@ public class MethodParameter {
 				sb.append(c);
 
 				if (c == ';') {
-					list.add(sb.toString());
+					String typeName = sb.toString();
+
+					list.add(_getGenericName(typeName));
 
 					sb.setLength(0);
 				}
@@ -109,9 +111,25 @@ public class MethodParameter {
 		}
 
 		if (sb.length() > 0) {
-			list.add(sb.toString());
+			String typeName = sb.toString();
+
+			list.add(_getGenericName(typeName));
 
 			sb.setLength(0);
+		}
+
+		int nullCount = 0;
+
+		for (String genericType : list) {
+			if (genericType != null) {
+				break;
+			}
+
+			nullCount++;
+		}
+
+		if (nullCount == list.size()) {
+			return null;
 		}
 
 		return list.toArray(new String[list.size()]);
@@ -148,6 +166,20 @@ public class MethodParameter {
 		return className;
 	}
 
+	private static String _getGenericName(String typeName) {
+		if (typeName.equals(StringPool.STAR)) {
+			return null;
+		}
+
+		if (typeName.startsWith(StringPool.PLUS) ||
+			typeName.startsWith(StringPool.MINUS)) {
+
+			typeName = typeName.substring(1, typeName.length());
+		}
+
+		return typeName;
+	}
+
 	private static Class<?>[] _loadGenericTypes(String[] signatures)
 		throws ClassNotFoundException {
 
@@ -158,6 +190,10 @@ public class MethodParameter {
 		Class<?>[] types = new Class<?>[signatures.length];
 
 		for (int i = 0; i < signatures.length; i++) {
+			if (signatures[i] == null) {
+				continue;
+			}
+
 			String className = _getClassName(signatures[i]);
 
 			if (className.startsWith(StringPool.OPEN_BRACKET)) {

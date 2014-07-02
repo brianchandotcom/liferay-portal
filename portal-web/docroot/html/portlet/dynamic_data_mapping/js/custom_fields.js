@@ -433,21 +433,22 @@ AUI.add(
 			AArray.each(
 				model,
 				function(item, index) {
-					if(item.attributeName == 'name'){
-						item.editor = new A.TextCellEditor({
-							                    validator: {
-								                    rules: {
-								                        value: {
-								                            required: true,
-								                            structureFieldName: true
-								                        }
-								                    }
-							                }
-							            });
+					if (item.attributeName == 'name') {
+						item.editor = new A.TextCellEditor(
+							{
+								validator: {
+									rules: {
+										value: {
+											required: true,
+											structureFieldName: true
+										}
+									}
+								}
+							}
+						);
 					}
 				}
 			);
-
 
 			return model.concat(
 				[
@@ -455,7 +456,7 @@ AUI.add(
 						attributeName: 'indexType',
 						editor: new A.RadioCellEditor(
 							{
-								options: indexTypeOptions,
+								options: indexTypeOptions
 
 							}
 						),

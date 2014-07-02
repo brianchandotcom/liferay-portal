@@ -28,12 +28,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jboss.arquillian.junit.Arquillian;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Raymond Augé
  */
+@RunWith(Arquillian.class)
 public class ServiceTrackerCollectionTest {
 
 	@Test

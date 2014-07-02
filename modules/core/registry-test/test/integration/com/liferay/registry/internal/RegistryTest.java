@@ -28,9 +28,12 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.jboss.arquillian.junit.Arquillian;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -39,6 +42,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Raymond Augé
  */
+@RunWith(Arquillian.class)
 public class RegistryTest {
 
 	@Before

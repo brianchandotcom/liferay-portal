@@ -868,11 +868,17 @@
 
 		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="messageBoardsThreadURL" value="${messageBoardsThreadURL}" />
+			<var name="postCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
@@ -1159,6 +1165,13 @@
 		</execute>
 
 		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}" />
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="${postCount}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="postCount" value="${postCount}" />

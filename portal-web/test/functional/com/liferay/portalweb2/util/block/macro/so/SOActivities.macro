@@ -347,10 +347,15 @@
 			<var name="categoryName" value="${categoryNameEdit}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#editPG">
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="1" />
 			<var name="threadBody" value="${threadBody}" />
-			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
 		</execute>
 

@@ -413,11 +413,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
-
-			> .navbar-header {
-				margin-left: 0;
-				margin-right: 0;
-			}
 		}
 
 		.divider-vertical {

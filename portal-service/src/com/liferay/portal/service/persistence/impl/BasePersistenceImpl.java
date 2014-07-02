@@ -133,7 +133,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public <T> List<T> findWithDynamicQuery(DynamicQuery dynamicQuery) {
+	public <V> List<V> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		Session session = null;
 
 		try {
@@ -152,7 +152,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public <T> List<T> findWithDynamicQuery(
+	public <V> List<V> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		Session session = null;
@@ -175,9 +175,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public <T> List<T> findWithDynamicQuery(
+	public <V> List<V> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
+		OrderByComparator<V> orderByComparator) {
 
 		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
 

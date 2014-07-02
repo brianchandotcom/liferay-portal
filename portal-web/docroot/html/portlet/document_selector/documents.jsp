@@ -40,11 +40,7 @@ String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 String type = DocumentSelectorUtil.getType(request);
 
-long repositoryId = groupId;
-
 if (folder != null) {
-	repositoryId = folder.getRepositoryId();
-
 	PortletURL breadcrumbURL = renderResponse.createRenderURL();
 
 	breadcrumbURL.setParameter("struts_action", "/document_selector/view");
@@ -100,7 +96,6 @@ portletURL.setParameter("type", type);
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 					</liferay-portlet:renderURL>
 
@@ -130,7 +125,6 @@ portletURL.setParameter("type", type);
 							<portlet:param name="struts_action" value="/document_selector/edit_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="type" value="<%= type %>" />
 						</liferay-portlet:renderURL>
@@ -154,7 +148,6 @@ portletURL.setParameter("type", type);
 							<portlet:param name="struts_action" value="/document_selector/edit_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 							<portlet:param name="type" value="<%= type %>" />
@@ -196,7 +189,7 @@ portletURL.setParameter("type", type);
 			iteratorURL="<%= portletURL %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= DLAppServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
 			/>
 
@@ -321,7 +314,7 @@ portletURL.setParameter("type", type);
 
 		searchContext.setStart(entryStart);
 
-		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
+		Hits hits = DLAppServiceUtil.search(scopeGroupId, searchContext);
 		%>
 
 		<liferay-ui:search-container-results

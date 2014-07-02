@@ -23,13 +23,9 @@ String uploadProgressId = "dlFileEntryUploadProgress";
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-long repositoryId = ParamUtil.getLong(request, "repositoryId");
-
-Folder folder = null;
-
 if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		folder = DLAppServiceUtil.getFolder(folderId);
+		DLAppServiceUtil.getFolder(folderId);
 	}
 	catch (NoSuchFolderException nsfe) {
 		folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -63,9 +59,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
-	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
 
@@ -127,7 +121,7 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 		String folderName = StringPool.BLANK;
 
 		if (folderId > 0) {
-			folder = DLAppLocalServiceUtil.getFolder(folderId);
+			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
 			folder = folder.toEscapedModel();
 
@@ -157,78 +151,71 @@ String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 			</aui:validator>
 		</aui:input>
 
-		<c:if test="<%= ((folder == null) || folder.isSupportsMetadata()) %>">
-			<aui:input name="description" />
+		<aui:input name="description" />
 
-			<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
-				<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+		<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
 
-				<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+		<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
-				<%
-				if (fileEntryTypeId > 0) {
+		<%
+		if (fileEntryTypeId > 0) {
+			try {
+				List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+				for (DDMStructure ddmStructure : ddmStructures) {
+					Fields fields = null;
+
 					try {
-						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+						DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), 0);
 
-						for (DDMStructure ddmStructure : ddmStructures) {
-							Fields fields = null;
-
-							try {
-								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), 0);
-
-								fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
-							}
-							catch (Exception e) {
-							}
-				%>
-
-							<liferay-ddm:html
-								classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-								classPK="<%= ddmStructure.getPrimaryKey() %>"
-								fields="<%= fields %>"
-								fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-								requestedLocale="<%= locale %>"
-							/>
-
-				<%
-						}
+						fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
 					}
 					catch (Exception e) {
-						_log.error(e, e);
 					}
-				}
-				%>
+		%>
 
-			</c:if>
-
-			<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= DLFileEntryConstants.getClassName() %>"
-					classPK="<%= 0 %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
-		</c:if>
-
-		<c:if test="<%= ((folder == null) || folder.isSupportsSocial()) %>">
-			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
-				<aui:fieldset>
-					<aui:input classPK="<%= 0 %>" classTypePK="<%= fileEntryTypeId %>" model="<%= DLFileEntry.class %>" name="categories" type="assetCategories" />
-
-					<aui:input classPK="<%= 0 %>" model="<%= DLFileEntry.class %>" name="tags" type="assetTags" />
-				</aui:fieldset>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-				<aui:fieldset>
-					<liferay-ui:input-asset-links
-						className="<%= DLFileEntry.class.getName() %>"
-						classPK="<%= 0 %>"
+					<liferay-ddm:html
+						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+						classPK="<%= ddmStructure.getPrimaryKey() %>"
+						fields="<%= fields %>"
+						fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+						requestedLocale="<%= locale %>"
 					/>
-				</aui:fieldset>
-			</liferay-ui:panel>
-		</c:if>
+
+		<%
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		%>
+
+		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+			<liferay-ui:custom-attribute-list
+				className="<%= DLFileEntryConstants.getClassName() %>"
+				classPK="<%= 0 %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</liferay-ui:custom-attributes-available>
+
+		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
+			<aui:fieldset>
+				<aui:input classPK="<%= 0 %>" classTypePK="<%= fileEntryTypeId %>" model="<%= DLFileEntry.class %>" name="categories" type="assetCategories" />
+
+				<aui:input classPK="<%= 0 %>" model="<%= DLFileEntry.class %>" name="tags" type="assetTags" />
+			</aui:fieldset>
+		</liferay-ui:panel>
+
+		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
+			<aui:fieldset>
+				<liferay-ui:input-asset-links
+					className="<%= DLFileEntry.class.getName() %>"
+					classPK="<%= 0 %>"
+				/>
+			</aui:fieldset>
+		</liferay-ui:panel>
 
 		<aui:field-wrapper label="permissions">
 			<liferay-ui:input-permissions
@@ -273,5 +260,5 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-fil
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.edit_file_entry_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_selector.edit_file_entry_jsp");
 %>

@@ -340,6 +340,7 @@ public class JournalFolderLocalServiceImpl
 		long groupId, long folderId, int start, int end,
 		OrderByComparator<?> obc) {
 
+		@SuppressWarnings("unchecked")
 		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			WorkflowConstants.STATUS_ANY, start, end,
 			(OrderByComparator<Object>)obc);

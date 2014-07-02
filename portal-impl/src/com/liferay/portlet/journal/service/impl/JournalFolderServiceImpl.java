@@ -148,6 +148,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		long groupId, long folderId, int status, int start, int end,
 		OrderByComparator<?> obc) {
 
+		@SuppressWarnings("unchecked")
 		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, (OrderByComparator<Object>)obc);
 

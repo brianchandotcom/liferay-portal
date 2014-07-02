@@ -83,9 +83,12 @@ public class SystemProperties {
 		// system.properties
 
 		try {
-			URL url = classLoader.getResource("system.properties");
+			Enumeration<URL> enumeration = classLoader.getResources(
+				"system.properties");
 
-			if (url != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
 				InputStream inputStream = url.openStream();
 
 				properties.load(inputStream);
@@ -104,9 +107,12 @@ public class SystemProperties {
 		// system-ext.properties
 
 		try {
-			URL url = classLoader.getResource("system-ext.properties");
+			Enumeration<URL> enumeration = classLoader.getResources(
+				"system-ext.properties");
 
-			if (url != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
 				_loaded = true;
 
 				InputStream inputStream = url.openStream();

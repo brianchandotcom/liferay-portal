@@ -76,7 +76,8 @@ public class LayoutsRemotePublisherMessageListener
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
+			exportImportConfiguration,
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		initThreadLocals(userId, parameterMap);
 

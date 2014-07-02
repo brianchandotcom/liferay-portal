@@ -66,7 +66,8 @@ public class LayoutsLocalPublisherMessageListener
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
+			exportImportConfiguration,
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		initThreadLocals(userId, parameterMap);
 

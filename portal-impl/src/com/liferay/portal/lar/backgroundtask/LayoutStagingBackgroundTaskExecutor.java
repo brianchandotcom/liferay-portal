@@ -183,7 +183,8 @@ public class LayoutStagingBackgroundTaskExecutor
 				Map<String, String[]> parameterMap =
 					(Map<String, String[]>)settingsMap.get("parameterMap");
 				DateRange dateRange = ExportImportDateUtil.getDateRange(
-					_exportImportConfiguration);
+					_exportImportConfiguration,
+					ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 				file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 					_sourceGroupId, privateLayout, layoutIds, parameterMap,

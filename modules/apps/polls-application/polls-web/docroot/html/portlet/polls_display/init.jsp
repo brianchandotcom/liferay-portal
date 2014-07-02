@@ -16,22 +16,14 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.polls.DuplicateVoteException" %><%@
-page import="com.liferay.portlet.polls.NoSuchChoiceException" %><%@
-page import="com.liferay.portlet.polls.NoSuchQuestionException" %><%@
-page import="com.liferay.portlet.polls.model.PollsChoice" %><%@
-page import="com.liferay.portlet.polls.model.PollsQuestion" %><%@
-page import="com.liferay.portlet.polls.model.PollsVote" %><%@
-page import="com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil" %><%@
-page import="com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil" %><%@
-page import="com.liferay.portlet.polls.service.permission.PollsPermission" %><%@
-page import="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" %><%@
-page import="com.liferay.portlet.polls.util.PollsUtil" %>
+<%@
+	page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+	page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+	page import="com.liferay.portal.model.Portlet" %><%@
+	page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+	page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
+	page import="com.liferay.portal.service.permission.PortletPermissionUtil" %>
 
 <%
-long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+	long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
 %>
-
-<%@ include file="/html/portlet/polls_display/init-ext.jsp" %>

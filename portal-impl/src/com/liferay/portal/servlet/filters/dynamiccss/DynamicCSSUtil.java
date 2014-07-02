@@ -518,7 +518,7 @@ public class DynamicCSSUtil {
 	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
 	 *      com.liferay.portal.servlet.filters.aggregate.ServletPaths, String)
 	 */
-	private static String propagateQueryString(
+	protected static String propagateQueryString(
 		String content, String queryString) {
 
 		StringBuilder sb = new StringBuilder(content.length());

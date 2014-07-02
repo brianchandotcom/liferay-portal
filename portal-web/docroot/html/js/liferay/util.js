@@ -538,10 +538,6 @@
 			return (window.innerWidth > 0) ? window.innerWidth : screen.width;
 		},
 
-		isArray: function(object) {
-			return !!(window.Array && object.constructor == window.Array);
-		},
-
 		inBrowserView: function(node, win, nodeRegion) {
 			var DOM = A.DOM;
 
@@ -556,10 +552,10 @@
 			var winRegion = DOM.viewportRegion(win);
 
 			var viewable = (
+				nodeRegion.bottom <= winRegion.bottom &&
 				nodeRegion.left >= winRegion.left &&
 				nodeRegion.right <= winRegion.right &&
-				nodeRegion.top >= winRegion.top &&
-				nodeRegion.bottom <= winRegion.bottom
+				nodeRegion.top >= winRegion.top
 			);
 
 			if (viewable) {
@@ -570,19 +566,23 @@
 
 					var xOffset = frameXY[0] - DOM.docScrollX(win);
 
-					nodeRegion.left = nodeRegion.left + xOffset;
-					nodeRegion.right = nodeRegion.right + xOffset;
+					nodeRegion.left += xOffset;
+					nodeRegion.right += xOffset;
 
 					var yOffset = frameXY[1] - DOM.docScrollY(win);
 
-					nodeRegion.top = nodeRegion.top + yOffset;
-					nodeRegion.bottom = nodeRegion.bottom + yOffset;
+					nodeRegion.top += yOffset;
+					nodeRegion.bottom += yOffset;
 
-					return Util.inBrowserView(node, win.parent, nodeRegion);
+					viewable = Util.inBrowserView(node, win.parent, nodeRegion);
 				}
 			}
 
 			return viewable;
+		},
+
+		isArray: function(object) {
+			return !!(window.Array && object.constructor == window.Array);
 		},
 
 		isEditorPresent: function(editorImpl) {

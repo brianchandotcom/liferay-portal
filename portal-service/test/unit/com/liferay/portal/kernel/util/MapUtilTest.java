@@ -39,35 +39,30 @@ public class MapUtilTest {
 
 			Assert.assertTrue(map.isEmpty());
 
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one,1"}, ",");
+			map = MapUtil.toLinkedHashMap(new String[] {"one,1"}, ",");
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue("1"));
 
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one,1", "two,2"}, ",");
+			map = MapUtil.toLinkedHashMap(new String[] {"one,1", "two,2"}, ",");
 
 			Assert.assertEquals(2, map.size());
 		}
 
 		@Test
 		public void shouldReturnMapWithDelimiterDefault() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(
-				new String[] {});
+			Map<String, String> map = MapUtil.toLinkedHashMap(new String[] {});
 
 			Assert.assertTrue(map.isEmpty());
 
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1"});
+			map = MapUtil.toLinkedHashMap(new String[] {"one:1"});
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue("1"));
 
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1", "two:2"});
+			map = MapUtil.toLinkedHashMap(new String[] {"one:1", "two:2"});
 
 			Assert.assertEquals(2, map.size());
 		}
@@ -314,7 +309,6 @@ public class MapUtilTest {
 
 			Assert.fail();
 		}
-
 	}
 
 	public static class WhenCreatingAMapFromArray {

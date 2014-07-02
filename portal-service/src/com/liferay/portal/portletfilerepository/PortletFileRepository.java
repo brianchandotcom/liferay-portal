@@ -104,10 +104,10 @@ public interface PortletFileRepository {
 
 	public List<FileEntry> getPortletFileEntries(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator obc);
+		OrderByComparator<FileEntry> obc);
 
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator obc);
+		long groupId, long folderId, OrderByComparator<FileEntry> obc);
 
 	public int getPortletFileEntriesCount(long groupId, long folderId);
 

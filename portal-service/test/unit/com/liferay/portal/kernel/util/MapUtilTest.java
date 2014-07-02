@@ -33,6 +33,40 @@ public class MapUtilTest {
 	public static class WhenCreatingALinkedHashMapFromArray {
 
 		@Test
+		public void shouldReturnEmptyMapWithParamsInvalid() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one"});
+
+			Assert.assertTrue(map.isEmpty());
+
+			map = MapUtil.toLinkedHashMap(new String[] {"one:two:three:four"});
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithParamsNull() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(null);
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithParamsTypeObject() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one:1:" + Object.class.getName()});
+
+			Assert.assertEquals(0, map.size());
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithParamsZeroLength() {
+			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
 		public void shouldReturnMapWithDelimiterCustom() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[] {}, ",");
@@ -65,25 +99,6 @@ public class MapUtilTest {
 			map = MapUtil.toLinkedHashMap(new String[] {"one:1", "two:2"});
 
 			Assert.assertEquals(2, map.size());
-		}
-
-		@Test
-		public void shouldReturnEmptyMapWithParamsInvalid() {
-			Map<String, Object> map = MapUtil.toLinkedHashMap(
-				new String[] {"one"});
-
-			Assert.assertTrue(map.isEmpty());
-
-			map = MapUtil.toLinkedHashMap(new String[] {"one:two:three:four"});
-
-			Assert.assertTrue(map.isEmpty());
-		}
-
-		@Test
-		public void shouldReturnEmptyMapWithParamsNull() {
-			Map<String, Object> map = MapUtil.toLinkedHashMap(null);
-
-			Assert.assertTrue(map.isEmpty());
 		}
 
 		@Test
@@ -141,14 +156,6 @@ public class MapUtilTest {
 			Assert.assertTrue(map.containsKey("one"));
 			Assert.assertTrue(map.containsValue((float) 1));
 			Assert.assertTrue(map.get("one") instanceof Float);
-		}
-
-		@Test
-		public void shouldReturnEmptyMapWithParamsTypeObject() {
-			Map<String, Object> map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1:" + Object.class.getName()});
-
-			Assert.assertEquals(0, map.size());
 		}
 
 		@Test
@@ -238,13 +245,6 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof String);
 		}
 
-		@Test
-		public void shouldReturnEmptyMapWithParamsZeroLength() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
-
-			Assert.assertTrue(map.isEmpty());
-		}
-
 	}
 
 	public static class
@@ -314,6 +314,26 @@ public class MapUtilTest {
 	public static class WhenCreatingAMapFromArray {
 
 		@Test
+		public void shouldFailWithOddLength() {
+			try {
+				MapUtil.fromArray(new String[] {"one", "two", "three"});
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException iae) {
+				Assert.assertEquals(
+					"Array length is not an even number", iae.getMessage());
+			}
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithZeroLength() {
+			Map<String, String> map = MapUtil.fromArray(new String[] {});
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
 		public void shouldSucceedWithEvenLength() {
 			String[] array = new String[] {
 				PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
@@ -349,26 +369,6 @@ public class MapUtilTest {
 			for (int i = 0; i < array.length; i += 2) {
 				Assert.assertEquals(array[i + 1], map.get(array[i]));
 			}
-		}
-
-		@Test
-		public void shouldFailWithOddLength() {
-			try {
-				MapUtil.fromArray(new String[] {"one", "two", "three"});
-
-				Assert.fail();
-			}
-			catch (IllegalArgumentException iae) {
-				Assert.assertEquals(
-					"Array length is not an even number", iae.getMessage());
-			}
-		}
-
-		@Test
-		public void shouldReturnEmptyMapWithZeroLength() {
-			Map<String, String> map = MapUtil.fromArray(new String[] {});
-
-			Assert.assertTrue(map.isEmpty());
 		}
 
 	}

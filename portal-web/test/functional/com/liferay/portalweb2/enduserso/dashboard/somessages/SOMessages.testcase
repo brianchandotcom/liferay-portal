@@ -950,7 +950,7 @@
 		<execute action="SOMessages#assertTextNotPresent" value1="${messageBody}" />
 	</command>
 
-	<command known-issues="SOS-2258" name="SendMessageAttachmentMultipleUsers" priority="5">
+	<command name="SendMessageAttachmentMultipleUsers" priority="5">
 		<var name="messageAttachmentFile1" value="Document_1.jpg" />
 		<var name="messageAttachmentFile2" value="Document_2.jpg" />
 		<var name="messageAttachmentFile3" value="Document_3.jpg" />
@@ -1031,7 +1031,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewMessage">
-			<var name="connectionName" value="${adminName} , ${userName2} , ${userName3}" />
+			<var name="connectionNameList" value="${adminName},${userName2},${userName3}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
@@ -1049,7 +1049,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${adminName} , ${userName2} , ${userName3}" />
+			<var name="connectionNameList" value="${adminName},${userName2},${userName3}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
@@ -1070,7 +1070,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName1} , ${adminName} , ${userName3}" />
+			<var name="connectionNameList" value="${userName1},${adminName},${userName3}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
@@ -1091,7 +1091,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName1} , ${adminName} , ${userName3}" />
+			<var name="connectionNameList" value="${userName1},${adminName},${userName3}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
@@ -1112,7 +1112,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName2} , ${userName1} , ${adminName}" />
+			<var name="connectionNameList" value="${userName2},${userName1},${adminName}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
@@ -1129,7 +1129,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName2} , ${userName1} , ${adminName}" />
+			<var name="connectionNameList" value="${userName2},${userName1},${adminName}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
@@ -1150,7 +1150,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName2} , ${userName1} , ${adminName}" />
+			<var name="connectionNameList" value="${userName2},${userName1},${adminName}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile4}" />
@@ -1171,7 +1171,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName3} , ${userName2} , ${userName1}" />
+			<var name="connectionNameList" value="${userName3},${userName2},${userName1}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
@@ -1188,7 +1188,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName3} , ${userName2} , ${userName1}" />
+			<var name="connectionNameList" value="${userName3},${userName2},${userName1}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
@@ -1205,7 +1205,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${userName3} , ${userName2} , ${userName1}" />
+			<var name="connectionNameList" value="${userName3},${userName2},${userName1}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile4}" />

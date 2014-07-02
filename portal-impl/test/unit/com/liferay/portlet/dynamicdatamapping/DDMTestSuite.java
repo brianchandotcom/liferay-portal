@@ -14,14 +14,14 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerTest;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImplTest;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValuesTest;
 import com.liferay.portlet.dynamicdatamapping.storage.GeolocationFieldRendererTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONDeserializerTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormJSONSerializerTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesJSONDeserializerTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesJSONSerializerTest;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImplTest;
 

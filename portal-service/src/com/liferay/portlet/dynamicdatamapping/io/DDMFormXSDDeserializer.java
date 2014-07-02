@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util;
+package com.liferay.portlet.dynamicdatamapping.io;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
- * @author Marcellus Tavares
+ * @author Pablo Carvalho
  */
-public interface DDMFormValuesJSONDeserializer {
+public interface DDMFormXSDDeserializer {
 
-	public DDMFormValues deserialize(String serializedDDMFormValues)
-		throws PortalException;
+	public DDMForm deserialize(String serializedDDMForm) throws PortalException;
 
 }

@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,11 @@ public class RegistryTest {
 		_bundle.start();
 
 		_registry = RegistryUtil.getRegistry();
+	}
+
+	@After
+	public void tearDown() throws BundleException {
+		_bundle.stop();
 	}
 
 	@Test

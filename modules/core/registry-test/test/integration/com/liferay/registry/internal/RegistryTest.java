@@ -43,6 +43,7 @@ import org.osgi.framework.BundleException;
 
 /**
  * @author Raymond Augé
+ * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
 public class RegistryTest {

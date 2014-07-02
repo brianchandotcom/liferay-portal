@@ -1324,7 +1324,6 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-wsdd-portlet-journal" />
 		<antcall target="build-wsdd-portlet-messageboards" />
 		<antcall target="build-wsdd-portlet-mobiledevicerules" />
-		<antcall target="build-wsdd-portlet-polls" />
 		<antcall target="build-wsdd-portlet-ratings" />
 		<antcall target="build-wsdd-portlet-shopping" />
 		<antcall target="build-wsdd-portlet-social" />

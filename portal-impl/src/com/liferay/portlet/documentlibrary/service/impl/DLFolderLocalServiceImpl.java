@@ -523,6 +523,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		long groupId, long folderId, int status, boolean includeMountFolders,
 		int start, int end, OrderByComparator<?> obc) {
 
+		@SuppressWarnings("unchecked")
 		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, (OrderByComparator<Object>)obc);
 
@@ -542,6 +543,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		boolean includeMountFolders, int start, int end,
 		OrderByComparator<?> obc) {
 
+		@SuppressWarnings("unchecked")
 		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, (OrderByComparator<Object>)obc);
 

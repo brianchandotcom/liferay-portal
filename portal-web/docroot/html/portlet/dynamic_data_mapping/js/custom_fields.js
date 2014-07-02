@@ -457,7 +457,6 @@ AUI.add(
 						editor: new A.RadioCellEditor(
 							{
 								options: indexTypeOptions
-
 							}
 						),
 						formatter: function(val) {

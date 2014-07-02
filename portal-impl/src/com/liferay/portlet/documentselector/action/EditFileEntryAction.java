@@ -142,63 +142,6 @@ public class EditFileEntryAction extends PortletAction {
 		return actionMapping.findForward(getForward(renderRequest, forward));
 	}
 
-	protected void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Exception e)
-		throws Exception {
-
-		if (e instanceof AssetCategoryException ||
-			e instanceof AssetTagException) {
-
-			SessionErrors.add(actionRequest, e.getClass(), e);
-		}
-		else if (e instanceof AntivirusScannerException ||
-				 e instanceof DuplicateFileException ||
-				 e instanceof DuplicateFolderNameException ||
-				 e instanceof LiferayFileItemException ||
-				 e instanceof FileExtensionException ||
-				 e instanceof FileMimeTypeException ||
-				 e instanceof FileNameException ||
-				 e instanceof FileSizeException ||
-				 e instanceof NoSuchFolderException ||
-				 e instanceof SourceFileNameException ||
-				 e instanceof StorageFieldRequiredException) {
-
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				String uploadExceptionRedirect = ParamUtil.getString(
-					actionRequest, "uploadExceptionRedirect");
-
-				actionResponse.sendRedirect(uploadExceptionRedirect);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				return;
-			}
-
-			if (e instanceof AntivirusScannerException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-		}
-		else if (e instanceof InvalidFileVersionException ||
-				 e instanceof NoSuchFileEntryException ||
-				 e instanceof PrincipalException) {
-
-			SessionErrors.add(actionRequest, e.getClass());
-
-			setForward(actionRequest, "portlet.document_library.error");
-		}
-		else {
-			throw e;
-		}
-	}
-
 	protected FileEntry addFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -276,6 +219,63 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	protected void handleUploadException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Exception e)
+		throws Exception {
+
+		if (e instanceof AssetCategoryException ||
+			e instanceof AssetTagException) {
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		else if (e instanceof AntivirusScannerException ||
+				 e instanceof DuplicateFileException ||
+				 e instanceof DuplicateFolderNameException ||
+				 e instanceof LiferayFileItemException ||
+				 e instanceof FileExtensionException ||
+				 e instanceof FileMimeTypeException ||
+				 e instanceof FileNameException ||
+				 e instanceof FileSizeException ||
+				 e instanceof NoSuchFolderException ||
+				 e instanceof SourceFileNameException ||
+				 e instanceof StorageFieldRequiredException) {
+
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				String uploadExceptionRedirect = ParamUtil.getString(
+					actionRequest, "uploadExceptionRedirect");
+
+				actionResponse.sendRedirect(uploadExceptionRedirect);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				return;
+			}
+
+			if (e instanceof AntivirusScannerException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+		}
+		else if (e instanceof InvalidFileVersionException ||
+				 e instanceof NoSuchFileEntryException ||
+				 e instanceof PrincipalException) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.document_library.error");
+		}
+		else {
+			throw e;
 		}
 	}
 

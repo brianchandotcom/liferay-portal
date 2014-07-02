@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -152,7 +152,7 @@ public class FileEntryAtomCollectionAdapter
 
 		long folderId = atomRequestContext.getLongParameter("folderId");
 
-		long repositoryId = 0;
+		long repositoryId;
 
 		if (folderId != 0) {
 			Folder folder = DLAppServiceUtil.getFolder(folderId);
@@ -172,7 +172,8 @@ public class FileEntryAtomCollectionAdapter
 
 		return DLAppServiceUtil.getFileEntries(
 			repositoryId, folderId, atomPager.getStart(),
-			atomPager.getEnd() + 1, new EntryNameComparator());
+			atomPager.getEnd() + 1,
+			new RepositoryModelNameComparator<FileEntry>());
 	}
 
 	@Override
@@ -222,7 +223,7 @@ public class FileEntryAtomCollectionAdapter
 
 		long folderId = atomRequestContext.getLongParameter("folderId");
 
-		long repositoryId = 0;
+		long repositoryId;
 
 		if (folderId != 0) {
 			Folder folder = DLAppServiceUtil.getFolder(folderId);

@@ -28,7 +28,6 @@ page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredExceptio
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.Fields" %><%@
 page import="com.liferay.portlet.journal.ArticleContentException" %><%@
 page import="com.liferay.portlet.journal.ArticleContentSizeException" %><%@
 page import="com.liferay.portlet.journal.ArticleDisplayDateException" %><%@

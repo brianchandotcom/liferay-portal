@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

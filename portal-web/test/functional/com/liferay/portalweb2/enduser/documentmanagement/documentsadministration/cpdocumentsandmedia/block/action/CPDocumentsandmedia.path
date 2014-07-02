@@ -324,22 +324,22 @@
 </tr>
 <!--FILTER_MENULIST-->
 <tr>
-	<td>FOLDER_MENULIST_DOWNLOAD</td>
+	<td>FILTER_MENULIST_DOWNLOAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENULIST_EDIT</td>
+	<td>FILTER_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENULIST_PERMISSIONS</td>
+	<td>FILTER_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENULIST_DELETE</td>
+	<td>FILTER_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
@@ -449,7 +449,7 @@
 </tr>
 <!--FOLDER_MENULIST-->
 <tr>
-	<td>FOLDER_MENULIST_EDIT</td>
+	<td>FILTER_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>

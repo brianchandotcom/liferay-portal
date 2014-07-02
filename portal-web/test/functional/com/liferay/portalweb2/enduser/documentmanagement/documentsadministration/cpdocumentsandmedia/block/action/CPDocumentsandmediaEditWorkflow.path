@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPWebcontentEditWorkflow</title>
+<title>CPDocumentsandmediaEditWorkflow</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPWebcontentEditWorkflow</td></tr>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaEditWorkflow</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPWebcontentEditWorkflow</td>
+	<td>CPDocumentsandmediaEditWorkflow</td>
 </tr>
 <tr>
 	<td></td>

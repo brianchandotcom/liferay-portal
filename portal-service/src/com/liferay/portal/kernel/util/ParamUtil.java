@@ -749,10 +749,6 @@ public class ParamUtil {
 			return defaultValue;
 		}
 
-		if (values.length == 1) {
-			return StringUtil.split(values[0]);
-		}
-
 		return values;
 	}
 

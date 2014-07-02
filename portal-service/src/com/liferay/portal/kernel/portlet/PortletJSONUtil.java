@@ -242,7 +242,7 @@ public class PortletJSONUtil {
 
 		writePaths(
 			response, jsonObject.getJSONArray("footerCssPaths"),
-				jsonObject.getJSONArray("footerJavaScriptPaths"));
+			jsonObject.getJSONArray("footerJavaScriptPaths"));
 	}
 
 	public static void writeHeaderPaths(
@@ -250,8 +250,8 @@ public class PortletJSONUtil {
 		throws IOException {
 
 		writePaths(
-				response, jsonObject.getJSONArray("headerCssPaths"),
-				jsonObject.getJSONArray("headerJavaScriptPaths"));
+			response, jsonObject.getJSONArray("headerCssPaths"),
+			jsonObject.getJSONArray("headerJavaScriptPaths"));
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {
@@ -270,7 +270,7 @@ public class PortletJSONUtil {
 		throws IOException {
 
 		if ((cssPathsJSONArray.length() == 0) &&
-				(javaScriptPathsJSONArray.length() == 0)) {
+			(javaScriptPathsJSONArray.length() == 0)) {
 
 			return;
 		}

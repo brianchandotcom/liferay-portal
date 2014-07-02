@@ -25,7 +25,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByTableNameWithPeriodReturnsDecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column"), "table.");
 
 		Assert.assertEquals(
@@ -35,7 +35,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithBlankTableNameReturnsUndecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column1, column2"), "");
 
 		Assert.assertEquals(
@@ -45,7 +45,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithMultipleColumnNamesReturnsDecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column1, column2"), "table");
 
 		Assert.assertEquals(
@@ -56,7 +56,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithMultipleTableNameReturnsNewTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("table1.column1, column2"),
 				"table2");
 
@@ -68,7 +68,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithNullTableNameReturnsUndecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column1, column2"), null);
 
 		Assert.assertEquals(
@@ -78,7 +78,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithSingleColumnNameReturnsDecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column"), "table");
 
 		Assert.assertEquals(
@@ -88,7 +88,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithSingleTableNameReturnsNewTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("table1.column1"), "table2");
 
 		Assert.assertEquals(
@@ -98,7 +98,7 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByWithSortDirectionReturnsDecoratedTableName() {
 		TableNameOrderByComparator<?> tableNameOrderByComparator =
-			new TableNameOrderByComparator(
+			new TableNameOrderByComparator<Object>(
 				new TestGetOrderByComparator("column ASC"), "table");
 
 		Assert.assertEquals(

@@ -793,8 +793,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		var popover = new A.Popover(
 			{
-				cssClass: 'lfr-discussion-reply',
 				constrain: true,
+				cssClass: 'lfr-discussion-reply',
 				position: 'top',
 				visible: false,
 				width: 400,
@@ -831,7 +831,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			},
 			'.lfr-discussion-parent-link'
 		);
-
 	</aui:script>
 </c:if>
 

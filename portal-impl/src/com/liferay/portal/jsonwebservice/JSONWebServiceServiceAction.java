@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 
@@ -181,7 +182,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	private String _getThrowableMessage(Throwable throwable) {
 		String message = throwable.getMessage();
 
-		if (message != null) {
+		if (Validator.isNotNull(message)) {
 			return message;
 		}
 

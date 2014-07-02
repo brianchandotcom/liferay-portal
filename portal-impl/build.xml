@@ -979,12 +979,6 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-polls">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/polls/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-service-portlet-ratings">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/ratings/service.xml" />
@@ -1035,7 +1029,6 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlet-journal" />
 		<antcall target="build-service-portlet-messageboards" />
 		<antcall target="build-service-portlet-mobiledevicerules" />
-		<antcall target="build-service-portlet-polls" />
 		<antcall target="build-service-portlet-ratings" />
 		<antcall target="build-service-portlet-shopping" />
 		<antcall target="build-service-portlet-social" />

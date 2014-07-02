@@ -329,7 +329,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							%>
 
 								<liferay-ui:icon
-									image='<%= "../file_system/small/" + conversion %>'
+									iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 									label="<%= true %>"
 									message="<%= StringUtil.toUpperCase(conversion) %>"
 									url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'

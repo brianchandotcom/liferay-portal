@@ -151,7 +151,7 @@ boolean expired = true;
 												</portlet:actionURL>
 
 												<liferay-ui:icon
-													image='<%= "../file_system/small/" + HtmlUtil.escapeAttribute(extension) %>'
+													iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"
 													label="<%= true %>"
 													message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
 													method="get"

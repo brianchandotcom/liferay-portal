@@ -134,7 +134,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			%>
 
 				<liferay-ui:icon
-					image='<%= "../file_system/small/" + conversion %>'
+					iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 					label="<%= true %>"
 					message="<%= StringUtil.toUpperCase(conversion) %>"
 					method="get"

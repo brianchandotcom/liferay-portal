@@ -302,7 +302,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 						<liferay-ui:icon
 							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
-							message="unsubscribe"
+							message="icon-remove-sign"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>

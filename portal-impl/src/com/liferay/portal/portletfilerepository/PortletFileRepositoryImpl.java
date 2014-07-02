@@ -57,6 +57,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -377,20 +378,22 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public List<FileEntry> getPortletFileEntries(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<FileEntry> obc) {
 
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, status, start, end, obc));
+				groupId, folderId, status, start, end,
+				new DLFileEntryOrderByComparator(obc)));
 	}
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator obc) {
+		long groupId, long folderId, OrderByComparator<FileEntry> obc) {
 
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc));
+				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new DLFileEntryOrderByComparator(obc)));
 	}
 
 	@Override

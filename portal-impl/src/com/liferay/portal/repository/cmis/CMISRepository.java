@@ -445,7 +445,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public List<FileEntry> getFileEntries(
-		long folderId, int start, int end, OrderByComparator obc) {
+		long folderId, int start, int end, OrderByComparator<FileEntry> obc) {
 
 		List<FileEntry> fileEntries = getFileEntries(folderId);
 
@@ -455,7 +455,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public List<FileEntry> getFileEntries(
 		long folderId, long fileEntryTypeId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<FileEntry> obc) {
 
 		return new ArrayList<FileEntry>();
 	}
@@ -463,7 +463,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
@@ -692,7 +692,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountfolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<Folder> folders = getFolders(parentFolderId);
@@ -702,7 +702,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public List<Object> getFoldersAndFileEntries(
-		long folderId, int start, int end, OrderByComparator obc) {
+		long folderId, int start, int end, OrderByComparator<Object> obc) {
 
 		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
 
@@ -712,7 +712,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public List<Object> getFoldersAndFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		Map<Long, List<Object>> foldersAndFileEntriesCache =
@@ -807,7 +807,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public List<Folder> getMountFolders(
-		long parentFolderId, int start, int end, OrderByComparator obc) {
+		long parentFolderId, int start, int end,
+		OrderByComparator<Folder> obc) {
 
 		return new ArrayList<Folder>();
 	}

@@ -1046,14 +1046,14 @@ public interface DLAppService extends BaseService {
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<Object> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		int end, com.liferay.portal.kernel.util.OrderByComparator<Object> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

@@ -51,6 +51,8 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.util.DLSearcher;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByComparator;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -270,11 +272,12 @@ public class LiferayRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator obc)
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
-			getGroupId(), toFolderId(folderId), start, end, obc);
+			getGroupId(), toFolderId(folderId), start, end,
+			new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -282,12 +285,12 @@ public class LiferayRepository
 	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, long fileEntryTypeId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), fileEntryTypeId, start, end,
-			obc);
+			new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -295,11 +298,12 @@ public class LiferayRepository
 	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
-			getGroupId(), toFolderId(folderId), mimeTypes, start, end, obc);
+			getGroupId(), toFolderId(folderId), mimeTypes, start, end,
+			new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -411,7 +415,7 @@ public class LiferayRepository
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountfolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		return getFolders(
@@ -422,12 +426,13 @@ public class LiferayRepository
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountfolders,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<DLFolder> dlFolders = dlFolderService.getFolders(
 			getGroupId(), toFolderId(parentFolderId), status,
-			includeMountfolders, start, end, obc);
+			includeMountfolders, start, end,
+			new DLFolderOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
@@ -435,7 +440,7 @@ public class LiferayRepository
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Object> obc)
 		throws PortalException {
 
 		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
@@ -451,7 +456,7 @@ public class LiferayRepository
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
@@ -510,11 +515,13 @@ public class LiferayRepository
 
 	@Override
 	public List<Folder> getMountFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, int start, int end,
+			OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<DLFolder> dlFolders = dlFolderService.getMountFolders(
-			getGroupId(), toFolderId(parentFolderId), start, end, obc);
+			getGroupId(), toFolderId(parentFolderId), start, end,
+			new DLFolderOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
@@ -530,13 +537,13 @@ public class LiferayRepository
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryService.getGroupFileEntries(
 				getGroupId(), userId, toFolderId(rootFolderId), start, end,
-				obc);
+				new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -544,13 +551,14 @@ public class LiferayRepository
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryService.getGroupFileEntries(
 				getGroupId(), userId, getRepositoryId(),
-				toFolderId(rootFolderId), mimeTypes, status, start, end, obc);
+				toFolderId(rootFolderId), mimeTypes, status, start, end,
+				new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}

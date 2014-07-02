@@ -164,24 +164,24 @@ public abstract class BaseRepositoryImpl
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountfolders,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		return getFolders(parentFolderId, includeMountfolders, start, end, obc);
 	}
 
 	public abstract List<Object> getFoldersAndFileEntries(
-		long folderId, int start, int end, OrderByComparator obc);
+		long folderId, int start, int end, OrderByComparator<Object> obc);
 
 	public abstract List<Object> getFoldersAndFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException;
 
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long folderId, int status, boolean includeMountFolders, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Object> obc) {
 
 		return getFoldersAndFileEntries(folderId, start, end, obc);
 	}
@@ -190,7 +190,7 @@ public abstract class BaseRepositoryImpl
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		return getFoldersAndFileEntries(folderId, mimeTypes, start, end, obc);
@@ -260,7 +260,7 @@ public abstract class BaseRepositoryImpl
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		return getFileEntries(rootFolderId, start, end, obc);
@@ -269,7 +269,7 @@ public abstract class BaseRepositoryImpl
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		return getFileEntries(rootFolderId, mimeTypes, start, end, obc);

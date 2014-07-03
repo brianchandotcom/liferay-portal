@@ -235,7 +235,7 @@ public class AssetEntryFinderImpl
 
 				selectRatings = true;
 
-				sb.append(", tempTable.averageScore ");
+				sb.append(", TEMP_TABLE.averageScore ");
 			}
 
 			sb.append("FROM (SELECT DISTINCT AssetEntry.entryId ");
@@ -367,15 +367,15 @@ public class AssetEntryFinderImpl
 		sb.append(getClassNameIds(entryQuery.getClassNameIds()));
 
 		if (!count) {
-			sb.append(") tempTable ");
+			sb.append(") TEMP_TABLE ");
 			sb.append("INNER JOIN ");
 			sb.append("AssetEntry AssetEntry ON ");
-			sb.append("tempTable.entryId = AssetEntry.entryId");
+			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId");
 
 			sb.append(" ORDER BY ");
 
 			if (entryQuery.getOrderByCol1().equals("ratings")) {
-				sb.append("tempTable.averageScore");
+				sb.append("TEMP_TABLE.averageScore");
 			}
 			else {
 				sb.append("AssetEntry.");
@@ -390,7 +390,7 @@ public class AssetEntryFinderImpl
 					entryQuery.getOrderByCol2())) {
 
 				if (entryQuery.getOrderByCol2().equals("ratings")) {
-					sb.append(", tempTable.averageScore");
+					sb.append(", TEMP_TABLE.averageScore");
 				}
 				else {
 					sb.append(", AssetEntry.");

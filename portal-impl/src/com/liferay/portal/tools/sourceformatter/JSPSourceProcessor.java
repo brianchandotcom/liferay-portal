@@ -645,15 +645,23 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (!hasUnsortedExceptions) {
-				int i = line.indexOf("<liferay-ui:error exception=\"<%=");
+				int x = line.indexOf("<liferay-ui:error exception=\"<%=");
 
-				if (i != -1) {
-					currentException = line.substring(i + 33);
+				if (x != -1) {
+					int y = line.indexOf(".class %>", x);
 
-					if (Validator.isNotNull(previousException) &&
-						(previousException.compareTo(currentException) > 0)) {
+					if (y != -1) {
+						currentException = line.substring(x, y);
 
-						hasUnsortedExceptions = true;
+						if (Validator.isNotNull(previousException) &&
+							(previousException.compareTo(currentException) >
+								0)) {
+
+							currentException = line;
+							previousException = previousLine;
+
+							hasUnsortedExceptions = true;
+						}
 					}
 				}
 

@@ -141,7 +141,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_LABEL</td>
-	<td>//input[@id='_174_keywords_users']/../../../../../..//div/div</td>
+	<td>//div[contains(@class,'panel-default lfr-panel')]//span[@class='title-text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -277,7 +277,7 @@ public class LiferayRepository
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), start, end,
-			new DLFileEntryOrderByComparator(obc));
+			DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -290,7 +290,7 @@ public class LiferayRepository
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), fileEntryTypeId, start, end,
-			new DLFileEntryOrderByComparator(obc));
+			DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -303,7 +303,7 @@ public class LiferayRepository
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), mimeTypes, start, end,
-			new DLFileEntryOrderByComparator(obc));
+			DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -432,7 +432,7 @@ public class LiferayRepository
 		List<DLFolder> dlFolders = dlFolderService.getFolders(
 			getGroupId(), toFolderId(parentFolderId), status,
 			includeMountfolders, start, end,
-			new DLFolderOrderByComparator(obc));
+			DLFolderOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
@@ -521,7 +521,7 @@ public class LiferayRepository
 
 		List<DLFolder> dlFolders = dlFolderService.getMountFolders(
 			getGroupId(), toFolderId(parentFolderId), start, end,
-			new DLFolderOrderByComparator(obc));
+			DLFolderOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
@@ -543,7 +543,7 @@ public class LiferayRepository
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryService.getGroupFileEntries(
 				getGroupId(), userId, toFolderId(rootFolderId), start, end,
-				new DLFileEntryOrderByComparator(obc));
+				DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
@@ -558,7 +558,7 @@ public class LiferayRepository
 			dlFileEntryService.getGroupFileEntries(
 				getGroupId(), userId, getRepositoryId(),
 				toFolderId(rootFolderId), mimeTypes, status, start, end,
-				new DLFileEntryOrderByComparator(obc));
+				DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}

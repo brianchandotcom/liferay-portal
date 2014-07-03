@@ -383,7 +383,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
 				groupId, folderId, status, start, end,
-				new DLFileEntryOrderByComparator(obc)));
+				DLFileEntryOrderByComparator.getOrderByComparator(obc)));
 	}
 
 	@Override
@@ -393,7 +393,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		return toFileEntries(
 			DLFileEntryLocalServiceUtil.getFileEntries(
 				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new DLFileEntryOrderByComparator(obc)));
+				DLFileEntryOrderByComparator.getOrderByComparator(obc)));
 	}
 
 	@Override

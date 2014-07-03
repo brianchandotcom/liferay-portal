@@ -1179,7 +1179,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Object> obc)
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
 			folderId, status, includeMountFolders, start, end, obc);
@@ -1189,7 +1189,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator<Object> obc)
+		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
 			folderId, status, mimeTypes, includeMountFolders, start, end, obc);

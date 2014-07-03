@@ -16,26 +16,35 @@ package com.liferay.portlet.documentlibrary.util.comparator;
 
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorAdaptor;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
  * @author William Newbury
  */
-public class DLFolderOrderByComparator extends OrderByComparator<DLFolder> {
+public class DLFolderOrderByComparator
+	extends OrderByComparatorAdaptor<DLFolder, Folder> {
 
-	public DLFolderOrderByComparator(
+	public static OrderByComparator<DLFolder> getOrderByComparator(
 		OrderByComparator<Folder> orderByComparator) {
 
-		_orderByComparator = orderByComparator;
+		if (orderByComparator == null) {
+			return null;
+		}
+
+		return new DLFolderOrderByComparator(orderByComparator);
 	}
 
 	@Override
-	public int compare(DLFolder dlFolder1, DLFolder dlFolder2) {
-		return _orderByComparator.compare(
-			new LiferayFolder(dlFolder1), new LiferayFolder(dlFolder2));
+	public Folder adapt(DLFolder dlFolder) {
+		return new LiferayFolder(dlFolder);
 	}
 
-	private OrderByComparator<Folder> _orderByComparator;
+	private DLFolderOrderByComparator(
+		OrderByComparator<Folder> orderByComparator) {
+
+		super(orderByComparator);
+	}
 
 }

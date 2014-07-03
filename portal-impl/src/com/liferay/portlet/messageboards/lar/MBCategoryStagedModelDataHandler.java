@@ -141,16 +141,6 @@ public class MBCategoryStagedModelDataHandler
 
 		// Parent category
 
-		if ((category.getParentCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(category.getParentCategoryId() !=
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, category, MBCategory.class,
-				category.getParentCategoryId());
-		}
-
 		Map<Long, Long> categoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MBCategory.class);

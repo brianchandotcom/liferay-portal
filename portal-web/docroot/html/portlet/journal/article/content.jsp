@@ -210,7 +210,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 							<c:if test="<%= (article != null) && !article.isNew() %>">
 								<span class="lfr-translation-manager-add-menu">
 									<liferay-ui:icon-menu
-										cssClass="add-translations-menu"
+										cssClass="lfr-translation-manager-icon-menu"
 										direction="down"
 										icon="../aui/plus"
 										message='<%= LanguageUtil.get(request, "add-translation") %>'

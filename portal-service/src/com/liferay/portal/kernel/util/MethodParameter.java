@@ -114,8 +114,6 @@ public class MethodParameter {
 			String typeName = sb.toString();
 
 			list.add(_getGenericName(typeName));
-
-			sb.setIndex(0);
 		}
 
 		int nullCount = 0;

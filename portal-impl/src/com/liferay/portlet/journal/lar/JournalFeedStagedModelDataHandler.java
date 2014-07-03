@@ -233,18 +233,12 @@ public class JournalFeedStagedModelDataHandler
 			autoFeedId = true;
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, feed, DDMStructure.class);
-
 		Map<String, String> ddmStructureKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class + ".ddmStructureKey");
 
 		String parentDDMStructureKey = MapUtil.getString(
 			ddmStructureKeys, feed.getStructureId(), feed.getStructureId());
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, feed, DDMTemplate.class);
 
 		Map<String, String> ddmTemplateKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(

@@ -15,12 +15,9 @@
 package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,17 +74,7 @@ public class UserSearchEntry extends TextSearchEntry {
 		_request.setAttribute(
 			"liferay-ui:search-container-column-user:userId", _userId);
 
-		if (_servletContext != null) {
-			RequestDispatcher requestDispatcher =
-				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-					_servletContext, _PAGE);
-
-			requestDispatcher.include(
-				_request, new PipingServletResponse(pageContext));
-		}
-		else {
-			pageContext.include(_PAGE);
-		}
+		pageContext.include(_PAGE);
 	}
 
 	public void setDate(Date date) {

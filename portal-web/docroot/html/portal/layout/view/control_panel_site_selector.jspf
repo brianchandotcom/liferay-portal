@@ -69,7 +69,7 @@ switchGroupURL = PortalUtil.resetPortletParameters(switchGroupURL, themeDisplay.
 			%>
 
 				<liferay-ui:icon
-					cssClass='<%= cssClass %>'
+					cssClass="<%= cssClass %>"
 					iconCssClass="<%= manageableSiteGroup.getIconCssClass() %>"
 					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"

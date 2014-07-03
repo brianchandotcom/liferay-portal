@@ -282,7 +282,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, false, null, parameterMap,
-				Constants.PUBLISH, dateRange.getStartDate(),
+				Constants.PUBLISH_TO_LIVE, dateRange.getStartDate(),
 				dateRange.getEndDate(), StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
@@ -666,7 +666,9 @@ public class StagingImpl implements Staging {
 			catch (Exception e1) {
 			}
 
-			if (Validator.equals(cmd, Constants.PUBLISH)) {
+			if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) ||
+				Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+
 				errorMessage = LanguageUtil.get(
 					locale,
 					"file-size-limit-exceeded.-please-ensure-that-the-file-" +
@@ -763,7 +765,9 @@ public class StagingImpl implements Staging {
 		else if (e instanceof MissingReferenceException) {
 			MissingReferenceException mre = (MissingReferenceException)e;
 
-			if (Validator.equals(cmd, Constants.PUBLISH)) {
+			if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) ||
+				Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
@@ -1337,7 +1341,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
-		taskContextMap.put(Constants.CMD, Constants.PUBLISH);
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -1928,7 +1932,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
 
-		taskContextMap.put(Constants.CMD, Constants.PUBLISH);
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_REMOTE);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());

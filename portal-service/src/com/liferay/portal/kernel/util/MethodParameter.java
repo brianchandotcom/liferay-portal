@@ -88,22 +88,21 @@ public class MethodParameter {
 
 		int level = 0;
 
-		for (int i = 0; i < generics.length(); i++) {
-			char c = generics.charAt(i);
-
-			if (c == '<') {
+		for (char c : generics.toCharArray()) {
+			if (c == CharPool.LESS_THAN) {
 				level++;
 			}
-			else if (c == '>') {
+			else if (c == CharPool.GREATER_THAN) {
 				level--;
 			}
 			else if (level == 0) {
 				sb.append(c);
 
-				if (c == ';') {
-					String typeName = sb.toString();
+				if (c == CharPool.SEMICOLON) {
+					String extractedTopLevelGenericName = _getGenericName(
+						sb.toString());
 
-					list.add(_getGenericName(typeName));
+					list.add(extractedTopLevelGenericName);
 
 					sb.setIndex(0);
 				}
@@ -111,9 +110,10 @@ public class MethodParameter {
 		}
 
 		if (sb.length() > 0) {
-			String typeName = sb.toString();
+			String extractedTopLevelGenericName = _getGenericName(
+				sb.toString());
 
-			list.add(_getGenericName(typeName));
+			list.add(extractedTopLevelGenericName);
 		}
 
 		int nullCount = 0;
@@ -169,10 +169,10 @@ public class MethodParameter {
 			return null;
 		}
 
-		if (typeName.startsWith(StringPool.PLUS) ||
-			typeName.startsWith(StringPool.MINUS)) {
+		if (typeName.startsWith(StringPool.MINUS) ||
+			typeName.startsWith(StringPool.PLUS)) {
 
-			typeName = typeName.substring(1, typeName.length());
+			typeName = typeName.substring(1);
 		}
 
 		return typeName;

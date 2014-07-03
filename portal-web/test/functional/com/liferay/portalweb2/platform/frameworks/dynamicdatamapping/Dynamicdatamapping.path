@@ -56,12 +56,12 @@
 </tr>
 <tr>
 	<td>FIELDS_FIELD</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}']/div</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'diagram-builder-field-draggable')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_FIELD_UNSELECTABLE</td>
-	<td>//div[@class='tab-content']/div/ul/li[contains(@class,'unselectable') and @title='${key_field}']/div</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'diagram-builder-field-draggable'))]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_DELETE_ICON</td>
-	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/i[@class='icon-trash'])[1]</td>
+	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/span[contains (@class,'glyphicon-trash')])[1]</td>
 	<td></td>
 </tr>
 <tr>

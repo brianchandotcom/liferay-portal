@@ -20,8 +20,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
- *
- * @author wnewbury
+ * @author William Newbury
  */
 public class DLFolderOrderByComparator extends OrderByComparator<DLFolder> {
 

@@ -20,8 +20,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
- *
- * @author wnewbury
+ * @author William Newbury
  */
 public class DLFileEntryOrderByComparator
 	extends OrderByComparator<DLFileEntry> {

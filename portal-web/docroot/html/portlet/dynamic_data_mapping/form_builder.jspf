@@ -113,7 +113,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	var availableFields;
 	var formEditor;
-	var xmlFormatter;
 
 	var displayMessage = function(type, message) {
 		var messageContainer = A.one('#<portlet:namespace />messageContainer');
@@ -132,7 +131,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		messageContainer.show();
 	};
 
-	var getContentDefinition = function() {
+	var getContentValue = function() {
 		var content;
 
 		if (formEditor && !isViewTabActive()) {
@@ -185,8 +184,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		setEditorSize();
 
 		var content = formBuilder.getContent();
-
-		console.log(content)
 
 		getFormEditor().set(STR_VALUE, content);
 	};
@@ -261,12 +258,12 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	window.<portlet:namespace />formBuilder = formBuilder;
 
-	window.<portlet:namespace />getContentDefinition = getContentDefinition;
+	window.<portlet:namespace />getContentValue = getContentValue;
 
 	Liferay.on(
 		'<portlet:namespace />saveTemplate',
 		function(event) {
-			A.one('#<portlet:namespace />scriptContent').val(getContentDefinition());
+			A.one('#<portlet:namespace />scriptContent').val(getContentValue());
 		}
 	);
 

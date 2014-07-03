@@ -86,7 +86,6 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="definition" type="hidden" />
-	<aui:input name="layout" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
@@ -282,10 +281,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			var definition = window.<portlet:namespace />formBuilder.getContentDefinition();
-
-			document.<portlet:namespace />fm.<portlet:namespace />layout.value = definition.layout;
-			document.<portlet:namespace />fm.<portlet:namespace />definition.value = definition.structure;
+			document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentValue();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

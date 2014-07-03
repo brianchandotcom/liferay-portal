@@ -158,8 +158,6 @@ AUI.add(
 						instance.addTarget(Liferay.Util.getOpener().Liferay);
 
 						instance._toggleInputDirection(translationManager.get('defaultLocale'));
-
-						console.log(instance.get('fields'));
 					},
 
 					bindUI: function() {
@@ -204,43 +202,22 @@ AUI.add(
 					getParsedDefinition: function(content) {
 						var instance = this;
 
-						var field = {};
+						var availableLanguageIds = content.availableLanguageIds;
 
 						var fields = content.fields;
 
-						var translationManager = instance.translationManager;
+						A.each(
+							fields,
+							function(field) {
+								instance._addLocalizationMapField(field, availableLanguageIds);
 
-						for (var i = 0, len = fields.length; i < len; i++) {
-							field = fields[i];
-
-							for (var j = 0, len2 = content.availableLanguageIds.length; j < len2; j++) {
-								var language = content.availableLanguageIds[j];
-
-								field.localizationMap = field.localizationMap || {};
-								field.localizationMap[language] = field.localizationMap[language] || {};
-
-								for (var index2 in instance.LOCALIZABLE_FIELD_ATTRS) {
-									var localizableField = instance.LOCALIZABLE_FIELD_ATTRS[index2];
-
-									if (field[localizableField]) {
-										field.localizationMap[language][localizableField] = field[localizableField][language];
-									}
+								if (field.options) {
+									instance._addLocalizationMapFieldForOptions(field, content.availableLanguageIds);
 								}
 							}
+						);
 
-						}
-
-						for (var i = 0, len = fields.length; i < len; i++) {
-							var field = fields[i];
-
-							for (var index in instance.LOCALIZABLE_FIELD_ATTRS) {
-								var localizableField = instance.LOCALIZABLE_FIELD_ATTRS[index];
-
-								if (field[localizableField]) {
-									field[localizableField] = field[localizableField][instance.translationManager.get('editingLocale')];
-								}
-							}
-						}
+						instance._addLocalizableFields(fields);
 
 						return fields;
 					},
@@ -266,6 +243,71 @@ AUI.add(
 						}
 
 						return value;
+					},
+
+					_addLocalizableFields: function(fields) {
+						var instance = this;
+
+						A.each(
+							fields,
+							function(field) {
+								A.each(
+									instance.LOCALIZABLE_FIELD_ATTRS,
+									function(localizableField) {
+										if (field[localizableField]) {
+											field[localizableField] = field[localizableField][instance.translationManager.get('editingLocale')];
+										}
+									}
+								);
+							}
+						);
+					},
+
+					_addLocalizationMapField: function(field, availableLanguageIds) {
+						var instance = this;
+
+						A.each(
+							availableLanguageIds,
+							function(language) {
+
+								field.localizationMap = field.localizationMap || {};
+								field.localizationMap[language] = {};
+
+								A.each(
+									instance.LOCALIZABLE_FIELD_ATTRS,
+									function(localizableField) {
+										if (field[localizableField]) {
+											field.localizationMap[language][localizableField] = field[localizableField][language];
+										}
+
+									}
+								);
+							}
+						);
+					},
+
+					_addLocalizationMapFieldForOptions: function(field, availableLanguageIds) {
+						var instance = this;
+
+						var labels;
+
+						var translationManager = instance.translationManager;
+
+						A.each(
+							field.options,
+							function(option) {
+								labels = option.label;
+								option.label = labels[translationManager.get('editingLocale')];
+								option.localizationMap = {};
+								A.each(
+									availableLanguageIds,
+									function(language) {
+										option.localizationMap[language] = {};
+										option.localizationMap[language]['label'] = labels[language];
+									}
+								);
+							}
+						);
 					},
 
 					_addStructureAvailableLanguageIds: function(structure) {

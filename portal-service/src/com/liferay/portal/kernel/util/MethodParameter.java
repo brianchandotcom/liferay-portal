@@ -33,15 +33,7 @@ public class MethodParameter {
 			return _genericTypes;
 		}
 
-		String[] genericSignatures = _extractTopLevelGenericSignatures(
-			_signatures);
-
-		if (genericSignatures == null) {
-			_genericTypes = null;
-		}
-		else {
-			_genericTypes = _loadGenericTypes(genericSignatures);
-		}
+		_genericTypes = _getGenericTypes(_signatures);
 
 		_initialized = true;
 
@@ -60,31 +52,31 @@ public class MethodParameter {
 		return _type;
 	}
 
-	private static String[] _extractTopLevelGenericSignatures(
-		String signature) {
+	private Class<?>[] _getGenericTypes(String signatures)
+		throws ClassNotFoundException {
 
-		if (signature == null) {
+		if (signatures == null) {
 			return null;
 		}
 
-		int leftBracketIndex = signature.indexOf(CharPool.LESS_THAN);
+		int leftBracketIndex = signatures.indexOf(CharPool.LESS_THAN);
 
 		if (leftBracketIndex == -1) {
 			return null;
 		}
 
-		int rightBracketIndex = signature.lastIndexOf(CharPool.GREATER_THAN);
+		int rightBracketIndex = signatures.lastIndexOf(CharPool.GREATER_THAN);
 
 		if (rightBracketIndex == -1) {
 			return null;
 		}
 
-		String generics = signature.substring(
+		String generics = signatures.substring(
 			leftBracketIndex + 1, rightBracketIndex);
 
 		StringBundler sb = new StringBundler(generics.length());
 
-		List<String> list = new ArrayList<String>();
+		List<Class<?>> genericTypeslist = new ArrayList<Class<?>>();
 
 		int level = 0;
 
@@ -102,7 +94,10 @@ public class MethodParameter {
 					String extractedTopLevelGenericName = _getGenericName(
 						sb.toString());
 
-					list.add(extractedTopLevelGenericName);
+					if (Validator.isNotNull(extractedTopLevelGenericName)) {
+						genericTypeslist.add(
+							_getGenericType(extractedTopLevelGenericName));
+					}
 
 					sb.setIndex(0);
 				}
@@ -113,24 +108,17 @@ public class MethodParameter {
 			String extractedTopLevelGenericName = _getGenericName(
 				sb.toString());
 
-			list.add(extractedTopLevelGenericName);
-		}
-
-		int nullCount = 0;
-
-		for (String genericType : list) {
-			if (genericType != null) {
-				break;
+			if (Validator.isNotNull(extractedTopLevelGenericName)) {
+				genericTypeslist.add(
+					_getGenericType(extractedTopLevelGenericName));
 			}
-
-			nullCount++;
 		}
 
-		if (nullCount == list.size()) {
+		if (genericTypeslist.isEmpty()) {
 			return null;
 		}
 
-		return list.toArray(new String[list.size()]);
+		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
 	}
 
 	private static String _getClassName(String signature) {
@@ -178,39 +166,37 @@ public class MethodParameter {
 		return typeName;
 	}
 
-	private static Class<?>[] _loadGenericTypes(String[] signatures)
-		throws ClassNotFoundException {
+	private ClassLoader _getContextClassLoader() {
+		if (_contextClassLoader != null) {
+			return _contextClassLoader;
+		}
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		_contextClassLoader = currentThread.getContextClassLoader();
 
-		Class<?>[] types = new Class<?>[signatures.length];
-
-		for (int i = 0; i < signatures.length; i++) {
-			if (signatures[i] == null) {
-				continue;
-			}
-
-			String className = _getClassName(signatures[i]);
-
-			if (className.startsWith(StringPool.OPEN_BRACKET)) {
-				try {
-					types[i] = Class.forName(
-						className, true, contextClassLoader);
-
-					continue;
-				}
-				catch (ClassNotFoundException cnfe) {
-				}
-			}
-
-			types[i] = contextClassLoader.loadClass(className);
-		}
-
-		return types;
+		return _contextClassLoader;
 	}
 
+	private Class<?> _getGenericType(String signature)
+		throws ClassNotFoundException {
+
+		ClassLoader contextClassLoader = _getContextClassLoader();
+
+		String className = _getClassName(signature);
+
+		if (className.startsWith(StringPool.OPEN_BRACKET)) {
+			try {
+				return Class.forName(className, true, contextClassLoader);
+			}
+			catch (ClassNotFoundException cnfe) {
+			}
+		}
+
+		return contextClassLoader.loadClass(className);
+	}
+
+	private ClassLoader _contextClassLoader;
 	private Class<?>[] _genericTypes;
 	private boolean _initialized;
 	private String _name;

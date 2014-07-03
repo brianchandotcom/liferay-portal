@@ -104,7 +104,13 @@ for (int i = 0; i < choices.size(); i++) {
 		for (int i = 0; i < _CHARTS.length; i++) {
 			String chart = _CHARTS[i];
 
-			String hrefTaglib = "javascript:var viewChartWindow = window.open('" + themeDisplay.getPathMain() + "/polls/view_chart?questionId=" + question.getQuestionId() +"&chartType=" + TextFormatter.format(chart, TextFormatter.N) + "', 'viewChart', 'directories=no,height=430,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=420'); void(''); viewChartWindow.focus();";
+			ResourceURL resourceUrl = renderResponse.createResourceURL();
+
+			resourceUrl.setParameter("struts_action", "/polls/view_chart");
+			resourceUrl.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
+			resourceUrl.setParameter("questionId", Long.toString(question.getQuestionId()));
+
+			String hrefTaglib = "javascript:var viewChartWindow = window.open('" + resourceUrl + "', 'viewChart', 'directories=no,height=430,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=420'); void(''); viewChartWindow.focus();";
 		%>
 
 			<aui:a href="<%= hrefTaglib %>"><liferay-ui:message key="<%= chart %>" /></aui:a><%= (i != (_CHARTS.length - 1)) ? StringPool.COMMA_AND_SPACE : StringPool.BLANK %>

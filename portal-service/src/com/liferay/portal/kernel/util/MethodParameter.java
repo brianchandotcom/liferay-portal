@@ -82,7 +82,7 @@ public class MethodParameter {
 		String generics = signature.substring(
 			leftBracketIndex + 1, rightBracketIndex);
 
-		StringBuilder sb = new StringBuilder(generics.length());
+		StringBundler sb = new StringBundler(generics.length());
 
 		List<String> list = new ArrayList<String>();
 
@@ -105,7 +105,7 @@ public class MethodParameter {
 
 					list.add(_getGenericName(typeName));
 
-					sb.setLength(0);
+					sb.setIndex(0);
 				}
 			}
 		}
@@ -115,7 +115,7 @@ public class MethodParameter {
 
 			list.add(_getGenericName(typeName));
 
-			sb.setLength(0);
+			sb.setIndex(0);
 		}
 
 		int nullCount = 0;

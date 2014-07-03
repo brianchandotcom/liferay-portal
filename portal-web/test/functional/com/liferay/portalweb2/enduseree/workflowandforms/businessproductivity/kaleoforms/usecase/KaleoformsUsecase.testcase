@@ -16,8 +16,8 @@
 	</tear-down>
 
 	<command name="CompleteProcessPredefined" priority="5">
+		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="processName" value="Kaleo Forms Process Predefined" />
 		<var name="workflowDefinition" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
@@ -27,7 +27,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -49,19 +49,19 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
 		<execute macro="KaleoFormsAdmin#chooseForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -75,7 +75,7 @@
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
@@ -136,17 +136,17 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#assignProcessToMe">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#approveProcess">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinition" value="${workflowDefinition}" />
 		</execute>
 
@@ -211,7 +211,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="processName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -233,19 +233,19 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
 		<execute macro="KaleoFormsAdmin#chooseForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
-			<var name="processName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -259,7 +259,7 @@
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
-			<var name="processName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
@@ -320,18 +320,18 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#assignProcessToMe">
-			<var name="processName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="processName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
-			<var name="processName" value="Kaleo Forms Process" />
-			<var name="processStatus" value="Update" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessStatus" value="Update" />
 			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
@@ -388,8 +388,8 @@
 		<execute macro="KaleoFormsPortlet#resubmitPendingProcess" />
 
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
-			<var name="processName" value="Kaleo Forms Process" />
-			<var name="processStatus" value="Review" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessStatus" value="Review" />
 			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 	</command>

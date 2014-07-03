@@ -200,7 +200,7 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator obc)
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
@@ -212,7 +212,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, long documentTypeId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
@@ -224,7 +224,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
@@ -331,7 +331,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountfolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<Folder> folders = _baseRepository.getFolders(
@@ -343,7 +343,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountfolders,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<Folder> folders = _baseRepository.getFolders(
@@ -355,7 +355,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Object> obc)
 		throws PortalException {
 
 		List<Object> objects =
@@ -369,7 +369,7 @@ public class BaseRepositoryProxyBean
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException {
 
 		List<Object> objects =
@@ -432,7 +432,8 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public List<Folder> getMountFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, int start, int end,
+			OrderByComparator<Folder> obc)
 		throws PortalException {
 
 		List<Folder> folders = _baseRepository.getMountFolders(
@@ -455,7 +456,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _baseRepository.getRepositoryFileEntries(
@@ -467,7 +468,7 @@ public class BaseRepositoryProxyBean
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _baseRepository.getRepositoryFileEntries(

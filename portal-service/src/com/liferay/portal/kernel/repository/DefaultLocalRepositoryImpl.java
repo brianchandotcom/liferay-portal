@@ -132,7 +132,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
-			long rootFolderId, int start, int end, OrderByComparator obc)
+			long rootFolderId, int start, int end,
+			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		return _repository.getRepositoryFileEntries(

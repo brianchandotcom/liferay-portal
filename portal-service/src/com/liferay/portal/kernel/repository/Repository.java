@@ -101,17 +101,17 @@ public interface Repository extends CapabilityProvider {
 		throws PortalException;
 
 	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator obc)
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
 	public List<FileEntry> getFileEntries(
 			long folderId, long fileEntryTypeId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
 	public List<Object> getFileEntriesAndFileShortcuts(
@@ -150,23 +150,23 @@ public interface Repository extends CapabilityProvider {
 
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Folder> obc)
 		throws PortalException;
 
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountFolders,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<Folder> obc)
 		throws PortalException;
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<Object> obc)
 		throws PortalException;
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Object> obc)
 		throws PortalException;
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -189,19 +189,20 @@ public interface Repository extends CapabilityProvider {
 		throws PortalException;
 
 	public List<Folder> getMountFolders(
-			long parentFolderId, int start, int end, OrderByComparator obc)
+			long parentFolderId, int start, int end,
+			OrderByComparator<Folder> obc)
 		throws PortalException;
 
 	public int getMountFoldersCount(long parentFolderId) throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
-			int start, int end, OrderByComparator obc)
+			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)

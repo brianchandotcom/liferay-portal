@@ -1370,7 +1370,7 @@
 			if (!interacting) {
 				el = A.one(el);
 
-				if (Util.inBrowserView(el)) {
+				if (el && Util.inBrowserView(el)) {
 					try {
 						el.focus();
 					}

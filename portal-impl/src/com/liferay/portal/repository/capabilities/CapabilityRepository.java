@@ -305,7 +305,7 @@ public class CapabilityRepository
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator<Object> obc)
+			int end, OrderByComparator<?> obc)
 		throws PortalException {
 
 		return getRepository().getFoldersAndFileEntriesAndFileShortcuts(
@@ -316,7 +316,7 @@ public class CapabilityRepository
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		return getRepository().getFoldersAndFileEntriesAndFileShortcuts(

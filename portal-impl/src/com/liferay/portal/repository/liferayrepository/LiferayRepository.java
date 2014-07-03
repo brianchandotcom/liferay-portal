@@ -440,7 +440,7 @@ public class LiferayRepository
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator<Object> obc)
+			int end, OrderByComparator<?> obc)
 		throws PortalException {
 
 		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
@@ -456,7 +456,7 @@ public class LiferayRepository
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =

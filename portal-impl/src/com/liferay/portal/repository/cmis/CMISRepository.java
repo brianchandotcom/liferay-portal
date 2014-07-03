@@ -701,18 +701,21 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Object> getFoldersAndFileEntries(
-		long folderId, int start, int end, OrderByComparator<Object> obc) {
+		long folderId, int start, int end, OrderByComparator<?> obc) {
 
 		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
 
-		return subList(foldersAndFileEntries, start, end, obc);
+		return subList(
+			foldersAndFileEntries, start, end, (OrderByComparator<Object>)obc);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Object> getFoldersAndFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		Map<Long, List<Object>> foldersAndFileEntriesCache =
@@ -735,7 +738,8 @@ public class CMISRepository extends BaseCmisRepository {
 			}
 		}
 
-		return subList(foldersAndFileEntries, start, end, obc);
+		return subList(
+			foldersAndFileEntries, start, end, (OrderByComparator<Object>)obc);
 	}
 
 	@Override

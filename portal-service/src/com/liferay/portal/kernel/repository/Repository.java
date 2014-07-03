@@ -160,13 +160,13 @@ public interface Repository extends CapabilityProvider {
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
-			int end, OrderByComparator<Object> obc)
+			int end, OrderByComparator<?> obc)
 		throws PortalException;
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException;
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(

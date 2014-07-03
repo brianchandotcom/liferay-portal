@@ -231,7 +231,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	@Override
 	public List<Object> getFoldersAndFileEntries(
-		long folderId, int start, int end, OrderByComparator<Object> obc) {
+		long folderId, int start, int end, OrderByComparator<?> obc) {
 
 		return _baseCmisRepository.getFoldersAndFileEntries(
 			folderId, start, end, obc);
@@ -240,7 +240,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	@Override
 	public List<Object> getFoldersAndFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		return _baseCmisRepository.getFoldersAndFileEntries(

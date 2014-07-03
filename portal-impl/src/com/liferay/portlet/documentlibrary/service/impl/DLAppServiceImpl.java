@@ -1525,7 +1525,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long repositoryId, long folderId, int status,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		return getFoldersAndFileEntriesAndFileShortcuts(
@@ -1537,7 +1537,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long repositoryId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		Repository repository = getRepository(repositoryId);

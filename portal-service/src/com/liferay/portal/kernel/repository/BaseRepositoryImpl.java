@@ -171,17 +171,17 @@ public abstract class BaseRepositoryImpl
 	}
 
 	public abstract List<Object> getFoldersAndFileEntries(
-		long folderId, int start, int end, OrderByComparator<Object> obc);
+		long folderId, int start, int end, OrderByComparator<?> obc);
 
 	public abstract List<Object> getFoldersAndFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException;
 
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long folderId, int status, boolean includeMountFolders, int start,
-		int end, OrderByComparator<Object> obc) {
+		int end, OrderByComparator<?> obc) {
 
 		return getFoldersAndFileEntries(folderId, start, end, obc);
 	}
@@ -190,7 +190,7 @@ public abstract class BaseRepositoryImpl
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
-			OrderByComparator<Object> obc)
+			OrderByComparator<?> obc)
 		throws PortalException {
 
 		return getFoldersAndFileEntries(folderId, mimeTypes, start, end, obc);

@@ -371,7 +371,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							%>
 
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>">
-								<aui:option label="title" />
+								<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+									<aui:option label="title" />
+								</c:if>
+
 								<aui:option label="create-date" value="createDate" />
 								<aui:option label="modified-date" value="modifiedDate" />
 								<aui:option label="publish-date" value="publishDate" />
@@ -570,7 +573,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			}
 
-			<%= className %>toggleSubclassesFields(true);
+			<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+				<%= className %>toggleSubclassesFields(true);
+			</c:if>
 		}
 
 		<%
@@ -633,69 +638,71 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var <%= className %>SubtypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
 
-		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-			var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
-			var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+		<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
+				var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
+				var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
-			var selectedSubtype = <%= className %>SubtypeSelector.val();
+				var selectedSubtype = <%= className %>SubtypeSelector.val();
 
-			var structureOptions = A.one('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
-
-			if (structureOptions) {
-				structureOptions.show();
-			}
-
-			if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-				var orderByColumn1Subtype = orderByColumn1.one('.order-by-subtype');
-
-				if (orderByColumn1Subtype) {
-					orderByColumn1Subtype.remove();
-				}
-
-				var orderByColumn2Subtype = orderByColumn2.one('.order-by-subtype');
-
-				if (orderByColumn2Subtype) {
-					orderByColumn2Subtype.remove();
-				}
-
-				orderByColumn1.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
-				orderByColumn2.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
+				var structureOptions = A.one('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
 				if (structureOptions) {
-					subtypeFieldsWrapper.show();
-					subtypeFieldsFilterEnableWrapper.show();
+					structureOptions.show();
+				}
+
+				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
+					var orderByColumn1Subtype = orderByColumn1.one('.order-by-subtype');
+
+					if (orderByColumn1Subtype) {
+						orderByColumn1Subtype.remove();
+					}
+
+					var orderByColumn2Subtype = orderByColumn2.one('.order-by-subtype');
+
+					if (orderByColumn2Subtype) {
+						orderByColumn2Subtype.remove();
+					}
+
+					orderByColumn1.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
+					orderByColumn2.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
+
+					if (structureOptions) {
+						subtypeFieldsWrapper.show();
+						subtypeFieldsFilterEnableWrapper.show();
+					}
+					else if (hideSubtypeFilterEnableWrapper) {
+						subtypeFieldsWrapper.hide();
+						subtypeFieldsFilterEnableWrapper.hide();
+					}
 				}
 				else if (hideSubtypeFilterEnableWrapper) {
 					subtypeFieldsWrapper.hide();
 					subtypeFieldsFilterEnableWrapper.hide();
 				}
 			}
-			else if (hideSubtypeFilterEnableWrapper) {
-				subtypeFieldsWrapper.hide();
-				subtypeFieldsFilterEnableWrapper.hide();
-			}
-		}
 
-		<%= className %>toggleSubclassesFields(false);
+			<%= className %>toggleSubclassesFields(false);
 
-		<%= className %>SubtypeSelector.on(
-			'change',
-			function(event) {
-				setDDMFields('<%= className %>', '', '', '', '');
+			<%= className %>SubtypeSelector.on(
+				'change',
+				function(event) {
+					setDDMFields('<%= className %>', '', '', '', '');
 
-				var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+					var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-				subtypeFieldsFilterEnabled.val(false);
+					subtypeFieldsFilterEnabled.val(false);
 
-				var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+					var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-				subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
+					subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
 
-				sourcePanel.all('.asset-subtypefields').hide();
+					sourcePanel.all('.asset-subtypefields').hide();
 
-				<%= className %>toggleSubclassesFields(true);
-			}
-		);
+					<%= className %>toggleSubclassesFields(true);
+				}
+			);
+		</c:if>
 
 	<%
 	}

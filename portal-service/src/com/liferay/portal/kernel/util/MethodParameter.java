@@ -52,75 +52,6 @@ public class MethodParameter {
 		return _type;
 	}
 
-	private Class<?>[] _getGenericTypes(String signatures)
-		throws ClassNotFoundException {
-
-		if (signatures == null) {
-			return null;
-		}
-
-		int leftBracketIndex = signatures.indexOf(CharPool.LESS_THAN);
-
-		if (leftBracketIndex == -1) {
-			return null;
-		}
-
-		int rightBracketIndex = signatures.lastIndexOf(CharPool.GREATER_THAN);
-
-		if (rightBracketIndex == -1) {
-			return null;
-		}
-
-		String generics = signatures.substring(
-			leftBracketIndex + 1, rightBracketIndex);
-
-		StringBundler sb = new StringBundler(generics.length());
-
-		List<Class<?>> genericTypeslist = new ArrayList<Class<?>>();
-
-		int level = 0;
-
-		for (char c : generics.toCharArray()) {
-			if (c == CharPool.LESS_THAN) {
-				level++;
-			}
-			else if (c == CharPool.GREATER_THAN) {
-				level--;
-			}
-			else if (level == 0) {
-				sb.append(c);
-
-				if (c == CharPool.SEMICOLON) {
-					String extractedTopLevelGenericName = _getGenericName(
-						sb.toString());
-
-					if (Validator.isNotNull(extractedTopLevelGenericName)) {
-						genericTypeslist.add(
-							_getGenericType(extractedTopLevelGenericName));
-					}
-
-					sb.setIndex(0);
-				}
-			}
-		}
-
-		if (sb.length() > 0) {
-			String extractedTopLevelGenericName = _getGenericName(
-				sb.toString());
-
-			if (Validator.isNotNull(extractedTopLevelGenericName)) {
-				genericTypeslist.add(
-					_getGenericType(extractedTopLevelGenericName));
-			}
-		}
-
-		if (genericTypeslist.isEmpty()) {
-			return null;
-		}
-
-		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
-	}
-
 	private static String _getClassName(String signature) {
 		String className = signature;
 
@@ -194,6 +125,75 @@ public class MethodParameter {
 		}
 
 		return contextClassLoader.loadClass(className);
+	}
+
+	private Class<?>[] _getGenericTypes(String signatures)
+		throws ClassNotFoundException {
+
+		if (signatures == null) {
+			return null;
+		}
+
+		int leftBracketIndex = signatures.indexOf(CharPool.LESS_THAN);
+
+		if (leftBracketIndex == -1) {
+			return null;
+		}
+
+		int rightBracketIndex = signatures.lastIndexOf(CharPool.GREATER_THAN);
+
+		if (rightBracketIndex == -1) {
+			return null;
+		}
+
+		String generics = signatures.substring(
+			leftBracketIndex + 1, rightBracketIndex);
+
+		StringBundler sb = new StringBundler(generics.length());
+
+		List<Class<?>> genericTypeslist = new ArrayList<Class<?>>();
+
+		int level = 0;
+
+		for (char c : generics.toCharArray()) {
+			if (c == CharPool.LESS_THAN) {
+				level++;
+			}
+			else if (c == CharPool.GREATER_THAN) {
+				level--;
+			}
+			else if (level == 0) {
+				sb.append(c);
+
+				if (c == CharPool.SEMICOLON) {
+					String extractedTopLevelGenericName = _getGenericName(
+						sb.toString());
+
+					if (Validator.isNotNull(extractedTopLevelGenericName)) {
+						genericTypeslist.add(
+							_getGenericType(extractedTopLevelGenericName));
+					}
+
+					sb.setIndex(0);
+				}
+			}
+		}
+
+		if (sb.length() > 0) {
+			String extractedTopLevelGenericName = _getGenericName(
+				sb.toString());
+
+			if (Validator.isNotNull(extractedTopLevelGenericName)) {
+				genericTypeslist.add(
+					_getGenericType(extractedTopLevelGenericName));
+			}
+		}
+
+		if (genericTypeslist.isEmpty()) {
+			return null;
+		}
+
+		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
 	}
 
 	private ClassLoader _contextClassLoader;

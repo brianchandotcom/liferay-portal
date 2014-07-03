@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Igor Spasic
  */
@@ -149,10 +146,12 @@ public class MethodParameter {
 		String generics = signatures.substring(
 			leftBracketIndex + 1, rightBracketIndex);
 
+		Class<?>[] genericTypes =
+			new Class<?>[StringUtil.count(generics, StringPool.SEMICOLON) + 1];
+
 		StringBundler sb = new StringBundler(generics.length());
 
-		List<Class<?>> genericTypeslist = new ArrayList<Class<?>>();
-
+		int count = 0;
 		int level = 0;
 
 		for (char c : generics.toCharArray()) {
@@ -170,11 +169,13 @@ public class MethodParameter {
 						sb.toString());
 
 					if (Validator.isNotNull(extractedTopLevelGenericName)) {
-						genericTypeslist.add(
-							_getGenericType(extractedTopLevelGenericName));
+						genericTypes[count] = _getGenericType(
+							extractedTopLevelGenericName);
 					}
 
 					sb.setIndex(0);
+
+					count++;
 				}
 			}
 		}
@@ -184,16 +185,12 @@ public class MethodParameter {
 				sb.toString());
 
 			if (Validator.isNotNull(extractedTopLevelGenericName)) {
-				genericTypeslist.add(
-					_getGenericType(extractedTopLevelGenericName));
+				genericTypes[count] = _getGenericType(
+					extractedTopLevelGenericName);
 			}
 		}
 
-		if (genericTypeslist.isEmpty()) {
-			return null;
-		}
-
-		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
+		return genericTypes;
 	}
 
 	private ClassLoader _contextClassLoader;

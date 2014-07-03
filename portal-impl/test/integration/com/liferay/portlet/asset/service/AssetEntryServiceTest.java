@@ -24,8 +24,6 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
-import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 
 import java.util.ArrayList;
@@ -52,45 +50,30 @@ public class AssetEntryServiceTest {
 
 	@Test
 	public void testGetEntriesCountNoFilters() throws Exception {
-		AssetEntry assetEntry = null;
+		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
-		try {
-			assetEntry = AssetTestUtil.addAssetEntry(_group.getGroupId());
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+		int count = AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
 
-			int count = AssetEntryLocalServiceUtil.getEntriesCount(
-				assetEntryQuery);
-
-			Assert.assertEquals(1, count);
-		}
-		finally {
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-		}
+		Assert.assertEquals(1, count);
 	}
 
 	@Test
 	public void testGetEntriesNoFilters() throws Exception {
-		AssetEntry assetEntry = null;
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
 
-		try {
-			assetEntry = AssetTestUtil.addAssetEntry(_group.getGroupId());
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
+			assetEntryQuery);
 
-			List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
-				assetEntryQuery);
+		Assert.assertEquals(1, entries.size());
 
-			Assert.assertEquals(1, entries.size());
+		AssetEntry assetEntry1 = entries.get(0);
 
-			AssetEntry assetEntry1 = entries.get(0);
-
-			Assert.assertEquals(
-				assetEntry.getEntryId(), assetEntry1.getEntryId());
-		}
-		finally {
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-		}
+		Assert.assertEquals(assetEntry.getEntryId(), assetEntry1.getEntryId());
 	}
 
 	@Test
@@ -109,8 +92,6 @@ public class AssetEntryServiceTest {
 			assetEntryQuery);
 
 		validateAssetEntries(assetEntries, entries);
-
-		deleteAssetEntries();
 	}
 
 	@Test
@@ -126,8 +107,6 @@ public class AssetEntryServiceTest {
 			assetEntryQuery);
 
 		validateAssetEntries(assetEntries, entries);
-
-		deleteAssetEntries();
 	}
 
 	protected List<AssetEntry> createAssetEntries() throws Exception {
@@ -141,41 +120,31 @@ public class AssetEntryServiceTest {
 
 		Date dayBeforeYesterday = calendar.getTime();
 
-		_assetEntry1 = AssetTestUtil.addAssetEntry(
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);
 
-		_ratingStats1 = RatingsTestUtil.addStats(
-			_assetEntry1.getClassName(), _assetEntry1.getClassPK(), 2000);
+		RatingsTestUtil.addStats(
+			assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
 
-		_assetEntry2 = AssetTestUtil.addAssetEntry(
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);
 
-		_ratingStats2 = RatingsTestUtil.addStats(
-			_assetEntry2.getClassName(), _assetEntry2.getClassPK(), 1000);
+		RatingsTestUtil.addStats(
+			assetEntry2.getClassName(), assetEntry2.getClassPK(), 1000);
 
-		_assetEntry3 = AssetTestUtil.addAssetEntry(
+		AssetEntry assetEntry3 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), yesterday);
 
-		_ratingStats3 = RatingsTestUtil.addStats(
-			_assetEntry3.getClassName(), _assetEntry3.getClassPK(), 3000);
+		RatingsTestUtil.addStats(
+			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
 
 		List<AssetEntry> entries = new ArrayList<AssetEntry>(3);
 
-		entries.add(_assetEntry3);
-		entries.add(_assetEntry1);
-		entries.add(_assetEntry2);
+		entries.add(assetEntry3);
+		entries.add(assetEntry1);
+		entries.add(assetEntry2);
 
 		return entries;
-	}
-
-	protected void deleteAssetEntries() {
-		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry1);
-		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry2);
-		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry3);
-
-		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats1);
-		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats2);
-		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats3);
 	}
 
 	protected void validateAssetEntries(
@@ -192,15 +161,7 @@ public class AssetEntryServiceTest {
 		}
 	}
 
-	private AssetEntry _assetEntry1;
-	private AssetEntry _assetEntry2;
-	private AssetEntry _assetEntry3;
-
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private RatingsStats _ratingStats1;
-	private RatingsStats _ratingStats2;
-	private RatingsStats _ratingStats3;
 
 }

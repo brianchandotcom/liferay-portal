@@ -2480,6 +2480,7 @@
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="true" />
+		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
 		<var name="fieldNameEdit" value="Boolean_Edit" />
@@ -3754,19 +3755,19 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Fieldset" />
+			<var name="field" value="Fieldset" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="field" value="Paragraph" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Separator" />
+			<var name="field" value="Separator" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="field" value="${field}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#deleteField">
@@ -3774,19 +3775,19 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Fieldset" />
+			<var name="field" value="Fieldset" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="field" value="Paragraph" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Separator" />
+			<var name="field" value="Separator" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="field" value="${field}" />
 		</execute>
 	</command>
 
@@ -3825,19 +3826,19 @@
 		<execute macro="DDLTemplate#saveAndContinueFormTemplateCP" />
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Fieldset" />
+			<var name="field" value="Fieldset" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="field" value="Paragraph" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="fieldFieldLabel" value="Separator" />
+			<var name="field" value="Separator" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="field" value="${field}" />
 		</execute>
 	</command>
 

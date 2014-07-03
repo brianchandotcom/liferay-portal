@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.polls.constants.PollsPortletKeys;
 
 /**
  * @author Mika Koivisto
@@ -41,7 +41,7 @@ public class PollsPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.POLLS, actionId);
+			PollsPortletKeys.POLLS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

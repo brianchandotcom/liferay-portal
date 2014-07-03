@@ -47,7 +47,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 				0, SchedulerEngine.JOB_NAME_MAX_LENGTH);
 		}
 
-		_key = _jobName.concat(StringPool.PERIOD).concat(_groupName);
+		_receiverKey = _jobName.concat(StringPool.PERIOD).concat(_groupName);
 
 		if (_messageListenerUUID == null) {
 			_messageListenerUUID = PortalUUIDUtil.generate();
@@ -67,7 +67,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			String receiverKey = GetterUtil.getString(
 				message.getString(SchedulerEngine.RECEIVER_KEY));
 
-			if (!receiverKey.equals(_key)) {
+			if (!receiverKey.equals(_receiverKey)) {
 				return;
 			}
 		}
@@ -152,8 +152,8 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 	private String _groupName;
 	private String _jobName;
-	private String _key;
 	private MessageListener _messageListener;
 	private String _messageListenerUUID;
+	private String _receiverKey;
 
 }

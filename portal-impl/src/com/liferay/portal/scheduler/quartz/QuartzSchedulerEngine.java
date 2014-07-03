@@ -569,10 +569,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return argument;
 	}
 
-	protected String getFullName(String jobName, String groupName) {
-		return groupName.concat(StringPool.PERIOD).concat(jobName);
-	}
-
 	protected JobState getJobState(JobDataMap jobDataMap) {
 		Map<String, Object> jobStateMap = (Map<String, Object>)jobDataMap.get(
 			JOB_STATE);
@@ -698,6 +694,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		return quartzTrigger;
+	}
+
+	protected String getReceiverKey(String jobName, String groupName) {
+		return groupName.concat(StringPool.PERIOD).concat(jobName);
 	}
 
 	protected SchedulerResponse getScheduledJob(
@@ -950,7 +950,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			MESSAGE_LISTENER_UUID,
 			schedulerEventListenerWrapper.getMessageListenerUUID());
 
-		message.put(RECEIVER_KEY, getFullName(jobName, groupName));
+		message.put(RECEIVER_KEY, getReceiverKey(jobName, groupName));
 	}
 
 	protected void schedule(

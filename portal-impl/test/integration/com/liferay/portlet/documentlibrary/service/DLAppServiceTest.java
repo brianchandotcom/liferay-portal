@@ -135,6 +135,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
+				expectedLog =
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction",
+				expectedType = ExpectedType.EXACT),
+			@ExpectedLog(
 				expectedLog = "Duplicate entry ",
 				expectedType = ExpectedType.PREFIX)
 		},

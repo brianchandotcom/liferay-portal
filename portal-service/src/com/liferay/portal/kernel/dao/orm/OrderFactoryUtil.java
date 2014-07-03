@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class OrderFactoryUtil {
 
 	public static void addOrderByComparator(
-		DynamicQuery dynamicQuery, OrderByComparator obc) {
+		DynamicQuery dynamicQuery, OrderByComparator<?> obc) {
 
 		if (obc == null) {
 			return;

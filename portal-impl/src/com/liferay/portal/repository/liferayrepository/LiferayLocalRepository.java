@@ -42,6 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -228,11 +229,13 @@ public class LiferayLocalRepository
 
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
-		long rootFolderId, int start, int end, OrderByComparator obc) {
+		long rootFolderId, int start, int end,
+		OrderByComparator<FileEntry> obc) {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getGroupFileEntries(
-				getGroupId(), 0, rootFolderId, start, end, obc);
+				getGroupId(), 0, rootFolderId, start, end,
+				new DLFileEntryOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}

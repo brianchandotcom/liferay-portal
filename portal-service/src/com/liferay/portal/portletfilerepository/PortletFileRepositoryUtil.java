@@ -174,14 +174,14 @@ public class PortletFileRepositoryUtil {
 
 	public static List<FileEntry> getPortletFileEntries(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<FileEntry> obc) {
 
 		return getPortletFileRepository().getPortletFileEntries(
 			groupId, folderId, status, start, end, obc);
 	}
 
 	public static List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator obc) {
+		long groupId, long folderId, OrderByComparator<FileEntry> obc) {
 
 		return getPortletFileRepository().getPortletFileEntries(
 			groupId, folderId, obc);

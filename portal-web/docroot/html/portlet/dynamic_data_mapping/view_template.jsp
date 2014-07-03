@@ -84,7 +84,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 		orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
 	}
 
-	OrderByComparator orderByComparator = DDMUtil.getTemplateOrderByComparator(orderByCol, orderByType);
+	OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(orderByCol, orderByType);
 	%>
 
 	<liferay-ui:search-container

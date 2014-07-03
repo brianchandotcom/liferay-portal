@@ -77,7 +77,7 @@ public class TableNameOrderByComparator<T> extends OrderByComparator<T> {
 		return _orderByComparator.getOrderByFields();
 	}
 
-	public OrderByComparator getWrappedOrderByComparator() {
+	public OrderByComparator<T> getWrappedOrderByComparator() {
 		return _orderByComparator;
 	}
 

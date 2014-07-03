@@ -40,8 +40,6 @@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTempl
 page import="com.liferay.util.RSSUtil" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(request, portletPreferences);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

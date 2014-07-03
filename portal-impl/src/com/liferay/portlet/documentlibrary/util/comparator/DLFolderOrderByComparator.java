@@ -32,12 +32,9 @@ public class DLFolderOrderByComparator extends OrderByComparator<DLFolder> {
 	}
 
 	@Override
-	public int compare(DLFolder o1, DLFolder o2) {
-		return _orderByComparator.compare(toFolder(o1), toFolder(o2));
-	}
-
-	protected Folder toFolder(DLFolder dlFolder) {
-		return new LiferayFolder(dlFolder);
+	public int compare(DLFolder dlFolder1, DLFolder dlFolder2) {
+		return _orderByComparator.compare(
+			new LiferayFolder(dlFolder1), new LiferayFolder(dlFolder2));
 	}
 
 	private OrderByComparator<Folder> _orderByComparator;

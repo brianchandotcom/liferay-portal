@@ -33,12 +33,10 @@ public class DLFileEntryOrderByComparator
 	}
 
 	@Override
-	public int compare(DLFileEntry o1, DLFileEntry o2) {
-		return _orderByComparator.compare(toFileEntry(o1), toFileEntry(o2));
-	}
-
-	protected FileEntry toFileEntry(DLFileEntry dlFileEntry) {
-		return new LiferayFileEntry(dlFileEntry);
+	public int compare(DLFileEntry dlFileEntry1, DLFileEntry dlFileEntry2) {
+		return _orderByComparator.compare(
+			new LiferayFileEntry(dlFileEntry1),
+			new LiferayFileEntry(dlFileEntry2));
 	}
 
 	private OrderByComparator<FileEntry> _orderByComparator;

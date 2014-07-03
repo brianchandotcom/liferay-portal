@@ -14,59 +14,35 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Sergio González
  * @author Shuyang Zhou
  * @author Roberto Díaz
+ * @author Peter Fellwock
  */
 public class SiteMembershipPolicyFactoryImpl
 	implements SiteMembershipPolicyFactory {
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.MEMBERSHIP_POLICY_SITES);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalSiteMembershipPolicy =
-			(SiteMembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.MEMBERSHIP_POLICY_SITES);
-
-		_siteMembershipPolicy = _originalSiteMembershipPolicy;
-	}
-
 	@Override
 	public SiteMembershipPolicy getSiteMembershipPolicy() {
-		return _siteMembershipPolicy;
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setSiteMembershipPolicy(
-		SiteMembershipPolicy siteMembershipPolicy) {
+	private SiteMembershipPolicyFactoryImpl() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(siteMembershipPolicy));
-		}
+		_serviceTracker = registry.trackServices(SiteMembershipPolicy.class);
 
-		if (siteMembershipPolicy == null) {
-			_siteMembershipPolicy = _originalSiteMembershipPolicy;
-		}
-		else {
-			_siteMembershipPolicy = siteMembershipPolicy;
-		}
+		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		SiteMembershipPolicyFactoryImpl.class);
+	private static SiteMembershipPolicyFactoryImpl
+	_instance = new SiteMembershipPolicyFactoryImpl();
 
-	private static SiteMembershipPolicy _originalSiteMembershipPolicy;
-	private static volatile SiteMembershipPolicy _siteMembershipPolicy;
+	private ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
 
 }

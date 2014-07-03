@@ -115,8 +115,6 @@ import com.liferay.portal.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
-import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl;
-import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
@@ -547,15 +545,6 @@ public class HookHotDeployListener
 						getRoleMembershipPolicyFactory();
 
 			roleMembershipPolicyFactoryImpl.setRoleMembershipPolicy(null);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_SITES)) {
-			SiteMembershipPolicyFactoryImpl siteMembershipPolicyFactoryImpl =
-				(SiteMembershipPolicyFactoryImpl)
-					SiteMembershipPolicyFactoryUtil.
-						getSiteMembershipPolicyFactory();
-
-			siteMembershipPolicyFactoryImpl.setSiteMembershipPolicy(null);
 		}
 
 		if (portalProperties.containsKey(
@@ -1796,18 +1785,14 @@ public class HookHotDeployListener
 			String siteMembershipPolicyClassName = portalProperties.getProperty(
 				PropsKeys.MEMBERSHIP_POLICY_SITES);
 
-			SiteMembershipPolicyFactoryImpl siteMembershipPolicyFactoryImpl =
-				(SiteMembershipPolicyFactoryImpl)
-					SiteMembershipPolicyFactoryUtil.
-						getSiteMembershipPolicyFactory();
-
 			SiteMembershipPolicy siteMembershipPolicy =
 				(SiteMembershipPolicy)newInstance(
 					portletClassLoader, SiteMembershipPolicy.class,
 					siteMembershipPolicyClassName);
 
-			siteMembershipPolicyFactoryImpl.setSiteMembershipPolicy(
-				siteMembershipPolicy);
+			registerService(
+					servletContextName, siteMembershipPolicyClassName,
+					SiteMembershipPolicy.class, siteMembershipPolicy);
 
 			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				siteMembershipPolicy.verifyPolicy();

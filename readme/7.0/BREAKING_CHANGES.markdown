@@ -352,3 +352,34 @@ As stated previously, the use of the `javax.servlet.jsp` API in `portal-service`
 prevented the use of any other JSP impl within plugins (OSGi or otherwise). This
 limited what Liferay could change with respect to providing its own JSP
 implementation within OSGi.
+
+### Changes in Exceptions thrown by user services
+- **Date:** 2014-July
+- **JIRA Ticket:** LPS-47130
+
+#### What changed?
+
+In order to provide more information about the root cause of an exception
+several exceptions have been extended with static inner classes, one for each
+cause. As a result of this effort we identified some exceptions that really
+belong as (static inner) subclasses of existing exceptions.
+
+#### Who is affected?
+
+Client code which is handling any of the following exceptions:
+- `DuplicateUserScreenNameException`
+- `DuplicateUserEmailAddressException`
+
+
+#### How should I update my code?
+
+Replace the old exception with the equivalent inner class exception as follows:
+- `DuplicateUserScreenNameException` -> UserScreenNameException.MustNotBeDuplicate
+- `DuplicateUserEmailAddressException`-> UserEmailAddressException.MustNotBeDuplicate
+
+#### Why was this change made?
+
+In order to provide more information to clients of the services API about what
+is the root cause of the error. This should allow for easier recovery when it
+is possible and to provide a more helpful error message to the end user
+otherwise.

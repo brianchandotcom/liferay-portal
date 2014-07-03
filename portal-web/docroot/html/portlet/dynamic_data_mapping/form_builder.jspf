@@ -139,7 +139,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			content = formEditor.get(STR_VALUE);
 		}
 		else {
-			content = formBuilder.getDefinition();
+			content = formBuilder.getContent();
 		}
 
 		return content;
@@ -179,14 +179,16 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		if (!isViewTabActive()) {
 			getFormEditor().set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
 		}
-	}
+	};
 
 	var switchToSource = function() {
 		setEditorSize();
 
-		var content = formBuilder.getDefinition();
+		var content = formBuilder.getContent();
 
-		getFormEditor().set(STR_VALUE, A.JSON.stringify(content, null, 4));
+		console.log(content)
+
+		getFormEditor().set(STR_VALUE, content);
 	};
 
 	var switchToView = function() {

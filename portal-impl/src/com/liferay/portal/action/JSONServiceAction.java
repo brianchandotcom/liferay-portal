@@ -226,25 +226,31 @@ public class JSONServiceAction extends JSONAction {
 			return value;
 		}
 		else if (typeNameOrClassDescriptor.equals("[Z")) {
-			return ParamUtil.getBooleanValues(request, parameter);
+			return GetterUtil.getBooleanValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[D")) {
-			return ParamUtil.getDoubleValues(request, parameter);
+			return GetterUtil.getDoubleValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[F")) {
-			return ParamUtil.getFloatValues(request, parameter);
+			return GetterUtil.getFloatValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[I")) {
-			return ParamUtil.getIntegerValues(request, parameter);
+			return GetterUtil.getIntegerValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[J")) {
-			return ParamUtil.getLongValues(request, parameter);
+			return GetterUtil.getLongValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[S")) {
-			return ParamUtil.getShortValues(request, parameter);
+			return GetterUtil.getShortValues(
+				getArrayParameterValues(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("[Ljava.lang.String;")) {
-			return ParamUtil.getParameterValues(request, parameter);
+			return getArrayParameterValues(request, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[[Z")) {
 			String[] values = request.getParameterValues(parameter);
@@ -421,6 +427,18 @@ public class JSONServiceAction extends JSONAction {
 				return null;
 			}
 		}
+	}
+
+	protected String[] getArrayParameterValues(
+		HttpServletRequest request, String parameter) {
+
+		String[] values = ParamUtil.getParameterValues(request, parameter);
+
+		if (values.length == 1) {
+			values = StringUtil.split(values[0]);
+		}
+
+		return values;
 	}
 
 	/**

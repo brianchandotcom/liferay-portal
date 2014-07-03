@@ -541,40 +541,46 @@
 		inBrowserView: function(node, win, nodeRegion) {
 			var DOM = A.DOM;
 
-			if (!win) {
-				win = window;
-			}
+			var viewable = false;
 
-			if (!nodeRegion) {
-				nodeRegion = node.get('region');
-			}
+			node = A.one(node);
 
-			var winRegion = DOM.viewportRegion(win);
+			if (node) {
+				if (!nodeRegion) {
+					nodeRegion = node.get('region');
+				}
 
-			var viewable = (
-				nodeRegion.bottom <= winRegion.bottom &&
-				nodeRegion.left >= winRegion.left &&
-				nodeRegion.right <= winRegion.right &&
-				nodeRegion.top >= winRegion.top
-			);
+				if (!win) {
+					win = window;
+				}
 
-			if (viewable) {
-				var frameEl = win.frameElement;
+				var winRegion = DOM.viewportRegion(win);
 
-				if (frameEl) {
-					var frameXY = DOM.getXY(frameEl);
+				var viewable = (
+					nodeRegion.bottom <= winRegion.bottom &&
+					nodeRegion.left >= winRegion.left &&
+					nodeRegion.right <= winRegion.right &&
+					nodeRegion.top >= winRegion.top
+				);
 
-					var xOffset = frameXY[0] - DOM.docScrollX(win);
+				if (viewable) {
+					var frameEl = win.frameElement;
 
-					nodeRegion.left += xOffset;
-					nodeRegion.right += xOffset;
+					if (frameEl) {
+						var frameXY = DOM.getXY(frameEl);
 
-					var yOffset = frameXY[1] - DOM.docScrollY(win);
+						var xOffset = frameXY[0] - DOM.docScrollX(win);
 
-					nodeRegion.top += yOffset;
-					nodeRegion.bottom += yOffset;
+						nodeRegion.left += xOffset;
+						nodeRegion.right += xOffset;
 
-					viewable = Util.inBrowserView(node, win.parent, nodeRegion);
+						var yOffset = frameXY[1] - DOM.docScrollY(win);
+
+						nodeRegion.top += yOffset;
+						nodeRegion.bottom += yOffset;
+
+						viewable = Util.inBrowserView(node, win.parent, nodeRegion);
+					}
 				}
 			}
 
@@ -1367,16 +1373,8 @@
 				}
 			);
 
-			if (!interacting) {
-				el = A.one(el);
-
-				if (el && Util.inBrowserView(el)) {
-					try {
-						el.focus();
-					}
-					catch (e) {
-					}
-				}
+			if (!interacting && Util.inBrowserView(el)) {
+				A.one(el).focus();
 			}
 		},
 		['aui-base']

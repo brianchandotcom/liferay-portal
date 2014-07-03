@@ -15,7 +15,7 @@
 package com.liferay.portlet.asset.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -29,14 +29,14 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Alberto Chaparro
@@ -62,7 +62,7 @@ public class AssetEntryServiceTest {
 			int count = AssetEntryLocalServiceUtil.getEntriesCount(
 				assetEntryQuery);
 
-			Assert.assertEquals(count, 1);
+			Assert.assertEquals(1, count);
 		}
 		finally {
 			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
@@ -78,12 +78,15 @@ public class AssetEntryServiceTest {
 
 			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-			List<AssetEntry> assetEntries =
-				AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
+				assetEntryQuery);
 
-			Assert.assertEquals(assetEntries.size(), 1);
+			Assert.assertEquals(1, entries.size());
 
-			Assert.assertEquals(assetEntries.get(0), assetEntry);
+			AssetEntry assetEntry1 = entries.get(0);
+
+			Assert.assertEquals(
+				assetEntry.getEntryId(), assetEntry1.getEntryId());
 		}
 		finally {
 			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
@@ -92,135 +95,112 @@ public class AssetEntryServiceTest {
 
 	@Test
 	public void testGetEntriesOrderByPublishDateAndRatings() throws Exception {
-		AssetEntry assetEntry1 = null;
-		AssetEntry assetEntry2 = null;
-		AssetEntry assetEntry3 = null;
+		List<AssetEntry> assetEntries = createAssetEntries();
 
-		RatingsStats ratingsStats1 = null;
-		RatingsStats ratingsStats2 = null;
-		RatingsStats ratingsStats3 = null;
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		Date yesterday = DateUtil.newDate(
-			DateUtil.newDate().getTime() - DAY_IN_MILISECONDS);
+		assetEntryQuery.setOrderByCol1("publishDate");
+		assetEntryQuery.setOrderByType1("DESC");
 
-		Date dayBeforeYesterday = DateUtil.newDate(
-			DateUtil.newDate().getTime() - (2 * DAY_IN_MILISECONDS));
+		assetEntryQuery.setOrderByCol2("ratings");
+		assetEntryQuery.setOrderByType2("DESC");
 
-		try {
-			assetEntry1 = AssetTestUtil.addAssetEntry(
-				_group.getGroupId(), dayBeforeYesterday);
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
+			assetEntryQuery);
 
-			ratingsStats1 = RatingsTestUtil.addStats(
-				assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
+		validateAssetEntries(assetEntries, entries);
 
-			assetEntry2 = AssetTestUtil.addAssetEntry(
-				_group.getGroupId(), dayBeforeYesterday);
-
-			ratingsStats2 = RatingsTestUtil.addStats(
-				assetEntry2.getClassName(), assetEntry2.getClassPK(), 1000);
-
-			assetEntry3 = AssetTestUtil.addAssetEntry(
-				_group.getGroupId(), yesterday);
-
-			ratingsStats3 = RatingsTestUtil.addStats(
-				assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
-
-			List<AssetEntry> orderedAssetEntries = new ArrayList<AssetEntry>(3);
-
-			orderedAssetEntries.add(assetEntry3);
-			orderedAssetEntries.add(assetEntry1);
-			orderedAssetEntries.add(assetEntry2);
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-			assetEntryQuery.setOrderByCol1("publishDate");
-			assetEntryQuery.setOrderByType1("DESC");
-
-			assetEntryQuery.setOrderByCol2("ratings");
-			assetEntryQuery.setOrderByType2("DESC");
-
-			List<AssetEntry> assetEntries =
-				AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
-
-			Assert.assertEquals(assetEntries.size(), 3);
-
-			for (int pos = 0; pos < 3; pos++) {
-				Assert.assertEquals(
-					assetEntries.get(pos), orderedAssetEntries.get(pos));
-			}
-		}
-		finally {
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry1);
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry2);
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry3);
-
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats1);
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats2);
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats3);
-		}
+		deleteAssetEntries();
 	}
 
 	@Test
 	public void testGetEntriesOrderByRatings() throws Exception {
-		AssetEntry assetEntry1 = null;
-		AssetEntry assetEntry2 = null;
-		AssetEntry assetEntry3 = null;
+		List<AssetEntry> assetEntries = createAssetEntries();
 
-		RatingsStats ratingsStats1 = null;
-		RatingsStats ratingsStats2 = null;
-		RatingsStats ratingsStats3 = null;
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		try {
-			assetEntry1 = AssetTestUtil.addAssetEntry(_group.getGroupId());
+		assetEntryQuery.setOrderByCol1("ratings");
+		assetEntryQuery.setOrderByType1("DESC");
 
-			ratingsStats1 = RatingsTestUtil.addStats(
-				assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
+			assetEntryQuery);
 
-			assetEntry2 = AssetTestUtil.addAssetEntry(_group.getGroupId());
+		validateAssetEntries(assetEntries, entries);
 
-			ratingsStats2 = RatingsTestUtil.addStats(
-				assetEntry2.getClassName(), assetEntry2.getClassPK(), 1000);
+		deleteAssetEntries();
+	}
 
-			assetEntry3 = AssetTestUtil.addAssetEntry(_group.getGroupId());
+	protected List<AssetEntry> createAssetEntries() throws Exception {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-			ratingsStats3 = RatingsTestUtil.addStats(
-				assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
 
-			List<AssetEntry> orderedAssetEntries = new ArrayList<AssetEntry>(3);
+		Date yesterday = calendar.getTime();
 
-			orderedAssetEntries.add(assetEntry3);
-			orderedAssetEntries.add(assetEntry1);
-			orderedAssetEntries.add(assetEntry2);
+		calendar.add(Calendar.DAY_OF_MONTH, -2);
 
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+		Date dayBeforeYesterday = calendar.getTime();
 
-			assetEntryQuery.setOrderByCol1("ratings");
-			assetEntryQuery.setOrderByType1("DESC");
+		_assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), dayBeforeYesterday);
 
-			List<AssetEntry> assetEntries =
-				AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+		_ratingStats1 = RatingsTestUtil.addStats(
+			_assetEntry1.getClassName(), _assetEntry1.getClassPK(), 2000);
 
-			Assert.assertEquals(assetEntries.size(), 3);
+		_assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), dayBeforeYesterday);
 
-			for (int pos = 0; pos < 3; pos++) {
-				Assert.assertEquals(
-					assetEntries.get(pos), orderedAssetEntries.get(pos));
-			}
-		}
-		finally {
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry1);
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry2);
-			AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry3);
+		_ratingStats2 = RatingsTestUtil.addStats(
+			_assetEntry2.getClassName(), _assetEntry2.getClassPK(), 1000);
 
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats1);
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats2);
-			RatingsStatsLocalServiceUtil.deleteRatingsStats(ratingsStats3);
+		_assetEntry3 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), yesterday);
+
+		_ratingStats3 = RatingsTestUtil.addStats(
+			_assetEntry3.getClassName(), _assetEntry3.getClassPK(), 3000);
+
+		List<AssetEntry> entries = new ArrayList<AssetEntry>(3);
+
+		entries.add(_assetEntry3);
+		entries.add(_assetEntry1);
+		entries.add(_assetEntry2);
+
+		return entries;
+	}
+
+	protected void deleteAssetEntries() {
+		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry1);
+		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry2);
+		AssetEntryLocalServiceUtil.deleteAssetEntry(_assetEntry3);
+
+		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats1);
+		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats2);
+		RatingsStatsLocalServiceUtil.deleteRatingsStats(_ratingStats3);
+	}
+
+	protected void validateAssetEntries(
+		List<AssetEntry> expectedEntries, List<AssetEntry> actualEntries) {
+
+		Assert.assertEquals(expectedEntries.size(), actualEntries.size());
+
+		for (int pos = 0; pos < 3; pos++) {
+			AssetEntry expectedEntry = expectedEntries.get(pos);
+			AssetEntry actualEntry = actualEntries.get(pos);
+
+			Assert.assertEquals(
+				expectedEntry.getEntryId(), actualEntry.getEntryId());
 		}
 	}
 
-	private static final int DAY_IN_MILISECONDS = 86400000;
+	private AssetEntry _assetEntry1;
+	private AssetEntry _assetEntry2;
+	private AssetEntry _assetEntry3;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private RatingsStats _ratingStats1;
+	private RatingsStats _ratingStats2;
+	private RatingsStats _ratingStats3;
 
 }

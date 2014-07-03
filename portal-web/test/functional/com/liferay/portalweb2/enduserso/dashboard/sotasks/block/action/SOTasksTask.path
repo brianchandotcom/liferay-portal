@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TASK_IFRAME</td>
-	<td>//iframe[contains(@id,'tasksportlet_Dialog_iframe')]</td>
+	<td>//iframe[contains(@id,'tasksportlet_Dialog_iframe')] | //iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>
 <tr>

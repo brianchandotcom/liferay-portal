@@ -1915,7 +1915,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2322" name="SearchContentSOSitePrivateNonMember" priority="5">
+	<command name="SearchContentSOSitePrivateNonMember" priority="5">
 		<var name="announcementEntryContent" value="Announcements Entry Content" />
 		<var name="announcementEntryTitle" value="Announcements Entry Title" />
 		<var name="announcementEntryURL" value="http://www.liferay.com" />
@@ -2311,7 +2311,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2322" name="SearchContentSOSitePrivateRestrictedNonMember" priority="5">
+	<command name="SearchContentSOSitePrivateRestrictedNonMember" priority="5">
 		<var name="announcementEntryContent" value="Announcements Entry Content" />
 		<var name="announcementEntryTitle" value="Announcements Entry Title" />
 		<var name="announcementEntryURL" value="http://www.liferay.com" />
@@ -4309,6 +4309,9 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
+		<execute action="SOUserBar#selectFrameTop" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_VIEW_ALL" value1="View All (12)" />

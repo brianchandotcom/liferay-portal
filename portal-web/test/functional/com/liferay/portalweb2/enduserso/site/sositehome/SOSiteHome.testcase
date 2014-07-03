@@ -255,7 +255,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2229" name="AddSOAnnouncementsEntryHTML" priority="5">
+	<command known-issues="LIFERAYQA-10032" name="AddSOAnnouncementsEntryHTML" priority="5">
 		<var name="entryContentSource"><![CDATA[&ltem&gtAnnouncements Entry Content&lt&#47em&gt]]></var>
 		<var name="entryContentText" value="Announcements Entry Content" />
 		<var name="entryTitleSource"><![CDATA[<strong>Announcements Entry Title</strong>]]></var>

@@ -2379,7 +2379,7 @@
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
 	</command>
 
-	<command known-issues="SOS-2326" name="ViewUpcomingTaskAssignedToConnection" priority="5">
+	<command name="ViewUpcomingTaskAssignedToConnection" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -2436,7 +2436,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2326" name="ViewUpcomingTaskAssignedToMe" priority="5">
+	<command name="ViewUpcomingTaskAssignedToMe" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 
@@ -2458,7 +2458,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2326" name="ViewUpcomingTaskReassignedToConnection" priority="5">
+	<command name="ViewUpcomingTaskReassignedToConnection" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -2547,7 +2547,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2326" name="ViewUpcomingTasksAssignedToMe" priority="4">
+	<command name="ViewUpcomingTasksAssignedToMe" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription1" value="Task1 Description" />
 		<var name="taskDescription2" value="Task2 Description" />

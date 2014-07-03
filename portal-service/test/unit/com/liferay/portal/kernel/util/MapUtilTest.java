@@ -33,27 +33,7 @@ public class MapUtilTest {
 	public static class WhenCreatingALinkedHashMapFromArray {
 
 		@Test
-		public void testDelimiterCustom() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(
-				new String[] {"one,1"}, ",");
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue("1"));
-		}
-
-		@Test
-		public void testDelimiterDefault() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1"});
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue("1"));
-		}
-
-		@Test
-		public void testParamsInvalid() {
+		public void shouldReturnEmptyMapWithParamsInvalid() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one"});
 
@@ -65,14 +45,152 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsNull() {
+		public void shouldReturnEmptyMapWithParamsNull() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(null);
 
 			Assert.assertTrue(map.isEmpty());
 		}
 
 		@Test
-		public void testParamsTypeBoolean() {
+		public void shouldReturnEmptyMapWithParamsTypeObject() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one:1:" + Object.class.getName()});
+
+			Assert.assertEquals(0, map.size());
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithParamsZeroLength() {
+			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
+		public void shouldReturnMapWithDelimiterCustom() {
+			Map<String, String> map = MapUtil.toLinkedHashMap(
+				new String[] {}, ",");
+
+			Assert.assertTrue(map.isEmpty());
+
+			map = MapUtil.toLinkedHashMap(new String[] {"one,1"}, ",");
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue("1"));
+
+			map = MapUtil.toLinkedHashMap(new String[] {"one,1", "two,2"}, ",");
+
+			Assert.assertEquals(2, map.size());
+		}
+
+		@Test
+		public void shouldReturnMapWithDelimiterDefault() {
+			Map<String, String> map = MapUtil.toLinkedHashMap(new String[] {});
+
+			Assert.assertTrue(map.isEmpty());
+
+			map = MapUtil.toLinkedHashMap(new String[] {"one:1"});
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue("1"));
+
+			map = MapUtil.toLinkedHashMap(new String[] {"one:1", "two:2"});
+
+			Assert.assertEquals(2, map.size());
+		}
+
+	}
+
+	public static class
+		WhenCreatingALinkedHashMapFromArrayWithInvalidParamsTypeValue {
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithCompositeDouble() {
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Double.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithCompositeInteger() {
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Integer.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithCompositeLong() {
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Long.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithCompositeShort() {
+			MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Short.class.getName()});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithDouble() {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:double"});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithInteger() {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:int"});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithLong() {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:long"});
+
+			Assert.fail();
+		}
+
+		@Test(expected = NumberFormatException.class)
+		public void shouldFailWithShort() {
+			MapUtil.toLinkedHashMap(new String[]{"one:foo:short"});
+
+			Assert.fail();
+		}
+
+		@Test
+		public void shouldReturnMapWithBoolean() {
+			Map<String, Object> map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:boolean"});
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+
+			map = MapUtil.toLinkedHashMap(
+				new String[] {"one:foo:" + Boolean.class.getName()});
+
+			Assert.assertEquals(1, map.size());
+			Assert.assertTrue(map.containsKey("one"));
+			Assert.assertTrue(map.containsValue(false));
+			Assert.assertTrue(map.get("one") instanceof Boolean);
+		}
+
+	}
+
+	public static class WhenCreatingALinkedHashMapFromArrayWithParamsType {
+
+		@Test
+		public void shouldReturnMapWithBoolean() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:true:boolean"});
 
@@ -91,50 +209,26 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testParamsTypeBooleanInvalidValue() {
+		public void shouldReturnMapWithComposite() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:boolean"});
+				new String[]{"one:1:" + Byte.class.getName()});
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(false));
-			Assert.assertTrue(map.get("one") instanceof Boolean);
-
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Boolean.class.getName()});
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(false));
-			Assert.assertTrue(map.get("one") instanceof Boolean);
-		}
-
-		@Test
-		public void testParamsTypeComposite() {
-			Map<String, Object> map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1:" + Byte.class.getName()});
-
-			Assert.assertEquals(1, map.size());
-			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue((byte)1));
+			Assert.assertTrue(map.containsValue((byte) 1));
 			Assert.assertTrue(map.get("one") instanceof Byte);
 
 			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1:" + Float.class.getName()});
+				new String[]{"one:1:" + Float.class.getName()});
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue((float)1));
+			Assert.assertTrue(map.containsValue((float) 1));
 			Assert.assertTrue(map.get("one") instanceof Float);
-
-			map = MapUtil.toLinkedHashMap(
-				new String[] {"one:1:" + Object.class.getName()});
-
-			Assert.assertEquals(0, map.size());
 		}
 
 		@Test
-		public void testParamsTypeDouble() {
+		public void shouldReturnMapWithDouble() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1.0:double"});
 
@@ -152,23 +246,8 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Double);
 		}
 
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidCompositeValue() {
-			MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Double.class.getName()});
-
-			Assert.fail();
-		}
-
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeDoubleInvalidValue() {
-			MapUtil.toLinkedHashMap(new String[]{"one:foo:double"});
-
-			Assert.fail();
-		}
-
 		@Test
-		public void testParamsTypeInteger() {
+		public void shouldReturnMapWithInteger() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:int"});
 
@@ -186,23 +265,8 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Integer);
 		}
 
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidCompositeValue() {
-			MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Integer.class.getName()});
-
-			Assert.fail();
-		}
-
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeIntegerInvalidValue() {
-			MapUtil.toLinkedHashMap(new String[]{"one:foo:int"});
-
-			Assert.fail();
-		}
-
 		@Test
-		public void testParamsTypeLong() {
+		public void shouldReturnMapWithLong() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:long"});
 
@@ -220,23 +284,8 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Long);
 		}
 
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidCompositeValue() {
-			MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Long.class.getName()});
-
-			Assert.fail();
-		}
-
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeLongInvalidValue() {
-			MapUtil.toLinkedHashMap(new String[]{"one:foo:long"});
-
-			Assert.fail();
-		}
-
 		@Test
-		public void testParamsTypeShort() {
+		public void shouldReturnMapWithShort() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:1:short"});
 
@@ -254,23 +303,8 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof Short);
 		}
 
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidCompositeValue() {
-			MapUtil.toLinkedHashMap(
-				new String[] {"one:foo:" + Short.class.getName()});
-
-			Assert.fail();
-		}
-
-		@Test(expected = NumberFormatException.class)
-		public void testParamsTypeShortInvalidValue() {
-			MapUtil.toLinkedHashMap(new String[]{"one:foo:short"});
-
-			Assert.fail();
-		}
-
 		@Test
-		public void testParamsTypeString() {
+		public void shouldReturnMapWithString() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one:X:" + String.class.getName()});
 
@@ -280,19 +314,32 @@ public class MapUtilTest {
 			Assert.assertTrue(map.get("one") instanceof String);
 		}
 
-		@Test
-		public void testParamsZeroLength() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
-
-			Assert.assertTrue(map.isEmpty());
-		}
-
 	}
 
 	public static class WhenCreatingAMapFromArray {
 
 		@Test
-		public void testSucceed() {
+		public void shouldFailWithOddLength() {
+			try {
+				MapUtil.fromArray(new String[] {"one", "two", "three"});
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException iae) {
+				Assert.assertEquals(
+					"Array length is not an even number", iae.getMessage());
+			}
+		}
+
+		@Test
+		public void shouldReturnEmptyMapWithZeroLength() {
+			Map<String, String> map = MapUtil.fromArray(new String[] {});
+
+			Assert.assertTrue(map.isEmpty());
+		}
+
+		@Test
+		public void shouldSucceedWithEvenLength() {
 			String[] array = new String[] {
 				PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
 				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS,
@@ -329,32 +376,12 @@ public class MapUtilTest {
 			}
 		}
 
-		@Test
-		public void testWithOddLength() {
-			try {
-				MapUtil.fromArray(new String[] {"one", "two", "three"});
-
-				Assert.fail();
-			}
-			catch (IllegalArgumentException iae) {
-				Assert.assertEquals(
-					"Array length is not an even number", iae.getMessage());
-			}
-		}
-
-		@Test
-		public void testWithZeroLength() {
-			Map<String, String> map = MapUtil.fromArray(new String[] {});
-
-			Assert.assertTrue(map.isEmpty());
-		}
-
 	}
 
 	public static class WhenFilteringByPredicateFilter {
 
 		@Test
-		public void testSuceed() {
+		public void shouldReturnMapFilteredByEven() {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("1", "one");
@@ -386,7 +413,7 @@ public class MapUtilTest {
 		}
 
 		@Test
-		public void testWithPrefix() {
+		public void shouldReturnMapFilteredByPrefix() {
 			Map<String, String> inputMap = new HashMap<String, String>();
 
 			inputMap.put("x1", "one");

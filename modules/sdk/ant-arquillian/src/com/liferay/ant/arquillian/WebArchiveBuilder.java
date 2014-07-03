@@ -16,8 +16,8 @@ package com.liferay.ant.arquillian;
 
 import java.io.File;
 
-import org.apache.tools.ant.BuildEvent;
-import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.listener.Log4jListener;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 
@@ -50,30 +50,7 @@ public class WebArchiveBuilder {
 	private static Project _getProject() {
 		Project project = new Project();
 
-		DefaultLogger defaultLogger = new DefaultLogger() {
-
-			@Override
-			public void buildFinished(BuildEvent buildEvent) {
-				System.out.println("[BUILD FINISHED]");
-			}
-
-			@Override
-			public void buildStarted(BuildEvent buildEvent) {
-				System.out.println("[BUILD STARTED]");
-			}
-
-			@Override
-			public void messageLogged(BuildEvent buildEvent) {
-				System.out.println(buildEvent.getMessage());
-			}
-
-		};
-
-		defaultLogger.setErrorPrintStream(System.err);
-		defaultLogger.setMessageOutputLevel(Project.MSG_INFO);
-		defaultLogger.setOutputPrintStream(System.out);
-
-		project.addBuildListener(defaultLogger);
+		project.addBuildListener(new Log4jListener());
 
 		File buildFile = new File("build.xml");
 

@@ -18,10 +18,9 @@
 
 <%
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
-String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
-String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
+String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) + "_selectAsset";
 %>
 
 <liferay-ui:tabs

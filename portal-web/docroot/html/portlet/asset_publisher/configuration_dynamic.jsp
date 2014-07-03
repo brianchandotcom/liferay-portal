@@ -20,7 +20,6 @@
 List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
-String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 %>
@@ -38,7 +37,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherDynamicSelectionAssetSelectionPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSourcePanel" persistState="<%= true %>" title="source">
-				<aui:fieldset cssClass='<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) ? "hide" : "" %>' label="scope">
+				<aui:fieldset cssClass='<%= assetPublisherDisplayContext.isShowScopeSelector() ? StringPool.BLANK : "hide" %>' label="scope">
 					<%= selectScope %>
 				</aui:fieldset>
 
@@ -190,7 +189,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
 										<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 											<portlet:param name="struts_action" value="/portlet_configuration/select_structure_field" />
-											<portlet:param name="portletResource" value="<%= portletResource %>" />
+											<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 											<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
 											<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
 										</portlet:renderURL>
@@ -361,7 +360,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			}
 			%>
 
-			<c:if test="<%= !rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) %>">
+			<c:if test="<%= assetPublisherDisplayContext.isOrderingAndGroupingEnabled() %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherOrderingAndGroupingPanel" persistState="<%= true %>" title="ordering-and-grouping">
 					<aui:fieldset>
 						<span class="field-row">
@@ -371,7 +370,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							%>
 
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>">
-								<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+								<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 									<aui:option label="title" />
 								</c:if>
 
@@ -573,7 +572,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			}
 
-			<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 				<%= className %>toggleSubclassesFields(true);
 			</c:if>
 		}
@@ -638,7 +637,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var <%= className %>SubtypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
 
-		<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+		<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
 				var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
 				var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');

@@ -84,7 +84,7 @@ public class BreadcrumbTag extends IncludeTag {
 		sb.append(breadcrumbEntry.getURL());
 		sb.append("\">");
 		sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-		sb.append("</a><span class=\"divider\">/</span></li>");
+		sb.append("</a></li>");
 	}
 
 	protected void buildLayoutBreadcrumb(
@@ -110,7 +110,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 			sb.append(StringPool.GREATER_THAN);
 			sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-			sb.append("</a><span class=\"divider\">/</span></li>");
+			sb.append("</a></li>");
 		}
 	}
 
@@ -126,7 +126,7 @@ public class BreadcrumbTag extends IncludeTag {
 			sb.append(breadcrumbEntry.getURL());
 			sb.append("\">");
 			sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-			sb.append("</a><span class=\"divider\">/</span></li>");
+			sb.append("</a></li>");
 		}
 	}
 
@@ -164,7 +164,7 @@ public class BreadcrumbTag extends IncludeTag {
 				sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
 			}
 
-			sb.append("<span class=\"divider\">/</span></li>");
+			sb.append("</li>");
 		}
 	}
 
@@ -183,7 +183,7 @@ public class BreadcrumbTag extends IncludeTag {
 		sb.append(breadcrumbEntry.getURL());
 		sb.append("\">");
 		sb.append(HtmlUtil.escape(breadcrumbEntry.getTitle()));
-		sb.append("</a><span class=\"divider\">/</span></li>");
+		sb.append("</a></li>");
 	}
 
 	@Override

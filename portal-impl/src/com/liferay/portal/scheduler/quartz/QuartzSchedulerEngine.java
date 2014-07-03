@@ -38,12 +38,12 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.scheduler.messaging.ReceiverKey;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
 import com.liferay.portal.service.QuartzLocalService;
@@ -696,8 +696,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return quartzTrigger;
 	}
 
-	protected String getReceiverKey(String jobName, String groupName) {
-		return groupName.concat(StringPool.PERIOD).concat(jobName);
+	protected ReceiverKey getReceiverKey(String jobName, String groupName) {
+		return new ReceiverKey(jobName, groupName);
 	}
 
 	protected SchedulerResponse getScheduledJob(

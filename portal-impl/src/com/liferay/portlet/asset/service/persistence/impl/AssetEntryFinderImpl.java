@@ -225,7 +225,7 @@ public class AssetEntryFinderImpl
 		else {
 			sb.append("SELECT {AssetEntry.*} ");
 
-			boolean isRequiredRatings = false;
+			boolean selectRatings = false;
 
 			String orderByCol1 = entryQuery.getOrderByCol1();
 			String orderByCol2 = entryQuery.getOrderByCol2();
@@ -233,14 +233,14 @@ public class AssetEntryFinderImpl
 			if (orderByCol1.equals("ratings") ||
 				orderByCol2.equals("ratings")) {
 
-				isRequiredRatings = true;
+				selectRatings = true;
 
 				sb.append(", tempTable.averageScore ");
 			}
 
 			sb.append("FROM (SELECT DISTINCT AssetEntry.entryId ");
 
-			if (isRequiredRatings) {
+			if (selectRatings) {
 				sb.append(", RatingsStats.averageScore ");
 			}
 		}

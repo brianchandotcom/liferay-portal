@@ -203,7 +203,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="RejectAndResubmitProcessPG" priority="5">
+	<command name="RejectAndResubmitProcess" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>

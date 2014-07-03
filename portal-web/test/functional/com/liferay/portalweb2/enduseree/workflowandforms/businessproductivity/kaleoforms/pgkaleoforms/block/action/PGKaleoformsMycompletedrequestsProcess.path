@@ -44,7 +44,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TASKS_TABLE-->
+<!--TASKS_TABLE_REVIEW-->
 <tr>
 	<td>TASKS_TABLE_REVIEW_TASK</td>
 	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[1]/span</td>

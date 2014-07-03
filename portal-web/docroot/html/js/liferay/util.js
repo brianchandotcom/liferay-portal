@@ -538,6 +538,49 @@
 			return (window.innerWidth > 0) ? window.innerWidth : screen.width;
 		},
 
+		inBrowserView: function(node, win, nodeRegion) {
+			var DOM = A.DOM;
+
+			if (!win) {
+				win = window;
+			}
+
+			if (!nodeRegion) {
+				nodeRegion = node.get('region');
+			}
+
+			var winRegion = DOM.viewportRegion(win);
+
+			var viewable = (
+				nodeRegion.bottom <= winRegion.bottom &&
+				nodeRegion.left >= winRegion.left &&
+				nodeRegion.right <= winRegion.right &&
+				nodeRegion.top >= winRegion.top
+			);
+
+			if (viewable) {
+				var frameEl = win.frameElement;
+
+				if (frameEl) {
+					var frameXY = DOM.getXY(frameEl);
+
+					var xOffset = frameXY[0] - DOM.docScrollX(win);
+
+					nodeRegion.left += xOffset;
+					nodeRegion.right += xOffset;
+
+					var yOffset = frameXY[1] - DOM.docScrollY(win);
+
+					nodeRegion.top += yOffset;
+					nodeRegion.bottom += yOffset;
+
+					viewable = Util.inBrowserView(node, win.parent, nodeRegion);
+				}
+			}
+
+			return viewable;
+		},
+
 		isArray: function(object) {
 			return !!(window.Array && object.constructor == window.Array);
 		},
@@ -1327,10 +1370,12 @@
 			if (!interacting) {
 				el = A.one(el);
 
-				try {
-					el.focus();
-				}
-				catch (e) {
+				if (Util.inBrowserView(el)) {
+					try {
+						el.focus();
+					}
+					catch (e) {
+					}
 				}
 			}
 		},

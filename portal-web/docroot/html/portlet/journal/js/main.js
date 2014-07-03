@@ -29,10 +29,6 @@ AUI.add(
 						value: {}
 					},
 
-					focusFieldId: {
-						validator: Lang.isString
-					},
-
 					strings: {
 						validator: Lang.isObject,
 						value: {
@@ -57,8 +53,6 @@ AUI.add(
 						instance._createTooltip();
 
 						instance._bindUI();
-
-						instance._focusField();
 					},
 
 					destructor: function() {
@@ -118,16 +112,6 @@ AUI.add(
 						var strings = instance.get(STR_STRINGS);
 
 						alert(strings.addTemplate);
-					},
-
-					_focusField: function() {
-						var instance = this;
-
-						var focusFieldId = instance.get('focusFieldId');
-
-						if (focusFieldId) {
-							Liferay.Util.focusFormField(instance.one(focusFieldId));
-						}
 					},
 
 					_getByName: function(currentForm, name, withoutNamespace) {

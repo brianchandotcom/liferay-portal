@@ -363,11 +363,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 				title: '<%= (article != null) ? HtmlUtil.escapeJS(article.getTitle(locale)) : StringPool.BLANK %>'
 			},
-
-			<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-				focusFieldId: '<%= (article != null || PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID) ? "#title" : "#newArticleId" %>',
-			</c:if>
-
 			namespace: '<portlet:namespace />'
 		}
 	);

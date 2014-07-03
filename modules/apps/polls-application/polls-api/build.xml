@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="plugin.name" value="com.liferay.portal.polls.api" />
+	<property name="plugin.name" value="com.liferay.portlet.polls.api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

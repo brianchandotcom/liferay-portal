@@ -12,7 +12,7 @@
 	</tear-down>
 
 	<command name="AddProcessPredefined" priority="5">
-		<var name="processName" value="Kaleo Forms Process Predefined" />
+		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
@@ -21,7 +21,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -43,19 +43,19 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
 		<execute macro="KaleoFormsAdmin#chooseForm">
-			<var name="formName" value="Created Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
-			<var name="processName" value="${processName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
 </definition>

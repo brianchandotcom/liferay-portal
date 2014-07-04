@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.scheduler.messaging;
 
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -67,11 +66,7 @@ public class ReceiverKey implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, _jobName);
-
-		hashCode = HashUtil.hash(hashCode, _groupName);
-
-		return hashCode;
+		return _groupName.hashCode() * 11 + _jobName.hashCode();
 	}
 
 	private String _groupName;

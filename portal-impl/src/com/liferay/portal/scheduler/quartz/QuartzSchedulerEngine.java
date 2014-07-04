@@ -696,10 +696,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return quartzTrigger;
 	}
 
-	protected ReceiverKey getReceiverKey(String jobName, String groupName) {
-		return new ReceiverKey(jobName, groupName);
-	}
-
 	protected SchedulerResponse getScheduledJob(
 			Scheduler scheduler, JobKey jobKey)
 		throws Exception {
@@ -950,7 +946,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			MESSAGE_LISTENER_UUID,
 			schedulerEventListenerWrapper.getMessageListenerUUID());
 
-		message.put(RECEIVER_KEY, getReceiverKey(jobName, groupName));
+		message.put(RECEIVER_KEY, new ReceiverKey(jobName, groupName));
 	}
 
 	protected void schedule(

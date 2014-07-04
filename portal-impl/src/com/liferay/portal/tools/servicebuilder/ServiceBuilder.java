@@ -59,6 +59,7 @@ import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
+import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
 
 import de.hunsicker.io.FileFormat;
@@ -873,6 +874,61 @@ public class ServiceBuilder {
 			targetEntityName, testDir, true);
 	}
 
+	public String annotationToString(Annotation annotation) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.AT);
+
+		Type type = annotation.getType();
+
+		sb.append(type.getValue());
+
+		Map<String, Object> namedParameters = annotation.getNamedParameterMap();
+
+		if (namedParameters.isEmpty()) {
+			return sb.toString();
+		}
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (Map.Entry<String, Object> entry : namedParameters.entrySet()) {
+			sb.append(entry.getKey());
+
+			sb.append(StringPool.EQUAL);
+
+			Object value = entry.getValue();
+
+			if (value instanceof List) {
+				List<String> stringValues = (List<String>)entry.getValue();
+
+				sb.append(StringPool.OPEN_CURLY_BRACE);
+
+				for (String stringValue : stringValues) {
+					sb.append(stringValue);
+
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				if (!stringValues.isEmpty()) {
+					sb.setIndex(sb.index() - 1);
+				}
+
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
+			}
+			else {
+				sb.append(value);
+			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	public String getClassName(Type type) {
 		int dimensions = type.getDimensions();
 		String name = type.getValue();
@@ -1509,41 +1565,6 @@ public class ServiceBuilder {
 		}
 		else {
 			return true;
-		}
-	}
-
-	public boolean isDuplicateMethod(
-		JavaMethod method, Map<String, Object> tempMap) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("isDuplicateMethod ");
-		sb.append(getTypeGenericsName(method.getReturns()));
-		sb.append(StringPool.SPACE);
-		sb.append(method.getName());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		JavaParameter[] parameters = method.getParameters();
-
-		for (int i = 0; i < parameters.length; i++) {
-			JavaParameter javaParameter = parameters[i];
-
-			sb.append(getTypeGenericsName(javaParameter.getType()));
-
-			if ((i + 1) != parameters.length) {
-				sb.append(StringPool.COMMA);
-			}
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		String key = sb.toString();
-
-		if (tempMap.put(key, key) != null) {
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 
@@ -2459,19 +2480,19 @@ public class ServiceBuilder {
 		JavaClass modelJavaClass = _getJavaClass(
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
-		Object[] methods = _getMethods(modelJavaClass);
+		JavaMethod[] methods = _getMethods(modelJavaClass);
 
 		JavaClass extendedModelBaseImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "BaseImpl.java");
 
-		methods = ArrayUtil.append(
-			methods, _getMethods(extendedModelBaseImplJavaClass));
+		methods = _mergeMethods(
+			methods, _getMethods(extendedModelBaseImplJavaClass), false);
 
 		JavaClass extendedModelJavaClass = _getJavaClass(
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
-		methods = ArrayUtil.append(
-			methods, _getMethods(extendedModelJavaClass));
+		methods = _mergeMethods(
+			methods, _getMethods(extendedModelJavaClass), false);
 
 		Map<String, Object> context = _getContext();
 
@@ -2770,9 +2791,15 @@ public class ServiceBuilder {
 	private void _createService(Entity entity, int sessionType)
 		throws Exception {
 
+		Set<String> imports = new HashSet<String>();
+
 		JavaClass javaClass = _getJavaClass(
 			_outputPath + "/service/impl/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceImpl.java");
+
+		JavaSource javaSource = javaClass.getSource();
+
+		imports.addAll(Arrays.asList(javaSource.getImports()));
 
 		JavaMethod[] methods = _getMethods(javaClass);
 
@@ -2788,13 +2815,18 @@ public class ServiceBuilder {
 				_outputPath + "/service/base/" + entity.getName() +
 					_getSessionTypeName(sessionType) + "ServiceBaseImpl.java");
 
-			methods = ArrayUtil.append(
-				parentJavaClass.getMethods(), methods);
+			JavaSource parentJavaSource = parentJavaClass.getSource();
+
+			imports.addAll(Arrays.asList(parentJavaSource.getImports()));
+
+			methods = _mergeMethods(
+				methods, parentJavaClass.getMethods(), true);
 		}
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("imports", imports);
 		context.put("methods", methods);
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 
@@ -4211,6 +4243,34 @@ public class ServiceBuilder {
 		return javaClass;
 	}
 
+	private String _getMethodKey(JavaMethod javaMethod) {
+		StringBundler sb = new StringBundler();
+
+		if (!javaMethod.isConstructor()) {
+			sb.append(getTypeGenericsName(javaMethod.getReturns()));
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(javaMethod.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		JavaParameter[] parameters = javaMethod.getParameters();
+
+		for (int i = 0; i < parameters.length; i++) {
+			JavaParameter javaParameter = parameters[i];
+
+			sb.append(getTypeGenericsName(javaParameter.getType()));
+
+			if ((i + 1) != parameters.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	private JavaMethod[] _getMethods(JavaClass javaClass) {
 		return _getMethods(javaClass, false);
 	}
@@ -4395,6 +4455,87 @@ public class ServiceBuilder {
 
 	private boolean _isTypeValue(Type type, String value) {
 		return value.equals(type.getValue());
+	}
+
+	private Annotation[] _mergeAnnotations(
+		Annotation[] annotations1, Annotation[] annotations2) {
+
+		Map<Type, Annotation> annotationsMap = new HashMap<Type, Annotation>();
+
+		for (Annotation annotation : annotations2) {
+			annotationsMap.put(annotation.getType(), annotation);
+		}
+
+		for (Annotation annotation : annotations1) {
+			annotationsMap.put(annotation.getType(), annotation);
+		}
+
+		List<Annotation> annotations = new ArrayList<Annotation>(
+			annotationsMap.values());
+
+		Comparator<Annotation> comparator = new Comparator<Annotation>() {
+
+			@Override
+			public int compare(Annotation annotation1, Annotation annotation2) {
+				String annotationString1 = annotation1.toString();
+				String annotationString2 = annotation2.toString();
+
+				return annotationString1.compareTo(annotationString2);
+			}
+
+		};
+
+		Collections.sort(annotations, comparator);
+
+		return annotations.toArray(new Annotation[annotations.size()]);
+	}
+
+	private JavaMethod[] _mergeMethods(
+		JavaMethod[] javaMethods1, JavaMethod[] javaMethods2,
+		boolean mergeAnnotations) {
+
+		Map<String, JavaMethod> javaMethodMap =
+			new HashMap<String, JavaMethod>();
+
+		for (JavaMethod javaMethod : javaMethods2) {
+			javaMethodMap.put(_getMethodKey(javaMethod), javaMethod);
+		}
+
+		for (JavaMethod javaMethod : javaMethods1) {
+			String javaMethodKey = _getMethodKey(javaMethod);
+
+			JavaMethod existingJavaMethod = javaMethodMap.get(javaMethodKey);
+
+			if (existingJavaMethod == null) {
+				javaMethodMap.put(javaMethodKey, javaMethod);
+			}
+			else if (mergeAnnotations) {
+				Annotation[] annotations = _mergeAnnotations(
+					javaMethod.getAnnotations(),
+					existingJavaMethod.getAnnotations());
+
+				existingJavaMethod.setAnnotations(annotations);
+			}
+		}
+
+		List<JavaMethod> javaMethods = new ArrayList<JavaMethod>(
+			javaMethodMap.values());
+
+		Comparator<JavaMethod> comparator = new Comparator<JavaMethod>() {
+
+			@Override
+			public int compare(JavaMethod javaMethod1, JavaMethod javaMethod2) {
+				String callSignature1 = javaMethod1.getCallSignature();
+				String callSignature2 = javaMethod2.getCallSignature();
+
+				return callSignature1.compareTo(callSignature2);
+			}
+
+		};
+
+		Collections.sort(javaMethods, comparator);
+
+		return javaMethods.toArray(new JavaMethod[javaMethods.size()]);
 	}
 
 	private List<Entity> _mergeReferenceList(Entity entity) {

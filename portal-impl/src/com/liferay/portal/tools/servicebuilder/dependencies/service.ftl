@@ -14,6 +14,10 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.service.PermissionedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
+<#list imports as import>
+import ${import};
+</#list>
+
 <#if sessionTypeName == "Local">
 /**
  * Provides the local service interface for ${entity.name}. Methods of this
@@ -95,12 +99,14 @@ public interface ${entity.name}${sessionTypeName}Service
 	 */
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isDuplicateMethod(method, tempMap)>
+		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
 
-			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
-				@Deprecated
-			</#if>
+			<#list method.annotations as annotation>
+				<#if annotation.type != "java.lang.Override">
+					${serviceBuilder.annotationToString(annotation)}
+				</#if>
+			</#list>
 
 			<#if overrideMethodNames?seq_index_of(method.name) != -1>
 				@Override

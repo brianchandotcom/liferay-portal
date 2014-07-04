@@ -78,24 +78,25 @@
 				<div class="btn-group">
 					<c:choose>
 						<c:when test="<%= entry != null %>">
-							<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
+							<c:if test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
+								<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
 
-							<aui:script use="aui-base">
-								<portlet:actionURL var="restoreEntryURL">
-									<portlet:param name="struts_action" value="/trash/edit_entry" />
-									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-								</portlet:actionURL>
+								<aui:script use="aui-base">
+									<portlet:actionURL var="restoreEntryURL">
+										<portlet:param name="struts_action" value="/trash/edit_entry" />
+										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+									</portlet:actionURL>
 
-								A.one('#<portlet:namespace />restoreEntryButton').on(
-									'click',
-									function(event) {
-										Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
-									}
-								);
-							</aui:script>
-
+									A.one('#<portlet:namespace />restoreEntryButton').on(
+										'click',
+										function(event) {
+											Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+										}
+									);
+								</aui:script>
+							</c:if>
 							<c:if test="<%= trashHandler.isDeletable() %>">
 								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
 

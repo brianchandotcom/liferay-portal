@@ -28,7 +28,7 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	actionJsp="/html/portlet/journal/folder_action.jsp"
 	author="<%= folder.getUserName() %>"
 	createDate="<%= folder.getCreateDate() %>"
-	description="<%= folder.getDescription() %>"
+	description="<%= HtmlUtil.escape(folder.getDescription()) %>"
 	displayStyle="descriptive"
 	folder="<%= true %>"
 	modifiedDate="<%= folder.getModifiedDate() %>"
@@ -37,6 +37,6 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
-	title="<%= folder.getName() %>"
+	title="<%= HtmlUtil.escape(folder.getName()) %>"
 	url="<%= tempRowURL.toString() %>"
 />

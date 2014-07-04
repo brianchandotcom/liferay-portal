@@ -16,7 +16,7 @@
 
 <liferay-ui:search-container-column-text
 	name="id"
-	value="<%= curArticle.getArticleId() %>"
+	value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
 />
 
 <liferay-ui:search-container-column-text
@@ -42,7 +42,7 @@
 		cssClass="entry-display-style selectable"
 		iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 		label="<%= true %>"
-		message="<%= curArticle.getTitle(locale) %>"
+		message="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
 		method="get"
 		url="<%= rowURL.toString() %>"
 	/>
@@ -118,7 +118,7 @@ DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroup
 
 <liferay-ui:search-container-column-text
 	name="type"
-	value="<%= ddmStructure.getName(locale) %>"
+	value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 />
 
 <liferay-ui:search-container-column-jsp

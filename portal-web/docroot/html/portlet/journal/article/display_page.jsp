@@ -576,8 +576,6 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 				defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
 			}
 
-			defaultDisplayLayout = defaultDisplayLayout.toEscapedModel();
-
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
@@ -586,7 +584,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			%>
 
 			<c:if test="<%= Validator.isNotNull(urlViewInContext) %>">
-				<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(request, "view-content-in-x", defaultDisplayLayout.getName(locale), false) %></a>
+				<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(request, "view-content-in-x", HtmlUtil.escape(defaultDisplayLayout.getName(locale)), false) %></a>
 			</c:if>
 		</c:if>
 	</c:otherwise>
@@ -597,8 +595,6 @@ private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Excepti
 	List<Layout> ancestors = layout.getAncestors();
 
 	StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
-
-	layout = layout.toEscapedModel();
 
 	if (layout.isPrivateLayout()) {
 		sb.append(LanguageUtil.get(locale, "private-pages"));
@@ -614,15 +610,13 @@ private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Excepti
 	Collections.reverse(ancestors);
 
 	for (Layout ancestor : ancestors) {
-		ancestor = ancestor.toEscapedModel();
-
-		sb.append(ancestor.getName(locale));
+		sb.append(HtmlUtil.escape(ancestor.getName(locale)));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.GREATER_THAN);
 		sb.append(StringPool.SPACE);
 	}
 
-	sb.append(layout.getName(locale));
+	sb.append(HtmlUtil.escape(layout.getName(locale)));
 
 	return sb.toString();
 }

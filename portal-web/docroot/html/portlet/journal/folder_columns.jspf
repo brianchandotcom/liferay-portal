@@ -40,7 +40,7 @@
 	<liferay-ui:icon
 		iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 		label="<%= true %>"
-		message="<%= curFolder.getName() %>"
+		message="<%= HtmlUtil.escape(curFolder.getName()) %>"
 		url="<%= rowURL.toString() %>"
 	/>
 </liferay-ui:search-container-column-text>

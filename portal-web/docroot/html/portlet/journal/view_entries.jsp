@@ -386,13 +386,9 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 
 				if (result instanceof JournalFolder) {
 					curFolder = (JournalFolder)result;
-
-					curFolder = curFolder.toEscapedModel();
 				}
 				else {
 					curArticle = (JournalArticle)result;
-
-					curArticle = curArticle.toEscapedModel();
 				}
 				%>
 
@@ -405,11 +401,11 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
-						rowData.put("title", curArticle.getTitle(locale));
+						rowData.put("title", HtmlUtil.escape(curArticle.getTitle(locale)));
 
 						row.setData(rowData);
 
-						row.setPrimaryKey(curArticle.getArticleId());
+						row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
 						%>
 
 						<%@ include file="/html/portlet/journal/article_columns.jspf" %>
@@ -424,7 +420,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
 						rowData.put("folder", true);
 						rowData.put("folder-id", curFolder.getFolderId());
-						rowData.put("title", curFolder.getName());
+						rowData.put("title", HtmlUtil.escape(curFolder.getName()));
 
 						row.setData(rowData);
 						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));

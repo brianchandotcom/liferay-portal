@@ -71,7 +71,7 @@ else {
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= JournalArticle.class.getName() %>"
-				modelResourceDescription="<%= article.getTitle(locale) %>"
+				modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 				resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"

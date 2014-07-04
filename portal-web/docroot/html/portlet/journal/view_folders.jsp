@@ -90,7 +90,7 @@ else {
 		<aui:nav cssClass="list-group">
 			<c:if test="<%= Validator.isNotNull(parentTitle) %>">
 				<li class="dropdown-header list-group-item">
-					<%= parentTitle %>
+					<%= HtmlUtil.escape(parentTitle) %>
 				</li>
 			</c:if>
 
@@ -214,7 +214,7 @@ else {
 								cssClass="app-view-navigation-entry folder list-group-item structure"
 								href="<%= viewDDMStructureArticlesURL %>"
 								iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
-								label="<%= ddmStructure.getName(locale) %>"
+								label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 								localizeLabel="<%= false %>"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 							/>
@@ -263,7 +263,7 @@ else {
 							cssClass="app-view-navigation-entry folder list-group-item"
 							href="<%= viewURL %>"
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							label="<%= curFolder.getName() %>"
+							label="<%= HtmlUtil.escape(curFolder.getName()) %>"
 							localizeLabel="<%= false %>"
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
 						>

@@ -75,12 +75,12 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 					<liferay-ui:search-container-column-text
 						name="id"
-						property="articleId"
+                        value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="title"
-						value="<%= articleVersion.getTitle(locale) %>"
+						value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

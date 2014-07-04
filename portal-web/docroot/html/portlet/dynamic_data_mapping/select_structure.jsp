@@ -82,7 +82,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 				value="<%= structure.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text cssClass="entry-action">
 				<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
 
 					<%

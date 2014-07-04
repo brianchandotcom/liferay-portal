@@ -1419,13 +1419,13 @@ public class ServiceBuilder {
 		if (actualTypeArguments != null) {
 			sb.append(StringPool.LESS_THAN);
 
-			for (int i = 0; i < actualTypeArguments.length; i++) {
-				if (i > 0) {
-					sb.append(", ");
-				}
+			for (Type actualTypeArgument : actualTypeArguments) {
+				sb.append(getTypeGenericsName(actualTypeArgument));
 
-				sb.append(getTypeGenericsName(actualTypeArguments[i]));
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
+
+			sb.setIndex(sb.index() - 1);
 
 			sb.append(StringPool.GREATER_THAN);
 		}
@@ -4254,16 +4254,16 @@ public class ServiceBuilder {
 		sb.append(javaMethod.getName());
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		JavaParameter[] parameters = javaMethod.getParameters();
+		JavaParameter[] javaParameters = javaMethod.getParameters();
 
-		for (int i = 0; i < parameters.length; i++) {
-			JavaParameter javaParameter = parameters[i];
-
+		for (JavaParameter javaParameter : javaParameters) {
 			sb.append(getTypeGenericsName(javaParameter.getType()));
 
-			if ((i + 1) != parameters.length) {
-				sb.append(StringPool.COMMA);
-			}
+			sb.append(StringPool.COMMA);
+		}
+
+		if (javaParameters.length > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);

@@ -100,7 +100,11 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String redirect = mainPath;
 
-		String pathInfo = request.getPathInfo();
+		String contextPath = request.getContextPath();
+		String requestURI = request.getRequestURI();
+
+		String pathInfo = requestURI.substring(
+			contextPath.length() + _friendlyURLPathPrefix.length());
 
 		String friendlyURL = _friendlyURLPathPrefix;
 

@@ -498,6 +498,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public void deleteGroupEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.deleteGroupEntries(groupId);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId) {
 		return _assetEntryLocalService.fetchEntry(entryId);
 	}
@@ -569,6 +575,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.getEntry(className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getGroupEntries(
+		long groupId) {
+		return _assetEntryLocalService.getGroupEntries(groupId);
 	}
 
 	@Override

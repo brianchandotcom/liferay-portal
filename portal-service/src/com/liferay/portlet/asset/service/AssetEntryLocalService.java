@@ -348,6 +348,9 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void deleteGroupEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId);
 
@@ -397,6 +400,10 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public com.liferay.portlet.asset.model.AssetEntry getEntry(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getGroupEntries(
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetEntry getNextEntry(long entryId)

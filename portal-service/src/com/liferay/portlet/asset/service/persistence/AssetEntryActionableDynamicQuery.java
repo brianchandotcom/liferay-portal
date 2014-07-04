@@ -22,7 +22,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link AssetEntryLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link AssetEntryLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

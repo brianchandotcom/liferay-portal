@@ -444,6 +444,11 @@ public class AssetEntryLocalServiceUtil {
 		getService().deleteEntry(className, classPK);
 	}
 
+	public static void deleteGroupEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteGroupEntries(groupId);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetEntry fetchEntry(
 		long entryId) {
 		return getService().fetchEntry(entryId);
@@ -506,6 +511,11 @@ public class AssetEntryLocalServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getGroupEntries(
+		long groupId) {
+		return getService().getGroupEntries(groupId);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry getNextEntry(

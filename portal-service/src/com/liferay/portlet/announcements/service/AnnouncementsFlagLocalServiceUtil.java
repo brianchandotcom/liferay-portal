@@ -52,6 +52,11 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().addAnnouncementsFlag(announcementsFlag);
 	}
 
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag addFlag(
+		long userId, long entryId, int value) {
+		return getService().addFlag(userId, entryId, value);
+	}
+
 	/**
 	* Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
 	*
@@ -61,6 +66,17 @@ public class AnnouncementsFlagLocalServiceUtil {
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag createAnnouncementsFlag(
 		long flagId) {
 		return getService().createAnnouncementsFlag(flagId);
+	}
+
+	/**
+	* Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was removed
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
+		return getService().deleteAnnouncementsFlag(announcementsFlag);
 	}
 
 	/**
@@ -75,15 +91,27 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().deleteAnnouncementsFlag(flagId);
 	}
 
+	public static void deleteFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag flag) {
+		getService().deleteFlag(flag);
+	}
+
+	public static void deleteFlag(long flagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFlag(flagId);
+	}
+
+	public static void deleteFlags(long entryId) {
+		getService().deleteFlags(entryId);
+	}
+
 	/**
-	* Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsFlag the announcements flag
-	* @return the announcements flag that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
-		return getService().deleteAnnouncementsFlag(announcementsFlag);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -169,6 +197,10 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().fetchAnnouncementsFlag(flagId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the announcements flag with the primary key.
 	*
@@ -179,25 +211,6 @@ public class AnnouncementsFlagLocalServiceUtil {
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag getAnnouncementsFlag(
 		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnnouncementsFlag(flagId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -226,23 +239,24 @@ public class AnnouncementsFlagLocalServiceUtil {
 	}
 
 	/**
-	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsFlag the announcements flag
-	* @return the announcements flag that was updated
-	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsFlag updateAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
-		return getService().updateAnnouncementsFlag(announcementsFlag);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
+		long userId, long entryId, int value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFlag(userId, entryId, value);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -254,29 +268,15 @@ public class AnnouncementsFlagLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.announcements.model.AnnouncementsFlag addFlag(
-		long userId, long entryId, int value) {
-		return getService().addFlag(userId, entryId, value);
-	}
-
-	public static void deleteFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag flag) {
-		getService().deleteFlag(flag);
-	}
-
-	public static void deleteFlag(long flagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFlag(flagId);
-	}
-
-	public static void deleteFlags(long entryId) {
-		getService().deleteFlags(entryId);
-	}
-
-	public static com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
-		long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFlag(userId, entryId, value);
+	/**
+	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was updated
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsFlag updateAnnouncementsFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
+		return getService().updateAnnouncementsFlag(announcementsFlag);
 	}
 
 	public static AnnouncementsFlagLocalService getService() {

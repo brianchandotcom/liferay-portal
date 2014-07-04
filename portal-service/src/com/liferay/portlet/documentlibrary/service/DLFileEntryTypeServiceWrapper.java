@@ -33,26 +33,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		_dlFileEntryTypeService = dlFileEntryTypeService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileEntryTypeService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileEntryTypeService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
 		long groupId, java.lang.String fileEntryTypeKey,
@@ -80,6 +60,16 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileEntryTypeService.getBeanIdentifier();
 	}
 
 	@Override
@@ -130,15 +120,14 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 			keywords, includeBasicFileEntryType);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public void updateFileEntryType(long fileEntryTypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, nameMap,
-			descriptionMap, ddmStructureIds, serviceContext);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFileEntryTypeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -149,6 +138,17 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, name,
 			description, ddmStructureIds, serviceContext);
+	}
+
+	@Override
+	public void updateFileEntryType(long fileEntryTypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeService.updateFileEntryType(fileEntryTypeId, nameMap,
+			descriptionMap, ddmStructureIds, serviceContext);
 	}
 
 	/**

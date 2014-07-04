@@ -32,24 +32,15 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService = wikiPageService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiPageService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiPageService.setBeanIdentifier(beanIdentifier);
+	public com.liferay.portlet.wiki.model.WikiPage addPage(long nodeId,
+		java.lang.String title, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.addPage(nodeId, title, content, summary,
+			minorEdit, format, parentTitle, redirectTitle, serviceContext);
 	}
 
 	@Override
@@ -60,17 +51,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.addPage(nodeId, title, content, summary,
 			minorEdit, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage addPage(long nodeId,
-		java.lang.String title, java.lang.String content,
-		java.lang.String summary, boolean minorEdit, java.lang.String format,
-		java.lang.String parentTitle, java.lang.String redirectTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.addPage(nodeId, title, content, summary,
-			minorEdit, format, parentTitle, redirectTitle, serviceContext);
 	}
 
 	@Override
@@ -178,6 +158,16 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.fetchPage(nodeId, title, version);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _wikiPageService.getBeanIdentifier();
 	}
 
 	@Override
@@ -290,6 +280,18 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		return _wikiPageService.getPagesCount(groupId, userId, nodeId, status);
 	}
 
+	@Override
+	public java.lang.String getPagesRSS(long companyId, long nodeId,
+		java.lang.String title, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
+			type, version, displayStyle, feedURL, entryURL,
+			attachmentURLPrefix, locale);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, long,
 	String, int, String, double, String, String, String, String,
@@ -304,18 +306,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
 			type, version, displayStyle, feedURL, entryURL, locale);
-	}
-
-	@Override
-	public java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
-			type, version, displayStyle, feedURL, entryURL,
-			attachmentURLPrefix, locale);
 	}
 
 	@Override
@@ -389,6 +379,16 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.revertPage(nodeId, title, version,
 			serviceContext);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_wikiPageService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

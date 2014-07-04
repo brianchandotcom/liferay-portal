@@ -34,6 +34,50 @@ public class ShoppingCategoryLocalServiceWrapper
 		_shoppingCategoryLocalService = shoppingCategoryLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCategory addCategory(
+		long userId, long parentCategoryId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.addCategory(userId,
+			parentCategoryId, name, description, serviceContext);
+	}
+
+	@Override
+	public void addCategoryResources(
+		com.liferay.portlet.shopping.model.ShoppingCategory category,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.addCategoryResources(category,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addCategoryResources(
+		com.liferay.portlet.shopping.model.ShoppingCategory category,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.addCategoryResources(category,
+			groupPermissions, guestPermissions);
+	}
+
+	@Override
+	public void addCategoryResources(long categoryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.addCategoryResources(categoryId,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addCategoryResources(long categoryId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.addCategoryResources(categoryId,
+			groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Adds the shopping category to the database. Also notifies the appropriate model listeners.
 	*
@@ -56,6 +100,35 @@ public class ShoppingCategoryLocalServiceWrapper
 	public com.liferay.portlet.shopping.model.ShoppingCategory createShoppingCategory(
 		long categoryId) {
 		return _shoppingCategoryLocalService.createShoppingCategory(categoryId);
+	}
+
+	@Override
+	public void deleteCategories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.deleteCategories(groupId);
+	}
+
+	@Override
+	public void deleteCategory(
+		com.liferay.portlet.shopping.model.ShoppingCategory category)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.deleteCategory(category);
+	}
+
+	@Override
+	public void deleteCategory(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingCategoryLocalService.deleteCategory(categoryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -176,33 +249,66 @@ public class ShoppingCategoryLocalServiceWrapper
 		return _shoppingCategoryLocalService.fetchShoppingCategory(categoryId);
 	}
 
-	/**
-	* Returns the shopping category with the primary key.
-	*
-	* @param categoryId the primary key of the shopping category
-	* @return the shopping category
-	* @throws PortalException if a shopping category with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCategory getShoppingCategory(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.getShoppingCategory(categoryId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _shoppingCategoryLocalService.getActionableDynamicQuery();
 	}
 
 	/**
-	* @throws PortalException
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingCategoryLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getCategories(
+		long groupId) {
+		return _shoppingCategoryLocalService.getCategories(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getCategories(
+		long groupId, long parentCategoryId, int start, int end) {
+		return _shoppingCategoryLocalService.getCategories(groupId,
+			parentCategoryId, start, end);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long parentCategoryId) {
+		return _shoppingCategoryLocalService.getCategoriesCount(groupId,
+			parentCategoryId);
+	}
+
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.deletePersistedModel(persistedModel);
+		return _shoppingCategoryLocalService.getCategory(categoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
+		com.liferay.portlet.shopping.model.ShoppingCategory category)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.getParentCategories(category);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.getParentCategories(categoryId);
+	}
+
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCategory getParentCategory(
+		com.liferay.portlet.shopping.model.ShoppingCategory category)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.getParentCategory(category);
 	}
 
 	@Override
@@ -240,25 +346,24 @@ public class ShoppingCategoryLocalServiceWrapper
 	}
 
 	/**
-	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the shopping category with the primary key.
 	*
-	* @param shoppingCategory the shopping category
-	* @return the shopping category that was updated
+	* @param categoryId the primary key of the shopping category
+	* @return the shopping category
+	* @throws PortalException if a shopping category with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCategory updateShoppingCategory(
-		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory) {
-		return _shoppingCategoryLocalService.updateShoppingCategory(shoppingCategory);
+	public com.liferay.portlet.shopping.model.ShoppingCategory getShoppingCategory(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryLocalService.getShoppingCategory(categoryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCategoryLocalService.getBeanIdentifier();
+	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
+		long groupId, long categoryId) {
+		_shoppingCategoryLocalService.getSubcategoryIds(categoryIds, groupId,
+			categoryId);
 	}
 
 	/**
@@ -272,123 +377,6 @@ public class ShoppingCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.addCategory(userId,
-			parentCategoryId, name, description, serviceContext);
-	}
-
-	@Override
-	public void addCategoryResources(long categoryId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.addCategoryResources(categoryId,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.addCategoryResources(categoryId,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void addCategoryResources(
-		com.liferay.portlet.shopping.model.ShoppingCategory category,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.addCategoryResources(category,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addCategoryResources(
-		com.liferay.portlet.shopping.model.ShoppingCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.addCategoryResources(category,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void deleteCategories(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.deleteCategories(groupId);
-	}
-
-	@Override
-	public void deleteCategory(long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.deleteCategory(categoryId);
-	}
-
-	@Override
-	public void deleteCategory(
-		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryLocalService.deleteCategory(category);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getCategories(
-		long groupId) {
-		return _shoppingCategoryLocalService.getCategories(groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getCategories(
-		long groupId, long parentCategoryId, int start, int end) {
-		return _shoppingCategoryLocalService.getCategories(groupId,
-			parentCategoryId, start, end);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long parentCategoryId) {
-		return _shoppingCategoryLocalService.getCategoriesCount(groupId,
-			parentCategoryId);
-	}
-
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.getCategory(categoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.getParentCategories(categoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
-		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.getParentCategories(category);
-	}
-
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCategory getParentCategory(
-		com.liferay.portlet.shopping.model.ShoppingCategory category)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryLocalService.getParentCategory(category);
-	}
-
-	@Override
-	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
-		long groupId, long categoryId) {
-		_shoppingCategoryLocalService.getSubcategoryIds(categoryIds, groupId,
-			categoryId);
-	}
-
-	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
@@ -397,6 +385,18 @@ public class ShoppingCategoryLocalServiceWrapper
 		return _shoppingCategoryLocalService.updateCategory(categoryId,
 			parentCategoryId, name, description, mergeWithParentCategory,
 			serviceContext);
+	}
+
+	/**
+	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCategory the shopping category
+	* @return the shopping category that was updated
+	*/
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCategory updateShoppingCategory(
+		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory) {
+		return _shoppingCategoryLocalService.updateShoppingCategory(shoppingCategory);
 	}
 
 	/**

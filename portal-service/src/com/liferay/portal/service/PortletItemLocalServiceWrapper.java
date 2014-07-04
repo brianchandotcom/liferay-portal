@@ -43,6 +43,15 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		return _portletItemLocalService.addPortletItem(portletItem);
 	}
 
+	@Override
+	public com.liferay.portal.model.PortletItem addPortletItem(long userId,
+		long groupId, java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.addPortletItem(userId, groupId, name,
+			portletId, className);
+	}
+
 	/**
 	* Creates a new portlet item with the primary key. Does not add the portlet item to the database.
 	*
@@ -53,6 +62,28 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	public com.liferay.portal.model.PortletItem createPortletItem(
 		long portletItemId) {
 		return _portletItemLocalService.createPortletItem(portletItemId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.PortletItem deletePortletItem(
+		com.liferay.portal.model.PortletItem portletItem) {
+		return _portletItemLocalService.deletePortletItem(portletItem);
 	}
 
 	/**
@@ -67,18 +98,6 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletItemLocalService.deletePortletItem(portletItemId);
-	}
-
-	/**
-	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.PortletItem deletePortletItem(
-		com.liferay.portal.model.PortletItem portletItem) {
-		return _portletItemLocalService.deletePortletItem(portletItem);
 	}
 
 	@Override
@@ -172,6 +191,37 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		return _portletItemLocalService.fetchPortletItem(portletItemId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _portletItemLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _portletItemLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
+		java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletItemLocalService.getPortletItem(groupId, name,
+			portletId, className);
+	}
+
 	/**
 	* Returns the portlet item with the primary key.
 	*
@@ -187,25 +237,16 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _portletItemLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.deletePersistedModel(persistedModel);
+	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String className) {
+		return _portletItemLocalService.getPortletItems(groupId, className);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String portletId, java.lang.String className) {
+		return _portletItemLocalService.getPortletItems(groupId, portletId,
+			className);
 	}
 
 	/**
@@ -236,28 +277,6 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 	}
 
 	/**
-	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.PortletItem updatePortletItem(
-		com.liferay.portal.model.PortletItem portletItem) {
-		return _portletItemLocalService.updatePortletItem(portletItem);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletItemLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -267,35 +286,16 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		_portletItemLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.PortletItem addPortletItem(long userId,
-		long groupId, java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.addPortletItem(userId, groupId, name,
-			portletId, className);
-	}
-
-	@Override
-	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
-		java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletItemLocalService.getPortletItem(groupId, name,
-			portletId, className);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className) {
-		return _portletItemLocalService.getPortletItems(groupId, className);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className) {
-		return _portletItemLocalService.getPortletItems(groupId, portletId,
-			className);
+	public com.liferay.portal.model.PortletItem updatePortletItem(
+		com.liferay.portal.model.PortletItem portletItem) {
+		return _portletItemLocalService.updatePortletItem(portletItem);
 	}
 
 	@Override

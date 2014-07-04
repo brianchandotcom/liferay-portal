@@ -53,6 +53,18 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
+	* Adds an asset tag statistics instance.
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return the asset tag statistics instance
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagStats addTagStats(
+		long tagId, long classNameId) {
+		return getService().addTagStats(tagId, classNameId);
+	}
+
+	/**
 	* Creates a new asset tag stats with the primary key. Does not add the asset tag stats to the database.
 	*
 	* @param tagStatsId the primary key for the new asset tag stats
@@ -61,6 +73,17 @@ public class AssetTagStatsLocalServiceUtil {
 	public static com.liferay.portlet.asset.model.AssetTagStats createAssetTagStats(
 		long tagStatsId) {
 		return getService().createAssetTagStats(tagStatsId);
+	}
+
+	/**
+	* Deletes the asset tag stats from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagStats the asset tag stats
+	* @return the asset tag stats that was removed
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagStats deleteAssetTagStats(
+		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
+		return getService().deleteAssetTagStats(assetTagStats);
 	}
 
 	/**
@@ -77,14 +100,53 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the asset tag stats from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetTagStats the asset tag stats
-	* @return the asset tag stats that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats deleteAssetTagStats(
-		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
-		return getService().deleteAssetTagStats(assetTagStats);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the asset tag statistics instance.
+	*
+	* @param tagStats the asset tag statistics instance
+	*/
+	public static void deleteTagStats(
+		com.liferay.portlet.asset.model.AssetTagStats tagStats) {
+		getService().deleteTagStats(tagStats);
+	}
+
+	/**
+	* Deletes the asset tag statistics instance matching the tag statistics ID.
+	*
+	* @param tagStatsId the primary key of the asset tag statistics instance
+	* @throws PortalException if the assetTagStats with the primary key could
+	not be found
+	*/
+	public static void deleteTagStats(long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTagStats(tagStatsId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the asset
+	* entry matching the class name ID.
+	*
+	* @param classNameId the asset entry's class name ID
+	*/
+	public static void deleteTagStatsByClassNameId(long classNameId) {
+		getService().deleteTagStatsByClassNameId(classNameId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the tag.
+	*
+	* @param tagId the primary key of the tag
+	*/
+	public static void deleteTagStatsByTagId(long tagId) {
+		getService().deleteTagStatsByTagId(tagId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +232,10 @@ public class AssetTagStatsLocalServiceUtil {
 		return getService().fetchAssetTagStats(tagStatsId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the asset tag stats with the primary key.
 	*
@@ -181,25 +247,6 @@ public class AssetTagStatsLocalServiceUtil {
 		long tagStatsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAssetTagStats(tagStatsId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,17 +275,6 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetTagStats the asset tag stats
-	* @return the asset tag stats that was updated
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats updateAssetTagStats(
-		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
-		return getService().updateAssetTagStats(assetTagStats);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -247,66 +283,10 @@ public class AssetTagStatsLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds an asset tag statistics instance.
-	*
-	* @param tagId the primary key of the tag
-	* @param classNameId the asset entry's class name ID
-	* @return the asset tag statistics instance
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagStats addTagStats(
-		long tagId, long classNameId) {
-		return getService().addTagStats(tagId, classNameId);
-	}
-
-	/**
-	* Deletes the asset tag statistics instance.
-	*
-	* @param tagStats the asset tag statistics instance
-	*/
-	public static void deleteTagStats(
-		com.liferay.portlet.asset.model.AssetTagStats tagStats) {
-		getService().deleteTagStats(tagStats);
-	}
-
-	/**
-	* Deletes the asset tag statistics instance matching the tag statistics ID.
-	*
-	* @param tagStatsId the primary key of the asset tag statistics instance
-	* @throws PortalException if the assetTagStats with the primary key could
-	not be found
-	*/
-	public static void deleteTagStats(long tagStatsId)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTagStats(tagStatsId);
-	}
-
-	/**
-	* Deletes all asset tag statistics instances associated with the asset
-	* entry matching the class name ID.
-	*
-	* @param classNameId the asset entry's class name ID
-	*/
-	public static void deleteTagStatsByClassNameId(long classNameId) {
-		getService().deleteTagStatsByClassNameId(classNameId);
-	}
-
-	/**
-	* Deletes all asset tag statistics instances associated with the tag.
-	*
-	* @param tagId the primary key of the tag
-	*/
-	public static void deleteTagStatsByTagId(long tagId) {
-		getService().deleteTagStatsByTagId(tagId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -346,6 +326,26 @@ public class AssetTagStatsLocalServiceUtil {
 	public static com.liferay.portlet.asset.model.AssetTagStats getTagStats(
 		long tagId, long classNameId) {
 		return getService().getTagStats(tagId, classNameId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagStats the asset tag stats
+	* @return the asset tag stats that was updated
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagStats updateAssetTagStats(
+		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
+		return getService().updateAssetTagStats(assetTagStats);
 	}
 
 	/**

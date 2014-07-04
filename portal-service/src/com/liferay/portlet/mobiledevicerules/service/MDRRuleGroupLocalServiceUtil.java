@@ -52,6 +52,31 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().addMDRRuleGroup(mdrRuleGroup);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup addRuleGroup(
+		long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRuleGroup(groupId, nameMap, descriptionMap,
+			serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
+		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
+		long ruleGroupId, long groupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
+	}
+
 	/**
 	* Creates a new m d r rule group with the primary key. Does not add the m d r rule group to the database.
 	*
@@ -61,6 +86,17 @@ public class MDRRuleGroupLocalServiceUtil {
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup createMDRRuleGroup(
 		long ruleGroupId) {
 		return getService().createMDRRuleGroup(ruleGroupId);
+	}
+
+	/**
+	* Deletes the m d r rule group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroup the m d r rule group
+	* @return the m d r rule group that was removed
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup deleteMDRRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
+		return getService().deleteMDRRuleGroup(mdrRuleGroup);
 	}
 
 	/**
@@ -77,14 +113,25 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the m d r rule group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroup the m d r rule group
-	* @return the m d r rule group that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup deleteMDRRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
-		return getService().deleteMDRRuleGroup(mdrRuleGroup);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup) {
+		getService().deleteRuleGroup(ruleGroup);
+	}
+
+	public static void deleteRuleGroup(long ruleGroupId) {
+		getService().deleteRuleGroup(ruleGroupId);
+	}
+
+	public static void deleteRuleGroups(long groupId) {
+		getService().deleteRuleGroups(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,6 +241,29 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().fetchMDRRuleGroupByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchRuleGroup(
+		long ruleGroupId) {
+		return getService().fetchRuleGroup(ruleGroupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the m d r rule group with the primary key.
 	*
@@ -205,30 +275,6 @@ public class MDRRuleGroupLocalServiceUtil {
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRRuleGroup(ruleGroupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -284,76 +330,10 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().getMDRRuleGroupsCount();
 	}
 
-	/**
-	* Updates the m d r rule group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroup the m d r rule group
-	* @return the m d r rule group that was updated
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateMDRRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
-		return getService().updateMDRRuleGroup(mdrRuleGroup);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRuleGroup(groupId, nameMap, descriptionMap,
-			serviceContext);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
-		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
-	}
-
-	public static void deleteRuleGroup(long ruleGroupId) {
-		getService().deleteRuleGroup(ruleGroupId);
-	}
-
-	public static void deleteRuleGroup(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup) {
-		getService().deleteRuleGroup(ruleGroup);
-	}
-
-	public static void deleteRuleGroups(long groupId) {
-		getService().deleteRuleGroups(groupId);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchRuleGroup(
-		long ruleGroupId) {
-		return getService().fetchRuleGroup(ruleGroupId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup(
@@ -448,6 +428,26 @@ public class MDRRuleGroupLocalServiceUtil {
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator) {
 		return getService().searchCount(groupId, name, params, andOperator);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the m d r rule group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroup the m d r rule group
+	* @return the m d r rule group that was updated
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateMDRRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
+		return getService().updateMDRRuleGroup(mdrRuleGroup);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(

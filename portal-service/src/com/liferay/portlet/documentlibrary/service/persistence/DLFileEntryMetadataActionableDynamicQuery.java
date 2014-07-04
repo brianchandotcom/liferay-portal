@@ -22,7 +22,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link DLFileEntryMetadataLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link DLFileEntryMetadataLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

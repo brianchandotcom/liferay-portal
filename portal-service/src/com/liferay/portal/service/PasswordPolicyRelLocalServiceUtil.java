@@ -40,6 +40,11 @@ public class PasswordPolicyRelLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.PasswordPolicyRel addPasswordPolicyRel(
+		long passwordPolicyId, java.lang.String className, long classPK) {
+		return getService()
+				   .addPasswordPolicyRel(passwordPolicyId, className, classPK);
+	}
 
 	/**
 	* Adds the password policy rel to the database. Also notifies the appropriate model listeners.
@@ -52,6 +57,11 @@ public class PasswordPolicyRelLocalServiceUtil {
 		return getService().addPasswordPolicyRel(passwordPolicyRel);
 	}
 
+	public static void addPasswordPolicyRels(long passwordPolicyId,
+		java.lang.String className, long[] classPKs) {
+		getService().addPasswordPolicyRels(passwordPolicyId, className, classPKs);
+	}
+
 	/**
 	* Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
 	*
@@ -61,6 +71,28 @@ public class PasswordPolicyRelLocalServiceUtil {
 	public static com.liferay.portal.model.PasswordPolicyRel createPasswordPolicyRel(
 		long passwordPolicyRelId) {
 		return getService().createPasswordPolicyRel(passwordPolicyRelId);
+	}
+
+	public static void deletePasswordPolicyRel(java.lang.String className,
+		long classPK) {
+		getService().deletePasswordPolicyRel(className, classPK);
+	}
+
+	public static void deletePasswordPolicyRel(long passwordPolicyId,
+		java.lang.String className, long classPK) {
+		getService()
+			.deletePasswordPolicyRel(passwordPolicyId, className, classPK);
+	}
+
+	/**
+	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicyRel the password policy rel
+	* @return the password policy rel that was removed
+	*/
+	public static com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
+		return getService().deletePasswordPolicyRel(passwordPolicyRel);
 	}
 
 	/**
@@ -76,15 +108,23 @@ public class PasswordPolicyRelLocalServiceUtil {
 		return getService().deletePasswordPolicyRel(passwordPolicyRelId);
 	}
 
+	public static void deletePasswordPolicyRels(long passwordPolicyId) {
+		getService().deletePasswordPolicyRels(passwordPolicyId);
+	}
+
+	public static void deletePasswordPolicyRels(long passwordPolicyId,
+		java.lang.String className, long[] classPKs) {
+		getService()
+			.deletePasswordPolicyRels(passwordPolicyId, className, classPKs);
+	}
+
 	/**
-	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicyRel the password policy rel
-	* @return the password policy rel that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
-		return getService().deletePasswordPolicyRel(passwordPolicyRel);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -166,8 +206,39 @@ public class PasswordPolicyRelLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
+		java.lang.String className, long classPK) {
+		return getService().fetchPasswordPolicyRel(className, classPK);
+	}
+
+	public static com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
 		long passwordPolicyRelId) {
 		return getService().fetchPasswordPolicyRel(passwordPolicyRelId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPasswordPolicyRel(className, classPK);
+	}
+
+	public static com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
+		long passwordPolicyId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getPasswordPolicyRel(passwordPolicyId, className, classPK);
 	}
 
 	/**
@@ -181,25 +252,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 		long passwordPolicyRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPasswordPolicyRel(passwordPolicyRelId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,24 +279,16 @@ public class PasswordPolicyRelLocalServiceUtil {
 		return getService().getPasswordPolicyRelsCount();
 	}
 
-	/**
-	* Updates the password policy rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicyRel the password policy rel
-	* @return the password policy rel that was updated
-	*/
-	public static com.liferay.portal.model.PasswordPolicyRel updatePasswordPolicyRel(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
-		return getService().updatePasswordPolicyRel(passwordPolicyRel);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static boolean hasPasswordPolicyRel(long passwordPolicyId,
+		java.lang.String className, long classPK) {
+		return getService()
+				   .hasPasswordPolicyRel(passwordPolicyId, className, classPK);
 	}
 
 	/**
@@ -256,60 +300,15 @@ public class PasswordPolicyRelLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.PasswordPolicyRel addPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK) {
-		return getService()
-				   .addPasswordPolicyRel(passwordPolicyId, className, classPK);
-	}
-
-	public static void addPasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs) {
-		getService().addPasswordPolicyRels(passwordPolicyId, className, classPKs);
-	}
-
-	public static void deletePasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK) {
-		getService()
-			.deletePasswordPolicyRel(passwordPolicyId, className, classPK);
-	}
-
-	public static void deletePasswordPolicyRel(java.lang.String className,
-		long classPK) {
-		getService().deletePasswordPolicyRel(className, classPK);
-	}
-
-	public static void deletePasswordPolicyRels(long passwordPolicyId) {
-		getService().deletePasswordPolicyRels(passwordPolicyId);
-	}
-
-	public static void deletePasswordPolicyRels(long passwordPolicyId,
-		java.lang.String className, long[] classPKs) {
-		getService()
-			.deletePasswordPolicyRels(passwordPolicyId, className, classPKs);
-	}
-
-	public static com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		java.lang.String className, long classPK) {
-		return getService().fetchPasswordPolicyRel(className, classPK);
-	}
-
-	public static com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getPasswordPolicyRel(passwordPolicyId, className, classPK);
-	}
-
-	public static com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPasswordPolicyRel(className, classPK);
-	}
-
-	public static boolean hasPasswordPolicyRel(long passwordPolicyId,
-		java.lang.String className, long classPK) {
-		return getService()
-				   .hasPasswordPolicyRel(passwordPolicyId, className, classPK);
+	/**
+	* Updates the password policy rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicyRel the password policy rel
+	* @return the password policy rel that was updated
+	*/
+	public static com.liferay.portal.model.PasswordPolicyRel updatePasswordPolicyRel(
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
+		return getService().updatePasswordPolicyRel(passwordPolicyRel);
 	}
 
 	public static PasswordPolicyRelLocalService getService() {

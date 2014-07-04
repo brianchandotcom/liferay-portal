@@ -45,6 +45,62 @@ public class PasswordPolicyLocalServiceWrapper
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(long,
+	boolean, String, String, boolean, boolean, long, boolean,
+	boolean, int, int, int, int, int, int, String, boolean, int,
+	boolean, long, long, int, boolean, int, long, long, long,
+	ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
+		long userId, boolean defaultPolicy, java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		boolean history, int historyCount, boolean expireable, long maxAge,
+		long warningTime, int graceLimit, boolean lockout, int maxFailure,
+		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.addPasswordPolicy(userId,
+			defaultPolicy, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
+			history, historyCount, expireable, maxAge, warningTime, graceLimit,
+			lockout, maxFailure, lockoutDuration, resetFailureCount,
+			resetTicketMaxAge);
+	}
+
+	@Override
+	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
+		long userId, boolean defaultPolicy, java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		java.lang.String regex, boolean history, int historyCount,
+		boolean expireable, long maxAge, long warningTime, int graceLimit,
+		boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.addPasswordPolicy(userId,
+			defaultPolicy, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
+			regex, history, historyCount, expireable, maxAge, warningTime,
+			graceLimit, lockout, maxFailure, lockoutDuration,
+			resetFailureCount, resetTicketMaxAge, serviceContext);
+	}
+
+	@Override
+	public void checkDefaultPasswordPolicy(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
+	}
+
+	/**
 	* Creates a new password policy with the primary key. Does not add the password policy to the database.
 	*
 	* @param passwordPolicyId the primary key for the new password policy
@@ -54,6 +110,26 @@ public class PasswordPolicyLocalServiceWrapper
 	public com.liferay.portal.model.PasswordPolicy createPasswordPolicy(
 		long passwordPolicyId) {
 		return _passwordPolicyLocalService.createPasswordPolicy(passwordPolicyId);
+	}
+
+	@Override
+	public void deleteNondefaultPasswordPolicies(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_passwordPolicyLocalService.deleteNondefaultPasswordPolicies(companyId);
+	}
+
+	/**
+	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicy the password policy
+	* @return the password policy that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
 	}
 
 	/**
@@ -71,17 +147,13 @@ public class PasswordPolicyLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was removed
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy)
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
+		return _passwordPolicyLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -171,6 +243,12 @@ public class PasswordPolicyLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+		long companyId, java.lang.String name) {
+		return _passwordPolicyLocalService.fetchPasswordPolicy(companyId, name);
+	}
+
+	@Override
+	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
 		long passwordPolicyId) {
 		return _passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
 	}
@@ -189,62 +267,32 @@ public class PasswordPolicyLocalServiceWrapper
 			companyId);
 	}
 
-	/**
-	* Returns the password policy with the primary key.
-	*
-	* @param passwordPolicyId the primary key of the password policy
-	* @return the password policy
-	* @throws PortalException if a password policy with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.getPasswordPolicy(passwordPolicyId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _passwordPolicyLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _passwordPolicyLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _passwordPolicyLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the password policy with the matching UUID and company.
-	*
-	* @param uuid the password policy's UUID
-	* @param companyId the primary key of the company
-	* @return the matching password policy
-	* @throws PortalException if a matching password policy could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.getPasswordPolicyByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**
@@ -275,113 +323,6 @@ public class PasswordPolicyLocalServiceWrapper
 	}
 
 	/**
-	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy) {
-		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _passwordPolicyLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_passwordPolicyLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(long,
-	boolean, String, String, boolean, boolean, long, boolean,
-	boolean, int, int, int, int, int, int, String, boolean, int,
-	boolean, long, long, int, boolean, int, long, long, long,
-	ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
-		long userId, boolean defaultPolicy, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		boolean history, int historyCount, boolean expireable, long maxAge,
-		long warningTime, int graceLimit, boolean lockout, int maxFailure,
-		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.addPasswordPolicy(userId,
-			defaultPolicy, name, description, changeable, changeRequired,
-			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
-			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
-			history, historyCount, expireable, maxAge, warningTime, graceLimit,
-			lockout, maxFailure, lockoutDuration, resetFailureCount,
-			resetTicketMaxAge);
-	}
-
-	@Override
-	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
-		long userId, boolean defaultPolicy, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		java.lang.String regex, boolean history, int historyCount,
-		boolean expireable, long maxAge, long warningTime, int graceLimit,
-		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.addPasswordPolicy(userId,
-			defaultPolicy, name, description, changeable, changeRequired,
-			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
-			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
-			regex, history, historyCount, expireable, maxAge, warningTime,
-			graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge, serviceContext);
-	}
-
-	@Override
-	public void checkDefaultPasswordPolicy(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
-	}
-
-	@Override
-	public void deleteNondefaultPasswordPolicies(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_passwordPolicyLocalService.deleteNondefaultPasswordPolicies(companyId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long companyId, java.lang.String name) {
-		return _passwordPolicyLocalService.fetchPasswordPolicy(companyId, name);
-	}
-
-	@Override
-	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
-	}
-
-	/**
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
@@ -401,10 +342,47 @@ public class PasswordPolicyLocalServiceWrapper
 			organizationIds);
 	}
 
+	/**
+	* Returns the password policy with the primary key.
+	*
+	* @param passwordPolicyId the primary key of the password policy
+	* @return the password policy
+	* @throws PortalException if a password policy with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
+		long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.getPasswordPolicy(passwordPolicyId);
+	}
+
 	@Override
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUserId(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
+	}
+
+	/**
+	* Returns the password policy with the matching UUID and company.
+	*
+	* @param uuid the password policy's UUID
+	* @param companyId the primary key of the company
+	* @return the matching password policy
+	* @throws PortalException if a matching password policy could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.getPasswordPolicyByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -418,6 +396,28 @@ public class PasswordPolicyLocalServiceWrapper
 	@Override
 	public int searchCount(long companyId, java.lang.String name) {
 		return _passwordPolicyLocalService.searchCount(companyId, name);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_passwordPolicyLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicy the password policy
+	* @return the password policy that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy) {
+		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
 	}
 
 	/**

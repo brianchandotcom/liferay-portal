@@ -58,6 +58,25 @@ public class JournalArticleResourceLocalServiceWrapper
 		return _journalArticleResourceLocalService.createJournalArticleResource(resourcePrimKey);
 	}
 
+	@Override
+	public void deleteArticleResource(long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalArticleResourceLocalService.deleteArticleResource(groupId,
+			articleId);
+	}
+
+	/**
+	* Deletes the journal article resource from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticleResource the journal article resource
+	* @return the journal article resource that was removed
+	*/
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleResource deleteJournalArticleResource(
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+		return _journalArticleResourceLocalService.deleteJournalArticleResource(journalArticleResource);
+	}
+
 	/**
 	* Deletes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -73,15 +92,13 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the journal article resource from the database. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticleResource the journal article resource
-	* @return the journal article resource that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource deleteJournalArticleResource(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
-		return _journalArticleResourceLocalService.deleteJournalArticleResource(journalArticleResource);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleResourceLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -171,6 +188,20 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		long groupId, java.lang.String articleId) {
+		return _journalArticleResourceLocalService.fetchArticleResource(groupId,
+			articleId);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		java.lang.String uuid, long groupId) {
+		return _journalArticleResourceLocalService.fetchArticleResource(uuid,
+			groupId);
+	}
+
+	@Override
 	public com.liferay.portlet.journal.model.JournalArticleResource fetchJournalArticleResource(
 		long resourcePrimKey) {
 		return _journalArticleResourceLocalService.fetchJournalArticleResource(resourcePrimKey);
@@ -190,6 +221,48 @@ public class JournalArticleResourceLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _journalArticleResourceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
+		long articleResourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleResourceLocalService.getArticleResource(articleResourcePrimKey);
+	}
+
+	@Override
+	public long getArticleResourcePrimKey(long groupId,
+		java.lang.String articleId) {
+		return _journalArticleResourceLocalService.getArticleResourcePrimKey(groupId,
+			articleId);
+	}
+
+	@Override
+	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
+		java.lang.String articleId) {
+		return _journalArticleResourceLocalService.getArticleResourcePrimKey(uuid,
+			groupId, articleId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> getArticleResources(
+		long groupId) {
+		return _journalArticleResourceLocalService.getArticleResources(groupId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _journalArticleResourceLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the journal article resource with the primary key.
 	*
@@ -202,28 +275,6 @@ public class JournalArticleResourceLocalServiceWrapper
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleResourceLocalService.getJournalArticleResource(resourcePrimKey);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _journalArticleResourceLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticleResourceLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticleResourceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -270,26 +321,11 @@ public class JournalArticleResourceLocalServiceWrapper
 		return _journalArticleResourceLocalService.getJournalArticleResourcesCount();
 	}
 
-	/**
-	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticleResource the journal article resource
-	* @return the journal article resource that was updated
-	*/
 	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource updateJournalArticleResource(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
-		return _journalArticleResourceLocalService.updateJournalArticleResource(journalArticleResource);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalArticleResourceLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleResourceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -302,52 +338,16 @@ public class JournalArticleResourceLocalServiceWrapper
 		_journalArticleResourceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticleResource the journal article resource
+	* @return the journal article resource that was updated
+	*/
 	@Override
-	public void deleteArticleResource(long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_journalArticleResourceLocalService.deleteArticleResource(groupId,
-			articleId);
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, java.lang.String articleId) {
-		return _journalArticleResourceLocalService.fetchArticleResource(groupId,
-			articleId);
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
-		java.lang.String uuid, long groupId) {
-		return _journalArticleResourceLocalService.fetchArticleResource(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
-		long articleResourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticleResourceLocalService.getArticleResource(articleResourcePrimKey);
-	}
-
-	@Override
-	public long getArticleResourcePrimKey(long groupId,
-		java.lang.String articleId) {
-		return _journalArticleResourceLocalService.getArticleResourcePrimKey(groupId,
-			articleId);
-	}
-
-	@Override
-	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
-		java.lang.String articleId) {
-		return _journalArticleResourceLocalService.getArticleResourcePrimKey(uuid,
-			groupId, articleId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> getArticleResources(
-		long groupId) {
-		return _journalArticleResourceLocalService.getArticleResources(groupId);
+	public com.liferay.portlet.journal.model.JournalArticleResource updateJournalArticleResource(
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+		return _journalArticleResourceLocalService.updateJournalArticleResource(journalArticleResource);
 	}
 
 	/**

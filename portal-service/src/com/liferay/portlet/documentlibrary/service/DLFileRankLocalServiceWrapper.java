@@ -45,6 +45,19 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		return _dlFileRankLocalService.addDLFileRank(dlFileRank);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _dlFileRankLocalService.addFileRank(groupId, companyId, userId,
+			fileEntryId, serviceContext);
+	}
+
+	@Override
+	public void checkFileRanks() {
+		_dlFileRankLocalService.checkFileRanks();
+	}
+
 	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
@@ -55,6 +68,18 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileRank createDLFileRank(
 		long fileRankId) {
 		return _dlFileRankLocalService.createDLFileRank(fileRankId);
+	}
+
+	/**
+	* Deletes the document library file rank from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was removed
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
+		return _dlFileRankLocalService.deleteDLFileRank(dlFileRank);
 	}
 
 	/**
@@ -71,16 +96,47 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		return _dlFileRankLocalService.deleteDLFileRank(fileRankId);
 	}
 
+	@Override
+	public void deleteFileRank(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
+		_dlFileRankLocalService.deleteFileRank(dlFileRank);
+	}
+
+	@Override
+	public void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.deleteFileRank(fileRankId);
+	}
+
+	@Override
+	public void deleteFileRanksByFileEntryId(long fileEntryId) {
+		_dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	@Override
+	public void deleteFileRanksByUserId(long userId) {
+		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
+	}
+
 	/**
-	* Deletes the document library file rank from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		return _dlFileRankLocalService.deleteDLFileRank(dlFileRank);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileRankLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void disableFileRanks(long fileEntryId) {
+		_dlFileRankLocalService.disableFileRanks(fileEntryId);
+	}
+
+	@Override
+	public void disableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.disableFileRanksByFolderId(folderId);
 	}
 
 	@Override
@@ -169,9 +225,35 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
+	public void enableFileRanks(long fileEntryId) {
+		_dlFileRankLocalService.enableFileRanks(fileEntryId);
+	}
+
+	@Override
+	public void enableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.enableFileRanksByFolderId(folderId);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
 		long fileRankId) {
 		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlFileRankLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileRankLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -186,28 +268,6 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		long fileRankId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileRankLocalService.getDLFileRank(fileRankId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlFileRankLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileRankLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileRankLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -237,26 +297,17 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		return _dlFileRankLocalService.getDLFileRanksCount();
 	}
 
-	/**
-	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was updated
-	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		return _dlFileRankLocalService.updateDLFileRank(dlFileRank);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
+		long groupId, long userId) {
+		return _dlFileRankLocalService.getFileRanks(groupId, userId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileRankLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileRankLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -269,67 +320,16 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		_dlFileRankLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was updated
+	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _dlFileRankLocalService.addFileRank(groupId, companyId, userId,
-			fileEntryId, serviceContext);
-	}
-
-	@Override
-	public void checkFileRanks() {
-		_dlFileRankLocalService.checkFileRanks();
-	}
-
-	@Override
-	public void deleteFileRank(
+	public com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
 		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		_dlFileRankLocalService.deleteFileRank(dlFileRank);
-	}
-
-	@Override
-	public void deleteFileRank(long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileRankLocalService.deleteFileRank(fileRankId);
-	}
-
-	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		_dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
-	}
-
-	@Override
-	public void deleteFileRanksByUserId(long userId) {
-		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
-	}
-
-	@Override
-	public void disableFileRanks(long fileEntryId) {
-		_dlFileRankLocalService.disableFileRanks(fileEntryId);
-	}
-
-	@Override
-	public void disableFileRanksByFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileRankLocalService.disableFileRanksByFolderId(folderId);
-	}
-
-	@Override
-	public void enableFileRanks(long fileEntryId) {
-		_dlFileRankLocalService.enableFileRanks(fileEntryId);
-	}
-
-	@Override
-	public void enableFileRanksByFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileRankLocalService.enableFileRanksByFolderId(folderId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
-		long groupId, long userId) {
-		return _dlFileRankLocalService.getFileRanks(groupId, userId);
+		return _dlFileRankLocalService.updateDLFileRank(dlFileRank);
 	}
 
 	@Override

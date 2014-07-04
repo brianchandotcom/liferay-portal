@@ -32,26 +32,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		_journalFeedService = journalFeedService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalFeedService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalFeedService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed addFeed(long groupId,
 		java.lang.String feedId, boolean autoFeedId, java.lang.String name,
@@ -92,6 +72,16 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		_journalFeedService.deleteFeed(groupId, feedId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _journalFeedService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -113,6 +103,16 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.getFeed(groupId, feedId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_journalFeedService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

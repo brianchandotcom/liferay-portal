@@ -46,6 +46,25 @@ public class MBMailingListLocalServiceWrapper
 		return _mbMailingListLocalService.addMBMailingList(mbMailingList);
 	}
 
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMailingList addMailingList(
+		long userId, long groupId, long categoryId,
+		java.lang.String emailAddress, java.lang.String inProtocol,
+		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
+		java.lang.String inUserName, java.lang.String inPassword,
+		int inReadInterval, java.lang.String outEmailAddress,
+		boolean outCustom, java.lang.String outServerName, int outServerPort,
+		boolean outUseSSL, java.lang.String outUserName,
+		java.lang.String outPassword, boolean allowAnonymous, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.addMailingList(userId, groupId,
+			categoryId, emailAddress, inProtocol, inServerName, inServerPort,
+			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
+			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
+			outPassword, allowAnonymous, active, serviceContext);
+	}
+
 	/**
 	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	*
@@ -56,6 +75,12 @@ public class MBMailingListLocalServiceWrapper
 	public com.liferay.portlet.messageboards.model.MBMailingList createMBMailingList(
 		long mailingListId) {
 		return _mbMailingListLocalService.createMBMailingList(mailingListId);
+	}
+
+	@Override
+	public void deleteCategoryMailingList(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteCategoryMailingList(groupId, categoryId);
 	}
 
 	/**
@@ -82,6 +107,29 @@ public class MBMailingListLocalServiceWrapper
 	public com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
 		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList) {
 		return _mbMailingListLocalService.deleteMBMailingList(mbMailingList);
+	}
+
+	@Override
+	public void deleteMailingList(
+		com.liferay.portlet.messageboards.model.MBMailingList mailingList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteMailingList(mailingList);
+	}
+
+	@Override
+	public void deleteMailingList(long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteMailingList(mailingListId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -203,6 +251,35 @@ public class MBMailingListLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mbMailingListLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mbMailingListLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMailingList getCategoryMailingList(
+		long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getCategoryMailingList(groupId,
+			categoryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _mbMailingListLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the message boards mailing list with the primary key.
 	*
@@ -215,34 +292,6 @@ public class MBMailingListLocalServiceWrapper
 		long mailingListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMailingListLocalService.getMBMailingList(mailingListId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mbMailingListLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _mbMailingListLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -304,26 +353,11 @@ public class MBMailingListLocalServiceWrapper
 		return _mbMailingListLocalService.getMBMailingListsCount();
 	}
 
-	/**
-	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbMailingList the message boards mailing list
-	* @return the message boards mailing list that was updated
-	*/
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMailingList updateMBMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList) {
-		return _mbMailingListLocalService.updateMBMailingList(mbMailingList);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbMailingListLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -336,50 +370,16 @@ public class MBMailingListLocalServiceWrapper
 		_mbMailingListLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbMailingList the message boards mailing list
+	* @return the message boards mailing list that was updated
+	*/
 	@Override
-	public com.liferay.portlet.messageboards.model.MBMailingList addMailingList(
-		long userId, long groupId, long categoryId,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.addMailingList(userId, groupId,
-			categoryId, emailAddress, inProtocol, inServerName, inServerPort,
-			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
-			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
-			outPassword, allowAnonymous, active, serviceContext);
-	}
-
-	@Override
-	public void deleteCategoryMailingList(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteCategoryMailingList(groupId, categoryId);
-	}
-
-	@Override
-	public void deleteMailingList(long mailingListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteMailingList(mailingListId);
-	}
-
-	@Override
-	public void deleteMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mailingList)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMailingListLocalService.deleteMailingList(mailingList);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBMailingList getCategoryMailingList(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMailingListLocalService.getCategoryMailingList(groupId,
-			categoryId);
+	public com.liferay.portlet.messageboards.model.MBMailingList updateMBMailingList(
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList) {
+		return _mbMailingListLocalService.updateMBMailingList(mbMailingList);
 	}
 
 	@Override

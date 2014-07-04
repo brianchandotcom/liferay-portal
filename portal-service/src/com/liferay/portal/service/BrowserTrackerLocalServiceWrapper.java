@@ -57,6 +57,18 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the browser tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param browserTracker the browser tracker
+	* @return the browser tracker that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
+		com.liferay.portal.model.BrowserTracker browserTracker) {
+		return _browserTrackerLocalService.deleteBrowserTracker(browserTracker);
+	}
+
+	/**
 	* Deletes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param browserTrackerId the primary key of the browser tracker
@@ -71,15 +83,18 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the browser tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @return the browser tracker that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker) {
-		return _browserTrackerLocalService.deleteBrowserTracker(browserTracker);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _browserTrackerLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteUserBrowserTracker(long userId) {
+		_browserTrackerLocalService.deleteUserBrowserTracker(userId);
 	}
 
 	@Override
@@ -173,6 +188,21 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.fetchBrowserTracker(browserTrackerId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _browserTrackerLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _browserTrackerLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the browser tracker with the primary key.
 	*
@@ -188,25 +218,9 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _browserTrackerLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _browserTrackerLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _browserTrackerLocalService.getPersistedModel(primaryKeyObj);
+	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
+		long userId, long browserKey) {
+		return _browserTrackerLocalService.getBrowserTracker(userId, browserKey);
 	}
 
 	/**
@@ -236,26 +250,11 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.getBrowserTrackersCount();
 	}
 
-	/**
-	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @return the browser tracker that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker) {
-		return _browserTrackerLocalService.updateBrowserTracker(browserTracker);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _browserTrackerLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _browserTrackerLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -268,15 +267,16 @@ public class BrowserTrackerLocalServiceWrapper
 		_browserTrackerLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param browserTracker the browser tracker
+	* @return the browser tracker that was updated
+	*/
 	@Override
-	public void deleteUserBrowserTracker(long userId) {
-		_browserTrackerLocalService.deleteUserBrowserTracker(userId);
-	}
-
-	@Override
-	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey) {
-		return _browserTrackerLocalService.getBrowserTracker(userId, browserKey);
+	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
+		com.liferay.portal.model.BrowserTracker browserTracker) {
+		return _browserTrackerLocalService.updateBrowserTracker(browserTracker);
 	}
 
 	@Override

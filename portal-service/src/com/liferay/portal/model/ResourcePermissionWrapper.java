@@ -121,184 +121,15 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		}
 	}
 
-	/**
-	* Returns the primary key of this resource permission.
-	*
-	* @return the primary key of this resource permission
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _resourcePermission.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ResourcePermissionWrapper((ResourcePermission)_resourcePermission.clone());
 	}
 
-	/**
-	* Sets the primary key of this resource permission.
-	*
-	* @param primaryKey the primary key of this resource permission
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_resourcePermission.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this resource permission.
-	*
-	* @return the mvcc version of this resource permission
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _resourcePermission.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this resource permission.
-	*
-	* @param mvccVersion the mvcc version of this resource permission
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_resourcePermission.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the resource permission ID of this resource permission.
-	*
-	* @return the resource permission ID of this resource permission
-	*/
-	@Override
-	public long getResourcePermissionId() {
-		return _resourcePermission.getResourcePermissionId();
-	}
-
-	/**
-	* Sets the resource permission ID of this resource permission.
-	*
-	* @param resourcePermissionId the resource permission ID of this resource permission
-	*/
-	@Override
-	public void setResourcePermissionId(long resourcePermissionId) {
-		_resourcePermission.setResourcePermissionId(resourcePermissionId);
-	}
-
-	/**
-	* Returns the company ID of this resource permission.
-	*
-	* @return the company ID of this resource permission
-	*/
-	@Override
-	public long getCompanyId() {
-		return _resourcePermission.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this resource permission.
-	*
-	* @param companyId the company ID of this resource permission
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_resourcePermission.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the name of this resource permission.
-	*
-	* @return the name of this resource permission
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _resourcePermission.getName();
-	}
-
-	/**
-	* Sets the name of this resource permission.
-	*
-	* @param name the name of this resource permission
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_resourcePermission.setName(name);
-	}
-
-	/**
-	* Returns the scope of this resource permission.
-	*
-	* @return the scope of this resource permission
-	*/
-	@Override
-	public int getScope() {
-		return _resourcePermission.getScope();
-	}
-
-	/**
-	* Sets the scope of this resource permission.
-	*
-	* @param scope the scope of this resource permission
-	*/
-	@Override
-	public void setScope(int scope) {
-		_resourcePermission.setScope(scope);
-	}
-
-	/**
-	* Returns the prim key of this resource permission.
-	*
-	* @return the prim key of this resource permission
-	*/
-	@Override
-	public java.lang.String getPrimKey() {
-		return _resourcePermission.getPrimKey();
-	}
-
-	/**
-	* Sets the prim key of this resource permission.
-	*
-	* @param primKey the prim key of this resource permission
-	*/
-	@Override
-	public void setPrimKey(java.lang.String primKey) {
-		_resourcePermission.setPrimKey(primKey);
-	}
-
-	/**
-	* Returns the role ID of this resource permission.
-	*
-	* @return the role ID of this resource permission
-	*/
-	@Override
-	public long getRoleId() {
-		return _resourcePermission.getRoleId();
-	}
-
-	/**
-	* Sets the role ID of this resource permission.
-	*
-	* @param roleId the role ID of this resource permission
-	*/
-	@Override
-	public void setRoleId(long roleId) {
-		_resourcePermission.setRoleId(roleId);
-	}
-
-	/**
-	* Returns the owner ID of this resource permission.
-	*
-	* @return the owner ID of this resource permission
-	*/
-	@Override
-	public long getOwnerId() {
-		return _resourcePermission.getOwnerId();
-	}
-
-	/**
-	* Sets the owner ID of this resource permission.
-	*
-	* @param ownerId the owner ID of this resource permission
-	*/
-	@Override
-	public void setOwnerId(long ownerId) {
-		_resourcePermission.setOwnerId(ownerId);
+	public int compareTo(
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
+		return _resourcePermission.compareTo(resourcePermission);
 	}
 
 	/**
@@ -312,6 +143,136 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	/**
+	* Returns the company ID of this resource permission.
+	*
+	* @return the company ID of this resource permission
+	*/
+	@Override
+	public long getCompanyId() {
+		return _resourcePermission.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _resourcePermission.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mvcc version of this resource permission.
+	*
+	* @return the mvcc version of this resource permission
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _resourcePermission.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this resource permission.
+	*
+	* @return the name of this resource permission
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _resourcePermission.getName();
+	}
+
+	/**
+	* Returns the owner ID of this resource permission.
+	*
+	* @return the owner ID of this resource permission
+	*/
+	@Override
+	public long getOwnerId() {
+		return _resourcePermission.getOwnerId();
+	}
+
+	/**
+	* Returns the prim key of this resource permission.
+	*
+	* @return the prim key of this resource permission
+	*/
+	@Override
+	public java.lang.String getPrimKey() {
+		return _resourcePermission.getPrimKey();
+	}
+
+	/**
+	* Returns the primary key of this resource permission.
+	*
+	* @return the primary key of this resource permission
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _resourcePermission.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _resourcePermission.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the resource permission ID of this resource permission.
+	*
+	* @return the resource permission ID of this resource permission
+	*/
+	@Override
+	public long getResourcePermissionId() {
+		return _resourcePermission.getResourcePermissionId();
+	}
+
+	/**
+	* Returns the role ID of this resource permission.
+	*
+	* @return the role ID of this resource permission
+	*/
+	@Override
+	public long getRoleId() {
+		return _resourcePermission.getRoleId();
+	}
+
+	/**
+	* Returns the scope of this resource permission.
+	*
+	* @return the scope of this resource permission
+	*/
+	@Override
+	public int getScope() {
+		return _resourcePermission.getScope();
+	}
+
+	@Override
+	public boolean hasActionId(java.lang.String actionId) {
+		return _resourcePermission.hasActionId(actionId);
+	}
+
+	@Override
+	public int hashCode() {
+		return _resourcePermission.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _resourcePermission.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _resourcePermission.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _resourcePermission.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_resourcePermission.persist();
+	}
+
+	/**
 	* Sets the action IDs of this resource permission.
 	*
 	* @param actionIds the action IDs of this resource permission
@@ -322,43 +283,18 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public boolean isNew() {
-		return _resourcePermission.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_resourcePermission.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _resourcePermission.isCachedModel();
-	}
-
-	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_resourcePermission.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this resource permission.
+	*
+	* @param companyId the company ID of this resource permission
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _resourcePermission.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _resourcePermission.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_resourcePermission.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _resourcePermission.getExpandoBridge();
+	public void setCompanyId(long companyId) {
+		_resourcePermission.setCompanyId(companyId);
 	}
 
 	@Override
@@ -379,20 +315,94 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		_resourcePermission.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the mvcc version of this resource permission.
+	*
+	* @param mvccVersion the mvcc version of this resource permission
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ResourcePermissionWrapper((ResourcePermission)_resourcePermission.clone());
+	public void setMvccVersion(long mvccVersion) {
+		_resourcePermission.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Sets the name of this resource permission.
+	*
+	* @param name the name of this resource permission
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_resourcePermission.setName(name);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
-		return _resourcePermission.compareTo(resourcePermission);
+	public void setNew(boolean n) {
+		_resourcePermission.setNew(n);
+	}
+
+	/**
+	* Sets the owner ID of this resource permission.
+	*
+	* @param ownerId the owner ID of this resource permission
+	*/
+	@Override
+	public void setOwnerId(long ownerId) {
+		_resourcePermission.setOwnerId(ownerId);
+	}
+
+	/**
+	* Sets the prim key of this resource permission.
+	*
+	* @param primKey the prim key of this resource permission
+	*/
+	@Override
+	public void setPrimKey(java.lang.String primKey) {
+		_resourcePermission.setPrimKey(primKey);
+	}
+
+	/**
+	* Sets the primary key of this resource permission.
+	*
+	* @param primaryKey the primary key of this resource permission
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_resourcePermission.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _resourcePermission.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_resourcePermission.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the resource permission ID of this resource permission.
+	*
+	* @param resourcePermissionId the resource permission ID of this resource permission
+	*/
+	@Override
+	public void setResourcePermissionId(long resourcePermissionId) {
+		_resourcePermission.setResourcePermissionId(resourcePermissionId);
+	}
+
+	/**
+	* Sets the role ID of this resource permission.
+	*
+	* @param roleId the role ID of this resource permission
+	*/
+	@Override
+	public void setRoleId(long roleId) {
+		_resourcePermission.setRoleId(roleId);
+	}
+
+	/**
+	* Sets the scope of this resource permission.
+	*
+	* @param scope the scope of this resource permission
+	*/
+	@Override
+	public void setScope(int scope) {
+		_resourcePermission.setScope(scope);
 	}
 
 	@Override
@@ -406,28 +416,18 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public com.liferay.portal.model.ResourcePermission toUnescapedModel() {
-		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _resourcePermission.toString();
 	}
 
 	@Override
+	public com.liferay.portal.model.ResourcePermission toUnescapedModel() {
+		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _resourcePermission.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_resourcePermission.persist();
-	}
-
-	@Override
-	public boolean hasActionId(java.lang.String actionId) {
-		return _resourcePermission.hasActionId(actionId);
 	}
 
 	@Override

@@ -57,6 +57,21 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.createShoppingCart(cartId);
 	}
 
+	@Override
+	public void deleteGroupCarts(long groupId) {
+		_shoppingCartLocalService.deleteGroupCarts(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.deletePersistedModel(persistedModel);
+	}
+
 	/**
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -80,6 +95,11 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	public com.liferay.portlet.shopping.model.ShoppingCart deleteShoppingCart(
 		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart) {
 		return _shoppingCartLocalService.deleteShoppingCart(shoppingCart);
+	}
+
+	@Override
+	public void deleteUserCarts(long userId) {
+		_shoppingCartLocalService.deleteUserCarts(userId);
 	}
 
 	@Override
@@ -173,6 +193,41 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.fetchShoppingCart(cartId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingCartLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingCartLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCart getCart(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.getCart(userId, groupId);
+	}
+
+	@Override
+	public java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
+		long groupId, java.lang.String itemIds) {
+		return _shoppingCartLocalService.getItems(groupId, itemIds);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping cart with the primary key.
 	*
@@ -184,28 +239,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	public com.liferay.portlet.shopping.model.ShoppingCart getShoppingCart(
 		long cartId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCartLocalService.getShoppingCart(cartId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingCartLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -236,28 +269,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	/**
-	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was updated
-	*/
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCart updateShoppingCart(
-		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart) {
-		return _shoppingCartLocalService.updateShoppingCart(shoppingCart);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCartLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -268,35 +279,24 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	@Override
-	public void deleteGroupCarts(long groupId) {
-		_shoppingCartLocalService.deleteGroupCarts(groupId);
-	}
-
-	@Override
-	public void deleteUserCarts(long userId) {
-		_shoppingCartLocalService.deleteUserCarts(userId);
-	}
-
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCart getCart(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.getCart(userId, groupId);
-	}
-
-	@Override
-	public java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds) {
-		return _shoppingCartLocalService.getItems(groupId, itemIds);
-	}
-
-	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCart updateCart(
 		long userId, long groupId, java.lang.String itemIds,
 		java.lang.String couponCodes, int altShipping, boolean insure)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCartLocalService.updateCart(userId, groupId, itemIds,
 			couponCodes, altShipping, insure);
+	}
+
+	/**
+	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was updated
+	*/
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCart updateShoppingCart(
+		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart) {
+		return _shoppingCartLocalService.updateShoppingCart(shoppingCart);
 	}
 
 	/**

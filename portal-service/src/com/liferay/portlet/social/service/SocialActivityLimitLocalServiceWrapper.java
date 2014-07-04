@@ -34,6 +34,16 @@ public class SocialActivityLimitLocalServiceWrapper
 		_socialActivityLimitLocalService = socialActivityLimitLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
+		long userId, long groupId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName, int limitPeriod)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLimitLocalService.addActivityLimit(userId,
+			groupId, classNameId, classPK, activityType, activityCounterName,
+			limitPeriod);
+	}
+
 	/**
 	* Adds the social activity limit to the database. Also notifies the appropriate model listeners.
 	*
@@ -56,6 +66,16 @@ public class SocialActivityLimitLocalServiceWrapper
 	public com.liferay.portlet.social.model.SocialActivityLimit createSocialActivityLimit(
 		long activityLimitId) {
 		return _socialActivityLimitLocalService.createSocialActivityLimit(activityLimitId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLimitLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -171,9 +191,39 @@ public class SocialActivityLimitLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName) {
+		return _socialActivityLimitLocalService.fetchActivityLimit(groupId,
+			userId, classNameId, classPK, activityType, activityCounterName);
+	}
+
+	@Override
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchSocialActivityLimit(
 		long activityLimitId) {
 		return _socialActivityLimitLocalService.fetchSocialActivityLimit(activityLimitId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _socialActivityLimitLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _socialActivityLimitLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLimitLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -188,28 +238,6 @@ public class SocialActivityLimitLocalServiceWrapper
 		long activityLimitId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityLimitLocalService.getSocialActivityLimit(activityLimitId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _socialActivityLimitLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLimitLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLimitLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -241,28 +269,6 @@ public class SocialActivityLimitLocalServiceWrapper
 	}
 
 	/**
-	* Updates the social activity limit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was updated
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivityLimit updateSocialActivityLimit(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit) {
-		return _socialActivityLimitLocalService.updateSocialActivityLimit(socialActivityLimit);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityLimitLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -272,22 +278,16 @@ public class SocialActivityLimitLocalServiceWrapper
 		_socialActivityLimitLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the social activity limit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was updated
+	*/
 	@Override
-	public com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
-		long userId, long groupId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName, int limitPeriod)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLimitLocalService.addActivityLimit(userId,
-			groupId, classNameId, classPK, activityType, activityCounterName,
-			limitPeriod);
-	}
-
-	@Override
-	public com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
-		long groupId, long userId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName) {
-		return _socialActivityLimitLocalService.fetchActivityLimit(groupId,
-			userId, classNameId, classPK, activityType, activityCounterName);
+	public com.liferay.portlet.social.model.SocialActivityLimit updateSocialActivityLimit(
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit) {
+		return _socialActivityLimitLocalService.updateSocialActivityLimit(socialActivityLimit);
 	}
 
 	/**

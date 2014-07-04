@@ -40,6 +40,41 @@ public class UserGroupLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addGroupUserGroup(long groupId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().addGroupUserGroup(groupId, userGroup);
+	}
+
+	public static void addGroupUserGroup(long groupId, long userGroupId) {
+		getService().addGroupUserGroup(groupId, userGroupId);
+	}
+
+	public static void addGroupUserGroups(long groupId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().addGroupUserGroups(groupId, UserGroups);
+	}
+
+	public static void addGroupUserGroups(long groupId, long[] userGroupIds) {
+		getService().addGroupUserGroups(groupId, userGroupIds);
+	}
+
+	public static void addTeamUserGroup(long teamId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().addTeamUserGroup(teamId, userGroup);
+	}
+
+	public static void addTeamUserGroup(long teamId, long userGroupId) {
+		getService().addTeamUserGroup(teamId, userGroupId);
+	}
+
+	public static void addTeamUserGroups(long teamId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().addTeamUserGroups(teamId, UserGroups);
+	}
+
+	public static void addTeamUserGroups(long teamId, long[] userGroupIds) {
+		getService().addTeamUserGroups(teamId, userGroupIds);
+	}
 
 	/**
 	* Adds the user group to the database. Also notifies the appropriate model listeners.
@@ -53,6 +88,137 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
+	* Adds a user group.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the user group,
+	* including its resources, metadata, and internal data structures. It is
+	* not necessary to make subsequent calls to setup default groups and
+	* resources for the user group.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the user group's company
+	* @param name the user group's name
+	* @param description the user group's description
+	* @return the user group
+	* @throws PortalException if the user group's information was invalid
+	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
+	String, String, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
+		long companyId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserGroup(userId, companyId, name, description);
+	}
+
+	/**
+	* Adds a user group.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the user group,
+	* including its resources, metadata, and internal data structures. It is
+	* not necessary to make subsequent calls to setup default groups and
+	* resources for the user group.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the user group's company
+	* @param name the user group's name
+	* @param description the user group's description
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	user group.
+	* @return the user group
+	* @throws PortalException if the user group's information was invalid
+	*/
+	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
+		long companyId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addUserGroup(userId, companyId, name, description,
+			serviceContext);
+	}
+
+	public static void addUserUserGroup(long userId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().addUserUserGroup(userId, userGroup);
+	}
+
+	public static void addUserUserGroup(long userId, long userGroupId) {
+		getService().addUserUserGroup(userId, userGroupId);
+	}
+
+	public static void addUserUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().addUserUserGroups(userId, UserGroups);
+	}
+
+	public static void addUserUserGroups(long userId, long[] userGroupIds) {
+		getService().addUserUserGroups(userId, userGroupIds);
+	}
+
+	public static void clearGroupUserGroups(long groupId) {
+		getService().clearGroupUserGroups(groupId);
+	}
+
+	public static void clearTeamUserGroups(long teamId) {
+		getService().clearTeamUserGroups(teamId);
+	}
+
+	public static void clearUserUserGroups(long userId) {
+		getService().clearUserUserGroups(userId);
+	}
+
+	/**
+	* Copies the user group's layout to the user.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userId the primary key of the user
+	* @throws PortalException if a user with the primary key could not be
+	found or if a portal exception occurred
+	* @deprecated As of 6.2.0
+	*/
+	@Deprecated
+	public static void copyUserGroupLayouts(long userGroupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().copyUserGroupLayouts(userGroupId, userId);
+	}
+
+	/**
+	* Copies the user group's layouts to the users who are not already members
+	* of the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if any one of the users could not be found or
+	if a portal exception occurred
+	* @deprecated As of 6.1.0
+	*/
+	@Deprecated
+	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().copyUserGroupLayouts(userGroupId, userIds);
+	}
+
+	/**
+	* Copies the user groups' layouts to the user.
+	*
+	* @param userGroupIds the primary keys of the user groups
+	* @param userId the primary key of the user
+	* @throws PortalException if a user with the primary key could not be
+	found or if a portal exception occurred
+	* @deprecated As of 6.1.0
+	*/
+	@Deprecated
+	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().copyUserGroupLayouts(userGroupIds, userId);
+	}
+
+	/**
 	* Creates a new user group with the primary key. Does not add the user group to the database.
 	*
 	* @param userGroupId the primary key for the new user group
@@ -61,6 +227,64 @@ public class UserGroupLocalServiceUtil {
 	public static com.liferay.portal.model.UserGroup createUserGroup(
 		long userGroupId) {
 		return getService().createUserGroup(userGroupId);
+	}
+
+	public static void deleteGroupUserGroup(long groupId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().deleteGroupUserGroup(groupId, userGroup);
+	}
+
+	public static void deleteGroupUserGroup(long groupId, long userGroupId) {
+		getService().deleteGroupUserGroup(groupId, userGroupId);
+	}
+
+	public static void deleteGroupUserGroups(long groupId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().deleteGroupUserGroups(groupId, UserGroups);
+	}
+
+	public static void deleteGroupUserGroups(long groupId, long[] userGroupIds) {
+		getService().deleteGroupUserGroups(groupId, userGroupIds);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteTeamUserGroup(long teamId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().deleteTeamUserGroup(teamId, userGroup);
+	}
+
+	public static void deleteTeamUserGroup(long teamId, long userGroupId) {
+		getService().deleteTeamUserGroup(teamId, userGroupId);
+	}
+
+	public static void deleteTeamUserGroups(long teamId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().deleteTeamUserGroups(teamId, UserGroups);
+	}
+
+	public static void deleteTeamUserGroups(long teamId, long[] userGroupIds) {
+		getService().deleteTeamUserGroups(teamId, userGroupIds);
+	}
+
+	/**
+	* Deletes the user group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userGroup the user group
+	* @return the user group that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.UserGroup deleteUserGroup(
+		com.liferay.portal.model.UserGroup userGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteUserGroup(userGroup);
 	}
 
 	/**
@@ -76,17 +300,27 @@ public class UserGroupLocalServiceUtil {
 		return getService().deleteUserGroup(userGroupId);
 	}
 
-	/**
-	* Deletes the user group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @return the user group that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.UserGroup deleteUserGroup(
-		com.liferay.portal.model.UserGroup userGroup)
+	public static void deleteUserGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteUserGroup(userGroup);
+		getService().deleteUserGroups(companyId);
+	}
+
+	public static void deleteUserUserGroup(long userId,
+		com.liferay.portal.model.UserGroup userGroup) {
+		getService().deleteUserUserGroup(userId, userGroup);
+	}
+
+	public static void deleteUserUserGroup(long userId, long userGroupId) {
+		getService().deleteUserUserGroup(userId, userGroupId);
+	}
+
+	public static void deleteUserUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
+		getService().deleteUserUserGroups(userId, UserGroups);
+	}
+
+	public static void deleteUserUserGroups(long userId, long[] userGroupIds) {
+		getService().deleteUserUserGroups(userId, userGroupIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -168,6 +402,11 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.UserGroup fetchUserGroup(
+		long companyId, java.lang.String name) {
+		return getService().fetchUserGroup(companyId, name);
+	}
+
+	public static com.liferay.portal.model.UserGroup fetchUserGroup(
 		long userGroupId) {
 		return getService().fetchUserGroup(userGroupId);
 	}
@@ -184,131 +423,22 @@ public class UserGroupLocalServiceUtil {
 		return getService().fetchUserGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
-	/**
-	* Returns the user group with the primary key.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group
-	* @throws PortalException if a user group with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.UserGroup getUserGroup(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroup(userGroupId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the user group with the matching UUID and company.
-	*
-	* @param uuid the user group's UUID
-	* @param companyId the primary key of the company
-	* @return the matching user group
-	* @throws PortalException if a matching user group could not be found
-	*/
-	public static com.liferay.portal.model.UserGroup getUserGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroupByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the user groups.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user groups
-	* @param end the upper bound of the range of user groups (not inclusive)
-	* @return the range of user groups
-	*/
-	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		int start, int end) {
-		return getService().getUserGroups(start, end);
-	}
-
-	/**
-	* Returns the number of user groups.
-	*
-	* @return the number of user groups
-	*/
-	public static int getUserGroupsCount() {
-		return getService().getUserGroupsCount();
-	}
-
-	/**
-	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @return the user group that was updated
-	*/
-	public static com.liferay.portal.model.UserGroup updateUserGroup(
-		com.liferay.portal.model.UserGroup userGroup) {
-		return getService().updateUserGroup(userGroup);
-	}
-
-	public static void addGroupUserGroup(long groupId, long userGroupId) {
-		getService().addGroupUserGroup(groupId, userGroupId);
-	}
-
-	public static void addGroupUserGroup(long groupId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().addGroupUserGroup(groupId, userGroup);
-	}
-
-	public static void addGroupUserGroups(long groupId, long[] userGroupIds) {
-		getService().addGroupUserGroups(groupId, userGroupIds);
-	}
-
-	public static void addGroupUserGroups(long groupId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().addGroupUserGroups(groupId, UserGroups);
-	}
-
-	public static void clearGroupUserGroups(long groupId) {
-		getService().clearGroupUserGroups(groupId);
-	}
-
-	public static void deleteGroupUserGroup(long groupId, long userGroupId) {
-		getService().deleteGroupUserGroup(groupId, userGroupId);
-	}
-
-	public static void deleteGroupUserGroup(long groupId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().deleteGroupUserGroup(groupId, userGroup);
-	}
-
-	public static void deleteGroupUserGroups(long groupId, long[] userGroupIds) {
-		getService().deleteGroupUserGroups(groupId, userGroupIds);
-	}
-
-	public static void deleteGroupUserGroups(long groupId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().deleteGroupUserGroups(groupId, UserGroups);
 	}
 
 	/**
@@ -342,56 +472,16 @@ public class UserGroupLocalServiceUtil {
 		return getService().getGroupUserGroupsCount(groupId);
 	}
 
-	public static boolean hasGroupUserGroup(long groupId, long userGroupId) {
-		return getService().hasGroupUserGroup(groupId, userGroupId);
+	public static java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGroupUserUserGroups(groupId, userId);
 	}
 
-	public static boolean hasGroupUserGroups(long groupId) {
-		return getService().hasGroupUserGroups(groupId);
-	}
-
-	public static void setGroupUserGroups(long groupId, long[] userGroupIds) {
-		getService().setGroupUserGroups(groupId, userGroupIds);
-	}
-
-	public static void addTeamUserGroup(long teamId, long userGroupId) {
-		getService().addTeamUserGroup(teamId, userGroupId);
-	}
-
-	public static void addTeamUserGroup(long teamId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().addTeamUserGroup(teamId, userGroup);
-	}
-
-	public static void addTeamUserGroups(long teamId, long[] userGroupIds) {
-		getService().addTeamUserGroups(teamId, userGroupIds);
-	}
-
-	public static void addTeamUserGroups(long teamId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().addTeamUserGroups(teamId, UserGroups);
-	}
-
-	public static void clearTeamUserGroups(long teamId) {
-		getService().clearTeamUserGroups(teamId);
-	}
-
-	public static void deleteTeamUserGroup(long teamId, long userGroupId) {
-		getService().deleteTeamUserGroup(teamId, userGroupId);
-	}
-
-	public static void deleteTeamUserGroup(long teamId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().deleteTeamUserGroup(teamId, userGroup);
-	}
-
-	public static void deleteTeamUserGroups(long teamId, long[] userGroupIds) {
-		getService().deleteTeamUserGroups(teamId, userGroupIds);
-	}
-
-	public static void deleteTeamUserGroups(long teamId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().deleteTeamUserGroups(teamId, UserGroups);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -425,56 +515,94 @@ public class UserGroupLocalServiceUtil {
 		return getService().getTeamUserGroupsCount(teamId);
 	}
 
-	public static boolean hasTeamUserGroup(long teamId, long userGroupId) {
-		return getService().hasTeamUserGroup(teamId, userGroupId);
+	/**
+	* Returns the user group with the name.
+	*
+	* @param companyId the primary key of the user group's company
+	* @param name the user group's name
+	* @return Returns the user group with the name
+	* @throws PortalException if a user group with the name could not be found
+	*/
+	public static com.liferay.portal.model.UserGroup getUserGroup(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroup(companyId, name);
 	}
 
-	public static boolean hasTeamUserGroups(long teamId) {
-		return getService().hasTeamUserGroups(teamId);
+	/**
+	* Returns the user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group
+	* @throws PortalException if a user group with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.UserGroup getUserGroup(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroup(userGroupId);
 	}
 
-	public static void setTeamUserGroups(long teamId, long[] userGroupIds) {
-		getService().setTeamUserGroups(teamId, userGroupIds);
+	/**
+	* Returns the user group with the matching UUID and company.
+	*
+	* @param uuid the user group's UUID
+	* @param companyId the primary key of the company
+	* @return the matching user group
+	* @throws PortalException if a matching user group could not be found
+	*/
+	public static com.liferay.portal.model.UserGroup getUserGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static void addUserUserGroup(long userId, long userGroupId) {
-		getService().addUserUserGroup(userId, userGroupId);
+	/**
+	* Returns all the user groups belonging to the company.
+	*
+	* @param companyId the primary key of the user groups' company
+	* @return the user groups belonging to the company
+	*/
+	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
+		long companyId) {
+		return getService().getUserGroups(companyId);
 	}
 
-	public static void addUserUserGroup(long userId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().addUserUserGroup(userId, userGroup);
+	/**
+	* Returns a range of all the user groups.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user groups
+	* @param end the upper bound of the range of user groups (not inclusive)
+	* @return the range of user groups
+	*/
+	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
+		int start, int end) {
+		return getService().getUserGroups(start, end);
 	}
 
-	public static void addUserUserGroups(long userId, long[] userGroupIds) {
-		getService().addUserUserGroups(userId, userGroupIds);
+	/**
+	* Returns all the user groups with the primary keys.
+	*
+	* @param userGroupIds the primary keys of the user groups
+	* @return the user groups with the primary keys
+	* @throws PortalException if any one of the user groups could not be found
+	*/
+	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
+		long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroups(userGroupIds);
 	}
 
-	public static void addUserUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().addUserUserGroups(userId, UserGroups);
-	}
-
-	public static void clearUserUserGroups(long userId) {
-		getService().clearUserUserGroups(userId);
-	}
-
-	public static void deleteUserUserGroup(long userId, long userGroupId) {
-		getService().deleteUserUserGroup(userId, userGroupId);
-	}
-
-	public static void deleteUserUserGroup(long userId,
-		com.liferay.portal.model.UserGroup userGroup) {
-		getService().deleteUserUserGroup(userId, userGroup);
-	}
-
-	public static void deleteUserUserGroups(long userId, long[] userGroupIds) {
-		getService().deleteUserUserGroups(userId, userGroupIds);
-	}
-
-	public static void deleteUserUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.UserGroup> UserGroups) {
-		getService().deleteUserUserGroups(userId, UserGroups);
+	/**
+	* Returns the number of user groups.
+	*
+	* @return the number of user groups
+	*/
+	public static int getUserGroupsCount() {
+		return getService().getUserGroupsCount();
 	}
 
 	/**
@@ -508,193 +636,28 @@ public class UserGroupLocalServiceUtil {
 		return getService().getUserUserGroupsCount(userId);
 	}
 
+	public static boolean hasGroupUserGroup(long groupId, long userGroupId) {
+		return getService().hasGroupUserGroup(groupId, userGroupId);
+	}
+
+	public static boolean hasGroupUserGroups(long groupId) {
+		return getService().hasGroupUserGroups(groupId);
+	}
+
+	public static boolean hasTeamUserGroup(long teamId, long userGroupId) {
+		return getService().hasTeamUserGroup(teamId, userGroupId);
+	}
+
+	public static boolean hasTeamUserGroups(long teamId) {
+		return getService().hasTeamUserGroups(teamId);
+	}
+
 	public static boolean hasUserUserGroup(long userId, long userGroupId) {
 		return getService().hasUserUserGroup(userId, userGroupId);
 	}
 
 	public static boolean hasUserUserGroups(long userId) {
 		return getService().hasUserUserGroups(userId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static void setUserUserGroups(long userId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().setUserUserGroups(userId, userGroupIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures. It is
-	* not necessary to make subsequent calls to setup default groups and
-	* resources for the user group.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name
-	* @param description the user group's description
-	* @return the user group
-	* @throws PortalException if the user group's information was invalid
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
-		long companyId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserGroup(userId, companyId, name, description);
-	}
-
-	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures. It is
-	* not necessary to make subsequent calls to setup default groups and
-	* resources for the user group.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name
-	* @param description the user group's description
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set expando bridge attributes for the
-	user group.
-	* @return the user group
-	* @throws PortalException if the user group's information was invalid
-	*/
-	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
-		long companyId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addUserGroup(userId, companyId, name, description,
-			serviceContext);
-	}
-
-	/**
-	* Copies the user group's layout to the user.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
-	* @deprecated As of 6.2.0
-	*/
-	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupId, userId);
-	}
-
-	/**
-	* Copies the user group's layouts to the users who are not already members
-	* of the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if any one of the users could not be found or
-	if a portal exception occurred
-	* @deprecated As of 6.1.0
-	*/
-	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupId, userIds);
-	}
-
-	/**
-	* Copies the user groups' layouts to the user.
-	*
-	* @param userGroupIds the primary keys of the user groups
-	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
-	* @deprecated As of 6.1.0
-	*/
-	@Deprecated
-	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupIds, userId);
-	}
-
-	public static void deleteUserGroups(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserGroups(companyId);
-	}
-
-	public static com.liferay.portal.model.UserGroup fetchUserGroup(
-		long companyId, java.lang.String name) {
-		return getService().fetchUserGroup(companyId, name);
-	}
-
-	public static java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getGroupUserUserGroups(groupId, userId);
-	}
-
-	/**
-	* Returns the user group with the name.
-	*
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name
-	* @return Returns the user group with the name
-	* @throws PortalException if a user group with the name could not be found
-	*/
-	public static com.liferay.portal.model.UserGroup getUserGroup(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroup(companyId, name);
-	}
-
-	/**
-	* Returns all the user groups belonging to the company.
-	*
-	* @param companyId the primary key of the user groups' company
-	* @return the user groups belonging to the company
-	*/
-	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		long companyId) {
-		return getService().getUserGroups(companyId);
-	}
-
-	/**
-	* Returns all the user groups with the primary keys.
-	*
-	* @param userGroupIds the primary keys of the user groups
-	* @return the user groups with the primary keys
-	* @throws PortalException if any one of the user groups could not be found
-	*/
-	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroups(userGroupIds);
 	}
 
 	/**
@@ -914,6 +877,31 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static void setGroupUserGroups(long groupId, long[] userGroupIds) {
+		getService().setGroupUserGroups(groupId, userGroupIds);
+	}
+
+	public static void setTeamUserGroups(long teamId, long[] userGroupIds) {
+		getService().setTeamUserGroups(teamId, userGroupIds);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static void setUserUserGroups(long userId, long[] userGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().setUserUserGroups(userId, userGroupIds);
+	}
+
+	/**
 	* Removes the user groups from the group.
 	*
 	* @param groupId the primary key of the group
@@ -977,6 +965,17 @@ public class UserGroupLocalServiceUtil {
 		return getService()
 				   .updateUserGroup(companyId, userGroupId, name, description,
 			serviceContext);
+	}
+
+	/**
+	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userGroup the user group
+	* @return the user group that was updated
+	*/
+	public static com.liferay.portal.model.UserGroup updateUserGroup(
+		com.liferay.portal.model.UserGroup userGroup) {
+		return getService().updateUserGroup(userGroup);
 	}
 
 	public static UserGroupLocalService getService() {

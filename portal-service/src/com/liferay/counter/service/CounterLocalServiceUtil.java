@@ -64,6 +64,17 @@ public class CounterLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the counter from the database. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was removed
+	*/
+	public static com.liferay.counter.model.Counter deleteCounter(
+		com.liferay.counter.model.Counter counter) {
+		return getService().deleteCounter(counter);
+	}
+
+	/**
 	* Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param name the primary key of the counter
@@ -77,14 +88,12 @@ public class CounterLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the counter from the database. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.counter.model.Counter deleteCounter(
-		com.liferay.counter.model.Counter counter) {
-		return getService().deleteCounter(counter);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -171,6 +180,15 @@ public class CounterLocalServiceUtil {
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
 	* Returns the counter with the primary key.
 	*
 	* @param name the primary key of the counter
@@ -181,21 +199,6 @@ public class CounterLocalServiceUtil {
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCounter(name);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -223,37 +226,14 @@ public class CounterLocalServiceUtil {
 		return getService().getCountersCount();
 	}
 
-	/**
-	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was updated
-	*/
-	public static com.liferay.counter.model.Counter updateCounter(
-		com.liferay.counter.model.Counter counter) {
-		return getService().updateCounter(counter);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static java.util.List<java.lang.String> getNames() {
 		return getService().getNames();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static long increment() {
@@ -278,6 +258,26 @@ public class CounterLocalServiceUtil {
 
 	public static void reset(java.lang.String name, long size) {
 		getService().reset(name, size);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was updated
+	*/
+	public static com.liferay.counter.model.Counter updateCounter(
+		com.liferay.counter.model.Counter counter) {
+		return getService().updateCounter(counter);
 	}
 
 	public static CounterLocalService getService() {

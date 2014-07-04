@@ -52,6 +52,12 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().addAnnouncementsDelivery(announcementsDelivery);
 	}
 
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery addUserDelivery(
+		long userId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserDelivery(userId, type);
+	}
+
 	/**
 	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
 	*
@@ -61,6 +67,17 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery createAnnouncementsDelivery(
 		long deliveryId) {
 		return getService().createAnnouncementsDelivery(deliveryId);
+	}
+
+	/**
+	* Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsDelivery the announcements delivery
+	* @return the announcements delivery that was removed
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
+		return getService().deleteAnnouncementsDelivery(announcementsDelivery);
 	}
 
 	/**
@@ -76,15 +93,31 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().deleteAnnouncementsDelivery(deliveryId);
 	}
 
+	public static void deleteDeliveries(long userId) {
+		getService().deleteDeliveries(userId);
+	}
+
+	public static void deleteDelivery(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery delivery) {
+		getService().deleteDelivery(delivery);
+	}
+
+	public static void deleteDelivery(long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteDelivery(deliveryId);
+	}
+
+	public static void deleteDelivery(long userId, java.lang.String type) {
+		getService().deleteDelivery(userId, type);
+	}
+
 	/**
-	* Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsDelivery the announcements delivery
-	* @return the announcements delivery that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
-		return getService().deleteAnnouncementsDelivery(announcementsDelivery);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,36 +203,8 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().fetchAnnouncementsDelivery(deliveryId);
 	}
 
-	/**
-	* Returns the announcements delivery with the primary key.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery
-	* @throws PortalException if a announcements delivery with the primary key could not be found
-	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery getAnnouncementsDelivery(
-		long deliveryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAnnouncementsDelivery(deliveryId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,14 +233,16 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 	}
 
 	/**
-	* Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the announcements delivery with the primary key.
 	*
-	* @param announcementsDelivery the announcements delivery
-	* @return the announcements delivery that was updated
+	* @param deliveryId the primary key of the announcements delivery
+	* @return the announcements delivery
+	* @throws PortalException if a announcements delivery with the primary key could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateAnnouncementsDelivery(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
-		return getService().updateAnnouncementsDelivery(announcementsDelivery);
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery getAnnouncementsDelivery(
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAnnouncementsDelivery(deliveryId);
 	}
 
 	/**
@@ -247,43 +254,16 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery addUserDelivery(
-		long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserDelivery(userId, type);
-	}
-
-	public static void deleteDeliveries(long userId) {
-		getService().deleteDeliveries(userId);
-	}
-
-	public static void deleteDelivery(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery delivery) {
-		getService().deleteDelivery(delivery);
-	}
-
-	public static void deleteDelivery(long deliveryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteDelivery(deliveryId);
-	}
-
-	public static void deleteDelivery(long userId, java.lang.String type) {
-		getService().deleteDelivery(userId, type);
-	}
-
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery getDelivery(
 		long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDelivery(deliveryId);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> getUserDeliveries(
@@ -295,6 +275,26 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		long userId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserDelivery(userId, type);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsDelivery the announcements delivery
+	* @return the announcements delivery that was updated
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateAnnouncementsDelivery(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
+		return getService().updateAnnouncementsDelivery(announcementsDelivery);
 	}
 
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateDelivery(

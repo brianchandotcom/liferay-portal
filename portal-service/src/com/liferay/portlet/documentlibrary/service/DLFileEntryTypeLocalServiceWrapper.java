@@ -34,6 +34,34 @@ public class DLFileEntryTypeLocalServiceWrapper
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
+	@Override
+	public void addDDMStructureDLFileEntryType(long structureId,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryType(structureId,
+			dlFileEntryType);
+	}
+
+	@Override
+	public void addDDMStructureDLFileEntryType(long structureId,
+		long fileEntryTypeId) {
+		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryType(structureId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public void addDDMStructureDLFileEntryTypes(long structureId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
+		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryTypes(structureId,
+			DLFileEntryTypes);
+	}
+
+	@Override
+	public void addDDMStructureDLFileEntryTypes(long structureId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryTypes(structureId,
+			fileEntryTypeIds);
+	}
+
 	/**
 	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
 	*
@@ -46,6 +74,73 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.addDLFileEntryType(dlFileEntryType);
 	}
 
+	@Override
+	public void addDLFolderDLFileEntryType(long folderId,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(folderId,
+			dlFileEntryType);
+	}
+
+	@Override
+	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId) {
+		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(folderId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public void addDLFolderDLFileEntryTypes(long folderId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
+		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(folderId,
+			DLFileEntryTypes);
+	}
+
+	@Override
+	public void addDLFolderDLFileEntryTypes(long folderId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(folderId,
+			fileEntryTypeIds);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
+		long userId, long groupId, java.lang.String fileEntryTypeKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryTypeLocalService.addFileEntryType(userId, groupId,
+			fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryTypeLocalService.addFileEntryType(userId, groupId,
+			name, description, ddmStructureIds, serviceContext);
+	}
+
+	@Override
+	public void cascadeFileEntryTypes(long userId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeLocalService.cascadeFileEntryTypes(userId, dlFolder);
+	}
+
+	@Override
+	public void clearDDMStructureDLFileEntryTypes(long structureId) {
+		_dlFileEntryTypeLocalService.clearDDMStructureDLFileEntryTypes(structureId);
+	}
+
+	@Override
+	public void clearDLFolderDLFileEntryTypes(long folderId) {
+		_dlFileEntryTypeLocalService.clearDLFolderDLFileEntryTypes(folderId);
+	}
+
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	*
@@ -56,6 +151,46 @@ public class DLFileEntryTypeLocalServiceWrapper
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType createDLFileEntryType(
 		long fileEntryTypeId) {
 		return _dlFileEntryTypeLocalService.createDLFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public void deleteDDMStructureDLFileEntryType(long structureId,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryType(structureId,
+			dlFileEntryType);
+	}
+
+	@Override
+	public void deleteDDMStructureDLFileEntryType(long structureId,
+		long fileEntryTypeId) {
+		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryType(structureId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public void deleteDDMStructureDLFileEntryTypes(long structureId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
+		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryTypes(structureId,
+			DLFileEntryTypes);
+	}
+
+	@Override
+	public void deleteDDMStructureDLFileEntryTypes(long structureId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryTypes(structureId,
+			fileEntryTypeIds);
+	}
+
+	/**
+	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was removed
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		return _dlFileEntryTypeLocalService.deleteDLFileEntryType(dlFileEntryType);
 	}
 
 	/**
@@ -72,16 +207,61 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.deleteDLFileEntryType(fileEntryTypeId);
 	}
 
+	@Override
+	public void deleteDLFolderDLFileEntryType(long folderId,
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryType(folderId,
+			dlFileEntryType);
+	}
+
+	@Override
+	public void deleteDLFolderDLFileEntryType(long folderId,
+		long fileEntryTypeId) {
+		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryType(folderId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public void deleteDLFolderDLFileEntryTypes(long folderId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
+		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryTypes(folderId,
+			DLFileEntryTypes);
+	}
+
+	@Override
+	public void deleteDLFolderDLFileEntryTypes(long folderId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryTypes(folderId,
+			fileEntryTypeIds);
+	}
+
+	@Override
+	public void deleteFileEntryType(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+	}
+
+	@Override
+	public void deleteFileEntryType(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public void deleteFileEntryTypes(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeLocalService.deleteFileEntryTypes(groupId);
+	}
+
 	/**
-	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		return _dlFileEntryTypeLocalService.deleteDLFileEntryType(dlFileEntryType);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryTypeLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -204,6 +384,71 @@ public class DLFileEntryTypeLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
+		long fileEntryTypeId) {
+		return _dlFileEntryTypeLocalService.fetchFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
+		long groupId, java.lang.String fileEntryTypeKey) {
+		return _dlFileEntryTypeLocalService.fetchFileEntryType(groupId,
+			fileEntryTypeKey);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlFileEntryTypeLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileEntryTypeLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
+		long structureId) {
+		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
+		long structureId, int start, int end) {
+		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
+		long structureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
+		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getDDMStructureDLFileEntryTypesCount(long structureId) {
+		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypesCount(structureId);
+	}
+
+	/**
+	* Returns the structureIds of the d d m structures associated with the document library file entry type.
+	*
+	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
+	* @return long[] the structureIds of d d m structures associated with the document library file entry type
+	*/
+	@Override
+	public long[] getDDMStructurePrimaryKeys(long fileEntryTypeId) {
+		return _dlFileEntryTypeLocalService.getDDMStructurePrimaryKeys(fileEntryTypeId);
+	}
+
 	/**
 	* Returns the document library file entry type with the primary key.
 	*
@@ -216,34 +461,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlFileEntryTypeLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _dlFileEntryTypeLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryTypeLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryTypeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -305,89 +522,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.getDLFileEntryTypesCount();
 	}
 
-	/**
-	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was updated
-	*/
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		return _dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
-	}
-
-	@Override
-	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId) {
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(folderId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public void addDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(folderId,
-			dlFileEntryType);
-	}
-
-	@Override
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(folderId,
-			fileEntryTypeIds);
-	}
-
-	@Override
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(folderId,
-			DLFileEntryTypes);
-	}
-
-	@Override
-	public void clearDLFolderDLFileEntryTypes(long folderId) {
-		_dlFileEntryTypeLocalService.clearDLFolderDLFileEntryTypes(folderId);
-	}
-
-	@Override
-	public void deleteDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId) {
-		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryType(folderId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public void deleteDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryType(folderId,
-			dlFileEntryType);
-	}
-
-	@Override
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryTypes(folderId,
-			fileEntryTypeIds);
-	}
-
-	@Override
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
-		_dlFileEntryTypeLocalService.deleteDLFolderDLFileEntryTypes(folderId,
-			DLFileEntryTypes);
-	}
-
-	/**
-	* Returns the folderIds of the document library folders associated with the document library file entry type.
-	*
-	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
-	* @return long[] the folderIds of document library folders associated with the document library file entry type
-	*/
-	@Override
-	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId) {
-		return _dlFileEntryTypeLocalService.getDLFolderPrimaryKeys(fileEntryTypeId);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
 		long folderId) {
@@ -414,228 +548,27 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypesCount(folderId);
 	}
 
-	@Override
-	public boolean hasDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId) {
-		return _dlFileEntryTypeLocalService.hasDLFolderDLFileEntryType(folderId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public boolean hasDLFolderDLFileEntryTypes(long folderId) {
-		return _dlFileEntryTypeLocalService.hasDLFolderDLFileEntryTypes(folderId);
-	}
-
-	@Override
-	public void setDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.setDLFolderDLFileEntryTypes(folderId,
-			fileEntryTypeIds);
-	}
-
-	@Override
-	public void addDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId) {
-		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryType(structureId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public void addDDMStructureDLFileEntryType(long structureId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryType(structureId,
-			dlFileEntryType);
-	}
-
-	@Override
-	public void addDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryTypes(structureId,
-			fileEntryTypeIds);
-	}
-
-	@Override
-	public void addDDMStructureDLFileEntryTypes(long structureId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
-		_dlFileEntryTypeLocalService.addDDMStructureDLFileEntryTypes(structureId,
-			DLFileEntryTypes);
-	}
-
-	@Override
-	public void clearDDMStructureDLFileEntryTypes(long structureId) {
-		_dlFileEntryTypeLocalService.clearDDMStructureDLFileEntryTypes(structureId);
-	}
-
-	@Override
-	public void deleteDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId) {
-		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryType(structureId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public void deleteDDMStructureDLFileEntryType(long structureId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
-		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryType(structureId,
-			dlFileEntryType);
-	}
-
-	@Override
-	public void deleteDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryTypes(structureId,
-			fileEntryTypeIds);
-	}
-
-	@Override
-	public void deleteDDMStructureDLFileEntryTypes(long structureId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes) {
-		_dlFileEntryTypeLocalService.deleteDDMStructureDLFileEntryTypes(structureId,
-			DLFileEntryTypes);
-	}
-
 	/**
-	* Returns the structureIds of the d d m structures associated with the document library file entry type.
+	* Returns the folderIds of the document library folders associated with the document library file entry type.
 	*
 	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
-	* @return long[] the structureIds of d d m structures associated with the document library file entry type
+	* @return long[] the folderIds of document library folders associated with the document library file entry type
 	*/
 	@Override
-	public long[] getDDMStructurePrimaryKeys(long fileEntryTypeId) {
-		return _dlFileEntryTypeLocalService.getDDMStructurePrimaryKeys(fileEntryTypeId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
-		long structureId) {
-		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
-		long structureId, int start, int end) {
-		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
-		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(structureId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getDDMStructureDLFileEntryTypesCount(long structureId) {
-		return _dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypesCount(structureId);
-	}
-
-	@Override
-	public boolean hasDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId) {
-		return _dlFileEntryTypeLocalService.hasDDMStructureDLFileEntryType(structureId,
-			fileEntryTypeId);
-	}
-
-	@Override
-	public boolean hasDDMStructureDLFileEntryTypes(long structureId) {
-		return _dlFileEntryTypeLocalService.hasDDMStructureDLFileEntryTypes(structureId);
-	}
-
-	@Override
-	public void setDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds) {
-		_dlFileEntryTypeLocalService.setDDMStructureDLFileEntryTypes(structureId,
-			fileEntryTypeIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileEntryTypeLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileEntryTypeLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String fileEntryTypeKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryTypeLocalService.addFileEntryType(userId, groupId,
-			fileEntryTypeKey, nameMap, descriptionMap, ddmStructureIds,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryTypeLocalService.addFileEntryType(userId, groupId,
-			name, description, ddmStructureIds, serviceContext);
-	}
-
-	@Override
-	public void cascadeFileEntryTypes(long userId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeLocalService.cascadeFileEntryTypes(userId, dlFolder);
-	}
-
-	@Override
-	public void deleteFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
-	}
-
-	@Override
-	public void deleteFileEntryType(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
-	}
-
-	@Override
-	public void deleteFileEntryTypes(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeLocalService.deleteFileEntryTypes(groupId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
-		long fileEntryTypeId) {
-		return _dlFileEntryTypeLocalService.fetchFileEntryType(fileEntryTypeId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey) {
-		return _dlFileEntryTypeLocalService.fetchFileEntryType(groupId,
-			fileEntryTypeKey);
+	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId) {
+		return _dlFileEntryTypeLocalService.getDLFolderPrimaryKeys(fileEntryTypeId);
 	}
 
 	@Override
 	public long getDefaultFileEntryTypeId(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _dlFileEntryTypeLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -668,6 +601,37 @@ public class DLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryTypeLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public boolean hasDDMStructureDLFileEntryType(long structureId,
+		long fileEntryTypeId) {
+		return _dlFileEntryTypeLocalService.hasDDMStructureDLFileEntryType(structureId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public boolean hasDDMStructureDLFileEntryTypes(long structureId) {
+		return _dlFileEntryTypeLocalService.hasDDMStructureDLFileEntryTypes(structureId);
+	}
+
+	@Override
+	public boolean hasDLFolderDLFileEntryType(long folderId,
+		long fileEntryTypeId) {
+		return _dlFileEntryTypeLocalService.hasDLFolderDLFileEntryType(folderId,
+			fileEntryTypeId);
+	}
+
+	@Override
+	public boolean hasDLFolderDLFileEntryTypes(long folderId) {
+		return _dlFileEntryTypeLocalService.hasDLFolderDLFileEntryTypes(folderId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
@@ -683,9 +647,45 @@ public class DLFileEntryTypeLocalServiceWrapper
 			keywords, includeBasicFileEntryType);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFileEntryTypeLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void setDDMStructureDLFileEntryTypes(long structureId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.setDDMStructureDLFileEntryTypes(structureId,
+			fileEntryTypeIds);
+	}
+
+	@Override
+	public void setDLFolderDLFileEntryTypes(long folderId,
+		long[] fileEntryTypeIds) {
+		_dlFileEntryTypeLocalService.setDLFolderDLFileEntryTypes(folderId,
+			fileEntryTypeIds);
+	}
+
 	@Override
 	public void unsetFolderFileEntryTypes(long folderId) {
 		_dlFileEntryTypeLocalService.unsetFolderFileEntryTypes(folderId);
+	}
+
+	/**
+	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was updated
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType) {
+		return _dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 	}
 
 	@Override
@@ -699,6 +699,16 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	@Override
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryTypeLocalService.updateFileEntryType(userId,
+			fileEntryTypeId, name, description, ddmStructureIds, serviceContext);
+	}
+
+	@Override
+	public void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] ddmStructureIds,
@@ -707,16 +717,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 		_dlFileEntryTypeLocalService.updateFileEntryType(userId,
 			fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 			serviceContext);
-	}
-
-	@Override
-	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryTypeLocalService.updateFileEntryType(userId,
-			fileEntryTypeId, name, description, ddmStructureIds, serviceContext);
 	}
 
 	@Override

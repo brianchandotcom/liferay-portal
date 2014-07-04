@@ -46,6 +46,31 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
+	* Adds a new asset link.
+	*
+	* @param userId the primary key of the link's creator
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	* @param type the link type. Acceptable values include {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
+	which is a bidirectional relationship and {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
+	which is a unidirectional relationship. For more information see
+	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	* @param weight the weight of the relationship, allowing precedence
+	ordering of links
+	* @return the asset link
+	* @throws PortalException if the user could not be found
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink addLink(long userId,
+		long entryId1, long entryId2, int type, int weight)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.addLink(userId, entryId1, entryId2, type,
+			weight);
+	}
+
+	/**
 	* Creates a new asset link with the primary key. Does not add the asset link to the database.
 	*
 	* @param linkId the primary key for the new asset link
@@ -55,6 +80,18 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public com.liferay.portlet.asset.model.AssetLink createAssetLink(
 		long linkId) {
 		return _assetLinkLocalService.createAssetLink(linkId);
+	}
+
+	/**
+	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was removed
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
+		return _assetLinkLocalService.deleteAssetLink(assetLink);
 	}
 
 	/**
@@ -71,15 +108,56 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
-	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
+	* Deletes the asset link.
 	*
-	* @param assetLink the asset link
-	* @return the asset link that was removed
+	* @param link the asset link
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink) {
-		return _assetLinkLocalService.deleteAssetLink(assetLink);
+	public void deleteLink(com.liferay.portlet.asset.model.AssetLink link) {
+		_assetLinkLocalService.deleteLink(link);
+	}
+
+	/**
+	* Deletes the asset link.
+	*
+	* @param linkId the primary key of the asset link
+	* @throws PortalException if the asset link could not be found
+	*/
+	@Override
+	public void deleteLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetLinkLocalService.deleteLink(linkId);
+	}
+
+	/**
+	* Deletes all links associated with the asset entry.
+	*
+	* @param entryId the primary key of the asset entry
+	*/
+	@Override
+	public void deleteLinks(long entryId) {
+		_assetLinkLocalService.deleteLinks(entryId);
+	}
+
+	/**
+	* Delete all links that associate the two asset entries.
+	*
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	*/
+	@Override
+	public void deleteLinks(long entryId1, long entryId2) {
+		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -171,6 +249,11 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.fetchAssetLink(linkId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _assetLinkLocalService.getActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the asset link with the primary key.
 	*
@@ -182,28 +265,6 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public com.liferay.portlet.asset.model.AssetLink getAssetLink(long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetLinkLocalService.getAssetLink(linkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _assetLinkLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -234,18 +295,6 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink) {
-		return _assetLinkLocalService.updateAssetLink(assetLink);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -253,84 +302,6 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _assetLinkLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetLinkLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds a new asset link.
-	*
-	* @param userId the primary key of the link's creator
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	* @param type the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
-	* @param weight the weight of the relationship, allowing precedence
-	ordering of links
-	* @return the asset link
-	* @throws PortalException if the user could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink addLink(long userId,
-		long entryId1, long entryId2, int type, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.addLink(userId, entryId1, entryId2, type,
-			weight);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param link the asset link
-	*/
-	@Override
-	public void deleteLink(com.liferay.portlet.asset.model.AssetLink link) {
-		_assetLinkLocalService.deleteLink(link);
-	}
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param linkId the primary key of the asset link
-	* @throws PortalException if the asset link could not be found
-	*/
-	@Override
-	public void deleteLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetLinkLocalService.deleteLink(linkId);
-	}
-
-	/**
-	* Deletes all links associated with the asset entry.
-	*
-	* @param entryId the primary key of the asset entry
-	*/
-	@Override
-	public void deleteLinks(long entryId) {
-		_assetLinkLocalService.deleteLinks(entryId);
-	}
-
-	/**
-	* Delete all links that associate the two asset entries.
-	*
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	*/
-	@Override
-	public void deleteLinks(long entryId1, long entryId2) {
-		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
 	}
 
 	/**
@@ -399,6 +370,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getLinks(entryId, typeId);
 	}
 
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
@@ -417,6 +395,28 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getReverseLinks(
 		long entryId, int typeId) {
 		return _assetLinkLocalService.getReverseLinks(entryId, typeId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetLinkLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was updated
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
+		return _assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
 	@Override

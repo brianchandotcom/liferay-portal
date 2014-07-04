@@ -44,6 +44,13 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.addResourceBlockPermission(resourceBlockPermission);
 	}
 
+	@Override
+	public void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
+		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
+			resourceBlockPermissionsContainer);
+	}
+
 	/**
 	* Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	*
@@ -54,6 +61,28 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	public com.liferay.portal.model.ResourceBlockPermission createResourceBlockPermission(
 		long resourceBlockPermissionId) {
 		return _resourceBlockPermissionLocalService.createResourceBlockPermission(resourceBlockPermissionId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.ResourceBlockPermission deleteResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission) {
+		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermission);
 	}
 
 	/**
@@ -70,16 +99,9 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermissionId);
 	}
 
-	/**
-	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was removed
-	*/
 	@Override
-	public com.liferay.portal.model.ResourceBlockPermission deleteResourceBlockPermission(
-		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission) {
-		return _resourceBlockPermissionLocalService.deleteResourceBlockPermission(resourceBlockPermission);
+	public void deleteResourceBlockPermissions(long resourceBlockId) {
+		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
 	}
 
 	@Override
@@ -174,6 +196,37 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.fetchResourceBlockPermission(resourceBlockPermissionId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourceBlockPermissionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		long[] roleIds, java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
+			name, primKey, actionIds);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _resourceBlockPermissionLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the resource block permission with the primary key.
 	*
@@ -186,28 +239,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		long resourceBlockPermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockPermissionLocalService.getResourceBlockPermission(resourceBlockPermissionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourceBlockPermissionLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,6 +259,12 @@ public class ResourceBlockPermissionLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long resourceBlockId) {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
+	}
+
 	/**
 	* Returns the number of resource block permissions.
 	*
@@ -238,26 +275,11 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount();
 	}
 
-	/**
-	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
-		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission) {
-		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceBlockPermissionLocalService.getBeanIdentifier();
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
+			roleId);
 	}
 
 	/**
@@ -271,44 +293,22 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	@Override
-	public void addResourceBlockPermissions(long resourceBlockId,
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
-			resourceBlockPermissionsContainer);
-	}
-
-	@Override
-	public void deleteResourceBlockPermissions(long resourceBlockId) {
-		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
-	}
-
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		long[] roleIds, java.lang.String name, long primKey,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
-			name, primKey, actionIds);
-	}
-
-	@Override
-	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId) {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
-	}
-
-	@Override
-	public int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId) {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
-			roleId);
-	}
-
-	@Override
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator) {
 		_resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockId,
 			roleId, actionIdsLong, operator);
+	}
+
+	/**
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission) {
+		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
 	}
 
 	/**

@@ -33,6 +33,33 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 
+	@Override
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
+			dlFolder);
+	}
+
+	@Override
+	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId) {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	@Override
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders) {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
+			DLFolders);
+	}
+
+	@Override
+	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) {
+		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
+	}
+
 	/**
 	* Adds the document library folder to the database. Also notifies the appropriate model listeners.
 	*
@@ -45,6 +72,40 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.addDLFolder(dlFolder);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean hidden,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
+			mountPoint, parentFolderId, name, description, hidden,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
+	long, long, boolean, long, String, String, boolean,
+	ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
+			mountPoint, parentFolderId, name, description, serviceContext);
+	}
+
+	@Override
+	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId) {
+		_dlFolderLocalService.clearDLFileEntryTypeDLFolders(fileEntryTypeId);
+	}
+
 	/**
 	* Creates a new document library folder with the primary key. Does not add the document library folder to the database.
 	*
@@ -55,6 +116,52 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFolder createDLFolder(
 		long folderId) {
 		return _dlFolderLocalService.createDLFolder(folderId);
+	}
+
+	@Override
+	public void deleteAll(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFolderLocalService.deleteAll(groupId);
+	}
+
+	@Override
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
+			dlFolder);
+	}
+
+	@Override
+	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId) {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	@Override
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders) {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
+			DLFolders);
+	}
+
+	@Override
+	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) {
+		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
+	}
+
+	/**
+	* Deletes the document library folder from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFolder the document library folder
+	* @return the document library folder that was removed
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		return _dlFolderLocalService.deleteDLFolder(dlFolder);
 	}
 
 	/**
@@ -71,16 +178,53 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.deleteDLFolder(folderId);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deleteFolder(dlFolder);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deleteFolder(dlFolder,
+			includeTrashedEntries);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deleteFolder(folderId);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deleteFolder(folderId,
+			includeTrashedEntries);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long userId, long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deleteFolder(userId, folderId,
+			includeTrashedEntries);
+	}
+
 	/**
-	* Deletes the document library folder from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @return the document library folder that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
-		return _dlFolderLocalService.deleteDLFolder(dlFolder);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -200,6 +344,81 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.fetchDLFolderByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
+		long folderId) {
+		return _dlFolderLocalService.fetchFolder(folderId);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
+		long groupId, long parentFolderId, java.lang.String name) {
+		return _dlFolderLocalService.fetchFolder(groupId, parentFolderId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlFolderLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFolderLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
+		long companyId, int start, int end) {
+		return _dlFolderLocalService.getCompanyFolders(companyId, start, end);
+	}
+
+	@Override
+	public int getCompanyFoldersCount(long companyId) {
+		return _dlFolderLocalService.getCompanyFoldersCount(companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId) {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end) {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId) {
+		return _dlFolderLocalService.getDLFileEntryTypeDLFoldersCount(fileEntryTypeId);
+	}
+
+	/**
+	* Returns the fileEntryTypeIds of the document library file entry types associated with the document library folder.
+	*
+	* @param folderId the folderId of the document library folder
+	* @return long[] the fileEntryTypeIds of document library file entry types associated with the document library folder
+	*/
+	@Override
+	public long[] getDLFileEntryTypePrimaryKeys(long folderId) {
+		return _dlFolderLocalService.getDLFileEntryTypePrimaryKeys(folderId);
+	}
+
 	/**
 	* Returns the document library folder with the primary key.
 	*
@@ -212,34 +431,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.getDLFolder(folderId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlFolderLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _dlFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -300,249 +491,18 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.getDLFoldersCount();
 	}
 
-	/**
-	* Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @return the document library folder that was updated
-	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
-		return _dlFolderLocalService.updateDLFolder(dlFolder);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _dlFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
-	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId) {
-		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
-			folderId);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
-		_dlFolderLocalService.addDLFileEntryTypeDLFolder(fileEntryTypeId,
-			dlFolder);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds) {
-		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
-			folderIds);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders) {
-		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
-			DLFolders);
-	}
-
-	@Override
-	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId) {
-		_dlFolderLocalService.clearDLFileEntryTypeDLFolders(fileEntryTypeId);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		long folderId) {
-		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
-			folderId);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
-		_dlFolderLocalService.deleteDLFileEntryTypeDLFolder(fileEntryTypeId,
-			dlFolder);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds) {
-		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
-			folderIds);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders) {
-		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
-			DLFolders);
-	}
-
-	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the document library folder.
-	*
-	* @param folderId the folderId of the document library folder
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the document library folder
-	*/
-	@Override
-	public long[] getDLFileEntryTypePrimaryKeys(long folderId) {
-		return _dlFolderLocalService.getDLFileEntryTypePrimaryKeys(folderId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId) {
-		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId, int start, int end) {
-		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
-		return _dlFolderLocalService.getDLFileEntryTypeDLFolders(fileEntryTypeId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId) {
-		return _dlFolderLocalService.getDLFileEntryTypeDLFoldersCount(fileEntryTypeId);
-	}
-
-	@Override
-	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		long folderId) {
-		return _dlFolderLocalService.hasDLFileEntryTypeDLFolder(fileEntryTypeId,
-			folderId);
-	}
-
-	@Override
-	public boolean hasDLFileEntryTypeDLFolders(long fileEntryTypeId) {
-		return _dlFolderLocalService.hasDLFileEntryTypeDLFolders(fileEntryTypeId);
-	}
-
-	@Override
-	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds) {
-		_dlFolderLocalService.setDLFileEntryTypeDLFolders(fileEntryTypeId,
-			folderIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFolderLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFolderLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean hidden,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
-			mountPoint, parentFolderId, name, description, hidden,
-			serviceContext);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
-	long, long, boolean, long, String, String, boolean,
-	ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.addFolder(userId, groupId, repositoryId,
-			mountPoint, parentFolderId, name, description, serviceContext);
-	}
-
-	@Override
-	public void deleteAll(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFolderLocalService.deleteAll(groupId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deleteFolder(dlFolder);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deleteFolder(dlFolder,
-			includeTrashedEntries);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deleteFolder(folderId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deleteFolder(folderId,
-			includeTrashedEntries);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long userId, long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.deleteFolder(userId, folderId,
-			includeTrashedEntries);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
-		long folderId) {
-		return _dlFolderLocalService.fetchFolder(folderId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
-		long groupId, long parentFolderId, java.lang.String name) {
-		return _dlFolderLocalService.fetchFolder(groupId, parentFolderId, name);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
-		long companyId, int start, int end) {
-		return _dlFolderLocalService.getCompanyFolders(companyId, start, end);
-	}
-
-	@Override
-	public int getCompanyFoldersCount(long companyId) {
-		return _dlFolderLocalService.getCompanyFoldersCount(companyId);
+	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
+		long groupId, long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _dlFolderLocalService.getFileEntriesAndFileShortcuts(groupId,
+			folderId, queryDefinition);
 	}
 
 	/**
@@ -558,10 +518,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId,
+	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return _dlFolderLocalService.getFileEntriesAndFileShortcuts(groupId,
+		return _dlFolderLocalService.getFileEntriesAndFileShortcutsCount(groupId,
 			folderId, queryDefinition);
 	}
 
@@ -576,13 +535,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		int status) {
 		return _dlFolderLocalService.getFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status);
-	}
-
-	@Override
-	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return _dlFolderLocalService.getFileEntriesAndFileShortcutsCount(groupId,
-			folderId, queryDefinition);
 	}
 
 	@Override
@@ -640,6 +592,15 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 			end, obc);
 	}
 
+	@Override
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, java.lang.String[] mimeTypes,
+		boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+			folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getFoldersAndFileEntriesAndFileShortcuts(long, long,
@@ -671,11 +632,11 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, java.lang.String[] mimeTypes,
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
+		long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
@@ -704,15 +665,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		boolean includeMountFolders) {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, mimeTypes, includeMountFolders);
-	}
-
-	@Override
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, java.lang.String[] mimeTypes,
-		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-			folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
 	@Override
@@ -761,9 +713,28 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId) {
 		_dlFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	@Override
+	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
+		long folderId) {
+		return _dlFolderLocalService.hasDLFileEntryTypeDLFolder(fileEntryTypeId,
+			folderId);
+	}
+
+	@Override
+	public boolean hasDLFileEntryTypeDLFolders(long fileEntryTypeId) {
+		return _dlFolderLocalService.hasDLFileEntryTypeDLFolders(fileEntryTypeId);
 	}
 
 	@Override
@@ -799,12 +770,21 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.rebuildTree(companyId);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFolderLocalService.unlockFolder(groupId, parentFolderId, name,
-			lockUuid);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFolderLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		long[] folderIds) {
+		_dlFolderLocalService.setDLFileEntryTypeDLFolders(fileEntryTypeId,
+			folderIds);
 	}
 
 	@Override
@@ -814,16 +794,23 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
-			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
-			overrideFileEntryTypes, serviceContext);
+		_dlFolderLocalService.unlockFolder(groupId, parentFolderId, name,
+			lockUuid);
+	}
+
+	/**
+	* Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFolder the document library folder
+	* @return the document library folder that was updated
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder) {
+		return _dlFolderLocalService.updateDLFolder(dlFolder);
 	}
 
 	@Override
@@ -837,6 +824,19 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.updateFolder(folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.updateFolder(folderId, parentFolderId,
+			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
+			overrideFileEntryTypes, serviceContext);
 	}
 
 	@Override

@@ -32,26 +32,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		_dlFileEntryService = dlFileEntryService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileEntryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileEntryService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		long groupId, long repositoryId, long folderId,
@@ -74,15 +54,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		return _dlFileEntryService.cancelCheckOut(fileEntryId);
 	}
 
-	@Override
-	public void checkInFileEntry(long fileEntryId, boolean major,
-		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryService.checkInFileEntry(fileEntryId, major, changeLog,
-			serviceContext);
-	}
-
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
@@ -102,6 +73,15 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			serviceContext);
 	}
 
+	@Override
+	public void checkInFileEntry(long fileEntryId, boolean major,
+		java.lang.String changeLog,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryService.checkInFileEntry(fileEntryId, major, changeLog,
+			serviceContext);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	ServiceContext)}
@@ -112,14 +92,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.checkOutFileEntry(fileEntryId);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.checkOutFileEntry(fileEntryId, serviceContext);
 	}
 
 	/**
@@ -142,6 +114,14 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.checkOutFileEntry(fileEntryId, owner,
 			expirationTime, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
+		long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.checkOutFileEntry(fileEntryId, serviceContext);
 	}
 
 	@Override
@@ -179,6 +159,16 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		return _dlFileEntryService.fetchFileEntryByImageId(imageId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileEntryService.getBeanIdentifier();
+	}
+
 	@Override
 	public java.io.InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version)
@@ -192,24 +182,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.getFileAsStream(fileEntryId, version,
 			incrementCounter);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.getFileEntries(groupId, folderId, status,
-			start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.getFileEntries(groupId, folderId, start,
-			end, obc);
 	}
 
 	@Override
@@ -232,13 +204,26 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
-	public int getFileEntriesCount(long groupId, long folderId) {
-		return _dlFileEntryService.getFileEntriesCount(groupId, folderId);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.getFileEntries(groupId, folderId, start,
+			end, obc);
 	}
 
 	@Override
-	public int getFileEntriesCount(long groupId, long folderId, int status) {
-		return _dlFileEntryService.getFileEntriesCount(groupId, folderId, status);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.getFileEntries(groupId, folderId, status,
+			start, end, obc);
+	}
+
+	@Override
+	public int getFileEntriesCount(long groupId, long folderId) {
+		return _dlFileEntryService.getFileEntriesCount(groupId, folderId);
 	}
 
 	@Override
@@ -253,6 +238,11 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		java.lang.String[] mimeTypes) {
 		return _dlFileEntryService.getFileEntriesCount(groupId, folderId,
 			mimeTypes);
+	}
+
+	@Override
+	public int getFileEntriesCount(long groupId, long folderId, int status) {
+		return _dlFileEntryService.getFileEntriesCount(groupId, folderId, status);
 	}
 
 	@Override
@@ -290,15 +280,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, long userId, long rootFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.getGroupFileEntries(groupId, userId,
-			rootFolderId, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
 		long groupId, long userId, long repositoryId, long rootFolderId,
 		java.lang.String[] mimeTypes, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
@@ -318,11 +299,12 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
-	public int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long rootFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.getGroupFileEntriesCount(groupId, userId,
-			rootFolderId);
+		return _dlFileEntryService.getGroupFileEntries(groupId, userId,
+			rootFolderId, start, end, obc);
 	}
 
 	@Override
@@ -331,6 +313,14 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		int status) throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.getGroupFileEntriesCount(groupId, userId,
 			repositoryId, rootFolderId, mimeTypes, status);
+	}
+
+	@Override
+	public int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.getGroupFileEntriesCount(groupId, userId,
+			rootFolderId);
 	}
 
 	@Override
@@ -379,19 +369,29 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryService.search(groupId, creatorUserId, folderId,
+			mimeTypes, status, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.search(groupId, creatorUserId, status,
 			start, end);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
-		int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryService.search(groupId, creatorUserId, folderId,
-			mimeTypes, status, start, end);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFileEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

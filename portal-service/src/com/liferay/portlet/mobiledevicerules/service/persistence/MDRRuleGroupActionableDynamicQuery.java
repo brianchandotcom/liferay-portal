@@ -22,7 +22,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUti
 
 /**
  * @author Edward C. Han
- * @deprecated As of 7.0.0, replaced by {@link MDRRuleGroupLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link MDRRuleGroupLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

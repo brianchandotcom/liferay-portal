@@ -22,7 +22,7 @@ import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServic
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SCFrameworkVersionLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SCFrameworkVersionLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

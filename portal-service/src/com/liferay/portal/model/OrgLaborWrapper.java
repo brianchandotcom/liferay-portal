@@ -183,324 +183,19 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this org labor.
-	*
-	* @return the primary key of this org labor
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _orgLabor.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
 	}
 
-	/**
-	* Sets the primary key of this org labor.
-	*
-	* @param primaryKey the primary key of this org labor
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_orgLabor.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.OrgLabor orgLabor) {
+		return _orgLabor.compareTo(orgLabor);
 	}
 
-	/**
-	* Returns the mvcc version of this org labor.
-	*
-	* @return the mvcc version of this org labor
-	*/
 	@Override
-	public long getMvccVersion() {
-		return _orgLabor.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this org labor.
-	*
-	* @param mvccVersion the mvcc version of this org labor
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_orgLabor.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the org labor ID of this org labor.
-	*
-	* @return the org labor ID of this org labor
-	*/
-	@Override
-	public long getOrgLaborId() {
-		return _orgLabor.getOrgLaborId();
-	}
-
-	/**
-	* Sets the org labor ID of this org labor.
-	*
-	* @param orgLaborId the org labor ID of this org labor
-	*/
-	@Override
-	public void setOrgLaborId(long orgLaborId) {
-		_orgLabor.setOrgLaborId(orgLaborId);
-	}
-
-	/**
-	* Returns the organization ID of this org labor.
-	*
-	* @return the organization ID of this org labor
-	*/
-	@Override
-	public long getOrganizationId() {
-		return _orgLabor.getOrganizationId();
-	}
-
-	/**
-	* Sets the organization ID of this org labor.
-	*
-	* @param organizationId the organization ID of this org labor
-	*/
-	@Override
-	public void setOrganizationId(long organizationId) {
-		_orgLabor.setOrganizationId(organizationId);
-	}
-
-	/**
-	* Returns the type ID of this org labor.
-	*
-	* @return the type ID of this org labor
-	*/
-	@Override
-	public int getTypeId() {
-		return _orgLabor.getTypeId();
-	}
-
-	/**
-	* Sets the type ID of this org labor.
-	*
-	* @param typeId the type ID of this org labor
-	*/
-	@Override
-	public void setTypeId(int typeId) {
-		_orgLabor.setTypeId(typeId);
-	}
-
-	/**
-	* Returns the sun open of this org labor.
-	*
-	* @return the sun open of this org labor
-	*/
-	@Override
-	public int getSunOpen() {
-		return _orgLabor.getSunOpen();
-	}
-
-	/**
-	* Sets the sun open of this org labor.
-	*
-	* @param sunOpen the sun open of this org labor
-	*/
-	@Override
-	public void setSunOpen(int sunOpen) {
-		_orgLabor.setSunOpen(sunOpen);
-	}
-
-	/**
-	* Returns the sun close of this org labor.
-	*
-	* @return the sun close of this org labor
-	*/
-	@Override
-	public int getSunClose() {
-		return _orgLabor.getSunClose();
-	}
-
-	/**
-	* Sets the sun close of this org labor.
-	*
-	* @param sunClose the sun close of this org labor
-	*/
-	@Override
-	public void setSunClose(int sunClose) {
-		_orgLabor.setSunClose(sunClose);
-	}
-
-	/**
-	* Returns the mon open of this org labor.
-	*
-	* @return the mon open of this org labor
-	*/
-	@Override
-	public int getMonOpen() {
-		return _orgLabor.getMonOpen();
-	}
-
-	/**
-	* Sets the mon open of this org labor.
-	*
-	* @param monOpen the mon open of this org labor
-	*/
-	@Override
-	public void setMonOpen(int monOpen) {
-		_orgLabor.setMonOpen(monOpen);
-	}
-
-	/**
-	* Returns the mon close of this org labor.
-	*
-	* @return the mon close of this org labor
-	*/
-	@Override
-	public int getMonClose() {
-		return _orgLabor.getMonClose();
-	}
-
-	/**
-	* Sets the mon close of this org labor.
-	*
-	* @param monClose the mon close of this org labor
-	*/
-	@Override
-	public void setMonClose(int monClose) {
-		_orgLabor.setMonClose(monClose);
-	}
-
-	/**
-	* Returns the tue open of this org labor.
-	*
-	* @return the tue open of this org labor
-	*/
-	@Override
-	public int getTueOpen() {
-		return _orgLabor.getTueOpen();
-	}
-
-	/**
-	* Sets the tue open of this org labor.
-	*
-	* @param tueOpen the tue open of this org labor
-	*/
-	@Override
-	public void setTueOpen(int tueOpen) {
-		_orgLabor.setTueOpen(tueOpen);
-	}
-
-	/**
-	* Returns the tue close of this org labor.
-	*
-	* @return the tue close of this org labor
-	*/
-	@Override
-	public int getTueClose() {
-		return _orgLabor.getTueClose();
-	}
-
-	/**
-	* Sets the tue close of this org labor.
-	*
-	* @param tueClose the tue close of this org labor
-	*/
-	@Override
-	public void setTueClose(int tueClose) {
-		_orgLabor.setTueClose(tueClose);
-	}
-
-	/**
-	* Returns the wed open of this org labor.
-	*
-	* @return the wed open of this org labor
-	*/
-	@Override
-	public int getWedOpen() {
-		return _orgLabor.getWedOpen();
-	}
-
-	/**
-	* Sets the wed open of this org labor.
-	*
-	* @param wedOpen the wed open of this org labor
-	*/
-	@Override
-	public void setWedOpen(int wedOpen) {
-		_orgLabor.setWedOpen(wedOpen);
-	}
-
-	/**
-	* Returns the wed close of this org labor.
-	*
-	* @return the wed close of this org labor
-	*/
-	@Override
-	public int getWedClose() {
-		return _orgLabor.getWedClose();
-	}
-
-	/**
-	* Sets the wed close of this org labor.
-	*
-	* @param wedClose the wed close of this org labor
-	*/
-	@Override
-	public void setWedClose(int wedClose) {
-		_orgLabor.setWedClose(wedClose);
-	}
-
-	/**
-	* Returns the thu open of this org labor.
-	*
-	* @return the thu open of this org labor
-	*/
-	@Override
-	public int getThuOpen() {
-		return _orgLabor.getThuOpen();
-	}
-
-	/**
-	* Sets the thu open of this org labor.
-	*
-	* @param thuOpen the thu open of this org labor
-	*/
-	@Override
-	public void setThuOpen(int thuOpen) {
-		_orgLabor.setThuOpen(thuOpen);
-	}
-
-	/**
-	* Returns the thu close of this org labor.
-	*
-	* @return the thu close of this org labor
-	*/
-	@Override
-	public int getThuClose() {
-		return _orgLabor.getThuClose();
-	}
-
-	/**
-	* Sets the thu close of this org labor.
-	*
-	* @param thuClose the thu close of this org labor
-	*/
-	@Override
-	public void setThuClose(int thuClose) {
-		_orgLabor.setThuClose(thuClose);
-	}
-
-	/**
-	* Returns the fri open of this org labor.
-	*
-	* @return the fri open of this org labor
-	*/
-	@Override
-	public int getFriOpen() {
-		return _orgLabor.getFriOpen();
-	}
-
-	/**
-	* Sets the fri open of this org labor.
-	*
-	* @param friOpen the fri open of this org labor
-	*/
-	@Override
-	public void setFriOpen(int friOpen) {
-		_orgLabor.setFriOpen(friOpen);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _orgLabor.getExpandoBridge();
 	}
 
 	/**
@@ -514,33 +209,78 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	/**
-	* Sets the fri close of this org labor.
+	* Returns the fri open of this org labor.
 	*
-	* @param friClose the fri close of this org labor
+	* @return the fri open of this org labor
 	*/
 	@Override
-	public void setFriClose(int friClose) {
-		_orgLabor.setFriClose(friClose);
+	public int getFriOpen() {
+		return _orgLabor.getFriOpen();
 	}
 
 	/**
-	* Returns the sat open of this org labor.
+	* Returns the mon close of this org labor.
 	*
-	* @return the sat open of this org labor
+	* @return the mon close of this org labor
 	*/
 	@Override
-	public int getSatOpen() {
-		return _orgLabor.getSatOpen();
+	public int getMonClose() {
+		return _orgLabor.getMonClose();
 	}
 
 	/**
-	* Sets the sat open of this org labor.
+	* Returns the mon open of this org labor.
 	*
-	* @param satOpen the sat open of this org labor
+	* @return the mon open of this org labor
 	*/
 	@Override
-	public void setSatOpen(int satOpen) {
-		_orgLabor.setSatOpen(satOpen);
+	public int getMonOpen() {
+		return _orgLabor.getMonOpen();
+	}
+
+	/**
+	* Returns the mvcc version of this org labor.
+	*
+	* @return the mvcc version of this org labor
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _orgLabor.getMvccVersion();
+	}
+
+	/**
+	* Returns the org labor ID of this org labor.
+	*
+	* @return the org labor ID of this org labor
+	*/
+	@Override
+	public long getOrgLaborId() {
+		return _orgLabor.getOrgLaborId();
+	}
+
+	/**
+	* Returns the organization ID of this org labor.
+	*
+	* @return the organization ID of this org labor
+	*/
+	@Override
+	public long getOrganizationId() {
+		return _orgLabor.getOrganizationId();
+	}
+
+	/**
+	* Returns the primary key of this org labor.
+	*
+	* @return the primary key of this org labor
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _orgLabor.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _orgLabor.getPrimaryKeyObj();
 	}
 
 	/**
@@ -554,23 +294,114 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	/**
-	* Sets the sat close of this org labor.
+	* Returns the sat open of this org labor.
 	*
-	* @param satClose the sat close of this org labor
+	* @return the sat open of this org labor
 	*/
 	@Override
-	public void setSatClose(int satClose) {
-		_orgLabor.setSatClose(satClose);
+	public int getSatOpen() {
+		return _orgLabor.getSatOpen();
+	}
+
+	/**
+	* Returns the sun close of this org labor.
+	*
+	* @return the sun close of this org labor
+	*/
+	@Override
+	public int getSunClose() {
+		return _orgLabor.getSunClose();
+	}
+
+	/**
+	* Returns the sun open of this org labor.
+	*
+	* @return the sun open of this org labor
+	*/
+	@Override
+	public int getSunOpen() {
+		return _orgLabor.getSunOpen();
+	}
+
+	/**
+	* Returns the thu close of this org labor.
+	*
+	* @return the thu close of this org labor
+	*/
+	@Override
+	public int getThuClose() {
+		return _orgLabor.getThuClose();
+	}
+
+	/**
+	* Returns the thu open of this org labor.
+	*
+	* @return the thu open of this org labor
+	*/
+	@Override
+	public int getThuOpen() {
+		return _orgLabor.getThuOpen();
+	}
+
+	/**
+	* Returns the tue close of this org labor.
+	*
+	* @return the tue close of this org labor
+	*/
+	@Override
+	public int getTueClose() {
+		return _orgLabor.getTueClose();
+	}
+
+	/**
+	* Returns the tue open of this org labor.
+	*
+	* @return the tue open of this org labor
+	*/
+	@Override
+	public int getTueOpen() {
+		return _orgLabor.getTueOpen();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _orgLabor.isNew();
+	public com.liferay.portal.model.ListType getType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _orgLabor.getType();
+	}
+
+	/**
+	* Returns the type ID of this org labor.
+	*
+	* @return the type ID of this org labor
+	*/
+	@Override
+	public int getTypeId() {
+		return _orgLabor.getTypeId();
+	}
+
+	/**
+	* Returns the wed close of this org labor.
+	*
+	* @return the wed close of this org labor
+	*/
+	@Override
+	public int getWedClose() {
+		return _orgLabor.getWedClose();
+	}
+
+	/**
+	* Returns the wed open of this org labor.
+	*
+	* @return the wed open of this org labor
+	*/
+	@Override
+	public int getWedOpen() {
+		return _orgLabor.getWedOpen();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_orgLabor.setNew(n);
+	public int hashCode() {
+		return _orgLabor.hashCode();
 	}
 
 	@Override
@@ -579,28 +410,23 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_orgLabor.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _orgLabor.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _orgLabor.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _orgLabor.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_orgLabor.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_orgLabor.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _orgLabor.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_orgLabor.setCachedModel(cachedModel);
 	}
 
 	@Override
@@ -621,19 +447,204 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		_orgLabor.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the fri close of this org labor.
+	*
+	* @param friClose the fri close of this org labor
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
+	public void setFriClose(int friClose) {
+		_orgLabor.setFriClose(friClose);
+	}
+
+	/**
+	* Sets the fri open of this org labor.
+	*
+	* @param friOpen the fri open of this org labor
+	*/
+	@Override
+	public void setFriOpen(int friOpen) {
+		_orgLabor.setFriOpen(friOpen);
+	}
+
+	/**
+	* Sets the mon close of this org labor.
+	*
+	* @param monClose the mon close of this org labor
+	*/
+	@Override
+	public void setMonClose(int monClose) {
+		_orgLabor.setMonClose(monClose);
+	}
+
+	/**
+	* Sets the mon open of this org labor.
+	*
+	* @param monOpen the mon open of this org labor
+	*/
+	@Override
+	public void setMonOpen(int monOpen) {
+		_orgLabor.setMonOpen(monOpen);
+	}
+
+	/**
+	* Sets the mvcc version of this org labor.
+	*
+	* @param mvccVersion the mvcc version of this org labor
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_orgLabor.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.OrgLabor orgLabor) {
-		return _orgLabor.compareTo(orgLabor);
+	public void setNew(boolean n) {
+		_orgLabor.setNew(n);
+	}
+
+	/**
+	* Sets the org labor ID of this org labor.
+	*
+	* @param orgLaborId the org labor ID of this org labor
+	*/
+	@Override
+	public void setOrgLaborId(long orgLaborId) {
+		_orgLabor.setOrgLaborId(orgLaborId);
+	}
+
+	/**
+	* Sets the organization ID of this org labor.
+	*
+	* @param organizationId the organization ID of this org labor
+	*/
+	@Override
+	public void setOrganizationId(long organizationId) {
+		_orgLabor.setOrganizationId(organizationId);
+	}
+
+	/**
+	* Sets the primary key of this org labor.
+	*
+	* @param primaryKey the primary key of this org labor
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_orgLabor.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _orgLabor.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_orgLabor.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the sat close of this org labor.
+	*
+	* @param satClose the sat close of this org labor
+	*/
+	@Override
+	public void setSatClose(int satClose) {
+		_orgLabor.setSatClose(satClose);
+	}
+
+	/**
+	* Sets the sat open of this org labor.
+	*
+	* @param satOpen the sat open of this org labor
+	*/
+	@Override
+	public void setSatOpen(int satOpen) {
+		_orgLabor.setSatOpen(satOpen);
+	}
+
+	/**
+	* Sets the sun close of this org labor.
+	*
+	* @param sunClose the sun close of this org labor
+	*/
+	@Override
+	public void setSunClose(int sunClose) {
+		_orgLabor.setSunClose(sunClose);
+	}
+
+	/**
+	* Sets the sun open of this org labor.
+	*
+	* @param sunOpen the sun open of this org labor
+	*/
+	@Override
+	public void setSunOpen(int sunOpen) {
+		_orgLabor.setSunOpen(sunOpen);
+	}
+
+	/**
+	* Sets the thu close of this org labor.
+	*
+	* @param thuClose the thu close of this org labor
+	*/
+	@Override
+	public void setThuClose(int thuClose) {
+		_orgLabor.setThuClose(thuClose);
+	}
+
+	/**
+	* Sets the thu open of this org labor.
+	*
+	* @param thuOpen the thu open of this org labor
+	*/
+	@Override
+	public void setThuOpen(int thuOpen) {
+		_orgLabor.setThuOpen(thuOpen);
+	}
+
+	/**
+	* Sets the tue close of this org labor.
+	*
+	* @param tueClose the tue close of this org labor
+	*/
+	@Override
+	public void setTueClose(int tueClose) {
+		_orgLabor.setTueClose(tueClose);
+	}
+
+	/**
+	* Sets the tue open of this org labor.
+	*
+	* @param tueOpen the tue open of this org labor
+	*/
+	@Override
+	public void setTueOpen(int tueOpen) {
+		_orgLabor.setTueOpen(tueOpen);
+	}
+
+	/**
+	* Sets the type ID of this org labor.
+	*
+	* @param typeId the type ID of this org labor
+	*/
+	@Override
+	public void setTypeId(int typeId) {
+		_orgLabor.setTypeId(typeId);
+	}
+
+	/**
+	* Sets the wed close of this org labor.
+	*
+	* @param wedClose the wed close of this org labor
+	*/
+	@Override
+	public void setWedClose(int wedClose) {
+		_orgLabor.setWedClose(wedClose);
+	}
+
+	/**
+	* Sets the wed open of this org labor.
+	*
+	* @param wedOpen the wed open of this org labor
+	*/
+	@Override
+	public void setWedOpen(int wedOpen) {
+		_orgLabor.setWedOpen(wedOpen);
 	}
 
 	@Override
@@ -647,29 +658,18 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public com.liferay.portal.model.OrgLabor toUnescapedModel() {
-		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _orgLabor.toString();
 	}
 
 	@Override
+	public com.liferay.portal.model.OrgLabor toUnescapedModel() {
+		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _orgLabor.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_orgLabor.persist();
-	}
-
-	@Override
-	public com.liferay.portal.model.ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _orgLabor.getType();
 	}
 
 	@Override

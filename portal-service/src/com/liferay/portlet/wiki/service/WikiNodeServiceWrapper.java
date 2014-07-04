@@ -32,26 +32,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		_wikiNodeService = wikiNodeService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiNodeService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiNodeService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.wiki.model.WikiNode addNode(
 		java.lang.String name, java.lang.String description,
@@ -66,10 +46,14 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		_wikiNodeService.deleteNode(nodeId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.wiki.model.WikiNode getNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeService.getNode(nodeId);
+	public java.lang.String getBeanIdentifier() {
+		return _wikiNodeService.getBeanIdentifier();
 	}
 
 	@Override
@@ -77,6 +61,12 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.getNode(groupId, name);
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiNode getNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeService.getNode(nodeId);
 	}
 
 	@Override
@@ -88,15 +78,15 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeService.getNodes(groupId, status);
+		long groupId, int start, int end) {
+		return _wikiNodeService.getNodes(groupId, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end) {
-		return _wikiNodeService.getNodes(groupId, start, end);
+		long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeService.getNodes(groupId, status);
 	}
 
 	@Override
@@ -133,6 +123,16 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	public void restoreNodeFromTrash(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeService.restoreNodeFromTrash(nodeId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_wikiNodeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

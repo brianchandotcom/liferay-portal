@@ -32,26 +32,6 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		_dlFolderService = dlFolderService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFolderService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFolderService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
 		long groupId, long repositoryId, boolean mountPoint,
@@ -80,6 +60,16 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderService.deleteFolder(groupId, parentFolderId, name);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFolderService.getBeanIdentifier();
 	}
 
 	@Override
@@ -128,21 +118,21 @@ public class DLFolderServiceWrapper implements DLFolderService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
+		long groupId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderService.getFolders(groupId, parentFolderId, start, end,
+			obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.getFolders(groupId, parentFolderId, status,
 			includeMountfolders, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderService.getFolders(groupId, parentFolderId, start, end,
-			obc);
 	}
 
 	@Override
@@ -285,17 +275,27 @@ public class DLFolderServiceWrapper implements DLFolderService,
 			expirationTime);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public void unlockFolder(long groupId, long parentFolderId,
-		java.lang.String name, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFolderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
 	public void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFolderService.unlockFolder(folderId, lockUuid);
+	}
+
+	@Override
+	public void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
 	}
 
 	@Override

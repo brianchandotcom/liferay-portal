@@ -109,44 +109,15 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		}
 	}
 
-	/**
-	* Returns the primary key of this announcements delivery.
-	*
-	* @return the primary key of this announcements delivery
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _announcementsDelivery.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AnnouncementsDeliveryWrapper((AnnouncementsDelivery)_announcementsDelivery.clone());
 	}
 
-	/**
-	* Sets the primary key of this announcements delivery.
-	*
-	* @param primaryKey the primary key of this announcements delivery
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_announcementsDelivery.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the delivery ID of this announcements delivery.
-	*
-	* @return the delivery ID of this announcements delivery
-	*/
-	@Override
-	public long getDeliveryId() {
-		return _announcementsDelivery.getDeliveryId();
-	}
-
-	/**
-	* Sets the delivery ID of this announcements delivery.
-	*
-	* @param deliveryId the delivery ID of this announcements delivery
-	*/
-	@Override
-	public void setDeliveryId(long deliveryId) {
-		_announcementsDelivery.setDeliveryId(deliveryId);
+	public int compareTo(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
+		return _announcementsDelivery.compareTo(announcementsDelivery);
 	}
 
 	/**
@@ -160,73 +131,13 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	/**
-	* Sets the company ID of this announcements delivery.
+	* Returns the delivery ID of this announcements delivery.
 	*
-	* @param companyId the company ID of this announcements delivery
+	* @return the delivery ID of this announcements delivery
 	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_announcementsDelivery.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this announcements delivery.
-	*
-	* @return the user ID of this announcements delivery
-	*/
-	@Override
-	public long getUserId() {
-		return _announcementsDelivery.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this announcements delivery.
-	*
-	* @param userId the user ID of this announcements delivery
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_announcementsDelivery.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this announcements delivery.
-	*
-	* @return the user uuid of this announcements delivery
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _announcementsDelivery.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this announcements delivery.
-	*
-	* @param userUuid the user uuid of this announcements delivery
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_announcementsDelivery.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the type of this announcements delivery.
-	*
-	* @return the type of this announcements delivery
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _announcementsDelivery.getType();
-	}
-
-	/**
-	* Sets the type of this announcements delivery.
-	*
-	* @param type the type of this announcements delivery
-	*/
-	@Override
-	public void setType(java.lang.String type) {
-		_announcementsDelivery.setType(type);
+	public long getDeliveryId() {
+		return _announcementsDelivery.getDeliveryId();
 	}
 
 	/**
@@ -239,24 +150,24 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		return _announcementsDelivery.getEmail();
 	}
 
-	/**
-	* Returns <code>true</code> if this announcements delivery is email.
-	*
-	* @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
-	*/
 	@Override
-	public boolean isEmail() {
-		return _announcementsDelivery.isEmail();
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _announcementsDelivery.getExpandoBridge();
 	}
 
 	/**
-	* Sets whether this announcements delivery is email.
+	* Returns the primary key of this announcements delivery.
 	*
-	* @param email the email of this announcements delivery
+	* @return the primary key of this announcements delivery
 	*/
 	@Override
-	public void setEmail(boolean email) {
-		_announcementsDelivery.setEmail(email);
+	public long getPrimaryKey() {
+		return _announcementsDelivery.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _announcementsDelivery.getPrimaryKeyObj();
 	}
 
 	/**
@@ -270,23 +181,33 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	/**
-	* Returns <code>true</code> if this announcements delivery is sms.
+	* Returns the type of this announcements delivery.
 	*
-	* @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
+	* @return the type of this announcements delivery
 	*/
 	@Override
-	public boolean isSms() {
-		return _announcementsDelivery.isSms();
+	public java.lang.String getType() {
+		return _announcementsDelivery.getType();
 	}
 
 	/**
-	* Sets whether this announcements delivery is sms.
+	* Returns the user ID of this announcements delivery.
 	*
-	* @param sms the sms of this announcements delivery
+	* @return the user ID of this announcements delivery
 	*/
 	@Override
-	public void setSms(boolean sms) {
-		_announcementsDelivery.setSms(sms);
+	public long getUserId() {
+		return _announcementsDelivery.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this announcements delivery.
+	*
+	* @return the user uuid of this announcements delivery
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _announcementsDelivery.getUserUuid();
 	}
 
 	/**
@@ -299,6 +220,46 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		return _announcementsDelivery.getWebsite();
 	}
 
+	@Override
+	public int hashCode() {
+		return _announcementsDelivery.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _announcementsDelivery.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this announcements delivery is email.
+	*
+	* @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEmail() {
+		return _announcementsDelivery.isEmail();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _announcementsDelivery.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _announcementsDelivery.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this announcements delivery is sms.
+	*
+	* @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSms() {
+		return _announcementsDelivery.isSms();
+	}
+
 	/**
 	* Returns <code>true</code> if this announcements delivery is website.
 	*
@@ -309,29 +270,9 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		return _announcementsDelivery.isWebsite();
 	}
 
-	/**
-	* Sets whether this announcements delivery is website.
-	*
-	* @param website the website of this announcements delivery
-	*/
 	@Override
-	public void setWebsite(boolean website) {
-		_announcementsDelivery.setWebsite(website);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _announcementsDelivery.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_announcementsDelivery.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _announcementsDelivery.isCachedModel();
+	public void persist() {
+		_announcementsDelivery.persist();
 	}
 
 	@Override
@@ -339,24 +280,34 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		_announcementsDelivery.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this announcements delivery.
+	*
+	* @param companyId the company ID of this announcements delivery
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _announcementsDelivery.isEscapedModel();
+	public void setCompanyId(long companyId) {
+		_announcementsDelivery.setCompanyId(companyId);
 	}
 
+	/**
+	* Sets the delivery ID of this announcements delivery.
+	*
+	* @param deliveryId the delivery ID of this announcements delivery
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _announcementsDelivery.getPrimaryKeyObj();
+	public void setDeliveryId(long deliveryId) {
+		_announcementsDelivery.setDeliveryId(deliveryId);
 	}
 
+	/**
+	* Sets whether this announcements delivery is email.
+	*
+	* @param email the email of this announcements delivery
+	*/
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_announcementsDelivery.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _announcementsDelivery.getExpandoBridge();
+	public void setEmail(boolean email) {
+		_announcementsDelivery.setEmail(email);
 	}
 
 	@Override
@@ -378,19 +329,73 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new AnnouncementsDeliveryWrapper((AnnouncementsDelivery)_announcementsDelivery.clone());
+	public void setNew(boolean n) {
+		_announcementsDelivery.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this announcements delivery.
+	*
+	* @param primaryKey the primary key of this announcements delivery
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_announcementsDelivery.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
-		return _announcementsDelivery.compareTo(announcementsDelivery);
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_announcementsDelivery.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	/**
+	* Sets whether this announcements delivery is sms.
+	*
+	* @param sms the sms of this announcements delivery
+	*/
 	@Override
-	public int hashCode() {
-		return _announcementsDelivery.hashCode();
+	public void setSms(boolean sms) {
+		_announcementsDelivery.setSms(sms);
+	}
+
+	/**
+	* Sets the type of this announcements delivery.
+	*
+	* @param type the type of this announcements delivery
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_announcementsDelivery.setType(type);
+	}
+
+	/**
+	* Sets the user ID of this announcements delivery.
+	*
+	* @param userId the user ID of this announcements delivery
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_announcementsDelivery.setUserId(userId);
+	}
+
+	/**
+	* Sets the user uuid of this announcements delivery.
+	*
+	* @param userUuid the user uuid of this announcements delivery
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_announcementsDelivery.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets whether this announcements delivery is website.
+	*
+	* @param website the website of this announcements delivery
+	*/
+	@Override
+	public void setWebsite(boolean website) {
+		_announcementsDelivery.setWebsite(website);
 	}
 
 	@Override
@@ -404,23 +409,18 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	@Override
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery toUnescapedModel() {
-		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _announcementsDelivery.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _announcementsDelivery.toXmlString();
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery toUnescapedModel() {
+		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_announcementsDelivery.persist();
+	public java.lang.String toXmlString() {
+		return _announcementsDelivery.toXmlString();
 	}
 
 	@Override

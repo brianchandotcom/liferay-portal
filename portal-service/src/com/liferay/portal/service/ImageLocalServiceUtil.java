@@ -63,6 +63,17 @@ public class ImageLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the image from the database. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was removed
+	*/
+	public static com.liferay.portal.model.Image deleteImage(
+		com.liferay.portal.model.Image image) {
+		return getService().deleteImage(image);
+	}
+
+	/**
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param imageId the primary key of the image
@@ -75,14 +86,12 @@ public class ImageLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the image from the database. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.Image deleteImage(
-		com.liferay.portal.model.Image image) {
-		return getService().deleteImage(image);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -167,6 +176,23 @@ public class ImageLocalServiceUtil {
 		return getService().fetchImage(imageId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.Image getCompanyLogo(long imageId) {
+		return getService().getCompanyLogo(imageId);
+	}
+
 	/**
 	* Returns the image with the primary key.
 	*
@@ -179,23 +205,12 @@ public class ImageLocalServiceUtil {
 		return getService().getImage(imageId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static com.liferay.portal.model.Image getImageOrDefault(long imageId) {
+		return getService().getImageOrDefault(imageId);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	public static java.util.List<com.liferay.portal.model.Image> getImages() {
+		return getService().getImages();
 	}
 
 	/**
@@ -214,6 +229,11 @@ public class ImageLocalServiceUtil {
 		return getService().getImages(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Image> getImagesBySize(
+		int size) {
+		return getService().getImagesBySize(size);
+	}
+
 	/**
 	* Returns the number of images.
 	*
@@ -223,24 +243,10 @@ public class ImageLocalServiceUtil {
 		return getService().getImagesCount();
 	}
 
-	/**
-	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was updated
-	*/
-	public static com.liferay.portal.model.Image updateImage(
-		com.liferay.portal.model.Image image) {
-		return getService().updateImage(image);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -252,21 +258,15 @@ public class ImageLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.Image getCompanyLogo(long imageId) {
-		return getService().getCompanyLogo(imageId);
-	}
-
-	public static com.liferay.portal.model.Image getImageOrDefault(long imageId) {
-		return getService().getImageOrDefault(imageId);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Image> getImages() {
-		return getService().getImages();
-	}
-
-	public static java.util.List<com.liferay.portal.model.Image> getImagesBySize(
-		int size) {
-		return getService().getImagesBySize(size);
+	/**
+	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was updated
+	*/
+	public static com.liferay.portal.model.Image updateImage(
+		com.liferay.portal.model.Image image) {
+		return getService().updateImage(image);
 	}
 
 	public static com.liferay.portal.model.Image updateImage(long imageId,

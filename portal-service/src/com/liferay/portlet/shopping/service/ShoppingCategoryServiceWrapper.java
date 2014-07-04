@@ -33,26 +33,6 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 		_shoppingCategoryService = shoppingCategoryService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCategoryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingCategoryService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCategory addCategory(
 		long parentCategoryId, java.lang.String name,
@@ -67,6 +47,16 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	public void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingCategoryService.deleteCategory(categoryId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingCategoryService.getBeanIdentifier();
 	}
 
 	@Override
@@ -100,6 +90,16 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 		long groupId, long categoryId) {
 		_shoppingCategoryService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_shoppingCategoryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

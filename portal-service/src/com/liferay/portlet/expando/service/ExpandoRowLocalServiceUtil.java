@@ -52,6 +52,12 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().addExpandoRow(expandoRow);
 	}
 
+	public static com.liferay.portlet.expando.model.ExpandoRow addRow(
+		long tableId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addRow(tableId, classPK);
+	}
+
 	/**
 	* Creates a new expando row with the primary key. Does not add the expando row to the database.
 	*
@@ -61,6 +67,17 @@ public class ExpandoRowLocalServiceUtil {
 	public static com.liferay.portlet.expando.model.ExpandoRow createExpandoRow(
 		long rowId) {
 		return getService().createExpandoRow(rowId);
+	}
+
+	/**
+	* Deletes the expando row from the database. Also notifies the appropriate model listeners.
+	*
+	* @param expandoRow the expando row
+	* @return the expando row that was removed
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoRow deleteExpandoRow(
+		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
+		return getService().deleteExpandoRow(expandoRow);
 	}
 
 	/**
@@ -76,14 +93,43 @@ public class ExpandoRowLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the expando row from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoRow the expando row
-	* @return the expando row that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.expando.model.ExpandoRow deleteExpandoRow(
-		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
-		return getService().deleteExpandoRow(expandoRow);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteRow(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRow(companyId, className, tableName, classPK);
+	}
+
+	public static void deleteRow(long companyId, long classNameId,
+		java.lang.String tableName, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRow(companyId, classNameId, tableName, classPK);
+	}
+
+	public static void deleteRow(
+		com.liferay.portlet.expando.model.ExpandoRow row) {
+		getService().deleteRow(row);
+	}
+
+	public static void deleteRow(long rowId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRow(rowId);
+	}
+
+	public static void deleteRow(long tableId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRow(tableId, classPK);
+	}
+
+	public static void deleteRows(long classPK) {
+		getService().deleteRows(classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -169,6 +215,39 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().fetchExpandoRow(rowId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
+		long companyId, java.lang.String className, int start, int end) {
+		return getService().getDefaultTableRows(companyId, className, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
+		long companyId, long classNameId, int start, int end) {
+		return getService()
+				   .getDefaultTableRows(companyId, classNameId, start, end);
+	}
+
+	public static int getDefaultTableRowsCount(long companyId,
+		java.lang.String className) {
+		return getService().getDefaultTableRowsCount(companyId, className);
+	}
+
+	public static int getDefaultTableRowsCount(long companyId, long classNameId) {
+		return getService().getDefaultTableRowsCount(companyId, classNameId);
+	}
+
 	/**
 	* Returns the expando row with the primary key.
 	*
@@ -179,25 +258,6 @@ public class ExpandoRowLocalServiceUtil {
 	public static com.liferay.portlet.expando.model.ExpandoRow getExpandoRow(
 		long rowId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getExpandoRow(rowId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -225,90 +285,22 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().getExpandoRowsCount();
 	}
 
-	/**
-	* Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoRow the expando row
-	* @return the expando row that was updated
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoRow updateExpandoRow(
-		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
-		return getService().updateExpandoRow(expandoRow);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoRow addRow(
-		long tableId, long classPK)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addRow(tableId, classPK);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteRow(
-		com.liferay.portlet.expando.model.ExpandoRow row) {
-		getService().deleteRow(row);
+	public static com.liferay.portlet.expando.model.ExpandoRow getRow(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		long classPK) {
+		return getService().getRow(companyId, className, tableName, classPK);
 	}
 
-	public static void deleteRow(long rowId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRow(rowId);
-	}
-
-	public static void deleteRow(long tableId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRow(tableId, classPK);
-	}
-
-	public static void deleteRow(long companyId, long classNameId,
-		java.lang.String tableName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRow(companyId, classNameId, tableName, classPK);
-	}
-
-	public static void deleteRow(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRow(companyId, className, tableName, classPK);
-	}
-
-	public static void deleteRows(long classPK) {
-		getService().deleteRows(classPK);
-	}
-
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
-		long companyId, long classNameId, int start, int end) {
-		return getService()
-				   .getDefaultTableRows(companyId, classNameId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
-		long companyId, java.lang.String className, int start, int end) {
-		return getService().getDefaultTableRows(companyId, className, start, end);
-	}
-
-	public static int getDefaultTableRowsCount(long companyId, long classNameId) {
-		return getService().getDefaultTableRowsCount(companyId, classNameId);
-	}
-
-	public static int getDefaultTableRowsCount(long companyId,
-		java.lang.String className) {
-		return getService().getDefaultTableRowsCount(companyId, className);
+	public static com.liferay.portlet.expando.model.ExpandoRow getRow(
+		long companyId, long classNameId, java.lang.String tableName,
+		long classPK) {
+		return getService().getRow(companyId, classNameId, tableName, classPK);
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoRow getRow(
@@ -322,36 +314,6 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().getRow(tableId, classPK);
 	}
 
-	public static com.liferay.portlet.expando.model.ExpandoRow getRow(
-		long companyId, long classNameId, java.lang.String tableName,
-		long classPK) {
-		return getService().getRow(companyId, classNameId, tableName, classPK);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoRow getRow(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		long classPK) {
-		return getService().getRow(companyId, className, tableName, classPK);
-	}
-
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
-		long tableId, int start, int end) {
-		return getService().getRows(tableId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
-		long companyId, long classNameId, java.lang.String tableName,
-		int start, int end) {
-		return getService()
-				   .getRows(companyId, classNameId, tableName, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		int start, int end) {
-		return getService().getRows(companyId, className, tableName, start, end);
-	}
-
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
 	String, int, int)}
@@ -363,18 +325,22 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().getRows(className, tableName, start, end);
 	}
 
-	public static int getRowsCount(long tableId) {
-		return getService().getRowsCount(tableId);
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		int start, int end) {
+		return getService().getRows(companyId, className, tableName, start, end);
 	}
 
-	public static int getRowsCount(long companyId, long classNameId,
-		java.lang.String tableName) {
-		return getService().getRowsCount(companyId, classNameId, tableName);
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
+		long companyId, long classNameId, java.lang.String tableName,
+		int start, int end) {
+		return getService()
+				   .getRows(companyId, classNameId, tableName, start, end);
 	}
 
-	public static int getRowsCount(long companyId, java.lang.String className,
-		java.lang.String tableName) {
-		return getService().getRowsCount(companyId, className, tableName);
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
+		long tableId, int start, int end) {
+		return getService().getRows(tableId, start, end);
 	}
 
 	/**
@@ -385,6 +351,40 @@ public class ExpandoRowLocalServiceUtil {
 	public static int getRowsCount(java.lang.String className,
 		java.lang.String tableName) {
 		return getService().getRowsCount(className, tableName);
+	}
+
+	public static int getRowsCount(long companyId, java.lang.String className,
+		java.lang.String tableName) {
+		return getService().getRowsCount(companyId, className, tableName);
+	}
+
+	public static int getRowsCount(long companyId, long classNameId,
+		java.lang.String tableName) {
+		return getService().getRowsCount(companyId, classNameId, tableName);
+	}
+
+	public static int getRowsCount(long tableId) {
+		return getService().getRowsCount(tableId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param expandoRow the expando row
+	* @return the expando row that was updated
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoRow updateExpandoRow(
+		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
+		return getService().updateExpandoRow(expandoRow);
 	}
 
 	public static ExpandoRowLocalService getService() {

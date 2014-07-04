@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,6 +54,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param counter the counter
 	* @return the counter that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.counter.model.Counter addCounter(
 		com.liferay.counter.model.Counter counter);
 
@@ -66,24 +68,34 @@ public interface CounterLocalService extends BaseLocalService,
 		java.lang.String name);
 
 	/**
+	* Deletes the counter from the database. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was removed
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.counter.model.Counter deleteCounter(
+		com.liferay.counter.model.Counter counter);
+
+	/**
 	* Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param name the primary key of the counter
 	* @return the counter that was removed
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.counter.model.Counter deleteCounter(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Deletes the counter from the database. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was removed
+	* @throws PortalException
 	*/
-	public com.liferay.counter.model.Counter deleteCounter(
-		com.liferay.counter.model.Counter counter);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -154,6 +166,13 @@ public interface CounterLocalService extends BaseLocalService,
 	public com.liferay.counter.model.Counter fetchCounter(java.lang.String name);
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
 	* Returns the counter with the primary key.
 	*
 	* @param name the primary key of the counter
@@ -162,20 +181,6 @@ public interface CounterLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.counter.model.Counter getCounter(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -201,21 +206,32 @@ public interface CounterLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountersCount();
 
-	/**
-	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was updated
-	*/
-	public com.liferay.counter.model.Counter updateCounter(
-		com.liferay.counter.model.Counter counter);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.String> getNames();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public long increment();
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public long increment(java.lang.String name);
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public long increment(java.lang.String name, int size);
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public void rename(java.lang.String oldName, java.lang.String newName);
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public void reset(java.lang.String name);
+
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	public void reset(java.lang.String name, long size);
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -224,18 +240,13 @@ public interface CounterLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.String> getNames();
-
-	public long increment();
-
-	public long increment(java.lang.String name);
-
-	public long increment(java.lang.String name, int size);
-
-	public void rename(java.lang.String oldName, java.lang.String newName);
-
-	public void reset(java.lang.String name);
-
-	public void reset(java.lang.String name, long size);
+	/**
+	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.counter.model.Counter updateCounter(
+		com.liferay.counter.model.Counter counter);
 }

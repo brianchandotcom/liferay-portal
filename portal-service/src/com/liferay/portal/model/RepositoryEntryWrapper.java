@@ -145,104 +145,15 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		}
 	}
 
-	/**
-	* Returns the primary key of this repository entry.
-	*
-	* @return the primary key of this repository entry
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _repositoryEntry.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new RepositoryEntryWrapper((RepositoryEntry)_repositoryEntry.clone());
 	}
 
-	/**
-	* Sets the primary key of this repository entry.
-	*
-	* @param primaryKey the primary key of this repository entry
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_repositoryEntry.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this repository entry.
-	*
-	* @return the mvcc version of this repository entry
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _repositoryEntry.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this repository entry.
-	*
-	* @param mvccVersion the mvcc version of this repository entry
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_repositoryEntry.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the uuid of this repository entry.
-	*
-	* @return the uuid of this repository entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _repositoryEntry.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this repository entry.
-	*
-	* @param uuid the uuid of this repository entry
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_repositoryEntry.setUuid(uuid);
-	}
-
-	/**
-	* Returns the repository entry ID of this repository entry.
-	*
-	* @return the repository entry ID of this repository entry
-	*/
-	@Override
-	public long getRepositoryEntryId() {
-		return _repositoryEntry.getRepositoryEntryId();
-	}
-
-	/**
-	* Sets the repository entry ID of this repository entry.
-	*
-	* @param repositoryEntryId the repository entry ID of this repository entry
-	*/
-	@Override
-	public void setRepositoryEntryId(long repositoryEntryId) {
-		_repositoryEntry.setRepositoryEntryId(repositoryEntryId);
-	}
-
-	/**
-	* Returns the group ID of this repository entry.
-	*
-	* @return the group ID of this repository entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _repositoryEntry.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this repository entry.
-	*
-	* @param groupId the group ID of this repository entry
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_repositoryEntry.setGroupId(groupId);
+	public int compareTo(
+		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
+		return _repositoryEntry.compareTo(repositoryEntry);
 	}
 
 	/**
@@ -256,76 +167,6 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	/**
-	* Sets the company ID of this repository entry.
-	*
-	* @param companyId the company ID of this repository entry
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_repositoryEntry.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this repository entry.
-	*
-	* @return the user ID of this repository entry
-	*/
-	@Override
-	public long getUserId() {
-		return _repositoryEntry.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this repository entry.
-	*
-	* @param userId the user ID of this repository entry
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_repositoryEntry.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this repository entry.
-	*
-	* @return the user uuid of this repository entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _repositoryEntry.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this repository entry.
-	*
-	* @param userUuid the user uuid of this repository entry
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_repositoryEntry.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this repository entry.
-	*
-	* @return the user name of this repository entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _repositoryEntry.getUserName();
-	}
-
-	/**
-	* Sets the user name of this repository entry.
-	*
-	* @param userName the user name of this repository entry
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_repositoryEntry.setUserName(userName);
-	}
-
-	/**
 	* Returns the create date of this repository entry.
 	*
 	* @return the create date of this repository entry
@@ -335,74 +176,19 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		return _repositoryEntry.getCreateDate();
 	}
 
-	/**
-	* Sets the create date of this repository entry.
-	*
-	* @param createDate the create date of this repository entry
-	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_repositoryEntry.setCreateDate(createDate);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _repositoryEntry.getExpandoBridge();
 	}
 
 	/**
-	* Returns the modified date of this repository entry.
+	* Returns the group ID of this repository entry.
 	*
-	* @return the modified date of this repository entry
+	* @return the group ID of this repository entry
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
-		return _repositoryEntry.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this repository entry.
-	*
-	* @param modifiedDate the modified date of this repository entry
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_repositoryEntry.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the repository ID of this repository entry.
-	*
-	* @return the repository ID of this repository entry
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _repositoryEntry.getRepositoryId();
-	}
-
-	/**
-	* Sets the repository ID of this repository entry.
-	*
-	* @param repositoryId the repository ID of this repository entry
-	*/
-	@Override
-	public void setRepositoryId(long repositoryId) {
-		_repositoryEntry.setRepositoryId(repositoryId);
-	}
-
-	/**
-	* Returns the mapped ID of this repository entry.
-	*
-	* @return the mapped ID of this repository entry
-	*/
-	@Override
-	public java.lang.String getMappedId() {
-		return _repositoryEntry.getMappedId();
-	}
-
-	/**
-	* Sets the mapped ID of this repository entry.
-	*
-	* @param mappedId the mapped ID of this repository entry
-	*/
-	@Override
-	public void setMappedId(java.lang.String mappedId) {
-		_repositoryEntry.setMappedId(mappedId);
+	public long getGroupId() {
+		return _repositoryEntry.getGroupId();
 	}
 
 	/**
@@ -416,6 +202,126 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	/**
+	* Returns the mapped ID of this repository entry.
+	*
+	* @return the mapped ID of this repository entry
+	*/
+	@Override
+	public java.lang.String getMappedId() {
+		return _repositoryEntry.getMappedId();
+	}
+
+	/**
+	* Returns the modified date of this repository entry.
+	*
+	* @return the modified date of this repository entry
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _repositoryEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this repository entry.
+	*
+	* @return the mvcc version of this repository entry
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _repositoryEntry.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this repository entry.
+	*
+	* @return the primary key of this repository entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _repositoryEntry.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _repositoryEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the repository entry ID of this repository entry.
+	*
+	* @return the repository entry ID of this repository entry
+	*/
+	@Override
+	public long getRepositoryEntryId() {
+		return _repositoryEntry.getRepositoryEntryId();
+	}
+
+	/**
+	* Returns the repository ID of this repository entry.
+	*
+	* @return the repository ID of this repository entry
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _repositoryEntry.getRepositoryId();
+	}
+
+	/**
+	* Returns the user ID of this repository entry.
+	*
+	* @return the user ID of this repository entry
+	*/
+	@Override
+	public long getUserId() {
+		return _repositoryEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this repository entry.
+	*
+	* @return the user name of this repository entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _repositoryEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this repository entry.
+	*
+	* @return the user uuid of this repository entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _repositoryEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this repository entry.
+	*
+	* @return the uuid of this repository entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _repositoryEntry.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _repositoryEntry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _repositoryEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _repositoryEntry.isEscapedModel();
+	}
+
+	/**
 	* Returns <code>true</code> if this repository entry is manual check in required.
 	*
 	* @return <code>true</code> if this repository entry is manual check in required; <code>false</code> otherwise
@@ -425,29 +331,14 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		return _repositoryEntry.isManualCheckInRequired();
 	}
 
-	/**
-	* Sets whether this repository entry is manual check in required.
-	*
-	* @param manualCheckInRequired the manual check in required of this repository entry
-	*/
-	@Override
-	public void setManualCheckInRequired(boolean manualCheckInRequired) {
-		_repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
-	}
-
 	@Override
 	public boolean isNew() {
 		return _repositoryEntry.isNew();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_repositoryEntry.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _repositoryEntry.isCachedModel();
+	public void persist() {
+		_repositoryEntry.persist();
 	}
 
 	@Override
@@ -455,24 +346,24 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		_repositoryEntry.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this repository entry.
+	*
+	* @param companyId the company ID of this repository entry
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _repositoryEntry.isEscapedModel();
+	public void setCompanyId(long companyId) {
+		_repositoryEntry.setCompanyId(companyId);
 	}
 
+	/**
+	* Sets the create date of this repository entry.
+	*
+	* @param createDate the create date of this repository entry
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _repositoryEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_repositoryEntry.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _repositoryEntry.getExpandoBridge();
+	public void setCreateDate(java.util.Date createDate) {
+		_repositoryEntry.setCreateDate(createDate);
 	}
 
 	@Override
@@ -493,20 +384,134 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		_repositoryEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this repository entry.
+	*
+	* @param groupId the group ID of this repository entry
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new RepositoryEntryWrapper((RepositoryEntry)_repositoryEntry.clone());
+	public void setGroupId(long groupId) {
+		_repositoryEntry.setGroupId(groupId);
+	}
+
+	/**
+	* Sets whether this repository entry is manual check in required.
+	*
+	* @param manualCheckInRequired the manual check in required of this repository entry
+	*/
+	@Override
+	public void setManualCheckInRequired(boolean manualCheckInRequired) {
+		_repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+	}
+
+	/**
+	* Sets the mapped ID of this repository entry.
+	*
+	* @param mappedId the mapped ID of this repository entry
+	*/
+	@Override
+	public void setMappedId(java.lang.String mappedId) {
+		_repositoryEntry.setMappedId(mappedId);
+	}
+
+	/**
+	* Sets the modified date of this repository entry.
+	*
+	* @param modifiedDate the modified date of this repository entry
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_repositoryEntry.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this repository entry.
+	*
+	* @param mvccVersion the mvcc version of this repository entry
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_repositoryEntry.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
-		return _repositoryEntry.compareTo(repositoryEntry);
+	public void setNew(boolean n) {
+		_repositoryEntry.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this repository entry.
+	*
+	* @param primaryKey the primary key of this repository entry
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_repositoryEntry.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _repositoryEntry.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_repositoryEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the repository entry ID of this repository entry.
+	*
+	* @param repositoryEntryId the repository entry ID of this repository entry
+	*/
+	@Override
+	public void setRepositoryEntryId(long repositoryEntryId) {
+		_repositoryEntry.setRepositoryEntryId(repositoryEntryId);
+	}
+
+	/**
+	* Sets the repository ID of this repository entry.
+	*
+	* @param repositoryId the repository ID of this repository entry
+	*/
+	@Override
+	public void setRepositoryId(long repositoryId) {
+		_repositoryEntry.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Sets the user ID of this repository entry.
+	*
+	* @param userId the user ID of this repository entry
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_repositoryEntry.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this repository entry.
+	*
+	* @param userName the user name of this repository entry
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_repositoryEntry.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this repository entry.
+	*
+	* @param userUuid the user uuid of this repository entry
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_repositoryEntry.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this repository entry.
+	*
+	* @param uuid the uuid of this repository entry
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_repositoryEntry.setUuid(uuid);
 	}
 
 	@Override
@@ -520,23 +525,18 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public com.liferay.portal.model.RepositoryEntry toUnescapedModel() {
-		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _repositoryEntry.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _repositoryEntry.toXmlString();
+	public com.liferay.portal.model.RepositoryEntry toUnescapedModel() {
+		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_repositoryEntry.persist();
+	public java.lang.String toXmlString() {
+		return _repositoryEntry.toXmlString();
 	}
 
 	@Override

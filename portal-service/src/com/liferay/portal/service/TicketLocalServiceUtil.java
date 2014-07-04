@@ -40,6 +40,14 @@ public class TicketLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.Ticket addTicket(long companyId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addTicket(companyId, className, classPK, type, extraInfo,
+			expirationDate, serviceContext);
+	}
 
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
@@ -63,15 +71,12 @@ public class TicketLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ticketId the primary key of the ticket
-	* @return the ticket that was removed
-	* @throws PortalException if a ticket with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.Ticket deleteTicket(long ticketId)
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteTicket(ticketId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -83,6 +88,18 @@ public class TicketLocalServiceUtil {
 	public static com.liferay.portal.model.Ticket deleteTicket(
 		com.liferay.portal.model.Ticket ticket) {
 		return getService().deleteTicket(ticket);
+	}
+
+	/**
+	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ticketId the primary key of the ticket
+	* @return the ticket that was removed
+	* @throws PortalException if a ticket with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.Ticket deleteTicket(long ticketId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteTicket(ticketId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -163,8 +180,38 @@ public class TicketLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portal.model.Ticket fetchTicket(
+		java.lang.String key) {
+		return getService().fetchTicket(key);
+	}
+
 	public static com.liferay.portal.model.Ticket fetchTicket(long ticketId) {
 		return getService().fetchTicket(ticketId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.model.Ticket getTicket(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTicket(key);
 	}
 
 	/**
@@ -177,25 +224,6 @@ public class TicketLocalServiceUtil {
 	public static com.liferay.portal.model.Ticket getTicket(long ticketId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTicket(ticketId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -224,26 +252,6 @@ public class TicketLocalServiceUtil {
 	}
 
 	/**
-	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ticket the ticket
-	* @return the ticket that was updated
-	*/
-	public static com.liferay.portal.model.Ticket updateTicket(
-		com.liferay.portal.model.Ticket ticket) {
-		return getService().updateTicket(ticket);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -252,24 +260,15 @@ public class TicketLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.Ticket addTicket(long companyId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService()
-				   .addTicket(companyId, className, classPK, type, extraInfo,
-			expirationDate, serviceContext);
-	}
-
-	public static com.liferay.portal.model.Ticket fetchTicket(
-		java.lang.String key) {
-		return getService().fetchTicket(key);
-	}
-
-	public static com.liferay.portal.model.Ticket getTicket(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTicket(key);
+	/**
+	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ticket the ticket
+	* @return the ticket that was updated
+	*/
+	public static com.liferay.portal.model.Ticket updateTicket(
+		com.liferay.portal.model.Ticket ticket) {
+		return getService().updateTicket(ticket);
 	}
 
 	public static TicketLocalService getService() {

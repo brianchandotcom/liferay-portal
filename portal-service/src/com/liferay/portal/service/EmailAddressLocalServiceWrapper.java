@@ -44,6 +44,30 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	String, long, String, int, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String address,
+		int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.addEmailAddress(userId, className,
+			classPK, address, typeId, primary);
+	}
+
+	@Override
+	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String address,
+		int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.addEmailAddress(userId, className,
+			classPK, address, typeId, primary, serviceContext);
+	}
+
+	/**
 	* Creates a new email address with the primary key. Does not add the email address to the database.
 	*
 	* @param emailAddressId the primary key for the new email address
@@ -53,6 +77,18 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	public com.liferay.portal.model.EmailAddress createEmailAddress(
 		long emailAddressId) {
 		return _emailAddressLocalService.createEmailAddress(emailAddressId);
+	}
+
+	/**
+	* Deletes the email address from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
+		com.liferay.portal.model.EmailAddress emailAddress) {
+		return _emailAddressLocalService.deleteEmailAddress(emailAddress);
 	}
 
 	/**
@@ -69,16 +105,21 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		return _emailAddressLocalService.deleteEmailAddress(emailAddressId);
 	}
 
+	@Override
+	public void deleteEmailAddresses(long companyId,
+		java.lang.String className, long classPK) {
+		_emailAddressLocalService.deleteEmailAddresses(companyId, className,
+			classPK);
+	}
+
 	/**
-	* Deletes the email address from the database. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
-		com.liferay.portal.model.EmailAddress emailAddress) {
-		return _emailAddressLocalService.deleteEmailAddress(emailAddress);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -186,6 +227,21 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 			companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _emailAddressLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _emailAddressLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the email address with the primary key.
 	*
@@ -198,34 +254,6 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.getEmailAddress(emailAddressId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _emailAddressLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _emailAddressLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -242,6 +270,18 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressLocalService.getEmailAddressByUuidAndCompanyId(uuid,
 			companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses() {
+		return _emailAddressLocalService.getEmailAddresses();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
+		long companyId, java.lang.String className, long classPK) {
+		return _emailAddressLocalService.getEmailAddresses(companyId,
+			className, classPK);
 	}
 
 	/**
@@ -271,26 +311,17 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		return _emailAddressLocalService.getEmailAddressesCount();
 	}
 
-	/**
-	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.EmailAddress updateEmailAddress(
-		com.liferay.portal.model.EmailAddress emailAddress) {
-		return _emailAddressLocalService.updateEmailAddress(emailAddress);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _emailAddressLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _emailAddressLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -304,46 +335,15 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
-	String, long, String, int, boolean, ServiceContext)}
+	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was updated
 	*/
-	@Deprecated
 	@Override
-	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String address,
-		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.addEmailAddress(userId, className,
-			classPK, address, typeId, primary);
-	}
-
-	@Override
-	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String address,
-		int typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddressLocalService.addEmailAddress(userId, className,
-			classPK, address, typeId, primary, serviceContext);
-	}
-
-	@Override
-	public void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK) {
-		_emailAddressLocalService.deleteEmailAddresses(companyId, className,
-			classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses() {
-		return _emailAddressLocalService.getEmailAddresses();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
-		long companyId, java.lang.String className, long classPK) {
-		return _emailAddressLocalService.getEmailAddresses(companyId,
-			className, classPK);
+	public com.liferay.portal.model.EmailAddress updateEmailAddress(
+		com.liferay.portal.model.EmailAddress emailAddress) {
+		return _emailAddressLocalService.updateEmailAddress(emailAddress);
 	}
 
 	@Override

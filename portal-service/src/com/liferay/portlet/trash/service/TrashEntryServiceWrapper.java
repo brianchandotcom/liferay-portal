@@ -33,23 +33,17 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Deletes the trash entries with the primary keys.
 	*
-	* @return the Spring bean ID for this bean
+	* @param entryIds the primary keys of the trash entries
+	* @throws PortalException if a trash entry with the primary key could not
+	be found or if the user did not have permission to delete any one
+	of the trash entries
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _trashEntryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_trashEntryService.setBeanIdentifier(beanIdentifier);
+	public void deleteEntries(long[] entryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntries(entryIds);
 	}
 
 	/**
@@ -66,17 +60,24 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
-	* Deletes the trash entries with the primary keys.
+	* Deletes the trash entry with the entity class name and class primary key.
 	*
-	* @param entryIds the primary keys of the trash entries
-	* @throws PortalException if a trash entry with the primary key could not
-	be found or if the user did not have permission to delete any one
-	of the trash entries
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @throws PortalException if a trash entry with the entity class name and
+	primary key could not be found or if the user did not have
+	permission to delete the entry
 	*/
 	@Override
-	public void deleteEntries(long[] entryIds)
+	public void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntries(entryIds);
+		_trashEntryService.deleteEntry(className, classPK);
 	}
 
 	/**
@@ -100,24 +101,13 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
-	* Deletes the trash entry with the entity class name and class primary key.
+	* Returns the Spring bean ID for this bean.
 	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} with type {@link
-	* TrashPermissionException#DELETE} if the user did not have permission to
-	* delete the trash entry.
-	* </p>
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	* @throws PortalException if a trash entry with the entity class name and
-	primary key could not be found or if the user did not have
-	permission to delete the entry
+	* @return the Spring bean ID for this bean
 	*/
 	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(className, classPK);
+	public java.lang.String getBeanIdentifier() {
+		return _trashEntryService.getBeanIdentifier();
 	}
 
 	/**
@@ -199,6 +189,22 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	@Override
+	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _trashEntryService.restoreEntry(className, classPK);
+	}
+
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK, long overrideClassPK,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _trashEntryService.restoreEntry(className, classPK,
+			overrideClassPK, name);
+	}
+
+	@Override
 	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryService.restoreEntry(entryId);
@@ -249,20 +255,14 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 		return _trashEntryService.restoreEntry(entryId, overrideClassPK, name);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK);
-	}
-
-	@Override
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK, long overrideClassPK,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK,
-			overrideClassPK, name);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_trashEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

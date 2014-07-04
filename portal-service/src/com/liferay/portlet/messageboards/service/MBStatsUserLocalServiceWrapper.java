@@ -45,6 +45,12 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		return _mbStatsUserLocalService.addMBStatsUser(mbStatsUser);
 	}
 
+	@Override
+	public com.liferay.portlet.messageboards.model.MBStatsUser addStatsUser(
+		long groupId, long userId) {
+		return _mbStatsUserLocalService.addStatsUser(groupId, userId);
+	}
+
 	/**
 	* Creates a new message boards stats user with the primary key. Does not add the message boards stats user to the database.
 	*
@@ -55,6 +61,18 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	public com.liferay.portlet.messageboards.model.MBStatsUser createMBStatsUser(
 		long statsUserId) {
 		return _mbStatsUserLocalService.createMBStatsUser(statsUserId);
+	}
+
+	/**
+	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was removed
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBStatsUser deleteMBStatsUser(
+		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser) {
+		return _mbStatsUserLocalService.deleteMBStatsUser(mbStatsUser);
 	}
 
 	/**
@@ -72,15 +90,35 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	}
 
 	/**
-	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbStatsUser the message boards stats user
-	* @return the message boards stats user that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.messageboards.model.MBStatsUser deleteMBStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser) {
-		return _mbStatsUserLocalService.deleteMBStatsUser(mbStatsUser);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbStatsUserLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteStatsUser(
+		com.liferay.portlet.messageboards.model.MBStatsUser statsUser) {
+		_mbStatsUserLocalService.deleteStatsUser(statsUser);
+	}
+
+	@Override
+	public void deleteStatsUser(long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbStatsUserLocalService.deleteStatsUser(statsUserId);
+	}
+
+	@Override
+	public void deleteStatsUsersByGroupId(long groupId) {
+		_mbStatsUserLocalService.deleteStatsUsersByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteStatsUsersByUserId(long userId) {
+		_mbStatsUserLocalService.deleteStatsUsersByUserId(userId);
 	}
 
 	@Override
@@ -174,6 +212,26 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		return _mbStatsUserLocalService.fetchMBStatsUser(statsUserId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mbStatsUserLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mbStatsUserLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.Date getLastPostDateByUserId(long groupId, long userId) {
+		return _mbStatsUserLocalService.getLastPostDateByUserId(groupId, userId);
+	}
+
 	/**
 	* Returns the message boards stats user with the primary key.
 	*
@@ -186,28 +244,6 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbStatsUserLocalService.getMBStatsUser(statsUserId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mbStatsUserLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbStatsUserLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbStatsUserLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -237,71 +273,6 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		return _mbStatsUserLocalService.getMBStatsUsersCount();
 	}
 
-	/**
-	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbStatsUser the message boards stats user
-	* @return the message boards stats user that was updated
-	*/
-	@Override
-	public com.liferay.portlet.messageboards.model.MBStatsUser updateMBStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser) {
-		return _mbStatsUserLocalService.updateMBStatsUser(mbStatsUser);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbStatsUserLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbStatsUserLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBStatsUser addStatsUser(
-		long groupId, long userId) {
-		return _mbStatsUserLocalService.addStatsUser(groupId, userId);
-	}
-
-	@Override
-	public void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbStatsUserLocalService.deleteStatsUser(statsUserId);
-	}
-
-	@Override
-	public void deleteStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser statsUser) {
-		_mbStatsUserLocalService.deleteStatsUser(statsUser);
-	}
-
-	@Override
-	public void deleteStatsUsersByGroupId(long groupId) {
-		_mbStatsUserLocalService.deleteStatsUsersByGroupId(groupId);
-	}
-
-	@Override
-	public void deleteStatsUsersByUserId(long userId) {
-		_mbStatsUserLocalService.deleteStatsUsersByUserId(userId);
-	}
-
-	@Override
-	public java.util.Date getLastPostDateByUserId(long groupId, long userId) {
-		return _mbStatsUserLocalService.getLastPostDateByUserId(groupId, userId);
-	}
-
 	@Override
 	public long getMessageCountByGroupId(long groupId) {
 		return _mbStatsUserLocalService.getMessageCountByGroupId(groupId);
@@ -310,6 +281,13 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	@Override
 	public long getMessageCountByUserId(long userId) {
 		return _mbStatsUserLocalService.getMessageCountByUserId(userId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbStatsUserLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -336,6 +314,28 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getStatsUsersByUserId(
 		long userId) {
 		return _mbStatsUserLocalService.getStatsUsersByUserId(userId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_mbStatsUserLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was updated
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBStatsUser updateMBStatsUser(
+		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser) {
+		return _mbStatsUserLocalService.updateMBStatsUser(mbStatsUser);
 	}
 
 	@Override

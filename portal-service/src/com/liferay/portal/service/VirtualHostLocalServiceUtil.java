@@ -64,16 +64,12 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHostId the primary key of the virtual host
-	* @return the virtual host that was removed
-	* @throws PortalException if a virtual host with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.VirtualHost deleteVirtualHost(
-		long virtualHostId)
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteVirtualHost(virtualHostId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -85,6 +81,19 @@ public class VirtualHostLocalServiceUtil {
 	public static com.liferay.portal.model.VirtualHost deleteVirtualHost(
 		com.liferay.portal.model.VirtualHost virtualHost) {
 		return getService().deleteVirtualHost(virtualHost);
+	}
+
+	/**
+	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHostId the primary key of the virtual host
+	* @return the virtual host that was removed
+	* @throws PortalException if a virtual host with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.VirtualHost deleteVirtualHost(
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteVirtualHost(virtualHostId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -166,8 +175,49 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
+		long companyId, long layoutSetId) {
+		return getService().fetchVirtualHost(companyId, layoutSetId);
+	}
+
+	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
+		java.lang.String hostname) {
+		return getService().fetchVirtualHost(hostname);
+	}
+
+	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
 		long virtualHostId) {
 		return getService().fetchVirtualHost(virtualHostId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.model.VirtualHost getVirtualHost(
+		long companyId, long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(companyId, layoutSetId);
+	}
+
+	public static com.liferay.portal.model.VirtualHost getVirtualHost(
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(hostname);
 	}
 
 	/**
@@ -181,25 +231,6 @@ public class VirtualHostLocalServiceUtil {
 		long virtualHostId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVirtualHost(virtualHostId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,26 +259,6 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	/**
-	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was updated
-	*/
-	public static com.liferay.portal.model.VirtualHost updateVirtualHost(
-		com.liferay.portal.model.VirtualHost virtualHost) {
-		return getService().updateVirtualHost(virtualHost);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -256,31 +267,20 @@ public class VirtualHostLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId) {
-		return getService().fetchVirtualHost(companyId, layoutSetId);
-	}
-
-	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
-		return getService().fetchVirtualHost(hostname);
-	}
-
-	public static com.liferay.portal.model.VirtualHost getVirtualHost(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(companyId, layoutSetId);
-	}
-
-	public static com.liferay.portal.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(hostname);
-	}
-
 	public static com.liferay.portal.model.VirtualHost updateVirtualHost(
 		long companyId, long layoutSetId, java.lang.String hostname) {
 		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
+	}
+
+	/**
+	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was updated
+	*/
+	public static com.liferay.portal.model.VirtualHost updateVirtualHost(
+		com.liferay.portal.model.VirtualHost virtualHost) {
+		return getService().updateVirtualHost(virtualHost);
 	}
 
 	public static VirtualHostLocalService getService() {

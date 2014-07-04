@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -46,6 +47,26 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SCProductVersionLocalServiceUtil} to access the s c product version local service. Add custom service methods to {@link com.liferay.portlet.softwarecatalog.service.impl.SCProductVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion addProductVersion(
+		long userId, long productEntryId, java.lang.String version,
+		java.lang.String changeLog, java.lang.String downloadPageURL,
+		java.lang.String directDownloadURL, boolean testDirectDownloadURL,
+		boolean repoStoreArtifact, long[] frameworkVersionIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
+		long productVersionId);
+
+	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
+
+	public void addSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> SCProductVersions);
+
+	public void addSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds);
 
 	/**
 	* Adds the s c product version to the database. Also notifies the appropriate model listeners.
@@ -53,8 +74,12 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	* @param scProductVersion the s c product version
 	* @return the s c product version that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion addSCProductVersion(
 		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
+
+	public void clearSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId);
 
 	/**
 	* Creates a new s c product version with the primary key. Does not add the s c product version to the database.
@@ -66,12 +91,43 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 		long productVersionId);
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteProductVersion(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion productVersion);
+
+	public void deleteProductVersion(long productVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteProductVersions(long productEntryId);
+
+	public void deleteSCFrameworkVersionSCProductVersion(
+		long frameworkVersionId, long productVersionId);
+
+	public void deleteSCFrameworkVersionSCProductVersion(
+		long frameworkVersionId,
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
+
+	public void deleteSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> SCProductVersions);
+
+	public void deleteSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds);
+
+	/**
 	* Deletes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param productVersionId the primary key of the s c product version
 	* @return the s c product version that was removed
 	* @throws PortalException if a s c product version with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion deleteSCProductVersion(
 		long productVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -82,6 +138,7 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	* @param scProductVersion the s c product version
 	* @return the s c product version that was removed
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion deleteSCProductVersion(
 		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
 
@@ -154,28 +211,15 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchSCProductVersion(
 		long productVersionId);
 
-	/**
-	* Returns the s c product version with the primary key.
-	*
-	* @param productVersionId the primary key of the s c product version
-	* @return the s c product version
-	* @throws PortalException if a s c product version with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getSCProductVersion(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* @throws PortalException
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.lang.String getBeanIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -183,67 +227,22 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns a range of all the s c product versions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of s c product versions
-	* @param end the upper bound of the range of s c product versions (not inclusive)
-	* @return the range of s c product versions
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
-		int start, int end);
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getProductVersion(
+		long productVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns the number of s c product versions.
-	*
-	* @return the number of s c product versions
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSCProductVersionsCount();
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getProductVersionByDirectDownloadURL(
+		java.lang.String directDownloadURL)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Updates the s c product version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param scProductVersion the s c product version
-	* @return the s c product version that was updated
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion updateSCProductVersion(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getProductVersions(
+		long productEntryId, int start, int end);
 
-	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
-		long productVersionId);
-
-	public void addSCFrameworkVersionSCProductVersion(long frameworkVersionId,
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
-
-	public void addSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId, long[] productVersionIds);
-
-	public void addSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> SCProductVersions);
-
-	public void clearSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId);
-
-	public void deleteSCFrameworkVersionSCProductVersion(
-		long frameworkVersionId, long productVersionId);
-
-	public void deleteSCFrameworkVersionSCProductVersion(
-		long frameworkVersionId,
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
-
-	public void deleteSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId, long[] productVersionIds);
-
-	public void deleteSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> SCProductVersions);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getProductVersionsCount(long productEntryId);
 
 	/**
 	* Returns the frameworkVersionIds of the s c framework versions associated with the s c product version.
@@ -271,6 +270,41 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	public int getSCFrameworkVersionSCProductVersionsCount(
 		long frameworkVersionId);
 
+	/**
+	* Returns the s c product version with the primary key.
+	*
+	* @param productVersionId the primary key of the s c product version
+	* @return the s c product version
+	* @throws PortalException if a s c product version with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getSCProductVersion(
+		long productVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns a range of all the s c product versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of s c product versions
+	* @param end the upper bound of the range of s c product versions (not inclusive)
+	* @return the range of s c product versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
+		int start, int end);
+
+	/**
+	* Returns the number of s c product versions.
+	*
+	* @return the number of s c product versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSCProductVersionsCount();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSCFrameworkVersionSCProductVersion(
 		long frameworkVersionId, long productVersionId);
@@ -279,16 +313,6 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	public boolean hasSCFrameworkVersionSCProductVersions(
 		long frameworkVersionId);
 
-	public void setSCFrameworkVersionSCProductVersions(
-		long frameworkVersionId, long[] productVersionIds);
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -296,38 +320,8 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion addProductVersion(
-		long userId, long productEntryId, java.lang.String version,
-		java.lang.String changeLog, java.lang.String downloadPageURL,
-		java.lang.String directDownloadURL, boolean testDirectDownloadURL,
-		boolean repoStoreArtifact, long[] frameworkVersionIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteProductVersion(long productVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteProductVersion(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion productVersion);
-
-	public void deleteProductVersions(long productEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getProductVersion(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion getProductVersionByDirectDownloadURL(
-		java.lang.String directDownloadURL)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getProductVersions(
-		long productEntryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getProductVersionsCount(long productEntryId);
+	public void setSCFrameworkVersionSCProductVersions(
+		long frameworkVersionId, long[] productVersionIds);
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion updateProductVersion(
 		long productVersionId, java.lang.String version,
@@ -335,4 +329,14 @@ public interface SCProductVersionLocalService extends BaseLocalService,
 		java.lang.String directDownloadURL, boolean testDirectDownloadURL,
 		boolean repoStoreArtifact, long[] frameworkVersionIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Updates the s c product version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param scProductVersion the s c product version
+	* @return the s c product version that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion updateSCProductVersion(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion);
 }

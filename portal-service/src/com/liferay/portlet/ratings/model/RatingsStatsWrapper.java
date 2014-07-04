@@ -101,139 +101,15 @@ public class RatingsStatsWrapper implements RatingsStats,
 		}
 	}
 
-	/**
-	* Returns the primary key of this ratings stats.
-	*
-	* @return the primary key of this ratings stats
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _ratingsStats.getPrimaryKey();
-	}
-
-	/**
-	* Sets the primary key of this ratings stats.
-	*
-	* @param primaryKey the primary key of this ratings stats
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_ratingsStats.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the stats ID of this ratings stats.
-	*
-	* @return the stats ID of this ratings stats
-	*/
-	@Override
-	public long getStatsId() {
-		return _ratingsStats.getStatsId();
-	}
-
-	/**
-	* Sets the stats ID of this ratings stats.
-	*
-	* @param statsId the stats ID of this ratings stats
-	*/
-	@Override
-	public void setStatsId(long statsId) {
-		_ratingsStats.setStatsId(statsId);
-	}
-
-	/**
-	* Returns the fully qualified class name of this ratings stats.
-	*
-	* @return the fully qualified class name of this ratings stats
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _ratingsStats.getClassName();
+	public java.lang.Object clone() {
+		return new RatingsStatsWrapper((RatingsStats)_ratingsStats.clone());
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
-		_ratingsStats.setClassName(className);
-	}
-
-	/**
-	* Returns the class name ID of this ratings stats.
-	*
-	* @return the class name ID of this ratings stats
-	*/
-	@Override
-	public long getClassNameId() {
-		return _ratingsStats.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this ratings stats.
-	*
-	* @param classNameId the class name ID of this ratings stats
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_ratingsStats.setClassNameId(classNameId);
-	}
-
-	/**
-	* Returns the class p k of this ratings stats.
-	*
-	* @return the class p k of this ratings stats
-	*/
-	@Override
-	public long getClassPK() {
-		return _ratingsStats.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this ratings stats.
-	*
-	* @param classPK the class p k of this ratings stats
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_ratingsStats.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the total entries of this ratings stats.
-	*
-	* @return the total entries of this ratings stats
-	*/
-	@Override
-	public int getTotalEntries() {
-		return _ratingsStats.getTotalEntries();
-	}
-
-	/**
-	* Sets the total entries of this ratings stats.
-	*
-	* @param totalEntries the total entries of this ratings stats
-	*/
-	@Override
-	public void setTotalEntries(int totalEntries) {
-		_ratingsStats.setTotalEntries(totalEntries);
-	}
-
-	/**
-	* Returns the total score of this ratings stats.
-	*
-	* @return the total score of this ratings stats
-	*/
-	@Override
-	public double getTotalScore() {
-		return _ratingsStats.getTotalScore();
-	}
-
-	/**
-	* Sets the total score of this ratings stats.
-	*
-	* @param totalScore the total score of this ratings stats
-	*/
-	@Override
-	public void setTotalScore(double totalScore) {
-		_ratingsStats.setTotalScore(totalScore);
+	public int compareTo(
+		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
+		return _ratingsStats.compareTo(ratingsStats);
 	}
 
 	/**
@@ -247,6 +123,111 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	/**
+	* Returns the fully qualified class name of this ratings stats.
+	*
+	* @return the fully qualified class name of this ratings stats
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _ratingsStats.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this ratings stats.
+	*
+	* @return the class name ID of this ratings stats
+	*/
+	@Override
+	public long getClassNameId() {
+		return _ratingsStats.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this ratings stats.
+	*
+	* @return the class p k of this ratings stats
+	*/
+	@Override
+	public long getClassPK() {
+		return _ratingsStats.getClassPK();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _ratingsStats.getExpandoBridge();
+	}
+
+	/**
+	* Returns the primary key of this ratings stats.
+	*
+	* @return the primary key of this ratings stats
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ratingsStats.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _ratingsStats.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the stats ID of this ratings stats.
+	*
+	* @return the stats ID of this ratings stats
+	*/
+	@Override
+	public long getStatsId() {
+		return _ratingsStats.getStatsId();
+	}
+
+	/**
+	* Returns the total entries of this ratings stats.
+	*
+	* @return the total entries of this ratings stats
+	*/
+	@Override
+	public int getTotalEntries() {
+		return _ratingsStats.getTotalEntries();
+	}
+
+	/**
+	* Returns the total score of this ratings stats.
+	*
+	* @return the total score of this ratings stats
+	*/
+	@Override
+	public double getTotalScore() {
+		return _ratingsStats.getTotalScore();
+	}
+
+	@Override
+	public int hashCode() {
+		return _ratingsStats.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _ratingsStats.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ratingsStats.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ratingsStats.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_ratingsStats.persist();
+	}
+
+	/**
 	* Sets the average score of this ratings stats.
 	*
 	* @param averageScore the average score of this ratings stats
@@ -257,43 +238,33 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public boolean isNew() {
-		return _ratingsStats.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ratingsStats.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ratingsStats.isCachedModel();
-	}
-
-	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_ratingsStats.setCachedModel(cachedModel);
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _ratingsStats.isEscapedModel();
+	public void setClassName(java.lang.String className) {
+		_ratingsStats.setClassName(className);
 	}
 
+	/**
+	* Sets the class name ID of this ratings stats.
+	*
+	* @param classNameId the class name ID of this ratings stats
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _ratingsStats.getPrimaryKeyObj();
+	public void setClassNameId(long classNameId) {
+		_ratingsStats.setClassNameId(classNameId);
 	}
 
+	/**
+	* Sets the class p k of this ratings stats.
+	*
+	* @param classPK the class p k of this ratings stats
+	*/
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_ratingsStats.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _ratingsStats.getExpandoBridge();
+	public void setClassPK(long classPK) {
+		_ratingsStats.setClassPK(classPK);
 	}
 
 	@Override
@@ -315,19 +286,53 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new RatingsStatsWrapper((RatingsStats)_ratingsStats.clone());
+	public void setNew(boolean n) {
+		_ratingsStats.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this ratings stats.
+	*
+	* @param primaryKey the primary key of this ratings stats
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_ratingsStats.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
-		return _ratingsStats.compareTo(ratingsStats);
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_ratingsStats.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	/**
+	* Sets the stats ID of this ratings stats.
+	*
+	* @param statsId the stats ID of this ratings stats
+	*/
 	@Override
-	public int hashCode() {
-		return _ratingsStats.hashCode();
+	public void setStatsId(long statsId) {
+		_ratingsStats.setStatsId(statsId);
+	}
+
+	/**
+	* Sets the total entries of this ratings stats.
+	*
+	* @param totalEntries the total entries of this ratings stats
+	*/
+	@Override
+	public void setTotalEntries(int totalEntries) {
+		_ratingsStats.setTotalEntries(totalEntries);
+	}
+
+	/**
+	* Sets the total score of this ratings stats.
+	*
+	* @param totalScore the total score of this ratings stats
+	*/
+	@Override
+	public void setTotalScore(double totalScore) {
+		_ratingsStats.setTotalScore(totalScore);
 	}
 
 	@Override
@@ -341,23 +346,18 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public com.liferay.portlet.ratings.model.RatingsStats toUnescapedModel() {
-		return new RatingsStatsWrapper(_ratingsStats.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _ratingsStats.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _ratingsStats.toXmlString();
+	public com.liferay.portlet.ratings.model.RatingsStats toUnescapedModel() {
+		return new RatingsStatsWrapper(_ratingsStats.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_ratingsStats.persist();
+	public java.lang.String toXmlString() {
+		return _ratingsStats.toXmlString();
 	}
 
 	@Override

@@ -31,6 +31,15 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		_systemEventLocalService = systemEventLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		java.lang.String referrerClassName, int type, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _systemEventLocalService.addSystemEvent(companyId, className,
+			classPK, classUuid, referrerClassName, type, extraData);
+	}
+
 	/**
 	* Adds the system event to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,6 +52,16 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		return _systemEventLocalService.addSystemEvent(systemEvent);
 	}
 
+	@Override
+	public com.liferay.portal.model.SystemEvent addSystemEvent(long userId,
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, java.lang.String referrerClassName,
+		int type, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _systemEventLocalService.addSystemEvent(userId, groupId,
+			className, classPK, classUuid, referrerClassName, type, extraData);
+	}
+
 	/**
 	* Creates a new system event with the primary key. Does not add the system event to the database.
 	*
@@ -53,6 +72,28 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	public com.liferay.portal.model.SystemEvent createSystemEvent(
 		long systemEventId) {
 		return _systemEventLocalService.createSystemEvent(systemEventId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _systemEventLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the system event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param systemEvent the system event
+	* @return the system event that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
+		com.liferay.portal.model.SystemEvent systemEvent) {
+		return _systemEventLocalService.deleteSystemEvent(systemEvent);
 	}
 
 	/**
@@ -69,16 +110,14 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		return _systemEventLocalService.deleteSystemEvent(systemEventId);
 	}
 
-	/**
-	* Deletes the system event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was removed
-	*/
 	@Override
-	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
-		com.liferay.portal.model.SystemEvent systemEvent) {
-		return _systemEventLocalService.deleteSystemEvent(systemEvent);
+	public void deleteSystemEvents(long groupId) {
+		_systemEventLocalService.deleteSystemEvents(groupId);
+	}
+
+	@Override
+	public void deleteSystemEvents(long groupId, long systemEventSetKey) {
+		_systemEventLocalService.deleteSystemEvents(groupId, systemEventSetKey);
 	}
 
 	@Override
@@ -167,9 +206,38 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
+		long classNameId, long classPK, int type) {
+		return _systemEventLocalService.fetchSystemEvent(groupId, classNameId,
+			classPK, type);
+	}
+
+	@Override
 	public com.liferay.portal.model.SystemEvent fetchSystemEvent(
 		long systemEventId) {
 		return _systemEventLocalService.fetchSystemEvent(systemEventId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _systemEventLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _systemEventLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _systemEventLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -187,25 +255,17 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _systemEventLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _systemEventLocalService.deletePersistedModel(persistedModel);
+	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
+		long groupId, long classNameId, long classPK) {
+		return _systemEventLocalService.getSystemEvents(groupId, classNameId,
+			classPK);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _systemEventLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
+		long groupId, long classNameId, long classPK, int type) {
+		return _systemEventLocalService.getSystemEvents(groupId, classNameId,
+			classPK, type);
 	}
 
 	/**
@@ -236,28 +296,6 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	/**
-	* Updates the system event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.SystemEvent updateSystemEvent(
-		com.liferay.portal.model.SystemEvent systemEvent) {
-		return _systemEventLocalService.updateSystemEvent(systemEvent);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _systemEventLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -267,54 +305,16 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		_systemEventLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the system event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param systemEvent the system event
+	* @return the system event that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.SystemEvent addSystemEvent(long userId,
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _systemEventLocalService.addSystemEvent(userId, groupId,
-			className, classPK, classUuid, referrerClassName, type, extraData);
-	}
-
-	@Override
-	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _systemEventLocalService.addSystemEvent(companyId, className,
-			classPK, classUuid, referrerClassName, type, extraData);
-	}
-
-	@Override
-	public void deleteSystemEvents(long groupId) {
-		_systemEventLocalService.deleteSystemEvents(groupId);
-	}
-
-	@Override
-	public void deleteSystemEvents(long groupId, long systemEventSetKey) {
-		_systemEventLocalService.deleteSystemEvents(groupId, systemEventSetKey);
-	}
-
-	@Override
-	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
-		long classNameId, long classPK, int type) {
-		return _systemEventLocalService.fetchSystemEvent(groupId, classNameId,
-			classPK, type);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK) {
-		return _systemEventLocalService.getSystemEvents(groupId, classNameId,
-			classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK, int type) {
-		return _systemEventLocalService.getSystemEvents(groupId, classNameId,
-			classPK, type);
+	public com.liferay.portal.model.SystemEvent updateSystemEvent(
+		com.liferay.portal.model.SystemEvent systemEvent) {
+		return _systemEventLocalService.updateSystemEvent(systemEvent);
 	}
 
 	/**

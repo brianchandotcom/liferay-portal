@@ -59,6 +59,18 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the document library file version from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersion the document library file version
+	* @return the document library file version that was removed
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion deleteDLFileVersion(
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
+		return _dlFileVersionLocalService.deleteDLFileVersion(dlFileVersion);
+	}
+
+	/**
 	* Deletes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileVersionId the primary key of the document library file version
@@ -73,15 +85,13 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the document library file version from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileVersion the document library file version
-	* @return the document library file version that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion deleteDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
-		return _dlFileVersionLocalService.deleteDLFileVersion(dlFileVersion);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -203,6 +213,21 @@ public class DLFileVersionLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlFileVersionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileVersionLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the document library file version with the primary key.
 	*
@@ -215,34 +240,6 @@ public class DLFileVersionLocalServiceWrapper
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersionLocalService.getDLFileVersion(fileVersionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlFileVersionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _dlFileVersionLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -304,43 +301,10 @@ public class DLFileVersionLocalServiceWrapper
 		return _dlFileVersionLocalService.getDLFileVersionsCount();
 	}
 
-	/**
-	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileVersion the document library file version
-	* @return the document library file version that was updated
-	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion updateDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
-		return _dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileVersionLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileVersionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersionLocalService.getFileVersion(fileVersionId);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _dlFileVersionLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -348,6 +312,13 @@ public class DLFileVersionLocalServiceWrapper
 		long fileEntryId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersionLocalService.getFileVersion(fileEntryId, version);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersionLocalService.getFileVersion(fileVersionId);
 	}
 
 	@Override
@@ -386,8 +357,37 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public void rebuildTree(long companyId) {
 		_dlFileVersionLocalService.rebuildTree(companyId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFileVersionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersion the document library file version
+	* @return the document library file version that was updated
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion updateDLFileVersion(
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
+		return _dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 	}
 
 	/**

@@ -45,6 +45,38 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.addDDLRecordSet(ddlRecordSet);
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addRecordSet(
+		long userId, long groupId, long ddmStructureId,
+		java.lang.String recordSetKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int minDisplayRows, int scope,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.addRecordSet(userId, groupId,
+			ddmStructureId, recordSetKey, nameMap, descriptionMap,
+			minDisplayRows, scope, serviceContext);
+	}
+
+	@Override
+	public void addRecordSetResources(
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addRecordSetResources(
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
+			groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Creates a new d d l record set with the primary key. Does not add the d d l record set to the database.
 	*
@@ -55,6 +87,18 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet createDDLRecordSet(
 		long recordSetId) {
 		return _ddlRecordSetLocalService.createDDLRecordSet(recordSetId);
+	}
+
+	/**
+	* Deletes the d d l record set from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordSet the d d l record set
+	* @return the d d l record set that was removed
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
+		return _ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet);
 	}
 
 	/**
@@ -72,15 +116,38 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Deletes the d d l record set from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
-		return _ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteRecordSet(long groupId, java.lang.String recordSetKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.deleteRecordSet(groupId, recordSetKey);
+	}
+
+	@Override
+	public void deleteRecordSet(
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
+	}
+
+	@Override
+	public void deleteRecordSet(long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.deleteRecordSet(recordSetId);
+	}
+
+	@Override
+	public void deleteRecordSets(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.deleteRecordSets(groupId);
 	}
 
 	@Override
@@ -202,6 +269,33 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
+		long groupId, java.lang.String recordSetKey) {
+		return _ddlRecordSetLocalService.fetchRecordSet(groupId, recordSetKey);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId) {
+		return _ddlRecordSetLocalService.fetchRecordSet(recordSetId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ddlRecordSetLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _ddlRecordSetLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the d d l record set with the primary key.
 	*
@@ -214,34 +308,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getDDLRecordSet(recordSetId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ddlRecordSetLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -303,112 +369,17 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.getDDLRecordSetsCount();
 	}
 
-	/**
-	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was updated
-	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
-		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordSetLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordSetLocalService.setBeanIdentifier(beanIdentifier);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addRecordSet(
-		long userId, long groupId, long ddmStructureId,
-		java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows, int scope,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.addRecordSet(userId, groupId,
-			ddmStructureId, recordSetKey, nameMap, descriptionMap,
-			minDisplayRows, scope, serviceContext);
-	}
-
-	@Override
-	public void addRecordSetResources(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addRecordSetResources(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void deleteRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
-	}
-
-	@Override
-	public void deleteRecordSet(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(recordSetId);
-	}
-
-	@Override
-	public void deleteRecordSet(long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(groupId, recordSetKey);
-	}
-
-	@Override
-	public void deleteRecordSets(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSets(groupId);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
-		long recordSetId) {
-		return _ddlRecordSetLocalService.fetchRecordSet(recordSetId);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
-		long groupId, java.lang.String recordSetKey) {
-		return _ddlRecordSetLocalService.fetchRecordSet(groupId, recordSetKey);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getRecordSet(recordSetId);
+		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -416,6 +387,13 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		long groupId, java.lang.String recordSetKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getRecordSet(groupId, recordSetKey);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSet(recordSetId);
 	}
 
 	@Override
@@ -462,12 +440,47 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 			description, scope, andOperator);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_ddlRecordSetLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordSet the d d l record set
+	* @return the d d l record set that was updated
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateDDLRecordSet(
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
+		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
+	}
+
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.updateMinDisplayRows(recordSetId,
+			minDisplayRows, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+		long groupId, long ddmStructureId, java.lang.String recordSetKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int minDisplayRows,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.updateRecordSet(groupId,
+			ddmStructureId, recordSetKey, nameMap, descriptionMap,
 			minDisplayRows, serviceContext);
 	}
 
@@ -482,19 +495,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
 			ddmStructureId, nameMap, descriptionMap, minDisplayRows,
 			serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateRecordSet(groupId,
-			ddmStructureId, recordSetKey, nameMap, descriptionMap,
-			minDisplayRows, serviceContext);
 	}
 
 	/**

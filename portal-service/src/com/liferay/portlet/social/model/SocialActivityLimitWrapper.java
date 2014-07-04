@@ -123,199 +123,15 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		}
 	}
 
-	/**
-	* Returns the primary key of this social activity limit.
-	*
-	* @return the primary key of this social activity limit
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _socialActivityLimit.getPrimaryKey();
-	}
-
-	/**
-	* Sets the primary key of this social activity limit.
-	*
-	* @param primaryKey the primary key of this social activity limit
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_socialActivityLimit.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the activity limit ID of this social activity limit.
-	*
-	* @return the activity limit ID of this social activity limit
-	*/
-	@Override
-	public long getActivityLimitId() {
-		return _socialActivityLimit.getActivityLimitId();
-	}
-
-	/**
-	* Sets the activity limit ID of this social activity limit.
-	*
-	* @param activityLimitId the activity limit ID of this social activity limit
-	*/
-	@Override
-	public void setActivityLimitId(long activityLimitId) {
-		_socialActivityLimit.setActivityLimitId(activityLimitId);
-	}
-
-	/**
-	* Returns the group ID of this social activity limit.
-	*
-	* @return the group ID of this social activity limit
-	*/
-	@Override
-	public long getGroupId() {
-		return _socialActivityLimit.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this social activity limit.
-	*
-	* @param groupId the group ID of this social activity limit
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_socialActivityLimit.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this social activity limit.
-	*
-	* @return the company ID of this social activity limit
-	*/
-	@Override
-	public long getCompanyId() {
-		return _socialActivityLimit.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this social activity limit.
-	*
-	* @param companyId the company ID of this social activity limit
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_socialActivityLimit.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this social activity limit.
-	*
-	* @return the user ID of this social activity limit
-	*/
-	@Override
-	public long getUserId() {
-		return _socialActivityLimit.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this social activity limit.
-	*
-	* @param userId the user ID of this social activity limit
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_socialActivityLimit.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this social activity limit.
-	*
-	* @return the user uuid of this social activity limit
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _socialActivityLimit.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this social activity limit.
-	*
-	* @param userUuid the user uuid of this social activity limit
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_socialActivityLimit.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the fully qualified class name of this social activity limit.
-	*
-	* @return the fully qualified class name of this social activity limit
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _socialActivityLimit.getClassName();
+	public java.lang.Object clone() {
+		return new SocialActivityLimitWrapper((SocialActivityLimit)_socialActivityLimit.clone());
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
-		_socialActivityLimit.setClassName(className);
-	}
-
-	/**
-	* Returns the class name ID of this social activity limit.
-	*
-	* @return the class name ID of this social activity limit
-	*/
-	@Override
-	public long getClassNameId() {
-		return _socialActivityLimit.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this social activity limit.
-	*
-	* @param classNameId the class name ID of this social activity limit
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_socialActivityLimit.setClassNameId(classNameId);
-	}
-
-	/**
-	* Returns the class p k of this social activity limit.
-	*
-	* @return the class p k of this social activity limit
-	*/
-	@Override
-	public long getClassPK() {
-		return _socialActivityLimit.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this social activity limit.
-	*
-	* @param classPK the class p k of this social activity limit
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_socialActivityLimit.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the activity type of this social activity limit.
-	*
-	* @return the activity type of this social activity limit
-	*/
-	@Override
-	public int getActivityType() {
-		return _socialActivityLimit.getActivityType();
-	}
-
-	/**
-	* Sets the activity type of this social activity limit.
-	*
-	* @param activityType the activity type of this social activity limit
-	*/
-	@Override
-	public void setActivityType(int activityType) {
-		_socialActivityLimit.setActivityType(activityType);
+	public int compareTo(
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit) {
+		return _socialActivityLimit.compareTo(socialActivityLimit);
 	}
 
 	/**
@@ -329,13 +145,123 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	/**
-	* Sets the activity counter name of this social activity limit.
+	* Returns the activity limit ID of this social activity limit.
 	*
-	* @param activityCounterName the activity counter name of this social activity limit
+	* @return the activity limit ID of this social activity limit
 	*/
 	@Override
-	public void setActivityCounterName(java.lang.String activityCounterName) {
-		_socialActivityLimit.setActivityCounterName(activityCounterName);
+	public long getActivityLimitId() {
+		return _socialActivityLimit.getActivityLimitId();
+	}
+
+	/**
+	* Returns the activity type of this social activity limit.
+	*
+	* @return the activity type of this social activity limit
+	*/
+	@Override
+	public int getActivityType() {
+		return _socialActivityLimit.getActivityType();
+	}
+
+	/**
+	* Returns the fully qualified class name of this social activity limit.
+	*
+	* @return the fully qualified class name of this social activity limit
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _socialActivityLimit.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this social activity limit.
+	*
+	* @return the class name ID of this social activity limit
+	*/
+	@Override
+	public long getClassNameId() {
+		return _socialActivityLimit.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this social activity limit.
+	*
+	* @return the class p k of this social activity limit
+	*/
+	@Override
+	public long getClassPK() {
+		return _socialActivityLimit.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this social activity limit.
+	*
+	* @return the company ID of this social activity limit
+	*/
+	@Override
+	public long getCompanyId() {
+		return _socialActivityLimit.getCompanyId();
+	}
+
+	@Override
+	public int getCount() {
+		return _socialActivityLimit.getCount();
+	}
+
+	@Override
+	public int getCount(int limitPeriod) {
+		return _socialActivityLimit.getCount(limitPeriod);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _socialActivityLimit.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this social activity limit.
+	*
+	* @return the group ID of this social activity limit
+	*/
+	@Override
+	public long getGroupId() {
+		return _socialActivityLimit.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this social activity limit.
+	*
+	* @return the primary key of this social activity limit
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _socialActivityLimit.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _socialActivityLimit.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the user ID of this social activity limit.
+	*
+	* @return the user ID of this social activity limit
+	*/
+	@Override
+	public long getUserId() {
+		return _socialActivityLimit.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this social activity limit.
+	*
+	* @return the user uuid of this social activity limit
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _socialActivityLimit.getUserUuid();
 	}
 
 	/**
@@ -348,24 +274,9 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		return _socialActivityLimit.getValue();
 	}
 
-	/**
-	* Sets the value of this social activity limit.
-	*
-	* @param value the value of this social activity limit
-	*/
 	@Override
-	public void setValue(java.lang.String value) {
-		_socialActivityLimit.setValue(value);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivityLimit.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_socialActivityLimit.setNew(n);
+	public int hashCode() {
+		return _socialActivityLimit.hashCode();
 	}
 
 	@Override
@@ -374,28 +285,93 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_socialActivityLimit.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _socialActivityLimit.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _socialActivityLimit.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _socialActivityLimit.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_socialActivityLimit.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_socialActivityLimit.persist();
+	}
+
+	/**
+	* Sets the activity counter name of this social activity limit.
+	*
+	* @param activityCounterName the activity counter name of this social activity limit
+	*/
+	@Override
+	public void setActivityCounterName(java.lang.String activityCounterName) {
+		_socialActivityLimit.setActivityCounterName(activityCounterName);
+	}
+
+	/**
+	* Sets the activity limit ID of this social activity limit.
+	*
+	* @param activityLimitId the activity limit ID of this social activity limit
+	*/
+	@Override
+	public void setActivityLimitId(long activityLimitId) {
+		_socialActivityLimit.setActivityLimitId(activityLimitId);
+	}
+
+	/**
+	* Sets the activity type of this social activity limit.
+	*
+	* @param activityType the activity type of this social activity limit
+	*/
+	@Override
+	public void setActivityType(int activityType) {
+		_socialActivityLimit.setActivityType(activityType);
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _socialActivityLimit.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_socialActivityLimit.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_socialActivityLimit.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this social activity limit.
+	*
+	* @param classNameId the class name ID of this social activity limit
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_socialActivityLimit.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this social activity limit.
+	*
+	* @param classPK the class p k of this social activity limit
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_socialActivityLimit.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this social activity limit.
+	*
+	* @param companyId the company ID of this social activity limit
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_socialActivityLimit.setCompanyId(companyId);
+	}
+
+	@Override
+	public void setCount(int limitPeriod, int count) {
+		_socialActivityLimit.setCount(limitPeriod, count);
 	}
 
 	@Override
@@ -416,20 +392,64 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		_socialActivityLimit.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this social activity limit.
+	*
+	* @param groupId the group ID of this social activity limit
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new SocialActivityLimitWrapper((SocialActivityLimit)_socialActivityLimit.clone());
+	public void setGroupId(long groupId) {
+		_socialActivityLimit.setGroupId(groupId);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit) {
-		return _socialActivityLimit.compareTo(socialActivityLimit);
+	public void setNew(boolean n) {
+		_socialActivityLimit.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this social activity limit.
+	*
+	* @param primaryKey the primary key of this social activity limit
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_socialActivityLimit.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _socialActivityLimit.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_socialActivityLimit.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user ID of this social activity limit.
+	*
+	* @param userId the user ID of this social activity limit
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_socialActivityLimit.setUserId(userId);
+	}
+
+	/**
+	* Sets the user uuid of this social activity limit.
+	*
+	* @param userUuid the user uuid of this social activity limit
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_socialActivityLimit.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the value of this social activity limit.
+	*
+	* @param value the value of this social activity limit
+	*/
+	@Override
+	public void setValue(java.lang.String value) {
+		_socialActivityLimit.setValue(value);
 	}
 
 	@Override
@@ -443,38 +463,18 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public com.liferay.portlet.social.model.SocialActivityLimit toUnescapedModel() {
-		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _socialActivityLimit.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.social.model.SocialActivityLimit toUnescapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _socialActivityLimit.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_socialActivityLimit.persist();
-	}
-
-	@Override
-	public int getCount() {
-		return _socialActivityLimit.getCount();
-	}
-
-	@Override
-	public int getCount(int limitPeriod) {
-		return _socialActivityLimit.getCount(limitPeriod);
-	}
-
-	@Override
-	public void setCount(int limitPeriod, int count) {
-		_socialActivityLimit.setCount(limitPeriod, count);
 	}
 
 	@Override

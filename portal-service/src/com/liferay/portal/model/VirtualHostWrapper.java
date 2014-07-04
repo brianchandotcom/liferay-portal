@@ -93,64 +93,14 @@ public class VirtualHostWrapper implements VirtualHost,
 		}
 	}
 
-	/**
-	* Returns the primary key of this virtual host.
-	*
-	* @return the primary key of this virtual host
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _virtualHost.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new VirtualHostWrapper((VirtualHost)_virtualHost.clone());
 	}
 
-	/**
-	* Sets the primary key of this virtual host.
-	*
-	* @param primaryKey the primary key of this virtual host
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_virtualHost.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this virtual host.
-	*
-	* @return the mvcc version of this virtual host
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _virtualHost.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this virtual host.
-	*
-	* @param mvccVersion the mvcc version of this virtual host
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_virtualHost.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the virtual host ID of this virtual host.
-	*
-	* @return the virtual host ID of this virtual host
-	*/
-	@Override
-	public long getVirtualHostId() {
-		return _virtualHost.getVirtualHostId();
-	}
-
-	/**
-	* Sets the virtual host ID of this virtual host.
-	*
-	* @param virtualHostId the virtual host ID of this virtual host
-	*/
-	@Override
-	public void setVirtualHostId(long virtualHostId) {
-		_virtualHost.setVirtualHostId(virtualHostId);
+	public int compareTo(com.liferay.portal.model.VirtualHost virtualHost) {
+		return _virtualHost.compareTo(virtualHost);
 	}
 
 	/**
@@ -163,34 +113,9 @@ public class VirtualHostWrapper implements VirtualHost,
 		return _virtualHost.getCompanyId();
 	}
 
-	/**
-	* Sets the company ID of this virtual host.
-	*
-	* @param companyId the company ID of this virtual host
-	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_virtualHost.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the layout set ID of this virtual host.
-	*
-	* @return the layout set ID of this virtual host
-	*/
-	@Override
-	public long getLayoutSetId() {
-		return _virtualHost.getLayoutSetId();
-	}
-
-	/**
-	* Sets the layout set ID of this virtual host.
-	*
-	* @param layoutSetId the layout set ID of this virtual host
-	*/
-	@Override
-	public void setLayoutSetId(long layoutSetId) {
-		_virtualHost.setLayoutSetId(layoutSetId);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _virtualHost.getExpandoBridge();
 	}
 
 	/**
@@ -204,23 +129,53 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	/**
-	* Sets the hostname of this virtual host.
+	* Returns the layout set ID of this virtual host.
 	*
-	* @param hostname the hostname of this virtual host
+	* @return the layout set ID of this virtual host
 	*/
 	@Override
-	public void setHostname(java.lang.String hostname) {
-		_virtualHost.setHostname(hostname);
+	public long getLayoutSetId() {
+		return _virtualHost.getLayoutSetId();
+	}
+
+	/**
+	* Returns the mvcc version of this virtual host.
+	*
+	* @return the mvcc version of this virtual host
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _virtualHost.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this virtual host.
+	*
+	* @return the primary key of this virtual host
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _virtualHost.getPrimaryKey();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _virtualHost.isNew();
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _virtualHost.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the virtual host ID of this virtual host.
+	*
+	* @return the virtual host ID of this virtual host
+	*/
+	@Override
+	public long getVirtualHostId() {
+		return _virtualHost.getVirtualHostId();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_virtualHost.setNew(n);
+	public int hashCode() {
+		return _virtualHost.hashCode();
 	}
 
 	@Override
@@ -229,28 +184,33 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_virtualHost.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _virtualHost.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _virtualHost.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _virtualHost.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_virtualHost.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_virtualHost.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _virtualHost.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_virtualHost.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this virtual host.
+	*
+	* @param companyId the company ID of this virtual host
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_virtualHost.setCompanyId(companyId);
 	}
 
 	@Override
@@ -271,19 +231,64 @@ public class VirtualHostWrapper implements VirtualHost,
 		_virtualHost.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the hostname of this virtual host.
+	*
+	* @param hostname the hostname of this virtual host
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new VirtualHostWrapper((VirtualHost)_virtualHost.clone());
+	public void setHostname(java.lang.String hostname) {
+		_virtualHost.setHostname(hostname);
+	}
+
+	/**
+	* Sets the layout set ID of this virtual host.
+	*
+	* @param layoutSetId the layout set ID of this virtual host
+	*/
+	@Override
+	public void setLayoutSetId(long layoutSetId) {
+		_virtualHost.setLayoutSetId(layoutSetId);
+	}
+
+	/**
+	* Sets the mvcc version of this virtual host.
+	*
+	* @param mvccVersion the mvcc version of this virtual host
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_virtualHost.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.VirtualHost virtualHost) {
-		return _virtualHost.compareTo(virtualHost);
+	public void setNew(boolean n) {
+		_virtualHost.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this virtual host.
+	*
+	* @param primaryKey the primary key of this virtual host
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_virtualHost.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _virtualHost.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_virtualHost.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the virtual host ID of this virtual host.
+	*
+	* @param virtualHostId the virtual host ID of this virtual host
+	*/
+	@Override
+	public void setVirtualHostId(long virtualHostId) {
+		_virtualHost.setVirtualHostId(virtualHostId);
 	}
 
 	@Override
@@ -297,23 +302,18 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public com.liferay.portal.model.VirtualHost toUnescapedModel() {
-		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _virtualHost.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _virtualHost.toXmlString();
+	public com.liferay.portal.model.VirtualHost toUnescapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_virtualHost.persist();
+	public java.lang.String toXmlString() {
+		return _virtualHost.toXmlString();
 	}
 
 	@Override

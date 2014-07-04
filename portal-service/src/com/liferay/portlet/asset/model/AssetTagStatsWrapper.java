@@ -87,99 +87,15 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		}
 	}
 
-	/**
-	* Returns the primary key of this asset tag stats.
-	*
-	* @return the primary key of this asset tag stats
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _assetTagStats.getPrimaryKey();
-	}
-
-	/**
-	* Sets the primary key of this asset tag stats.
-	*
-	* @param primaryKey the primary key of this asset tag stats
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_assetTagStats.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the tag stats ID of this asset tag stats.
-	*
-	* @return the tag stats ID of this asset tag stats
-	*/
-	@Override
-	public long getTagStatsId() {
-		return _assetTagStats.getTagStatsId();
-	}
-
-	/**
-	* Sets the tag stats ID of this asset tag stats.
-	*
-	* @param tagStatsId the tag stats ID of this asset tag stats
-	*/
-	@Override
-	public void setTagStatsId(long tagStatsId) {
-		_assetTagStats.setTagStatsId(tagStatsId);
-	}
-
-	/**
-	* Returns the tag ID of this asset tag stats.
-	*
-	* @return the tag ID of this asset tag stats
-	*/
-	@Override
-	public long getTagId() {
-		return _assetTagStats.getTagId();
-	}
-
-	/**
-	* Sets the tag ID of this asset tag stats.
-	*
-	* @param tagId the tag ID of this asset tag stats
-	*/
-	@Override
-	public void setTagId(long tagId) {
-		_assetTagStats.setTagId(tagId);
-	}
-
-	/**
-	* Returns the fully qualified class name of this asset tag stats.
-	*
-	* @return the fully qualified class name of this asset tag stats
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _assetTagStats.getClassName();
+	public java.lang.Object clone() {
+		return new AssetTagStatsWrapper((AssetTagStats)_assetTagStats.clone());
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
-		_assetTagStats.setClassName(className);
-	}
-
-	/**
-	* Returns the class name ID of this asset tag stats.
-	*
-	* @return the class name ID of this asset tag stats
-	*/
-	@Override
-	public long getClassNameId() {
-		return _assetTagStats.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this asset tag stats.
-	*
-	* @param classNameId the class name ID of this asset tag stats
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_assetTagStats.setClassNameId(classNameId);
+	public int compareTo(
+		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
+		return _assetTagStats.compareTo(assetTagStats);
 	}
 
 	/**
@@ -193,6 +109,91 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	/**
+	* Returns the fully qualified class name of this asset tag stats.
+	*
+	* @return the fully qualified class name of this asset tag stats
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _assetTagStats.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this asset tag stats.
+	*
+	* @return the class name ID of this asset tag stats
+	*/
+	@Override
+	public long getClassNameId() {
+		return _assetTagStats.getClassNameId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _assetTagStats.getExpandoBridge();
+	}
+
+	/**
+	* Returns the primary key of this asset tag stats.
+	*
+	* @return the primary key of this asset tag stats
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _assetTagStats.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _assetTagStats.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the tag ID of this asset tag stats.
+	*
+	* @return the tag ID of this asset tag stats
+	*/
+	@Override
+	public long getTagId() {
+		return _assetTagStats.getTagId();
+	}
+
+	/**
+	* Returns the tag stats ID of this asset tag stats.
+	*
+	* @return the tag stats ID of this asset tag stats
+	*/
+	@Override
+	public long getTagStatsId() {
+		return _assetTagStats.getTagStatsId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetTagStats.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _assetTagStats.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _assetTagStats.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _assetTagStats.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_assetTagStats.persist();
+	}
+
+	/**
 	* Sets the asset count of this asset tag stats.
 	*
 	* @param assetCount the asset count of this asset tag stats
@@ -203,43 +204,23 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public boolean isNew() {
-		return _assetTagStats.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetTagStats.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetTagStats.isCachedModel();
-	}
-
-	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_assetTagStats.setCachedModel(cachedModel);
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _assetTagStats.isEscapedModel();
+	public void setClassName(java.lang.String className) {
+		_assetTagStats.setClassName(className);
 	}
 
+	/**
+	* Sets the class name ID of this asset tag stats.
+	*
+	* @param classNameId the class name ID of this asset tag stats
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _assetTagStats.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_assetTagStats.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _assetTagStats.getExpandoBridge();
+	public void setClassNameId(long classNameId) {
+		_assetTagStats.setClassNameId(classNameId);
 	}
 
 	@Override
@@ -261,19 +242,43 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new AssetTagStatsWrapper((AssetTagStats)_assetTagStats.clone());
+	public void setNew(boolean n) {
+		_assetTagStats.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this asset tag stats.
+	*
+	* @param primaryKey the primary key of this asset tag stats
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_assetTagStats.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.asset.model.AssetTagStats assetTagStats) {
-		return _assetTagStats.compareTo(assetTagStats);
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_assetTagStats.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	/**
+	* Sets the tag ID of this asset tag stats.
+	*
+	* @param tagId the tag ID of this asset tag stats
+	*/
 	@Override
-	public int hashCode() {
-		return _assetTagStats.hashCode();
+	public void setTagId(long tagId) {
+		_assetTagStats.setTagId(tagId);
+	}
+
+	/**
+	* Sets the tag stats ID of this asset tag stats.
+	*
+	* @param tagStatsId the tag stats ID of this asset tag stats
+	*/
+	@Override
+	public void setTagStatsId(long tagStatsId) {
+		_assetTagStats.setTagStatsId(tagStatsId);
 	}
 
 	@Override
@@ -287,23 +292,18 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetTagStats toUnescapedModel() {
-		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _assetTagStats.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _assetTagStats.toXmlString();
+	public com.liferay.portlet.asset.model.AssetTagStats toUnescapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_assetTagStats.persist();
+	public java.lang.String toXmlString() {
+		return _assetTagStats.toXmlString();
 	}
 
 	@Override

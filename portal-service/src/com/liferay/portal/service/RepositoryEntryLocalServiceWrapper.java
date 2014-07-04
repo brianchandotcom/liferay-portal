@@ -44,6 +44,16 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.addRepositoryEntry(repositoryEntry);
 	}
 
+	@Override
+	public com.liferay.portal.model.RepositoryEntry addRepositoryEntry(
+		long userId, long groupId, long repositoryId,
+		java.lang.String mappedId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.addRepositoryEntry(userId, groupId,
+			repositoryId, mappedId, serviceContext);
+	}
+
 	/**
 	* Creates a new repository entry with the primary key. Does not add the repository entry to the database.
 	*
@@ -54,6 +64,28 @@ public class RepositoryEntryLocalServiceWrapper
 	public com.liferay.portal.model.RepositoryEntry createRepositoryEntry(
 		long repositoryEntryId) {
 		return _repositoryEntryLocalService.createRepositoryEntry(repositoryEntryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repositoryEntry the repository entry
+	* @return the repository entry that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
+		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
+		return _repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntry);
 	}
 
 	/**
@@ -68,18 +100,6 @@ public class RepositoryEntryLocalServiceWrapper
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntryId);
-	}
-
-	/**
-	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryEntry the repository entry
-	* @return the repository entry that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.RepositoryEntry deleteRepositoryEntry(
-		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
-		return _repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntry);
 	}
 
 	@Override
@@ -202,6 +222,67 @@ public class RepositoryEntryLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _repositoryEntryLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _repositoryEntryLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _repositoryEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _repositoryEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
+		long repositoryId) {
+		return _repositoryEntryLocalService.getRepositoryEntries(repositoryId);
+	}
+
+	/**
+	* Returns a range of all the repository entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of repository entries
+	* @param end the upper bound of the range of repository entries (not inclusive)
+	* @return the range of repository entries
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
+		int start, int end) {
+		return _repositoryEntryLocalService.getRepositoryEntries(start, end);
+	}
+
+	/**
+	* Returns the number of repository entries.
+	*
+	* @return the number of repository entries
+	*/
+	@Override
+	public int getRepositoryEntriesCount() {
+		return _repositoryEntryLocalService.getRepositoryEntriesCount();
+	}
+
 	/**
 	* Returns the repository entry with the primary key.
 	*
@@ -214,34 +295,6 @@ public class RepositoryEntryLocalServiceWrapper
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _repositoryEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _repositoryEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -277,30 +330,13 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the repository entries.
+	* Sets the Spring bean ID for this bean.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RepositoryEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of repository entries
-	* @param end the upper bound of the range of repository entries (not inclusive)
-	* @return the range of repository entries
+	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
-		int start, int end) {
-		return _repositoryEntryLocalService.getRepositoryEntries(start, end);
-	}
-
-	/**
-	* Returns the number of repository entries.
-	*
-	* @return the number of repository entries
-	*/
-	@Override
-	public int getRepositoryEntriesCount() {
-		return _repositoryEntryLocalService.getRepositoryEntriesCount();
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_repositoryEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -313,42 +349,6 @@ public class RepositoryEntryLocalServiceWrapper
 	public com.liferay.portal.model.RepositoryEntry updateRepositoryEntry(
 		com.liferay.portal.model.RepositoryEntry repositoryEntry) {
 		return _repositoryEntryLocalService.updateRepositoryEntry(repositoryEntry);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _repositoryEntryLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_repositoryEntryLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portal.model.RepositoryEntry addRepositoryEntry(
-		long userId, long groupId, long repositoryId,
-		java.lang.String mappedId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryEntryLocalService.addRepositoryEntry(userId, groupId,
-			repositoryId, mappedId, serviceContext);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntries(
-		long repositoryId) {
-		return _repositoryEntryLocalService.getRepositoryEntries(repositoryId);
 	}
 
 	@Override

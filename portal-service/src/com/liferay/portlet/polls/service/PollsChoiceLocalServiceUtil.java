@@ -40,6 +40,15 @@ public class PollsChoiceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.polls.model.PollsChoice addChoice(
+		long userId, long questionId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addChoice(userId, questionId, name, description,
+			serviceContext);
+	}
 
 	/**
 	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
@@ -61,6 +70,15 @@ public class PollsChoiceLocalServiceUtil {
 	public static com.liferay.portlet.polls.model.PollsChoice createPollsChoice(
 		long choiceId) {
 		return getService().createPollsChoice(choiceId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -194,6 +212,45 @@ public class PollsChoiceLocalServiceUtil {
 		return getService().fetchPollsChoiceByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.polls.model.PollsChoice getChoice(
+		long choiceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getChoice(choiceId);
+	}
+
+	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> getChoices(
+		long questionId) {
+		return getService().getChoices(questionId);
+	}
+
+	public static int getChoicesCount(long questionId) {
+		return getService().getChoicesCount(questionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the polls choice with the primary key.
 	*
@@ -205,30 +262,6 @@ public class PollsChoiceLocalServiceUtil {
 		long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPollsChoice(choiceId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -285,57 +318,12 @@ public class PollsChoiceLocalServiceUtil {
 	}
 
 	/**
-	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was updated
-	*/
-	public static com.liferay.portlet.polls.model.PollsChoice updatePollsChoice(
-		com.liferay.portlet.polls.model.PollsChoice pollsChoice) {
-		return getService().updatePollsChoice(pollsChoice);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.polls.model.PollsChoice addChoice(
-		long userId, long questionId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addChoice(userId, questionId, name, description,
-			serviceContext);
-	}
-
-	public static com.liferay.portlet.polls.model.PollsChoice getChoice(
-		long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getChoice(choiceId);
-	}
-
-	public static java.util.List<com.liferay.portlet.polls.model.PollsChoice> getChoices(
-		long questionId) {
-		return getService().getChoices(questionId);
-	}
-
-	public static int getChoicesCount(long questionId) {
-		return getService().getChoicesCount(questionId);
 	}
 
 	public static com.liferay.portlet.polls.model.PollsChoice updateChoice(
@@ -346,6 +334,17 @@ public class PollsChoiceLocalServiceUtil {
 		return getService()
 				   .updateChoice(choiceId, questionId, name, description,
 			serviceContext);
+	}
+
+	/**
+	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsChoice the polls choice
+	* @return the polls choice that was updated
+	*/
+	public static com.liferay.portlet.polls.model.PollsChoice updatePollsChoice(
+		com.liferay.portlet.polls.model.PollsChoice pollsChoice) {
+		return getService().updatePollsChoice(pollsChoice);
 	}
 
 	public static PollsChoiceLocalService getService() {

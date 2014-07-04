@@ -33,26 +33,6 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 		_bookmarksFolderService = bookmarksFolderService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _bookmarksFolderService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_bookmarksFolderService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder addFolder(
 		long parentFolderId, java.lang.String name,
@@ -73,6 +53,16 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksFolderService.deleteFolder(folderId, includeTrashedEntries);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _bookmarksFolderService.getBeanIdentifier();
 	}
 
 	@Override
@@ -209,6 +199,16 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksFolderService.restoreFolderFromTrash(folderId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_bookmarksFolderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -46,6 +46,14 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.addDDMStructureLink(ddmStructureLink);
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink addStructureLink(
+		long classNameId, long classPK, long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _ddmStructureLinkLocalService.addStructureLink(classNameId,
+			classPK, structureId, serviceContext);
+	}
+
 	/**
 	* Creates a new d d m structure link with the primary key. Does not add the d d m structure link to the database.
 	*
@@ -56,6 +64,24 @@ public class DDMStructureLinkLocalServiceWrapper
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink createDDMStructureLink(
 		long structureLinkId) {
 		return _ddmStructureLinkLocalService.createDDMStructureLink(structureLinkId);
+	}
+
+	@Override
+	public void deleteClassStructureLink(long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStructureLinkLocalService.deleteClassStructureLink(classPK);
+	}
+
+	/**
+	* Deletes the d d m structure link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStructureLink the d d m structure link
+	* @return the d d m structure link that was removed
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+		return _ddmStructureLinkLocalService.deleteDDMStructureLink(ddmStructureLink);
 	}
 
 	/**
@@ -73,15 +99,30 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m structure link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStructureLink the d d m structure link
-	* @return the d d m structure link that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
-		return _ddmStructureLinkLocalService.deleteDDMStructureLink(ddmStructureLink);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLinkLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteStructureLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink) {
+		_ddmStructureLinkLocalService.deleteStructureLink(structureLink);
+	}
+
+	@Override
+	public void deleteStructureLink(long structureLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStructureLinkLocalService.deleteStructureLink(structureLinkId);
+	}
+
+	@Override
+	public void deleteStructureStructureLinks(long structureId) {
+		_ddmStructureLinkLocalService.deleteStructureStructureLinks(structureId);
 	}
 
 	@Override
@@ -176,6 +217,34 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.fetchDDMStructureLink(structureLinkId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ddmStructureLinkLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _ddmStructureLinkLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getClassStructureLink(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLinkLocalService.getClassStructureLink(classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassStructureLinks(
+		long classNameId) {
+		return _ddmStructureLinkLocalService.getClassStructureLinks(classNameId);
+	}
+
 	/**
 	* Returns the d d m structure link with the primary key.
 	*
@@ -188,28 +257,6 @@ public class DDMStructureLinkLocalServiceWrapper
 		long structureLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLinkLocalService.getDDMStructureLink(structureLinkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ddmStructureLinkLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLinkLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -239,80 +286,11 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.getDDMStructureLinksCount();
 	}
 
-	/**
-	* Updates the d d m structure link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStructureLink the d d m structure link
-	* @return the d d m structure link that was updated
-	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateDDMStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
-		return _ddmStructureLinkLocalService.updateDDMStructureLink(ddmStructureLink);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureLinkLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureLinkLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink addStructureLink(
-		long classNameId, long classPK, long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _ddmStructureLinkLocalService.addStructureLink(classNameId,
-			classPK, structureId, serviceContext);
-	}
-
-	@Override
-	public void deleteClassStructureLink(long classPK)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmStructureLinkLocalService.deleteClassStructureLink(classPK);
-	}
-
-	@Override
-	public void deleteStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink) {
-		_ddmStructureLinkLocalService.deleteStructureLink(structureLink);
-	}
-
-	@Override
-	public void deleteStructureLink(long structureLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmStructureLinkLocalService.deleteStructureLink(structureLinkId);
-	}
-
-	@Override
-	public void deleteStructureStructureLinks(long structureId) {
-		_ddmStructureLinkLocalService.deleteStructureStructureLinks(structureId);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getClassStructureLink(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLinkLocalService.getClassStructureLink(classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassStructureLinks(
-		long classNameId) {
-		return _ddmStructureLinkLocalService.getClassStructureLinks(classNameId);
+		return _ddmStructureLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -327,6 +305,28 @@ public class DDMStructureLinkLocalServiceWrapper
 		long structureId, int start, int end) {
 		return _ddmStructureLinkLocalService.getStructureLinks(structureId,
 			start, end);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_ddmStructureLinkLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the d d m structure link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStructureLink the d d m structure link
+	* @return the d d m structure link that was updated
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateDDMStructureLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+		return _ddmStructureLinkLocalService.updateDDMStructureLink(ddmStructureLink);
 	}
 
 	@Override

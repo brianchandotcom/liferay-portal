@@ -33,26 +33,6 @@ public class PollsQuestionServiceWrapper implements PollsQuestionService,
 		_pollsQuestionService = pollsQuestionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _pollsQuestionService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_pollsQuestionService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.polls.model.PollsQuestion addQuestion(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -74,11 +54,31 @@ public class PollsQuestionServiceWrapper implements PollsQuestionService,
 		_pollsQuestionService.deleteQuestion(questionId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _pollsQuestionService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.polls.model.PollsQuestion getQuestion(
 		long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionService.getQuestion(questionId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_pollsQuestionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

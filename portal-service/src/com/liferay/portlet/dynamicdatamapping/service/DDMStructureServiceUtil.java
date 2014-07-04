@@ -42,56 +42,6 @@ public class DDMStructureServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds a structure referencing a default parent structure, using the portal
-	* property <code>dynamic.data.lists.storage.type</code> storage type and
-	* default structure type.
-	*
-	* @param userId the primary key of the structure's creator/owner
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for the structure's
-	related model
-	* @param nameMap the structure's locales and localized names
-	* @param descriptionMap the structure's locales and localized descriptions
-	* @param xsd the structure's XML schema definition
-	* @param serviceContext the service context to be applied. Can set the
-	UUID, creation date, modification date, guest permissions, and
-	group permissions for the structure.
-	* @return the structure
-	* @throws PortalException if a user with the primary key could not be
-	found, if the user did not have permission to add the structure,
-	if the XSD was not well-formed, or if a portal exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
-		long userId, long groupId, long classNameId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addStructure(userId, groupId, classNameId, nameMap,
-			descriptionMap, xsd, serviceContext);
-	}
-
-	/**
 	* Adds a structure referencing its parent structure.
 	*
 	* @param groupId the primary key of the group
@@ -130,6 +80,38 @@ public class DDMStructureServiceUtil {
 				   .addStructure(groupId, parentStructureId, classNameId,
 			structureKey, nameMap, descriptionMap, xsd, storageType, type,
 			serviceContext);
+	}
+
+	/**
+	* Adds a structure referencing a default parent structure, using the portal
+	* property <code>dynamic.data.lists.storage.type</code> storage type and
+	* default structure type.
+	*
+	* @param userId the primary key of the structure's creator/owner
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @param nameMap the structure's locales and localized names
+	* @param descriptionMap the structure's locales and localized descriptions
+	* @param xsd the structure's XML schema definition
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the structure.
+	* @return the structure
+	* @throws PortalException if a user with the primary key could not be
+	found, if the user did not have permission to add the structure,
+	if the XSD was not well-formed, or if a portal exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
+		long userId, long groupId, long classNameId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addStructure(userId, groupId, classNameId, nameMap,
+			descriptionMap, xsd, serviceContext);
 	}
 
 	/**
@@ -245,26 +227,21 @@ public class DDMStructureServiceUtil {
 		return getService().fetchStructure(groupId, classNameId, structureKey);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
 		long[] groupIds, long journalFolderId, int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJournalFolderStructures(groupIds, journalFolderId,
 			restrictionType);
-	}
-
-	/**
-	* Returns the structure with the ID.
-	*
-	* @param structureId the primary key of the structure
-	* @return the structure with the ID
-	* @throws PortalException if the user did not have permission to view the
-	structure or if a structure with the ID could not be found
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getStructure(structureId);
 	}
 
 	/**
@@ -312,6 +289,20 @@ public class DDMStructureServiceUtil {
 		return getService()
 				   .getStructure(groupId, classNameId, structureKey,
 			includeAncestorStructures);
+	}
+
+	/**
+	* Returns the structure with the ID.
+	*
+	* @param structureId the primary key of the structure
+	* @return the structure with the ID
+	* @throws PortalException if the user did not have permission to view the
+	structure or if a structure with the ID could not be found
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
+		long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructure(structureId);
 	}
 
 	/**
@@ -485,6 +476,15 @@ public class DDMStructureServiceUtil {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, name,
 			description, storageType, type, andOperator);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

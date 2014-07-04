@@ -53,6 +53,30 @@ public class PhoneLocalServiceUtil {
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
+	String, String, int, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPhone(userId, className, classPK, number, extension,
+			typeId, primary);
+	}
+
+	public static com.liferay.portal.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPhone(userId, className, classPK, number, extension,
+			typeId, primary, serviceContext);
+	}
+
+	/**
 	* Creates a new phone with the primary key. Does not add the phone to the database.
 	*
 	* @param phoneId the primary key for the new phone
@@ -60,6 +84,26 @@ public class PhoneLocalServiceUtil {
 	*/
 	public static com.liferay.portal.model.Phone createPhone(long phoneId) {
 		return getService().createPhone(phoneId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the phone from the database. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was removed
+	*/
+	public static com.liferay.portal.model.Phone deletePhone(
+		com.liferay.portal.model.Phone phone) {
+		return getService().deletePhone(phone);
 	}
 
 	/**
@@ -74,15 +118,9 @@ public class PhoneLocalServiceUtil {
 		return getService().deletePhone(phoneId);
 	}
 
-	/**
-	* Deletes the phone from the database. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was removed
-	*/
-	public static com.liferay.portal.model.Phone deletePhone(
-		com.liferay.portal.model.Phone phone) {
-		return getService().deletePhone(phone);
+	public static void deletePhones(long companyId, java.lang.String className,
+		long classPK) {
+		getService().deletePhones(companyId, className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -179,6 +217,30 @@ public class PhoneLocalServiceUtil {
 		return getService().fetchPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the phone with the primary key.
 	*
@@ -189,30 +251,6 @@ public class PhoneLocalServiceUtil {
 	public static com.liferay.portal.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPhone(phoneId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,6 +265,15 @@ public class PhoneLocalServiceUtil {
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Phone> getPhones() {
+		return getService().getPhones();
+	}
+
+	public static java.util.List<com.liferay.portal.model.Phone> getPhones(
+		long companyId, java.lang.String className, long classPK) {
+		return getService().getPhones(companyId, className, classPK);
 	}
 
 	/**
@@ -255,26 +302,6 @@ public class PhoneLocalServiceUtil {
 	}
 
 	/**
-	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was updated
-	*/
-	public static com.liferay.portal.model.Phone updatePhone(
-		com.liferay.portal.model.Phone phone) {
-		return getService().updatePhone(phone);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -284,41 +311,14 @@ public class PhoneLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
-	String, String, int, boolean, ServiceContext)}
+	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was updated
 	*/
-	@Deprecated
-	public static com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPhone(userId, className, classPK, number, extension,
-			typeId, primary);
-	}
-
-	public static com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, int typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPhone(userId, className, classPK, number, extension,
-			typeId, primary, serviceContext);
-	}
-
-	public static void deletePhones(long companyId, java.lang.String className,
-		long classPK) {
-		getService().deletePhones(companyId, className, classPK);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Phone> getPhones() {
-		return getService().getPhones();
-	}
-
-	public static java.util.List<com.liferay.portal.model.Phone> getPhones(
-		long companyId, java.lang.String className, long classPK) {
-		return getService().getPhones(companyId, className, classPK);
+	public static com.liferay.portal.model.Phone updatePhone(
+		com.liferay.portal.model.Phone phone) {
+		return getService().updatePhone(phone);
 	}
 
 	public static com.liferay.portal.model.Phone updatePhone(long phoneId,

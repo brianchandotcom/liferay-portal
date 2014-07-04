@@ -22,7 +22,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SCProductEntryLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SCProductEntryLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

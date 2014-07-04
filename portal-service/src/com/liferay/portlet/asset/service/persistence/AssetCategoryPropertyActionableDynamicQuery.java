@@ -22,7 +22,7 @@ import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link AssetCategoryPropertyLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link AssetCategoryPropertyLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

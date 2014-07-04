@@ -32,6 +32,13 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		_mbBanLocalService = mbBanLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.messageboards.model.MBBan addBan(long userId,
+		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbBanLocalService.addBan(userId, banUserId, serviceContext);
+	}
+
 	/**
 	* Adds the message boards ban to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,6 +51,12 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		return _mbBanLocalService.addMBBan(mbBan);
 	}
 
+	@Override
+	public void checkBan(long groupId, long banUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbBanLocalService.checkBan(groupId, banUserId);
+	}
+
 	/**
 	* Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	*
@@ -53,6 +66,33 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	@Override
 	public com.liferay.portlet.messageboards.model.MBBan createMBBan(long banId) {
 		return _mbBanLocalService.createMBBan(banId);
+	}
+
+	@Override
+	public void deleteBan(com.liferay.portlet.messageboards.model.MBBan ban) {
+		_mbBanLocalService.deleteBan(ban);
+	}
+
+	@Override
+	public void deleteBan(long banId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbBanLocalService.deleteBan(banId);
+	}
+
+	@Override
+	public void deleteBan(long banUserId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_mbBanLocalService.deleteBan(banUserId, serviceContext);
+	}
+
+	@Override
+	public void deleteBansByBanUserId(long banUserId) {
+		_mbBanLocalService.deleteBansByBanUserId(banUserId);
+	}
+
+	@Override
+	public void deleteBansByGroupId(long groupId) {
+		_mbBanLocalService.deleteBansByGroupId(groupId);
 	}
 
 	/**
@@ -78,6 +118,16 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	public com.liferay.portlet.messageboards.model.MBBan deleteMBBan(
 		com.liferay.portlet.messageboards.model.MBBan mbBan) {
 		return _mbBanLocalService.deleteMBBan(mbBan);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbBanLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -165,6 +215,11 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	}
 
 	@Override
+	public void expireBans() {
+		_mbBanLocalService.expireBans();
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBBan fetchMBBan(long banId) {
 		return _mbBanLocalService.fetchMBBan(banId);
 	}
@@ -195,6 +250,38 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		return _mbBanLocalService.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mbBanLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> getBans(
+		long groupId, int start, int end) {
+		return _mbBanLocalService.getBans(groupId, start, end);
+	}
+
+	@Override
+	public int getBansCount(long groupId) {
+		return _mbBanLocalService.getBansCount(groupId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mbBanLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _mbBanLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the message boards ban with the primary key.
 	*
@@ -206,34 +293,6 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	public com.liferay.portlet.messageboards.model.MBBan getMBBan(long banId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbBanLocalService.getMBBan(banId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mbBanLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _mbBanLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbBanLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbBanLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -293,26 +352,16 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		return _mbBanLocalService.getMBBansCount();
 	}
 
-	/**
-	* Updates the message boards ban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbBan the message boards ban
-	* @return the message boards ban that was updated
-	*/
 	@Override
-	public com.liferay.portlet.messageboards.model.MBBan updateMBBan(
-		com.liferay.portlet.messageboards.model.MBBan mbBan) {
-		return _mbBanLocalService.updateMBBan(mbBan);
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbBanLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbBanLocalService.getBeanIdentifier();
+	public boolean hasBan(long groupId, long banUserId) {
+		return _mbBanLocalService.hasBan(groupId, banUserId);
 	}
 
 	/**
@@ -325,65 +374,16 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		_mbBanLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the message boards ban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbBan the message boards ban
+	* @return the message boards ban that was updated
+	*/
 	@Override
-	public com.liferay.portlet.messageboards.model.MBBan addBan(long userId,
-		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbBanLocalService.addBan(userId, banUserId, serviceContext);
-	}
-
-	@Override
-	public void checkBan(long groupId, long banUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbBanLocalService.checkBan(groupId, banUserId);
-	}
-
-	@Override
-	public void deleteBan(long banId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbBanLocalService.deleteBan(banId);
-	}
-
-	@Override
-	public void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_mbBanLocalService.deleteBan(banUserId, serviceContext);
-	}
-
-	@Override
-	public void deleteBan(com.liferay.portlet.messageboards.model.MBBan ban) {
-		_mbBanLocalService.deleteBan(ban);
-	}
-
-	@Override
-	public void deleteBansByBanUserId(long banUserId) {
-		_mbBanLocalService.deleteBansByBanUserId(banUserId);
-	}
-
-	@Override
-	public void deleteBansByGroupId(long groupId) {
-		_mbBanLocalService.deleteBansByGroupId(groupId);
-	}
-
-	@Override
-	public void expireBans() {
-		_mbBanLocalService.expireBans();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBBan> getBans(
-		long groupId, int start, int end) {
-		return _mbBanLocalService.getBans(groupId, start, end);
-	}
-
-	@Override
-	public int getBansCount(long groupId) {
-		return _mbBanLocalService.getBansCount(groupId);
-	}
-
-	@Override
-	public boolean hasBan(long groupId, long banUserId) {
-		return _mbBanLocalService.hasBan(groupId, banUserId);
+	public com.liferay.portlet.messageboards.model.MBBan updateMBBan(
+		com.liferay.portlet.messageboards.model.MBBan mbBan) {
+		return _mbBanLocalService.updateMBBan(mbBan);
 	}
 
 	/**

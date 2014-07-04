@@ -130,64 +130,30 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 		}
 	}
 
-	/**
-	* Returns the primary key of this shopping order item.
-	*
-	* @return the primary key of this shopping order item
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _shoppingOrderItem.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ShoppingOrderItemWrapper((ShoppingOrderItem)_shoppingOrderItem.clone());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portlet.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return _shoppingOrderItem.compareTo(shoppingOrderItem);
 	}
 
 	/**
-	* Sets the primary key of this shopping order item.
+	* Returns the description of this shopping order item.
 	*
-	* @param primaryKey the primary key of this shopping order item
+	* @return the description of this shopping order item
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_shoppingOrderItem.setPrimaryKey(primaryKey);
+	public java.lang.String getDescription() {
+		return _shoppingOrderItem.getDescription();
 	}
 
-	/**
-	* Returns the order item ID of this shopping order item.
-	*
-	* @return the order item ID of this shopping order item
-	*/
 	@Override
-	public long getOrderItemId() {
-		return _shoppingOrderItem.getOrderItemId();
-	}
-
-	/**
-	* Sets the order item ID of this shopping order item.
-	*
-	* @param orderItemId the order item ID of this shopping order item
-	*/
-	@Override
-	public void setOrderItemId(long orderItemId) {
-		_shoppingOrderItem.setOrderItemId(orderItemId);
-	}
-
-	/**
-	* Returns the order ID of this shopping order item.
-	*
-	* @return the order ID of this shopping order item
-	*/
-	@Override
-	public long getOrderId() {
-		return _shoppingOrderItem.getOrderId();
-	}
-
-	/**
-	* Sets the order ID of this shopping order item.
-	*
-	* @param orderId the order ID of this shopping order item
-	*/
-	@Override
-	public void setOrderId(long orderId) {
-		_shoppingOrderItem.setOrderId(orderId);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _shoppingOrderItem.getExpandoBridge();
 	}
 
 	/**
@@ -201,36 +167,6 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	/**
-	* Sets the item ID of this shopping order item.
-	*
-	* @param itemId the item ID of this shopping order item
-	*/
-	@Override
-	public void setItemId(java.lang.String itemId) {
-		_shoppingOrderItem.setItemId(itemId);
-	}
-
-	/**
-	* Returns the sku of this shopping order item.
-	*
-	* @return the sku of this shopping order item
-	*/
-	@Override
-	public java.lang.String getSku() {
-		return _shoppingOrderItem.getSku();
-	}
-
-	/**
-	* Sets the sku of this shopping order item.
-	*
-	* @param sku the sku of this shopping order item
-	*/
-	@Override
-	public void setSku(java.lang.String sku) {
-		_shoppingOrderItem.setSku(sku);
-	}
-
-	/**
 	* Returns the name of this shopping order item.
 	*
 	* @return the name of this shopping order item
@@ -241,53 +177,23 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	/**
-	* Sets the name of this shopping order item.
+	* Returns the order ID of this shopping order item.
 	*
-	* @param name the name of this shopping order item
+	* @return the order ID of this shopping order item
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_shoppingOrderItem.setName(name);
+	public long getOrderId() {
+		return _shoppingOrderItem.getOrderId();
 	}
 
 	/**
-	* Returns the description of this shopping order item.
+	* Returns the order item ID of this shopping order item.
 	*
-	* @return the description of this shopping order item
+	* @return the order item ID of this shopping order item
 	*/
 	@Override
-	public java.lang.String getDescription() {
-		return _shoppingOrderItem.getDescription();
-	}
-
-	/**
-	* Sets the description of this shopping order item.
-	*
-	* @param description the description of this shopping order item
-	*/
-	@Override
-	public void setDescription(java.lang.String description) {
-		_shoppingOrderItem.setDescription(description);
-	}
-
-	/**
-	* Returns the properties of this shopping order item.
-	*
-	* @return the properties of this shopping order item
-	*/
-	@Override
-	public java.lang.String getProperties() {
-		return _shoppingOrderItem.getProperties();
-	}
-
-	/**
-	* Sets the properties of this shopping order item.
-	*
-	* @param properties the properties of this shopping order item
-	*/
-	@Override
-	public void setProperties(java.lang.String properties) {
-		_shoppingOrderItem.setProperties(properties);
+	public long getOrderItemId() {
+		return _shoppingOrderItem.getOrderItemId();
 	}
 
 	/**
@@ -301,13 +207,28 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	/**
-	* Sets the price of this shopping order item.
+	* Returns the primary key of this shopping order item.
 	*
-	* @param price the price of this shopping order item
+	* @return the primary key of this shopping order item
 	*/
 	@Override
-	public void setPrice(double price) {
-		_shoppingOrderItem.setPrice(price);
+	public long getPrimaryKey() {
+		return _shoppingOrderItem.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _shoppingOrderItem.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the properties of this shopping order item.
+	*
+	* @return the properties of this shopping order item
+	*/
+	@Override
+	public java.lang.String getProperties() {
+		return _shoppingOrderItem.getProperties();
 	}
 
 	/**
@@ -321,16 +242,6 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	/**
-	* Sets the quantity of this shopping order item.
-	*
-	* @param quantity the quantity of this shopping order item
-	*/
-	@Override
-	public void setQuantity(int quantity) {
-		_shoppingOrderItem.setQuantity(quantity);
-	}
-
-	/**
 	* Returns the shipped date of this shopping order item.
 	*
 	* @return the shipped date of this shopping order item
@@ -341,23 +252,18 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	/**
-	* Sets the shipped date of this shopping order item.
+	* Returns the sku of this shopping order item.
 	*
-	* @param shippedDate the shipped date of this shopping order item
+	* @return the sku of this shopping order item
 	*/
 	@Override
-	public void setShippedDate(java.util.Date shippedDate) {
-		_shoppingOrderItem.setShippedDate(shippedDate);
+	public java.lang.String getSku() {
+		return _shoppingOrderItem.getSku();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _shoppingOrderItem.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_shoppingOrderItem.setNew(n);
+	public int hashCode() {
+		return _shoppingOrderItem.hashCode();
 	}
 
 	@Override
@@ -366,28 +272,33 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_shoppingOrderItem.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _shoppingOrderItem.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _shoppingOrderItem.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _shoppingOrderItem.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_shoppingOrderItem.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_shoppingOrderItem.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _shoppingOrderItem.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_shoppingOrderItem.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the description of this shopping order item.
+	*
+	* @param description the description of this shopping order item
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_shoppingOrderItem.setDescription(description);
 	}
 
 	@Override
@@ -408,20 +319,114 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 		_shoppingOrderItem.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the item ID of this shopping order item.
+	*
+	* @param itemId the item ID of this shopping order item
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ShoppingOrderItemWrapper((ShoppingOrderItem)_shoppingOrderItem.clone());
+	public void setItemId(java.lang.String itemId) {
+		_shoppingOrderItem.setItemId(itemId);
+	}
+
+	/**
+	* Sets the name of this shopping order item.
+	*
+	* @param name the name of this shopping order item
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_shoppingOrderItem.setName(name);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return _shoppingOrderItem.compareTo(shoppingOrderItem);
+	public void setNew(boolean n) {
+		_shoppingOrderItem.setNew(n);
+	}
+
+	/**
+	* Sets the order ID of this shopping order item.
+	*
+	* @param orderId the order ID of this shopping order item
+	*/
+	@Override
+	public void setOrderId(long orderId) {
+		_shoppingOrderItem.setOrderId(orderId);
+	}
+
+	/**
+	* Sets the order item ID of this shopping order item.
+	*
+	* @param orderItemId the order item ID of this shopping order item
+	*/
+	@Override
+	public void setOrderItemId(long orderItemId) {
+		_shoppingOrderItem.setOrderItemId(orderItemId);
+	}
+
+	/**
+	* Sets the price of this shopping order item.
+	*
+	* @param price the price of this shopping order item
+	*/
+	@Override
+	public void setPrice(double price) {
+		_shoppingOrderItem.setPrice(price);
+	}
+
+	/**
+	* Sets the primary key of this shopping order item.
+	*
+	* @param primaryKey the primary key of this shopping order item
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_shoppingOrderItem.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _shoppingOrderItem.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_shoppingOrderItem.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the properties of this shopping order item.
+	*
+	* @param properties the properties of this shopping order item
+	*/
+	@Override
+	public void setProperties(java.lang.String properties) {
+		_shoppingOrderItem.setProperties(properties);
+	}
+
+	/**
+	* Sets the quantity of this shopping order item.
+	*
+	* @param quantity the quantity of this shopping order item
+	*/
+	@Override
+	public void setQuantity(int quantity) {
+		_shoppingOrderItem.setQuantity(quantity);
+	}
+
+	/**
+	* Sets the shipped date of this shopping order item.
+	*
+	* @param shippedDate the shipped date of this shopping order item
+	*/
+	@Override
+	public void setShippedDate(java.util.Date shippedDate) {
+		_shoppingOrderItem.setShippedDate(shippedDate);
+	}
+
+	/**
+	* Sets the sku of this shopping order item.
+	*
+	* @param sku the sku of this shopping order item
+	*/
+	@Override
+	public void setSku(java.lang.String sku) {
+		_shoppingOrderItem.setSku(sku);
 	}
 
 	@Override
@@ -435,23 +440,18 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public com.liferay.portlet.shopping.model.ShoppingOrderItem toUnescapedModel() {
-		return new ShoppingOrderItemWrapper(_shoppingOrderItem.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _shoppingOrderItem.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _shoppingOrderItem.toXmlString();
+	public com.liferay.portlet.shopping.model.ShoppingOrderItem toUnescapedModel() {
+		return new ShoppingOrderItemWrapper(_shoppingOrderItem.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_shoppingOrderItem.persist();
+	public java.lang.String toXmlString() {
+		return _shoppingOrderItem.toXmlString();
 	}
 
 	@Override

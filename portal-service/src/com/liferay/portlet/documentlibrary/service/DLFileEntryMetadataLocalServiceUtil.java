@@ -64,6 +64,17 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the document library file entry metadata from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was removed
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata deleteDLFileEntryMetadata(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
+		return getService().deleteDLFileEntryMetadata(dlFileEntryMetadata);
+	}
+
+	/**
 	* Deletes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param fileEntryMetadataId the primary key of the document library file entry metadata
@@ -76,15 +87,23 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().deleteDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
+	public static void deleteFileEntryMetadata(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileEntryMetadata(fileEntryId);
+	}
+
+	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileVersionFileEntryMetadata(fileVersionId);
+	}
+
 	/**
-	* Deletes the document library file entry metadata from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryMetadata the document library file entry metadata
-	* @return the document library file entry metadata that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata deleteDLFileEntryMetadata(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
-		return getService().deleteDLFileEntryMetadata(dlFileEntryMetadata);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +189,29 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().fetchDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
+		long ddmStructureId, long fileVersionId) {
+		return getService().fetchFileEntryMetadata(ddmStructureId, fileVersionId);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
+		long fileEntryMetadataId) {
+		return getService().fetchFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	/**
 	* Returns the document library file entry metadata with the primary key.
 	*
@@ -181,25 +223,6 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,65 +250,16 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().getDLFileEntryMetadatasCount();
 	}
 
-	/**
-	* Updates the document library file entry metadata in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryMetadata the document library file entry metadata
-	* @return the document library file entry metadata that was updated
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateDLFileEntryMetadata(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
-		return getService().updateDLFileEntryMetadata(dlFileEntryMetadata);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void deleteFileEntryMetadata(long fileEntryId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
+		long ddmStructureId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileEntryMetadata(fileEntryId);
-	}
-
-	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileVersionFileEntryMetadata(fileVersionId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
-		long fileEntryMetadataId) {
-		return getService().fetchFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
-		long ddmStructureId, long fileVersionId) {
-		return getService().fetchFileEntryMetadata(ddmStructureId, fileVersionId);
+		return getService().getFileEntryMetadata(ddmStructureId, fileVersionId);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
 		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
-		long ddmStructureId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileEntryMetadata(ddmStructureId, fileVersionId);
 	}
 
 	/**
@@ -305,6 +279,32 @@ public class DLFileEntryMetadataLocalServiceUtil {
 
 	public static long getFileVersionFileEntryMetadatasCount(long fileVersionId) {
 		return getService().getFileVersionFileEntryMetadatasCount(fileVersionId);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the document library file entry metadata in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was updated
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateDLFileEntryMetadata(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
+		return getService().updateDLFileEntryMetadata(dlFileEntryMetadata);
 	}
 
 	public static void updateFileEntryMetadata(long companyId,

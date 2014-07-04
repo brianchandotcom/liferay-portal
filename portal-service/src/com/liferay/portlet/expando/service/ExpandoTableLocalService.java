@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -46,6 +47,13 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoTableLocalServiceUtil} to access the expando table local service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the expando table to the database. Also notifies the appropriate model listeners.
@@ -53,8 +61,35 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	* @param expandoTable the expando table
 	* @return the expando table that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.expando.model.ExpandoTable addExpandoTable(
 		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
+
+	/**
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
+	String)}
+	*/
+	@java.lang.Deprecated
+	public com.liferay.portlet.expando.model.ExpandoTable addTable(
+		java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
+	String)}
+	*/
+	@java.lang.Deprecated
+	public com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new expando table with the primary key. Does not add the expando table to the database.
@@ -66,24 +101,52 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 		long tableId);
 
 	/**
+	* Deletes the expando table from the database. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was removed
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
+
+	/**
 	* Deletes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tableId the primary key of the expando table
 	* @return the expando table that was removed
 	* @throws PortalException if a expando table with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
 		long tableId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Deletes the expando table from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was removed
+	* @throws PortalException
 	*/
-	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTable(long companyId, java.lang.String className,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTable(long companyId, long classNameId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTable(
+		com.liferay.portlet.expando.model.ExpandoTable table);
+
+	public void deleteTable(long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTables(long companyId, java.lang.String className);
+
+	public void deleteTables(long companyId, long classNameId);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -151,8 +214,40 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoTable fetchExpandoTable(
 		long tableId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable fetchTable(
+		long companyId, long classNameId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the expando table with the primary key.
@@ -164,23 +259,6 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoTable getExpandoTable(
 		long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -206,21 +284,53 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExpandoTablesCount();
 
-	/**
-	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was updated
-	*/
-	public com.liferay.portlet.expando.model.ExpandoTable updateExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
+	String)}
 	*/
-	public java.lang.String getBeanIdentifier();
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getTable(
+		java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, long,
+	String)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getTable(
+		long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getTable(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoTable getTable(long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
+		long companyId, java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
+		long companyId, long classNameId);
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -229,121 +339,15 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
-		long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
-	String)}
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was updated
 	*/
-	@Deprecated
-	public com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
-	String)}
-	*/
-	@Deprecated
-	public com.liferay.portlet.expando.model.ExpandoTable addTable(
-		java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTable(
-		com.liferay.portlet.expando.model.ExpandoTable table);
-
-	public void deleteTable(long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTable(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTables(long companyId, long classNameId);
-
-	public void deleteTables(long companyId, java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
-		long companyId, long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable fetchTable(
-		long companyId, long classNameId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
-		long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getTable(long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getTable(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, long,
-	String)}
-	*/
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getTable(
-		long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
-	String)}
-	*/
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoTable getTable(
-		java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
-		long companyId, long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className);
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portlet.expando.model.ExpandoTable updateExpandoTable(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable);
 
 	public com.liferay.portlet.expando.model.ExpandoTable updateTable(
 		long tableId, java.lang.String name)

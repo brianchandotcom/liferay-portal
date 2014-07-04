@@ -46,6 +46,14 @@ public class DDMStorageLinkLocalServiceWrapper
 		return _ddmStorageLinkLocalService.addDDMStorageLink(ddmStorageLink);
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink addStorageLink(
+		long classNameId, long classPK, long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _ddmStorageLinkLocalService.addStorageLink(classNameId, classPK,
+			structureId, serviceContext);
+	}
+
 	/**
 	* Creates a new d d m storage link with the primary key. Does not add the d d m storage link to the database.
 	*
@@ -56,6 +64,24 @@ public class DDMStorageLinkLocalServiceWrapper
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink createDDMStorageLink(
 		long storageLinkId) {
 		return _ddmStorageLinkLocalService.createDDMStorageLink(storageLinkId);
+	}
+
+	@Override
+	public void deleteClassStorageLink(long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStorageLinkLocalService.deleteClassStorageLink(classPK);
+	}
+
+	/**
+	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was removed
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		return _ddmStorageLinkLocalService.deleteDDMStorageLink(ddmStorageLink);
 	}
 
 	/**
@@ -73,15 +99,30 @@ public class DDMStorageLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStorageLink the d d m storage link
-	* @return the d d m storage link that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
-		return _ddmStorageLinkLocalService.deleteDDMStorageLink(ddmStorageLink);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStorageLinkLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink storageLink) {
+		_ddmStorageLinkLocalService.deleteStorageLink(storageLink);
+	}
+
+	@Override
+	public void deleteStorageLink(long storageLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStorageLinkLocalService.deleteStorageLink(storageLinkId);
+	}
+
+	@Override
+	public void deleteStructureStorageLinks(long structureId) {
+		_ddmStorageLinkLocalService.deleteStructureStorageLinks(structureId);
 	}
 
 	@Override
@@ -175,6 +216,28 @@ public class DDMStorageLinkLocalServiceWrapper
 		return _ddmStorageLinkLocalService.fetchDDMStorageLink(storageLinkId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ddmStorageLinkLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _ddmStorageLinkLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink getClassStorageLink(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStorageLinkLocalService.getClassStorageLink(classPK);
+	}
+
 	/**
 	* Returns the d d m storage link with the primary key.
 	*
@@ -187,28 +250,6 @@ public class DDMStorageLinkLocalServiceWrapper
 		long storageLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLinkLocalService.getDDMStorageLink(storageLinkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ddmStorageLinkLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStorageLinkLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStorageLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -238,74 +279,11 @@ public class DDMStorageLinkLocalServiceWrapper
 		return _ddmStorageLinkLocalService.getDDMStorageLinksCount();
 	}
 
-	/**
-	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStorageLink the d d m storage link
-	* @return the d d m storage link that was updated
-	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateDDMStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
-		return _ddmStorageLinkLocalService.updateDDMStorageLink(ddmStorageLink);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStorageLinkLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStorageLinkLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink addStorageLink(
-		long classNameId, long classPK, long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _ddmStorageLinkLocalService.addStorageLink(classNameId, classPK,
-			structureId, serviceContext);
-	}
-
-	@Override
-	public void deleteClassStorageLink(long classPK)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmStorageLinkLocalService.deleteClassStorageLink(classPK);
-	}
-
-	@Override
-	public void deleteStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink storageLink) {
-		_ddmStorageLinkLocalService.deleteStorageLink(storageLink);
-	}
-
-	@Override
-	public void deleteStorageLink(long storageLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmStorageLinkLocalService.deleteStorageLink(storageLinkId);
-	}
-
-	@Override
-	public void deleteStructureStorageLinks(long structureId) {
-		_ddmStorageLinkLocalService.deleteStructureStorageLinks(structureId);
-	}
-
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink getClassStorageLink(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStorageLinkLocalService.getClassStorageLink(classPK);
+		return _ddmStorageLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -324,6 +302,28 @@ public class DDMStorageLinkLocalServiceWrapper
 	@Override
 	public int getStructureStorageLinksCount(long structureId) {
 		return _ddmStorageLinkLocalService.getStructureStorageLinksCount(structureId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_ddmStorageLinkLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was updated
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateDDMStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		return _ddmStorageLinkLocalService.updateDDMStorageLink(ddmStorageLink);
 	}
 
 	@Override

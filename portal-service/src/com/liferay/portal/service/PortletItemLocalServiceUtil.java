@@ -52,6 +52,14 @@ public class PortletItemLocalServiceUtil {
 		return getService().addPortletItem(portletItem);
 	}
 
+	public static com.liferay.portal.model.PortletItem addPortletItem(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String portletId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPortletItem(userId, groupId, name, portletId, className);
+	}
+
 	/**
 	* Creates a new portlet item with the primary key. Does not add the portlet item to the database.
 	*
@@ -61,6 +69,26 @@ public class PortletItemLocalServiceUtil {
 	public static com.liferay.portal.model.PortletItem createPortletItem(
 		long portletItemId) {
 		return getService().createPortletItem(portletItemId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was removed
+	*/
+	public static com.liferay.portal.model.PortletItem deletePortletItem(
+		com.liferay.portal.model.PortletItem portletItem) {
+		return getService().deletePortletItem(portletItem);
 	}
 
 	/**
@@ -74,17 +102,6 @@ public class PortletItemLocalServiceUtil {
 		long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePortletItem(portletItemId);
-	}
-
-	/**
-	* Deletes the portlet item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was removed
-	*/
-	public static com.liferay.portal.model.PortletItem deletePortletItem(
-		com.liferay.portal.model.PortletItem portletItem) {
-		return getService().deletePortletItem(portletItem);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +187,32 @@ public class PortletItemLocalServiceUtil {
 		return getService().fetchPortletItem(portletItemId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.model.PortletItem getPortletItem(
+		long groupId, java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPortletItem(groupId, name, portletId, className);
+	}
+
 	/**
 	* Returns the portlet item with the primary key.
 	*
@@ -183,23 +226,14 @@ public class PortletItemLocalServiceUtil {
 		return getService().getPortletItem(portletItemId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String className) {
+		return getService().getPortletItems(groupId, className);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String portletId, java.lang.String className) {
+		return getService().getPortletItems(groupId, portletId, className);
 	}
 
 	/**
@@ -228,26 +262,6 @@ public class PortletItemLocalServiceUtil {
 	}
 
 	/**
-	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was updated
-	*/
-	public static com.liferay.portal.model.PortletItem updatePortletItem(
-		com.liferay.portal.model.PortletItem portletItem) {
-		return getService().updatePortletItem(portletItem);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -256,29 +270,15 @@ public class PortletItemLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.PortletItem addPortletItem(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String portletId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPortletItem(userId, groupId, name, portletId, className);
-	}
-
-	public static com.liferay.portal.model.PortletItem getPortletItem(
-		long groupId, java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPortletItem(groupId, name, portletId, className);
-	}
-
-	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className) {
-		return getService().getPortletItems(groupId, className);
-	}
-
-	public static java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className) {
-		return getService().getPortletItems(groupId, portletId, className);
+	/**
+	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was updated
+	*/
+	public static com.liferay.portal.model.PortletItem updatePortletItem(
+		com.liferay.portal.model.PortletItem portletItem) {
+		return getService().updatePortletItem(portletItem);
 	}
 
 	public static com.liferay.portal.model.PortletItem updatePortletItem(

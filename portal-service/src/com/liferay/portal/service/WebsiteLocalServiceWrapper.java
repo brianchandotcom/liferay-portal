@@ -31,6 +31,30 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
+	long, String, int, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.Website addWebsite(long userId,
+		java.lang.String className, long classPK, java.lang.String url,
+		int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.addWebsite(userId, className, classPK, url,
+			typeId, primary);
+	}
+
+	@Override
+	public com.liferay.portal.model.Website addWebsite(long userId,
+		java.lang.String className, long classPK, java.lang.String url,
+		int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.addWebsite(userId, className, classPK, url,
+			typeId, primary, serviceContext);
+	}
+
+	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
 	*
 	* @param website the website
@@ -54,16 +78,13 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
-	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param websiteId the primary key of the website
-	* @return the website that was removed
-	* @throws PortalException if a website with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.Website deleteWebsite(long websiteId)
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.deleteWebsite(websiteId);
+		return _websiteLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -76,6 +97,25 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	public com.liferay.portal.model.Website deleteWebsite(
 		com.liferay.portal.model.Website website) {
 		return _websiteLocalService.deleteWebsite(website);
+	}
+
+	/**
+	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param websiteId the primary key of the website
+	* @return the website that was removed
+	* @throws PortalException if a website with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Website deleteWebsite(long websiteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.deleteWebsite(websiteId);
+	}
+
+	@Override
+	public void deleteWebsites(long companyId, java.lang.String className,
+		long classPK) {
+		_websiteLocalService.deleteWebsites(companyId, className, classPK);
 	}
 
 	@Override
@@ -181,6 +221,34 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 			companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _websiteLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _websiteLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _websiteLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the website with the primary key.
 	*
@@ -192,34 +260,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	public com.liferay.portal.model.Website getWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _websiteLocalService.getWebsite(websiteId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _websiteLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _websiteLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -235,6 +275,17 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _websiteLocalService.getWebsiteByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Website> getWebsites() {
+		return _websiteLocalService.getWebsites();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Website> getWebsites(
+		long companyId, java.lang.String className, long classPK) {
+		return _websiteLocalService.getWebsites(companyId, className, classPK);
 	}
 
 	/**
@@ -265,28 +316,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
-	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param website the website
-	* @return the website that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Website updateWebsite(
-		com.liferay.portal.model.Website website) {
-		return _websiteLocalService.updateWebsite(website);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _websiteLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -297,44 +326,15 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
-	long, String, int, boolean, ServiceContext)}
+	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param website the website
+	* @return the website that was updated
 	*/
-	@Deprecated
 	@Override
-	public com.liferay.portal.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.addWebsite(userId, className, classPK, url,
-			typeId, primary);
-	}
-
-	@Override
-	public com.liferay.portal.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		int typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.addWebsite(userId, className, classPK, url,
-			typeId, primary, serviceContext);
-	}
-
-	@Override
-	public void deleteWebsites(long companyId, java.lang.String className,
-		long classPK) {
-		_websiteLocalService.deleteWebsites(companyId, className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Website> getWebsites() {
-		return _websiteLocalService.getWebsites();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Website> getWebsites(
-		long companyId, java.lang.String className, long classPK) {
-		return _websiteLocalService.getWebsites(companyId, className, classPK);
+	public com.liferay.portal.model.Website updateWebsite(
+		com.liferay.portal.model.Website website) {
+		return _websiteLocalService.updateWebsite(website);
 	}
 
 	@Override

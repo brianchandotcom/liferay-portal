@@ -40,6 +40,11 @@ public class ShoppingOrderLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingOrderLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.shopping.model.ShoppingOrder addLatestOrder(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLatestOrder(userId, groupId);
+	}
 
 	/**
 	* Adds the shopping order to the database. Also notifies the appropriate model listeners.
@@ -52,6 +57,17 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().addShoppingOrder(shoppingOrder);
 	}
 
+	public static void completeOrder(java.lang.String number,
+		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
+		double ppPaymentGross, java.lang.String ppReceiverEmail,
+		java.lang.String ppPayerEmail, boolean updateInventory,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.completeOrder(number, ppTxnId, ppPaymentStatus, ppPaymentGross,
+			ppReceiverEmail, ppPayerEmail, updateInventory, serviceContext);
+	}
+
 	/**
 	* Creates a new shopping order with the primary key. Does not add the shopping order to the database.
 	*
@@ -61,6 +77,31 @@ public class ShoppingOrderLocalServiceUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingOrder createShoppingOrder(
 		long orderId) {
 		return getService().createShoppingOrder(orderId);
+	}
+
+	public static void deleteOrder(
+		com.liferay.portlet.shopping.model.ShoppingOrder order)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrder(order);
+	}
+
+	public static void deleteOrder(long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrder(orderId);
+	}
+
+	public static void deleteOrders(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrders(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -170,6 +211,49 @@ public class ShoppingOrderLocalServiceUtil {
 		return getService().fetchShoppingOrder(orderId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder getLatestOrder(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestOrder(userId, groupId);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
+		java.lang.String number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrder(number);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
+		long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrder(orderId);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
+		java.lang.String ppTxnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPayPalTxnIdOrder(ppTxnId);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping order with the primary key.
 	*
@@ -181,25 +265,6 @@ public class ShoppingOrderLocalServiceUtil {
 		long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShoppingOrder(orderId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -225,92 +290,6 @@ public class ShoppingOrderLocalServiceUtil {
 	*/
 	public static int getShoppingOrdersCount() {
 		return getService().getShoppingOrdersCount();
-	}
-
-	/**
-	* Updates the shopping order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrder the shopping order
-	* @return the shopping order that was updated
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingOrder updateShoppingOrder(
-		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder) {
-		return getService().updateShoppingOrder(shoppingOrder);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder addLatestOrder(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addLatestOrder(userId, groupId);
-	}
-
-	public static void completeOrder(java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.completeOrder(number, ppTxnId, ppPaymentStatus, ppPaymentGross,
-			ppReceiverEmail, ppPayerEmail, updateInventory, serviceContext);
-	}
-
-	public static void deleteOrder(long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteOrder(orderId);
-	}
-
-	public static void deleteOrder(
-		com.liferay.portlet.shopping.model.ShoppingOrder order)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteOrder(order);
-	}
-
-	public static void deleteOrders(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteOrders(groupId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder getLatestOrder(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestOrder(userId, groupId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrder(orderId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
-		java.lang.String number)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrder(number);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
-		java.lang.String ppTxnId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPayPalTxnIdOrder(ppTxnId);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder saveLatestOrder(
@@ -347,18 +326,27 @@ public class ShoppingOrderLocalServiceUtil {
 			ppPaymentStatus, andOperator);
 	}
 
-	public static void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendEmail(orderId, emailType, serviceContext);
-	}
-
 	public static void sendEmail(
 		com.liferay.portlet.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().sendEmail(order, emailType, serviceContext);
+	}
+
+	public static void sendEmail(long orderId, java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendEmail(orderId, emailType, serviceContext);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder updateLatestOrder(
@@ -389,16 +377,6 @@ public class ShoppingOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
-		long orderId, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateOrder(orderId, ppTxnId, ppPaymentStatus,
-			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
 		long orderId, java.lang.String billingFirstName,
 		java.lang.String billingLastName, java.lang.String billingEmailAddress,
 		java.lang.String billingCompany, java.lang.String billingStreet,
@@ -423,6 +401,27 @@ public class ShoppingOrderLocalServiceUtil {
 			shippingCity, shippingState, shippingZip, shippingCountry,
 			shippingPhone, ccName, ccType, ccNumber, ccExpMonth, ccExpYear,
 			ccVerNumber, comments);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
+		long orderId, java.lang.String ppTxnId,
+		java.lang.String ppPaymentStatus, double ppPaymentGross,
+		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOrder(orderId, ppTxnId, ppPaymentStatus,
+			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+	}
+
+	/**
+	* Updates the shopping order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrder the shopping order
+	* @return the shopping order that was updated
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingOrder updateShoppingOrder(
+		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder) {
+		return getService().updateShoppingOrder(shoppingOrder);
 	}
 
 	public static ShoppingOrderLocalService getService() {

@@ -22,7 +22,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link MBCategoryLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link MBCategoryLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

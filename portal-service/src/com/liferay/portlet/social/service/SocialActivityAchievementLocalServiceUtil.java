@@ -40,6 +40,11 @@ public class SocialActivityAchievementLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addActivityAchievement(long userId, long groupId,
+		com.liferay.portlet.social.model.SocialAchievement achievement)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addActivityAchievement(userId, groupId, achievement);
+	}
 
 	/**
 	* Adds the social activity achievement to the database. Also notifies the appropriate model listeners.
@@ -63,6 +68,15 @@ public class SocialActivityAchievementLocalServiceUtil {
 		long activityAchievementId) {
 		return getService()
 				   .createSocialActivityAchievement(activityAchievementId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -174,73 +188,13 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return getService().fetchSocialActivityAchievement(activityAchievementId);
 	}
 
-	/**
-	* Returns the social activity achievement with the primary key.
-	*
-	* @param activityAchievementId the primary key of the social activity achievement
-	* @return the social activity achievement
-	* @throws PortalException if a social activity achievement with the primary key could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityAchievement getSocialActivityAchievement(
-		long activityAchievementId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialActivityAchievement(activityAchievementId);
+	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchUserAchievement(
+		long userId, long groupId, java.lang.String name) {
+		return getService().fetchUserAchievement(userId, groupId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the social activity achievements.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activity achievements
-	* @param end the upper bound of the range of social activity achievements (not inclusive)
-	* @return the range of social activity achievements
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getSocialActivityAchievements(
-		int start, int end) {
-		return getService().getSocialActivityAchievements(start, end);
-	}
-
-	/**
-	* Returns the number of social activity achievements.
-	*
-	* @return the number of social activity achievements
-	*/
-	public static int getSocialActivityAchievementsCount() {
-		return getService().getSocialActivityAchievementsCount();
-	}
-
-	/**
-	* Updates the social activity achievement in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityAchievement the social activity achievement
-	* @return the social activity achievement that was updated
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityAchievement updateSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement) {
-		return getService()
-				   .updateSocialActivityAchievement(socialActivityAchievement);
 	}
 
 	/**
@@ -250,26 +204,6 @@ public class SocialActivityAchievementLocalServiceUtil {
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void addActivityAchievement(long userId, long groupId,
-		com.liferay.portlet.social.model.SocialAchievement achievement)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addActivityAchievement(userId, groupId, achievement);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivityAchievement fetchUserAchievement(
-		long userId, long groupId, java.lang.String name) {
-		return getService().fetchUserAchievement(userId, groupId, name);
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
@@ -300,6 +234,50 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return getService().getGroupFirstAchievementsCount(groupId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the social activity achievement with the primary key.
+	*
+	* @param activityAchievementId the primary key of the social activity achievement
+	* @return the social activity achievement
+	* @throws PortalException if a social activity achievement with the primary key could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityAchievement getSocialActivityAchievement(
+		long activityAchievementId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialActivityAchievement(activityAchievementId);
+	}
+
+	/**
+	* Returns a range of all the social activity achievements.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activity achievements
+	* @param end the upper bound of the range of social activity achievements (not inclusive)
+	* @return the range of social activity achievements
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getSocialActivityAchievements(
+		int start, int end) {
+		return getService().getSocialActivityAchievements(start, end);
+	}
+
+	/**
+	* Returns the number of social activity achievements.
+	*
+	* @return the number of social activity achievements
+	*/
+	public static int getSocialActivityAchievementsCount() {
+		return getService().getSocialActivityAchievementsCount();
+	}
+
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getUserAchievements(
 		long userId, long groupId) {
 		return getService().getUserAchievements(userId, groupId);
@@ -307,6 +285,27 @@ public class SocialActivityAchievementLocalServiceUtil {
 
 	public static int getUserAchievementsCount(long userId, long groupId) {
 		return getService().getUserAchievementsCount(userId, groupId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the social activity achievement in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityAchievement the social activity achievement
+	* @return the social activity achievement that was updated
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityAchievement updateSocialActivityAchievement(
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement) {
+		return getService()
+				   .updateSocialActivityAchievement(socialActivityAchievement);
 	}
 
 	public static SocialActivityAchievementLocalService getService() {

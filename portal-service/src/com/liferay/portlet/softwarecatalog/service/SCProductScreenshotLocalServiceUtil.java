@@ -64,6 +64,26 @@ public class SCProductScreenshotLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteProductScreenshot(
+		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot productScreenshot)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteProductScreenshot(productScreenshot);
+	}
+
+	public static void deleteProductScreenshots(long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteProductScreenshots(productEntryId);
+	}
+
+	/**
 	* Deletes the s c product screenshot with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param productScreenshotId the primary key of the s c product screenshot
@@ -170,6 +190,48 @@ public class SCProductScreenshotLocalServiceUtil {
 		return getService().fetchSCProductScreenshot(productScreenshotId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshot(
+		long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getProductScreenshot(productEntryId, priority);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByFullImageId(
+		long fullImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getProductScreenshotByFullImageId(fullImageId);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByThumbnailId(
+		long thumbnailId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getProductScreenshotByThumbnailId(thumbnailId);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> getProductScreenshots(
+		long productEntryId) {
+		return getService().getProductScreenshots(productEntryId);
+	}
+
 	/**
 	* Returns the s c product screenshot with the primary key.
 	*
@@ -181,25 +243,6 @@ public class SCProductScreenshotLocalServiceUtil {
 		long productScreenshotId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSCProductScreenshot(productScreenshotId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,26 +271,6 @@ public class SCProductScreenshotLocalServiceUtil {
 	}
 
 	/**
-	* Updates the s c product screenshot in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param scProductScreenshot the s c product screenshot
-	* @return the s c product screenshot that was updated
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot updateSCProductScreenshot(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot) {
-		return getService().updateSCProductScreenshot(scProductScreenshot);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -256,38 +279,15 @@ public class SCProductScreenshotLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void deleteProductScreenshot(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot productScreenshot)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteProductScreenshot(productScreenshot);
-	}
-
-	public static void deleteProductScreenshots(long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteProductScreenshots(productEntryId);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshot(
-		long productEntryId, int priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getProductScreenshot(productEntryId, priority);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByFullImageId(
-		long fullImageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getProductScreenshotByFullImageId(fullImageId);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByThumbnailId(
-		long thumbnailId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getProductScreenshotByThumbnailId(thumbnailId);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> getProductScreenshots(
-		long productEntryId) {
-		return getService().getProductScreenshots(productEntryId);
+	/**
+	* Updates the s c product screenshot in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param scProductScreenshot the s c product screenshot
+	* @return the s c product screenshot that was updated
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot updateSCProductScreenshot(
+		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot) {
+		return getService().updateSCProductScreenshot(scProductScreenshot);
 	}
 
 	public static SCProductScreenshotLocalService getService() {

@@ -59,6 +59,16 @@ public class ShoppingOrderItemLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderItemLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderItemId the primary key of the shopping order item
@@ -176,6 +186,34 @@ public class ShoppingOrderItemLocalServiceWrapper
 		return _shoppingOrderItemLocalService.fetchShoppingOrderItem(orderItemId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingOrderItemLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingOrderItemLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrderItem> getOrderItems(
+		long orderId) {
+		return _shoppingOrderItemLocalService.getOrderItems(orderId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping order item with the primary key.
 	*
@@ -188,28 +226,6 @@ public class ShoppingOrderItemLocalServiceWrapper
 		long orderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderItemLocalService.getShoppingOrderItem(orderItemId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingOrderItemLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderItemLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderItemLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -240,28 +256,6 @@ public class ShoppingOrderItemLocalServiceWrapper
 	}
 
 	/**
-	* Updates the shopping order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was updated
-	*/
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingOrderItem updateShoppingOrderItem(
-		com.liferay.portlet.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return _shoppingOrderItemLocalService.updateShoppingOrderItem(shoppingOrderItem);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingOrderItemLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -271,10 +265,16 @@ public class ShoppingOrderItemLocalServiceWrapper
 		_shoppingOrderItemLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the shopping order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was updated
+	*/
 	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrderItem> getOrderItems(
-		long orderId) {
-		return _shoppingOrderItemLocalService.getOrderItems(orderId);
+	public com.liferay.portlet.shopping.model.ShoppingOrderItem updateShoppingOrderItem(
+		com.liferay.portlet.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return _shoppingOrderItemLocalService.updateShoppingOrderItem(shoppingOrderItem);
 	}
 
 	/**

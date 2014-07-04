@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -51,8 +52,36 @@ public interface TeamLocalService extends BaseLocalService,
 	* @param team the team
 	* @return the team that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Team addTeam(
 		com.liferay.portal.model.Team team);
+
+	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void addUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team);
+
+	public void addUserGroupTeam(long userGroupId, long teamId);
+
+	public void addUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams);
+
+	public void addUserGroupTeams(long userGroupId, long[] teamIds);
+
+	public void addUserTeam(long userId, com.liferay.portal.model.Team team);
+
+	public void addUserTeam(long userId, long teamId);
+
+	public void addUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams);
+
+	public void addUserTeams(long userId, long[] teamIds);
+
+	public void clearUserGroupTeams(long userGroupId);
+
+	public void clearUserTeams(long userId);
 
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
@@ -63,13 +92,11 @@ public interface TeamLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Team createTeam(long teamId);
 
 	/**
-	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param teamId the primary key of the team
-	* @return the team that was removed
-	* @throws PortalException if a team with the primary key could not be found
+	* @throws PortalException
 	*/
-	public com.liferay.portal.model.Team deleteTeam(long teamId)
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -79,9 +106,43 @@ public interface TeamLocalService extends BaseLocalService,
 	* @return the team that was removed
 	* @throws PortalException
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Team deleteTeam(
 		com.liferay.portal.model.Team team)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param teamId the primary key of the team
+	* @return the team that was removed
+	* @throws PortalException if a team with the primary key could not be found
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portal.model.Team deleteTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTeams(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team);
+
+	public void deleteUserGroupTeam(long userGroupId, long teamId);
+
+	public void deleteUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams);
+
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
+
+	public void deleteUserTeam(long userId, com.liferay.portal.model.Team team);
+
+	public void deleteUserTeam(long userId, long teamId);
+
+	public void deleteUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams);
+
+	public void deleteUserTeams(long userId, long[] teamIds);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -151,6 +212,31 @@ public interface TeamLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team fetchTeam(long teamId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
+		long groupId);
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Team getTeam(long groupId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the team with the primary key.
 	*
@@ -160,23 +246,6 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -203,90 +272,6 @@ public interface TeamLocalService extends BaseLocalService,
 	public int getTeamsCount();
 
 	/**
-	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was updated
-	*/
-	public com.liferay.portal.model.Team updateTeam(
-		com.liferay.portal.model.Team team);
-
-	public void addUserTeam(long userId, long teamId);
-
-	public void addUserTeam(long userId, com.liferay.portal.model.Team team);
-
-	public void addUserTeams(long userId, long[] teamIds);
-
-	public void addUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams);
-
-	public void clearUserTeams(long userId);
-
-	public void deleteUserTeam(long userId, long teamId);
-
-	public void deleteUserTeam(long userId, com.liferay.portal.model.Team team);
-
-	public void deleteUserTeams(long userId, long[] teamIds);
-
-	public void deleteUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams);
-
-	/**
-	* Returns the userIds of the users associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userIds of users associated with the team
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrimaryKeys(long teamId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserTeamsCount(long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserTeam(long userId, long teamId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserTeams(long userId);
-
-	public void setUserTeams(long userId, long[] teamIds);
-
-	public void addUserGroupTeam(long userGroupId, long teamId);
-
-	public void addUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team);
-
-	public void addUserGroupTeams(long userGroupId, long[] teamIds);
-
-	public void addUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams);
-
-	public void clearUserGroupTeams(long userGroupId);
-
-	public void deleteUserGroupTeam(long userGroupId, long teamId);
-
-	public void deleteUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team);
-
-	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
-
-	public void deleteUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams);
-
-	/**
 	* Returns the userGroupIds of the user groups associated with the team.
 	*
 	* @param teamId the teamId of the team
@@ -311,47 +296,46 @@ public interface TeamLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupTeamsCount(long userGroupId);
 
+	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrimaryKeys(long teamId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserTeamsCount(long userId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupTeam(long userGroupId, long teamId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupTeams(long userGroupId);
 
-	public void setUserGroupTeams(long userGroupId, long[] teamIds);
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserTeam(long userId, long teamId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Team getTeam(long groupId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, long groupId);
+	public boolean hasUserTeams(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
@@ -364,6 +348,27 @@ public interface TeamLocalService extends BaseLocalService,
 	public int searchCount(long groupId, java.lang.String name,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void setUserGroupTeams(long userGroupId, long[] teamIds);
+
+	public void setUserTeams(long userId, long[] teamIds);
+
+	/**
+	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portal.model.Team updateTeam(
+		com.liferay.portal.model.Team team);
 
 	public com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)

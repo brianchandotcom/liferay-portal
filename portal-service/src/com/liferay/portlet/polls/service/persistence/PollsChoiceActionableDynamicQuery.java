@@ -22,7 +22,7 @@ import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link PollsChoiceLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link PollsChoiceLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

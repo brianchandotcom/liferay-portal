@@ -40,6 +40,17 @@ public class MBBanServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.messageboards.model.MBBan addBan(
+		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addBan(banUserId, serviceContext);
+	}
+
+	public static void deleteBan(long banUserId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteBan(banUserId, serviceContext);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -57,18 +68,6 @@ public class MBBanServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.messageboards.model.MBBan addBan(
-		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addBan(banUserId, serviceContext);
-	}
-
-	public static void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteBan(banUserId, serviceContext);
 	}
 
 	public static MBBanService getService() {

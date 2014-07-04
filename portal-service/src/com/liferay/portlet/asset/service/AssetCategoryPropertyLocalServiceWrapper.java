@@ -46,6 +46,15 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		return _assetCategoryPropertyLocalService.addAssetCategoryProperty(assetCategoryProperty);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty addCategoryProperty(
+		long userId, long categoryId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.addCategoryProperty(userId,
+			categoryId, key, value);
+	}
+
 	/**
 	* Creates a new asset category property with the primary key. Does not add the asset category property to the database.
 	*
@@ -56,6 +65,18 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	public com.liferay.portlet.asset.model.AssetCategoryProperty createAssetCategoryProperty(
 		long categoryPropertyId) {
 		return _assetCategoryPropertyLocalService.createAssetCategoryProperty(categoryPropertyId);
+	}
+
+	/**
+	* Deletes the asset category property from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetCategoryProperty the asset category property
+	* @return the asset category property that was removed
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty deleteAssetCategoryProperty(
+		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty) {
+		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(assetCategoryProperty);
 	}
 
 	/**
@@ -72,16 +93,31 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(categoryPropertyId);
 	}
 
+	@Override
+	public void deleteCategoryProperties(long entryId) {
+		_assetCategoryPropertyLocalService.deleteCategoryProperties(entryId);
+	}
+
+	@Override
+	public void deleteCategoryProperty(
+		com.liferay.portlet.asset.model.AssetCategoryProperty categoryProperty) {
+		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryProperty);
+	}
+
+	@Override
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryPropertyId);
+	}
+
 	/**
-	* Deletes the asset category property from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetCategoryProperty the asset category property
-	* @return the asset category property that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty deleteAssetCategoryProperty(
-		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty) {
-		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(assetCategoryProperty);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -176,40 +212,9 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		return _assetCategoryPropertyLocalService.fetchAssetCategoryProperty(categoryPropertyId);
 	}
 
-	/**
-	* Returns the asset category property with the primary key.
-	*
-	* @param categoryPropertyId the primary key of the asset category property
-	* @return the asset category property
-	* @throws PortalException if a asset category property with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty getAssetCategoryProperty(
-		long categoryPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.getAssetCategoryProperty(categoryPropertyId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetCategoryPropertyLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -241,15 +246,17 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	/**
-	* Updates the asset category property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the asset category property with the primary key.
 	*
-	* @param assetCategoryProperty the asset category property
-	* @return the asset category property that was updated
+	* @param categoryPropertyId the primary key of the asset category property
+	* @return the asset category property
+	* @throws PortalException if a asset category property with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateAssetCategoryProperty(
-		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty) {
-		return _assetCategoryPropertyLocalService.updateAssetCategoryProperty(assetCategoryProperty);
+	public com.liferay.portlet.asset.model.AssetCategoryProperty getAssetCategoryProperty(
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.getAssetCategoryProperty(categoryPropertyId);
 	}
 
 	/**
@@ -260,42 +267,6 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _assetCategoryPropertyLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetCategoryPropertyLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty addCategoryProperty(
-		long userId, long categoryId, java.lang.String key,
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.addCategoryProperty(userId,
-			categoryId, key, value);
-	}
-
-	@Override
-	public void deleteCategoryProperties(long entryId) {
-		_assetCategoryPropertyLocalService.deleteCategoryProperties(entryId);
-	}
-
-	@Override
-	public void deleteCategoryProperty(
-		com.liferay.portlet.asset.model.AssetCategoryProperty categoryProperty) {
-		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryProperty);
-	}
-
-	@Override
-	public void deleteCategoryProperty(long categoryPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryPropertyId);
 	}
 
 	@Override
@@ -311,17 +282,17 @@ public class AssetCategoryPropertyLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategoryProperty getCategoryProperty(
-		long categoryPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.getCategoryProperty(categoryPropertyId);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty getCategoryProperty(
 		long categoryId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyLocalService.getCategoryProperty(categoryId,
 			key);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty getCategoryProperty(
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.getCategoryProperty(categoryPropertyId);
 	}
 
 	@Override
@@ -332,12 +303,32 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyLocalService.updateCategoryProperty(userId,
-			categoryPropertyId, key, value);
+		return _assetCategoryPropertyLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetCategoryPropertyLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset category property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetCategoryProperty the asset category property
+	* @return the asset category property that was updated
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty updateAssetCategoryProperty(
+		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty) {
+		return _assetCategoryPropertyLocalService.updateAssetCategoryProperty(assetCategoryProperty);
 	}
 
 	@Override
@@ -346,6 +337,15 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyLocalService.updateCategoryProperty(categoryPropertyId,
 			key, value);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.updateCategoryProperty(userId,
+			categoryPropertyId, key, value);
 	}
 
 	/**

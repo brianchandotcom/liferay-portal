@@ -42,6 +42,38 @@ public class SocialRequestLocalServiceUtil {
 	 */
 
 	/**
+	* Adds a social request to the database.
+	*
+	* <p>
+	* In order to add a social request, both the requesting user and the
+	* receiving user must be from the same company and neither of them can be
+	* the default user.
+	* </p>
+	*
+	* @param userId the primary key of the requesting user
+	* @param groupId the primary key of the group
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param extraData the extra data regarding the request
+	* @param receiverUserId the primary key of the user receiving the request
+	* @return the social request
+	* @throws PortalException if the users could not be found, if the users
+	were not from the same company, or if either of the users was the
+	default user
+	*/
+	public static com.liferay.portlet.social.model.SocialRequest addRequest(
+		long userId, long groupId, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRequest(userId, groupId, className, classPK, type,
+			extraData, receiverUserId);
+	}
+
+	/**
 	* Adds the social request to the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialRequest the social request
@@ -61,6 +93,50 @@ public class SocialRequestLocalServiceUtil {
 	public static com.liferay.portlet.social.model.SocialRequest createSocialRequest(
 		long requestId) {
 		return getService().createSocialRequest(requestId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Removes all the social requests for the receiving user.
+	*
+	* @param receiverUserId the primary key of the receiving user
+	*/
+	public static void deleteReceiverUserRequests(long receiverUserId) {
+		getService().deleteReceiverUserRequests(receiverUserId);
+	}
+
+	/**
+	* Removes the social request from the database.
+	*
+	* @param request the social request to be removed
+	*/
+	public static void deleteRequest(
+		com.liferay.portlet.social.model.SocialRequest request) {
+		getService().deleteRequest(request);
+	}
+
+	/**
+	* Removes the social request identified by its primary key from the
+	* database.
+	*
+	* @param requestId the primary key of the social request
+	* @throws PortalException if the social request could not be found
+	*/
+	public static void deleteRequest(long requestId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRequest(requestId);
+	}
+
+	public static void deleteRequests(long className, long classPK) {
+		getService().deleteRequests(className, classPK);
 	}
 
 	/**
@@ -85,6 +161,15 @@ public class SocialRequestLocalServiceUtil {
 	public static com.liferay.portlet.social.model.SocialRequest deleteSocialRequest(
 		com.liferay.portlet.social.model.SocialRequest socialRequest) {
 		return getService().deleteSocialRequest(socialRequest);
+	}
+
+	/**
+	* Removes all the social requests for the requesting user.
+	*
+	* @param userId the primary key of the requesting user
+	*/
+	public static void deleteUserRequests(long userId) {
+		getService().deleteUserRequests(userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,100 +279,8 @@ public class SocialRequestLocalServiceUtil {
 		return getService().fetchSocialRequestByUuidAndGroupId(uuid, groupId);
 	}
 
-	/**
-	* Returns the social request with the primary key.
-	*
-	* @param requestId the primary key of the social request
-	* @return the social request
-	* @throws PortalException if a social request with the primary key could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialRequest getSocialRequest(
-		long requestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialRequest(requestId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the social request with the matching UUID and company.
-	*
-	* @param uuid the social request's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social request
-	* @throws PortalException if a matching social request could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialRequestByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the social request matching the UUID and group.
-	*
-	* @param uuid the social request's UUID
-	* @param groupId the primary key of the group
-	* @return the matching social request
-	* @throws PortalException if a matching social request could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialRequestByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns a range of all the social requests.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social requests
-	* @param end the upper bound of the range of social requests (not inclusive)
-	* @return the range of social requests
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequests(
-		int start, int end) {
-		return getService().getSocialRequests(start, end);
-	}
-
-	/**
-	* Returns the number of social requests.
-	*
-	* @return the number of social requests
-	*/
-	public static int getSocialRequestsCount() {
-		return getService().getSocialRequestsCount();
-	}
-
-	/**
-	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialRequest the social request
-	* @return the social request that was updated
-	*/
-	public static com.liferay.portlet.social.model.SocialRequest updateSocialRequest(
-		com.liferay.portlet.social.model.SocialRequest socialRequest) {
-		return getService().updateSocialRequest(socialRequest);
 	}
 
 	/**
@@ -299,89 +292,10 @@ public class SocialRequestLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds a social request to the database.
-	*
-	* <p>
-	* In order to add a social request, both the requesting user and the
-	* receiving user must be from the same company and neither of them can be
-	* the default user.
-	* </p>
-	*
-	* @param userId the primary key of the requesting user
-	* @param groupId the primary key of the group
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
-	* @param extraData the extra data regarding the request
-	* @param receiverUserId the primary key of the user receiving the request
-	* @return the social request
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
-	*/
-	public static com.liferay.portlet.social.model.SocialRequest addRequest(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRequest(userId, groupId, className, classPK, type,
-			extraData, receiverUserId);
-	}
-
-	/**
-	* Removes all the social requests for the receiving user.
-	*
-	* @param receiverUserId the primary key of the receiving user
-	*/
-	public static void deleteReceiverUserRequests(long receiverUserId) {
-		getService().deleteReceiverUserRequests(receiverUserId);
-	}
-
-	/**
-	* Removes the social request identified by its primary key from the
-	* database.
-	*
-	* @param requestId the primary key of the social request
-	* @throws PortalException if the social request could not be found
-	*/
-	public static void deleteRequest(long requestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRequest(requestId);
-	}
-
-	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	public static void deleteRequest(
-		com.liferay.portlet.social.model.SocialRequest request) {
-		getService().deleteRequest(request);
-	}
-
-	public static void deleteRequests(long className, long classPK) {
-		getService().deleteRequests(className, classPK);
-	}
-
-	/**
-	* Removes all the social requests for the requesting user.
-	*
-	* @param userId the primary key of the requesting user
-	*/
-	public static void deleteUserRequests(long userId) {
-		getService().deleteUserRequests(userId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -457,6 +371,72 @@ public class SocialRequestLocalServiceUtil {
 	}
 
 	/**
+	* Returns the social request with the primary key.
+	*
+	* @param requestId the primary key of the social request
+	* @return the social request
+	* @throws PortalException if a social request with the primary key could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialRequest getSocialRequest(
+		long requestId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialRequest(requestId);
+	}
+
+	/**
+	* Returns the social request with the matching UUID and company.
+	*
+	* @param uuid the social request's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social request
+	* @throws PortalException if a matching social request could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialRequestByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request
+	* @throws PortalException if a matching social request could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialRequestByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns a range of all the social requests.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social requests
+	* @param end the upper bound of the range of social requests (not inclusive)
+	* @return the range of social requests
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequests(
+		int start, int end) {
+		return getService().getSocialRequests(start, end);
+	}
+
+	/**
+	* Returns the number of social requests.
+	*
+	* @return the number of social requests
+	*/
+	public static int getSocialRequestsCount() {
+		return getService().getSocialRequestsCount();
+	}
+
+	/**
 	* Returns a range of all the social requests for the requesting user.
 	*
 	* <p>
@@ -527,25 +507,6 @@ public class SocialRequestLocalServiceUtil {
 	}
 
 	/**
-	* Returns <code>true</code> if a matching social requests exists in the
-	* database.
-	*
-	* @param userId the primary key of the requesting user
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
-	* @param status the social request's status
-	* @return <code>true</code> if the request exists; <code>false</code>
-	otherwise
-	*/
-	public static boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, int status) {
-		return getService().hasRequest(userId, className, classPK, type, status);
-	}
-
-	/**
 	* Returns <code>true</code> if a matching social request exists in the
 	* database.
 	*
@@ -565,6 +526,34 @@ public class SocialRequestLocalServiceUtil {
 		return getService()
 				   .hasRequest(userId, className, classPK, type,
 			receiverUserId, status);
+	}
+
+	/**
+	* Returns <code>true</code> if a matching social requests exists in the
+	* database.
+	*
+	* @param userId the primary key of the requesting user
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param status the social request's status
+	* @return <code>true</code> if the request exists; <code>false</code>
+	otherwise
+	*/
+	public static boolean hasRequest(long userId, java.lang.String className,
+		long classPK, int type, int status) {
+		return getService().hasRequest(userId, className, classPK, type, status);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -594,6 +583,17 @@ public class SocialRequestLocalServiceUtil {
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateRequest(requestId, status, themeDisplay);
+	}
+
+	/**
+	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialRequest the social request
+	* @return the social request that was updated
+	*/
+	public static com.liferay.portlet.social.model.SocialRequest updateSocialRequest(
+		com.liferay.portlet.social.model.SocialRequest socialRequest) {
+		return getService().updateSocialRequest(socialRequest);
 	}
 
 	public static SocialRequestLocalService getService() {

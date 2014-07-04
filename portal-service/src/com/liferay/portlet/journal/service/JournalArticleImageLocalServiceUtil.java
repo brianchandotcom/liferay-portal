@@ -40,6 +40,15 @@ public class JournalArticleImageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.journal.service.impl.JournalArticleImageLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addArticleImageId(long articleImageId, long groupId,
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addArticleImageId(articleImageId, groupId, articleId, version,
+			elInstanceId, elName, languageId);
+	}
 
 	/**
 	* Adds the journal article image to the database. Also notifies the appropriate model listeners.
@@ -61,6 +70,29 @@ public class JournalArticleImageLocalServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalArticleImage createJournalArticleImage(
 		long articleImageId) {
 		return getService().createJournalArticleImage(articleImageId);
+	}
+
+	public static void deleteArticleImage(
+		com.liferay.portlet.journal.model.JournalArticleImage articleImage) {
+		getService().deleteArticleImage(articleImage);
+	}
+
+	public static void deleteArticleImage(long articleImageId) {
+		getService().deleteArticleImage(articleImageId);
+	}
+
+	public static void deleteArticleImage(long groupId,
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId) {
+		getService()
+			.deleteArticleImage(groupId, articleId, version, elInstanceId,
+			elName, languageId);
+	}
+
+	public static void deleteImages(long groupId, java.lang.String articleId,
+		double version) {
+		getService().deleteImages(groupId, articleId, version);
 	}
 
 	/**
@@ -85,6 +117,15 @@ public class JournalArticleImageLocalServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalArticleImage deleteJournalArticleImage(
 		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
 		return getService().deleteJournalArticleImage(journalArticleImage);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,123 +211,8 @@ public class JournalArticleImageLocalServiceUtil {
 		return getService().fetchJournalArticleImage(articleImageId);
 	}
 
-	/**
-	* Returns the journal article image with the primary key.
-	*
-	* @param articleImageId the primary key of the journal article image
-	* @return the journal article image
-	* @throws PortalException if a journal article image with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage getJournalArticleImage(
-		long articleImageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalArticleImage(articleImageId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the journal article images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of journal article images
-	* @param end the upper bound of the range of journal article images (not inclusive)
-	* @return the range of journal article images
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> getJournalArticleImages(
-		int start, int end) {
-		return getService().getJournalArticleImages(start, end);
-	}
-
-	/**
-	* Returns the number of journal article images.
-	*
-	* @return the number of journal article images
-	*/
-	public static int getJournalArticleImagesCount() {
-		return getService().getJournalArticleImagesCount();
-	}
-
-	/**
-	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticleImage the journal article image
-	* @return the journal article image that was updated
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage updateJournalArticleImage(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
-		return getService().updateJournalArticleImage(journalArticleImage);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void addArticleImageId(long articleImageId, long groupId,
-		java.lang.String articleId, double version,
-		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addArticleImageId(articleImageId, groupId, articleId, version,
-			elInstanceId, elName, languageId);
-	}
-
-	public static void deleteArticleImage(
-		com.liferay.portlet.journal.model.JournalArticleImage articleImage) {
-		getService().deleteArticleImage(articleImage);
-	}
-
-	public static void deleteArticleImage(long articleImageId) {
-		getService().deleteArticleImage(articleImageId);
-	}
-
-	public static void deleteArticleImage(long groupId,
-		java.lang.String articleId, double version,
-		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId) {
-		getService()
-			.deleteArticleImage(groupId, articleId, version, elInstanceId,
-			elName, languageId);
-	}
-
-	public static void deleteImages(long groupId, java.lang.String articleId,
-		double version) {
-		getService().deleteImages(groupId, articleId, version);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleImage getArticleImage(
@@ -325,6 +251,79 @@ public class JournalArticleImageLocalServiceUtil {
 
 	public static int getArticleImagesCount(long groupId) {
 		return getService().getArticleImagesCount(groupId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Returns the journal article image with the primary key.
+	*
+	* @param articleImageId the primary key of the journal article image
+	* @return the journal article image
+	* @throws PortalException if a journal article image with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage getJournalArticleImage(
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalArticleImage(articleImageId);
+	}
+
+	/**
+	* Returns a range of all the journal article images.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal article images
+	* @param end the upper bound of the range of journal article images (not inclusive)
+	* @return the range of journal article images
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> getJournalArticleImages(
+		int start, int end) {
+		return getService().getJournalArticleImages(start, end);
+	}
+
+	/**
+	* Returns the number of journal article images.
+	*
+	* @return the number of journal article images
+	*/
+	public static int getJournalArticleImagesCount() {
+		return getService().getJournalArticleImagesCount();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticleImage the journal article image
+	* @return the journal article image that was updated
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage updateJournalArticleImage(
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
+		return getService().updateJournalArticleImage(journalArticleImage);
 	}
 
 	public static JournalArticleImageLocalService getService() {

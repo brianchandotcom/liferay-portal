@@ -32,6 +32,20 @@ public class MBBanServiceWrapper implements MBBanService,
 		_mbBanService = mbBanService;
 	}
 
+	@Override
+	public com.liferay.portlet.messageboards.model.MBBan addBan(
+		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbBanService.addBan(banUserId, serviceContext);
+	}
+
+	@Override
+	public void deleteBan(long banUserId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbBanService.deleteBan(banUserId, serviceContext);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -50,20 +64,6 @@ public class MBBanServiceWrapper implements MBBanService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_mbBanService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBBan addBan(
-		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbBanService.addBan(banUserId, serviceContext);
-	}
-
-	@Override
-	public void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbBanService.deleteBan(banUserId, serviceContext);
 	}
 
 	/**

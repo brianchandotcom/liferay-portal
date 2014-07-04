@@ -45,6 +45,12 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.addDLSyncEvent(dlSyncEvent);
 	}
 
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
+		java.lang.String event, java.lang.String type, long typePK) {
+		return _dlSyncEventLocalService.addDLSyncEvent(event, type, typePK);
+	}
+
 	/**
 	* Creates a new d l sync event with the primary key. Does not add the d l sync event to the database.
 	*
@@ -55,6 +61,18 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent createDLSyncEvent(
 		long syncEventId) {
 		return _dlSyncEventLocalService.createDLSyncEvent(syncEventId);
+	}
+
+	/**
+	* Deletes the d l sync event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the d l sync event
+	* @return the d l sync event that was removed
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
+		return _dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent);
 	}
 
 	/**
@@ -71,16 +89,19 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.deleteDLSyncEvent(syncEventId);
 	}
 
+	@Override
+	public void deleteDLSyncEvents() {
+		_dlSyncEventLocalService.deleteDLSyncEvents();
+	}
+
 	/**
-	* Deletes the d l sync event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
-		return _dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlSyncEventLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -174,6 +195,21 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.fetchDLSyncEvent(syncEventId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlSyncEventLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlSyncEventLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the d l sync event with the primary key.
 	*
@@ -189,25 +225,9 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlSyncEventLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlSyncEventLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlSyncEventLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
+		long modifiedTime) {
+		return _dlSyncEventLocalService.getDLSyncEvents(modifiedTime);
 	}
 
 	/**
@@ -237,26 +257,16 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.getDLSyncEventsCount();
 	}
 
-	/**
-	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was updated
-	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
-		return _dlSyncEventLocalService.updateDLSyncEvent(dlSyncEvent);
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents() {
+		return _dlSyncEventLocalService.getLatestDLSyncEvents();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlSyncEventLocalService.getBeanIdentifier();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlSyncEventLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -269,26 +279,16 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		_dlSyncEventLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the d l sync event
+	* @return the d l sync event that was updated
+	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
-		java.lang.String event, java.lang.String type, long typePK) {
-		return _dlSyncEventLocalService.addDLSyncEvent(event, type, typePK);
-	}
-
-	@Override
-	public void deleteDLSyncEvents() {
-		_dlSyncEventLocalService.deleteDLSyncEvents();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		long modifiedTime) {
-		return _dlSyncEventLocalService.getDLSyncEvents(modifiedTime);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents() {
-		return _dlSyncEventLocalService.getLatestDLSyncEvents();
+	public com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
+		return _dlSyncEventLocalService.updateDLSyncEvent(dlSyncEvent);
 	}
 
 	/**

@@ -164,204 +164,19 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this role.
-	*
-	* @return the primary key of this role
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _role.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new RoleWrapper((Role)_role.clone());
 	}
 
-	/**
-	* Sets the primary key of this role.
-	*
-	* @param primaryKey the primary key of this role
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_role.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.Role role) {
+		return _role.compareTo(role);
 	}
 
-	/**
-	* Returns the mvcc version of this role.
-	*
-	* @return the mvcc version of this role
-	*/
 	@Override
-	public long getMvccVersion() {
-		return _role.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this role.
-	*
-	* @param mvccVersion the mvcc version of this role
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_role.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the uuid of this role.
-	*
-	* @return the uuid of this role
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _role.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this role.
-	*
-	* @param uuid the uuid of this role
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_role.setUuid(uuid);
-	}
-
-	/**
-	* Returns the role ID of this role.
-	*
-	* @return the role ID of this role
-	*/
-	@Override
-	public long getRoleId() {
-		return _role.getRoleId();
-	}
-
-	/**
-	* Sets the role ID of this role.
-	*
-	* @param roleId the role ID of this role
-	*/
-	@Override
-	public void setRoleId(long roleId) {
-		_role.setRoleId(roleId);
-	}
-
-	/**
-	* Returns the company ID of this role.
-	*
-	* @return the company ID of this role
-	*/
-	@Override
-	public long getCompanyId() {
-		return _role.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this role.
-	*
-	* @param companyId the company ID of this role
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_role.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this role.
-	*
-	* @return the user ID of this role
-	*/
-	@Override
-	public long getUserId() {
-		return _role.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this role.
-	*
-	* @param userId the user ID of this role
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_role.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this role.
-	*
-	* @return the user uuid of this role
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _role.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this role.
-	*
-	* @param userUuid the user uuid of this role
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_role.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this role.
-	*
-	* @return the user name of this role
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _role.getUserName();
-	}
-
-	/**
-	* Sets the user name of this role.
-	*
-	* @param userName the user name of this role
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_role.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this role.
-	*
-	* @return the create date of this role
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _role.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this role.
-	*
-	* @param createDate the create date of this role
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_role.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this role.
-	*
-	* @return the modified date of this role
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _role.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this role.
-	*
-	* @param modifiedDate the modified date of this role
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_role.setModifiedDate(modifiedDate);
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _role.getAvailableLanguageIds();
 	}
 
 	/**
@@ -372,11 +187,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public java.lang.String getClassName() {
 		return _role.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_role.setClassName(className);
 	}
 
 	/**
@@ -390,16 +200,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	/**
-	* Sets the class name ID of this role.
-	*
-	* @param classNameId the class name ID of this role
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_role.setClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the class p k of this role.
 	*
 	* @return the class p k of this role
@@ -410,173 +210,28 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	/**
-	* Sets the class p k of this role.
+	* Returns the company ID of this role.
 	*
-	* @param classPK the class p k of this role
+	* @return the company ID of this role
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_role.setClassPK(classPK);
+	public long getCompanyId() {
+		return _role.getCompanyId();
 	}
 
 	/**
-	* Returns the name of this role.
+	* Returns the create date of this role.
 	*
-	* @return the name of this role
+	* @return the create date of this role
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _role.getName();
-	}
-
-	/**
-	* Sets the name of this role.
-	*
-	* @param name the name of this role
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_role.setName(name);
-	}
-
-	/**
-	* Returns the title of this role.
-	*
-	* @return the title of this role
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _role.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this role
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _role.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _role.getTitle(locale, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this role
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _role.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this role
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _role.getTitle(languageId, useDefault);
+	public java.util.Date getCreateDate() {
+		return _role.getCreateDate();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _role.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _role.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this role.
-	*
-	* @return the locales and localized titles of this role
-	*/
-	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _role.getTitleMap();
-	}
-
-	/**
-	* Sets the title of this role.
-	*
-	* @param title the title of this role
-	*/
-	@Override
-	public void setTitle(java.lang.String title) {
-		_role.setTitle(title);
-	}
-
-	/**
-	* Sets the localized title of this role in the language.
-	*
-	* @param title the localized title of this role
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
-		_role.setTitle(title, locale);
-	}
-
-	/**
-	* Sets the localized title of this role in the language, and sets the default locale.
-	*
-	* @param title the localized title of this role
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_role.setTitle(title, locale, defaultLocale);
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
-		_role.setTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized titles of this role from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this role
-	*/
-	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
-		_role.setTitleMap(titleMap);
-	}
-
-	/**
-	* Sets the localized titles of this role from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this role
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Locale defaultLocale) {
-		_role.setTitleMap(titleMap, defaultLocale);
+	public java.lang.String getDefaultLanguageId() {
+		return _role.getDefaultLanguageId();
 	}
 
 	/**
@@ -587,30 +242,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public java.lang.String getDescription() {
 		return _role.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this role
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _role.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _role.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -637,6 +268,30 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return _role.getDescription(languageId, useDefault);
 	}
 
+	/**
+	* Returns the localized description of this role in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this role
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _role.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this role in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _role.getDescription(locale, useDefault);
+	}
+
 	@Override
 	public java.lang.String getDescriptionCurrentLanguageId() {
 		return _role.getDescriptionCurrentLanguageId();
@@ -655,6 +310,307 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _role.getDescriptionMap();
+	}
+
+	@Override
+	public java.lang.String getDescriptiveName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _role.getDescriptiveName();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _role.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this role.
+	*
+	* @return the modified date of this role
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _role.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this role.
+	*
+	* @return the mvcc version of this role
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _role.getMvccVersion();
+	}
+
+	/**
+	* Returns the name of this role.
+	*
+	* @return the name of this role
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _role.getName();
+	}
+
+	/**
+	* Returns the primary key of this role.
+	*
+	* @return the primary key of this role
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _role.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _role.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the role ID of this role.
+	*
+	* @return the role ID of this role
+	*/
+	@Override
+	public long getRoleId() {
+		return _role.getRoleId();
+	}
+
+	/**
+	* Returns the subtype of this role.
+	*
+	* @return the subtype of this role
+	*/
+	@Override
+	public java.lang.String getSubtype() {
+		return _role.getSubtype();
+	}
+
+	/**
+	* Returns the title of this role.
+	*
+	* @return the title of this role
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _role.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this role
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _role.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this role
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _role.getTitle(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this role in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this role
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _role.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this role in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this role. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _role.getTitle(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _role.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _role.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this role.
+	*
+	* @return the locales and localized titles of this role
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _role.getTitleMap();
+	}
+
+	/**
+	* Returns the type of this role.
+	*
+	* @return the type of this role
+	*/
+	@Override
+	public int getType() {
+		return _role.getType();
+	}
+
+	@Override
+	public java.lang.String getTypeLabel() {
+		return _role.getTypeLabel();
+	}
+
+	/**
+	* Returns the user ID of this role.
+	*
+	* @return the user ID of this role
+	*/
+	@Override
+	public long getUserId() {
+		return _role.getUserId();
+	}
+
+	/**
+	* Returns the user name of this role.
+	*
+	* @return the user name of this role
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _role.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this role.
+	*
+	* @return the user uuid of this role
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _role.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this role.
+	*
+	* @return the uuid of this role
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _role.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _role.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _role.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _role.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _role.isNew();
+	}
+
+	@Override
+	public boolean isTeam() {
+		return _role.isTeam();
+	}
+
+	@Override
+	public void persist() {
+		_role.persist();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_role.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_role.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_role.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_role.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this role.
+	*
+	* @param classNameId the class name ID of this role
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_role.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this role.
+	*
+	* @param classPK the class p k of this role
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_role.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this role.
+	*
+	* @param companyId the company ID of this role
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_role.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this role.
+	*
+	* @param createDate the create date of this role
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_role.setCreateDate(createDate);
 	}
 
 	/**
@@ -721,86 +677,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		_role.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
-	/**
-	* Returns the type of this role.
-	*
-	* @return the type of this role
-	*/
-	@Override
-	public int getType() {
-		return _role.getType();
-	}
-
-	/**
-	* Sets the type of this role.
-	*
-	* @param type the type of this role
-	*/
-	@Override
-	public void setType(int type) {
-		_role.setType(type);
-	}
-
-	/**
-	* Returns the subtype of this role.
-	*
-	* @return the subtype of this role
-	*/
-	@Override
-	public java.lang.String getSubtype() {
-		return _role.getSubtype();
-	}
-
-	/**
-	* Sets the subtype of this role.
-	*
-	* @param subtype the subtype of this role
-	*/
-	@Override
-	public void setSubtype(java.lang.String subtype) {
-		_role.setSubtype(subtype);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _role.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_role.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _role.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_role.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _role.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _role.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_role.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _role.getExpandoBridge();
-	}
-
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.model.BaseModel<?> baseModel) {
@@ -819,42 +695,187 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		_role.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the modified date of this role.
+	*
+	* @param modifiedDate the modified date of this role
+	*/
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _role.getAvailableLanguageIds();
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_role.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this role.
+	*
+	* @param mvccVersion the mvcc version of this role
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_role.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Sets the name of this role.
+	*
+	* @param name the name of this role
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_role.setName(name);
 	}
 
 	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _role.getDefaultLanguageId();
+	public void setNew(boolean n) {
+		_role.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this role.
+	*
+	* @param primaryKey the primary key of this role
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_role.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.LocaleException {
-		_role.prepareLocalizedFieldsForImport();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_role.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the role ID of this role.
+	*
+	* @param roleId the role ID of this role
+	*/
+	@Override
+	public void setRoleId(long roleId) {
+		_role.setRoleId(roleId);
+	}
+
+	/**
+	* Sets the subtype of this role.
+	*
+	* @param subtype the subtype of this role
+	*/
+	@Override
+	public void setSubtype(java.lang.String subtype) {
+		_role.setSubtype(subtype);
+	}
+
+	/**
+	* Sets the title of this role.
+	*
+	* @param title the title of this role
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_role.setTitle(title);
+	}
+
+	/**
+	* Sets the localized title of this role in the language.
+	*
+	* @param title the localized title of this role
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale) {
+		_role.setTitle(title, locale);
+	}
+
+	/**
+	* Sets the localized title of this role in the language, and sets the default locale.
+	*
+	* @param title the localized title of this role
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_role.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
-	public void prepareLocalizedFieldsForImport(
-		java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.LocaleException {
-		_role.prepareLocalizedFieldsForImport(defaultImportLocale);
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_role.setTitleCurrentLanguageId(languageId);
 	}
 
+	/**
+	* Sets the localized titles of this role from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this role
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new RoleWrapper((Role)_role.clone());
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+		_role.setTitleMap(titleMap);
 	}
 
+	/**
+	* Sets the localized titles of this role from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this role
+	* @param defaultLocale the default locale
+	*/
 	@Override
-	public int compareTo(com.liferay.portal.model.Role role) {
-		return _role.compareTo(role);
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Locale defaultLocale) {
+		_role.setTitleMap(titleMap, defaultLocale);
 	}
 
+	/**
+	* Sets the type of this role.
+	*
+	* @param type the type of this role
+	*/
 	@Override
-	public int hashCode() {
-		return _role.hashCode();
+	public void setType(int type) {
+		_role.setType(type);
+	}
+
+	/**
+	* Sets the user ID of this role.
+	*
+	* @param userId the user ID of this role
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_role.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this role.
+	*
+	* @param userName the user name of this role
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_role.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this role.
+	*
+	* @param userUuid the user uuid of this role
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_role.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this role.
+	*
+	* @param uuid the uuid of this role
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_role.setUuid(uuid);
 	}
 
 	@Override
@@ -868,39 +889,18 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public com.liferay.portal.model.Role toUnescapedModel() {
-		return new RoleWrapper(_role.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _role.toString();
 	}
 
 	@Override
+	public com.liferay.portal.model.Role toUnescapedModel() {
+		return new RoleWrapper(_role.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _role.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_role.persist();
-	}
-
-	@Override
-	public java.lang.String getDescriptiveName()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _role.getDescriptiveName();
-	}
-
-	@Override
-	public java.lang.String getTypeLabel() {
-		return _role.getTypeLabel();
-	}
-
-	@Override
-	public boolean isTeam() {
-		return _role.isTeam();
 	}
 
 	@Override

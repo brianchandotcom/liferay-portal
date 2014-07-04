@@ -40,6 +40,10 @@ public class ShardLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ShardLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.Shard addShard(
+		java.lang.String className, long classPK, java.lang.String name) {
+		return getService().addShard(className, classPK, name);
+	}
 
 	/**
 	* Adds the shard to the database. Also notifies the appropriate model listeners.
@@ -63,15 +67,12 @@ public class ShardLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shard with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shardId the primary key of the shard
-	* @return the shard that was removed
-	* @throws PortalException if a shard with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.Shard deleteShard(long shardId)
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteShard(shardId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -83,6 +84,18 @@ public class ShardLocalServiceUtil {
 	public static com.liferay.portal.model.Shard deleteShard(
 		com.liferay.portal.model.Shard shard) {
 		return getService().deleteShard(shard);
+	}
+
+	/**
+	* Deletes the shard with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shardId the primary key of the shard
+	* @return the shard that was removed
+	* @throws PortalException if a shard with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.Shard deleteShard(long shardId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteShard(shardId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -167,6 +180,31 @@ public class ShardLocalServiceUtil {
 		return getService().fetchShard(shardId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.model.Shard getShard(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getShard(className, classPK);
+	}
+
 	/**
 	* Returns the shard with the primary key.
 	*
@@ -177,25 +215,6 @@ public class ShardLocalServiceUtil {
 	public static com.liferay.portal.model.Shard getShard(long shardId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShard(shardId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -224,26 +243,6 @@ public class ShardLocalServiceUtil {
 	}
 
 	/**
-	* Updates the shard in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shard the shard
-	* @return the shard that was updated
-	*/
-	public static com.liferay.portal.model.Shard updateShard(
-		com.liferay.portal.model.Shard shard) {
-		return getService().updateShard(shard);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -252,15 +251,15 @@ public class ShardLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.Shard addShard(
-		java.lang.String className, long classPK, java.lang.String name) {
-		return getService().addShard(className, classPK, name);
-	}
-
-	public static com.liferay.portal.model.Shard getShard(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getShard(className, classPK);
+	/**
+	* Updates the shard in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shard the shard
+	* @return the shard that was updated
+	*/
+	public static com.liferay.portal.model.Shard updateShard(
+		com.liferay.portal.model.Shard shard) {
+		return getService().updateShard(shard);
 	}
 
 	public static ShardLocalService getService() {

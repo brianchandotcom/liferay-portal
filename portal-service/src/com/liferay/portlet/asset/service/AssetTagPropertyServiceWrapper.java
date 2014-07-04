@@ -34,26 +34,6 @@ public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetTagPropertyService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetTagPropertyService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds an asset tag property.
 	*
 	* @param tagId the primary key of the tag
@@ -85,6 +65,16 @@ public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _assetTagPropertyService.getBeanIdentifier();
+	}
+
+	/**
 	* Returns all the asset tag property instances with the specified tag ID.
 	*
 	* @param tagId the primary key of the tag
@@ -107,6 +97,16 @@ public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> getTagPropertyValues(
 		long companyId, java.lang.String key) {
 		return _assetTagPropertyService.getTagPropertyValues(companyId, key);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetTagPropertyService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

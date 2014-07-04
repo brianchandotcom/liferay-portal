@@ -32,6 +32,13 @@ public class ExportImportConfigurationServiceWrapper
 		_exportImportConfigurationService = exportImportConfigurationService;
 	}
 
+	@Override
+	public void deleteExportImportConfiguration(
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_exportImportConfigurationService.deleteExportImportConfiguration(exportImportConfigurationId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -40,23 +47,6 @@ public class ExportImportConfigurationServiceWrapper
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _exportImportConfigurationService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_exportImportConfigurationService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void deleteExportImportConfiguration(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_exportImportConfigurationService.deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
 	@Override
@@ -71,6 +61,16 @@ public class ExportImportConfigurationServiceWrapper
 		long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfigurationService.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_exportImportConfigurationService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

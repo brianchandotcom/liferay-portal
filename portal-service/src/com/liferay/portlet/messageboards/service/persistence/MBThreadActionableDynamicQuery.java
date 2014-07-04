@@ -22,7 +22,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link MBThreadLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link MBThreadLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

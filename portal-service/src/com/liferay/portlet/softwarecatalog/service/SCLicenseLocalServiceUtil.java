@@ -40,6 +40,13 @@ public class SCLicenseLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.softwarecatalog.service.impl.SCLicenseLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
+		java.lang.String name, java.lang.String url, boolean openSource,
+		boolean active, boolean recommended)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLicense(name, url, openSource, active, recommended);
+	}
 
 	/**
 	* Adds the s c license to the database. Also notifies the appropriate model listeners.
@@ -52,6 +59,30 @@ public class SCLicenseLocalServiceUtil {
 		return getService().addSCLicense(scLicense);
 	}
 
+	public static void addSCProductEntrySCLicense(long productEntryId,
+		long licenseId) {
+		getService().addSCProductEntrySCLicense(productEntryId, licenseId);
+	}
+
+	public static void addSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		getService().addSCProductEntrySCLicense(productEntryId, scLicense);
+	}
+
+	public static void addSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
+		getService().addSCProductEntrySCLicenses(productEntryId, SCLicenses);
+	}
+
+	public static void addSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		getService().addSCProductEntrySCLicenses(productEntryId, licenseIds);
+	}
+
+	public static void clearSCProductEntrySCLicenses(long productEntryId) {
+		getService().clearSCProductEntrySCLicenses(productEntryId);
+	}
+
 	/**
 	* Creates a new s c license with the primary key. Does not add the s c license to the database.
 	*
@@ -61,6 +92,25 @@ public class SCLicenseLocalServiceUtil {
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense createSCLicense(
 		long licenseId) {
 		return getService().createSCLicense(licenseId);
+	}
+
+	public static void deleteLicense(
+		com.liferay.portlet.softwarecatalog.model.SCLicense license) {
+		getService().deleteLicense(license);
+	}
+
+	public static void deleteLicense(long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLicense(licenseId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -85,6 +135,26 @@ public class SCLicenseLocalServiceUtil {
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
 		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
 		return getService().deleteSCLicense(scLicense);
+	}
+
+	public static void deleteSCProductEntrySCLicense(long productEntryId,
+		long licenseId) {
+		getService().deleteSCProductEntrySCLicense(productEntryId, licenseId);
+	}
+
+	public static void deleteSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		getService().deleteSCProductEntrySCLicense(productEntryId, scLicense);
+	}
+
+	public static void deleteSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
+		getService().deleteSCProductEntrySCLicenses(productEntryId, SCLicenses);
+	}
+
+	public static void deleteSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		getService().deleteSCProductEntrySCLicenses(productEntryId, licenseIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +240,63 @@ public class SCLicenseLocalServiceUtil {
 		return getService().fetchSCLicense(licenseId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCLicense getLicense(
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLicense(licenseId);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses() {
+		return getService().getLicenses();
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
+		boolean active, boolean recommended) {
+		return getService().getLicenses(active, recommended);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
+		boolean active, boolean recommended, int start, int end) {
+		return getService().getLicenses(active, recommended, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
+		int start, int end) {
+		return getService().getLicenses(start, end);
+	}
+
+	public static int getLicensesCount() {
+		return getService().getLicensesCount();
+	}
+
+	public static int getLicensesCount(boolean active, boolean recommended) {
+		return getService().getLicensesCount(active, recommended);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getProductEntryLicenses(
+		long productEntryId) {
+		return getService().getProductEntryLicenses(productEntryId);
+	}
+
 	/**
 	* Returns the s c license with the primary key.
 	*
@@ -181,25 +308,6 @@ public class SCLicenseLocalServiceUtil {
 		long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSCLicense(licenseId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -225,61 +333,6 @@ public class SCLicenseLocalServiceUtil {
 	*/
 	public static int getSCLicensesCount() {
 		return getService().getSCLicensesCount();
-	}
-
-	/**
-	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param scLicense the s c license
-	* @return the s c license that was updated
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCLicense updateSCLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		return getService().updateSCLicense(scLicense);
-	}
-
-	public static void addSCProductEntrySCLicense(long productEntryId,
-		long licenseId) {
-		getService().addSCProductEntrySCLicense(productEntryId, licenseId);
-	}
-
-	public static void addSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		getService().addSCProductEntrySCLicense(productEntryId, scLicense);
-	}
-
-	public static void addSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		getService().addSCProductEntrySCLicenses(productEntryId, licenseIds);
-	}
-
-	public static void addSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
-		getService().addSCProductEntrySCLicenses(productEntryId, SCLicenses);
-	}
-
-	public static void clearSCProductEntrySCLicenses(long productEntryId) {
-		getService().clearSCProductEntrySCLicenses(productEntryId);
-	}
-
-	public static void deleteSCProductEntrySCLicense(long productEntryId,
-		long licenseId) {
-		getService().deleteSCProductEntrySCLicense(productEntryId, licenseId);
-	}
-
-	public static void deleteSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		getService().deleteSCProductEntrySCLicense(productEntryId, scLicense);
-	}
-
-	public static void deleteSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		getService().deleteSCProductEntrySCLicenses(productEntryId, licenseIds);
-	}
-
-	public static void deleteSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
-		getService().deleteSCProductEntrySCLicenses(productEntryId, SCLicenses);
 	}
 
 	/**
@@ -324,20 +377,6 @@ public class SCLicenseLocalServiceUtil {
 		return getService().hasSCProductEntrySCLicenses(productEntryId);
 	}
 
-	public static void setSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		getService().setSCProductEntrySCLicenses(productEntryId, licenseIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -347,60 +386,9 @@ public class SCLicenseLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
-		java.lang.String name, java.lang.String url, boolean openSource,
-		boolean active, boolean recommended)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLicense(name, url, openSource, active, recommended);
-	}
-
-	public static void deleteLicense(long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLicense(licenseId);
-	}
-
-	public static void deleteLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense license) {
-		getService().deleteLicense(license);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCLicense getLicense(
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLicense(licenseId);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses() {
-		return getService().getLicenses();
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
-		boolean active, boolean recommended) {
-		return getService().getLicenses(active, recommended);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
-		boolean active, boolean recommended, int start, int end) {
-		return getService().getLicenses(active, recommended, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getLicenses(
-		int start, int end) {
-		return getService().getLicenses(start, end);
-	}
-
-	public static int getLicensesCount() {
-		return getService().getLicensesCount();
-	}
-
-	public static int getLicensesCount(boolean active, boolean recommended) {
-		return getService().getLicensesCount(active, recommended);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getProductEntryLicenses(
-		long productEntryId) {
-		return getService().getProductEntryLicenses(productEntryId);
+	public static void setSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		getService().setSCProductEntrySCLicenses(productEntryId, licenseIds);
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense updateLicense(
@@ -410,6 +398,17 @@ public class SCLicenseLocalServiceUtil {
 		return getService()
 				   .updateLicense(licenseId, name, url, openSource, active,
 			recommended);
+	}
+
+	/**
+	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param scLicense the s c license
+	* @return the s c license that was updated
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCLicense updateSCLicense(
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		return getService().updateSCLicense(scLicense);
 	}
 
 	public static SCLicenseLocalService getService() {

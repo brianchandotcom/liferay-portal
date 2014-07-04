@@ -42,6 +42,23 @@ public class SocialRelationLocalServiceUtil {
 	 */
 
 	/**
+	* Adds a social relation between the two users to the database.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @param type the type of the relation
+	* @return the social relation
+	* @throws PortalException if the users could not be found, if the users
+	were not from the same company, or if either of the users was the
+	default user
+	*/
+	public static com.liferay.portlet.social.model.SocialRelation addRelation(
+		long userId1, long userId2, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addRelation(userId1, userId2, type);
+	}
+
+	/**
 	* Adds the social relation to the database. Also notifies the appropriate model listeners.
 	*
 	* @param socialRelation the social relation
@@ -61,6 +78,77 @@ public class SocialRelationLocalServiceUtil {
 	public static com.liferay.portlet.social.model.SocialRelation createSocialRelation(
 		long relationId) {
 		return getService().createSocialRelation(relationId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relation the relation to be removed
+	* @throws PortalException if the relation is bidirectional and its inverse
+	relation could not be found
+	*/
+	public static void deleteRelation(
+		com.liferay.portlet.social.model.SocialRelation relation)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRelation(relation);
+	}
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relationId the primary key of the relation
+	* @throws PortalException if the relation could not be found
+	*/
+	public static void deleteRelation(long relationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRelation(relationId);
+	}
+
+	/**
+	* Removes the matching relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @param type the relation's type
+	* @throws PortalException if the relation or its inverse relation (if
+	applicable) could not be found
+	*/
+	public static void deleteRelation(long userId1, long userId2, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRelation(userId1, userId2, type);
+	}
+
+	/**
+	* Removes all relations involving the user from the database.
+	*
+	* @param userId the primary key of the user
+	*/
+	public static void deleteRelations(long userId) {
+		getService().deleteRelations(userId);
+	}
+
+	/**
+	* Removes all relations between User1 and User2.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @throws PortalException if the inverse relation could not be found
+	*/
+	public static void deleteRelations(long userId1, long userId2)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRelations(userId1, userId2);
 	}
 
 	/**
@@ -183,86 +271,8 @@ public class SocialRelationLocalServiceUtil {
 				   .fetchSocialRelationByUuidAndCompanyId(uuid, companyId);
 	}
 
-	/**
-	* Returns the social relation with the primary key.
-	*
-	* @param relationId the primary key of the social relation
-	* @return the social relation
-	* @throws PortalException if a social relation with the primary key could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialRelation getSocialRelation(
-		long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialRelation(relationId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the social relation with the matching UUID and company.
-	*
-	* @param uuid the social relation's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social relation
-	* @throws PortalException if a matching social relation could not be found
-	*/
-	public static com.liferay.portlet.social.model.SocialRelation getSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialRelationByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the social relations.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social relations
-	* @param end the upper bound of the range of social relations (not inclusive)
-	* @return the range of social relations
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialRelation> getSocialRelations(
-		int start, int end) {
-		return getService().getSocialRelations(start, end);
-	}
-
-	/**
-	* Returns the number of social relations.
-	*
-	* @return the number of social relations
-	*/
-	public static int getSocialRelationsCount() {
-		return getService().getSocialRelationsCount();
-	}
-
-	/**
-	* Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @return the social relation that was updated
-	*/
-	public static com.liferay.portlet.social.model.SocialRelation updateSocialRelation(
-		com.liferay.portlet.social.model.SocialRelation socialRelation) {
-		return getService().updateSocialRelation(socialRelation);
 	}
 
 	/**
@@ -272,94 +282,6 @@ public class SocialRelationLocalServiceUtil {
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds a social relation between the two users to the database.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @param type the type of the relation
-	* @return the social relation
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
-	*/
-	public static com.liferay.portlet.social.model.SocialRelation addRelation(
-		long userId1, long userId2, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addRelation(userId1, userId2, type);
-	}
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
-	* @param relationId the primary key of the relation
-	* @throws PortalException if the relation could not be found
-	*/
-	public static void deleteRelation(long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRelation(relationId);
-	}
-
-	/**
-	* Removes the matching relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @param type the relation's type
-	* @throws PortalException if the relation or its inverse relation (if
-	applicable) could not be found
-	*/
-	public static void deleteRelation(long userId1, long userId2, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRelation(userId1, userId2, type);
-	}
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
-	* @param relation the relation to be removed
-	* @throws PortalException if the relation is bidirectional and its inverse
-	relation could not be found
-	*/
-	public static void deleteRelation(
-		com.liferay.portlet.social.model.SocialRelation relation)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRelation(relation);
-	}
-
-	/**
-	* Removes all relations involving the user from the database.
-	*
-	* @param userId the primary key of the user
-	*/
-	public static void deleteRelations(long userId) {
-		getService().deleteRelations(userId);
-	}
-
-	/**
-	* Removes all relations between User1 and User2.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @throws PortalException if the inverse relation could not be found
-	*/
-	public static void deleteRelations(long userId1, long userId2)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRelations(userId1, userId2);
 	}
 
 	/**
@@ -397,6 +319,12 @@ public class SocialRelationLocalServiceUtil {
 	*/
 	public static int getInverseRelationsCount(long userId, int type) {
 		return getService().getInverseRelationsCount(userId, type);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -500,6 +428,58 @@ public class SocialRelationLocalServiceUtil {
 	}
 
 	/**
+	* Returns the social relation with the primary key.
+	*
+	* @param relationId the primary key of the social relation
+	* @return the social relation
+	* @throws PortalException if a social relation with the primary key could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialRelation getSocialRelation(
+		long relationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialRelation(relationId);
+	}
+
+	/**
+	* Returns the social relation with the matching UUID and company.
+	*
+	* @param uuid the social relation's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social relation
+	* @throws PortalException if a matching social relation could not be found
+	*/
+	public static com.liferay.portlet.social.model.SocialRelation getSocialRelationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialRelationByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of all the social relations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @return the range of social relations
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialRelation> getSocialRelations(
+		int start, int end) {
+		return getService().getSocialRelations(start, end);
+	}
+
+	/**
+	* Returns the number of social relations.
+	*
+	* @return the number of social relations
+	*/
+	public static int getSocialRelationsCount() {
+		return getService().getSocialRelationsCount();
+	}
+
+	/**
 	* Returns <code>true</code> if a relation of the given type exists where
 	* the user with primary key <code>userId1</code> is User1 of the relation
 	* and the user with the primary key <code>userId2</code> is User2 of the
@@ -535,6 +515,26 @@ public class SocialRelationLocalServiceUtil {
 	*/
 	public static boolean isRelatable(long userId1, long userId2, int type) {
 		return getService().isRelatable(userId1, userId2, type);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialRelation the social relation
+	* @return the social relation that was updated
+	*/
+	public static com.liferay.portlet.social.model.SocialRelation updateSocialRelation(
+		com.liferay.portlet.social.model.SocialRelation socialRelation) {
+		return getService().updateSocialRelation(socialRelation);
 	}
 
 	public static SocialRelationLocalService getService() {

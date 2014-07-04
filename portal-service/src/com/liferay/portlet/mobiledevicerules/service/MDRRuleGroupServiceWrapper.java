@@ -32,26 +32,6 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 		_mdrRuleGroupService = mdrRuleGroupService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mdrRuleGroupService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mdrRuleGroupService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup addRuleGroup(
 		long groupId,
@@ -85,11 +65,31 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 		return _mdrRuleGroupService.fetchRuleGroup(ruleGroupId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mdrRuleGroupService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.getRuleGroup(ruleGroupId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_mdrRuleGroupService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

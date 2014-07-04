@@ -42,277 +42,6 @@ public class JournalArticleLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the journal article to the database. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticle the journal article
-	* @return the journal article that was added
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle addJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
-		return getService().addJournalArticle(journalArticle);
-	}
-
-	/**
-	* Creates a new journal article with the primary key. Does not add the journal article to the database.
-	*
-	* @param id the primary key for the new journal article
-	* @return the new journal article
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle createJournalArticle(
-		long id) {
-		return getService().createJournalArticle(id);
-	}
-
-	/**
-	* Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param id the primary key of the journal article
-	* @return the journal article that was removed
-	* @throws PortalException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		long id) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteJournalArticle(id);
-	}
-
-	/**
-	* Deletes the journal article from the database. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticle the journal article
-	* @return the journal article that was removed
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
-		return getService().deleteJournalArticle(journalArticle);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticle(
-		long id) {
-		return getService().fetchJournalArticle(id);
-	}
-
-	/**
-	* Returns the journal article with the matching UUID and company.
-	*
-	* @param uuid the journal article's UUID
-	* @param companyId the primary key of the company
-	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchJournalArticleByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the journal article matching the UUID and group.
-	*
-	* @param uuid the journal article's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchJournalArticleByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the journal article with the primary key.
-	*
-	* @param id the primary key of the journal article
-	* @return the journal article
-	* @throws PortalException if a journal article with the primary key could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticle(
-		long id) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalArticle(id);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the journal article with the matching UUID and company.
-	*
-	* @param uuid the journal article's UUID
-	* @param companyId the primary key of the company
-	* @return the matching journal article
-	* @throws PortalException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalArticleByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the journal article matching the UUID and group.
-	*
-	* @param uuid the journal article's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal article
-	* @throws PortalException if a matching journal article could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalArticleByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns a range of all the journal articles.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of journal articles
-	* @param end the upper bound of the range of journal articles (not inclusive)
-	* @return the range of journal articles
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getJournalArticles(
-		int start, int end) {
-		return getService().getJournalArticles(start, end);
-	}
-
-	/**
-	* Returns the number of journal articles.
-	*
-	* @return the number of journal articles
-	*/
-	public static int getJournalArticlesCount() {
-		return getService().getJournalArticlesCount();
-	}
-
-	/**
-	* Updates the journal article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticle the journal article
-	* @return the journal article that was updated
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle updateJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
-		return getService().updateJournalArticle(journalArticle);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds a web content article with additional parameters.
 	*
 	* @param userId the primary key of the web content article's creator/owner
@@ -537,6 +266,17 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Adds the journal article to the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticle the journal article
+	* @return the journal article that was added
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle addJournalArticle(
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
+		return getService().addJournalArticle(journalArticle);
+	}
+
+	/**
 	* Returns the web content article with the group, article ID, and version.
 	* This method checks for the article's resource primary key and, if not
 	* found, creates a new one.
@@ -626,6 +366,17 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Creates a new journal article with the primary key. Does not add the journal article to the database.
+	*
+	* @param id the primary key for the new journal article
+	* @return the new journal article
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle createJournalArticle(
+		long id) {
+		return getService().createJournalArticle(id);
+	}
+
+	/**
 	* Deletes the web content article and its resources.
 	*
 	* @param article the web content article
@@ -661,6 +412,24 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Deletes all web content articles and their resources matching the group
+	* and article ID, optionally sending email notifying denial of article if
+	* it had not yet been approved.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param serviceContext the service context to be applied. Can set the
+	portlet preferences that include email information to notify
+	recipients of the unapproved web content article's denial.
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void deleteArticle(long groupId, java.lang.String articleId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteArticle(groupId, articleId, serviceContext);
+	}
+
+	/**
 	* Deletes the web content article and its resources matching the group,
 	* article ID, and version, optionally sending email notifying denial of the
 	* web content article if it had not yet been approved.
@@ -684,24 +453,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService()
 				   .deleteArticle(groupId, articleId, version, articleURL,
 			serviceContext);
-	}
-
-	/**
-	* Deletes all web content articles and their resources matching the group
-	* and article ID, optionally sending email notifying denial of article if
-	* it had not yet been approved.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param serviceContext the service context to be applied. Can set the
-	portlet preferences that include email information to notify
-	recipients of the unapproved web content article's denial.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void deleteArticle(long groupId, java.lang.String articleId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteArticle(groupId, articleId, serviceContext);
 	}
 
 	/**
@@ -745,6 +496,29 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param id the primary key of the journal article
+	* @return the journal article that was removed
+	* @throws PortalException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteJournalArticle(id);
+	}
+
+	/**
+	* Deletes the journal article from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticle the journal article
+	* @return the journal article that was removed
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
+		return getService().deleteJournalArticle(journalArticle);
+	}
+
+	/**
 	* Deletes the layout's association with the web content articles for the
 	* group.
 	*
@@ -755,6 +529,124 @@ public class JournalArticleLocalServiceUtil {
 	public static void deleteLayoutArticleReferences(long groupId,
 		java.lang.String layoutUuid) {
 		getService().deleteLayoutArticleReferences(groupId, layoutUuid);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Expires the web content article matching the group and article ID,
+	* expiring all of its versions if the
+	* <code>journal.article.expire.all.versions</code> portal property is
+	* <code>true</code>, otherwise expiring only its latest approved version.
+	*
+	* @param userId the primary key of the user updating the web content
+	article
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param articleURL the web content article's accessible URL
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, status date, portlet preferences, and can set
+	whether to add the default command update for the web content
+	article. With respect to social activities, by setting the
+	service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
+	* @throws PortalException if a matching web content article could not be
+	found or if a portal exception occurred
+	*/
+	public static void expireArticle(long userId, long groupId,
+		java.lang.String articleId, java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.expireArticle(userId, groupId, articleId, articleURL,
+			serviceContext);
 	}
 
 	/**
@@ -789,40 +681,44 @@ public class JournalArticleLocalServiceUtil {
 			articleURL, serviceContext);
 	}
 
-	/**
-	* Expires the web content article matching the group and article ID,
-	* expiring all of its versions if the
-	* <code>journal.article.expire.all.versions</code> portal property is
-	* <code>true</code>, otherwise expiring only its latest approved version.
-	*
-	* @param userId the primary key of the user updating the web content
-	article
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param articleURL the web content article's accessible URL
-	* @param serviceContext the service context to be applied. Can set the
-	modification date, status date, portlet preferences, and can set
-	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
-	* @throws PortalException if a matching web content article could not be
-	found or if a portal exception occurred
-	*/
-	public static void expireArticle(long userId, long groupId,
-		java.lang.String articleId, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.expireArticle(userId, groupId, articleId, articleURL,
-			serviceContext);
-	}
-
 	public static com.liferay.portlet.journal.model.JournalArticle fetchArticle(
 		long groupId, java.lang.String articleId, double version) {
 		return getService().fetchArticle(groupId, articleId, version);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticle(
+		long id) {
+		return getService().fetchJournalArticle(id);
+	}
+
+	/**
+	* Returns the journal article with the matching UUID and company.
+	*
+	* @param uuid the journal article's UUID
+	* @param companyId the primary key of the company
+	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchJournalArticleByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the journal article matching the UUID and group.
+	*
+	* @param uuid the journal article's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchJournalArticleByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long groupId, java.lang.String articleId, int status) {
+		return getService().fetchLatestArticle(groupId, articleId, status);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
@@ -836,27 +732,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().fetchLatestArticle(resourcePrimKey, statuses);
 	}
 
-	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
-		long groupId, java.lang.String articleId, int status) {
-		return getService().fetchLatestArticle(groupId, articleId, status);
-	}
-
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestIndexableArticle(
 		long resourcePrimKey) {
 		return getService().fetchLatestIndexableArticle(resourcePrimKey);
 	}
 
-	/**
-	* Returns the web content article with the ID.
-	*
-	* @param id the primary key of the web content article
-	* @return the web content article with the ID
-	* @throws PortalException if a matching web content article could not be
-	found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getArticle(
-		long id) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getArticle(id);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -914,6 +796,19 @@ public class JournalArticleLocalServiceUtil {
 		long groupId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getArticle(groupId, className, classPK);
+	}
+
+	/**
+	* Returns the web content article with the ID.
+	*
+	* @param id the primary key of the web content article
+	* @return the web content article with the ID
+	* @throws PortalException if a matching web content article could not be
+	found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getArticle(
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getArticle(id);
 	}
 
 	/**
@@ -1179,6 +1074,49 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		long groupId, java.lang.String articleId,
+		java.lang.String ddmTemplateKey, java.lang.String viewMode,
+		java.lang.String languageId, int page,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getArticleDisplay(groupId, articleId, ddmTemplateKey,
+			viewMode, languageId, page, portletRequestModel, themeDisplay);
+	}
+
+	/**
+	* Returns a web content article display for the first page of the latest
+	* version of the web content article matching the group and article ID,
+	* optionally based on the DDM template if the article is template driven.
+	* If the article is template driven, web content transformation tokens are
+	* added from the theme display (if not <code>null</code>).
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param ddmTemplateKey the primary key of the web content article's DDM
+	template
+	* @param viewMode the mode in which the web content is being viewed
+	* @param languageId the primary key of the language translation to get
+	* @param themeDisplay the theme display
+	* @return the web content article display, or <code>null</code> if the
+	article has expired or if article's display date/time is after
+	the current date/time
+	* @throws PortalException if a matching web content article or DDM template
+	could not be found, or if a portal exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		long groupId, java.lang.String articleId,
+		java.lang.String ddmTemplateKey, java.lang.String viewMode,
+		java.lang.String languageId,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getArticleDisplay(groupId, articleId, ddmTemplateKey,
+			viewMode, languageId, themeDisplay);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String ddmTemplateKey, java.lang.String viewMode,
 		java.lang.String languageId, int page,
@@ -1234,49 +1172,6 @@ public class JournalArticleLocalServiceUtil {
 			page, portletRequestModel, themeDisplay);
 	}
 
-	public static com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
-		long groupId, java.lang.String articleId,
-		java.lang.String ddmTemplateKey, java.lang.String viewMode,
-		java.lang.String languageId, int page,
-		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getArticleDisplay(groupId, articleId, ddmTemplateKey,
-			viewMode, languageId, page, portletRequestModel, themeDisplay);
-	}
-
-	/**
-	* Returns a web content article display for the first page of the latest
-	* version of the web content article matching the group and article ID,
-	* optionally based on the DDM template if the article is template driven.
-	* If the article is template driven, web content transformation tokens are
-	* added from the theme display (if not <code>null</code>).
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param ddmTemplateKey the primary key of the web content article's DDM
-	template
-	* @param viewMode the mode in which the web content is being viewed
-	* @param languageId the primary key of the language translation to get
-	* @param themeDisplay the theme display
-	* @return the web content article display, or <code>null</code> if the
-	article has expired or if article's display date/time is after
-	the current date/time
-	* @throws PortalException if a matching web content article or DDM template
-	could not be found, or if a portal exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
-		long groupId, java.lang.String articleId,
-		java.lang.String ddmTemplateKey, java.lang.String viewMode,
-		java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getArticleDisplay(groupId, articleId, ddmTemplateKey,
-			viewMode, languageId, themeDisplay);
-	}
-
 	/**
 	* Returns a web content article display for the first page of the latest
 	* version of the web content article matching the group and article ID. If
@@ -1322,6 +1217,100 @@ public class JournalArticleLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
 		long groupId) {
 		return getService().getArticles(groupId);
+	}
+
+	/**
+	* Returns all the web content articles matching the group and article ID.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @return the matching web content articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, java.lang.String articleId) {
+		return getService().getArticles(groupId, articleId);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, java.lang.String articleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getService()
+				   .getArticles(groupId, articleId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the web content articles matching the group and folder.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @return the matching web content articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId) {
+		return getService().getArticles(groupId, folderId);
+	}
+
+	/**
+	* Returns a range of all the web content articles matching the group and
+	* folder.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article's folder
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @return the range of matching web content articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, int start, int end) {
+		return getService().getArticles(groupId, folderId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group and folder.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article's folder
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the web content
+	articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getService()
+				   .getArticles(groupId, folderId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, int status, int start, int end) {
+		return getService().getArticles(groupId, folderId, status, start, end);
 	}
 
 	/**
@@ -1376,100 +1365,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticles(groupId, start, end, obc);
 	}
 
-	/**
-	* Returns all the web content articles matching the group and folder.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article folder
-	* @return the matching web content articles
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, long folderId) {
-		return getService().getArticles(groupId, folderId);
-	}
-
-	/**
-	* Returns a range of all the web content articles matching the group and
-	* folder.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article's folder
-	* @param start the lower bound of the range of web content articles to
-	return
-	* @param end the upper bound of the range of web content articles to
-	return (not inclusive)
-	* @return the range of matching web content articles
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, long folderId, int start, int end) {
-		return getService().getArticles(groupId, folderId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, long folderId, int status, int start, int end) {
-		return getService().getArticles(groupId, folderId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the web content articles matching the
-	* group and folder.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article's folder
-	* @param start the lower bound of the range of web content articles to
-	return
-	* @param end the upper bound of the range of web content articles to
-	return (not inclusive)
-	* @param orderByComparator the comparator to order the web content
-	articles
-	* @return the range of matching web content articles ordered by the
-	comparator
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getService()
-				   .getArticles(groupId, folderId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns all the web content articles matching the group and article ID.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @return the matching web content articles
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, java.lang.String articleId) {
-		return getService().getArticles(groupId, articleId);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, java.lang.String articleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
-		return getService()
-				   .getArticles(groupId, articleId, start, end,
-			orderByComparator);
-	}
-
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByResourcePrimKey(
 		long resourcePrimKey) {
 		return getService().getArticlesByResourcePrimKey(resourcePrimKey);
@@ -1497,6 +1392,10 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesCount(groupId);
 	}
 
+	public static int getArticlesCount(long groupId, java.lang.String articleId) {
+		return getService().getArticlesCount(groupId, articleId);
+	}
+
 	/**
 	* Returns the number of web content articles matching the group and folder.
 	*
@@ -1512,8 +1411,41 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesCount(groupId, folderId, status);
 	}
 
-	public static int getArticlesCount(long groupId, java.lang.String articleId) {
-		return getService().getArticlesCount(groupId, articleId);
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* company and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the web content article's company
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @return the range of matching web content articles ordered by article ID
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getCompanyArticles(
+		long companyId, int status, int start, int end) {
+		return getService().getCompanyArticles(companyId, status, start, end);
 	}
 
 	/**
@@ -1547,31 +1479,17 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the web content articles matching the
-	* company and workflow status.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
+	* Returns the number of web content articles matching the company and
+	* workflow status.
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param status the web content article's workflow status. For more
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
-	* @param start the lower bound of the range of web content articles to
-	return
-	* @param end the upper bound of the range of web content articles to
-	return (not inclusive)
-	* @return the range of matching web content articles ordered by article ID
+	* @return the number of matching web content articles
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getCompanyArticles(
-		long companyId, int status, int start, int end) {
-		return getService().getCompanyArticles(companyId, status, start, end);
+	public static int getCompanyArticlesCount(long companyId, int status) {
+		return getService().getCompanyArticlesCount(companyId, status);
 	}
 
 	/**
@@ -1603,20 +1521,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService()
 				   .getCompanyArticlesCount(companyId, version, status, start,
 			end);
-	}
-
-	/**
-	* Returns the number of web content articles matching the company and
-	* workflow status.
-	*
-	* @param companyId the primary key of the web content article's company
-	* @param status the web content article's workflow status. For more
-	information see {@link WorkflowConstants} for constants starting
-	with the "STATUS_" prefix.
-	* @return the number of matching web content articles
-	*/
-	public static int getCompanyArticlesCount(long companyId, int status) {
-		return getService().getCompanyArticlesCount(companyId, status);
 	}
 
 	/**
@@ -1655,10 +1559,137 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getDisplayArticleByUrlTitle(groupId, urlTitle);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
 		long resourcePrimKey) {
 		return getService()
 				   .getIndexableArticlesByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	* Returns the journal article with the primary key.
+	*
+	* @param id the primary key of the journal article
+	* @return the journal article
+	* @throws PortalException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticle(
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalArticle(id);
+	}
+
+	/**
+	* Returns the journal article with the matching UUID and company.
+	*
+	* @param uuid the journal article's UUID
+	* @param companyId the primary key of the company
+	* @return the matching journal article
+	* @throws PortalException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalArticleByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the journal article matching the UUID and group.
+	*
+	* @param uuid the journal article's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article
+	* @throws PortalException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalArticleByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns a range of all the journal articles.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getJournalArticles(
+		int start, int end) {
+		return getService().getJournalArticles(start, end);
+	}
+
+	/**
+	* Returns the number of journal articles.
+	*
+	* @return the number of journal articles
+	*/
+	public static int getJournalArticlesCount() {
+		return getService().getJournalArticlesCount();
+	}
+
+	/**
+	* Returns the latest web content article with the group and article ID.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @return the latest matching web content article
+	* @throws PortalException if a matching web content article could not be
+	found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestArticle(groupId, articleId);
+	}
+
+	/**
+	* Returns the latest web content article matching the group, article ID,
+	* and workflow status.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @return the latest matching web content article
+	* @throws PortalException if a matching web content article could not be
+	found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long groupId, java.lang.String articleId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestArticle(groupId, articleId, status);
+	}
+
+	/**
+	* Returns the latest web content article matching the group, class name ID,
+	* and class PK.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param className the DDMStructure class name if the web content article
+	is related to a DDM structure, the class name associated with the
+	article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	otherwise
+	* @param classPK the primary key of the DDM structure, if the DDMStructure
+	class name is given as the <code>className</code> parameter, the
+	primary key of the class associated with the web content article,
+	or <code>0</code> otherwise
+	* @return the latest matching web content article
+	* @throws PortalException if a matching web content article could not be
+	found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestArticle(groupId, className, classPK);
 	}
 
 	/**
@@ -1721,63 +1752,6 @@ public class JournalArticleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLatestArticle(resourcePrimKey, status, preferApproved);
-	}
-
-	/**
-	* Returns the latest web content article with the group and article ID.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @return the latest matching web content article
-	* @throws PortalException if a matching web content article could not be
-	found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
-		long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestArticle(groupId, articleId);
-	}
-
-	/**
-	* Returns the latest web content article matching the group, article ID,
-	* and workflow status.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param status the web content article's workflow status. For more
-	information see {@link WorkflowConstants} for constants starting
-	with the "STATUS_" prefix.
-	* @return the latest matching web content article
-	* @throws PortalException if a matching web content article could not be
-	found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
-		long groupId, java.lang.String articleId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestArticle(groupId, articleId, status);
-	}
-
-	/**
-	* Returns the latest web content article matching the group, class name ID,
-	* and class PK.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param className the DDMStructure class name if the web content article
-	is related to a DDM structure, the class name associated with the
-	article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	otherwise
-	* @param classPK the primary key of the DDM structure, if the DDMStructure
-	class name is given as the <code>className</code> parameter, the
-	primary key of the class associated with the web content article,
-	or <code>0</code> otherwise
-	* @return the latest matching web content article
-	* @throws PortalException if a matching web content article could not be
-	found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
-		long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestArticle(groupId, className, classPK);
 	}
 
 	/**
@@ -1857,9 +1831,20 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getOldestArticle(groupId, articleId, status);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticle getPreviousApprovedArticle(
 		com.liferay.portlet.journal.model.JournalArticle article) {
 		return getService().getPreviousApprovedArticle(article);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getStructureArticles(
+		java.lang.String[] ddmStructureKeys) {
+		return getService().getStructureArticles(ddmStructureKeys);
 	}
 
 	/**
@@ -1906,11 +1891,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService()
 				   .getStructureArticles(groupId, ddmStructureKey, start, end,
 			obc);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getStructureArticles(
-		java.lang.String[] ddmStructureKeys) {
-		return getService().getStructureArticles(ddmStructureKeys);
 	}
 
 	/**
@@ -2180,25 +2160,14 @@ public class JournalArticleLocalServiceUtil {
 		return getService().restoreArticleFromTrash(userId, article);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long groupId, java.util.List<java.lang.Long> folderIds, int status,
-		int start, int end) {
-		return getService().search(groupId, folderIds, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long groupId, long folderId, int status, int start, int end) {
-		return getService().search(groupId, folderId, status, start, end);
-	}
-
 	/**
 	* Returns an ordered range of all the web content articles matching the
-	* parameters without using the indexer, including a keywords parameter for
-	* matching with the article's ID, title, description, and content, a DDM
-	* structure key parameter, and a DDM template key parameter. It is
-	* preferable to use the indexed version {@link #search(long, long, List,
-	* long, String, String, String, LinkedHashMap, int, int, Sort)} instead of
-	* this method wherever possible for performance reasons.
+	* parameters using the indexer, including a keywords parameter for matching
+	* an article's ID, title, description, or content, a DDM structure key
+	* parameter, a DDM template key parameter, an AND operator switch, and
+	* parameters for type, status, a finder hash map. It is preferable to use
+	* this method instead of the non-indexed version whenever possible for
+	* performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -2217,51 +2186,72 @@ public class JournalArticleLocalServiceUtil {
 	content article is related to a DDM structure, the primary key of
 	the class name associated with the article, or {@link
 	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param keywords the keywords (space separated), which may occur in the
-	web content article ID, title, description, or content
-	(optionally <code>null</code>). If the keywords value is not
-	<code>null</code>, the search uses the OR operator in connecting
-	query criteria; otherwise it uses the AND operator.
-	* @param version the web content article's version (optionally
+	* @param articleId the article ID keywords (space separated, optionally
+	<code>null</code>)
+	* @param title the title keywords (space separated, optionally
+	<code>null</code>)
+	* @param description the description keywords (space separated, optionally
+	<code>null</code>)
+	* @param content the content keywords (space separated, optionally
 	<code>null</code>)
 	* @param type the web content article's type (optionally
 	<code>null</code>)
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
 	* @param ddmStructureKey the primary key of the web content article's DDM
 	structure, if the article is related to a DDM structure, or
 	<code>null</code> otherwise
 	* @param ddmTemplateKey the primary key of the web content article's DDM
 	template
-	* @param displayDateGT the date after which a matching web content
-	article's display date must be after (optionally
-	<code>null</code>)
-	* @param displayDateLT the date before which a matching web content
-	article's display date must be before (optionally
-	<code>null</code>)
-	* @param status the web content article's workflow status. For more
-	information see {@link WorkflowConstants} for constants starting
-	with the "STATUS_" prefix.
-	* @param reviewDate the web content article's scheduled review date
-	(optionally <code>null</code>)
+	* @param params the finder parameters (optionally <code>null</code>). Can
+	set parameter <code>"includeDiscussions"</code> to
+	<code>true</code> to search for the keywords in the web content
+	article discussions.
+	* @param andSearch whether every field must match its value or keywords,
+	or just one field must match
 	* @param start the lower bound of the range of web content articles to
 	return
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
-	* @param obc the comparator to order the web content articles
-	* @return the range of matching web content articles ordered by the
-	comparator
+	* @param sort the field, type, and direction by which to sort (optionally
+	<code>null</code>)
+	* @return the matching web content articles ordered by <code>sort</code>
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, int status, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
 		return getService()
 				   .search(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
+			articleId, title, description, content, type, status,
+			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	long, String, String, String, String, String, int, String,
+	String, LinkedHashMap, boolean, int, int, Sort)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, java.lang.String statusString,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .search(companyId, groupId, folderIds, classNameId,
+			articleId, title, description, content, type, statusString,
+			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
 	}
 
 	/**
@@ -2485,12 +2475,12 @@ public class JournalArticleLocalServiceUtil {
 
 	/**
 	* Returns an ordered range of all the web content articles matching the
-	* parameters using the indexer, including a keywords parameter for matching
-	* an article's ID, title, description, or content, a DDM structure key
-	* parameter, a DDM template key parameter, an AND operator switch, and
-	* parameters for type, status, a finder hash map. It is preferable to use
-	* this method instead of the non-indexed version whenever possible for
-	* performance reasons.
+	* parameters without using the indexer, including a keywords parameter for
+	* matching with the article's ID, title, description, and content, a DDM
+	* structure key parameter, and a DDM template key parameter. It is
+	* preferable to use the indexed version {@link #search(long, long, List,
+	* long, String, String, String, LinkedHashMap, int, int, Sort)} instead of
+	* this method wherever possible for performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -2500,104 +2490,6 @@ public class JournalArticleLocalServiceUtil {
 	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
-	*
-	* @param companyId the primary key of the web content article's company
-	* @param groupId the primary key of the group (optionally <code>0</code>)
-	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
-	* @param classNameId the primary key of the DDMStructure class if the web
-	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param articleId the article ID keywords (space separated, optionally
-	<code>null</code>)
-	* @param title the title keywords (space separated, optionally
-	<code>null</code>)
-	* @param description the description keywords (space separated, optionally
-	<code>null</code>)
-	* @param content the content keywords (space separated, optionally
-	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
-	* @param status the web content article's workflow status. For more
-	information see {@link WorkflowConstants} for constants starting
-	with the "STATUS_" prefix.
-	* @param ddmStructureKey the primary key of the web content article's DDM
-	structure, if the article is related to a DDM structure, or
-	<code>null</code> otherwise
-	* @param ddmTemplateKey the primary key of the web content article's DDM
-	template
-	* @param params the finder parameters (optionally <code>null</code>). Can
-	set parameter <code>"includeDiscussions"</code> to
-	<code>true</code> to search for the keywords in the web content
-	article discussions.
-	* @param andSearch whether every field must match its value or keywords,
-	or just one field must match
-	* @param start the lower bound of the range of web content articles to
-	return
-	* @param end the upper bound of the range of web content articles to
-	return (not inclusive)
-	* @param sort the field, type, and direction by which to sort (optionally
-	<code>null</code>)
-	* @return the matching web content articles ordered by <code>sort</code>
-	*/
-	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String articleId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, int status, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
-		return getService()
-				   .search(companyId, groupId, folderIds, classNameId,
-			articleId, title, description, content, type, status,
-			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
-	long, String, String, String, String, String, int, String,
-	String, LinkedHashMap, boolean, int, int, Sort)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String articleId, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String statusString,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
-		return getService()
-				   .search(companyId, groupId, folderIds, classNameId,
-			articleId, title, description, content, type, statusString,
-			ddmStructureKey, ddmTemplateKey, params, andSearch, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .search(groupId, userId, creatorUserId, status, start, end);
-	}
-
-	public static int searchCount(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status) {
-		return getService().searchCount(groupId, folderIds, status);
-	}
-
-	public static int searchCount(long groupId, long folderId, int status) {
-		return getService().searchCount(groupId, folderId, status);
-	}
-
-	/**
-	* Returns the number of web content articles matching the parameters,
-	* including a keywords parameter for matching with the article's ID, title,
-	* description, and content, a DDM structure key parameter, and a DDM
-	* template key parameter.
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
@@ -2632,18 +2524,44 @@ public class JournalArticleLocalServiceUtil {
 	with the "STATUS_" prefix.
 	* @param reviewDate the web content article's scheduled review date
 	(optionally <code>null</code>)
-	* @return the number of matching web content articles
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param obc the comparator to order the web content articles
+	* @return the range of matching web content articles ordered by the
+	comparator
 	*/
-	public static int searchCount(long companyId, long groupId,
-		java.util.List<java.lang.Long> folderIds, long classNameId,
-		java.lang.String keywords, java.lang.Double version,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String ddmStructureKey,
 		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
 		return getService()
-				   .searchCount(companyId, groupId, folderIds, classNameId,
+				   .search(companyId, groupId, folderIds, classNameId,
 			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate);
+			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long groupId, long folderId, int status, int start, int end) {
+		return getService().search(groupId, folderId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long groupId, java.util.List<java.lang.Long> folderIds, int status,
+		int start, int end) {
+		return getService().search(groupId, folderIds, status, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
 	}
 
 	/**
@@ -2773,17 +2691,66 @@ public class JournalArticleLocalServiceUtil {
 			status, reviewDate, andOperator);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
-		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	/**
+	* Returns the number of web content articles matching the parameters,
+	* including a keywords parameter for matching with the article's ID, title,
+	* description, and content, a DDM structure key parameter, and a DDM
+	* template key parameter.
+	*
+	* @param companyId the primary key of the web content article's company
+	* @param groupId the primary key of the group (optionally <code>0</code>)
+	* @param folderIds the primary keys of the web content article folders
+	(optionally {@link java.util.Collections#EMPTY_LIST})
+	* @param classNameId the primary key of the DDMStructure class if the web
+	content article is related to a DDM structure, the primary key of
+	the class name associated with the article, or {@link
+	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	* @param keywords the keywords (space separated), which may occur in the
+	web content article ID, title, description, or content
+	(optionally <code>null</code>). If the keywords value is not
+	<code>null</code>, the search uses the OR operator in connecting
+	query criteria; otherwise it uses the AND operator.
+	* @param version the web content article's version (optionally
+	<code>null</code>)
+	* @param type the web content article's type (optionally
+	<code>null</code>)
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure, if the article is related to a DDM structure, or
+	<code>null</code> otherwise
+	* @param ddmTemplateKey the primary key of the web content article's DDM
+	template
+	* @param displayDateGT the date after which a matching web content
+	article's display date must be after (optionally
+	<code>null</code>)
+	* @param displayDateLT the date before which a matching web content
+	article's display date must be before (optionally
+	<code>null</code>)
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param reviewDate the web content article's scheduled review date
+	(optionally <code>null</code>)
+	* @return the number of matching web content articles
+	*/
+	public static int searchCount(long companyId, long groupId,
+		java.util.List<java.lang.Long> folderIds, long classNameId,
+		java.lang.String keywords, java.lang.Double version,
+		java.lang.String type, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
 		return getService()
-				   .searchJournalArticles(companyId, groupId, folderIds,
-			classNameId, ddmStructureKey, ddmTemplateKey, keywords, params,
-			start, end, sort);
+				   .searchCount(companyId, groupId, folderIds, classNameId,
+			keywords, version, type, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate);
+	}
+
+	public static int searchCount(long groupId, long folderId, int status) {
+		return getService().searchCount(groupId, folderId, status);
+	}
+
+	public static int searchCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status) {
+		return getService().searchCount(groupId, folderIds, status);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
@@ -2803,11 +2770,33 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchJournalArticles(companyId, groupId, folderIds,
+			classNameId, ddmStructureKey, ddmTemplateKey, keywords, params,
+			start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
 		long groupId, long userId, long creatorUserId, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchJournalArticles(groupId, userId, creatorUserId,
 			status, start, end);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribeStructure(long groupId, long userId,
@@ -2820,6 +2809,44 @@ public class JournalArticleLocalServiceUtil {
 		long ddmStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribeStructure(groupId, userId, ddmStructureId);
+	}
+
+	/**
+	* Updates the web content article matching the version, replacing its
+	* folder and content.
+	*
+	* @param userId the primary key of the user updating the web content
+	article
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param articleId the primary key of the web content article
+	* @param version the web content article's version
+	* @param content the HTML content wrapped in XML. For more information,
+	see the content example in the class description for {@link
+	JournalArticleLocalServiceImpl}.
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, expando bridge attributes, asset category IDs,
+	asset tag names, asset link entry IDs, workflow actions, the
+	"defaultLanguageId" and "urlTitle" attributes, and can set
+	whether to add the default command update for the web content
+	article. With respect to social activities, by setting the
+	service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
+	* @return the updated web content article
+	* @throws PortalException if a user with the primary key or a matching web
+	content article could not be found, or if a portal exception
+	occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle updateArticle(
+		long userId, long groupId, long folderId, java.lang.String articleId,
+		double version, java.lang.String content,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateArticle(userId, groupId, folderId, articleId,
+			version, content, serviceContext);
 	}
 
 	/**
@@ -2985,44 +3012,6 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* Updates the web content article matching the version, replacing its
-	* folder and content.
-	*
-	* @param userId the primary key of the user updating the web content
-	article
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article folder
-	* @param articleId the primary key of the web content article
-	* @param version the web content article's version
-	* @param content the HTML content wrapped in XML. For more information,
-	see the content example in the class description for {@link
-	JournalArticleLocalServiceImpl}.
-	* @param serviceContext the service context to be applied. Can set the
-	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, the
-	"defaultLanguageId" and "urlTitle" attributes, and can set
-	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
-	* @return the updated web content article
-	* @throws PortalException if a user with the primary key or a matching web
-	content article could not be found, or if a portal exception
-	occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long userId, long groupId, long folderId, java.lang.String articleId,
-		double version, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateArticle(userId, groupId, folderId, articleId,
-			version, content, serviceContext);
-	}
-
-	/**
 	* @deprecated As of 6.2.0, replaced by {@link
 	#updateArticleTranslation(long, String, double, Locale,
 	String, String, String, Map, ServiceContext)}
@@ -3113,6 +3102,17 @@ public class JournalArticleLocalServiceUtil {
 		java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateContent(groupId, articleId, version, content);
+	}
+
+	/**
+	* Updates the journal article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticle the journal article
+	* @return the journal article that was updated
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle updateJournalArticle(
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
+		return getService().updateJournalArticle(journalArticle);
 	}
 
 	/**

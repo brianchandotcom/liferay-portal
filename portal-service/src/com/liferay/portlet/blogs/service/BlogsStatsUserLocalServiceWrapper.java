@@ -59,6 +59,18 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param blogsStatsUser the blogs stats user
+	* @return the blogs stats user that was removed
+	*/
+	@Override
+	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
+		return _blogsStatsUserLocalService.deleteBlogsStatsUser(blogsStatsUser);
+	}
+
+	/**
 	* Deletes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsUserId the primary key of the blogs stats user
@@ -73,15 +85,35 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param blogsStatsUser the blogs stats user
-	* @return the blogs stats user that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
-		return _blogsStatsUserLocalService.deleteBlogsStatsUser(blogsStatsUser);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsStatsUserLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteStatsUser(long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsStatsUserLocalService.deleteStatsUser(statsUserId);
+	}
+
+	@Override
+	public void deleteStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers) {
+		_blogsStatsUserLocalService.deleteStatsUser(statsUsers);
+	}
+
+	@Override
+	public void deleteStatsUserByGroupId(long groupId) {
+		_blogsStatsUserLocalService.deleteStatsUserByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteStatsUserByUserId(long userId) {
+		_blogsStatsUserLocalService.deleteStatsUserByUserId(userId);
 	}
 
 	@Override
@@ -175,6 +207,21 @@ public class BlogsStatsUserLocalServiceWrapper
 		return _blogsStatsUserLocalService.fetchBlogsStatsUser(statsUserId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _blogsStatsUserLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _blogsStatsUserLocalService.getBeanIdentifier();
+	}
+
 	/**
 	* Returns the blogs stats user with the primary key.
 	*
@@ -187,28 +234,6 @@ public class BlogsStatsUserLocalServiceWrapper
 		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsStatsUserLocalService.getBlogsStatsUser(statsUserId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _blogsStatsUserLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsStatsUserLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsStatsUserLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -238,60 +263,6 @@ public class BlogsStatsUserLocalServiceWrapper
 		return _blogsStatsUserLocalService.getBlogsStatsUsersCount();
 	}
 
-	/**
-	* Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param blogsStatsUser the blogs stats user
-	* @return the blogs stats user that was updated
-	*/
-	@Override
-	public com.liferay.portlet.blogs.model.BlogsStatsUser updateBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
-		return _blogsStatsUserLocalService.updateBlogsStatsUser(blogsStatsUser);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _blogsStatsUserLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_blogsStatsUserLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void deleteStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers) {
-		_blogsStatsUserLocalService.deleteStatsUser(statsUsers);
-	}
-
-	@Override
-	public void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsStatsUserLocalService.deleteStatsUser(statsUserId);
-	}
-
-	@Override
-	public void deleteStatsUserByGroupId(long groupId) {
-		_blogsStatsUserLocalService.deleteStatsUserByGroupId(groupId);
-	}
-
-	@Override
-	public void deleteStatsUserByUserId(long userId) {
-		_blogsStatsUserLocalService.deleteStatsUserByUserId(userId);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end) {
@@ -310,13 +281,6 @@ public class BlogsStatsUserLocalServiceWrapper
 	@Override
 	public int getCompanyStatsUsersCount(long companyId) {
 		return _blogsStatsUserLocalService.getCompanyStatsUsersCount(companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end) {
-		return _blogsStatsUserLocalService.getGroupsStatsUsers(companyId,
-			groupId, start, end);
 	}
 
 	@Override
@@ -340,6 +304,13 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
+		long companyId, long groupId, int start, int end) {
+		return _blogsStatsUserLocalService.getGroupsStatsUsers(companyId,
+			groupId, start, end);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end) {
 		return _blogsStatsUserLocalService.getOrganizationStatsUsers(organizationId,
@@ -360,10 +331,39 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsStatsUserLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getStatsUser(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsStatsUserLocalService.getStatsUser(groupId, userId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_blogsStatsUserLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param blogsStatsUser the blogs stats user
+	* @return the blogs stats user that was updated
+	*/
+	@Override
+	public com.liferay.portlet.blogs.model.BlogsStatsUser updateBlogsStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
+		return _blogsStatsUserLocalService.updateBlogsStatsUser(blogsStatsUser);
 	}
 
 	@Override

@@ -57,6 +57,23 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		return _ratingsEntryLocalService.createRatingsEntry(entryId);
 	}
 
+	@Override
+	public void deleteEntry(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ratingsEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
 	/**
 	* Deletes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -169,6 +186,12 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	@Override
+	public com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(
+		long userId, java.lang.String className, long classPK) {
+		return _ratingsEntryLocalService.fetchEntry(userId, className, classPK);
+	}
+
+	@Override
 	public com.liferay.portlet.ratings.model.RatingsEntry fetchRatingsEntry(
 		long entryId) {
 		return _ratingsEntryLocalService.fetchRatingsEntry(entryId);
@@ -188,23 +211,52 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 			companyId);
 	}
 
-	/**
-	* Returns the ratings entry with the primary key.
-	*
-	* @param entryId the primary key of the ratings entry
-	* @return the ratings entry
-	* @throws PortalException if a ratings entry with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsEntryLocalService.getRatingsEntry(entryId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ratingsEntryLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _ratingsEntryLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK) {
+		return _ratingsEntryLocalService.getEntries(className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK, double score) {
+		return _ratingsEntryLocalService.getEntries(className, classPK, score);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
+		long userId, java.lang.String className,
+		java.util.List<java.lang.Long> classPKs) {
+		return _ratingsEntryLocalService.getEntries(userId, className, classPKs);
+	}
+
+	@Override
+	public int getEntriesCount(java.lang.String className, long classPK,
+		double score) {
+		return _ratingsEntryLocalService.getEntriesCount(className, classPK,
+			score);
+	}
+
+	@Override
+	public com.liferay.portlet.ratings.model.RatingsEntry getEntry(
+		long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ratingsEntryLocalService.getEntry(userId, className, classPK);
 	}
 
 	@Override
@@ -213,37 +265,11 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		return _ratingsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the ratings entry with the matching UUID and company.
-	*
-	* @param uuid the ratings entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching ratings entry
-	* @throws PortalException if a matching ratings entry could not be found
-	*/
-	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsEntryLocalService.getRatingsEntryByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**
@@ -274,25 +300,33 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	/**
-	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the ratings entry with the primary key.
 	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was updated
+	* @param entryId the primary key of the ratings entry
+	* @return the ratings entry
+	* @throws PortalException if a ratings entry with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry updateRatingsEntry(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
-		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
+	public com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ratingsEntryLocalService.getRatingsEntry(entryId);
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the ratings entry with the matching UUID and company.
 	*
-	* @return the Spring bean ID for this bean
+	* @param uuid the ratings entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching ratings entry
+	* @throws PortalException if a matching ratings entry could not be found
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ratingsEntryLocalService.getBeanIdentifier();
+	public com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ratingsEntryLocalService.getRatingsEntryByUuidAndCompanyId(uuid,
+			companyId);
 	}
 
 	/**
@@ -306,58 +340,24 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	@Override
-	public void deleteEntry(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
-	}
-
-	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(
-		long userId, java.lang.String className, long classPK) {
-		return _ratingsEntryLocalService.fetchEntry(userId, className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className,
-		java.util.List<java.lang.Long> classPKs) {
-		return _ratingsEntryLocalService.getEntries(userId, className, classPKs);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK) {
-		return _ratingsEntryLocalService.getEntries(className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK, double score) {
-		return _ratingsEntryLocalService.getEntries(className, classPK, score);
-	}
-
-	@Override
-	public int getEntriesCount(java.lang.String className, long classPK,
-		double score) {
-		return _ratingsEntryLocalService.getEntriesCount(className, classPK,
-			score);
-	}
-
-	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry getEntry(
-		long userId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsEntryLocalService.getEntry(userId, className, classPK);
-	}
-
-	@Override
 	public com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
 		long userId, java.lang.String className, long classPK, double score,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.updateEntry(userId, className,
 			classPK, score, serviceContext);
+	}
+
+	/**
+	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsEntry the ratings entry
+	* @return the ratings entry that was updated
+	*/
+	@Override
+	public com.liferay.portlet.ratings.model.RatingsEntry updateRatingsEntry(
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
+		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
 	}
 
 	/**

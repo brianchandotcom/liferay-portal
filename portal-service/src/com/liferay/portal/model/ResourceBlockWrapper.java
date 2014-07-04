@@ -107,64 +107,14 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		}
 	}
 
-	/**
-	* Returns the primary key of this resource block.
-	*
-	* @return the primary key of this resource block
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _resourceBlock.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ResourceBlockWrapper((ResourceBlock)_resourceBlock.clone());
 	}
 
-	/**
-	* Sets the primary key of this resource block.
-	*
-	* @param primaryKey the primary key of this resource block
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_resourceBlock.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this resource block.
-	*
-	* @return the mvcc version of this resource block
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _resourceBlock.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this resource block.
-	*
-	* @param mvccVersion the mvcc version of this resource block
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_resourceBlock.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the resource block ID of this resource block.
-	*
-	* @return the resource block ID of this resource block
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _resourceBlock.getResourceBlockId();
-	}
-
-	/**
-	* Sets the resource block ID of this resource block.
-	*
-	* @param resourceBlockId the resource block ID of this resource block
-	*/
-	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_resourceBlock.setResourceBlockId(resourceBlockId);
+	public int compareTo(com.liferay.portal.model.ResourceBlock resourceBlock) {
+		return _resourceBlock.compareTo(resourceBlock);
 	}
 
 	/**
@@ -177,14 +127,9 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		return _resourceBlock.getCompanyId();
 	}
 
-	/**
-	* Sets the company ID of this resource block.
-	*
-	* @param companyId the company ID of this resource block
-	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_resourceBlock.setCompanyId(companyId);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _resourceBlock.getExpandoBridge();
 	}
 
 	/**
@@ -198,13 +143,13 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	/**
-	* Sets the group ID of this resource block.
+	* Returns the mvcc version of this resource block.
 	*
-	* @param groupId the group ID of this resource block
+	* @return the mvcc version of this resource block
 	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_resourceBlock.setGroupId(groupId);
+	public long getMvccVersion() {
+		return _resourceBlock.getMvccVersion();
 	}
 
 	/**
@@ -218,16 +163,6 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	/**
-	* Sets the name of this resource block.
-	*
-	* @param name the name of this resource block
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_resourceBlock.setName(name);
-	}
-
-	/**
 	* Returns the permissions hash of this resource block.
 	*
 	* @return the permissions hash of this resource block
@@ -238,13 +173,18 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	/**
-	* Sets the permissions hash of this resource block.
+	* Returns the primary key of this resource block.
 	*
-	* @param permissionsHash the permissions hash of this resource block
+	* @return the primary key of this resource block
 	*/
 	@Override
-	public void setPermissionsHash(java.lang.String permissionsHash) {
-		_resourceBlock.setPermissionsHash(permissionsHash);
+	public long getPrimaryKey() {
+		return _resourceBlock.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _resourceBlock.getPrimaryKeyObj();
 	}
 
 	/**
@@ -258,23 +198,18 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	/**
-	* Sets the reference count of this resource block.
+	* Returns the resource block ID of this resource block.
 	*
-	* @param referenceCount the reference count of this resource block
+	* @return the resource block ID of this resource block
 	*/
 	@Override
-	public void setReferenceCount(long referenceCount) {
-		_resourceBlock.setReferenceCount(referenceCount);
+	public long getResourceBlockId() {
+		return _resourceBlock.getResourceBlockId();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _resourceBlock.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_resourceBlock.setNew(n);
+	public int hashCode() {
+		return _resourceBlock.hashCode();
 	}
 
 	@Override
@@ -283,28 +218,33 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_resourceBlock.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _resourceBlock.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _resourceBlock.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _resourceBlock.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_resourceBlock.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_resourceBlock.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _resourceBlock.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_resourceBlock.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this resource block.
+	*
+	* @param companyId the company ID of this resource block
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_resourceBlock.setCompanyId(companyId);
 	}
 
 	@Override
@@ -325,19 +265,84 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		_resourceBlock.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this resource block.
+	*
+	* @param groupId the group ID of this resource block
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ResourceBlockWrapper((ResourceBlock)_resourceBlock.clone());
+	public void setGroupId(long groupId) {
+		_resourceBlock.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the mvcc version of this resource block.
+	*
+	* @param mvccVersion the mvcc version of this resource block
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_resourceBlock.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Sets the name of this resource block.
+	*
+	* @param name the name of this resource block
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_resourceBlock.setName(name);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.ResourceBlock resourceBlock) {
-		return _resourceBlock.compareTo(resourceBlock);
+	public void setNew(boolean n) {
+		_resourceBlock.setNew(n);
+	}
+
+	/**
+	* Sets the permissions hash of this resource block.
+	*
+	* @param permissionsHash the permissions hash of this resource block
+	*/
+	@Override
+	public void setPermissionsHash(java.lang.String permissionsHash) {
+		_resourceBlock.setPermissionsHash(permissionsHash);
+	}
+
+	/**
+	* Sets the primary key of this resource block.
+	*
+	* @param primaryKey the primary key of this resource block
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_resourceBlock.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _resourceBlock.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_resourceBlock.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the reference count of this resource block.
+	*
+	* @param referenceCount the reference count of this resource block
+	*/
+	@Override
+	public void setReferenceCount(long referenceCount) {
+		_resourceBlock.setReferenceCount(referenceCount);
+	}
+
+	/**
+	* Sets the resource block ID of this resource block.
+	*
+	* @param resourceBlockId the resource block ID of this resource block
+	*/
+	@Override
+	public void setResourceBlockId(long resourceBlockId) {
+		_resourceBlock.setResourceBlockId(resourceBlockId);
 	}
 
 	@Override
@@ -351,23 +356,18 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public com.liferay.portal.model.ResourceBlock toUnescapedModel() {
-		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _resourceBlock.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _resourceBlock.toXmlString();
+	public com.liferay.portal.model.ResourceBlock toUnescapedModel() {
+		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_resourceBlock.persist();
+	public java.lang.String toXmlString() {
+		return _resourceBlock.toXmlString();
 	}
 
 	@Override

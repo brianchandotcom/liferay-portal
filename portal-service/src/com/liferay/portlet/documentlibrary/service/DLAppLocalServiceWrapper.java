@@ -33,26 +33,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlAppLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlAppLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds a file entry and associated metadata based on a byte array.
 	*
 	* <p>
@@ -366,6 +346,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlAppLocalService.getBeanIdentifier();
+	}
+
+	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -563,6 +553,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppLocalService.restoreFileEntryFromTrash(userId, fileEntryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlAppLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

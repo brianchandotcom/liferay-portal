@@ -40,6 +40,11 @@ public class SocialActivitySetLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivitySetLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.social.model.SocialActivitySet addActivitySet(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addActivitySet(activityId);
+	}
 
 	/**
 	* Adds the social activity set to the database. Also notifies the appropriate model listeners.
@@ -61,6 +66,25 @@ public class SocialActivitySetLocalServiceUtil {
 	public static com.liferay.portlet.social.model.SocialActivitySet createSocialActivitySet(
 		long activitySetId) {
 		return getService().createSocialActivitySet(activitySetId);
+	}
+
+	public static void decrementActivityCount(long activitySetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().decrementActivityCount(activitySetId);
+	}
+
+	public static void decrementActivityCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().decrementActivityCount(classNameId, classPK);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -170,6 +194,63 @@ public class SocialActivitySetLocalServiceUtil {
 		return getService().fetchSocialActivitySet(activitySetId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivitySet getClassActivitySet(
+		long classNameId, long classPK, int type) {
+		return getService().getClassActivitySet(classNameId, classPK, type);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivitySet getClassActivitySet(
+		long userId, long classNameId, long classPK, int type) {
+		return getService()
+				   .getClassActivitySet(userId, classNameId, classPK, type);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getGroupActivitySets(
+		long groupId, int start, int end) {
+		return getService().getGroupActivitySets(groupId, start, end);
+	}
+
+	public static int getGroupActivitySetsCount(long groupId) {
+		return getService().getGroupActivitySetsCount(groupId);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getRelationActivitySets(
+		long userId, int start, int end) {
+		return getService().getRelationActivitySets(userId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getRelationActivitySets(
+		long userId, int type, int start, int end) {
+		return getService().getRelationActivitySets(userId, type, start, end);
+	}
+
+	public static int getRelationActivitySetsCount(long userId) {
+		return getService().getRelationActivitySetsCount(userId);
+	}
+
+	public static int getRelationActivitySetsCount(long userId, int type) {
+		return getService().getRelationActivitySetsCount(userId, type);
+	}
+
 	/**
 	* Returns the social activity set with the primary key.
 	*
@@ -181,25 +262,6 @@ public class SocialActivitySetLocalServiceUtil {
 		long activitySetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSocialActivitySet(activitySetId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,98 +289,15 @@ public class SocialActivitySetLocalServiceUtil {
 		return getService().getSocialActivitySetsCount();
 	}
 
-	/**
-	* Updates the social activity set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySet the social activity set
-	* @return the social activity set that was updated
-	*/
-	public static com.liferay.portlet.social.model.SocialActivitySet updateSocialActivitySet(
-		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
-		return getService().updateSocialActivitySet(socialActivitySet);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivitySet addActivitySet(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addActivitySet(activityId);
-	}
-
-	public static void decrementActivityCount(long activitySetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().decrementActivityCount(activitySetId);
-	}
-
-	public static void decrementActivityCount(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().decrementActivityCount(classNameId, classPK);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivitySet getClassActivitySet(
-		long classNameId, long classPK, int type) {
-		return getService().getClassActivitySet(classNameId, classPK, type);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivitySet getClassActivitySet(
-		long userId, long classNameId, long classPK, int type) {
+	public static com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
+		long groupId, long userId, long classNameId, int type) {
 		return getService()
-				   .getClassActivitySet(userId, classNameId, classPK, type);
-	}
-
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getGroupActivitySets(
-		long groupId, int start, int end) {
-		return getService().getGroupActivitySets(groupId, start, end);
-	}
-
-	public static int getGroupActivitySetsCount(long groupId) {
-		return getService().getGroupActivitySetsCount(groupId);
-	}
-
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getRelationActivitySets(
-		long userId, int start, int end) {
-		return getService().getRelationActivitySets(userId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getRelationActivitySets(
-		long userId, int type, int start, int end) {
-		return getService().getRelationActivitySets(userId, type, start, end);
-	}
-
-	public static int getRelationActivitySetsCount(long userId) {
-		return getService().getRelationActivitySetsCount(userId);
-	}
-
-	public static int getRelationActivitySetsCount(long userId, int type) {
-		return getService().getRelationActivitySetsCount(userId, type);
+				   .getUserActivitySet(groupId, userId, classNameId, type);
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
 		long groupId, long userId, int type) {
 		return getService().getUserActivitySet(groupId, userId, type);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
-		long groupId, long userId, long classNameId, int type) {
-		return getService()
-				   .getUserActivitySet(groupId, userId, classNameId, type);
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getUserActivitySets(
@@ -352,6 +331,26 @@ public class SocialActivitySetLocalServiceUtil {
 		long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().incrementActivityCount(activitySetId, activityId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the social activity set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySet the social activity set
+	* @return the social activity set that was updated
+	*/
+	public static com.liferay.portlet.social.model.SocialActivitySet updateSocialActivitySet(
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
+		return getService().updateSocialActivitySet(socialActivitySet);
 	}
 
 	public static SocialActivitySetLocalService getService() {

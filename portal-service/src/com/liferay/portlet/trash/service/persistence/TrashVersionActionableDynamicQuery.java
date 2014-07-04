@@ -22,7 +22,7 @@ import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link TrashVersionLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link TrashVersionLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

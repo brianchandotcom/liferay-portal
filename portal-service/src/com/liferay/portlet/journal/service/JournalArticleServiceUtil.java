@@ -42,21 +42,106 @@ public class JournalArticleServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Adds a web content article without any images.
 	*
-	* @return the Spring bean ID for this bean
+	* @param groupId the primary key of the web content article's group
+	* @param folderId the primary key of the web content article folder
+	* @param classNameId the primary key of the DDMStructure class if the web
+	content article is related to a DDM structure, the primary key of
+	the class name associated with the article, or {@link
+	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	* @param classPK the primary key of the DDM structure, if the primary key
+	of the DDMStructure class is given as the
+	<code>classNameId</code> parameter, the primary key of the class
+	associated with the web content article, or <code>0</code>
+	otherwise
+	* @param articleId the primary key of the web content article
+	* @param autoArticleId whether to auto generate the web content article ID
+	* @param titleMap the web content article's locales and localized titles
+	* @param descriptionMap the web content article's locales and localized
+	descriptions
+	* @param content the HTML content wrapped in XML. For more information,
+	see the content example in the class description for {@link
+	JournalArticleLocalServiceImpl}.
+	* @param type the structure's type, if the web content article is related
+	to a DDM structure. For more information, see {@link
+	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure, if the article is related to a DDM structure, or
+	<code>null</code> otherwise
+	* @param ddmTemplateKey the primary key of the web content article's DDM
+	template
+	* @param layoutUuid the unique string identifying the web content
+	article's display page
+	* @param displayDateMonth the month the web content article is set to
+	display
+	* @param displayDateDay the calendar day the web content article is set to
+	display
+	* @param displayDateYear the year the web content article is set to
+	display
+	* @param displayDateHour the hour the web content article is set to
+	display
+	* @param displayDateMinute the minute the web content article is set to
+	display
+	* @param expirationDateMonth the month the web content article is set to
+	expire
+	* @param expirationDateDay the calendar day the web content article is set
+	to expire
+	* @param expirationDateYear the year the web content article is set to
+	expire
+	* @param expirationDateHour the hour the web content article is set to
+	expire
+	* @param expirationDateMinute the minute the web content article is set to
+	expire
+	* @param neverExpire whether the web content article is not set to auto
+	expire
+	* @param reviewDateMonth the month the web content article is set for
+	review
+	* @param reviewDateDay the calendar day the web content article is set for
+	review
+	* @param reviewDateYear the year the web content article is set for review
+	* @param reviewDateHour the hour the web content article is set for review
+	* @param reviewDateMinute the minute the web content article is set for
+	review
+	* @param neverReview whether the web content article is not set for review
+	* @param indexable whether the web content article is searchable
+	* @param articleURL the web content article's accessible URL
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, expando bridge
+	attributes, guest permissions, group permissions, asset category
+	IDs, asset tag names, asset link entry IDs, the "urlTitle"
+	attribute, and workflow actions for the web content article. Can
+	also set whether to add the default guest and group permissions.
+	* @return the web content article
+	* @throws PortalException if the user did not have permission to add the
+	web content article or if a portal exception occurred
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static com.liferay.portlet.journal.model.JournalArticle addArticle(
+		long groupId, long folderId, long classNameId, long classPK,
+		java.lang.String articleId, boolean autoArticleId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String content, java.lang.String type,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
+		int reviewDateHour, int reviewDateMinute, boolean neverReview,
+		boolean indexable, java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addArticle(groupId, folderId, classNameId, classPK,
+			articleId, autoArticleId, titleMap, descriptionMap, content, type,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			articleURL, serviceContext);
 	}
 
 	/**
@@ -170,109 +255,6 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Adds a web content article without any images.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param folderId the primary key of the web content article folder
-	* @param classNameId the primary key of the DDMStructure class if the web
-	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param classPK the primary key of the DDM structure, if the primary key
-	of the DDMStructure class is given as the
-	<code>classNameId</code> parameter, the primary key of the class
-	associated with the web content article, or <code>0</code>
-	otherwise
-	* @param articleId the primary key of the web content article
-	* @param autoArticleId whether to auto generate the web content article ID
-	* @param titleMap the web content article's locales and localized titles
-	* @param descriptionMap the web content article's locales and localized
-	descriptions
-	* @param content the HTML content wrapped in XML. For more information,
-	see the content example in the class description for {@link
-	JournalArticleLocalServiceImpl}.
-	* @param type the structure's type, if the web content article is related
-	to a DDM structure. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
-	* @param ddmStructureKey the primary key of the web content article's DDM
-	structure, if the article is related to a DDM structure, or
-	<code>null</code> otherwise
-	* @param ddmTemplateKey the primary key of the web content article's DDM
-	template
-	* @param layoutUuid the unique string identifying the web content
-	article's display page
-	* @param displayDateMonth the month the web content article is set to
-	display
-	* @param displayDateDay the calendar day the web content article is set to
-	display
-	* @param displayDateYear the year the web content article is set to
-	display
-	* @param displayDateHour the hour the web content article is set to
-	display
-	* @param displayDateMinute the minute the web content article is set to
-	display
-	* @param expirationDateMonth the month the web content article is set to
-	expire
-	* @param expirationDateDay the calendar day the web content article is set
-	to expire
-	* @param expirationDateYear the year the web content article is set to
-	expire
-	* @param expirationDateHour the hour the web content article is set to
-	expire
-	* @param expirationDateMinute the minute the web content article is set to
-	expire
-	* @param neverExpire whether the web content article is not set to auto
-	expire
-	* @param reviewDateMonth the month the web content article is set for
-	review
-	* @param reviewDateDay the calendar day the web content article is set for
-	review
-	* @param reviewDateYear the year the web content article is set for review
-	* @param reviewDateHour the hour the web content article is set for review
-	* @param reviewDateMinute the minute the web content article is set for
-	review
-	* @param neverReview whether the web content article is not set for review
-	* @param indexable whether the web content article is searchable
-	* @param articleURL the web content article's accessible URL
-	* @param serviceContext the service context to be applied. Can set the
-	UUID, creation date, modification date, expando bridge
-	attributes, guest permissions, group permissions, asset category
-	IDs, asset tag names, asset link entry IDs, the "urlTitle"
-	attribute, and workflow actions for the web content article. Can
-	also set whether to add the default guest and group permissions.
-	* @return the web content article
-	* @throws PortalException if the user did not have permission to add the
-	web content article or if a portal exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle addArticle(
-		long groupId, long folderId, long classNameId, long classPK,
-		java.lang.String articleId, boolean autoArticleId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		int reviewDateMonth, int reviewDateDay, int reviewDateYear,
-		int reviewDateHour, int reviewDateMinute, boolean neverReview,
-		boolean indexable, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addArticle(groupId, folderId, classNameId, classPK,
-			articleId, autoArticleId, titleMap, descriptionMap, content, type,
-			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
-			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			articleURL, serviceContext);
-	}
-
-	/**
 	* Copies the web content article matching the group, article ID, and
 	* version. This method creates a new article, extracting all the values
 	* from the old one and updating its article ID.
@@ -294,31 +276,6 @@ public class JournalArticleServiceUtil {
 		return getService()
 				   .copyArticle(groupId, oldArticleId, newArticleId,
 			autoArticleId, version);
-	}
-
-	/**
-	* Deletes the web content article and its resources matching the group,
-	* article ID, and version, optionally sending email notifying denial of the
-	* web content article if it had not yet been approved.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param version the web content article's version
-	* @param articleURL the web content article's accessible URL
-	* @param serviceContext the service context to be applied. Can set the
-	portlet preferences that include email information to notify
-	recipients of the unapproved web content article's denial.
-	* @throws PortalException if the user did not have permission to delete the
-	web content article, if a matching web content article could not
-	be found, or if a portal exception occurred
-	*/
-	public static void deleteArticle(long groupId, java.lang.String articleId,
-		double version, java.lang.String articleURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteArticle(groupId, articleId, version, articleURL,
-			serviceContext);
 	}
 
 	/**
@@ -344,33 +301,27 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Expires the web content article matching the group, article ID, and
-	* version.
+	* Deletes the web content article and its resources matching the group,
+	* article ID, and version, optionally sending email notifying denial of the
+	* web content article if it had not yet been approved.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @param articleURL the web content article's accessible URL
 	* @param serviceContext the service context to be applied. Can set the
-	modification date, status date, portlet preferences, and can set
-	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the
-	service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
-	* @return the web content article
-	* @throws PortalException if the user did not have permission to expire the
+	portlet preferences that include email information to notify
+	recipients of the unapproved web content article's denial.
+	* @throws PortalException if the user did not have permission to delete the
 	web content article, if a matching web content article could not
 	be found, or if a portal exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle expireArticle(
-		long groupId, java.lang.String articleId, double version,
-		java.lang.String articleURL,
+	public static void deleteArticle(long groupId, java.lang.String articleId,
+		double version, java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .expireArticle(groupId, articleId, version, articleURL,
+		getService()
+			.deleteArticle(groupId, articleId, version, articleURL,
 			serviceContext);
 	}
 
@@ -404,17 +355,34 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Returns the web content article with the ID.
+	* Expires the web content article matching the group, article ID, and
+	* version.
 	*
-	* @param id the primary key of the web content article
-	* @return the web content article with the ID
-	* @throws PortalException if a matching web content article could not be
-	found or if the user did not have permission to view the web
-	content article
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param version the web content article's version
+	* @param articleURL the web content article's accessible URL
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, status date, portlet preferences, and can set
+	whether to add the default command update for the web content
+	article. With respect to social activities, by setting the
+	service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
+	* @return the web content article
+	* @throws PortalException if the user did not have permission to expire the
+	web content article, if a matching web content article could not
+	be found, or if a portal exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getArticle(
-		long id) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getArticle(id);
+	public static com.liferay.portlet.journal.model.JournalArticle expireArticle(
+		long groupId, java.lang.String articleId, double version,
+		java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .expireArticle(groupId, articleId, version, articleURL,
+			serviceContext);
 	}
 
 	/**
@@ -478,6 +446,20 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
+	* Returns the web content article with the ID.
+	*
+	* @param id the primary key of the web content article
+	* @return the web content article with the ID
+	* @throws PortalException if a matching web content article could not be
+	found or if the user did not have permission to view the web
+	content article
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getArticle(
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getArticle(id);
+	}
+
+	/**
 	* Returns the latest web content article that is approved, or the latest
 	* unapproved article if none are approved. Both approved and unapproved
 	* articles must match the group and URL title.
@@ -492,6 +474,56 @@ public class JournalArticleServiceUtil {
 		long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getArticleByUrlTitle(groupId, urlTitle);
+	}
+
+	/**
+	* Returns the latest web content from the web content article matching the
+	* group and article ID.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param languageId the primary key of the language translation to get
+	* @param portletRequestModel the portlet request model
+	* @param themeDisplay the theme display
+	* @return the matching web content
+	* @throws PortalException if the user did not have permission to view the
+	web content article, if a matching web content article or DDM
+	template could not be found, or if a portal exception occurred
+	*/
+	public static java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, java.lang.String languageId,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getArticleContent(groupId, articleId, languageId,
+			portletRequestModel, themeDisplay);
+	}
+
+	/**
+	* Returns the latest web content from the web content article matching the
+	* group and article ID.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param languageId the primary key of the language translation to get
+	* @param themeDisplay the theme display
+	* @return the matching web content
+	* @throws PortalException if the user did not have permission to view
+	the web content article, if a matching web content article or
+	DDM template could not be found, or if a portal exception
+	occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
+	String, String, PortletRequestModel, ThemeDisplay)}
+	*/
+	@Deprecated
+	public static java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, java.lang.String languageId,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getArticleContent(groupId, articleId, languageId,
+			themeDisplay);
 	}
 
 	/**
@@ -545,56 +577,6 @@ public class JournalArticleServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getArticleContent(groupId, articleId, version, languageId,
-			themeDisplay);
-	}
-
-	/**
-	* Returns the latest web content from the web content article matching the
-	* group and article ID.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param languageId the primary key of the language translation to get
-	* @param portletRequestModel the portlet request model
-	* @param themeDisplay the theme display
-	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view the
-	web content article, if a matching web content article or DDM
-	template could not be found, or if a portal exception occurred
-	*/
-	public static java.lang.String getArticleContent(long groupId,
-		java.lang.String articleId, java.lang.String languageId,
-		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getArticleContent(groupId, articleId, languageId,
-			portletRequestModel, themeDisplay);
-	}
-
-	/**
-	* Returns the latest web content from the web content article matching the
-	* group and article ID.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param articleId the primary key of the web content article
-	* @param languageId the primary key of the language translation to get
-	* @param themeDisplay the theme display
-	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view
-	the web content article, if a matching web content article or
-	DDM template could not be found, or if a portal exception
-	occurred
-	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
-	String, String, PortletRequestModel, ThemeDisplay)}
-	*/
-	@Deprecated
-	public static java.lang.String getArticleContent(long groupId,
-		java.lang.String articleId, java.lang.String languageId,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getArticleContent(groupId, articleId, languageId,
 			themeDisplay);
 	}
 
@@ -824,6 +806,15 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.
 	*
@@ -856,16 +847,6 @@ public class JournalArticleServiceUtil {
 		return getService().getFoldersAndArticlesCount(groupId, folderIds);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
-		long groupId, long userId, long rootFolderId, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getGroupArticles(groupId, userId, rootFolderId, status,
-			start, end, orderByComparator);
-	}
-
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* group, user, the root folder or any of its subfolders.
@@ -895,6 +876,16 @@ public class JournalArticleServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
+		long groupId, long userId, long rootFolderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGroupArticles(groupId, userId, rootFolderId, status,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of web content articles matching the group, user, and
 	* the root folder or any of its subfolders.
@@ -919,23 +910,6 @@ public class JournalArticleServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getGroupArticlesCount(groupId, userId, rootFolderId, status);
-	}
-
-	/**
-	* Returns the latest web content article matching the resource primary key,
-	* preferring articles with approved workflow status.
-	*
-	* @param resourcePrimKey the primary key of the resource instance
-	* @return the latest web content article matching the resource primary key,
-	preferring articles with approved workflow status
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a matching web content article could
-	not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestArticle(resourcePrimKey);
 	}
 
 	/**
@@ -983,6 +957,23 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
+	* Returns the latest web content article matching the resource primary key,
+	* preferring articles with approved workflow status.
+	*
+	* @param resourcePrimKey the primary key of the resource instance
+	* @return the latest web content article matching the resource primary key,
+	preferring articles with approved workflow status
+	* @throws PortalException if the user did not have permission to view the
+	web content article or if a matching web content article could
+	not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestArticle(resourcePrimKey);
+	}
+
+	/**
 	* Moves all versions of the the web content article matching the group and
 	* article ID to the folder.
 	*
@@ -999,36 +990,6 @@ public class JournalArticleServiceUtil {
 		long newFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().moveArticle(groupId, articleId, newFolderId);
-	}
-
-	/**
-	* Moves the web content article from the Recycle Bin to the folder.
-	*
-	* @param groupId the primary key of the web content article's group
-	* @param resourcePrimKey the primary key of the resource instance
-	* @param newFolderId the primary key of the web content article's new
-	folder
-	* @param serviceContext the service context to be applied. Can set the
-	modification date, portlet preferences, and can set whether to
-	add the default command update for the web content article. With
-	respect to social activities, by setting the service context's
-	command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
-	* @return the updated web content article, which was moved from the Recycle
-	Bin to the folder
-	* @throws PortalException if the user did not have permission to view or
-	update the web content article, if a matching trashed web content
-	article could not be found, or if a portal exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
-		long groupId, long resourcePrimKey, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveArticleFromTrash(groupId, resourcePrimKey, newFolderId,
-			serviceContext);
 	}
 
 	/**
@@ -1059,6 +1020,36 @@ public class JournalArticleServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveArticleFromTrash(groupId, articleId, newFolderId,
+			serviceContext);
+	}
+
+	/**
+	* Moves the web content article from the Recycle Bin to the folder.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param resourcePrimKey the primary key of the resource instance
+	* @param newFolderId the primary key of the web content article's new
+	folder
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, portlet preferences, and can set whether to
+	add the default command update for the web content article. With
+	respect to social activities, by setting the service context's
+	command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
+	* @return the updated web content article, which was moved from the Recycle
+	Bin to the folder
+	* @throws PortalException if the user did not have permission to view or
+	update the web content article, if a matching trashed web content
+	article could not be found, or if a portal exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long groupId, long resourcePrimKey, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveArticleFromTrash(groupId, resourcePrimKey, newFolderId,
 			serviceContext);
 	}
 
@@ -1117,20 +1108,6 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Restores the web content article associated with the resource primary key
-	* from the Recycle Bin.
-	*
-	* @param resourcePrimKey the primary key of the resource instance
-	* @throws PortalException if a matching web content article could not be
-	found in the Recycle Bin, if the user did not have permission to
-	view or restore the article, or if a portal exception occurred
-	*/
-	public static void restoreArticleFromTrash(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreArticleFromTrash(resourcePrimKey);
-	}
-
-	/**
 	* Restores the web content article from the Recycle Bin.
 	*
 	* @param groupId the primary key of the web content article's group
@@ -1146,81 +1123,18 @@ public class JournalArticleServiceUtil {
 		getService().restoreArticleFromTrash(groupId, articleId);
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(long groupId,
-		long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().search(groupId, creatorUserId, status, start, end);
-	}
-
 	/**
-	* Returns an ordered range of all the web content articles matching the
-	* parameters, including a keywords parameter for matching with the
-	* article's ID, title, description, and content, a DDM structure key
-	* parameter, and a DDM template key parameter.
+	* Restores the web content article associated with the resource primary key
+	* from the Recycle Bin.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the web content article's company
-	* @param groupId the primary key of the group (optionally <code>0</code>)
-	* @param folderIds the primary keys of the web content article folders
-	(optionally {@link java.util.Collections#EMPTY_LIST})
-	* @param classNameId the primary key of the DDMStructure class if the web
-	content article is related to a DDM structure, the primary key of
-	the class name associated with the article, or {@link
-	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	* @param keywords the keywords (space separated), which may occur in the
-	web content article ID, title, description, or content
-	(optionally <code>null</code>). If the keywords value is not
-	<code>null</code>, the search uses the OR operator in connecting
-	query criteria; otherwise it uses the AND operator.
-	* @param version the web content article's version (optionally
-	<code>null</code>)
-	* @param type the web content article's type (optionally
-	<code>null</code>)
-	* @param ddmStructureKey the primary key of the web content article's DDM
-	structure, if the article is related to a DDM structure, or
-	<code>null</code> otherwise
-	* @param ddmTemplateKey the primary key of the web content article's DDM
-	template
-	* @param displayDateGT the date after which a matching web content
-	article's display date must be after (optionally
-	<code>null</code>)
-	* @param displayDateLT the date before which a matching web content
-	article's display date must be before (optionally
-	<code>null</code>)
-	* @param status the web content article's workflow status. For more
-	information see {@link WorkflowConstants} for constants starting
-	with the "STATUS_" prefix.
-	* @param reviewDate the web content article's scheduled review date
-	(optionally <code>null</code>)
-	* @param start the lower bound of the range of web content articles to
-	return
-	* @param end the upper bound of the range of web content articles to
-	return (not inclusive)
-	* @param obc the comparator to order the web content articles
-	* @return the range of matching web content articles ordered by the
-	comparator
+	* @param resourcePrimKey the primary key of the resource instance
+	* @throws PortalException if a matching web content article could not be
+	found in the Recycle Bin, if the user did not have permission to
+	view or restore the article, or if a portal exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
-		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
-		return getService()
-				   .search(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
+	public static void restoreArticleFromTrash(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreArticleFromTrash(resourcePrimKey);
 	}
 
 	/**
@@ -1385,10 +1299,20 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Returns the number of web content articles matching the parameters,
-	* including a keywords parameter for matching with the article's ID, title,
-	* description, and content, a DDM structure key parameter, and a DDM
-	* template key parameter.
+	* Returns an ordered range of all the web content articles matching the
+	* parameters, including a keywords parameter for matching with the
+	* article's ID, title, description, and content, a DDM structure key
+	* parameter, and a DDM template key parameter.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param groupId the primary key of the group (optionally <code>0</code>)
@@ -1423,18 +1347,32 @@ public class JournalArticleServiceUtil {
 	with the "STATUS_" prefix.
 	* @param reviewDate the web content article's scheduled review date
 	(optionally <code>null</code>)
-	* @return the number of matching web content articles
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param obc the comparator to order the web content articles
+	* @return the range of matching web content articles ordered by the
+	comparator
 	*/
-	public static int searchCount(long companyId, long groupId,
-		java.util.List<java.lang.Long> folderIds, long classNameId,
-		java.lang.String keywords, java.lang.Double version,
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String keywords, java.lang.Double version,
 		java.lang.String type, java.lang.String ddmStructureKey,
 		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> obc) {
 		return getService()
-				   .searchCount(companyId, groupId, folderIds, classNameId,
+				   .search(companyId, groupId, folderIds, classNameId,
 			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate);
+			displayDateGT, displayDateLT, status, reviewDate, start, end, obc);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().search(groupId, creatorUserId, status, start, end);
 	}
 
 	/**
@@ -1564,6 +1502,68 @@ public class JournalArticleServiceUtil {
 			status, reviewDate, andOperator);
 	}
 
+	/**
+	* Returns the number of web content articles matching the parameters,
+	* including a keywords parameter for matching with the article's ID, title,
+	* description, and content, a DDM structure key parameter, and a DDM
+	* template key parameter.
+	*
+	* @param companyId the primary key of the web content article's company
+	* @param groupId the primary key of the group (optionally <code>0</code>)
+	* @param folderIds the primary keys of the web content article folders
+	(optionally {@link java.util.Collections#EMPTY_LIST})
+	* @param classNameId the primary key of the DDMStructure class if the web
+	content article is related to a DDM structure, the primary key of
+	the class name associated with the article, or {@link
+	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	* @param keywords the keywords (space separated), which may occur in the
+	web content article ID, title, description, or content
+	(optionally <code>null</code>). If the keywords value is not
+	<code>null</code>, the search uses the OR operator in connecting
+	query criteria; otherwise it uses the AND operator.
+	* @param version the web content article's version (optionally
+	<code>null</code>)
+	* @param type the web content article's type (optionally
+	<code>null</code>)
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure, if the article is related to a DDM structure, or
+	<code>null</code> otherwise
+	* @param ddmTemplateKey the primary key of the web content article's DDM
+	template
+	* @param displayDateGT the date after which a matching web content
+	article's display date must be after (optionally
+	<code>null</code>)
+	* @param displayDateLT the date before which a matching web content
+	article's display date must be before (optionally
+	<code>null</code>)
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param reviewDate the web content article's scheduled review date
+	(optionally <code>null</code>)
+	* @return the number of matching web content articles
+	*/
+	public static int searchCount(long companyId, long groupId,
+		java.util.List<java.lang.Long> folderIds, long classNameId,
+		java.lang.String keywords, java.lang.Double version,
+		java.lang.String type, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		return getService()
+				   .searchCount(companyId, groupId, folderIds, classNameId,
+			keywords, version, type, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static void subscribeStructure(long groupId, long userId,
 		long ddmStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1578,22 +1578,15 @@ public class JournalArticleServiceUtil {
 
 	/**
 	* Updates the web content article matching the version, replacing its
-	* folder, title, description, content, and layout UUID.
+	* folder and content.
 	*
-	* @param userId the primary key of the user updating the web content
-	article
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
-	* @param titleMap the web content article's locales and localized titles
-	* @param descriptionMap the web content article's locales and localized
-	descriptions
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
-	* @param layoutUuid the unique string identifying the web content
-	article's display page
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
 	asset tag names, asset link entry IDs, workflow actions, the
@@ -1605,22 +1598,19 @@ public class JournalArticleServiceUtil {
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
 	* @return the updated web content article
-	* @throws PortalException if a user with the primary key or a matching web
-	content article could not be found, or if a portal exception
+	* @throws PortalException if the user did not have permission to update the
+	web content article, if a user with the primary key or a matching
+	web content article could not be found, or if a portal exception
 	occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long userId, long groupId, long folderId, java.lang.String articleId,
-		double version,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String content, java.lang.String layoutUuid,
+		long groupId, long folderId, java.lang.String articleId,
+		double version, java.lang.String content,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateArticle(userId, groupId, folderId, articleId,
-			version, titleMap, descriptionMap, content, layoutUuid,
-			serviceContext);
+				   .updateArticle(groupId, folderId, articleId, version,
+			content, serviceContext);
 	}
 
 	/**
@@ -1738,15 +1728,22 @@ public class JournalArticleServiceUtil {
 
 	/**
 	* Updates the web content article matching the version, replacing its
-	* folder and content.
+	* folder, title, description, content, and layout UUID.
 	*
+	* @param userId the primary key of the user updating the web content
+	article
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
+	* @param titleMap the web content article's locales and localized titles
+	* @param descriptionMap the web content article's locales and localized
+	descriptions
 	* @param content the HTML content wrapped in XML. For more information,
 	see the content example in the class description for {@link
 	JournalArticleLocalServiceImpl}.
+	* @param layoutUuid the unique string identifying the web content
+	article's display page
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
 	asset tag names, asset link entry IDs, workflow actions, the
@@ -1758,19 +1755,22 @@ public class JournalArticleServiceUtil {
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article, if a user with the primary key or a matching
-	web content article could not be found, or if a portal exception
+	* @throws PortalException if a user with the primary key or a matching web
+	content article could not be found, or if a portal exception
 	occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticle(
-		long groupId, long folderId, java.lang.String articleId,
-		double version, java.lang.String content,
+		long userId, long groupId, long folderId, java.lang.String articleId,
+		double version,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String content, java.lang.String layoutUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateArticle(groupId, folderId, articleId, version,
-			content, serviceContext);
+				   .updateArticle(userId, groupId, folderId, articleId,
+			version, titleMap, descriptionMap, content, layoutUuid,
+			serviceContext);
 	}
 
 	/**

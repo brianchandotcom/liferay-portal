@@ -32,36 +32,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		_mbCategoryService = mbCategoryService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbCategoryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbCategoryService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
-			description, serviceContext);
-	}
-
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
@@ -85,6 +55,16 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
+	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
+		long userId, long parentCategoryId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
+			description, serviceContext);
+	}
+
+	@Override
 	public void deleteCategory(long categoryId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbCategoryService.deleteCategory(categoryId, includeTrashedEntries);
@@ -96,6 +76,16 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		_mbCategoryService.deleteCategory(groupId, categoryId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mbCategoryService.getBeanIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
 		long groupId) {
@@ -104,8 +94,18 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, int status) {
-		return _mbCategoryService.getCategories(groupId, status);
+		long groupId, long excludedCategoryId, long parentCategoryId,
+		int status, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, excludedCategoryId,
+			parentCategoryId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		int status, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, excludedCategoryIds,
+			parentCategoryIds, status, start, end);
 	}
 
 	@Override
@@ -124,14 +124,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
-		int status, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, excludedCategoryId,
-			parentCategoryId, status, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
 			start, end);
@@ -146,10 +138,22 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
-		int status, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, excludedCategoryIds,
-			parentCategoryIds, status, start, end);
+		long groupId, int status) {
+		return _mbCategoryService.getCategories(groupId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return _mbCategoryService.getCategoriesCount(groupId,
+			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
+		long[] parentCategoryIds, int status) {
+		return _mbCategoryService.getCategoriesCount(groupId,
+			excludedCategoryIds, parentCategoryIds, status);
 	}
 
 	@Override
@@ -165,13 +169,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return _mbCategoryService.getCategoriesCount(groupId,
-			excludedCategoryId, parentCategoryId, status);
-	}
-
-	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
 		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
 	}
@@ -181,13 +178,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,
 			parentCategoryIds, status);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
-		long[] parentCategoryIds, int status) {
-		return _mbCategoryService.getCategoriesCount(groupId,
-			excludedCategoryIds, parentCategoryIds, status);
 	}
 
 	@Override
@@ -249,6 +239,16 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	public void restoreCategoryFromTrash(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbCategoryService.restoreCategoryFromTrash(categoryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_mbCategoryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

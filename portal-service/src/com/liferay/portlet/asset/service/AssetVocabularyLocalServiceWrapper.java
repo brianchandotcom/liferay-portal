@@ -46,6 +46,68 @@ public class AssetVocabularyLocalServiceWrapper
 		return _assetVocabularyLocalService.addAssetVocabulary(assetVocabulary);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary addDefaultVocabulary(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.addDefaultVocabulary(groupId);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.addVocabulary(userId, title,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.addVocabulary(userId, title,
+			titleMap, descriptionMap, settings, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 6.1.0
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.addVocabulary(userId, titleMap,
+			descriptionMap, settings, serviceContext);
+	}
+
+	@Override
+	public void addVocabularyResources(
+		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetVocabularyLocalService.addVocabularyResources(vocabulary,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addVocabularyResources(
+		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetVocabularyLocalService.addVocabularyResources(vocabulary,
+			groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
 	*
@@ -56,6 +118,18 @@ public class AssetVocabularyLocalServiceWrapper
 	public com.liferay.portlet.asset.model.AssetVocabulary createAssetVocabulary(
 		long vocabularyId) {
 		return _assetVocabularyLocalService.createAssetVocabulary(vocabularyId);
+	}
+
+	/**
+	* Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetVocabulary the asset vocabulary
+	* @return the asset vocabulary that was removed
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary) {
+		return _assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
 	}
 
 	/**
@@ -73,15 +147,32 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetVocabulary the asset vocabulary
-	* @return the asset vocabulary that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary) {
-		return _assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteVocabularies(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetVocabularyLocalService.deleteVocabularies(groupId);
+	}
+
+	@Override
+	public void deleteVocabulary(
+		com.liferay.portlet.asset.model.AssetVocabulary vocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetVocabularyLocalService.deleteVocabulary(vocabulary);
+	}
+
+	@Override
+	public void deleteVocabulary(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetVocabularyLocalService.deleteVocabulary(vocabularyId);
 	}
 
 	@Override
@@ -204,6 +295,38 @@ public class AssetVocabularyLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _assetVocabularyLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns a range of all the asset vocabularies.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset vocabularies
+	* @param end the upper bound of the range of asset vocabularies (not inclusive)
+	* @return the range of asset vocabularies
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getAssetVocabularies(
+		int start, int end) {
+		return _assetVocabularyLocalService.getAssetVocabularies(start, end);
+	}
+
+	/**
+	* Returns the number of asset vocabularies.
+	*
+	* @return the number of asset vocabularies
+	*/
+	@Override
+	public int getAssetVocabulariesCount() {
+		return _assetVocabularyLocalService.getAssetVocabulariesCount();
+	}
+
 	/**
 	* Returns the asset vocabulary with the primary key.
 	*
@@ -216,34 +339,6 @@ public class AssetVocabularyLocalServiceWrapper
 		long vocabularyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.getAssetVocabulary(vocabularyId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _assetVocabularyLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _assetVocabularyLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -279,45 +374,6 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the asset vocabularies.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of asset vocabularies
-	* @param end the upper bound of the range of asset vocabularies (not inclusive)
-	* @return the range of asset vocabularies
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getAssetVocabularies(
-		int start, int end) {
-		return _assetVocabularyLocalService.getAssetVocabularies(start, end);
-	}
-
-	/**
-	* Returns the number of asset vocabularies.
-	*
-	* @return the number of asset vocabularies
-	*/
-	@Override
-	public int getAssetVocabulariesCount() {
-		return _assetVocabularyLocalService.getAssetVocabulariesCount();
-	}
-
-	/**
-	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetVocabulary the asset vocabulary
-	* @return the asset vocabulary that was updated
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary updateAssetVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary) {
-		return _assetVocabularyLocalService.updateAssetVocabulary(assetVocabulary);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -327,97 +383,6 @@ public class AssetVocabularyLocalServiceWrapper
 		return _assetVocabularyLocalService.getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetVocabularyLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary addDefaultVocabulary(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.addDefaultVocabulary(groupId);
-	}
-
-	/**
-	* @deprecated As of 6.1.0
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
-		long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.addVocabulary(userId, titleMap,
-			descriptionMap, settings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
-		long userId, java.lang.String title,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.addVocabulary(userId, title,
-			titleMap, descriptionMap, settings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
-		long userId, java.lang.String title,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.addVocabulary(userId, title,
-			serviceContext);
-	}
-
-	@Override
-	public void addVocabularyResources(
-		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetVocabularyLocalService.addVocabularyResources(vocabulary,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addVocabularyResources(
-		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetVocabularyLocalService.addVocabularyResources(vocabulary,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void deleteVocabularies(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetVocabularyLocalService.deleteVocabularies(groupId);
-	}
-
-	@Override
-	public void deleteVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary vocabulary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetVocabularyLocalService.deleteVocabulary(vocabulary);
-	}
-
-	@Override
-	public void deleteVocabulary(long vocabularyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetVocabularyLocalService.deleteVocabulary(vocabularyId);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getCompanyVocabularies(
 		long companyId) {
@@ -425,23 +390,9 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
-		long[] groupIds) {
-		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
-		long[] groupIds, java.lang.String className) {
-		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds,
-			className);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
-		long[] groupIds, java.lang.String className, long classTypePK) {
-		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds,
-			className, classTypePK);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _assetVocabularyLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -486,6 +437,33 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
+		long[] groupIds) {
+		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
+		long[] groupIds, java.lang.String className) {
+		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds,
+			className);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
+		long[] groupIds, java.lang.String className, long classTypePK) {
+		return _assetVocabularyLocalService.getGroupsVocabularies(groupIds,
+			className, classTypePK);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getVocabularies(
 		long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -508,6 +486,40 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetVocabularyLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetVocabulary the asset vocabulary
+	* @return the asset vocabulary that was updated
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary updateAssetVocabulary(
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary) {
+		return _assetVocabularyLocalService.updateAssetVocabulary(assetVocabulary);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
+		long vocabularyId, java.lang.String title,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String settings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.updateVocabulary(vocabularyId,
+			title, titleMap, descriptionMap, settings, serviceContext);
+	}
+
+	/**
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
@@ -521,18 +533,6 @@ public class AssetVocabularyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.updateVocabulary(vocabularyId,
 			titleMap, descriptionMap, settings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
-		long vocabularyId, java.lang.String title,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabularyLocalService.updateVocabulary(vocabularyId,
-			title, titleMap, descriptionMap, settings, serviceContext);
 	}
 
 	/**

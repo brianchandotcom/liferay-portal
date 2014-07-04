@@ -40,6 +40,24 @@ public class ShoppingCouponLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingCouponLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon addCoupon(
+		long userId, java.lang.String code, boolean autoCode,
+		java.lang.String name, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, java.lang.String limitCategories,
+		java.lang.String limitSkus, double minOrder, double discount,
+		java.lang.String discountType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCoupon(userId, code, autoCode, name, description,
+			startDateMonth, startDateDay, startDateYear, startDateHour,
+			startDateMinute, endDateMonth, endDateDay, endDateYear,
+			endDateHour, endDateMinute, neverExpire, active, limitCategories,
+			limitSkus, minOrder, discount, discountType, serviceContext);
+	}
 
 	/**
 	* Adds the shopping coupon to the database. Also notifies the appropriate model listeners.
@@ -61,6 +79,29 @@ public class ShoppingCouponLocalServiceUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon createShoppingCoupon(
 		long couponId) {
 		return getService().createShoppingCoupon(couponId);
+	}
+
+	public static void deleteCoupon(
+		com.liferay.portlet.shopping.model.ShoppingCoupon coupon) {
+		getService().deleteCoupon(coupon);
+	}
+
+	public static void deleteCoupon(long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCoupon(couponId);
+	}
+
+	public static void deleteCoupons(long groupId) {
+		getService().deleteCoupons(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -170,6 +211,37 @@ public class ShoppingCouponLocalServiceUtil {
 		return getService().fetchShoppingCoupon(couponId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
+		java.lang.String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCoupon(code);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
+		long couponId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCoupon(couponId);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping coupon with the primary key.
 	*
@@ -181,25 +253,6 @@ public class ShoppingCouponLocalServiceUtil {
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShoppingCoupon(couponId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,80 +280,6 @@ public class ShoppingCouponLocalServiceUtil {
 		return getService().getShoppingCouponsCount();
 	}
 
-	/**
-	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCoupon the shopping coupon
-	* @return the shopping coupon that was updated
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateShoppingCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
-		return getService().updateShoppingCoupon(shoppingCoupon);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon addCoupon(
-		long userId, java.lang.String code, boolean autoCode,
-		java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCoupon(userId, code, autoCode, name, description,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, endDateMonth, endDateDay, endDateYear,
-			endDateHour, endDateMinute, neverExpire, active, limitCategories,
-			limitSkus, minOrder, discount, discountType, serviceContext);
-	}
-
-	public static void deleteCoupon(long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCoupon(couponId);
-	}
-
-	public static void deleteCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon coupon) {
-		getService().deleteCoupon(coupon);
-	}
-
-	public static void deleteCoupons(long groupId) {
-		getService().deleteCoupons(groupId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
-		long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCoupon(couponId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
-		java.lang.String code)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCoupon(code);
-	}
-
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> search(
 		long groupId, long companyId, java.lang.String code, boolean active,
 		java.lang.String discountType, boolean andOperator, int start, int end) {
@@ -315,6 +294,15 @@ public class ShoppingCouponLocalServiceUtil {
 		return getService()
 				   .searchCount(groupId, companyId, code, active, discountType,
 			andOperator);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateCoupon(
@@ -333,6 +321,17 @@ public class ShoppingCouponLocalServiceUtil {
 			startDateMinute, endDateMonth, endDateDay, endDateYear,
 			endDateHour, endDateMinute, neverExpire, active, limitCategories,
 			limitSkus, minOrder, discount, discountType, serviceContext);
+	}
+
+	/**
+	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCoupon the shopping coupon
+	* @return the shopping coupon that was updated
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateShoppingCoupon(
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
+		return getService().updateShoppingCoupon(shoppingCoupon);
 	}
 
 	public static ShoppingCouponLocalService getService() {

@@ -22,7 +22,7 @@ import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SCLicenseLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SCLicenseLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

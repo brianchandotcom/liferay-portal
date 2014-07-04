@@ -52,6 +52,11 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().addDLSyncEvent(dlSyncEvent);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
+		java.lang.String event, java.lang.String type, long typePK) {
+		return getService().addDLSyncEvent(event, type, typePK);
+	}
+
 	/**
 	* Creates a new d l sync event with the primary key. Does not add the d l sync event to the database.
 	*
@@ -61,6 +66,17 @@ public class DLSyncEventLocalServiceUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent createDLSyncEvent(
 		long syncEventId) {
 		return getService().createDLSyncEvent(syncEventId);
+	}
+
+	/**
+	* Deletes the d l sync event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the d l sync event
+	* @return the d l sync event that was removed
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
+		return getService().deleteDLSyncEvent(dlSyncEvent);
 	}
 
 	/**
@@ -76,15 +92,17 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().deleteDLSyncEvent(syncEventId);
 	}
 
+	public static void deleteDLSyncEvents() {
+		getService().deleteDLSyncEvents();
+	}
+
 	/**
-	* Deletes the d l sync event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
-		return getService().deleteDLSyncEvent(dlSyncEvent);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +188,19 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().fetchDLSyncEvent(syncEventId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	/**
 	* Returns the d l sync event with the primary key.
 	*
@@ -183,23 +214,9 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getDLSyncEvent(syncEventId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
+		long modifiedTime) {
+		return getService().getDLSyncEvents(modifiedTime);
 	}
 
 	/**
@@ -227,24 +244,14 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getDLSyncEventsCount();
 	}
 
-	/**
-	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was updated
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
-		return getService().updateDLSyncEvent(dlSyncEvent);
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents() {
+		return getService().getLatestDLSyncEvents();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -256,22 +263,15 @@ public class DLSyncEventLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
-		java.lang.String event, java.lang.String type, long typePK) {
-		return getService().addDLSyncEvent(event, type, typePK);
-	}
-
-	public static void deleteDLSyncEvents() {
-		getService().deleteDLSyncEvents();
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		long modifiedTime) {
-		return getService().getDLSyncEvents(modifiedTime);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents() {
-		return getService().getLatestDLSyncEvents();
+	/**
+	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the d l sync event
+	* @return the d l sync event that was updated
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
+		return getService().updateDLSyncEvent(dlSyncEvent);
 	}
 
 	public static DLSyncEventLocalService getService() {

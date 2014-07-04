@@ -53,6 +53,23 @@ public class AssetTagPropertyLocalServiceUtil {
 	}
 
 	/**
+	* Adds an asset tag property.
+	*
+	* @param userId the primary key of the user
+	* @param tagId the primary key of the tag
+	* @param key the key to be associated to the value
+	* @param value the value to which the key will refer
+	* @return the created asset tag property
+	* @throws PortalException if a user with the primary key could not be
+	found, or if the key or value were invalid
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagProperty addTagProperty(
+		long userId, long tagId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTagProperty(userId, tagId, key, value);
+	}
+
+	/**
 	* Creates a new asset tag property with the primary key. Does not add the asset tag property to the database.
 	*
 	* @param tagPropertyId the primary key for the new asset tag property
@@ -61,6 +78,17 @@ public class AssetTagPropertyLocalServiceUtil {
 	public static com.liferay.portlet.asset.model.AssetTagProperty createAssetTagProperty(
 		long tagPropertyId) {
 		return getService().createAssetTagProperty(tagPropertyId);
+	}
+
+	/**
+	* Deletes the asset tag property from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagProperty the asset tag property
+	* @return the asset tag property that was removed
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagProperty deleteAssetTagProperty(
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty) {
+		return getService().deleteAssetTagProperty(assetTagProperty);
 	}
 
 	/**
@@ -77,14 +105,43 @@ public class AssetTagPropertyLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the asset tag property from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetTagProperty the asset tag property
-	* @return the asset tag property that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.asset.model.AssetTagProperty deleteAssetTagProperty(
-		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty) {
-		return getService().deleteAssetTagProperty(assetTagProperty);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the asset tag property with the specified tag ID.
+	*
+	* @param tagId the primary key of the tag
+	*/
+	public static void deleteTagProperties(long tagId) {
+		getService().deleteTagProperties(tagId);
+	}
+
+	/**
+	* Deletes the asset tag property instance.
+	*
+	* @param tagProperty the asset tag property instance
+	*/
+	public static void deleteTagProperty(
+		com.liferay.portlet.asset.model.AssetTagProperty tagProperty) {
+		getService().deleteTagProperty(tagProperty);
+	}
+
+	/**
+	* Deletes the asset tag property with the specified ID.
+	*
+	* @param tagPropertyId the primary key of the asset tag property instance
+	* @throws PortalException if an asset tag property with the primary key
+	could not be found
+	*/
+	public static void deleteTagProperty(long tagPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTagProperty(tagPropertyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,36 +227,8 @@ public class AssetTagPropertyLocalServiceUtil {
 		return getService().fetchAssetTagProperty(tagPropertyId);
 	}
 
-	/**
-	* Returns the asset tag property with the primary key.
-	*
-	* @param tagPropertyId the primary key of the asset tag property
-	* @return the asset tag property
-	* @throws PortalException if a asset tag property with the primary key could not be found
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagProperty getAssetTagProperty(
-		long tagPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAssetTagProperty(tagPropertyId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,14 +257,16 @@ public class AssetTagPropertyLocalServiceUtil {
 	}
 
 	/**
-	* Updates the asset tag property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the asset tag property with the primary key.
 	*
-	* @param assetTagProperty the asset tag property
-	* @return the asset tag property that was updated
+	* @param tagPropertyId the primary key of the asset tag property
+	* @return the asset tag property
+	* @throws PortalException if a asset tag property with the primary key could not be found
 	*/
-	public static com.liferay.portlet.asset.model.AssetTagProperty updateAssetTagProperty(
-		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty) {
-		return getService().updateAssetTagProperty(assetTagProperty);
+	public static com.liferay.portlet.asset.model.AssetTagProperty getAssetTagProperty(
+		long tagPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetTagProperty(tagPropertyId);
 	}
 
 	/**
@@ -247,61 +278,10 @@ public class AssetTagPropertyLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Adds an asset tag property.
-	*
-	* @param userId the primary key of the user
-	* @param tagId the primary key of the tag
-	* @param key the key to be associated to the value
-	* @param value the value to which the key will refer
-	* @return the created asset tag property
-	* @throws PortalException if a user with the primary key could not be
-	found, or if the key or value were invalid
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagProperty addTagProperty(
-		long userId, long tagId, java.lang.String key, java.lang.String value)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTagProperty(userId, tagId, key, value);
-	}
-
-	/**
-	* Deletes the asset tag property with the specified tag ID.
-	*
-	* @param tagId the primary key of the tag
-	*/
-	public static void deleteTagProperties(long tagId) {
-		getService().deleteTagProperties(tagId);
-	}
-
-	/**
-	* Deletes the asset tag property instance.
-	*
-	* @param tagProperty the asset tag property instance
-	*/
-	public static void deleteTagProperty(
-		com.liferay.portlet.asset.model.AssetTagProperty tagProperty) {
-		getService().deleteTagProperty(tagProperty);
-	}
-
-	/**
-	* Deletes the asset tag property with the specified ID.
-	*
-	* @param tagPropertyId the primary key of the asset tag property instance
-	* @throws PortalException if an asset tag property with the primary key
-	could not be found
-	*/
-	public static void deleteTagProperty(long tagPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTagProperty(tagPropertyId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -325,20 +305,6 @@ public class AssetTagPropertyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the asset tag property with the specified ID.
-	*
-	* @param tagPropertyId the primary key of the asset tag property
-	* @return the matching asset tag property
-	* @throws PortalException if an asset tag property with the primary key
-	could not be found
-	*/
-	public static com.liferay.portlet.asset.model.AssetTagProperty getTagProperty(
-		long tagPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTagProperty(tagPropertyId);
-	}
-
-	/**
 	* Returns the asset tag property with the specified tag ID and key.
 	*
 	* @param tagId the primary key of the tag
@@ -351,6 +317,20 @@ public class AssetTagPropertyLocalServiceUtil {
 		long tagId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTagProperty(tagId, key);
+	}
+
+	/**
+	* Returns the asset tag property with the specified ID.
+	*
+	* @param tagPropertyId the primary key of the asset tag property
+	* @return the matching asset tag property
+	* @throws PortalException if an asset tag property with the primary key
+	could not be found
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagProperty getTagProperty(
+		long tagPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTagProperty(tagPropertyId);
 	}
 
 	/**
@@ -373,6 +353,26 @@ public class AssetTagPropertyLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> getTagPropertyValues(
 		long groupId, java.lang.String key) {
 		return getService().getTagPropertyValues(groupId, key);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset tag property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagProperty the asset tag property
+	* @return the asset tag property that was updated
+	*/
+	public static com.liferay.portlet.asset.model.AssetTagProperty updateAssetTagProperty(
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty) {
+		return getService().updateAssetTagProperty(assetTagProperty);
 	}
 
 	/**

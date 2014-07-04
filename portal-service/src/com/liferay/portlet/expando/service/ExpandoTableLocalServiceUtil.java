@@ -40,6 +40,17 @@ public class ExpandoTableLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addDefaultTable(companyId, className);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addDefaultTable(companyId, classNameId);
+	}
 
 	/**
 	* Adds the expando table to the database. Also notifies the appropriate model listeners.
@@ -53,6 +64,40 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	/**
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
+	String)}
+	*/
+	@Deprecated
+	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
+		java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTable(className, name);
+	}
+
+	/**
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
+	String)}
+	*/
+	@Deprecated
+	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTable(classNameId, name);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTable(companyId, className, name);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTable(companyId, classNameId, name);
+	}
+
+	/**
 	* Creates a new expando table with the primary key. Does not add the expando table to the database.
 	*
 	* @param tableId the primary key for the new expando table
@@ -61,6 +106,17 @@ public class ExpandoTableLocalServiceUtil {
 	public static com.liferay.portlet.expando.model.ExpandoTable createExpandoTable(
 		long tableId) {
 		return getService().createExpandoTable(tableId);
+	}
+
+	/**
+	* Deletes the expando table from the database. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was removed
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
+		return getService().deleteExpandoTable(expandoTable);
 	}
 
 	/**
@@ -77,14 +133,42 @@ public class ExpandoTableLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the expando table from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
-		return getService().deleteExpandoTable(expandoTable);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteTable(long companyId, java.lang.String className,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTable(companyId, className, name);
+	}
+
+	public static void deleteTable(long companyId, long classNameId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTable(companyId, classNameId, name);
+	}
+
+	public static void deleteTable(
+		com.liferay.portlet.expando.model.ExpandoTable table) {
+		getService().deleteTable(table);
+	}
+
+	public static void deleteTable(long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTable(tableId);
+	}
+
+	public static void deleteTables(long companyId, java.lang.String className) {
+		getService().deleteTables(companyId, className);
+	}
+
+	public static void deleteTables(long companyId, long classNameId) {
+		getService().deleteTables(companyId, classNameId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -165,9 +249,49 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, java.lang.String className) {
+		return getService().fetchDefaultTable(companyId, className);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, long classNameId) {
+		return getService().fetchDefaultTable(companyId, classNameId);
+	}
+
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchExpandoTable(
 		long tableId) {
 		return getService().fetchExpandoTable(tableId);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable fetchTable(
+		long companyId, long classNameId, java.lang.String name) {
+		return getService().fetchTable(companyId, classNameId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultTable(companyId, className);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultTable(companyId, classNameId);
 	}
 
 	/**
@@ -181,25 +305,6 @@ public class ExpandoTableLocalServiceUtil {
 		long tableId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getExpandoTable(tableId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,148 +332,21 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().getExpandoTablesCount();
 	}
 
-	/**
-	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was updated
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable updateExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
-		return getService().updateExpandoTable(expandoTable);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
-		long companyId, long classNameId)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addDefaultTable(companyId, classNameId);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable addDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addDefaultTable(companyId, className);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTable(companyId, classNameId, name);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
+	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
 	String)}
 	*/
 	@Deprecated
-	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTable(classNameId, name);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTable(companyId, className, name);
-	}
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
-	String)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.expando.model.ExpandoTable addTable(
+	public static com.liferay.portlet.expando.model.ExpandoTable getTable(
 		java.lang.String className, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTable(className, name);
-	}
-
-	public static void deleteTable(
-		com.liferay.portlet.expando.model.ExpandoTable table) {
-		getService().deleteTable(table);
-	}
-
-	public static void deleteTable(long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTable(tableId);
-	}
-
-	public static void deleteTable(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTable(companyId, classNameId, name);
-	}
-
-	public static void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTable(companyId, className, name);
-	}
-
-	public static void deleteTables(long companyId, long classNameId) {
-		getService().deleteTables(companyId, classNameId);
-	}
-
-	public static void deleteTables(long companyId, java.lang.String className) {
-		getService().deleteTables(companyId, className);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
-		long companyId, long classNameId) {
-		return getService().fetchDefaultTable(companyId, classNameId);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className) {
-		return getService().fetchDefaultTable(companyId, className);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable fetchTable(
-		long companyId, long classNameId, java.lang.String name) {
-		return getService().fetchTable(companyId, classNameId, name);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
-		long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultTable(companyId, classNameId);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultTable(companyId, className);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable getTable(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTable(tableId);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable getTable(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTable(companyId, classNameId, name);
+		return getService().getTable(className, name);
 	}
 
 	/**
@@ -388,15 +366,21 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().getTable(companyId, className, name);
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
-	String)}
-	*/
-	@Deprecated
 	public static com.liferay.portlet.expando.model.ExpandoTable getTable(
-		java.lang.String className, java.lang.String name)
+		long companyId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTable(className, name);
+		return getService().getTable(companyId, classNameId, name);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable getTable(
+		long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTable(tableId);
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
+		long companyId, java.lang.String className) {
+		return getService().getTables(companyId, className);
 	}
 
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
@@ -404,9 +388,24 @@ public class ExpandoTableLocalServiceUtil {
 		return getService().getTables(companyId, classNameId);
 	}
 
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className) {
-		return getService().getTables(companyId, className);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was updated
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable updateExpandoTable(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
+		return getService().updateExpandoTable(expandoTable);
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoTable updateTable(

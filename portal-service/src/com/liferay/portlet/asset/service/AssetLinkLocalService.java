@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,8 +54,30 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	* @param assetLink the asset link
 	* @return the asset link that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.asset.model.AssetLink addAssetLink(
 		com.liferay.portlet.asset.model.AssetLink assetLink);
+
+	/**
+	* Adds a new asset link.
+	*
+	* @param userId the primary key of the link's creator
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	* @param type the link type. Acceptable values include {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
+	which is a bidirectional relationship and {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
+	which is a unidirectional relationship. For more information see
+	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	* @param weight the weight of the relationship, allowing precedence
+	ordering of links
+	* @return the asset link
+	* @throws PortalException if the user could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetLink addLink(long userId,
+		long entryId1, long entryId2, int type, int weight)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new asset link with the primary key. Does not add the asset link to the database.
@@ -66,23 +89,64 @@ public interface AssetLinkLocalService extends BaseLocalService,
 		long linkId);
 
 	/**
+	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was removed
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink);
+
+	/**
 	* Deletes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param linkId the primary key of the asset link
 	* @return the asset link that was removed
 	* @throws PortalException if a asset link with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
 		long linkId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
+	* Deletes the asset link.
 	*
-	* @param assetLink the asset link
-	* @return the asset link that was removed
+	* @param link the asset link
 	*/
-	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink);
+	public void deleteLink(com.liferay.portlet.asset.model.AssetLink link);
+
+	/**
+	* Deletes the asset link.
+	*
+	* @param linkId the primary key of the asset link
+	* @throws PortalException if the asset link could not be found
+	*/
+	public void deleteLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Deletes all links associated with the asset entry.
+	*
+	* @param entryId the primary key of the asset entry
+	*/
+	public void deleteLinks(long entryId);
+
+	/**
+	* Delete all links that associate the two asset entries.
+	*
+	* @param entryId1 the primary key of the first asset entry
+	* @param entryId2 the primary key of the second asset entry
+	*/
+	public void deleteLinks(long entryId1, long entryId2);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -152,6 +216,9 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetLink fetchAssetLink(long linkId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
 	/**
 	* Returns the asset link with the primary key.
 	*
@@ -161,23 +228,6 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetLink getAssetLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -204,79 +254,11 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public int getAssetLinksCount();
 
 	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
-	*/
-	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink);
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
 	*/
 	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
-	* Adds a new asset link.
-	*
-	* @param userId the primary key of the link's creator
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	* @param type the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
-	* @param weight the weight of the relationship, allowing precedence
-	ordering of links
-	* @return the asset link
-	* @throws PortalException if the user could not be found
-	*/
-	public com.liferay.portlet.asset.model.AssetLink addLink(long userId,
-		long entryId1, long entryId2, int type, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param link the asset link
-	*/
-	public void deleteLink(com.liferay.portlet.asset.model.AssetLink link);
-
-	/**
-	* Deletes the asset link.
-	*
-	* @param linkId the primary key of the asset link
-	* @throws PortalException if the asset link could not be found
-	*/
-	public void deleteLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes all links associated with the asset entry.
-	*
-	* @param entryId the primary key of the asset entry
-	*/
-	public void deleteLinks(long entryId);
-
-	/**
-	* Delete all links that associate the two asset entries.
-	*
-	* @param entryId1 the primary key of the first asset entry
-	* @param entryId2 the primary key of the second asset entry
-	*/
-	public void deleteLinks(long entryId1, long entryId2);
 
 	/**
 	* Returns all the asset links whose first entry ID is the given entry ID.
@@ -336,6 +318,12 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getLinks(
 		long entryId, int typeId);
 
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
@@ -353,6 +341,23 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getReverseLinks(
 		long entryId, int typeId);
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink);
 
 	public com.liferay.portlet.asset.model.AssetLink updateLink(long userId,
 		long entryId1, long entryId2, int typeId, int weight)

@@ -34,6 +34,13 @@ public class SocialActivitySetLocalServiceWrapper
 		_socialActivitySetLocalService = socialActivitySetLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.social.model.SocialActivitySet addActivitySet(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySetLocalService.addActivitySet(activityId);
+	}
+
 	/**
 	* Adds the social activity set to the database. Also notifies the appropriate model listeners.
 	*
@@ -56,6 +63,29 @@ public class SocialActivitySetLocalServiceWrapper
 	public com.liferay.portlet.social.model.SocialActivitySet createSocialActivitySet(
 		long activitySetId) {
 		return _socialActivitySetLocalService.createSocialActivitySet(activitySetId);
+	}
+
+	@Override
+	public void decrementActivityCount(long activitySetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivitySetLocalService.decrementActivityCount(activitySetId);
+	}
+
+	@Override
+	public void decrementActivityCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivitySetLocalService.decrementActivityCount(classNameId,
+			classPK);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySetLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -176,79 +206,9 @@ public class SocialActivitySetLocalServiceWrapper
 		return _socialActivitySetLocalService.fetchSocialActivitySet(activitySetId);
 	}
 
-	/**
-	* Returns the social activity set with the primary key.
-	*
-	* @param activitySetId the primary key of the social activity set
-	* @return the social activity set
-	* @throws PortalException if a social activity set with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivitySet getSocialActivitySet(
-		long activitySetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySetLocalService.getSocialActivitySet(activitySetId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _socialActivitySetLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySetLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySetLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the social activity sets.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activity sets
-	* @param end the upper bound of the range of social activity sets (not inclusive)
-	* @return the range of social activity sets
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getSocialActivitySets(
-		int start, int end) {
-		return _socialActivitySetLocalService.getSocialActivitySets(start, end);
-	}
-
-	/**
-	* Returns the number of social activity sets.
-	*
-	* @return the number of social activity sets
-	*/
-	@Override
-	public int getSocialActivitySetsCount() {
-		return _socialActivitySetLocalService.getSocialActivitySetsCount();
-	}
-
-	/**
-	* Updates the social activity set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySet the social activity set
-	* @return the social activity set that was updated
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivitySet updateSocialActivitySet(
-		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
-		return _socialActivitySetLocalService.updateSocialActivitySet(socialActivitySet);
 	}
 
 	/**
@@ -259,36 +219,6 @@ public class SocialActivitySetLocalServiceWrapper
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _socialActivitySetLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivitySetLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.social.model.SocialActivitySet addActivitySet(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySetLocalService.addActivitySet(activityId);
-	}
-
-	@Override
-	public void decrementActivityCount(long activitySetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivitySetLocalService.decrementActivityCount(activitySetId);
-	}
-
-	@Override
-	public void decrementActivityCount(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivitySetLocalService.decrementActivityCount(classNameId,
-			classPK);
 	}
 
 	@Override
@@ -318,6 +248,13 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySetLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getRelationActivitySets(
 		long userId, int start, int end) {
 		return _socialActivitySetLocalService.getRelationActivitySets(userId,
@@ -342,11 +279,45 @@ public class SocialActivitySetLocalServiceWrapper
 			type);
 	}
 
+	/**
+	* Returns the social activity set with the primary key.
+	*
+	* @param activitySetId the primary key of the social activity set
+	* @return the social activity set
+	* @throws PortalException if a social activity set with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
-		long groupId, long userId, int type) {
-		return _socialActivitySetLocalService.getUserActivitySet(groupId,
-			userId, type);
+	public com.liferay.portlet.social.model.SocialActivitySet getSocialActivitySet(
+		long activitySetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySetLocalService.getSocialActivitySet(activitySetId);
+	}
+
+	/**
+	* Returns a range of all the social activity sets.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activity sets
+	* @param end the upper bound of the range of social activity sets (not inclusive)
+	* @return the range of social activity sets
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getSocialActivitySets(
+		int start, int end) {
+		return _socialActivitySetLocalService.getSocialActivitySets(start, end);
+	}
+
+	/**
+	* Returns the number of social activity sets.
+	*
+	* @return the number of social activity sets
+	*/
+	@Override
+	public int getSocialActivitySetsCount() {
+		return _socialActivitySetLocalService.getSocialActivitySetsCount();
 	}
 
 	@Override
@@ -354,6 +325,13 @@ public class SocialActivitySetLocalServiceWrapper
 		long groupId, long userId, long classNameId, int type) {
 		return _socialActivitySetLocalService.getUserActivitySet(groupId,
 			userId, classNameId, type);
+	}
+
+	@Override
+	public com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
+		long groupId, long userId, int type) {
+		return _socialActivitySetLocalService.getUserActivitySet(groupId,
+			userId, type);
 	}
 
 	@Override
@@ -397,6 +375,28 @@ public class SocialActivitySetLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySetLocalService.incrementActivityCount(activitySetId,
 			activityId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_socialActivitySetLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the social activity set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySet the social activity set
+	* @return the social activity set that was updated
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivitySet updateSocialActivitySet(
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
+		return _socialActivitySetLocalService.updateSocialActivitySet(socialActivitySet);
 	}
 
 	/**

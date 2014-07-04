@@ -22,7 +22,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link DDMStructureLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link DDMStructureLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

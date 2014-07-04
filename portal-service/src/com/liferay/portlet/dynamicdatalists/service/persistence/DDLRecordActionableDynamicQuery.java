@@ -22,7 +22,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link DDLRecordLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link DDLRecordLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

@@ -22,7 +22,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link JournalArticleLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link JournalArticleLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

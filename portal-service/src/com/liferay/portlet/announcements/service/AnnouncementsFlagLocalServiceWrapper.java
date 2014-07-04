@@ -46,6 +46,12 @@ public class AnnouncementsFlagLocalServiceWrapper
 		return _announcementsFlagLocalService.addAnnouncementsFlag(announcementsFlag);
 	}
 
+	@Override
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag addFlag(
+		long userId, long entryId, int value) {
+		return _announcementsFlagLocalService.addFlag(userId, entryId, value);
+	}
+
 	/**
 	* Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
 	*
@@ -56,6 +62,18 @@ public class AnnouncementsFlagLocalServiceWrapper
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag createAnnouncementsFlag(
 		long flagId) {
 		return _announcementsFlagLocalService.createAnnouncementsFlag(flagId);
+	}
+
+	/**
+	* Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was removed
+	*/
+	@Override
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
+		return _announcementsFlagLocalService.deleteAnnouncementsFlag(announcementsFlag);
 	}
 
 	/**
@@ -71,16 +89,31 @@ public class AnnouncementsFlagLocalServiceWrapper
 		return _announcementsFlagLocalService.deleteAnnouncementsFlag(flagId);
 	}
 
+	@Override
+	public void deleteFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag flag) {
+		_announcementsFlagLocalService.deleteFlag(flag);
+	}
+
+	@Override
+	public void deleteFlag(long flagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_announcementsFlagLocalService.deleteFlag(flagId);
+	}
+
+	@Override
+	public void deleteFlags(long entryId) {
+		_announcementsFlagLocalService.deleteFlags(entryId);
+	}
+
 	/**
-	* Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsFlag the announcements flag
-	* @return the announcements flag that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
-		return _announcementsFlagLocalService.deleteAnnouncementsFlag(announcementsFlag);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsFlagLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -175,6 +208,11 @@ public class AnnouncementsFlagLocalServiceWrapper
 		return _announcementsFlagLocalService.fetchAnnouncementsFlag(flagId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _announcementsFlagLocalService.getActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the announcements flag with the primary key.
 	*
@@ -186,28 +224,6 @@ public class AnnouncementsFlagLocalServiceWrapper
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag getAnnouncementsFlag(
 		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsFlagLocalService.getAnnouncementsFlag(flagId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _announcementsFlagLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _announcementsFlagLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _announcementsFlagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -238,18 +254,6 @@ public class AnnouncementsFlagLocalServiceWrapper
 	}
 
 	/**
-	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsFlag the announcements flag
-	* @return the announcements flag that was updated
-	*/
-	@Override
-	public com.liferay.portlet.announcements.model.AnnouncementsFlag updateAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
-		return _announcementsFlagLocalService.updateAnnouncementsFlag(announcementsFlag);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -257,6 +261,20 @@ public class AnnouncementsFlagLocalServiceWrapper
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _announcementsFlagLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
+		long userId, long entryId, int value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsFlagLocalService.getFlag(userId, entryId, value);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsFlagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -269,34 +287,16 @@ public class AnnouncementsFlagLocalServiceWrapper
 		_announcementsFlagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was updated
+	*/
 	@Override
-	public com.liferay.portlet.announcements.model.AnnouncementsFlag addFlag(
-		long userId, long entryId, int value) {
-		return _announcementsFlagLocalService.addFlag(userId, entryId, value);
-	}
-
-	@Override
-	public void deleteFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag flag) {
-		_announcementsFlagLocalService.deleteFlag(flag);
-	}
-
-	@Override
-	public void deleteFlag(long flagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_announcementsFlagLocalService.deleteFlag(flagId);
-	}
-
-	@Override
-	public void deleteFlags(long entryId) {
-		_announcementsFlagLocalService.deleteFlags(entryId);
-	}
-
-	@Override
-	public com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
-		long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _announcementsFlagLocalService.getFlag(userId, entryId, value);
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag updateAnnouncementsFlag(
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
+		return _announcementsFlagLocalService.updateAnnouncementsFlag(announcementsFlag);
 	}
 
 	/**

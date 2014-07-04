@@ -241,184 +241,39 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this asset entry.
-	*
-	* @return the primary key of this asset entry
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _assetEntry.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AssetEntryWrapper((AssetEntry)_assetEntry.clone());
 	}
 
-	/**
-	* Sets the primary key of this asset entry.
-	*
-	* @param primaryKey the primary key of this asset entry
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_assetEntry.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		return _assetEntry.compareTo(assetEntry);
 	}
 
-	/**
-	* Returns the entry ID of this asset entry.
-	*
-	* @return the entry ID of this asset entry
-	*/
 	@Override
-	public long getEntryId() {
-		return _assetEntry.getEntryId();
+	public com.liferay.portlet.asset.model.AssetRenderer getAssetRenderer() {
+		return _assetEntry.getAssetRenderer();
 	}
 
-	/**
-	* Sets the entry ID of this asset entry.
-	*
-	* @param entryId the entry ID of this asset entry
-	*/
 	@Override
-	public void setEntryId(long entryId) {
-		_assetEntry.setEntryId(entryId);
+	public com.liferay.portlet.asset.model.AssetRendererFactory getAssetRendererFactory() {
+		return _assetEntry.getAssetRendererFactory();
 	}
 
-	/**
-	* Returns the group ID of this asset entry.
-	*
-	* @return the group ID of this asset entry
-	*/
 	@Override
-	public long getGroupId() {
-		return _assetEntry.getGroupId();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _assetEntry.getAvailableLanguageIds();
 	}
 
-	/**
-	* Sets the group ID of this asset entry.
-	*
-	* @param groupId the group ID of this asset entry
-	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_assetEntry.setGroupId(groupId);
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories() {
+		return _assetEntry.getCategories();
 	}
 
-	/**
-	* Returns the company ID of this asset entry.
-	*
-	* @return the company ID of this asset entry
-	*/
 	@Override
-	public long getCompanyId() {
-		return _assetEntry.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this asset entry.
-	*
-	* @param companyId the company ID of this asset entry
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_assetEntry.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this asset entry.
-	*
-	* @return the user ID of this asset entry
-	*/
-	@Override
-	public long getUserId() {
-		return _assetEntry.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this asset entry.
-	*
-	* @param userId the user ID of this asset entry
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_assetEntry.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this asset entry.
-	*
-	* @return the user uuid of this asset entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _assetEntry.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this asset entry.
-	*
-	* @param userUuid the user uuid of this asset entry
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_assetEntry.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this asset entry.
-	*
-	* @return the user name of this asset entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _assetEntry.getUserName();
-	}
-
-	/**
-	* Sets the user name of this asset entry.
-	*
-	* @param userName the user name of this asset entry
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_assetEntry.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this asset entry.
-	*
-	* @return the create date of this asset entry
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _assetEntry.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this asset entry.
-	*
-	* @param createDate the create date of this asset entry
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_assetEntry.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this asset entry.
-	*
-	* @return the modified date of this asset entry
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _assetEntry.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this asset entry.
-	*
-	* @param modifiedDate the modified date of this asset entry
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_assetEntry.setModifiedDate(modifiedDate);
+	public long[] getCategoryIds() {
+		return _assetEntry.getCategoryIds();
 	}
 
 	/**
@@ -429,11 +284,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.lang.String getClassName() {
 		return _assetEntry.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_assetEntry.setClassName(className);
 	}
 
 	/**
@@ -447,16 +297,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Sets the class name ID of this asset entry.
-	*
-	* @param classNameId the class name ID of this asset entry
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_assetEntry.setClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the class p k of this asset entry.
 	*
 	* @return the class p k of this asset entry
@@ -464,36 +304,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public long getClassPK() {
 		return _assetEntry.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this asset entry.
-	*
-	* @param classPK the class p k of this asset entry
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_assetEntry.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the class uuid of this asset entry.
-	*
-	* @return the class uuid of this asset entry
-	*/
-	@Override
-	public java.lang.String getClassUuid() {
-		return _assetEntry.getClassUuid();
-	}
-
-	/**
-	* Sets the class uuid of this asset entry.
-	*
-	* @param classUuid the class uuid of this asset entry
-	*/
-	@Override
-	public void setClassUuid(java.lang.String classUuid) {
-		_assetEntry.setClassUuid(classUuid);
 	}
 
 	/**
@@ -507,283 +317,38 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Sets the class type ID of this asset entry.
+	* Returns the class uuid of this asset entry.
 	*
-	* @param classTypeId the class type ID of this asset entry
+	* @return the class uuid of this asset entry
 	*/
 	@Override
-	public void setClassTypeId(long classTypeId) {
-		_assetEntry.setClassTypeId(classTypeId);
+	public java.lang.String getClassUuid() {
+		return _assetEntry.getClassUuid();
 	}
 
 	/**
-	* Returns the visible of this asset entry.
+	* Returns the company ID of this asset entry.
 	*
-	* @return the visible of this asset entry
+	* @return the company ID of this asset entry
 	*/
 	@Override
-	public boolean getVisible() {
-		return _assetEntry.getVisible();
+	public long getCompanyId() {
+		return _assetEntry.getCompanyId();
 	}
 
 	/**
-	* Returns <code>true</code> if this asset entry is visible.
+	* Returns the create date of this asset entry.
 	*
-	* @return <code>true</code> if this asset entry is visible; <code>false</code> otherwise
+	* @return the create date of this asset entry
 	*/
 	@Override
-	public boolean isVisible() {
-		return _assetEntry.isVisible();
-	}
-
-	/**
-	* Sets whether this asset entry is visible.
-	*
-	* @param visible the visible of this asset entry
-	*/
-	@Override
-	public void setVisible(boolean visible) {
-		_assetEntry.setVisible(visible);
-	}
-
-	/**
-	* Returns the start date of this asset entry.
-	*
-	* @return the start date of this asset entry
-	*/
-	@Override
-	public java.util.Date getStartDate() {
-		return _assetEntry.getStartDate();
-	}
-
-	/**
-	* Sets the start date of this asset entry.
-	*
-	* @param startDate the start date of this asset entry
-	*/
-	@Override
-	public void setStartDate(java.util.Date startDate) {
-		_assetEntry.setStartDate(startDate);
-	}
-
-	/**
-	* Returns the end date of this asset entry.
-	*
-	* @return the end date of this asset entry
-	*/
-	@Override
-	public java.util.Date getEndDate() {
-		return _assetEntry.getEndDate();
-	}
-
-	/**
-	* Sets the end date of this asset entry.
-	*
-	* @param endDate the end date of this asset entry
-	*/
-	@Override
-	public void setEndDate(java.util.Date endDate) {
-		_assetEntry.setEndDate(endDate);
-	}
-
-	/**
-	* Returns the publish date of this asset entry.
-	*
-	* @return the publish date of this asset entry
-	*/
-	@Override
-	public java.util.Date getPublishDate() {
-		return _assetEntry.getPublishDate();
-	}
-
-	/**
-	* Sets the publish date of this asset entry.
-	*
-	* @param publishDate the publish date of this asset entry
-	*/
-	@Override
-	public void setPublishDate(java.util.Date publishDate) {
-		_assetEntry.setPublishDate(publishDate);
-	}
-
-	/**
-	* Returns the expiration date of this asset entry.
-	*
-	* @return the expiration date of this asset entry
-	*/
-	@Override
-	public java.util.Date getExpirationDate() {
-		return _assetEntry.getExpirationDate();
-	}
-
-	/**
-	* Sets the expiration date of this asset entry.
-	*
-	* @param expirationDate the expiration date of this asset entry
-	*/
-	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
-		_assetEntry.setExpirationDate(expirationDate);
-	}
-
-	/**
-	* Returns the mime type of this asset entry.
-	*
-	* @return the mime type of this asset entry
-	*/
-	@Override
-	public java.lang.String getMimeType() {
-		return _assetEntry.getMimeType();
-	}
-
-	/**
-	* Sets the mime type of this asset entry.
-	*
-	* @param mimeType the mime type of this asset entry
-	*/
-	@Override
-	public void setMimeType(java.lang.String mimeType) {
-		_assetEntry.setMimeType(mimeType);
-	}
-
-	/**
-	* Returns the title of this asset entry.
-	*
-	* @return the title of this asset entry
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _assetEntry.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this asset entry
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _assetEntry.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _assetEntry.getTitle(locale, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this asset entry
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _assetEntry.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset entry
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _assetEntry.getTitle(languageId, useDefault);
+	public java.util.Date getCreateDate() {
+		return _assetEntry.getCreateDate();
 	}
 
 	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _assetEntry.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _assetEntry.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this asset entry.
-	*
-	* @return the locales and localized titles of this asset entry
-	*/
-	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _assetEntry.getTitleMap();
-	}
-
-	/**
-	* Sets the title of this asset entry.
-	*
-	* @param title the title of this asset entry
-	*/
-	@Override
-	public void setTitle(java.lang.String title) {
-		_assetEntry.setTitle(title);
-	}
-
-	/**
-	* Sets the localized title of this asset entry in the language.
-	*
-	* @param title the localized title of this asset entry
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale) {
-		_assetEntry.setTitle(title, locale);
-	}
-
-	/**
-	* Sets the localized title of this asset entry in the language, and sets the default locale.
-	*
-	* @param title the localized title of this asset entry
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitle(java.lang.String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_assetEntry.setTitle(title, locale, defaultLocale);
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(java.lang.String languageId) {
-		_assetEntry.setTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized titles of this asset entry from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this asset entry
-	*/
-	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
-		_assetEntry.setTitleMap(titleMap);
-	}
-
-	/**
-	* Sets the localized titles of this asset entry from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this asset entry
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Locale defaultLocale) {
-		_assetEntry.setTitleMap(titleMap, defaultLocale);
+	public java.lang.String getDefaultLanguageId() {
+		return _assetEntry.getDefaultLanguageId();
 	}
 
 	/**
@@ -794,30 +359,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.lang.String getDescription() {
 		return _assetEntry.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this asset entry
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _assetEntry.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _assetEntry.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -844,6 +385,30 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		return _assetEntry.getDescription(languageId, useDefault);
 	}
 
+	/**
+	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this asset entry
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _assetEntry.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _assetEntry.getDescription(locale, useDefault);
+	}
+
 	@Override
 	public java.lang.String getDescriptionCurrentLanguageId() {
 		return _assetEntry.getDescriptionCurrentLanguageId();
@@ -862,6 +427,489 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _assetEntry.getDescriptionMap();
+	}
+
+	/**
+	* Returns the end date of this asset entry.
+	*
+	* @return the end date of this asset entry
+	*/
+	@Override
+	public java.util.Date getEndDate() {
+		return _assetEntry.getEndDate();
+	}
+
+	/**
+	* Returns the entry ID of this asset entry.
+	*
+	* @return the entry ID of this asset entry
+	*/
+	@Override
+	public long getEntryId() {
+		return _assetEntry.getEntryId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _assetEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the expiration date of this asset entry.
+	*
+	* @return the expiration date of this asset entry
+	*/
+	@Override
+	public java.util.Date getExpirationDate() {
+		return _assetEntry.getExpirationDate();
+	}
+
+	/**
+	* Returns the group ID of this asset entry.
+	*
+	* @return the group ID of this asset entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _assetEntry.getGroupId();
+	}
+
+	/**
+	* Returns the height of this asset entry.
+	*
+	* @return the height of this asset entry
+	*/
+	@Override
+	public int getHeight() {
+		return _assetEntry.getHeight();
+	}
+
+	/**
+	* Returns the layout uuid of this asset entry.
+	*
+	* @return the layout uuid of this asset entry
+	*/
+	@Override
+	public java.lang.String getLayoutUuid() {
+		return _assetEntry.getLayoutUuid();
+	}
+
+	/**
+	* Returns the mime type of this asset entry.
+	*
+	* @return the mime type of this asset entry
+	*/
+	@Override
+	public java.lang.String getMimeType() {
+		return _assetEntry.getMimeType();
+	}
+
+	/**
+	* Returns the modified date of this asset entry.
+	*
+	* @return the modified date of this asset entry
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _assetEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this asset entry.
+	*
+	* @return the primary key of this asset entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _assetEntry.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _assetEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this asset entry.
+	*
+	* @return the priority of this asset entry
+	*/
+	@Override
+	public double getPriority() {
+		return _assetEntry.getPriority();
+	}
+
+	/**
+	* Returns the publish date of this asset entry.
+	*
+	* @return the publish date of this asset entry
+	*/
+	@Override
+	public java.util.Date getPublishDate() {
+		return _assetEntry.getPublishDate();
+	}
+
+	/**
+	* Returns the start date of this asset entry.
+	*
+	* @return the start date of this asset entry
+	*/
+	@Override
+	public java.util.Date getStartDate() {
+		return _assetEntry.getStartDate();
+	}
+
+	/**
+	* Returns the summary of this asset entry.
+	*
+	* @return the summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary() {
+		return _assetEntry.getSummary();
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary(java.lang.String languageId) {
+		return _assetEntry.getSummary(languageId);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getSummary(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized summary of this asset entry
+	*/
+	@Override
+	public java.lang.String getSummary(java.util.Locale locale) {
+		return _assetEntry.getSummary(locale);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized summary of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getSummary(java.util.Locale locale,
+		boolean useDefault) {
+		return _assetEntry.getSummary(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getSummaryCurrentLanguageId() {
+		return _assetEntry.getSummaryCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getSummaryCurrentValue() {
+		return _assetEntry.getSummaryCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized summaries of this asset entry.
+	*
+	* @return the locales and localized summaries of this asset entry
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getSummaryMap() {
+		return _assetEntry.getSummaryMap();
+	}
+
+	@Override
+	public java.lang.String[] getTagNames() {
+		return _assetEntry.getTagNames();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags() {
+		return _assetEntry.getTags();
+	}
+
+	/**
+	* Returns the title of this asset entry.
+	*
+	* @return the title of this asset entry
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _assetEntry.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this asset entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _assetEntry.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getTitle(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this asset entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _assetEntry.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _assetEntry.getTitle(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _assetEntry.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _assetEntry.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this asset entry.
+	*
+	* @return the locales and localized titles of this asset entry
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _assetEntry.getTitleMap();
+	}
+
+	/**
+	* Returns the url of this asset entry.
+	*
+	* @return the url of this asset entry
+	*/
+	@Override
+	public java.lang.String getUrl() {
+		return _assetEntry.getUrl();
+	}
+
+	/**
+	* Returns the user ID of this asset entry.
+	*
+	* @return the user ID of this asset entry
+	*/
+	@Override
+	public long getUserId() {
+		return _assetEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this asset entry.
+	*
+	* @return the user name of this asset entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _assetEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this asset entry.
+	*
+	* @return the user uuid of this asset entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _assetEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the view count of this asset entry.
+	*
+	* @return the view count of this asset entry
+	*/
+	@Override
+	public int getViewCount() {
+		return _assetEntry.getViewCount();
+	}
+
+	/**
+	* Returns the visible of this asset entry.
+	*
+	* @return the visible of this asset entry
+	*/
+	@Override
+	public boolean getVisible() {
+		return _assetEntry.getVisible();
+	}
+
+	/**
+	* Returns the width of this asset entry.
+	*
+	* @return the width of this asset entry
+	*/
+	@Override
+	public int getWidth() {
+		return _assetEntry.getWidth();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetEntry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _assetEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _assetEntry.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _assetEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this asset entry is visible.
+	*
+	* @return <code>true</code> if this asset entry is visible; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isVisible() {
+		return _assetEntry.isVisible();
+	}
+
+	@Override
+	public void persist() {
+		_assetEntry.persist();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_assetEntry.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_assetEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_assetEntry.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_assetEntry.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this asset entry.
+	*
+	* @param classNameId the class name ID of this asset entry
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_assetEntry.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this asset entry.
+	*
+	* @param classPK the class p k of this asset entry
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_assetEntry.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the class type ID of this asset entry.
+	*
+	* @param classTypeId the class type ID of this asset entry
+	*/
+	@Override
+	public void setClassTypeId(long classTypeId) {
+		_assetEntry.setClassTypeId(classTypeId);
+	}
+
+	/**
+	* Sets the class uuid of this asset entry.
+	*
+	* @param classUuid the class uuid of this asset entry
+	*/
+	@Override
+	public void setClassUuid(java.lang.String classUuid) {
+		_assetEntry.setClassUuid(classUuid);
+	}
+
+	/**
+	* Sets the company ID of this asset entry.
+	*
+	* @param companyId the company ID of this asset entry
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_assetEntry.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this asset entry.
+	*
+	* @param createDate the create date of this asset entry
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_assetEntry.setCreateDate(createDate);
 	}
 
 	/**
@@ -929,81 +977,151 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns the summary of this asset entry.
+	* Sets the end date of this asset entry.
 	*
-	* @return the summary of this asset entry
+	* @param endDate the end date of this asset entry
 	*/
 	@Override
-	public java.lang.String getSummary() {
-		return _assetEntry.getSummary();
+	public void setEndDate(java.util.Date endDate) {
+		_assetEntry.setEndDate(endDate);
 	}
 
 	/**
-	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	* Sets the entry ID of this asset entry.
 	*
-	* @param locale the locale of the language
-	* @return the localized summary of this asset entry
+	* @param entryId the entry ID of this asset entry
 	*/
 	@Override
-	public java.lang.String getSummary(java.util.Locale locale) {
-		return _assetEntry.getSummary(locale);
+	public void setEntryId(long entryId) {
+		_assetEntry.setEntryId(entryId);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_assetEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_assetEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
 	/**
-	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	* Sets the expiration date of this asset entry.
 	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized summary of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	* @param expirationDate the expiration date of this asset entry
 	*/
 	@Override
-	public java.lang.String getSummary(java.util.Locale locale,
-		boolean useDefault) {
-		return _assetEntry.getSummary(locale, useDefault);
+	public void setExpirationDate(java.util.Date expirationDate) {
+		_assetEntry.setExpirationDate(expirationDate);
 	}
 
 	/**
-	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	* Sets the group ID of this asset entry.
 	*
-	* @param languageId the ID of the language
-	* @return the localized summary of this asset entry
+	* @param groupId the group ID of this asset entry
 	*/
 	@Override
-	public java.lang.String getSummary(java.lang.String languageId) {
-		return _assetEntry.getSummary(languageId);
+	public void setGroupId(long groupId) {
+		_assetEntry.setGroupId(groupId);
 	}
 
 	/**
-	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	* Sets the height of this asset entry.
 	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized summary of this asset entry
+	* @param height the height of this asset entry
 	*/
 	@Override
-	public java.lang.String getSummary(java.lang.String languageId,
-		boolean useDefault) {
-		return _assetEntry.getSummary(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getSummaryCurrentLanguageId() {
-		return _assetEntry.getSummaryCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getSummaryCurrentValue() {
-		return _assetEntry.getSummaryCurrentValue();
+	public void setHeight(int height) {
+		_assetEntry.setHeight(height);
 	}
 
 	/**
-	* Returns a map of the locales and localized summaries of this asset entry.
+	* Sets the layout uuid of this asset entry.
 	*
-	* @return the locales and localized summaries of this asset entry
+	* @param layoutUuid the layout uuid of this asset entry
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getSummaryMap() {
-		return _assetEntry.getSummaryMap();
+	public void setLayoutUuid(java.lang.String layoutUuid) {
+		_assetEntry.setLayoutUuid(layoutUuid);
+	}
+
+	/**
+	* Sets the mime type of this asset entry.
+	*
+	* @param mimeType the mime type of this asset entry
+	*/
+	@Override
+	public void setMimeType(java.lang.String mimeType) {
+		_assetEntry.setMimeType(mimeType);
+	}
+
+	/**
+	* Sets the modified date of this asset entry.
+	*
+	* @param modifiedDate the modified date of this asset entry
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_assetEntry.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_assetEntry.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this asset entry.
+	*
+	* @param primaryKey the primary key of this asset entry
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_assetEntry.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_assetEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the priority of this asset entry.
+	*
+	* @param priority the priority of this asset entry
+	*/
+	@Override
+	public void setPriority(double priority) {
+		_assetEntry.setPriority(priority);
+	}
+
+	/**
+	* Sets the publish date of this asset entry.
+	*
+	* @param publishDate the publish date of this asset entry
+	*/
+	@Override
+	public void setPublishDate(java.util.Date publishDate) {
+		_assetEntry.setPublishDate(publishDate);
+	}
+
+	/**
+	* Sets the start date of this asset entry.
+	*
+	* @param startDate the start date of this asset entry
+	*/
+	@Override
+	public void setStartDate(java.util.Date startDate) {
+		_assetEntry.setStartDate(startDate);
 	}
 
 	/**
@@ -1070,13 +1188,66 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns the url of this asset entry.
+	* Sets the title of this asset entry.
 	*
-	* @return the url of this asset entry
+	* @param title the title of this asset entry
 	*/
 	@Override
-	public java.lang.String getUrl() {
-		return _assetEntry.getUrl();
+	public void setTitle(java.lang.String title) {
+		_assetEntry.setTitle(title);
+	}
+
+	/**
+	* Sets the localized title of this asset entry in the language.
+	*
+	* @param title the localized title of this asset entry
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale) {
+		_assetEntry.setTitle(title, locale);
+	}
+
+	/**
+	* Sets the localized title of this asset entry in the language, and sets the default locale.
+	*
+	* @param title the localized title of this asset entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setTitle(title, locale, defaultLocale);
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_assetEntry.setTitleCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized titles of this asset entry from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this asset entry
+	*/
+	@Override
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+		_assetEntry.setTitleMap(titleMap);
+	}
+
+	/**
+	* Sets the localized titles of this asset entry from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this asset entry
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -1090,93 +1261,33 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns the layout uuid of this asset entry.
+	* Sets the user ID of this asset entry.
 	*
-	* @return the layout uuid of this asset entry
+	* @param userId the user ID of this asset entry
 	*/
 	@Override
-	public java.lang.String getLayoutUuid() {
-		return _assetEntry.getLayoutUuid();
+	public void setUserId(long userId) {
+		_assetEntry.setUserId(userId);
 	}
 
 	/**
-	* Sets the layout uuid of this asset entry.
+	* Sets the user name of this asset entry.
 	*
-	* @param layoutUuid the layout uuid of this asset entry
+	* @param userName the user name of this asset entry
 	*/
 	@Override
-	public void setLayoutUuid(java.lang.String layoutUuid) {
-		_assetEntry.setLayoutUuid(layoutUuid);
+	public void setUserName(java.lang.String userName) {
+		_assetEntry.setUserName(userName);
 	}
 
 	/**
-	* Returns the height of this asset entry.
+	* Sets the user uuid of this asset entry.
 	*
-	* @return the height of this asset entry
+	* @param userUuid the user uuid of this asset entry
 	*/
 	@Override
-	public int getHeight() {
-		return _assetEntry.getHeight();
-	}
-
-	/**
-	* Sets the height of this asset entry.
-	*
-	* @param height the height of this asset entry
-	*/
-	@Override
-	public void setHeight(int height) {
-		_assetEntry.setHeight(height);
-	}
-
-	/**
-	* Returns the width of this asset entry.
-	*
-	* @return the width of this asset entry
-	*/
-	@Override
-	public int getWidth() {
-		return _assetEntry.getWidth();
-	}
-
-	/**
-	* Sets the width of this asset entry.
-	*
-	* @param width the width of this asset entry
-	*/
-	@Override
-	public void setWidth(int width) {
-		_assetEntry.setWidth(width);
-	}
-
-	/**
-	* Returns the priority of this asset entry.
-	*
-	* @return the priority of this asset entry
-	*/
-	@Override
-	public double getPriority() {
-		return _assetEntry.getPriority();
-	}
-
-	/**
-	* Sets the priority of this asset entry.
-	*
-	* @param priority the priority of this asset entry
-	*/
-	@Override
-	public void setPriority(double priority) {
-		_assetEntry.setPriority(priority);
-	}
-
-	/**
-	* Returns the view count of this asset entry.
-	*
-	* @return the view count of this asset entry
-	*/
-	@Override
-	public int getViewCount() {
-		return _assetEntry.getViewCount();
+	public void setUserUuid(java.lang.String userUuid) {
+		_assetEntry.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1189,100 +1300,24 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		_assetEntry.setViewCount(viewCount);
 	}
 
+	/**
+	* Sets whether this asset entry is visible.
+	*
+	* @param visible the visible of this asset entry
+	*/
 	@Override
-	public boolean isNew() {
-		return _assetEntry.isNew();
+	public void setVisible(boolean visible) {
+		_assetEntry.setVisible(visible);
 	}
 
+	/**
+	* Sets the width of this asset entry.
+	*
+	* @param width the width of this asset entry
+	*/
 	@Override
-	public void setNew(boolean n) {
-		_assetEntry.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetEntry.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetEntry.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetEntry.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _assetEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_assetEntry.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _assetEntry.getExpandoBridge();
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_assetEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_assetEntry.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _assetEntry.getAvailableLanguageIds();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _assetEntry.getDefaultLanguageId();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport()
-		throws com.liferay.portal.LocaleException {
-		_assetEntry.prepareLocalizedFieldsForImport();
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport(
-		java.util.Locale defaultImportLocale)
-		throws com.liferay.portal.LocaleException {
-		_assetEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new AssetEntryWrapper((AssetEntry)_assetEntry.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		return _assetEntry.compareTo(assetEntry);
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetEntry.hashCode();
+	public void setWidth(int width) {
+		_assetEntry.setWidth(width);
 	}
 
 	@Override
@@ -1296,53 +1331,18 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry toUnescapedModel() {
-		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _assetEntry.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.asset.model.AssetEntry toUnescapedModel() {
+		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _assetEntry.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_assetEntry.persist();
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetRenderer getAssetRenderer() {
-		return _assetEntry.getAssetRenderer();
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetRendererFactory getAssetRendererFactory() {
-		return _assetEntry.getAssetRendererFactory();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories() {
-		return _assetEntry.getCategories();
-	}
-
-	@Override
-	public long[] getCategoryIds() {
-		return _assetEntry.getCategoryIds();
-	}
-
-	@Override
-	public java.lang.String[] getTagNames() {
-		return _assetEntry.getTagNames();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags() {
-		return _assetEntry.getTags();
 	}
 
 	@Override

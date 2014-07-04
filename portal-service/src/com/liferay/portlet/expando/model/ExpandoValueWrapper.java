@@ -115,259 +115,6 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		}
 	}
 
-	/**
-	* Returns the primary key of this expando value.
-	*
-	* @return the primary key of this expando value
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _expandoValue.getPrimaryKey();
-	}
-
-	/**
-	* Sets the primary key of this expando value.
-	*
-	* @param primaryKey the primary key of this expando value
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_expandoValue.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the value ID of this expando value.
-	*
-	* @return the value ID of this expando value
-	*/
-	@Override
-	public long getValueId() {
-		return _expandoValue.getValueId();
-	}
-
-	/**
-	* Sets the value ID of this expando value.
-	*
-	* @param valueId the value ID of this expando value
-	*/
-	@Override
-	public void setValueId(long valueId) {
-		_expandoValue.setValueId(valueId);
-	}
-
-	/**
-	* Returns the company ID of this expando value.
-	*
-	* @return the company ID of this expando value
-	*/
-	@Override
-	public long getCompanyId() {
-		return _expandoValue.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this expando value.
-	*
-	* @param companyId the company ID of this expando value
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_expandoValue.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the table ID of this expando value.
-	*
-	* @return the table ID of this expando value
-	*/
-	@Override
-	public long getTableId() {
-		return _expandoValue.getTableId();
-	}
-
-	/**
-	* Sets the table ID of this expando value.
-	*
-	* @param tableId the table ID of this expando value
-	*/
-	@Override
-	public void setTableId(long tableId) {
-		_expandoValue.setTableId(tableId);
-	}
-
-	/**
-	* Returns the column ID of this expando value.
-	*
-	* @return the column ID of this expando value
-	*/
-	@Override
-	public long getColumnId() {
-		return _expandoValue.getColumnId();
-	}
-
-	/**
-	* Sets the column ID of this expando value.
-	*
-	* @param columnId the column ID of this expando value
-	*/
-	@Override
-	public void setColumnId(long columnId) {
-		_expandoValue.setColumnId(columnId);
-	}
-
-	/**
-	* Returns the row ID of this expando value.
-	*
-	* @return the row ID of this expando value
-	*/
-	@Override
-	public long getRowId() {
-		return _expandoValue.getRowId();
-	}
-
-	/**
-	* Sets the row ID of this expando value.
-	*
-	* @param rowId the row ID of this expando value
-	*/
-	@Override
-	public void setRowId(long rowId) {
-		_expandoValue.setRowId(rowId);
-	}
-
-	/**
-	* Returns the fully qualified class name of this expando value.
-	*
-	* @return the fully qualified class name of this expando value
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _expandoValue.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_expandoValue.setClassName(className);
-	}
-
-	/**
-	* Returns the class name ID of this expando value.
-	*
-	* @return the class name ID of this expando value
-	*/
-	@Override
-	public long getClassNameId() {
-		return _expandoValue.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this expando value.
-	*
-	* @param classNameId the class name ID of this expando value
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_expandoValue.setClassNameId(classNameId);
-	}
-
-	/**
-	* Returns the class p k of this expando value.
-	*
-	* @return the class p k of this expando value
-	*/
-	@Override
-	public long getClassPK() {
-		return _expandoValue.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this expando value.
-	*
-	* @param classPK the class p k of this expando value
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_expandoValue.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the data of this expando value.
-	*
-	* @return the data of this expando value
-	*/
-	@Override
-	public java.lang.String getData() {
-		return _expandoValue.getData();
-	}
-
-	/**
-	* Sets the data of this expando value.
-	*
-	* @param data the data of this expando value
-	*/
-	@Override
-	public void setData(java.lang.String data) {
-		_expandoValue.setData(data);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _expandoValue.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_expandoValue.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoValue.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_expandoValue.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoValue.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _expandoValue.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_expandoValue.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _expandoValue.getExpandoBridge();
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_expandoValue.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_expandoValue.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_expandoValue.setExpandoBridgeAttributes(serviceContext);
-	}
-
 	@Override
 	public java.lang.Object clone() {
 		return new ExpandoValueWrapper((ExpandoValue)_expandoValue.clone());
@@ -377,41 +124,6 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public int compareTo(
 		com.liferay.portlet.expando.model.ExpandoValue expandoValue) {
 		return _expandoValue.compareTo(expandoValue);
-	}
-
-	@Override
-	public int hashCode() {
-		return _expandoValue.hashCode();
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoValue> toCacheModel() {
-		return _expandoValue.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoValue toEscapedModel() {
-		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoValue toUnescapedModel() {
-		return new ExpandoValueWrapper(_expandoValue.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _expandoValue.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _expandoValue.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_expandoValue.persist();
 	}
 
 	@Override
@@ -432,10 +144,70 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		return _expandoValue.getBooleanArray();
 	}
 
+	/**
+	* Returns the fully qualified class name of this expando value.
+	*
+	* @return the fully qualified class name of this expando value
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _expandoValue.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this expando value.
+	*
+	* @return the class name ID of this expando value
+	*/
+	@Override
+	public long getClassNameId() {
+		return _expandoValue.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this expando value.
+	*
+	* @return the class p k of this expando value
+	*/
+	@Override
+	public long getClassPK() {
+		return _expandoValue.getClassPK();
+	}
+
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getColumn();
+	}
+
+	/**
+	* Returns the column ID of this expando value.
+	*
+	* @return the column ID of this expando value
+	*/
+	@Override
+	public long getColumnId() {
+		return _expandoValue.getColumnId();
+	}
+
+	/**
+	* Returns the company ID of this expando value.
+	*
+	* @return the company ID of this expando value
+	*/
+	@Override
+	public long getCompanyId() {
+		return _expandoValue.getCompanyId();
+	}
+
+	/**
+	* Returns the data of this expando value.
+	*
+	* @return the data of this expando value
+	*/
+	@Override
+	public java.lang.String getData() {
+		return _expandoValue.getData();
 	}
 
 	@Override
@@ -466,6 +238,11 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public double[] getDoubleArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getDoubleArray();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _expandoValue.getExpandoBridge();
 	}
 
 	@Override
@@ -514,6 +291,31 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public java.lang.Number[] getNumberArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getNumberArray();
+	}
+
+	/**
+	* Returns the primary key of this expando value.
+	*
+	* @return the primary key of this expando value
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _expandoValue.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _expandoValue.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the row ID of this expando value.
+	*
+	* @return the row ID of this expando value
+	*/
+	@Override
+	public long getRowId() {
+		return _expandoValue.getRowId();
 	}
 
 	@Override
@@ -570,6 +372,51 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		return _expandoValue.getStringMap();
 	}
 
+	/**
+	* Returns the table ID of this expando value.
+	*
+	* @return the table ID of this expando value
+	*/
+	@Override
+	public long getTableId() {
+		return _expandoValue.getTableId();
+	}
+
+	/**
+	* Returns the value ID of this expando value.
+	*
+	* @return the value ID of this expando value
+	*/
+	@Override
+	public long getValueId() {
+		return _expandoValue.getValueId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _expandoValue.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _expandoValue.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _expandoValue.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _expandoValue.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_expandoValue.persist();
+	}
+
 	@Override
 	public void setBoolean(boolean data)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -583,9 +430,69 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_expandoValue.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_expandoValue.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this expando value.
+	*
+	* @param classNameId the class name ID of this expando value
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_expandoValue.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this expando value.
+	*
+	* @param classPK the class p k of this expando value
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_expandoValue.setClassPK(classPK);
+	}
+
+	@Override
 	public void setColumn(
 		com.liferay.portlet.expando.model.ExpandoColumn column) {
 		_expandoValue.setColumn(column);
+	}
+
+	/**
+	* Sets the column ID of this expando value.
+	*
+	* @param columnId the column ID of this expando value
+	*/
+	@Override
+	public void setColumnId(long columnId) {
+		_expandoValue.setColumnId(columnId);
+	}
+
+	/**
+	* Sets the company ID of this expando value.
+	*
+	* @param companyId the company ID of this expando value
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_expandoValue.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the data of this expando value.
+	*
+	* @param data the data of this expando value
+	*/
+	@Override
+	public void setData(java.lang.String data) {
+		_expandoValue.setData(data);
 	}
 
 	@Override
@@ -610,6 +517,24 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public void setDoubleArray(double[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setDoubleArray(data);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_expandoValue.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_expandoValue.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_expandoValue.setExpandoBridgeAttributes(serviceContext);
 	}
 
 	@Override
@@ -649,6 +574,11 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
+	public void setNew(boolean n) {
+		_expandoValue.setNew(n);
+	}
+
+	@Override
 	public void setNumber(java.lang.Number data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setNumber(data);
@@ -658,6 +588,31 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public void setNumberArray(java.lang.Number[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setNumberArray(data);
+	}
+
+	/**
+	* Sets the primary key of this expando value.
+	*
+	* @param primaryKey the primary key of this expando value
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_expandoValue.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_expandoValue.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the row ID of this expando value.
+	*
+	* @param rowId the row ID of this expando value
+	*/
+	@Override
+	public void setRowId(long rowId) {
+		_expandoValue.setRowId(rowId);
 	}
 
 	@Override
@@ -712,6 +667,51 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringMap(dataMap, defaultLocale);
+	}
+
+	/**
+	* Sets the table ID of this expando value.
+	*
+	* @param tableId the table ID of this expando value
+	*/
+	@Override
+	public void setTableId(long tableId) {
+		_expandoValue.setTableId(tableId);
+	}
+
+	/**
+	* Sets the value ID of this expando value.
+	*
+	* @param valueId the value ID of this expando value
+	*/
+	@Override
+	public void setValueId(long valueId) {
+		_expandoValue.setValueId(valueId);
+	}
+
+	@Override
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.expando.model.ExpandoValue> toCacheModel() {
+		return _expandoValue.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoValue toEscapedModel() {
+		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _expandoValue.toString();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoValue toUnescapedModel() {
+		return new ExpandoValueWrapper(_expandoValue.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _expandoValue.toXmlString();
 	}
 
 	@Override

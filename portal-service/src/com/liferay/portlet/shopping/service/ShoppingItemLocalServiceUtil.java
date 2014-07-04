@@ -40,6 +40,62 @@ public class ShoppingItemLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingItemLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addBookItems(long userId, long groupId, long categoryId,
+		java.lang.String[] isbns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addBookItems(userId, groupId, categoryId, isbns);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingItem addItem(
+		long userId, long groupId, long categoryId, java.lang.String sku,
+		java.lang.String name, java.lang.String description,
+		java.lang.String properties, java.lang.String fieldsQuantities,
+		boolean requiresShipping, int stockQuantity, boolean featured,
+		java.lang.Boolean sale, boolean smallImage,
+		java.lang.String smallImageURL, java.io.File smallImageFile,
+		boolean mediumImage, java.lang.String mediumImageURL,
+		java.io.File mediumImageFile, boolean largeImage,
+		java.lang.String largeImageURL, java.io.File largeImageFile,
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addItem(userId, groupId, categoryId, sku, name,
+			description, properties, fieldsQuantities, requiresShipping,
+			stockQuantity, featured, sale, smallImage, smallImageURL,
+			smallImageFile, mediumImage, mediumImageURL, mediumImageFile,
+			largeImage, largeImageURL, largeImageFile, itemFields, itemPrices,
+			serviceContext);
+	}
+
+	public static void addItemResources(
+		com.liferay.portlet.shopping.model.ShoppingItem item,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addItemResources(item, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addItemResources(
+		com.liferay.portlet.shopping.model.ShoppingItem item,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addItemResources(item, groupPermissions, guestPermissions);
+	}
+
+	public static void addItemResources(long itemId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addItemResources(itemId, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addItemResources(long itemId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addItemResources(itemId, groupPermissions, guestPermissions);
+	}
 
 	/**
 	* Adds the shopping item to the database. Also notifies the appropriate model listeners.
@@ -61,6 +117,31 @@ public class ShoppingItemLocalServiceUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingItem createShoppingItem(
 		long itemId) {
 		return getService().createShoppingItem(itemId);
+	}
+
+	public static void deleteItem(
+		com.liferay.portlet.shopping.model.ShoppingItem item)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteItem(item);
+	}
+
+	public static void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteItem(itemId);
+	}
+
+	public static void deleteItems(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteItems(groupId, categoryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -169,71 +250,8 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().fetchShoppingItem(itemId);
 	}
 
-	/**
-	* Returns the shopping item with the primary key.
-	*
-	* @param itemId the primary key of the shopping item
-	* @return the shopping item
-	* @throws PortalException if a shopping item with the primary key could not be found
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem getShoppingItem(
-		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getShoppingItem(itemId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the shopping items.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping items
-	* @param end the upper bound of the range of shopping items (not inclusive)
-	* @return the range of shopping items
-	*/
-	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getShoppingItems(
-		int start, int end) {
-		return getService().getShoppingItems(start, end);
-	}
-
-	/**
-	* Returns the number of shopping items.
-	*
-	* @return the number of shopping items
-	*/
-	public static int getShoppingItemsCount() {
-		return getService().getShoppingItemsCount();
-	}
-
-	/**
-	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItem the shopping item
-	* @return the shopping item that was updated
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItem updateShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
-		return getService().updateShoppingItem(shoppingItem);
 	}
 
 	/**
@@ -243,88 +261,6 @@ public class ShoppingItemLocalServiceUtil {
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void addBookItems(long userId, long groupId, long categoryId,
-		java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addBookItems(userId, groupId, categoryId, isbns);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingItem addItem(
-		long userId, long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
-		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addItem(userId, groupId, categoryId, sku, name,
-			description, properties, fieldsQuantities, requiresShipping,
-			stockQuantity, featured, sale, smallImage, smallImageURL,
-			smallImageFile, mediumImage, mediumImageURL, mediumImageFile,
-			largeImage, largeImageURL, largeImageFile, itemFields, itemPrices,
-			serviceContext);
-	}
-
-	public static void addItemResources(long itemId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addItemResources(itemId, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addItemResources(long itemId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addItemResources(itemId, groupPermissions, guestPermissions);
-	}
-
-	public static void addItemResources(
-		com.liferay.portlet.shopping.model.ShoppingItem item,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addItemResources(item, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addItemResources(
-		com.liferay.portlet.shopping.model.ShoppingItem item,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addItemResources(item, groupPermissions, guestPermissions);
-	}
-
-	public static void deleteItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteItem(itemId);
-	}
-
-	public static void deleteItem(
-		com.liferay.portlet.shopping.model.ShoppingItem item)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteItem(item);
-	}
-
-	public static void deleteItems(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteItems(groupId, categoryId);
 	}
 
 	public static int getCategoriesItemsCount(long groupId,
@@ -338,14 +274,14 @@ public class ShoppingItemLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem getItem(
-		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getItem(itemId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingItem getItem(
 		long companyId, java.lang.String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getItem(companyId, sku);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingItem getItem(
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getItem(itemId);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem getItemByLargeImageId(
@@ -388,9 +324,52 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().getItemsPrevAndNext(itemId, obc);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getSaleItems(
 		long groupId, long categoryId, int numOfItems) {
 		return getService().getSaleItems(groupId, categoryId, numOfItems);
+	}
+
+	/**
+	* Returns the shopping item with the primary key.
+	*
+	* @param itemId the primary key of the shopping item
+	* @return the shopping item
+	* @throws PortalException if a shopping item with the primary key could not be found
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItem getShoppingItem(
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getShoppingItem(itemId);
+	}
+
+	/**
+	* Returns a range of all the shopping items.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping items
+	* @param end the upper bound of the range of shopping items (not inclusive)
+	* @return the range of shopping items
+	*/
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getShoppingItems(
+		int start, int end) {
+		return getService().getShoppingItems(start, end);
+	}
+
+	/**
+	* Returns the number of shopping items.
+	*
+	* @return the number of shopping items
+	*/
+	public static int getShoppingItemsCount() {
+		return getService().getShoppingItemsCount();
 	}
 
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> search(
@@ -402,6 +381,15 @@ public class ShoppingItemLocalServiceUtil {
 	public static int searchCount(long groupId, long[] categoryIds,
 		java.lang.String keywords) {
 		return getService().searchCount(groupId, categoryIds, keywords);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem updateItem(
@@ -426,6 +414,17 @@ public class ShoppingItemLocalServiceUtil {
 			smallImageFile, mediumImage, mediumImageURL, mediumImageFile,
 			largeImage, largeImageURL, largeImageFile, itemFields, itemPrices,
 			serviceContext);
+	}
+
+	/**
+	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItem the shopping item
+	* @return the shopping item that was updated
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItem updateShoppingItem(
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
+		return getService().updateShoppingItem(shoppingItem);
 	}
 
 	public static ShoppingItemLocalService getService() {

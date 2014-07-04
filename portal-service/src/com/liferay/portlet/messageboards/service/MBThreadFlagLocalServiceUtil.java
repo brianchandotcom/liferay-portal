@@ -52,6 +52,13 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().addMBThreadFlag(mbThreadFlag);
 	}
 
+	public static void addThreadFlag(long userId,
+		com.liferay.portlet.messageboards.model.MBThread thread,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addThreadFlag(userId, thread, serviceContext);
+	}
+
 	/**
 	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	*
@@ -61,6 +68,17 @@ public class MBThreadFlagLocalServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBThreadFlag createMBThreadFlag(
 		long threadFlagId) {
 		return getService().createMBThreadFlag(threadFlagId);
+	}
+
+	/**
+	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was removed
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag) {
+		return getService().deleteMBThreadFlag(mbThreadFlag);
 	}
 
 	/**
@@ -77,14 +95,30 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThreadFlag deleteMBThreadFlag(
-		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag) {
-		return getService().deleteMBThreadFlag(mbThreadFlag);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag threadFlag) {
+		getService().deleteThreadFlag(threadFlag);
+	}
+
+	public static void deleteThreadFlag(long threadFlagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThreadFlag(threadFlagId);
+	}
+
+	public static void deleteThreadFlagsByThreadId(long threadId) {
+		getService().deleteThreadFlagsByThreadId(threadId);
+	}
+
+	public static void deleteThreadFlagsByUserId(long userId) {
+		getService().deleteThreadFlagsByUserId(userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,6 +228,24 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().fetchMBThreadFlagByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the message boards thread flag with the primary key.
 	*
@@ -205,30 +257,6 @@ public class MBThreadFlagLocalServiceUtil {
 		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBThreadFlag(threadFlagId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -284,58 +312,10 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().getMBThreadFlagsCount();
 	}
 
-	/**
-	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was updated
-	*/
-	public static com.liferay.portlet.messageboards.model.MBThreadFlag updateMBThreadFlag(
-		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag) {
-		return getService().updateMBThreadFlag(mbThreadFlag);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void addThreadFlag(long userId,
-		com.liferay.portlet.messageboards.model.MBThread thread,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addThreadFlag(userId, thread, serviceContext);
-	}
-
-	public static void deleteThreadFlag(long threadFlagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteThreadFlag(threadFlagId);
-	}
-
-	public static void deleteThreadFlag(
-		com.liferay.portlet.messageboards.model.MBThreadFlag threadFlag) {
-		getService().deleteThreadFlag(threadFlag);
-	}
-
-	public static void deleteThreadFlagsByThreadId(long threadId) {
-		getService().deleteThreadFlagsByThreadId(threadId);
-	}
-
-	public static void deleteThreadFlagsByUserId(long userId) {
-		getService().deleteThreadFlagsByUserId(userId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThreadFlag getThreadFlag(
@@ -348,6 +328,26 @@ public class MBThreadFlagLocalServiceUtil {
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasThreadFlag(userId, thread);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was updated
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThreadFlag updateMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag) {
+		return getService().updateMBThreadFlag(mbThreadFlag);
 	}
 
 	public static MBThreadFlagLocalService getService() {

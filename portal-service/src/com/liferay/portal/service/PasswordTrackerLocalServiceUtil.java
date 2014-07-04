@@ -64,6 +64,17 @@ public class PasswordTrackerLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordTracker the password tracker
+	* @return the password tracker that was removed
+	*/
+	public static com.liferay.portal.model.PasswordTracker deletePasswordTracker(
+		com.liferay.portal.model.PasswordTracker passwordTracker) {
+		return getService().deletePasswordTracker(passwordTracker);
+	}
+
+	/**
 	* Deletes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordTrackerId the primary key of the password tracker
@@ -76,15 +87,17 @@ public class PasswordTrackerLocalServiceUtil {
 		return getService().deletePasswordTracker(passwordTrackerId);
 	}
 
+	public static void deletePasswordTrackers(long userId) {
+		getService().deletePasswordTrackers(userId);
+	}
+
 	/**
-	* Deletes the password tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordTracker the password tracker
-	* @return the password tracker that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PasswordTracker deletePasswordTracker(
-		com.liferay.portal.model.PasswordTracker passwordTracker) {
-		return getService().deletePasswordTracker(passwordTracker);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -170,6 +183,19 @@ public class PasswordTrackerLocalServiceUtil {
 		return getService().fetchPasswordTracker(passwordTrackerId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	/**
 	* Returns the password tracker with the primary key.
 	*
@@ -181,25 +207,6 @@ public class PasswordTrackerLocalServiceUtil {
 		long passwordTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPasswordTracker(passwordTrackerId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,37 +234,10 @@ public class PasswordTrackerLocalServiceUtil {
 		return getService().getPasswordTrackersCount();
 	}
 
-	/**
-	* Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param passwordTracker the password tracker
-	* @return the password tracker that was updated
-	*/
-	public static com.liferay.portal.model.PasswordTracker updatePasswordTracker(
-		com.liferay.portal.model.PasswordTracker passwordTracker) {
-		return getService().updatePasswordTracker(passwordTracker);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void deletePasswordTrackers(long userId) {
-		getService().deletePasswordTrackers(userId);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static boolean isSameAsCurrentPassword(long userId,
@@ -272,9 +252,29 @@ public class PasswordTrackerLocalServiceUtil {
 		return getService().isValidPassword(userId, newClearTextPwd);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static void trackPassword(long userId, java.lang.String encPassword)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().trackPassword(userId, encPassword);
+	}
+
+	/**
+	* Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param passwordTracker the password tracker
+	* @return the password tracker that was updated
+	*/
+	public static com.liferay.portal.model.PasswordTracker updatePasswordTracker(
+		com.liferay.portal.model.PasswordTracker passwordTracker) {
+		return getService().updatePasswordTracker(passwordTracker);
 	}
 
 	public static PasswordTrackerLocalService getService() {

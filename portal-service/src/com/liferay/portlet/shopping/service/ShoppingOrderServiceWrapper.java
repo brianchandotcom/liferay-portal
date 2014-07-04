@@ -33,26 +33,6 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		_shoppingOrderService = shoppingOrderService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingOrderService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingOrderService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
@@ -71,6 +51,16 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		_shoppingOrderService.deleteOrder(groupId, orderId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingOrderService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
 		long groupId, long orderId)
@@ -87,14 +77,14 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 			serviceContext);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
-		long groupId, long orderId, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderService.updateOrder(groupId, orderId, ppTxnId,
-			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_shoppingOrderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -122,6 +112,16 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 			shippingCompany, shippingStreet, shippingCity, shippingState,
 			shippingZip, shippingCountry, shippingPhone, ccName, ccType,
 			ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
+	}
+
+	@Override
+	public com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
+		long groupId, long orderId, java.lang.String ppTxnId,
+		java.lang.String ppPaymentStatus, double ppPaymentGross,
+		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderService.updateOrder(groupId, orderId, ppTxnId,
+			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
 	}
 
 	/**

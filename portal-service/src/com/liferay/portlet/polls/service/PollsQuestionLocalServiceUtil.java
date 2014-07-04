@@ -52,6 +52,54 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().addPollsQuestion(pollsQuestion);
 	}
 
+	public static com.liferay.portlet.polls.model.PollsQuestion addQuestion(
+		long userId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.util.List<com.liferay.portlet.polls.model.PollsChoice> choices,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addQuestion(userId, titleMap, descriptionMap,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, choices,
+			serviceContext);
+	}
+
+	public static void addQuestionResources(
+		com.liferay.portlet.polls.model.PollsQuestion question,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(question, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addQuestionResources(
+		com.liferay.portlet.polls.model.PollsQuestion question,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(question, groupPermissions, guestPermissions);
+	}
+
+	public static void addQuestionResources(long questionId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(questionId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addQuestionResources(long questionId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addQuestionResources(questionId, groupPermissions, guestPermissions);
+	}
+
 	/**
 	* Creates a new polls question with the primary key. Does not add the polls question to the database.
 	*
@@ -61,6 +109,26 @@ public class PollsQuestionLocalServiceUtil {
 	public static com.liferay.portlet.polls.model.PollsQuestion createPollsQuestion(
 		long questionId) {
 		return getService().createPollsQuestion(questionId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was removed
+	*/
+	public static com.liferay.portlet.polls.model.PollsQuestion deletePollsQuestion(
+		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion) {
+		return getService().deletePollsQuestion(pollsQuestion);
 	}
 
 	/**
@@ -76,15 +144,20 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().deletePollsQuestion(questionId);
 	}
 
-	/**
-	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was removed
-	*/
-	public static com.liferay.portlet.polls.model.PollsQuestion deletePollsQuestion(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion) {
-		return getService().deletePollsQuestion(pollsQuestion);
+	public static void deleteQuestion(
+		com.liferay.portlet.polls.model.PollsQuestion question)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteQuestion(question);
+	}
+
+	public static void deleteQuestion(long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteQuestion(questionId);
+	}
+
+	public static void deleteQuestions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteQuestions(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,6 +267,30 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().fetchPollsQuestionByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the polls question with the primary key.
 	*
@@ -205,30 +302,6 @@ public class PollsQuestionLocalServiceUtil {
 		long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPollsQuestion(questionId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -284,99 +357,6 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().getPollsQuestionsCount();
 	}
 
-	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was updated
-	*/
-	public static com.liferay.portlet.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion) {
-		return getService().updatePollsQuestion(pollsQuestion);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.polls.model.PollsQuestion addQuestion(
-		long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.portlet.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addQuestion(userId, titleMap, descriptionMap,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, choices,
-			serviceContext);
-	}
-
-	public static void addQuestionResources(long questionId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(questionId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(questionId, groupPermissions, guestPermissions);
-	}
-
-	public static void addQuestionResources(
-		com.liferay.portlet.polls.model.PollsQuestion question,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(question, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addQuestionResources(
-		com.liferay.portlet.polls.model.PollsQuestion question,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addQuestionResources(question, groupPermissions, guestPermissions);
-	}
-
-	public static void deleteQuestion(long questionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteQuestion(questionId);
-	}
-
-	public static void deleteQuestion(
-		com.liferay.portlet.polls.model.PollsQuestion question)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteQuestion(question);
-	}
-
-	public static void deleteQuestions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteQuestions(groupId);
-	}
-
 	public static com.liferay.portlet.polls.model.PollsQuestion getQuestion(
 		long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -395,6 +375,26 @@ public class PollsQuestionLocalServiceUtil {
 
 	public static int getQuestionsCount(long groupId) {
 		return getService().getQuestionsCount(groupId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was updated
+	*/
+	public static com.liferay.portlet.polls.model.PollsQuestion updatePollsQuestion(
+		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion) {
+		return getService().updatePollsQuestion(pollsQuestion);
 	}
 
 	public static com.liferay.portlet.polls.model.PollsQuestion updateQuestion(

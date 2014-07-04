@@ -43,6 +43,30 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
+	String, String, int, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.addPhone(userId, className, classPK, number,
+			extension, typeId, primary);
+	}
+
+	@Override
+	public com.liferay.portal.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.addPhone(userId, className, classPK, number,
+			extension, typeId, primary, serviceContext);
+	}
+
+	/**
 	* Creates a new phone with the primary key. Does not add the phone to the database.
 	*
 	* @param phoneId the primary key for the new phone
@@ -51,6 +75,28 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	@Override
 	public com.liferay.portal.model.Phone createPhone(long phoneId) {
 		return _phoneLocalService.createPhone(phoneId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the phone from the database. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.Phone deletePhone(
+		com.liferay.portal.model.Phone phone) {
+		return _phoneLocalService.deletePhone(phone);
 	}
 
 	/**
@@ -66,16 +112,10 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.deletePhone(phoneId);
 	}
 
-	/**
-	* Deletes the phone from the database. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was removed
-	*/
 	@Override
-	public com.liferay.portal.model.Phone deletePhone(
-		com.liferay.portal.model.Phone phone) {
-		return _phoneLocalService.deletePhone(phone);
+	public void deletePhones(long companyId, java.lang.String className,
+		long classPK) {
+		_phoneLocalService.deletePhones(companyId, className, classPK);
 	}
 
 	@Override
@@ -180,6 +220,34 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _phoneLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _phoneLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _phoneLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phoneLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the phone with the primary key.
 	*
@@ -191,34 +259,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.getPhone(phoneId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _phoneLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _phoneLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -234,6 +274,17 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.getPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Phone> getPhones() {
+		return _phoneLocalService.getPhones();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Phone> getPhones(
+		long companyId, java.lang.String className, long classPK) {
+		return _phoneLocalService.getPhones(companyId, className, classPK);
 	}
 
 	/**
@@ -264,28 +315,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
-	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Phone updatePhone(
-		com.liferay.portal.model.Phone phone) {
-		return _phoneLocalService.updatePhone(phone);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _phoneLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -296,44 +325,15 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
-	String, String, int, boolean, ServiceContext)}
+	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was updated
 	*/
-	@Deprecated
 	@Override
-	public com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.addPhone(userId, className, classPK, number,
-			extension, typeId, primary);
-	}
-
-	@Override
-	public com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, int typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.addPhone(userId, className, classPK, number,
-			extension, typeId, primary, serviceContext);
-	}
-
-	@Override
-	public void deletePhones(long companyId, java.lang.String className,
-		long classPK) {
-		_phoneLocalService.deletePhones(companyId, className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Phone> getPhones() {
-		return _phoneLocalService.getPhones();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Phone> getPhones(
-		long companyId, java.lang.String className, long classPK) {
-		return _phoneLocalService.getPhones(companyId, className, classPK);
+	public com.liferay.portal.model.Phone updatePhone(
+		com.liferay.portal.model.Phone phone) {
+		return _phoneLocalService.updatePhone(phone);
 	}
 
 	@Override

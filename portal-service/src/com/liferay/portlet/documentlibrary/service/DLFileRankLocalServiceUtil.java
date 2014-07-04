@@ -52,6 +52,18 @@ public class DLFileRankLocalServiceUtil {
 		return getService().addDLFileRank(dlFileRank);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addFileRank(groupId, companyId, userId, fileEntryId,
+			serviceContext);
+	}
+
+	public static void checkFileRanks() {
+		getService().checkFileRanks();
+	}
+
 	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
@@ -61,6 +73,17 @@ public class DLFileRankLocalServiceUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank createDLFileRank(
 		long fileRankId) {
 		return getService().createDLFileRank(fileRankId);
+	}
+
+	/**
+	* Deletes the document library file rank from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was removed
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
+		return getService().deleteDLFileRank(dlFileRank);
 	}
 
 	/**
@@ -76,15 +99,40 @@ public class DLFileRankLocalServiceUtil {
 		return getService().deleteDLFileRank(fileRankId);
 	}
 
-	/**
-	* Deletes the document library file rank from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was removed
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
+	public static void deleteFileRank(
 		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		return getService().deleteDLFileRank(dlFileRank);
+		getService().deleteFileRank(dlFileRank);
+	}
+
+	public static void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileRank(fileRankId);
+	}
+
+	public static void deleteFileRanksByFileEntryId(long fileEntryId) {
+		getService().deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	public static void deleteFileRanksByUserId(long userId) {
+		getService().deleteFileRanksByUserId(userId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void disableFileRanks(long fileEntryId) {
+		getService().disableFileRanks(fileEntryId);
+	}
+
+	public static void disableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().disableFileRanksByFolderId(folderId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -165,9 +213,31 @@ public class DLFileRankLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void enableFileRanks(long fileEntryId) {
+		getService().enableFileRanks(fileEntryId);
+	}
+
+	public static void enableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().enableFileRanksByFolderId(folderId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
 		long fileRankId) {
 		return getService().fetchDLFileRank(fileRankId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -181,25 +251,6 @@ public class DLFileRankLocalServiceUtil {
 		long fileRankId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileRank(fileRankId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -227,24 +278,15 @@ public class DLFileRankLocalServiceUtil {
 		return getService().getDLFileRanksCount();
 	}
 
-	/**
-	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was updated
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		return getService().updateDLFileRank(dlFileRank);
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
+		long groupId, long userId) {
+		return getService().getFileRanks(groupId, userId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -256,57 +298,15 @@ public class DLFileRankLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService()
-				   .addFileRank(groupId, companyId, userId, fileEntryId,
-			serviceContext);
-	}
-
-	public static void checkFileRanks() {
-		getService().checkFileRanks();
-	}
-
-	public static void deleteFileRank(
+	/**
+	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was updated
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
 		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
-		getService().deleteFileRank(dlFileRank);
-	}
-
-	public static void deleteFileRank(long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileRank(fileRankId);
-	}
-
-	public static void deleteFileRanksByFileEntryId(long fileEntryId) {
-		getService().deleteFileRanksByFileEntryId(fileEntryId);
-	}
-
-	public static void deleteFileRanksByUserId(long userId) {
-		getService().deleteFileRanksByUserId(userId);
-	}
-
-	public static void disableFileRanks(long fileEntryId) {
-		getService().disableFileRanks(fileEntryId);
-	}
-
-	public static void disableFileRanksByFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().disableFileRanksByFolderId(folderId);
-	}
-
-	public static void enableFileRanks(long fileEntryId) {
-		getService().enableFileRanks(fileEntryId);
-	}
-
-	public static void enableFileRanksByFolderId(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().enableFileRanksByFolderId(folderId);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
-		long groupId, long userId) {
-		return getService().getFileRanks(groupId, userId);
+		return getService().updateDLFileRank(dlFileRank);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(

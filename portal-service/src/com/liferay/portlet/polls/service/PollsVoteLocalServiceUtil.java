@@ -52,6 +52,13 @@ public class PollsVoteLocalServiceUtil {
 		return getService().addPollsVote(pollsVote);
 	}
 
+	public static com.liferay.portlet.polls.model.PollsVote addVote(
+		long userId, long questionId, long choiceId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addVote(userId, questionId, choiceId, serviceContext);
+	}
+
 	/**
 	* Creates a new polls vote with the primary key. Does not add the polls vote to the database.
 	*
@@ -64,15 +71,12 @@ public class PollsVoteLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param voteId the primary key of the polls vote
-	* @return the polls vote that was removed
-	* @throws PortalException if a polls vote with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.polls.model.PollsVote deletePollsVote(
-		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePollsVote(voteId);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -84,6 +88,18 @@ public class PollsVoteLocalServiceUtil {
 	public static com.liferay.portlet.polls.model.PollsVote deletePollsVote(
 		com.liferay.portlet.polls.model.PollsVote pollsVote) {
 		return getService().deletePollsVote(pollsVote);
+	}
+
+	/**
+	* Deletes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param voteId the primary key of the polls vote
+	* @return the polls vote that was removed
+	* @throws PortalException if a polls vote with the primary key could not be found
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote deletePollsVote(
+		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePollsVote(voteId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -193,6 +209,39 @@ public class PollsVoteLocalServiceUtil {
 		return getService().fetchPollsVoteByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portlet.polls.model.PollsVote> getChoiceVotes(
+		long choiceId, int start, int end) {
+		return getService().getChoiceVotes(choiceId, start, end);
+	}
+
+	public static int getChoiceVotesCount(long choiceId) {
+		return getService().getChoiceVotesCount(choiceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the polls vote with the primary key.
 	*
@@ -203,30 +252,6 @@ public class PollsVoteLocalServiceUtil {
 	public static com.liferay.portlet.polls.model.PollsVote getPollsVote(
 		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPollsVote(voteId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -282,51 +307,6 @@ public class PollsVoteLocalServiceUtil {
 		return getService().getPollsVotesCount();
 	}
 
-	/**
-	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsVote the polls vote
-	* @return the polls vote that was updated
-	*/
-	public static com.liferay.portlet.polls.model.PollsVote updatePollsVote(
-		com.liferay.portlet.polls.model.PollsVote pollsVote) {
-		return getService().updatePollsVote(pollsVote);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.polls.model.PollsVote addVote(
-		long userId, long questionId, long choiceId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addVote(userId, questionId, choiceId, serviceContext);
-	}
-
-	public static java.util.List<com.liferay.portlet.polls.model.PollsVote> getChoiceVotes(
-		long choiceId, int start, int end) {
-		return getService().getChoiceVotes(choiceId, start, end);
-	}
-
-	public static int getChoiceVotesCount(long choiceId) {
-		return getService().getChoiceVotesCount(choiceId);
-	}
-
 	public static java.util.List<com.liferay.portlet.polls.model.PollsVote> getQuestionVotes(
 		long questionId, int start, int end) {
 		return getService().getQuestionVotes(questionId, start, end);
@@ -340,6 +320,26 @@ public class PollsVoteLocalServiceUtil {
 		long questionId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVote(questionId, userId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsVote the polls vote
+	* @return the polls vote that was updated
+	*/
+	public static com.liferay.portlet.polls.model.PollsVote updatePollsVote(
+		com.liferay.portlet.polls.model.PollsVote pollsVote) {
+		return getService().updatePollsVote(pollsVote);
 	}
 
 	public static PollsVoteLocalService getService() {

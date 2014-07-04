@@ -22,7 +22,7 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link RatingsStatsLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link RatingsStatsLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

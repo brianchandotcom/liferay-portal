@@ -33,26 +33,6 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		_bookmarksEntryService = bookmarksEntryService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _bookmarksEntryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_bookmarksEntryService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry addEntry(
 		long groupId, long folderId, java.lang.String name,
@@ -67,6 +47,16 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksEntryService.deleteEntry(entryId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _bookmarksEntryService.getBeanIdentifier();
 	}
 
 	@Override
@@ -115,18 +105,18 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntries(groupId, userId, start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getGroupEntries(
 		long groupId, long userId, long rootFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.getGroupEntries(groupId, userId,
 			rootFolderId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getGroupEntries(
+		long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntries(groupId, userId, start,
+			end);
 	}
 
 	@Override
@@ -195,6 +185,16 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.search(groupId, creatorUserId, status,
 			start, end);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_bookmarksEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

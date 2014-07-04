@@ -33,26 +33,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		_dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlAppHelperLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlAppHelperLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public void addFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
@@ -110,6 +90,16 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public void deleteRepositoryFileEntries(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.deleteRepositoryFileEntries(repositoryId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlAppHelperLocalService.getBeanIdentifier();
 	}
 
 	@Override
@@ -308,14 +298,14 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		_dlAppHelperLocalService.restoreFolderFromTrash(userId, folder);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long assetClassPk)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
-			fileVersion, assetClassPk);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlAppHelperLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -327,6 +317,16 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
 			fileVersion, assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		long assetClassPk)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
+			fileVersion, assetClassPk);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link BlogsStatsUserLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link BlogsStatsUserLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

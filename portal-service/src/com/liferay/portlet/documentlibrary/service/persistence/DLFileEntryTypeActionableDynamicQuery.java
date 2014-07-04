@@ -22,7 +22,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link DLFileEntryTypeLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link DLFileEntryTypeLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

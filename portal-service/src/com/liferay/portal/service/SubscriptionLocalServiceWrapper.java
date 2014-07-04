@@ -44,6 +44,67 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Subscribes the user to the entity, notifying him the instant the entity
+	* is created, deleted, or modified.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription
+	* @throws PortalException if a matching user or group could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Subscription addSubscription(long userId,
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.addSubscription(userId, groupId,
+			className, classPK);
+	}
+
+	/**
+	* Subscribes the user to the entity, notifying him at the given frequency.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @param frequency the frequency for notifications
+	* @return the subscription
+	* @throws PortalException if a matching user or group could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Subscription addSubscription(long userId,
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String frequency)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.addSubscription(userId, groupId,
+			className, classPK, frequency);
+	}
+
+	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
 	*
 	* @param subscriptionId the primary key for the new subscription
@@ -53,6 +114,30 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	public com.liferay.portal.model.Subscription createSubscription(
 		long subscriptionId) {
 		return _subscriptionLocalService.createSubscription(subscriptionId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.Subscription deleteSubscription(
+		com.liferay.portal.model.Subscription subscription)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.deleteSubscription(subscription);
 	}
 
 	/**
@@ -70,17 +155,48 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
+	* Deletes the user's subscription to the entity. A social activity with the
+	* unsubscribe action is created.
 	*
-	* @param subscription the subscription
-	* @return the subscription that was removed
-	* @throws PortalException
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @throws PortalException if a matching user or subscription could not be
+	found
 	*/
 	@Override
-	public com.liferay.portal.model.Subscription deleteSubscription(
-		com.liferay.portal.model.Subscription subscription)
+	public void deleteSubscription(long userId, java.lang.String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.deleteSubscription(subscription);
+		_subscriptionLocalService.deleteSubscription(userId, className, classPK);
+	}
+
+	/**
+	* Deletes all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void deleteSubscriptions(long companyId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscriptions(companyId, className,
+			classPK);
+	}
+
+	/**
+	* Deletes all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void deleteSubscriptions(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscriptions(userId);
 	}
 
 	@Override
@@ -174,6 +290,46 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		return _subscriptionLocalService.fetchSubscription(subscriptionId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _subscriptionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _subscriptionLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the subscription of the user to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription of the user to the entity
+	* @throws PortalException if a matching subscription could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Subscription getSubscription(
+		long companyId, long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.getSubscription(companyId, userId,
+			className, classPK);
+	}
+
 	/**
 	* Returns the subscription with the primary key.
 	*
@@ -188,26 +344,35 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		return _subscriptionLocalService.getSubscription(subscriptionId);
 	}
 
+	/**
+	* Returns all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscriptions to the entity
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _subscriptionLocalService.getActionableDynamicQuery();
+	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
+		long companyId, java.lang.String className, long classPK) {
+		return _subscriptionLocalService.getSubscriptions(companyId, className,
+			classPK);
 	}
 
 	/**
-	* @throws PortalException
+	* Returns all the subscriptions of the user to the entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return the subscriptions of the user to the entities
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
+		long companyId, long userId, java.lang.String className, long[] classPKs) {
+		return _subscriptionLocalService.getSubscriptions(companyId, userId,
+			className, classPKs);
 	}
 
 	/**
@@ -238,190 +403,17 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Subscription updateSubscription(
-		com.liferay.portal.model.Subscription subscription) {
-		return _subscriptionLocalService.updateSubscription(subscription);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _subscriptionLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_subscriptionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Subscribes the user to the entity, notifying him the instant the entity
-	* is created, deleted, or modified.
-	*
-	* <p>
-	* If there is no asset entry with the class name and class PK a new asset
-	* entry is created.
-	* </p>
-	*
-	* <p>
-	* A social activity for the subscription is created using the asset entry
-	* associated with the class name and class PK, or the newly created asset
-	* entry.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the entity's group
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Subscription addSubscription(long userId,
-		long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.addSubscription(userId, groupId,
-			className, classPK);
-	}
-
-	/**
-	* Subscribes the user to the entity, notifying him at the given frequency.
-	*
-	* <p>
-	* If there is no asset entry with the class name and class PK a new asset
-	* entry is created.
-	* </p>
-	*
-	* <p>
-	* A social activity for the subscription is created using the asset entry
-	* associated with the class name and class PK, or the newly created asset
-	* entry.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the entity's group
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param frequency the frequency for notifications
-	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Subscription addSubscription(long userId,
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String frequency)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.addSubscription(userId, groupId,
-			className, classPK, frequency);
-	}
-
-	/**
-	* Deletes the user's subscription to the entity. A social activity with the
-	* unsubscribe action is created.
+	* Returns all the subscriptions of the user to the entities with the class
+	* name.
 	*
 	* @param userId the primary key of the user
 	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a matching user or subscription could not be
-	found
+	* @return the subscriptions of the user to the entities with the class name
 	*/
 	@Override
-	public void deleteSubscription(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscription(userId, className, classPK);
-	}
-
-	/**
-	* Deletes all the subscriptions of the user.
-	*
-	* @param userId the primary key of the user
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public void deleteSubscriptions(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(userId);
-	}
-
-	/**
-	* Deletes all the subscriptions to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public void deleteSubscriptions(long companyId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(companyId, className,
-			classPK);
-	}
-
-	/**
-	* Returns the subscription of the user to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return the subscription of the user to the entity
-	* @throws PortalException if a matching subscription could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Subscription getSubscription(
-		long companyId, long userId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.getSubscription(companyId, userId,
-			className, classPK);
-	}
-
-	/**
-	* Returns all the subscriptions of the user to the entities.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPKs the primary key of the entities
-	* @return the subscriptions of the user to the entities
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
-		long companyId, long userId, java.lang.String className, long[] classPKs) {
-		return _subscriptionLocalService.getSubscriptions(companyId, userId,
-			className, classPKs);
-	}
-
-	/**
-	* Returns all the subscriptions to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return the subscriptions to the entity
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
-		long companyId, java.lang.String className, long classPK) {
-		return _subscriptionLocalService.getSubscriptions(companyId, className,
-			classPK);
+	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
+		long userId, java.lang.String className) {
+		return _subscriptionLocalService.getUserSubscriptions(userId, className);
 	}
 
 	/**
@@ -439,20 +431,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator) {
 		return _subscriptionLocalService.getUserSubscriptions(userId, start,
 			end, orderByComparator);
-	}
-
-	/**
-	* Returns all the subscriptions of the user to the entities with the class
-	* name.
-	*
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @return the subscriptions of the user to the entities with the class name
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
-		long userId, java.lang.String className) {
-		return _subscriptionLocalService.getUserSubscriptions(userId, className);
 	}
 
 	/**
@@ -499,6 +477,28 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		java.lang.String className, long[] classPKs) {
 		return _subscriptionLocalService.isSubscribed(companyId, userId,
 			className, classPKs);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_subscriptionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.Subscription updateSubscription(
+		com.liferay.portal.model.Subscription subscription) {
+		return _subscriptionLocalService.updateSubscription(subscription);
 	}
 
 	/**

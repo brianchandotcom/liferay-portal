@@ -22,7 +22,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ShoppingItemPriceLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ShoppingItemPriceLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

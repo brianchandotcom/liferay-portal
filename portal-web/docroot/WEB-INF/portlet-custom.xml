@@ -2857,7 +2857,7 @@
 		</init-param>
 		<init-param>
 			<name>view-action</name>
-			<value>/asset_publisher/view</value>
+			<value>/related_assets/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -1672,6 +1672,10 @@
 
 		<!-- Related Assets -->
 
+		<action path="/related_assets/view" type="com.liferay.portlet.relatedassets.action.ViewAction">
+			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
+		</action>
+
 		<action path="/related_assets/view_content" type="com.liferay.portlet.relatedassets.action.ViewContentAction">
 			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
 		</action>

@@ -18,21 +18,18 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -57,7 +54,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormTemplateSynchonizer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -69,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -1311,48 +1309,6 @@ public class DDMStructureLocalServiceImpl
 			serviceContext, structure);
 	}
 
-	protected void appendNewStructureRequiredFields(
-		DDMStructure structure, Document templateDocument) {
-
-		String definition = structure.getDefinition();
-
-		Document structureDocument = null;
-
-		try {
-			structureDocument = SAXReaderUtil.read(definition);
-		}
-		catch (DocumentException de) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(de, de);
-			}
-
-			return;
-		}
-
-		Element templateElement = templateDocument.getRootElement();
-
-		XPath structureXPath = SAXReaderUtil.createXPath(
-			"//dynamic-element[.//meta-data/entry[@name=\"required\"]=" +
-				"\"true\"]");
-
-		List<Node> nodes = structureXPath.selectNodes(structureDocument);
-
-		for (Node node : nodes) {
-			Element element = (Element)node;
-
-			String name = element.attributeValue("name");
-
-			name = HtmlUtil.escapeXPathAttribute(name);
-
-			XPath templateXPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name=" + name + "]");
-
-			if (!templateXPath.booleanValueOf(templateDocument)) {
-				templateElement.add(element.createCopy());
-			}
-		}
-	}
-
 	protected DDMStructure doUpdateStructure(
 			long parentStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String definition,
@@ -1471,98 +1427,39 @@ public class DDMStructureLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
-	protected void syncStructureTemplatesFields(DDMStructure structure)
-		throws PortalException {
+	protected List<DDMTemplate> getStructureTemplates(
+		DDMStructure structure, String type) {
 
 		long classNameId = classNameLocalService.getClassNameId(
 			DDMStructure.class);
 
-		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
+		return ddmTemplateLocalService.getTemplates(
 			structure.getGroupId(), classNameId, structure.getStructureId(),
-			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
-
-		for (DDMTemplate template : templates) {
-			String script = template.getScript();
-
-			Document templateDocument = null;
-
-			try {
-				templateDocument = SAXReaderUtil.read(script);
-			}
-			catch (DocumentException de) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(de, de);
-				}
-
-				continue;
-			}
-
-			Element templateRootElement = templateDocument.getRootElement();
-
-			syncStructureTemplatesFields(template, templateRootElement);
-
-			appendNewStructureRequiredFields(structure, templateDocument);
-
-			try {
-				script = DDMXMLUtil.formatXML(templateDocument.asXML());
-			}
-			catch (Exception e) {
-				throw new StructureDefinitionException();
-			}
-
-			template.setScript(script);
-
-			ddmTemplatePersistence.update(template);
-		}
+			type);
 	}
 
-	protected void syncStructureTemplatesFields(
-			DDMTemplate template, Element templateElement)
+	protected void syncStructureTemplatesFields(final DDMStructure structure)
 		throws PortalException {
 
-		DDMStructure structure = DDMTemplateHelperUtil.fetchStructure(template);
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
 
-		List<Element> dynamicElementElements = templateElement.elements(
-			"dynamic-element");
+				@Override
+				public Void call() throws Exception {
+					DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
+						new DDMFormTemplateSynchonizer(structure.getDDMForm());
 
-		for (Element dynamicElementElement : dynamicElementElements) {
-			String dataType = dynamicElementElement.attributeValue("dataType");
-			String fieldName = dynamicElementElement.attributeValue("name");
+					List<DDMTemplate> templates = getStructureTemplates(
+						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 
-			if (Validator.isNull(dataType)) {
-				continue;
-			}
+					ddmFormTemplateSynchonizer.setDDMFormTemplates(templates);
 
-			if (!structure.hasField(fieldName)) {
-				templateElement.remove(dynamicElementElement);
+					ddmFormTemplateSynchonizer.synchronize();
 
-				continue;
-			}
-
-			String mode = template.getMode();
-
-			if (mode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
-				boolean fieldRequired = structure.getFieldRequired(fieldName);
-
-				List<Element> metadataElements = dynamicElementElement.elements(
-					"meta-data");
-
-				for (Element metadataElement : metadataElements) {
-					for (Element metadataEntryElement :
-							metadataElement.elements()) {
-
-						String attributeName =
-							metadataEntryElement.attributeValue("name");
-
-						if (fieldRequired && attributeName.equals("required")) {
-							metadataEntryElement.setText("true");
-						}
-					}
+					return null;
 				}
-			}
 
-			syncStructureTemplatesFields(template, dynamicElementElement);
-		}
+			});
 	}
 
 	protected void validate(DDMForm parentDDMForm, Document childDocument)
@@ -1690,8 +1587,5 @@ public class DDMStructureLocalServiceImpl
 			throw le;
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		DDMStructureLocalServiceImpl.class);
 
 }

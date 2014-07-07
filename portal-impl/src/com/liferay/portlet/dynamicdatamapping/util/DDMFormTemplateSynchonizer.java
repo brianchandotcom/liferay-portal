@@ -1,0 +1,177 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.dynamicdatamapping.util;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
+/**
+ * @author Marcellus Tavares
+ */
+public class DDMFormTemplateSynchonizer {
+
+	public DDMFormTemplateSynchonizer(DDMForm structureDDMForm) {
+		_structureDDMForm = structureDDMForm;
+	}
+
+	public void setDDMFormTemplates(List<DDMTemplate> ddmFormTemplates) {
+		_ddmFormTemplates = ddmFormTemplates;
+	}
+
+	public void synchronize() throws PortalException {
+		for (DDMTemplate ddmTemplate : getDDMFormTemplates()) {
+			DDMForm templateDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+				ddmTemplate.getScript());
+
+			synchronizeDDMFormFields(
+				_structureDDMForm.getDDMFormFieldsMap(true),
+				templateDDMForm.getDDMFormFields(), ddmTemplate.getMode());
+
+			String mode = ddmTemplate.getMode();
+
+			if (mode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
+				addRequiredDDMFormFields(
+					_structureDDMForm.getDDMFormFields(),
+					templateDDMForm.getDDMFormFields());
+			}
+
+			updateDDMTemplate(ddmTemplate, templateDDMForm);
+		}
+	}
+
+	protected void addRequiredDDMFormFields(
+		List<DDMFormField> structureDDMFormFields,
+		List<DDMFormField> templateDDMFormFields) {
+
+		for (int i = 0; i < structureDDMFormFields.size(); i++) {
+			DDMFormField structureDDMFormField = structureDDMFormFields.get(i);
+
+			DDMFormField templateDDMFormField = getDDMFormField(
+				templateDDMFormFields, structureDDMFormField.getName());
+
+			if (templateDDMFormField == null) {
+				if (structureDDMFormField.isRequired()) {
+					templateDDMFormFields.add(structureDDMFormField);
+				}
+			}
+			else {
+				addRequiredDDMFormFields(
+					structureDDMFormField.getNestedDDMFormFields(),
+					templateDDMFormField.getNestedDDMFormFields());
+			}
+		}
+	}
+
+	protected DDMFormField getDDMFormField(
+		List<DDMFormField> ddmFormFields, String name) {
+
+		Queue<DDMFormField> queue = new LinkedList<DDMFormField>(ddmFormFields);
+
+		DDMFormField ddmFormField = null;
+
+		while ((ddmFormField = queue.poll()) != null) {
+			if (name.equals(ddmFormField.getName())) {
+				return ddmFormField;
+			}
+
+			queue.addAll(ddmFormField.getNestedDDMFormFields());
+		}
+
+		return null;
+	}
+
+	protected List<DDMTemplate> getDDMFormTemplates() {
+		return _ddmFormTemplates;
+	}
+
+	protected String serializeDDMForm(DDMForm templateDDMForm) {
+		String script = DDMFormXSDSerializerUtil.serialize(templateDDMForm);
+
+		return DDMXMLUtil.formatXML(script);
+	}
+
+	protected void synchronizeDDMFormFieldRequiredProperty(
+		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField,
+		String templateMode) {
+
+		if (structureDDMFormField == null) {
+			return;
+		}
+
+		if (!templateMode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
+			return;
+		}
+
+		templateDDMFormField.setRequired(structureDDMFormField.isRequired());
+	}
+
+	protected void synchronizeDDMFormFields(
+		Map<String, DDMFormField> structureDDMFormFieldsMap,
+		List<DDMFormField> templateDDMFormFields, String templateMode) {
+
+		Iterator<DDMFormField> itr = templateDDMFormFields.iterator();
+
+		while (itr.hasNext()) {
+			DDMFormField templateDDMFormField = itr.next();
+
+			String dataType = templateDDMFormField.getDataType();
+			String name = templateDDMFormField.getName();
+
+			if (Validator.isNotNull(dataType) &&
+				!structureDDMFormFieldsMap.containsKey(name)) {
+
+				itr.remove();
+
+				continue;
+			}
+
+			synchronizeDDMFormFieldRequiredProperty(
+				structureDDMFormFieldsMap.get(name), templateDDMFormField,
+				templateMode);
+
+			synchronizeDDMFormFields(
+				structureDDMFormFieldsMap,
+				templateDDMFormField.getNestedDDMFormFields(), templateMode);
+		}
+	}
+
+	protected void updateDDMTemplate(
+		DDMTemplate ddmTemplate, DDMForm templateDDMForm) {
+
+		String script = serializeDDMForm(templateDDMForm);
+
+		ddmTemplate.setScript(script);
+
+		DDMTemplateLocalServiceUtil.updateDDMTemplate(ddmTemplate);
+	}
+
+	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<DDMTemplate>();
+	private DDMForm _structureDDMForm;
+
+}

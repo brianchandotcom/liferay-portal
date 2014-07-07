@@ -14,10 +14,14 @@
 
 package com.liferay.portlet.ratings.util.test;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 /**
  * @author Daniel Kocsis
@@ -37,6 +41,30 @@ public class RatingsTestUtil {
 		return RatingsEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), className, classPK, score,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static RatingsStats addStats(String className, long classPK)
+		throws Exception {
+
+		return addStats(className, classPK, RandomTestUtil.randomInt());
+	}
+
+	public static RatingsStats addStats(
+			String className, long classPK, double averageScore)
+		throws Exception {
+
+		long statsId = CounterLocalServiceUtil.increment();
+
+		RatingsStats ratingsStats =
+			RatingsStatsLocalServiceUtil.createRatingsStats(statsId);
+
+		ratingsStats.setClassName(className);
+		ratingsStats.setClassPK(classPK);
+		ratingsStats.setTotalEntries(RandomTestUtil.randomInt());
+		ratingsStats.setTotalScore(RandomTestUtil.randomInt());
+		ratingsStats.setAverageScore(averageScore);
+
+		return RatingsStatsLocalServiceUtil.updateRatingsStats(ratingsStats);
 	}
 
 }

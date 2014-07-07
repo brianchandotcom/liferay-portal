@@ -674,25 +674,6 @@
 		<var attribute="value" locator="//input[@id='_88_schedulerStartDateMinute']" name="displayDateMinute" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
-
-		<if>
-			<isset var="addTimeIncrementValue" />
-			<then>
-				<var name="addTimeIncrementValue" value="${addTimeIncrementValue}" />
-				<var name="i" value="0" />
-
-				<while>
-					<not>
-						<equals arg1="${i}" arg2="${addTimeIncrementValue}" />
-					</not>
-					<then>
-						<var name="i" value="${i?increment()}" />
-						<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
-					</then>
-				</while>
-			</then>
-		</if>
-
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 		<if>

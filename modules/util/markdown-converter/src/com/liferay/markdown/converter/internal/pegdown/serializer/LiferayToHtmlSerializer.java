@@ -16,10 +16,17 @@ package com.liferay.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
+import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.Node;
 import org.pegdown.ast.SuperNode;
+import org.pegdown.ast.TextNode;
 
 /**
  * Provides a visitor implementation for printing HTML for pictures with
@@ -31,6 +38,31 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 	public LiferayToHtmlSerializer(LinkRenderer linkRenderer) {
 		super(linkRenderer);
+	}
+
+	@Override
+	public void visit(HeaderNode node) {
+		if (node.getLevel() != 1) {
+			List<Node> children = node.getChildren();
+
+			if (!children.isEmpty()) {
+				Node childNode = children.get(0);
+
+				if (childNode instanceof TextNode) {
+					TextNode textNode = (TextNode)children.get(0);
+
+					String text = StringUtil.toLowerCase(textNode.getText());
+					text = text.replaceAll("[^a-z0-9 ]", "");
+					text = StringUtil.trim(text);
+					text = StringUtil.replace(
+						text, CharPool.SPACE, CharPool.SLASH);
+
+					printer.print("<a name=\"" + text + "\" />");
+				}
+			}
+		}
+
+		super.visit(node);
 	}
 
 	public void visit(PicWithCaptionNode picWithCaptionNode) {

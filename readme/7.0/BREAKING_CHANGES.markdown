@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `d70397b`.*
+*This document has been reviewed through commit `b62c5e4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -36,7 +36,7 @@ the capitalization rules from
 (Optional).
 * **What changed?** Identify the affected component and the type of change that
 was made.
-* **Who is affected?** Are end users affected? Are developers affected? If the
+* **Who is affected?** Are end-users affected? Are developers affected? If the
 only affected people are those using a certain feature or API, say so.
 * **How should I update my code?** Explain any client code changes required.
 * **Why was this change made?** Explain the reason for the change. If
@@ -265,6 +265,7 @@ configuration and make any necessary modifications.
 Unifying portlet and service configuration facilitates managing them.
 
 ---------------------------------------
+
 ### DDM Structure Local Service API No Longer Has the `updateXSDFieldMetadata()` operation
 - **Date:** 2014-Jun-11
 - **JIRA Ticket:** LPS-47559
@@ -291,6 +292,7 @@ concerning themselves with the DDM Structure's internal content representation
 of data.
 
 ---------------------------------------
+
 ### The `aui:input` Taglib for Type `checkbox` No Longer Creates a Hidden Input
 - **Date:** 2014-Jun-16
 - **JIRA Ticket:** LPS-44228
@@ -353,33 +355,37 @@ prevented the use of any other JSP impl within plugins (OSGi or otherwise). This
 limited what Liferay could change with respect to providing its own JSP
 implementation within OSGi.
 
-### Changes in Exceptions thrown by user services
-- **Date:** 2014-July
+---------------------------------------
+
+### Changes in Exceptions Thrown by User Services
+- **Date:** 2014-Jul-03
 - **JIRA Ticket:** LPS-47130
 
 #### What changed?
 
-In order to provide more information about the root cause of an exception
+In order to provide more information about the root cause of an exception,
 several exceptions have been extended with static inner classes, one for each
-cause. As a result of this effort we identified some exceptions that really
-belong as (static inner) subclasses of existing exceptions.
+cause. As a result of this effort, some exceptions have been identified that
+really belong as static inner subclasses of existing exceptions.
 
 #### Who is affected?
 
 Client code which is handling any of the following exceptions:
+
 - `DuplicateUserScreenNameException`
 - `DuplicateUserEmailAddressException`
-
 
 #### How should I update my code?
 
 Replace the old exception with the equivalent inner class exception as follows:
-- `DuplicateUserScreenNameException` -> UserScreenNameException.MustNotBeDuplicate
-- `DuplicateUserEmailAddressException`-> UserEmailAddressException.MustNotBeDuplicate
+
+- `DuplicateUserScreenNameException` &rarr;
+`UserScreenNameException.MustNotBeDuplicate`
+- `DuplicateUserEmailAddressException` &rarr;
+`UserEmailAddressException.MustNotBeDuplicate`
 
 #### Why was this change made?
 
-In order to provide more information to clients of the services API about what
-is the root cause of the error. This should allow for easier recovery when it
-is possible and to provide a more helpful error message to the end user
-otherwise.
+This change provides more information to clients of the services API about the
+root cause of an error. It provides a more helpful error message to the end-user
+and it allows for easier recovery, when possible.

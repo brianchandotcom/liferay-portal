@@ -120,6 +120,10 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
 	</command>
 
+	<command name="viewNoSubscribePG">
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" />
+	</command>
+
 	<command name="viewPermissionsPG">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
 	</command>

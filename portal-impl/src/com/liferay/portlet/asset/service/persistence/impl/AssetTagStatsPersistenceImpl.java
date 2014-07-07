@@ -150,7 +150,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public List<AssetTagStats> findByTagId(long tagId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -256,7 +256,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats findByTagId_First(long tagId,
-		OrderByComparator orderByComparator) throws NoSuchTagStatsException {
+		OrderByComparator<AssetTagStats> orderByComparator)
+		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = fetchByTagId_First(tagId,
 				orderByComparator);
 
@@ -285,7 +286,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats fetchByTagId_First(long tagId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		List<AssetTagStats> list = findByTagId(tagId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -305,7 +306,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats findByTagId_Last(long tagId,
-		OrderByComparator orderByComparator) throws NoSuchTagStatsException {
+		OrderByComparator<AssetTagStats> orderByComparator)
+		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = fetchByTagId_Last(tagId, orderByComparator);
 
 		if (assetTagStats != null) {
@@ -333,7 +335,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats fetchByTagId_Last(long tagId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		int count = countByTagId(tagId);
 
 		if (count == 0) {
@@ -361,7 +363,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats[] findByTagId_PrevAndNext(long tagStatsId, long tagId,
-		OrderByComparator orderByComparator) throws NoSuchTagStatsException {
+		OrderByComparator<AssetTagStats> orderByComparator)
+		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = findByPrimaryKey(tagStatsId);
 
 		Session session = null;
@@ -391,7 +394,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 	protected AssetTagStats getByTagId_PrevAndNext(Session session,
 		AssetTagStats assetTagStats, long tagId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetTagStats> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -628,7 +631,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public List<AssetTagStats> findByClassNameId(long classNameId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetTagStats> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -734,7 +737,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats findByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchTagStatsException {
+		OrderByComparator<AssetTagStats> orderByComparator)
+		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = fetchByClassNameId_First(classNameId,
 				orderByComparator);
 
@@ -763,7 +767,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats fetchByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		List<AssetTagStats> list = findByClassNameId(classNameId, 0, 1,
 				orderByComparator);
 
@@ -784,7 +788,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats findByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchTagStatsException {
+		OrderByComparator<AssetTagStats> orderByComparator)
+		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = fetchByClassNameId_Last(classNameId,
 				orderByComparator);
 
@@ -813,7 +818,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats fetchByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		int count = countByClassNameId(classNameId);
 
 		if (count == 0) {
@@ -841,7 +846,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public AssetTagStats[] findByClassNameId_PrevAndNext(long tagStatsId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<AssetTagStats> orderByComparator)
 		throws NoSuchTagStatsException {
 		AssetTagStats assetTagStats = findByPrimaryKey(tagStatsId);
 
@@ -872,7 +877,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 	protected AssetTagStats getByClassNameId_PrevAndNext(Session session,
 		AssetTagStats assetTagStats, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetTagStats> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1840,7 +1845,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	@Override
 	public List<AssetTagStats> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTagStats> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

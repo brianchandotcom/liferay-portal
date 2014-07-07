@@ -845,7 +845,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	@Override
 	public List<Ticket> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Ticket> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

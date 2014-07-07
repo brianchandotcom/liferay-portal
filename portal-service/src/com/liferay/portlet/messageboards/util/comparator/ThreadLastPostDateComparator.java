@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ThreadLastPostDateComparator extends OrderByComparator {
+public class ThreadLastPostDateComparator extends OrderByComparator<MBThread> {
 
 	public static final String ORDER_BY_ASC =
 		"MBThread.lastPostDate ASC, MBThread.threadId ASC";
@@ -46,10 +46,7 @@ public class ThreadLastPostDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		MBThread thread1 = (MBThread)obj1;
-		MBThread thread2 = (MBThread)obj2;
-
+	public int compare(MBThread thread1, MBThread thread2) {
 		Date lastPostDate1 = thread1.getLastPostDate();
 		Date lastPostDate2 = thread2.getLastPostDate();
 

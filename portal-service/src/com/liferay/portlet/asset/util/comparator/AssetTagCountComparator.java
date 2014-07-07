@@ -20,7 +20,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 /**
  * @author Miguel Pastor
  */
-public class AssetTagCountComparator extends OrderByComparator {
+public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 
 	public static final String ORDER_BY_ASC = "AssetTag.assetCount ASC";
 
@@ -37,10 +37,7 @@ public class AssetTagCountComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		AssetTag assetTag1 = (AssetTag)obj1;
-		AssetTag assetTag2 = (AssetTag)obj2;
-
+	public int compare(AssetTag assetTag1, AssetTag assetTag2) {
 		int value = 0;
 
 		if (assetTag1.getAssetCount() < assetTag2.getAssetCount()) {

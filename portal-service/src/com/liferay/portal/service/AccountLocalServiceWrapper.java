@@ -54,6 +54,18 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	}
 
 	/**
+	* Deletes the account from the database. Also notifies the appropriate model listeners.
+	*
+	* @param account the account
+	* @return the account that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.Account deleteAccount(
+		com.liferay.portal.model.Account account) {
+		return _accountLocalService.deleteAccount(account);
+	}
+
+	/**
 	* Deletes the account with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param accountId the primary key of the account
@@ -67,15 +79,13 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	}
 
 	/**
-	* Deletes the account from the database. Also notifies the appropriate model listeners.
-	*
-	* @param account the account
-	* @return the account that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.Account deleteAccount(
-		com.liferay.portal.model.Account account) {
-		return _accountLocalService.deleteAccount(account);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _accountLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -90,8 +100,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _accountLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -109,8 +118,7 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _accountLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -130,11 +138,10 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _accountLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -184,25 +191,10 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _accountLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.Account getAccount(long companyId,
+		long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _accountLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _accountLocalService.getPersistedModel(primaryKeyObj);
+		return _accountLocalService.getAccount(companyId, accountId);
 	}
 
 	/**
@@ -232,16 +224,9 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		return _accountLocalService.getAccountsCount();
 	}
 
-	/**
-	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param account the account
-	* @return the account that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.Account updateAccount(
-		com.liferay.portal.model.Account account) {
-		return _accountLocalService.updateAccount(account);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _accountLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -254,6 +239,13 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		return _accountLocalService.getBeanIdentifier();
 	}
 
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _accountLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -264,11 +256,16 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		_accountLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param account the account
+	* @return the account that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.Account getAccount(long companyId,
-		long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _accountLocalService.getAccount(companyId, accountId);
+	public com.liferay.portal.model.Account updateAccount(
+		com.liferay.portal.model.Account account) {
+		return _accountLocalService.updateAccount(account);
 	}
 
 	/**

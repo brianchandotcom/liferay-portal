@@ -88,7 +88,7 @@ public class SocialActivitySetUtil {
 	 */
 	public static List<SocialActivitySet> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByGroupId_PrevAndNext(
 		long activitySetId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activitySetId, groupId,
@@ -293,7 +293,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -322,7 +322,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -336,7 +336,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -350,7 +350,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -365,7 +365,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByUserId_PrevAndNext(
 		long activitySetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(activitySetId, userId,
@@ -440,7 +440,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByG_U_T(
 		long groupId, long userId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_T(groupId, userId, type, start, end,
 			orderByComparator);
@@ -458,7 +458,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByG_U_T_First(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_T_First(groupId, userId, type, orderByComparator);
@@ -475,7 +475,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_First(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_T_First(groupId, userId, type, orderByComparator);
 	}
@@ -492,7 +492,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByG_U_T_Last(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_T_Last(groupId, userId, type, orderByComparator);
@@ -509,7 +509,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_Last(
 		long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_T_Last(groupId, userId, type, orderByComparator);
 	}
@@ -527,7 +527,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByG_U_T_PrevAndNext(
 		long activitySetId, long groupId, long userId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_T_PrevAndNext(activitySetId, groupId, userId,
@@ -607,7 +607,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end,
 			orderByComparator);
@@ -625,7 +625,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByC_C_T_First(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
@@ -643,7 +643,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_First(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -661,7 +661,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByC_C_T_Last(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
@@ -679,7 +679,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_Last(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -698,7 +698,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByC_C_T_PrevAndNext(
 		long activitySetId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(activitySetId, classNameId,
@@ -783,7 +783,7 @@ public class SocialActivitySetUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByG_U_C_T(
 		long groupId, long userId, long classNameId, int type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_C_T(groupId, userId, classNameId, type, start,
 			end, orderByComparator);
@@ -802,7 +802,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByG_U_C_T_First(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_C_T_First(groupId, userId, classNameId, type,
@@ -821,7 +821,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_C_T_First(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_T_First(groupId, userId, classNameId, type,
 			orderByComparator);
@@ -840,7 +840,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByG_U_C_T_Last(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_C_T_Last(groupId, userId, classNameId, type,
@@ -859,7 +859,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_C_T_Last(
 		long groupId, long userId, long classNameId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_T_Last(groupId, userId, classNameId, type,
 			orderByComparator);
@@ -880,7 +880,7 @@ public class SocialActivitySetUtil {
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByG_U_C_T_PrevAndNext(
 		long activitySetId, long groupId, long userId, long classNameId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByG_U_C_T_PrevAndNext(activitySetId, groupId, userId,
@@ -970,7 +970,7 @@ public class SocialActivitySetUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findByU_C_C_T(
 		long userId, long classNameId, long classPK, int type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .findByU_C_C_T(userId, classNameId, classPK, type, start,
 			end, orderByComparator);
@@ -989,7 +989,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByU_C_C_T_First(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByU_C_C_T_First(userId, classNameId, classPK, type,
@@ -1008,7 +1008,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_First(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_T_First(userId, classNameId, classPK, type,
 			orderByComparator);
@@ -1027,7 +1027,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet findByU_C_C_T_Last(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByU_C_C_T_Last(userId, classNameId, classPK, type,
@@ -1046,7 +1046,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_Last(
 		long userId, long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_T_Last(userId, classNameId, classPK, type,
 			orderByComparator);
@@ -1067,7 +1067,7 @@ public class SocialActivitySetUtil {
 	public static com.liferay.portlet.social.model.SocialActivitySet[] findByU_C_C_T_PrevAndNext(
 		long activitySetId, long userId, long classNameId, long classPK,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivitySetException {
 		return getPersistence()
 				   .findByU_C_C_T_PrevAndNext(activitySetId, userId,
@@ -1219,7 +1219,7 @@ public class SocialActivitySetUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivitySet> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

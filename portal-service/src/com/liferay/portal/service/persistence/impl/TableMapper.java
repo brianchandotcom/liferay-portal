@@ -39,14 +39,14 @@ public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 	public void destroy();
 
 	public List<L> getLeftBaseModels(
-		long rightPrimaryKey, int start, int end, OrderByComparator obc);
+		long rightPrimaryKey, int start, int end, OrderByComparator<L> obc);
 
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey);
 
 	public TableMapper<R, L> getReverseTableMapper();
 
 	public List<R> getRightBaseModels(
-		long leftPrimaryKey, int start, int end, OrderByComparator obc);
+		long leftPrimaryKey, int start, int end, OrderByComparator<R> obc);
 
 	public long[] getRightPrimaryKeys(long leftPrimaryKey);
 

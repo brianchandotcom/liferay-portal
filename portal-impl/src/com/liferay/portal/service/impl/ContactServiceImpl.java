@@ -43,7 +43,7 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 	@Override
 	public List<Contact> getContacts(
 			long classNameId, long classPK, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Contact> orderByComparator)
 		throws PortalException {
 
 		CommonPermissionUtil.check(

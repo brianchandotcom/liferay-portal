@@ -157,7 +157,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -277,7 +277,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByUuid_First(uuid, orderByComparator);
 
 		if (user != null) {
@@ -305,7 +305,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -324,8 +324,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws com.liferay.portal.NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByUuid_Last(String uuid, OrderByComparator orderByComparator)
-		throws NoSuchUserException {
+	public User findByUuid_Last(String uuid,
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (user != null) {
@@ -353,7 +353,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -380,7 +380,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByUuid_PrevAndNext(long userId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -409,7 +409,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByUuid_PrevAndNext(Session session, User user,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<User> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -677,7 +677,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -807,7 +807,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (user != null) {
@@ -839,7 +839,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -860,7 +860,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (user != null) {
@@ -892,7 +892,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -921,7 +921,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByUuid_C_PrevAndNext(long userId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
@@ -951,7 +951,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByUuid_C_PrevAndNext(Session session, User user,
-		String uuid, long companyId, OrderByComparator orderByComparator,
+		String uuid, long companyId, OrderByComparator<User> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1227,7 +1227,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1333,7 +1333,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (user != null) {
@@ -1361,7 +1361,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1381,7 +1381,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (user != null) {
@@ -1409,7 +1409,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1437,7 +1437,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByCompanyId_PrevAndNext(long userId, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -1466,7 +1466,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByCompanyId_PrevAndNext(Session session, User user,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId, OrderByComparator<User> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1902,7 +1903,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByEmailAddress(String emailAddress, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2026,7 +2027,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByEmailAddress_First(String emailAddress,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByEmailAddress_First(emailAddress, orderByComparator);
 
 		if (user != null) {
@@ -2054,7 +2055,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByEmailAddress_First(String emailAddress,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByEmailAddress(emailAddress, 0, 1,
 				orderByComparator);
 
@@ -2075,7 +2076,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByEmailAddress_Last(String emailAddress,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByEmailAddress_Last(emailAddress, orderByComparator);
 
 		if (user != null) {
@@ -2103,7 +2104,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByEmailAddress_Last(String emailAddress,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByEmailAddress(emailAddress);
 
 		if (count == 0) {
@@ -2131,7 +2132,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByEmailAddress_PrevAndNext(long userId,
-		String emailAddress, OrderByComparator orderByComparator)
+		String emailAddress, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
@@ -2161,7 +2162,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByEmailAddress_PrevAndNext(Session session, User user,
-		String emailAddress, OrderByComparator orderByComparator,
+		String emailAddress, OrderByComparator<User> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -2863,7 +2864,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_CD(long companyId, Date createDate, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2990,7 +2991,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_CD_First(long companyId, Date createDate,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_CD_First(companyId, createDate, orderByComparator);
 
 		if (user != null) {
@@ -3022,7 +3023,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_CD_First(long companyId, Date createDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByC_CD(companyId, createDate, 0, 1,
 				orderByComparator);
 
@@ -3044,7 +3045,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_CD_Last(long companyId, Date createDate,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_CD_Last(companyId, createDate, orderByComparator);
 
 		if (user != null) {
@@ -3076,7 +3077,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_CD_Last(long companyId, Date createDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByC_CD(companyId, createDate);
 
 		if (count == 0) {
@@ -3105,7 +3106,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByC_CD_PrevAndNext(long userId, long companyId,
-		Date createDate, OrderByComparator orderByComparator)
+		Date createDate, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
@@ -3135,8 +3136,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByC_CD_PrevAndNext(Session session, User user,
-		long companyId, Date createDate, OrderByComparator orderByComparator,
-		boolean previous) {
+		long companyId, Date createDate,
+		OrderByComparator<User> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3407,7 +3408,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_MD(long companyId, Date modifiedDate, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3534,7 +3535,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_MD_First(long companyId, Date modifiedDate,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_MD_First(companyId, modifiedDate, orderByComparator);
 
 		if (user != null) {
@@ -3566,7 +3567,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_MD_First(long companyId, Date modifiedDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByC_MD(companyId, modifiedDate, 0, 1,
 				orderByComparator);
 
@@ -3588,7 +3589,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_MD_Last(long companyId, Date modifiedDate,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_MD_Last(companyId, modifiedDate, orderByComparator);
 
 		if (user != null) {
@@ -3620,7 +3621,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_MD_Last(long companyId, Date modifiedDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByC_MD(companyId, modifiedDate);
 
 		if (count == 0) {
@@ -3649,7 +3650,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByC_MD_PrevAndNext(long userId, long companyId,
-		Date modifiedDate, OrderByComparator orderByComparator)
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
@@ -3679,8 +3680,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByC_MD_PrevAndNext(Session session, User user,
-		long companyId, Date modifiedDate, OrderByComparator orderByComparator,
-		boolean previous) {
+		long companyId, Date modifiedDate,
+		OrderByComparator<User> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5189,7 +5190,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_S(long companyId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5305,7 +5306,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_S_First(companyId, status, orderByComparator);
 
 		if (user != null) {
@@ -5337,7 +5338,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_S_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		List<User> list = findByC_S(companyId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5358,7 +5359,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchUserException {
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = fetchByC_S_Last(companyId, status, orderByComparator);
 
 		if (user != null) {
@@ -5390,7 +5391,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_S_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
@@ -5419,7 +5420,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByC_S_PrevAndNext(long userId, long companyId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
@@ -5449,7 +5450,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected User getByC_S_PrevAndNext(Session session, User user,
-		long companyId, int status, OrderByComparator orderByComparator,
+		long companyId, int status, OrderByComparator<User> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -5710,7 +5711,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<User> findByC_CD_MD(long companyId, Date createDate,
 		Date modifiedDate, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5854,7 +5855,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_CD_MD_First(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator orderByComparator)
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = fetchByC_CD_MD_First(companyId, createDate, modifiedDate,
 				orderByComparator);
@@ -5892,7 +5893,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_CD_MD_First(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator orderByComparator) {
+		Date modifiedDate, OrderByComparator<User> orderByComparator) {
 		List<User> list = findByC_CD_MD(companyId, createDate, modifiedDate, 0,
 				1, orderByComparator);
 
@@ -5915,7 +5916,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_CD_MD_Last(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator orderByComparator)
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = fetchByC_CD_MD_Last(companyId, createDate, modifiedDate,
 				orderByComparator);
@@ -5953,7 +5954,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_CD_MD_Last(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator orderByComparator) {
+		Date modifiedDate, OrderByComparator<User> orderByComparator) {
 		int count = countByC_CD_MD(companyId, createDate, modifiedDate);
 
 		if (count == 0) {
@@ -5983,8 +5984,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByC_CD_MD_PrevAndNext(long userId, long companyId,
-		Date createDate, Date modifiedDate, OrderByComparator orderByComparator)
-		throws NoSuchUserException {
+		Date createDate, Date modifiedDate,
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -6014,7 +6015,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	protected User getByC_CD_MD_PrevAndNext(Session session, User user,
 		long companyId, Date createDate, Date modifiedDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<User> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6333,7 +6334,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6455,7 +6457,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_DU_S_First(long companyId, boolean defaultUser,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = fetchByC_DU_S_First(companyId, defaultUser, status,
 				orderByComparator);
@@ -6493,7 +6495,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_DU_S_First(long companyId, boolean defaultUser,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<User> orderByComparator) {
 		List<User> list = findByC_DU_S(companyId, defaultUser, status, 0, 1,
 				orderByComparator);
 
@@ -6516,7 +6518,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User findByC_DU_S_Last(long companyId, boolean defaultUser,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 		User user = fetchByC_DU_S_Last(companyId, defaultUser, status,
 				orderByComparator);
@@ -6554,7 +6556,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByC_DU_S_Last(long companyId, boolean defaultUser,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<User> orderByComparator) {
 		int count = countByC_DU_S(companyId, defaultUser, status);
 
 		if (count == 0) {
@@ -6584,8 +6586,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User[] findByC_DU_S_PrevAndNext(long userId, long companyId,
-		boolean defaultUser, int status, OrderByComparator orderByComparator)
-		throws NoSuchUserException {
+		boolean defaultUser, int status,
+		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -6615,7 +6617,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	protected User getByC_DU_S_PrevAndNext(Session session, User user,
 		long companyId, boolean defaultUser, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<User> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7810,7 +7812,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<User> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7994,7 +7996,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return userToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -8255,7 +8258,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Organization> getOrganizations(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
 		return userToOrganizationTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -8526,7 +8530,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Role> getRoles(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Role> orderByComparator) {
 		return userToRoleTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -8786,7 +8791,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
 		return userToTeamTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -9046,7 +9052,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<com.liferay.portal.model.UserGroup> getUserGroups(long pk,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator) {
 		return userToUserGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}

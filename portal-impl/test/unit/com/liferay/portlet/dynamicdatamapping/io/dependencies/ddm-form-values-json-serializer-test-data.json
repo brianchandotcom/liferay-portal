@@ -1,0 +1,72 @@
+{
+	"defaultLanguageId": "en_US",
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"fieldValues": [
+		{
+			"name": "Separator7211",
+			"nestedFieldValues": [
+				{
+					"name": "Text_Box6748",
+					"value": {
+						"en_US": "Content 0",
+						"pt_BR": "Conteudo 0"
+					}
+				}
+			]
+		},
+		{
+			"name": "Separator7211",
+			"nestedFieldValues": [
+				{
+					"name": "Text_Box6748",
+					"value": {
+						"en_US": "Content 1",
+						"pt_BR": "Conteudo 1"
+					}
+				}
+			]
+		},
+		{
+			"name": "Text6513",
+			"value": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			} 
+		},
+		{
+			"name": "Image4751",
+			"value": "{\"alt\":\"This is a image description. 0\",\"data\":\"base64Value0\"}"
+		},
+		{
+			"name": "Image4751",
+			"value": "{\"alt\":\"This is a image description. 1\",\"data\":\"base64Value1\"}"
+		},
+		{
+			"name": "Image4751",
+			"value": "{\"alt\":\"This is a image description. 2\",\"data\":\"base64Value2\"}"
+		},
+		{
+			"name": "Boolean2282",
+			"nestedFieldValues": [
+				{
+					"name": "HTML4512",
+					"value": {
+						"en_US": "<p>This is a test. 0<\/p>",
+						"pt_BR": "<p>Isto e um teste. 0<\/p>"
+					}
+				},
+				{
+					"name": "HTML4512",
+					"value": {
+						"en_US": "<p>This is a test. 1<\/p>",
+						"pt_BR": "<p>Isto e um teste. 1<\/p>"
+					}
+				}
+			],
+			"value": {
+				"en_US": "false",
+				"pt_BR": "true"
+			}
+		}
+	]
+}

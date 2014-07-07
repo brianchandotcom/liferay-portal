@@ -1354,7 +1354,8 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = null;
 
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			if (preferApproved) {
@@ -1379,9 +1380,27 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses) {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
+
+		List<JournalArticle> articles = journalArticlePersistence.findByR_ST(
+			resourcePrimKey, statuses, 0, 1, orderByComparator);
+
+		if (!articles.isEmpty()) {
+			return articles.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public JournalArticle fetchLatestArticle(
 		long groupId, String articleId, int status) {
 
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return journalArticlePersistence.fetchByG_A_NotST_First(
@@ -1395,7 +1414,8 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestIndexableArticle(long resourcePrimKey) {
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		int[] statuses = new int[] {
 			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
@@ -2022,7 +2042,8 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
 
 		return journalArticlePersistence.findByGroupId(
 			groupId, start, end, obc);
@@ -2104,7 +2125,7 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public List<JournalArticle> getArticles(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return journalArticlePersistence.findByG_F(
 			groupId, folderId, start, end, orderByComparator);
@@ -2125,7 +2146,7 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public List<JournalArticle> getArticles(
 		long groupId, String articleId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return journalArticlePersistence.findByG_A(
 			groupId, articleId, start, end, orderByComparator);
@@ -2379,7 +2400,8 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articles = null;
 
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		articles = journalArticlePersistence.findByG_UT_ST(
 			groupId, urlTitle, WorkflowConstants.STATUS_APPROVED,
@@ -2478,7 +2500,8 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articles = null;
 
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			if (preferApproved) {
@@ -2602,7 +2625,8 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articles = null;
 
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			articles = journalArticlePersistence.findByG_UT(
@@ -2672,8 +2696,8 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getNotInTrashArticlesCount(long groupId, long folderId) {
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(WorkflowConstants.STATUS_ANY);
 
 		List<Long> folderIds = new ArrayList<Long>();
 
@@ -2766,7 +2790,7 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public List<JournalArticle> getStructureArticles(
 		long groupId, String ddmStructureKey, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalArticle> obc) {
 
 		return journalArticlePersistence.findByG_S(
 			groupId, ddmStructureKey, start, end, obc);
@@ -2835,7 +2859,7 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public List<JournalArticle> getTemplateArticles(
 		long groupId, String ddmTemplateKey, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalArticle> obc) {
 
 		return journalArticlePersistence.findByG_T(
 			groupId, ddmTemplateKey, start, end, obc);
@@ -3376,8 +3400,8 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> search(
 		long groupId, List<Long> folderIds, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, null);
 
 		return journalArticleFinder.findByG_F(
 			groupId, folderIds, queryDefinition);
@@ -3459,7 +3483,7 @@ public class JournalArticleLocalServiceImpl
 		String keywords, Double version, String type, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalArticle> obc) {
 
 		return journalArticleFinder.findByKeywords(
 			companyId, groupId, folderIds, classNameId, keywords, version, type,
@@ -3540,10 +3564,10 @@ public class JournalArticleLocalServiceImpl
 		String content, String type, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, boolean andOperator, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalArticle> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, obc);
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -3624,10 +3648,10 @@ public class JournalArticleLocalServiceImpl
 		String content, String type, String[] ddmStructureKeys,
 		String[] ddmTemplateKeys, Date displayDateGT, Date displayDateLT,
 		int status, Date reviewDate, boolean andOperator, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalArticle> obc) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status, start, end, obc);
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
@@ -3834,7 +3858,8 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, List<Long> folderIds, int status) {
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<JournalArticle>(status);
 
 		return journalArticleFinder.countByG_F(
 			groupId, folderIds, queryDefinition);
@@ -3962,7 +3987,7 @@ public class JournalArticleLocalServiceImpl
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
-			new QueryDefinition(status));
+			new QueryDefinition<JournalArticle>(status));
 	}
 
 	/**
@@ -4026,7 +4051,7 @@ public class JournalArticleLocalServiceImpl
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, ddmStructureKeys,
 			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
-			andOperator, new QueryDefinition(status));
+			andOperator, new QueryDefinition<JournalArticle>(status));
 	}
 
 	@Override
@@ -5338,7 +5363,8 @@ public class JournalArticleLocalServiceImpl
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 				new Date(
 					expirationDate.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL),
-				new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+				new QueryDefinition<JournalArticle>(
+					WorkflowConstants.STATUS_APPROVED));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expiring " + articles.size() + " articles");
@@ -6131,7 +6157,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected JournalArticle getFirstArticle(
 			long groupId, String articleId, int status,
-			OrderByComparator orderByComparator)
+			OrderByComparator<JournalArticle> orderByComparator)
 		throws PortalException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {

@@ -22,7 +22,7 @@ import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link AssetTagStatsLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link AssetTagStatsLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

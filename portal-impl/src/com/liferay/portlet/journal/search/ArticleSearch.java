@@ -142,7 +142,7 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 					PortletKeys.JOURNAL, "articles-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<JournalArticle> orderByComparator =
 				JournalUtil.getArticleOrderByComparator(
 					orderByCol, orderByType);
 

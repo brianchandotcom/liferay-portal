@@ -431,7 +431,7 @@ public class DDMStructurePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDMStructure> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructure", "uuid",
 			true, "structureId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

@@ -126,7 +126,7 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	public List<DLFileEntryType> search(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return dlFileEntryTypeFinder.filterFindByKeywords(
 			companyId, groupIds, keywords, includeBasicFileEntryType, start,

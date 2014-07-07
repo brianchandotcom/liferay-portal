@@ -235,7 +235,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public List<DDLRecord> getCompanyRecords(
 		long companyId, int status, int scope, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecord> orderByComparator) {
 
 		return ddlRecordFinder.findByC_S_S(
 			companyId, status, scope, start, end, orderByComparator);
@@ -249,7 +249,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public List<DDLRecord> getCompanyRecords(
 		long companyId, int scope, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecord> orderByComparator) {
 
 		return getCompanyRecords(
 			companyId, WorkflowConstants.STATUS_ANY, scope, start, end,
@@ -321,7 +321,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public List<DDLRecord> getRecords(
 		long recordSetId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecord> orderByComparator) {
 
 		return ddlRecordFinder.findByR_S(
 			recordSetId, status, start, end, orderByComparator);
@@ -354,7 +354,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 
 		return ddlRecordVersionPersistence.findByRecordId(
 			recordId, start, end, orderByComparator);

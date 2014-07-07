@@ -225,7 +225,7 @@ public class ResourceBlockPermissionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ResourceBlockPermission> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceBlockPermission",
 			"mvccVersion", true, "resourceBlockPermissionId", true,
 			"resourceBlockId", true, "roleId", true, "actionIds", true);

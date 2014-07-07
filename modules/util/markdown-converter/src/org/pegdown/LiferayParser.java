@@ -79,9 +79,8 @@ public class LiferayParser extends Parser {
 
 	public Rule Sidebar() {
 		return NodeSequence(
-			TestNot(OneOrMore(CharEntity())), '!', Label(), Spn1(), '(', Sp(),
-			LinkSource(), Spn1(), FirstOf(LinkTitle(), push("")), Sp(), ')',
-			Sp(), Para(),
+			TestNot(OneOrMore(CharEntity())), '!', Label(), Spn1(), '(',
+			LinkSource(), ')', Sp(), Para(),
 			push(new SidebarNode(popAsNode(), popAsString(), popAsNode())));
 	}
 

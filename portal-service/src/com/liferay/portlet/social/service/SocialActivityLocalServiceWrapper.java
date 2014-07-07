@@ -34,243 +34,34 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	/**
-	* Adds the social activity to the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was added
-	*/
 	@Override
-	public com.liferay.portlet.social.model.SocialActivity addSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity) {
-		return _socialActivityLocalService.addSocialActivity(socialActivity);
-	}
-
-	/**
-	* Creates a new social activity with the primary key. Does not add the social activity to the database.
-	*
-	* @param activityId the primary key for the new social activity
-	* @return the new social activity
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivity createSocialActivity(
-		long activityId) {
-		return _socialActivityLocalService.createSocialActivity(activityId);
-	}
-
-	/**
-	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param activityId the primary key of the social activity
-	* @return the social activity that was removed
-	* @throws PortalException if a social activity with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		long activityId)
+	public void addActivity(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLocalService.deleteSocialActivity(activityId);
+		_socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 
 	/**
-	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
+	* Records an activity in the database, using a time based on the current
+	* time in an attempt to make the activity's time unique.
 	*
-	* @param socialActivity the social activity
-	* @return the social activity that was removed
+	* @param userId the primary key of the acting user
+	* @param groupId the primary key of the group
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @param type the activity's type
+	* @param extraData any extra data regarding the activity
+	* @param receiverUserId the primary key of the receiving user
+	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
-	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity) {
-		return _socialActivityLocalService.deleteSocialActivity(socialActivity);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _socialActivityLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _socialActivityLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _socialActivityLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _socialActivityLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _socialActivityLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _socialActivityLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portlet.social.model.SocialActivity fetchSocialActivity(
-		long activityId) {
-		return _socialActivityLocalService.fetchSocialActivity(activityId);
-	}
-
-	/**
-	* Returns the social activity with the primary key.
-	*
-	* @param activityId the primary key of the social activity
-	* @return the social activity
-	* @throws PortalException if a social activity with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivity getSocialActivity(
-		long activityId)
+	public void addActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLocalService.getSocialActivity(activityId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _socialActivityLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivityLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the social activities.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activities
-	* @param end the upper bound of the range of social activities (not inclusive)
-	* @return the range of social activities
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getSocialActivities(
-		int start, int end) {
-		return _socialActivityLocalService.getSocialActivities(start, end);
-	}
-
-	/**
-	* Returns the number of social activities.
-	*
-	* @return the number of social activities
-	*/
-	@Override
-	public int getSocialActivitiesCount() {
-		return _socialActivityLocalService.getSocialActivitiesCount();
-	}
-
-	/**
-	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @return the social activity that was updated
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivity updateSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity) {
-		return _socialActivityLocalService.updateSocialActivity(socialActivity);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivityLocalService.setBeanIdentifier(beanIdentifier);
+		_socialActivityLocalService.addActivity(userId, groupId, className,
+			classPK, type, extraData, receiverUserId);
 	}
 
 	/**
@@ -321,8 +112,25 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Records an activity in the database, using a time based on the current
-	* time in an attempt to make the activity's time unique.
+	* Adds the social activity to the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was added
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity addSocialActivity(
+		com.liferay.portlet.social.model.SocialActivity socialActivity) {
+		return _socialActivityLocalService.addSocialActivity(socialActivity);
+	}
+
+	/**
+	* Records an activity with the current time in the database, but only if
+	* there isn't one with the same parameters.
+	*
+	* <p>
+	* For the main functionality see {@link #addActivity(long, long, Date,
+	* String, long, int, String, long)}
+	* </p>
 	*
 	* @param userId the primary key of the acting user
 	* @param groupId the primary key of the group
@@ -334,20 +142,12 @@ public class SocialActivityLocalServiceWrapper
 	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
-	public void addActivity(long userId, long groupId,
+	public void addUniqueActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addActivity(userId, groupId, className,
-			classPK, type, extraData, receiverUserId);
-	}
-
-	@Override
-	public void addActivity(
-		com.liferay.portlet.social.model.SocialActivity activity,
-		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addActivity(activity, mirrorActivity);
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
+			className, classPK, type, extraData, receiverUserId);
 	}
 
 	/**
@@ -379,30 +179,15 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Records an activity with the current time in the database, but only if
-	* there isn't one with the same parameters.
+	* Creates a new social activity with the primary key. Does not add the social activity to the database.
 	*
-	* <p>
-	* For the main functionality see {@link #addActivity(long, long, Date,
-	* String, long, int, String, long)}
-	* </p>
-	*
-	* @param userId the primary key of the acting user
-	* @param groupId the primary key of the group
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @param type the activity's type
-	* @param extraData any extra data regarding the activity
-	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
+	* @param activityId the primary key for the new social activity
+	* @return the new social activity
 	*/
 	@Override
-	public void addUniqueActivity(long userId, long groupId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.addUniqueActivity(userId, groupId,
-			className, classPK, type, extraData, receiverUserId);
+	public com.liferay.portlet.social.model.SocialActivity createSocialActivity(
+		long activityId) {
+		return _socialActivityLocalService.createSocialActivity(activityId);
 	}
 
 	/**
@@ -416,11 +201,6 @@ public class SocialActivityLocalServiceWrapper
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.deleteActivities(assetEntry);
-	}
-
-	@Override
-	public void deleteActivities(long groupId) {
-		_socialActivityLocalService.deleteActivities(groupId);
 	}
 
 	/**
@@ -438,16 +218,9 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteActivities(className, classPK);
 	}
 
-	/**
-	* Removes the stored activity from the database.
-	*
-	* @param activityId the primary key of the stored activity
-	* @throws PortalException if the activity could not be found
-	*/
 	@Override
-	public void deleteActivity(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityLocalService.deleteActivity(activityId);
+	public void deleteActivities(long groupId) {
+		_socialActivityLocalService.deleteActivities(groupId);
 	}
 
 	/**
@@ -462,6 +235,54 @@ public class SocialActivityLocalServiceWrapper
 		com.liferay.portlet.social.model.SocialActivity activity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityLocalService.deleteActivity(activity);
+	}
+
+	/**
+	* Removes the stored activity from the database.
+	*
+	* @param activityId the primary key of the stored activity
+	* @throws PortalException if the activity could not be found
+	*/
+	@Override
+	public void deleteActivity(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityLocalService.deleteActivity(activityId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param activityId the primary key of the social activity
+	* @return the social activity that was removed
+	* @throws PortalException if a social activity with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLocalService.deleteSocialActivity(activityId);
+	}
+
+	/**
+	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was removed
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
+		com.liferay.portlet.social.model.SocialActivity socialActivity) {
+		return _socialActivityLocalService.deleteSocialActivity(socialActivity);
 	}
 
 	/**
@@ -483,10 +304,131 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _socialActivityLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _socialActivityLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _socialActivityLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return _socialActivityLocalService.dynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _socialActivityLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _socialActivityLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
 	public com.liferay.portlet.social.model.SocialActivity fetchFirstActivity(
 		java.lang.String className, long classPK, int type) {
 		return _socialActivityLocalService.fetchFirstActivity(className,
 			classPK, type);
+	}
+
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity fetchSocialActivity(
+		long activityId) {
+		return _socialActivityLocalService.fetchSocialActivity(activityId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _socialActivityLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns a range of all the activities done on assets identified by the
+	* class name.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param className the target asset's class name
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
+		java.lang.String className, int start, int end) {
+		return _socialActivityLocalService.getActivities(className, start, end);
 	}
 
 	/**
@@ -512,36 +454,6 @@ public class SocialActivityLocalServiceWrapper
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		long classNameId, int start, int end) {
 		return _socialActivityLocalService.getActivities(classNameId, start, end);
-	}
-
-	/**
-	* Returns a range of all the activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end) {
-		return _socialActivityLocalService.getActivities(mirrorActivityId,
-			classNameId, classPK, start, end);
 	}
 
 	/**
@@ -575,8 +487,9 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the activities done on assets identified by the
-	* class name.
+	* Returns a range of all the activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -588,15 +501,30 @@ public class SocialActivityLocalServiceWrapper
 	* result set.
 	* </p>
 	*
-	* @param className the target asset's class name
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end) {
-		return _socialActivityLocalService.getActivities(className, start, end);
+		long mirrorActivityId, long classNameId, long classPK, int start,
+		int end) {
+		return _socialActivityLocalService.getActivities(mirrorActivityId,
+			classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns the number of activities done on assets identified by class name.
+	*
+	* @param className the target asset's class name
+	* @return the number of matching activities
+	*/
+	@Override
+	public int getActivitiesCount(java.lang.String className) {
+		return _socialActivityLocalService.getActivitiesCount(className);
 	}
 
 	/**
@@ -609,23 +537,6 @@ public class SocialActivityLocalServiceWrapper
 	@Override
 	public int getActivitiesCount(long classNameId) {
 		return _socialActivityLocalService.getActivitiesCount(classNameId);
-	}
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	@Override
-	public int getActivitiesCount(long mirrorActivityId, long classNameId,
-		long classPK) {
-		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
-			classNameId, classPK);
 	}
 
 	/**
@@ -646,14 +557,20 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of activities done on assets identified by class name.
+	* Returns the number of activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
-	* @param className the target asset's class name
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
 	* @return the number of matching activities
 	*/
 	@Override
-	public int getActivitiesCount(java.lang.String className) {
-		return _socialActivityLocalService.getActivitiesCount(className);
+	public int getActivitiesCount(long mirrorActivityId, long classNameId,
+		long classPK) {
+		return _socialActivityLocalService.getActivitiesCount(mirrorActivityId,
+			classNameId, classPK);
 	}
 
 	/**
@@ -675,6 +592,16 @@ public class SocialActivityLocalServiceWrapper
 		long activitySetId, int start, int end) {
 		return _socialActivityLocalService.getActivitySetActivities(activitySetId,
 			start, end);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _socialActivityLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -857,6 +784,13 @@ public class SocialActivityLocalServiceWrapper
 		return _socialActivityLocalService.getOrganizationUsersActivitiesCount(organizationId);
 	}
 
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the activities done by users in a relationship
 	* with the user identified by the user ID.
@@ -936,6 +870,47 @@ public class SocialActivityLocalServiceWrapper
 	public int getRelationActivitiesCount(long userId, int type) {
 		return _socialActivityLocalService.getRelationActivitiesCount(userId,
 			type);
+	}
+
+	/**
+	* Returns a range of all the social activities.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activities
+	* @param end the upper bound of the range of social activities (not inclusive)
+	* @return the range of social activities
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getSocialActivities(
+		int start, int end) {
+		return _socialActivityLocalService.getSocialActivities(start, end);
+	}
+
+	/**
+	* Returns the number of social activities.
+	*
+	* @return the number of social activities
+	*/
+	@Override
+	public int getSocialActivitiesCount() {
+		return _socialActivityLocalService.getSocialActivitiesCount();
+	}
+
+	/**
+	* Returns the social activity with the primary key.
+	*
+	* @param activityId the primary key of the social activity
+	* @return the social activity
+	* @throws PortalException if a social activity with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity getSocialActivity(
+		long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivityLocalService.getSocialActivity(activityId);
 	}
 
 	/**
@@ -1085,6 +1060,28 @@ public class SocialActivityLocalServiceWrapper
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
 		return _socialActivityLocalService.getUserOrganizationsActivitiesCount(userId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_socialActivityLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivity the social activity
+	* @return the social activity that was updated
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivity updateSocialActivity(
+		com.liferay.portlet.social.model.SocialActivity socialActivity) {
+		return _socialActivityLocalService.updateSocialActivity(socialActivity);
 	}
 
 	/**

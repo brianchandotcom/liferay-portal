@@ -101,7 +101,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	@Override
 	protected List<Fields> doGetFieldsListByClasses(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
 		return _doQuery(
@@ -111,7 +111,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	@Override
 	protected List<Fields> doGetFieldsListByDDMStructure(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
 		return _doQuery(ddmStructureId, fieldNames, null, orderByComparator);
@@ -128,7 +128,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	@Override
 	protected List<Fields> doQuery(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
 		return _doQuery(
@@ -189,7 +189,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 	private List<Fields> _doQuery(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
 		return _doQuery(
@@ -217,7 +217,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 	private List<Fields> _doQuery(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			Condition condition, OrderByComparator orderByComparator)
+			Condition condition, OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
 		List<Fields> fieldsList = new ArrayList<Fields>();

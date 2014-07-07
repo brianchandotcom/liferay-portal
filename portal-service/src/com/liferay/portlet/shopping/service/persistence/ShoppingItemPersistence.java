@@ -226,7 +226,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator);
 
 	/**
 	* Returns the first shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -239,7 +239,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem findByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemException;
 
 	/**
@@ -252,7 +252,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem fetchByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator);
 
 	/**
 	* Returns the last shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -265,7 +265,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem findByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemException;
 
 	/**
@@ -278,7 +278,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem fetchByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator);
 
 	/**
 	* Returns the shopping items before and after the current shopping item in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -292,7 +292,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem[] findByG_C_PrevAndNext(
 		long itemId, long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemException;
 
 	/**
@@ -337,7 +337,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> filterFindByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator);
 
 	/**
 	* Returns the shopping items before and after the current shopping item in the ordered set of shopping items that the user has permission to view where groupId = &#63; and categoryId = &#63;.
@@ -351,7 +351,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem[] filterFindByG_C_PrevAndNext(
 		long itemId, long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemException;
 
 	/**
@@ -528,7 +528,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> orderByComparator);
 
 	/**
 	* Removes all the shopping items from the database.

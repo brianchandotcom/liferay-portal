@@ -161,7 +161,7 @@ public class UsersAdminUtil {
 			actionRequest, defaultEmailAddresses);
 	}
 
-	public static OrderByComparator getGroupOrderByComparator(
+	public static OrderByComparator<Group> getGroupOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getUsersAdmin().getGroupOrderByComparator(
@@ -172,8 +172,9 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getOrganizationIds(organizations);
 	}
 
-	public static OrderByComparator getOrganizationOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<Organization>
+		getOrganizationOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		return getUsersAdmin().getOrganizationOrderByComparator(
 			orderByCol, orderByType);
@@ -199,14 +200,14 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getPhones(actionRequest, defaultPhones);
 	}
 
-	public static OrderByComparator getRoleOrderByComparator(
+	public static OrderByComparator<Role> getRoleOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getUsersAdmin().getRoleOrderByComparator(
 			orderByCol, orderByType);
 	}
 
-	public static OrderByComparator getUserGroupOrderByComparator(
+	public static OrderByComparator<UserGroup> getUserGroupOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getUsersAdmin().getUserGroupOrderByComparator(
@@ -226,7 +227,7 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getUserGroups(hits);
 	}
 
-	public static OrderByComparator getUserOrderByComparator(
+	public static OrderByComparator<User> getUserOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getUsersAdmin().getUserOrderByComparator(

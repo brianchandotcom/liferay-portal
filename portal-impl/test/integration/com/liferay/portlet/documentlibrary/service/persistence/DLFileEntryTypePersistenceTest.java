@@ -308,7 +308,7 @@ public class DLFileEntryTypePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLFileEntryType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryType", "uuid",
 			true, "fileEntryTypeId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

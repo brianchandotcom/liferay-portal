@@ -428,7 +428,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	@Override
 	public List<WikiPage> getPages(
 			long groupId, long nodeId, boolean head, int status, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<WikiPage> obc)
 		throws PortalException {
 
 		WikiNodePermission.check(

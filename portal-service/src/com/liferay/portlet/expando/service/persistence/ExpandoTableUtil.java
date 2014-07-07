@@ -88,7 +88,7 @@ public class ExpandoTableUtil {
 	 */
 	public static List<ExpandoTable> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoTable> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -155,7 +155,7 @@ public class ExpandoTableUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(companyId, classNameId, start, end,
 			orderByComparator);
@@ -172,7 +172,7 @@ public class ExpandoTableUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
@@ -188,7 +188,7 @@ public class ExpandoTableUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -204,7 +204,7 @@ public class ExpandoTableUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
@@ -220,7 +220,7 @@ public class ExpandoTableUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -237,7 +237,7 @@ public class ExpandoTableUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable[] findByC_C_PrevAndNext(
 		long tableId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(tableId, companyId, classNameId,
@@ -451,7 +451,7 @@ public class ExpandoTableUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

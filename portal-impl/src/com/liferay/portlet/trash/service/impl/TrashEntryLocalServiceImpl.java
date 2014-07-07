@@ -282,7 +282,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<TrashEntry> getEntries(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end, OrderByComparator<TrashEntry> obc) {
 
 		return trashEntryPersistence.findByGroupId(groupId, start, end, obc);
 	}

@@ -145,7 +145,7 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> getWorkflowTasks(
 			long companyId, Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasks(
@@ -154,7 +154,7 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> getWorkflowTasksByRole(
 			long companyId, long roleId, Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasksByRole(
@@ -163,7 +163,7 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> getWorkflowTasksBySubmittingUser(
 			long companyId, long userId, Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasksBySubmittingUser(
@@ -172,7 +172,7 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> getWorkflowTasksByUser(
 			long companyId, long userId, Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasksByUser(
@@ -181,7 +181,7 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> getWorkflowTasksByUserRoles(
 			long companyId, long userId, Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasksByUserRoles(
@@ -191,7 +191,7 @@ public class WorkflowTaskManagerUtil {
 	public static List<WorkflowTask> getWorkflowTasksByWorkflowInstance(
 			long companyId, Long userId, long workflowInstanceId,
 			Boolean completed, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().getWorkflowTasksByWorkflowInstance(
@@ -202,7 +202,7 @@ public class WorkflowTaskManagerUtil {
 	public static List<WorkflowTask> search(
 			long companyId, long userId, String keywords, Boolean completed,
 			Boolean searchByUserRoles, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().search(
@@ -214,7 +214,8 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long userId, String taskName, String assetType,
 			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
-			int start, int end, OrderByComparator orderByComparator)
+			int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().search(
@@ -226,7 +227,7 @@ public class WorkflowTaskManagerUtil {
 	public static List<WorkflowTask> search(
 			long companyId, long userId, String keywords, String[] assetTypes,
 			Boolean completed, Boolean searchByUserRoles, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().search(

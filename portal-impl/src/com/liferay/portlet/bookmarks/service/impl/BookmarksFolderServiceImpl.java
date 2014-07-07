@@ -139,7 +139,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public List<Object> getFoldersAndEntries(
 		long groupId, long folderId, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return bookmarksFolderFinder.filterFindBF_E_ByG_F(
 			groupId, folderId, queryDefinition);
@@ -149,7 +150,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public List<Object> getFoldersAndEntries(
 		long groupId, long folderId, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
 			status, start, end, null);
 
 		return bookmarksFolderFinder.filterFindBF_E_ByG_F(
@@ -166,7 +167,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public int getFoldersAndEntriesCount(
 		long groupId, long folderId, int status) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
+			status);
 
 		return bookmarksFolderFinder.filterCountF_E_ByG_F(
 			groupId, folderId, queryDefinition);

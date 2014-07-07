@@ -16,6 +16,7 @@ package com.liferay.portlet.passwordpoliciesadmin.util;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.util.comparator.PasswordPolicyDescriptionComparator;
 import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
 
@@ -26,7 +27,7 @@ import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
 public class PasswordPoliciesAdminImpl implements PasswordPoliciesAdmin {
 
 	@Override
-	public OrderByComparator getPasswordPolicyOrderByComparator(
+	public OrderByComparator<PasswordPolicy> getPasswordPolicyOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -35,7 +36,7 @@ public class PasswordPoliciesAdminImpl implements PasswordPoliciesAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<PasswordPolicy> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new PasswordPolicyNameComparator(orderByAsc);

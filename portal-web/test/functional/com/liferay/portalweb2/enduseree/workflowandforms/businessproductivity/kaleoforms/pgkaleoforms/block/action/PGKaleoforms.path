@@ -81,7 +81,7 @@
 <!--SUBMIT_NEW_MENULIST-->
 <tr>
 	<td>SUBMIT_NEW_MENULIST_PROCESS</td>
-	<td>//li/a[contains(.,'${key_processName}')]</td>
+	<td>//li/a[contains(.,'${key_kfProcessName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 <!--TABLE_GENERIC-->
 <tr>
 	<td>TABLE_GENERIC_PROCESS_NAME</td>
-	<td>//tr[contains(.,'${key_processName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,22 +103,22 @@
 <!--ASSIGNED_TO_ME_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[1]/a</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_NAME</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[2]/a</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[3]/a</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[4]/div/a</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,22 +155,22 @@
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[1]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_NAME</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[2]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[3]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_processName}')]/td[4]/div/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,7 +197,7 @@
 <!--DIALOG_BOX-->
 <tr>
 	<td>DIALOG_BOX_TITLE</td>
-	<td>//h3[@class='modal-title']</td>
+	<td>//div[contains(@class,'modal-header')]/h3</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,6 +220,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MY_PENDING_REQUESTS_TABLE-->
+<tr>
+	<td>MY_PENDING_REQUESTS_INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_END_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MY_COMPLETED_REQUESTS_TABLE-->
 <tr>
 	<td>MY_COMPLETED_REQUESTS_INFO_MESSAGE</td>
@@ -228,22 +259,22 @@
 </tr>
 <tr>
 	<td>MY_COMPLETED_REQUESTS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_processName}')]/td/a</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_COMPLETED_REQUESTS_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_processName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//tr[contains(.,'${key_processName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_COMPLETED_REQUESTS_TABLE_END_DATE</td>
-	<td>//tr[contains(.,'${key_processName}')]/td[4]/span</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]/span</td>
 	<td></td>
 </tr>
 </tbody>

@@ -42,12 +42,12 @@ public interface WorkflowDefinitionManager {
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, String name, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
 	public WorkflowDefinition getLatestKaleoDefinition(
@@ -66,12 +66,12 @@ public interface WorkflowDefinitionManager {
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
 	public void undeployWorkflowDefinition(

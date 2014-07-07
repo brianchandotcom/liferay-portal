@@ -88,7 +88,7 @@ public class DDMStorageLinkUtil {
 	 */
 	public static List<DDMStorageLink> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink[] findByUuid_PrevAndNext(
 		long storageLinkId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(storageLinkId, uuid,
@@ -350,7 +350,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findByStructureId(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .findByStructureId(structureId, start, end, orderByComparator);
 	}
@@ -365,7 +365,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByStructureId_First(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByStructureId_First(structureId, orderByComparator);
@@ -380,7 +380,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_First(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_First(structureId, orderByComparator);
 	}
@@ -395,7 +395,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByStructureId_Last(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByStructureId_Last(structureId, orderByComparator);
@@ -410,7 +410,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByStructureId_Last(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_Last(structureId, orderByComparator);
 	}
@@ -426,7 +426,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink[] findByStructureId_PrevAndNext(
 		long storageLinkId, long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
 		return getPersistence()
 				   .findByStructureId_PrevAndNext(storageLinkId, structureId,
@@ -569,7 +569,7 @@ public class DDMStorageLinkUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

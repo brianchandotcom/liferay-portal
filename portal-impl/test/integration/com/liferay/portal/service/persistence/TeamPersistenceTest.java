@@ -241,7 +241,7 @@ public class TeamPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Team> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Team", "mvccVersion", true,
 			"teamId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "groupId", true,

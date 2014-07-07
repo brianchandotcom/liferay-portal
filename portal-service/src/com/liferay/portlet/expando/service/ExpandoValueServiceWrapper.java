@@ -32,30 +32,10 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 		_expandoValueService = expandoValueService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _expandoValueService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_expandoValueService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Object data)
+		java.lang.String columnName, long classPK, java.lang.String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.addValue(companyId, className, tableName,
 			columnName, classPK, data);
@@ -64,7 +44,7 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String data)
+		java.lang.String columnName, long classPK, java.lang.Object data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.addValue(companyId, className, tableName,
 			columnName, classPK, data);
@@ -79,13 +59,14 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 			classPK, attributeValues);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
 	@Override
-	public java.util.Map<java.lang.String, java.io.Serializable> getData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoValueService.getData(companyId, className, tableName,
-			columnNames, classPK);
+	public java.lang.String getBeanIdentifier() {
+		return _expandoValueService.getBeanIdentifier();
 	}
 
 	@Override
@@ -98,12 +79,31 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	}
 
 	@Override
+	public java.util.Map<java.lang.String, java.io.Serializable> getData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoValueService.getData(companyId, className, tableName,
+			columnNames, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.json.JSONObject getJSONData(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.getJSONData(companyId, className,
 			tableName, columnName, classPK);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_expandoValueService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

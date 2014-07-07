@@ -750,11 +750,30 @@
 	</command>
 
 	<command name="gotoPG">
+		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<if>
+			<equals arg1="${entryTitleSpecialCharacter}" arg2="true" />
+			<then>
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
+				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
+			</then>
+			<elseif>
+				<equals arg1="${viewSpecificEntry}" arg2="true" />
+				<then>
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
+					<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="gotoScheduledEditPG">
@@ -928,7 +947,6 @@
 	<command name="subscribePG">
 		<execute action="PGBlogs#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="UNSUBSCRIBE_LINK" value1="Unsubscribe" />
 	</command>
 
 	<command name="tearDownCP">
@@ -1213,31 +1231,6 @@
 	</command>
 
 	<command name="viewPG">
-		<var name="key_entryContent" value="${entryContent}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<if>
-			<equals arg1="${entryTitleSpecialCharacter}" arg2="true" />
-			<then>
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
-				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
-			</then>
-			<elseif>
-				<equals arg1="${viewSpecificEntry}" arg2="true" />
-				<then>
-					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
-					<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-				</then>
-			</elseif>
-			<else>
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-			</else>
-		</if>
-
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>

@@ -138,8 +138,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -156,8 +155,8 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -176,9 +175,8 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -415,7 +413,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	@Override
 	public List<SCProductVersion> getSCFrameworkVersionSCProductVersions(
 		long frameworkVersionId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		return scFrameworkVersionPersistence.getSCProductVersions(frameworkVersionId,
 			start, end, orderByComparator);
 	}

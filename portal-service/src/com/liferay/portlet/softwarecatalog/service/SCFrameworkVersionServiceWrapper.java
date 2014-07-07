@@ -34,26 +34,6 @@ public class SCFrameworkVersionServiceWrapper
 		_scFrameworkVersionService = scFrameworkVersionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scFrameworkVersionService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scFrameworkVersionService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion addFrameworkVersion(
 		java.lang.String name, java.lang.String url, boolean active,
@@ -67,6 +47,16 @@ public class SCFrameworkVersionServiceWrapper
 	public void deleteFrameworkVersion(long frameworkVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scFrameworkVersionService.deleteFrameworkVersion(frameworkVersionId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _scFrameworkVersionService.getBeanIdentifier();
 	}
 
 	@Override
@@ -87,6 +77,16 @@ public class SCFrameworkVersionServiceWrapper
 		long groupId, boolean active, int start, int end) {
 		return _scFrameworkVersionService.getFrameworkVersions(groupId, active,
 			start, end);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_scFrameworkVersionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

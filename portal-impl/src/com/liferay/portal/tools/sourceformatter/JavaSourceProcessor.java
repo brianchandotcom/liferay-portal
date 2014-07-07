@@ -202,6 +202,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
+	protected String applyDiamondOperator(String content) {
+		Matcher matcher = _diamondOperatorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String parameterType = matcher.group(5);
+
+			if (parameterType.contains("Object")) {
+				String constructorParameter = matcher.group(6);
+
+				if (Validator.isNotNull(constructorParameter)) {
+					continue;
+				}
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replaceFirst(
+				match, "<" + parameterType + ">", "<>");
+
+			return StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
+	}
+
 	protected void checkAnnotationForMethod(
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
 		int requiredMethodType, String fileName) {
@@ -1052,7 +1077,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
-		_fitOnSingleLineExceptions = getExclusions(
+		_fitOnSingleLineExclusions = getExclusions(
 			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getExclusions(
 			"hibernate.sql.query.excludes");
@@ -1360,6 +1385,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-47055
 
 		newContent = fixSystemExceptions(newContent);
+
+		// LPS-47648
+
+		if (portalSource && fileName.contains("/test/integration/")) {
+			newContent = StringUtil.replace(
+				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
+		}
+
+		// LPS-47682
+
+		newContent = fixIncorrectParameterTypeForLanguageUtil(
+			newContent, false, fileName);
+
+		if (portalSource && fileName.contains("/portal-service/") &&
+			content.contains("import javax.servlet.jsp.")) {
+
+			processErrorMessage(
+				fileName,
+				"Never import javax.servlet.jsp.* from portal-service " +
+					fileName);
+		}
+
+		// LPS-48153
+
+		//newContent = applyDiamondOperator(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -2045,7 +2095,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!isExcluded(
-							_fitOnSingleLineExceptions, fileName, lineCount)) {
+							_fitOnSingleLineExclusions, fileName, lineCount)) {
 
 						combinedLines = getCombinedLines(
 							trimmedLine, previousLine, lineLeadingTabCount,
@@ -2207,6 +2257,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (pos == -1) {
 			pos = line.indexOf(StringPool.OPEN_CURLY_BRACE);
 		}
+
+		if (pos != -1) {
+			line = line.substring(0, pos);
+		}
+
+		pos = line.indexOf(StringPool.LESS_THAN);
 
 		if (pos != -1) {
 			line = line.substring(0, pos);
@@ -3078,7 +3134,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private List<String> _fitOnSingleLineExceptions;
+	private Pattern _diamondOperatorPattern = Pattern.compile(
+		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
+			"\\(\n*\t*(.*)\\);\n");
+	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");

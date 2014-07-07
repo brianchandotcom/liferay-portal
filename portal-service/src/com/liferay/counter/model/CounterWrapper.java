@@ -72,24 +72,29 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this counter.
-	*
-	* @return the primary key of this counter
-	*/
 	@Override
-	public java.lang.String getPrimaryKey() {
-		return _counter.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new CounterWrapper((Counter)_counter.clone());
+	}
+
+	@Override
+	public int compareTo(com.liferay.counter.model.Counter counter) {
+		return _counter.compareTo(counter);
 	}
 
 	/**
-	* Sets the primary key of this counter.
+	* Returns the current ID of this counter.
 	*
-	* @param primaryKey the primary key of this counter
+	* @return the current ID of this counter
 	*/
 	@Override
-	public void setPrimaryKey(java.lang.String primaryKey) {
-		_counter.setPrimaryKey(primaryKey);
+	public long getCurrentId() {
+		return _counter.getCurrentId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _counter.getExpandoBridge();
 	}
 
 	/**
@@ -103,23 +108,48 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	/**
-	* Sets the name of this counter.
+	* Returns the primary key of this counter.
 	*
-	* @param name the name of this counter
+	* @return the primary key of this counter
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_counter.setName(name);
+	public java.lang.String getPrimaryKey() {
+		return _counter.getPrimaryKey();
 	}
 
-	/**
-	* Returns the current ID of this counter.
-	*
-	* @return the current ID of this counter
-	*/
 	@Override
-	public long getCurrentId() {
-		return _counter.getCurrentId();
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _counter.getPrimaryKeyObj();
+	}
+
+	@Override
+	public int hashCode() {
+		return _counter.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _counter.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _counter.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _counter.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_counter.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_counter.setCachedModel(cachedModel);
 	}
 
 	/**
@@ -130,46 +160,6 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	@Override
 	public void setCurrentId(long currentId) {
 		_counter.setCurrentId(currentId);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _counter.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_counter.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _counter.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_counter.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _counter.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _counter.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_counter.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _counter.getExpandoBridge();
 	}
 
 	@Override
@@ -190,19 +180,34 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		_counter.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the name of this counter.
+	*
+	* @param name the name of this counter
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CounterWrapper((Counter)_counter.clone());
+	public void setName(java.lang.String name) {
+		_counter.setName(name);
 	}
 
 	@Override
-	public int compareTo(com.liferay.counter.model.Counter counter) {
-		return _counter.compareTo(counter);
+	public void setNew(boolean n) {
+		_counter.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this counter.
+	*
+	* @param primaryKey the primary key of this counter
+	*/
+	@Override
+	public void setPrimaryKey(java.lang.String primaryKey) {
+		_counter.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _counter.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_counter.setPrimaryKeyObj(primaryKeyObj);
 	}
 
 	@Override
@@ -216,23 +221,18 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public com.liferay.counter.model.Counter toUnescapedModel() {
-		return new CounterWrapper(_counter.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _counter.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _counter.toXmlString();
+	public com.liferay.counter.model.Counter toUnescapedModel() {
+		return new CounterWrapper(_counter.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_counter.persist();
+	public java.lang.String toXmlString() {
+		return _counter.toXmlString();
 	}
 
 	@Override

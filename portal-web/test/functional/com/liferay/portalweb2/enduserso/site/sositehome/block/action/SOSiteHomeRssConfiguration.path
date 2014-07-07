@@ -50,13 +50,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FEEDS_DELETE_ROW_BUTTON</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEEDS_TITLE_FIELD</td>
-	<td>//input[@id='_86_title2']</td>
+	<td>xpath=(//input[contains(@id,'_86_title')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FEEDS_URL_FIELD</td>
-	<td>//input[@id='_86_url2']</td>
+	<td>xpath=(//input[contains(@id,'_86_url')])[2]</td>
 	<td></td>
 </tr>
 <tr>

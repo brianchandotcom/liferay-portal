@@ -146,7 +146,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public List<DLSyncEvent> findByModifiedTime(long modifiedTime, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLSyncEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -244,7 +244,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent findByModifiedTime_First(long modifiedTime,
-		OrderByComparator orderByComparator) throws NoSuchSyncEventException {
+		OrderByComparator<DLSyncEvent> orderByComparator)
+		throws NoSuchSyncEventException {
 		DLSyncEvent dlSyncEvent = fetchByModifiedTime_First(modifiedTime,
 				orderByComparator);
 
@@ -273,7 +274,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent fetchByModifiedTime_First(long modifiedTime,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLSyncEvent> orderByComparator) {
 		List<DLSyncEvent> list = findByModifiedTime(modifiedTime, 0, 1,
 				orderByComparator);
 
@@ -294,7 +295,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent findByModifiedTime_Last(long modifiedTime,
-		OrderByComparator orderByComparator) throws NoSuchSyncEventException {
+		OrderByComparator<DLSyncEvent> orderByComparator)
+		throws NoSuchSyncEventException {
 		DLSyncEvent dlSyncEvent = fetchByModifiedTime_Last(modifiedTime,
 				orderByComparator);
 
@@ -323,7 +325,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent fetchByModifiedTime_Last(long modifiedTime,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLSyncEvent> orderByComparator) {
 		int count = countByModifiedTime(modifiedTime);
 
 		if (count == 0) {
@@ -351,7 +353,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent[] findByModifiedTime_PrevAndNext(long syncEventId,
-		long modifiedTime, OrderByComparator orderByComparator)
+		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
 		throws NoSuchSyncEventException {
 		DLSyncEvent dlSyncEvent = findByPrimaryKey(syncEventId);
 
@@ -382,7 +384,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 
 	protected DLSyncEvent getByModifiedTime_PrevAndNext(Session session,
 		DLSyncEvent dlSyncEvent, long modifiedTime,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLSyncEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1278,7 +1280,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public List<DLSyncEvent> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLSyncEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

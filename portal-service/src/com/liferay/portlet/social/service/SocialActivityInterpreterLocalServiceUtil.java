@@ -42,24 +42,6 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds the activity interpreter to the list of available interpreters.
 	*
 	* @param activityInterpreter the activity interpreter
@@ -86,6 +68,15 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getActivityInterpreters(
 		java.lang.String selector) {
 		return getService().getActivityInterpreters(selector);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -128,6 +119,15 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activitySet, serviceContext);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateActivitySet(long activityId)

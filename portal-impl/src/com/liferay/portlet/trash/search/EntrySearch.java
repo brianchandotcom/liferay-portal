@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Sergio González
  */
-public class EntrySearch extends SearchContainer<Group> {
+public class EntrySearch extends SearchContainer<TrashEntry> {
 
 	static List<String> headerNames = new ArrayList<String>();
 	static Map<String, String> orderableHeaders = new HashMap<String, String>();
@@ -91,7 +91,7 @@ public class EntrySearch extends SearchContainer<Group> {
 					PortletKeys.USERS_ADMIN, "entries-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<TrashEntry> orderByComparator =
 				TrashUtil.getEntryOrderByComparator(orderByCol, orderByType);
 
 			setOrderableHeaders(orderableHeaders);

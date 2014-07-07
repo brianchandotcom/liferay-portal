@@ -79,7 +79,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator);
 
 	/**
 	* Returns the first announcements flag in the ordered set where entryId = &#63;.
@@ -91,7 +91,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator);
 
 	/**
 	* Returns the last announcements flag in the ordered set where entryId = &#63;.
@@ -115,7 +115,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator);
 
 	/**
 	* Returns the announcements flags before and after the current announcements flag in the ordered set where entryId = &#63;.
@@ -140,7 +140,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag[] findByEntryId_PrevAndNext(
 		long flagId, long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
@@ -314,7 +314,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator);
 
 	/**
 	* Removes all the announcements flags from the database.

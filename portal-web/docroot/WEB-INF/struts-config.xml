@@ -35,8 +35,6 @@
 
 		<action path="/portal/extend_session" forward="/portal/extend_session.jsp" />
 
-		<action path="/portal/fckeditor" type="com.liferay.portal.editor.fckeditor.ConnectorAction" />
-
 		<action path="/portal/flash" forward="/portal/flash.jsp" />
 
 		<action path="/portal/j_login" forward="/portal/j_login.jsp" />
@@ -589,6 +587,10 @@
 
 		<!-- Document Selector -->
 
+		<action path="/document_selector/add_file_entry" type="com.liferay.portlet.documentselector.action.EditFileEntryAction">
+			<forward name="portlet.document_selector.add_file_entry" path="portlet.document_selector.add_file_entry" />
+		</action>
+
 		<action path="/document_selector/view" forward="portlet.document_selector.view" />
 
 		<!-- Dynamic Data List Display -->
@@ -910,10 +912,6 @@
 		</action>
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
-
-		<action path="/journal/search" type="com.liferay.portlet.journal.action.SearchAction">
-			<forward name="portlet.journal.view" path="portlet.journal.view" />
-		</action>
 
 		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
 
@@ -1673,6 +1671,10 @@
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
 
 		<!-- Related Assets -->
+
+		<action path="/related_assets/view" type="com.liferay.portlet.relatedassets.action.ViewAction">
+			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
+		</action>
 
 		<action path="/related_assets/view_content" type="com.liferay.portlet.relatedassets.action.ViewContentAction">
 			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />

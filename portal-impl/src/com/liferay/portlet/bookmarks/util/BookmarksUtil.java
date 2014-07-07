@@ -289,7 +289,7 @@ public class BookmarksUtil {
 		return entries;
 	}
 
-	public static OrderByComparator getEntryOrderByComparator(
+	public static OrderByComparator<BookmarksEntry> getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -298,7 +298,7 @@ public class BookmarksUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<BookmarksEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new EntryCreateDateComparator(orderByAsc);

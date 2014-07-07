@@ -17,10 +17,10 @@ package com.liferay.portal.kernel.util;
 /**
  * @author José Manuel Navarro
  */
-public class TableNameOrderByComparator extends OrderByComparator {
+public class TableNameOrderByComparator<T> extends OrderByComparator<T> {
 
 	public TableNameOrderByComparator(
-		OrderByComparator orderByComparator, String tableName) {
+		OrderByComparator<T> orderByComparator, String tableName) {
 
 		_orderByComparator = orderByComparator;
 
@@ -28,7 +28,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
+	public int compare(T obj1, T obj2) {
 		return _orderByComparator.compare(obj1, obj2);
 	}
 
@@ -77,7 +77,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _orderByComparator.getOrderByFields();
 	}
 
-	public OrderByComparator getWrappedOrderByComparator() {
+	public OrderByComparator<T> getWrappedOrderByComparator() {
 		return _orderByComparator;
 	}
 
@@ -110,7 +110,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _orderByComparator.toString();
 	}
 
-	private OrderByComparator _orderByComparator;
+	private OrderByComparator<T> _orderByComparator;
 	private String _tableName;
 
 }

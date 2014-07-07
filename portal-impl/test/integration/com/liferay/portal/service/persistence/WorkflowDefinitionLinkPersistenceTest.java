@@ -278,7 +278,7 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<WorkflowDefinitionLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WorkflowDefinitionLink",
 			"mvccVersion", true, "workflowDefinitionLinkId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,

@@ -143,7 +143,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	public List<Team> search(
 		long groupId, String name, String description,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Team> obc) {
 
 		return teamFinder.findByG_N_D(
 			groupId, name, description, params, start, end, obc);

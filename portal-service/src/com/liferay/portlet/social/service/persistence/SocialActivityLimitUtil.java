@@ -88,7 +88,7 @@ public class SocialActivityLimitUtil {
 	 */
 	public static List<SocialActivityLimit> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -153,7 +153,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -168,7 +168,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -182,7 +182,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -196,7 +196,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -210,7 +210,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -225,7 +225,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit[] findByGroupId_PrevAndNext(
 		long activityLimitId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityLimitId, groupId,
@@ -294,7 +294,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -309,7 +309,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -323,7 +323,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -337,7 +337,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -351,7 +351,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -366,7 +366,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit[] findByUserId_PrevAndNext(
 		long activityLimitId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(activityLimitId, userId,
@@ -438,7 +438,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -455,7 +455,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -471,7 +471,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -487,7 +487,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -503,7 +503,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -520,7 +520,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityLimit[] findByC_C_PrevAndNext(
 		long activityLimitId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityLimitId, classNameId,
@@ -765,7 +765,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

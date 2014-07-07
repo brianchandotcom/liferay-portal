@@ -131,184 +131,15 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		}
 	}
 
-	/**
-	* Returns the primary key of this ratings entry.
-	*
-	* @return the primary key of this ratings entry
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _ratingsEntry.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
 	}
 
-	/**
-	* Sets the primary key of this ratings entry.
-	*
-	* @param primaryKey the primary key of this ratings entry
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_ratingsEntry.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this ratings entry.
-	*
-	* @return the uuid of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _ratingsEntry.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this ratings entry.
-	*
-	* @param uuid the uuid of this ratings entry
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_ratingsEntry.setUuid(uuid);
-	}
-
-	/**
-	* Returns the entry ID of this ratings entry.
-	*
-	* @return the entry ID of this ratings entry
-	*/
-	@Override
-	public long getEntryId() {
-		return _ratingsEntry.getEntryId();
-	}
-
-	/**
-	* Sets the entry ID of this ratings entry.
-	*
-	* @param entryId the entry ID of this ratings entry
-	*/
-	@Override
-	public void setEntryId(long entryId) {
-		_ratingsEntry.setEntryId(entryId);
-	}
-
-	/**
-	* Returns the company ID of this ratings entry.
-	*
-	* @return the company ID of this ratings entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _ratingsEntry.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this ratings entry.
-	*
-	* @param companyId the company ID of this ratings entry
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_ratingsEntry.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this ratings entry.
-	*
-	* @return the user ID of this ratings entry
-	*/
-	@Override
-	public long getUserId() {
-		return _ratingsEntry.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this ratings entry.
-	*
-	* @param userId the user ID of this ratings entry
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_ratingsEntry.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this ratings entry.
-	*
-	* @return the user uuid of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _ratingsEntry.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this ratings entry.
-	*
-	* @param userUuid the user uuid of this ratings entry
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_ratingsEntry.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this ratings entry.
-	*
-	* @return the user name of this ratings entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _ratingsEntry.getUserName();
-	}
-
-	/**
-	* Sets the user name of this ratings entry.
-	*
-	* @param userName the user name of this ratings entry
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_ratingsEntry.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this ratings entry.
-	*
-	* @return the create date of this ratings entry
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _ratingsEntry.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this ratings entry.
-	*
-	* @param createDate the create date of this ratings entry
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_ratingsEntry.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this ratings entry.
-	*
-	* @return the modified date of this ratings entry
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _ratingsEntry.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this ratings entry.
-	*
-	* @param modifiedDate the modified date of this ratings entry
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_ratingsEntry.setModifiedDate(modifiedDate);
+	public int compareTo(
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
+		return _ratingsEntry.compareTo(ratingsEntry);
 	}
 
 	/**
@@ -319,11 +150,6 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public java.lang.String getClassName() {
 		return _ratingsEntry.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_ratingsEntry.setClassName(className);
 	}
 
 	/**
@@ -337,16 +163,6 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	* Sets the class name ID of this ratings entry.
-	*
-	* @param classNameId the class name ID of this ratings entry
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_ratingsEntry.setClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the class p k of this ratings entry.
 	*
 	* @return the class p k of this ratings entry
@@ -357,13 +173,63 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	* Sets the class p k of this ratings entry.
+	* Returns the company ID of this ratings entry.
 	*
-	* @param classPK the class p k of this ratings entry
+	* @return the company ID of this ratings entry
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_ratingsEntry.setClassPK(classPK);
+	public long getCompanyId() {
+		return _ratingsEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this ratings entry.
+	*
+	* @return the create date of this ratings entry
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _ratingsEntry.getCreateDate();
+	}
+
+	/**
+	* Returns the entry ID of this ratings entry.
+	*
+	* @return the entry ID of this ratings entry
+	*/
+	@Override
+	public long getEntryId() {
+		return _ratingsEntry.getEntryId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _ratingsEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this ratings entry.
+	*
+	* @return the modified date of this ratings entry
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _ratingsEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this ratings entry.
+	*
+	* @return the primary key of this ratings entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ratingsEntry.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _ratingsEntry.getPrimaryKeyObj();
 	}
 
 	/**
@@ -377,23 +243,48 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	* Sets the score of this ratings entry.
+	* Returns the user ID of this ratings entry.
 	*
-	* @param score the score of this ratings entry
+	* @return the user ID of this ratings entry
 	*/
 	@Override
-	public void setScore(double score) {
-		_ratingsEntry.setScore(score);
+	public long getUserId() {
+		return _ratingsEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this ratings entry.
+	*
+	* @return the user name of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _ratingsEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this ratings entry.
+	*
+	* @return the user uuid of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _ratingsEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this ratings entry.
+	*
+	* @return the uuid of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _ratingsEntry.getUuid();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _ratingsEntry.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ratingsEntry.setNew(n);
+	public int hashCode() {
+		return _ratingsEntry.hashCode();
 	}
 
 	@Override
@@ -402,28 +293,78 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ratingsEntry.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _ratingsEntry.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _ratingsEntry.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _ratingsEntry.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_ratingsEntry.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_ratingsEntry.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _ratingsEntry.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_ratingsEntry.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_ratingsEntry.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this ratings entry.
+	*
+	* @param classNameId the class name ID of this ratings entry
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_ratingsEntry.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this ratings entry.
+	*
+	* @param classPK the class p k of this ratings entry
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_ratingsEntry.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this ratings entry.
+	*
+	* @param companyId the company ID of this ratings entry
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ratingsEntry.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this ratings entry.
+	*
+	* @param createDate the create date of this ratings entry
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_ratingsEntry.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the entry ID of this ratings entry.
+	*
+	* @param entryId the entry ID of this ratings entry
+	*/
+	@Override
+	public void setEntryId(long entryId) {
+		_ratingsEntry.setEntryId(entryId);
 	}
 
 	@Override
@@ -444,20 +385,84 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		_ratingsEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the modified date of this ratings entry.
+	*
+	* @param modifiedDate the modified date of this ratings entry
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_ratingsEntry.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
-		return _ratingsEntry.compareTo(ratingsEntry);
+	public void setNew(boolean n) {
+		_ratingsEntry.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this ratings entry.
+	*
+	* @param primaryKey the primary key of this ratings entry
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_ratingsEntry.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _ratingsEntry.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_ratingsEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the score of this ratings entry.
+	*
+	* @param score the score of this ratings entry
+	*/
+	@Override
+	public void setScore(double score) {
+		_ratingsEntry.setScore(score);
+	}
+
+	/**
+	* Sets the user ID of this ratings entry.
+	*
+	* @param userId the user ID of this ratings entry
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_ratingsEntry.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this ratings entry.
+	*
+	* @param userName the user name of this ratings entry
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_ratingsEntry.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this ratings entry.
+	*
+	* @param userUuid the user uuid of this ratings entry
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_ratingsEntry.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this ratings entry.
+	*
+	* @param uuid the uuid of this ratings entry
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_ratingsEntry.setUuid(uuid);
 	}
 
 	@Override
@@ -471,23 +476,18 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public com.liferay.portlet.ratings.model.RatingsEntry toUnescapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _ratingsEntry.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _ratingsEntry.toXmlString();
+	public com.liferay.portlet.ratings.model.RatingsEntry toUnescapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_ratingsEntry.persist();
+	public java.lang.String toXmlString() {
+		return _ratingsEntry.toXmlString();
 	}
 
 	@Override

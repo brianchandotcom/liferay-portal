@@ -20,7 +20,8 @@ import com.liferay.portal.model.UserGroup;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserGroupDescriptionComparator extends OrderByComparator {
+public class UserGroupDescriptionComparator
+	extends OrderByComparator<UserGroup> {
 
 	public static final String ORDER_BY_ASC =
 		"UserGroup.description ASC, UserGroup.name ASC";
@@ -39,10 +40,7 @@ public class UserGroupDescriptionComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		UserGroup userGroup1 = (UserGroup)obj1;
-		UserGroup userGroup2 = (UserGroup)obj2;
-
+	public int compare(UserGroup userGroup1, UserGroup userGroup2) {
 		String description1 = userGroup1.getDescription();
 		String description2 = userGroup2.getDescription();
 

@@ -137,224 +137,20 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this polls vote.
-	*
-	* @return the primary key of this polls vote
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _pollsVote.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new PollsVoteWrapper((PollsVote)_pollsVote.clone());
 	}
 
-	/**
-	* Sets the primary key of this polls vote.
-	*
-	* @param primaryKey the primary key of this polls vote
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_pollsVote.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portlet.polls.model.PollsVote pollsVote) {
+		return _pollsVote.compareTo(pollsVote);
 	}
 
-	/**
-	* Returns the uuid of this polls vote.
-	*
-	* @return the uuid of this polls vote
-	*/
 	@Override
-	public java.lang.String getUuid() {
-		return _pollsVote.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this polls vote.
-	*
-	* @param uuid the uuid of this polls vote
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_pollsVote.setUuid(uuid);
-	}
-
-	/**
-	* Returns the vote ID of this polls vote.
-	*
-	* @return the vote ID of this polls vote
-	*/
-	@Override
-	public long getVoteId() {
-		return _pollsVote.getVoteId();
-	}
-
-	/**
-	* Sets the vote ID of this polls vote.
-	*
-	* @param voteId the vote ID of this polls vote
-	*/
-	@Override
-	public void setVoteId(long voteId) {
-		_pollsVote.setVoteId(voteId);
-	}
-
-	/**
-	* Returns the group ID of this polls vote.
-	*
-	* @return the group ID of this polls vote
-	*/
-	@Override
-	public long getGroupId() {
-		return _pollsVote.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this polls vote.
-	*
-	* @param groupId the group ID of this polls vote
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_pollsVote.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this polls vote.
-	*
-	* @return the company ID of this polls vote
-	*/
-	@Override
-	public long getCompanyId() {
-		return _pollsVote.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this polls vote.
-	*
-	* @param companyId the company ID of this polls vote
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_pollsVote.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this polls vote.
-	*
-	* @return the user ID of this polls vote
-	*/
-	@Override
-	public long getUserId() {
-		return _pollsVote.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this polls vote.
-	*
-	* @param userId the user ID of this polls vote
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_pollsVote.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this polls vote.
-	*
-	* @return the user uuid of this polls vote
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _pollsVote.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this polls vote.
-	*
-	* @param userUuid the user uuid of this polls vote
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_pollsVote.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this polls vote.
-	*
-	* @return the user name of this polls vote
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _pollsVote.getUserName();
-	}
-
-	/**
-	* Sets the user name of this polls vote.
-	*
-	* @param userName the user name of this polls vote
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_pollsVote.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this polls vote.
-	*
-	* @return the create date of this polls vote
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _pollsVote.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this polls vote.
-	*
-	* @param createDate the create date of this polls vote
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_pollsVote.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this polls vote.
-	*
-	* @return the modified date of this polls vote
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _pollsVote.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this polls vote.
-	*
-	* @param modifiedDate the modified date of this polls vote
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_pollsVote.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the question ID of this polls vote.
-	*
-	* @return the question ID of this polls vote
-	*/
-	@Override
-	public long getQuestionId() {
-		return _pollsVote.getQuestionId();
-	}
-
-	/**
-	* Sets the question ID of this polls vote.
-	*
-	* @param questionId the question ID of this polls vote
-	*/
-	@Override
-	public void setQuestionId(long questionId) {
-		_pollsVote.setQuestionId(questionId);
+	public com.liferay.portlet.polls.model.PollsChoice getChoice()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsVote.getChoice();
 	}
 
 	/**
@@ -368,13 +164,113 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	/**
-	* Sets the choice ID of this polls vote.
+	* Returns the company ID of this polls vote.
 	*
-	* @param choiceId the choice ID of this polls vote
+	* @return the company ID of this polls vote
 	*/
 	@Override
-	public void setChoiceId(long choiceId) {
-		_pollsVote.setChoiceId(choiceId);
+	public long getCompanyId() {
+		return _pollsVote.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this polls vote.
+	*
+	* @return the create date of this polls vote
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _pollsVote.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _pollsVote.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this polls vote.
+	*
+	* @return the group ID of this polls vote
+	*/
+	@Override
+	public long getGroupId() {
+		return _pollsVote.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this polls vote.
+	*
+	* @return the modified date of this polls vote
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _pollsVote.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this polls vote.
+	*
+	* @return the primary key of this polls vote
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _pollsVote.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _pollsVote.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the question ID of this polls vote.
+	*
+	* @return the question ID of this polls vote
+	*/
+	@Override
+	public long getQuestionId() {
+		return _pollsVote.getQuestionId();
+	}
+
+	/**
+	* Returns the user ID of this polls vote.
+	*
+	* @return the user ID of this polls vote
+	*/
+	@Override
+	public long getUserId() {
+		return _pollsVote.getUserId();
+	}
+
+	/**
+	* Returns the user name of this polls vote.
+	*
+	* @return the user name of this polls vote
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _pollsVote.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this polls vote.
+	*
+	* @return the user uuid of this polls vote
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _pollsVote.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this polls vote.
+	*
+	* @return the uuid of this polls vote
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _pollsVote.getUuid();
 	}
 
 	/**
@@ -388,23 +284,18 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	/**
-	* Sets the vote date of this polls vote.
+	* Returns the vote ID of this polls vote.
 	*
-	* @param voteDate the vote date of this polls vote
+	* @return the vote ID of this polls vote
 	*/
 	@Override
-	public void setVoteDate(java.util.Date voteDate) {
-		_pollsVote.setVoteDate(voteDate);
+	public long getVoteId() {
+		return _pollsVote.getVoteId();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _pollsVote.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_pollsVote.setNew(n);
+	public int hashCode() {
+		return _pollsVote.hashCode();
 	}
 
 	@Override
@@ -413,28 +304,53 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_pollsVote.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _pollsVote.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _pollsVote.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _pollsVote.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_pollsVote.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_pollsVote.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _pollsVote.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_pollsVote.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the choice ID of this polls vote.
+	*
+	* @param choiceId the choice ID of this polls vote
+	*/
+	@Override
+	public void setChoiceId(long choiceId) {
+		_pollsVote.setChoiceId(choiceId);
+	}
+
+	/**
+	* Sets the company ID of this polls vote.
+	*
+	* @param companyId the company ID of this polls vote
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_pollsVote.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this polls vote.
+	*
+	* @param createDate the create date of this polls vote
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_pollsVote.setCreateDate(createDate);
 	}
 
 	@Override
@@ -455,19 +371,114 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		_pollsVote.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this polls vote.
+	*
+	* @param groupId the group ID of this polls vote
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new PollsVoteWrapper((PollsVote)_pollsVote.clone());
+	public void setGroupId(long groupId) {
+		_pollsVote.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this polls vote.
+	*
+	* @param modifiedDate the modified date of this polls vote
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_pollsVote.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portlet.polls.model.PollsVote pollsVote) {
-		return _pollsVote.compareTo(pollsVote);
+	public void setNew(boolean n) {
+		_pollsVote.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this polls vote.
+	*
+	* @param primaryKey the primary key of this polls vote
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_pollsVote.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _pollsVote.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_pollsVote.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the question ID of this polls vote.
+	*
+	* @param questionId the question ID of this polls vote
+	*/
+	@Override
+	public void setQuestionId(long questionId) {
+		_pollsVote.setQuestionId(questionId);
+	}
+
+	/**
+	* Sets the user ID of this polls vote.
+	*
+	* @param userId the user ID of this polls vote
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_pollsVote.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this polls vote.
+	*
+	* @param userName the user name of this polls vote
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_pollsVote.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this polls vote.
+	*
+	* @param userUuid the user uuid of this polls vote
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_pollsVote.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this polls vote.
+	*
+	* @param uuid the uuid of this polls vote
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_pollsVote.setUuid(uuid);
+	}
+
+	/**
+	* Sets the vote date of this polls vote.
+	*
+	* @param voteDate the vote date of this polls vote
+	*/
+	@Override
+	public void setVoteDate(java.util.Date voteDate) {
+		_pollsVote.setVoteDate(voteDate);
+	}
+
+	/**
+	* Sets the vote ID of this polls vote.
+	*
+	* @param voteId the vote ID of this polls vote
+	*/
+	@Override
+	public void setVoteId(long voteId) {
+		_pollsVote.setVoteId(voteId);
 	}
 
 	@Override
@@ -481,29 +492,18 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public com.liferay.portlet.polls.model.PollsVote toUnescapedModel() {
-		return new PollsVoteWrapper(_pollsVote.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _pollsVote.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.polls.model.PollsVote toUnescapedModel() {
+		return new PollsVoteWrapper(_pollsVote.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _pollsVote.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_pollsVote.persist();
-	}
-
-	@Override
-	public com.liferay.portlet.polls.model.PollsChoice getChoice()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsVote.getChoice();
 	}
 
 	@Override

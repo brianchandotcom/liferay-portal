@@ -585,7 +585,8 @@ public class OrganizationLocalServiceImpl
 
 	@Override
 	public List<Organization> getOrganizations(
-			long userId, int start, int end, OrderByComparator obc)
+			long userId, int start, int end,
+			OrderByComparator<Organization> obc)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -1196,7 +1197,7 @@ public class OrganizationLocalServiceImpl
 	public List<Organization> search(
 		long companyId, long parentOrganizationId, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<Organization> obc) {
 
 		String parentOrganizationIdComparator = StringPool.EQUAL;
 
@@ -1318,7 +1319,7 @@ public class OrganizationLocalServiceImpl
 		long companyId, long parentOrganizationId, String name, String type,
 		String street, String city, String zip, Long regionId, Long countryId,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Organization> obc) {
 
 		String parentOrganizationIdComparator = StringPool.EQUAL;
 

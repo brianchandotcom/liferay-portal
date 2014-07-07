@@ -44,15 +44,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TASKS_TABLE-->
+<!--TASKS_TABLE_REVIEW-->
 <tr>
-	<td>TASKS_TABLE_TASK</td>
-	<td>//div[contains(@id,'workflowTasksSearchContainer')]//td[1]/span</td>
+	<td>TASKS_TABLE_REVIEW_TASK</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[1]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TASKS_TABLE_COMPLETED</td>
-	<td>//div[contains(@id,'workflowTasksSearchContainer')]//td[3]</td>
+	<td>TASKS_TABLE_REVEIW_COMPLETED</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[3]</td>
 	<td></td>
 </tr>
 </tbody>

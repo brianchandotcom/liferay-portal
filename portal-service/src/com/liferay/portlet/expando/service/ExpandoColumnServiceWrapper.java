@@ -33,26 +33,6 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
 		_expandoColumnService = expandoColumnService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _expandoColumnService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_expandoColumnService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
 		long tableId, java.lang.String name, int type)
@@ -72,6 +52,26 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
 	public void deleteColumn(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoColumnService.deleteColumn(columnId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _expandoColumnService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_expandoColumnService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

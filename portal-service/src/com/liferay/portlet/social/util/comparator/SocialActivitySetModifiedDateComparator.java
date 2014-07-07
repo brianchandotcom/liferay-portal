@@ -20,7 +20,8 @@ import com.liferay.portlet.social.model.SocialActivitySet;
 /**
  * @author Matthew Kong
  */
-public class SocialActivitySetModifiedDateComparator extends OrderByComparator {
+public class SocialActivitySetModifiedDateComparator
+	extends OrderByComparator<SocialActivitySet> {
 
 	public static final String ORDER_BY_ASC =
 		"SocialActivitySet.modifiedDate ASC";
@@ -39,9 +40,8 @@ public class SocialActivitySetModifiedDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		SocialActivitySet activitySet1 = (SocialActivitySet)obj1;
-		SocialActivitySet activitySet2 = (SocialActivitySet)obj2;
+	public int compare(
+		SocialActivitySet activitySet1, SocialActivitySet activitySet2) {
 
 		long modifiedDate1 = activitySet1.getModifiedDate();
 		long modifiedDate2 = activitySet2.getModifiedDate();

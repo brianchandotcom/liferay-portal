@@ -15,26 +15,96 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.User;
 
 /**
  * @author Scott Lee
  */
 public class UserLockoutException extends PortalException {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
 	public UserLockoutException() {
 		super();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
 	public UserLockoutException(String msg) {
 		super(msg);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
 	public UserLockoutException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
 	public UserLockoutException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class LDAPLockout extends UserLockoutException {
+
+		public LDAPLockout(String fullUserDN, String ldapMessage) {
+			super(
+				String.format(
+					"User %s is locked out of a required LDAP server: %s",
+					fullUserDN, ldapMessage));
+
+			_fullUserDN = fullUserDN;
+			_ldapMessage = ldapMessage;
+		}
+
+		public String getFullUserDN() {
+			return _fullUserDN;
+		}
+
+		public String getLDAPMessage() {
+			return _ldapMessage;
+		}
+
+		private String _fullUserDN;
+		private String _ldapMessage;
+
+	}
+
+	public static class PasswordPolicyLockout extends UserLockoutException {
+
+		public PasswordPolicyLockout(User user, PasswordPolicy passwordPolicy) {
+			super(
+				String.format(
+					"User %s was locked on %s by password policy %s and will " +
+						"be automatically unlocked on %s",
+					user.getUserId(), user.getLockoutDate(),
+					passwordPolicy.getName(),
+					DateUtil.newDate(
+						user.getLockoutDate().getTime() +
+							passwordPolicy.getLockoutDuration() * 1000)));
+
+			_user = user;
+			_passwordPolicy = passwordPolicy;
+		}
+
+		public PasswordPolicy getPasswordPolicy() {
+			return _passwordPolicy;
+		}
+
+		public User getUser() {
+			return _user;
+		}
+
+		private PasswordPolicy _passwordPolicy;
+		private User _user;
+
 	}
 
 }

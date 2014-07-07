@@ -41,6 +41,124 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	 */
 
 	/**
+	* Returns all the asset entries where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching asset entries
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByGroupId(
+		long groupId);
+
+	/**
+	* Returns a range of all the asset entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @return the range of matching asset entries
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByGroupId(
+		long groupId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the asset entries where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset entries
+	*/
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
+
+	/**
+	* Returns the first asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry
+	* @throws com.liferay.portlet.asset.NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the first asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
+
+	/**
+	* Returns the last asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry
+	* @throws com.liferay.portlet.asset.NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the last asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63;.
+	*
+	* @param entryId the primary key of the current asset entry
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset entry
+	* @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry[] findByGroupId_PrevAndNext(
+		long entryId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Removes all the asset entries where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public void removeByGroupId(long groupId);
+
+	/**
+	* Returns the number of asset entries where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching asset entries
+	*/
+	public int countByGroupId(long groupId);
+
+	/**
 	* Returns all the asset entries where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -79,7 +197,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the first asset entry in the ordered set where companyId = &#63;.
@@ -91,7 +209,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -103,7 +221,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the last asset entry in the ordered set where companyId = &#63;.
@@ -115,7 +233,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -127,7 +245,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
@@ -140,7 +258,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry[] findByCompanyId_PrevAndNext(
 		long entryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -197,7 +315,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByVisible(
 		boolean visible, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the first asset entry in the ordered set where visible = &#63;.
@@ -209,7 +327,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByVisible_First(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -221,7 +339,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByVisible_First(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the last asset entry in the ordered set where visible = &#63;.
@@ -233,7 +351,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByVisible_Last(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -245,7 +363,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByVisible_Last(
 		boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the asset entries before and after the current asset entry in the ordered set where visible = &#63;.
@@ -258,7 +376,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry[] findByVisible_PrevAndNext(
 		long entryId, boolean visible,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -315,7 +433,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByPublishDate(
 		java.util.Date publishDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the first asset entry in the ordered set where publishDate = &#63;.
@@ -327,7 +445,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByPublishDate_First(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -339,7 +457,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_First(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the last asset entry in the ordered set where publishDate = &#63;.
@@ -351,7 +469,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByPublishDate_Last(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -363,7 +481,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_Last(
 		java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the asset entries before and after the current asset entry in the ordered set where publishDate = &#63;.
@@ -376,7 +494,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry[] findByPublishDate_PrevAndNext(
 		long entryId, java.util.Date publishDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -433,7 +551,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByExpirationDate(
 		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the first asset entry in the ordered set where expirationDate = &#63;.
@@ -445,7 +563,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -457,7 +575,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the last asset entry in the ordered set where expirationDate = &#63;.
@@ -469,7 +587,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -481,7 +599,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the asset entries before and after the current asset entry in the ordered set where expirationDate = &#63;.
@@ -494,7 +612,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry[] findByExpirationDate_PrevAndNext(
 		long entryId, java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -551,7 +669,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByLayoutUuid(
 		java.lang.String layoutUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the first asset entry in the ordered set where layoutUuid = &#63;.
@@ -563,7 +681,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -575,7 +693,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the last asset entry in the ordered set where layoutUuid = &#63;.
@@ -587,7 +705,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry findByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -599,7 +717,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Returns the asset entries before and after the current asset entry in the ordered set where layoutUuid = &#63;.
@@ -612,7 +730,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry[] findByLayoutUuid_PrevAndNext(
 		long entryId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
@@ -831,7 +949,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator);
 
 	/**
 	* Removes all the asset entries from the database.
@@ -892,7 +1010,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategories(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator);
 
 	/**
 	* Returns the number of asset categories associated with the asset entry.
@@ -1058,7 +1176,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the number of asset tags associated with the asset entry.

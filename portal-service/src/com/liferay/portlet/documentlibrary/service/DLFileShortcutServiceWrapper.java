@@ -33,26 +33,6 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 		_dlFileShortcutService = dlFileShortcutService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileShortcutService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileShortcutService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
 		long groupId, long folderId, long toFileEntryId,
@@ -68,11 +48,31 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 		_dlFileShortcutService.deleteFileShortcut(fileShortcutId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _dlFileShortcutService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutService.getFileShortcut(fileShortcutId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFileShortcutService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

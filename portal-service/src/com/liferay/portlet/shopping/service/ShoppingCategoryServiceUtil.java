@@ -40,25 +40,6 @@ public class ShoppingCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static com.liferay.portlet.shopping.model.ShoppingCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description,
@@ -72,6 +53,15 @@ public class ShoppingCategoryServiceUtil {
 	public static void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCategory(categoryId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getCategories(
@@ -98,6 +88,15 @@ public class ShoppingCategoryServiceUtil {
 		java.util.List<java.lang.Long> categoryIds, long groupId,
 		long categoryId) {
 		getService().getSubcategoryIds(categoryIds, groupId, categoryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingCategory updateCategory(

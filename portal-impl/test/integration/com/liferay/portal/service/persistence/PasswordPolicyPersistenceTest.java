@@ -380,7 +380,7 @@ public class PasswordPolicyPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<PasswordPolicy> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PasswordPolicy",
 			"mvccVersion", true, "uuid", true, "passwordPolicyId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

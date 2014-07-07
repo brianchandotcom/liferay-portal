@@ -260,7 +260,7 @@ public class DLFileRankPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLFileRank> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileRank", "fileRankId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"createDate", true, "fileEntryId", true, "active", true);

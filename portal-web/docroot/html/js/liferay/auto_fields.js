@@ -366,7 +366,7 @@ AUI.add(
 									item.val('');
 								}
 								else if (type == 'checkbox' || type == 'radio') {
-									item.set('checked', false);
+									item.attr('checked', false);
 								}
 								else if (tag == 'select') {
 									var selectedIndex = 0;
@@ -375,7 +375,7 @@ AUI.add(
 										selectedIndex = -1;
 									}
 
-									item.set('selectedIndex', selectedIndex);
+									item.attr('selectedIndex', selectedIndex);
 								}
 							}
 						);

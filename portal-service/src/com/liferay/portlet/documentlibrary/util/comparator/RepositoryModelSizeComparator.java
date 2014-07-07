@@ -25,7 +25,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 /**
  * @author Alexander Chow
  */
-public class RepositoryModelSizeComparator extends OrderByComparator {
+public class RepositoryModelSizeComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "size_ ASC";
 
@@ -42,9 +42,9 @@ public class RepositoryModelSizeComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Long size1 = getSize(obj1);
-		Long size2 = getSize(obj2);
+	public int compare(T t1, T t2) {
+		Long size1 = getSize(t1);
+		Long size2 = getSize(t2);
 
 		int value = size1.compareTo(size2);
 

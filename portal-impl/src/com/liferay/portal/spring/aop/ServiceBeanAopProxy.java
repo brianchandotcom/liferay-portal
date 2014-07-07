@@ -158,17 +158,11 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		Object target = null;
 
 		try {
-			Class<?> targetClass = null;
-
 			target = targetSource.getTarget();
-
-			if (target != null) {
-				targetClass = target.getClass();
-			}
 
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 				new ServiceBeanMethodInvocation(
-					target, targetClass, method, arguments);
+					target, targetSource.getTargetClass(), method, arguments);
 
 			_setMethodInterceptors(serviceBeanMethodInvocation);
 

@@ -258,7 +258,7 @@ public class CompanyPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Company> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Company", "mvccVersion",
 			true, "companyId", true, "accountId", true, "webId", true, "key",
 			true, "mx", true, "homeURL", true, "logoId", true, "system", true,

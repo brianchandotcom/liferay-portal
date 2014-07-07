@@ -18,23 +18,47 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Jorge Ferrer
  */
 public class UserIdException extends PortalException {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserIdException() {
-		super();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserIdException(String msg) {
 		super(msg);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserIdException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserIdException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeNull extends UserIdException {
+
+		public MustNotBeNull() {
+			super("User ID must not be null");
+		}
+
 	}
 
 }

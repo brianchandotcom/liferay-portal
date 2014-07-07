@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,6 +54,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	* @param blogsStatsUser the blogs stats user
 	* @return the blogs stats user that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser addBlogsStatsUser(
 		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
 
@@ -66,24 +68,44 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 		long statsUserId);
 
 	/**
+	* Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param blogsStatsUser the blogs stats user
+	* @return the blogs stats user that was removed
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
+
+	/**
 	* Deletes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user that was removed
 	* @throws PortalException if a blogs stats user with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
 		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Deletes the blogs stats user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param blogsStatsUser the blogs stats user
-	* @return the blogs stats user that was removed
+	* @throws PortalException
 	*/
-	public com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteStatsUser(long statsUserId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers);
+
+	public void deleteStatsUserByGroupId(long groupId);
+
+	public void deleteStatsUserByUserId(long userId);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -93,8 +115,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -109,8 +130,7 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -127,11 +147,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -157,6 +176,16 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public com.liferay.portlet.blogs.model.BlogsStatsUser fetchBlogsStatsUser(
 		long statsUserId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
 	/**
 	* Returns the blogs stats user with the primary key.
 	*
@@ -167,23 +196,6 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getBlogsStatsUser(
 		long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -209,39 +221,6 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBlogsStatsUsersCount();
 
-	/**
-	* Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param blogsStatsUser the blogs stats user
-	* @return the blogs stats user that was updated
-	*/
-	public com.liferay.portlet.blogs.model.BlogsStatsUser updateBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public void deleteStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers);
-
-	public void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteStatsUserByGroupId(long groupId);
-
-	public void deleteStatsUserByUserId(long userId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end);
@@ -249,14 +228,10 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyStatsUsersCount(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
@@ -265,10 +240,14 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupStatsUsersCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
+		long companyId, long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
@@ -277,15 +256,38 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationStatsUsersCount(long organizationId);
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getStatsUser(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
+	* Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param blogsStatsUser the blogs stats user
+	* @return the blogs stats user that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portlet.blogs.model.BlogsStatsUser updateBlogsStatsUser(
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser);
 
 	public void updateStatsUser(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException;

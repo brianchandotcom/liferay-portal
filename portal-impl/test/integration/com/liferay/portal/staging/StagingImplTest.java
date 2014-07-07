@@ -58,7 +58,7 @@ import org.junit.runner.RunWith;
 	SynchronousDestinationExecutionTestListener.class
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Sync
+@Sync(cleanTransaction = true)
 public class StagingImplTest {
 
 	@Before

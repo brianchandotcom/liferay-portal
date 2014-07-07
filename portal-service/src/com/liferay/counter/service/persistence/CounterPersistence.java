@@ -135,7 +135,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	*/
 	public java.util.List<com.liferay.counter.model.Counter> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.counter.model.Counter> orderByComparator);
 
 	/**
 	* Removes all the counters from the database.

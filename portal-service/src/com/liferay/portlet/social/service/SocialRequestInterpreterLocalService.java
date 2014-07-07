@@ -45,20 +45,6 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
 	* Adds the social request interpreter to the list of available
 	* interpreters.
 	*
@@ -75,6 +61,13 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	*/
 	public void deleteRequestInterpreter(
 		com.liferay.portlet.social.model.SocialRequestInterpreter requestInterpreter);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Creates a human readable request feed entry for the social request using
@@ -132,4 +125,11 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	public void processRejection(
 		com.liferay.portlet.social.model.SocialRequest request,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 }

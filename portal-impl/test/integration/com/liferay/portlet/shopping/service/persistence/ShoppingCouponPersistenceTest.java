@@ -273,7 +273,7 @@ public class ShoppingCouponPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ShoppingCoupon> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingCoupon",
 			"couponId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

@@ -78,7 +78,8 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public List<BlogsStatsUser> getCompanyStatsUsers(
-		long companyId, int start, int end, OrderByComparator obc) {
+		long companyId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
 
 		return blogsStatsUserPersistence.findByC_NotE(
 			companyId, 0, start, end, obc);
@@ -107,7 +108,8 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public List<BlogsStatsUser> getGroupStatsUsers(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
 
 		return blogsStatsUserPersistence.findByG_NotE(
 			groupId, 0, start, end, obc);
@@ -128,7 +130,8 @@ public class BlogsStatsUserLocalServiceImpl
 
 	@Override
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
-		long organizationId, int start, int end, OrderByComparator obc) {
+		long organizationId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
 
 		return blogsStatsUserFinder.findByOrganizationId(
 			organizationId, start, end, obc);

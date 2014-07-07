@@ -195,7 +195,7 @@ public class BrowserTrackerPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<BrowserTracker> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BrowserTracker",
 			"mvccVersion", true, "browserTrackerId", true, "userId", true,
 			"browserKey", true);

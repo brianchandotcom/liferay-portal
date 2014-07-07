@@ -148,7 +148,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	@Override
 	public List<ExportImportConfiguration> getExportImportConfigurations(
 		long groupId, int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
 		return exportImportConfigurationPersistence.findByG_T_S(
 			groupId, type, WorkflowConstants.STATUS_APPROVED, start, end,

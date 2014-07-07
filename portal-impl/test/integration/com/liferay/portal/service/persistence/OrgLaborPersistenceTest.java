@@ -248,7 +248,7 @@ public class OrgLaborPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<OrgLabor> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("OrgLabor", "mvccVersion",
 			true, "orgLaborId", true, "organizationId", true, "typeId", true,
 			"sunOpen", true, "sunClose", true, "monOpen", true, "monClose",

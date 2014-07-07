@@ -20,7 +20,7 @@ import com.liferay.portal.model.User;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserEmailAddressComparator extends OrderByComparator {
+public class UserEmailAddressComparator extends OrderByComparator<User> {
 
 	public static final String ORDER_BY_ASC = "emailAddress ASC";
 
@@ -37,10 +37,7 @@ public class UserEmailAddressComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		User user1 = (User)obj1;
-		User user2 = (User)obj2;
-
+	public int compare(User user1, User user2) {
 		String emailAddress1 = user1.getEmailAddress();
 		String emailAddress2 = user2.getEmailAddress();
 

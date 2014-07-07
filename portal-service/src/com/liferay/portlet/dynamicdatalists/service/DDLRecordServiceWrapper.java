@@ -32,26 +32,6 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 		_ddlRecordService = ddlRecordService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
@@ -87,6 +67,16 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 			serviceContext);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _ddlRecordService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
 		long recordId)
@@ -101,15 +91,14 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 		_ddlRecordService.revertRecordVersion(recordId, version, serviceContext);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
-		long recordId, boolean majorVersion, int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
-		boolean mergeFields,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordService.updateRecord(recordId, majorVersion,
-			displayIndex, fields, mergeFields, serviceContext);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_ddlRecordService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -121,6 +110,17 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordService.updateRecord(recordId, displayIndex,
 			fieldsMap, mergeFields, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+		long recordId, boolean majorVersion, int displayIndex,
+		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
+		boolean mergeFields,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordService.updateRecord(recordId, majorVersion,
+			displayIndex, fields, mergeFields, serviceContext);
 	}
 
 	/**

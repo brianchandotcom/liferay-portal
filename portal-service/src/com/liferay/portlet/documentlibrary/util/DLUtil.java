@@ -258,7 +258,7 @@ public class DLUtil {
 			absoluteURL);
 	}
 
-	public static OrderByComparator getRepositoryModelOrderByComparator(
+	public static <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getDL().getRepositoryModelOrderByComparator(

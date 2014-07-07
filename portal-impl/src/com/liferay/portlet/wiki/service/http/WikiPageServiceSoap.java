@@ -421,7 +421,8 @@ public class WikiPageServiceSoap {
 
 	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getPages(
 		long groupId, long nodeId, boolean head, int status, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPage> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,

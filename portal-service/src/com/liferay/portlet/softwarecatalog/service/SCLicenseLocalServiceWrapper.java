@@ -33,6 +33,15 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 		_scLicenseLocalService = scLicenseLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
+		java.lang.String name, java.lang.String url, boolean openSource,
+		boolean active, boolean recommended)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scLicenseLocalService.addLicense(name, url, openSource, active,
+			recommended);
+	}
+
 	/**
 	* Adds the s c license to the database. Also notifies the appropriate model listeners.
 	*
@@ -45,6 +54,38 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 		return _scLicenseLocalService.addSCLicense(scLicense);
 	}
 
+	@Override
+	public void addSCProductEntrySCLicense(long productEntryId, long licenseId) {
+		_scLicenseLocalService.addSCProductEntrySCLicense(productEntryId,
+			licenseId);
+	}
+
+	@Override
+	public void addSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		_scLicenseLocalService.addSCProductEntrySCLicense(productEntryId,
+			scLicense);
+	}
+
+	@Override
+	public void addSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
+		_scLicenseLocalService.addSCProductEntrySCLicenses(productEntryId,
+			SCLicenses);
+	}
+
+	@Override
+	public void addSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		_scLicenseLocalService.addSCProductEntrySCLicenses(productEntryId,
+			licenseIds);
+	}
+
+	@Override
+	public void clearSCProductEntrySCLicenses(long productEntryId) {
+		_scLicenseLocalService.clearSCProductEntrySCLicenses(productEntryId);
+	}
+
 	/**
 	* Creates a new s c license with the primary key. Does not add the s c license to the database.
 	*
@@ -55,6 +96,28 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	public com.liferay.portlet.softwarecatalog.model.SCLicense createSCLicense(
 		long licenseId) {
 		return _scLicenseLocalService.createSCLicense(licenseId);
+	}
+
+	@Override
+	public void deleteLicense(
+		com.liferay.portlet.softwarecatalog.model.SCLicense license) {
+		_scLicenseLocalService.deleteLicense(license);
+	}
+
+	@Override
+	public void deleteLicense(long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_scLicenseLocalService.deleteLicense(licenseId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scLicenseLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -84,6 +147,34 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	}
 
 	@Override
+	public void deleteSCProductEntrySCLicense(long productEntryId,
+		long licenseId) {
+		_scLicenseLocalService.deleteSCProductEntrySCLicense(productEntryId,
+			licenseId);
+	}
+
+	@Override
+	public void deleteSCProductEntrySCLicense(long productEntryId,
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		_scLicenseLocalService.deleteSCProductEntrySCLicense(productEntryId,
+			scLicense);
+	}
+
+	@Override
+	public void deleteSCProductEntrySCLicenses(long productEntryId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
+		_scLicenseLocalService.deleteSCProductEntrySCLicenses(productEntryId,
+			SCLicenses);
+	}
+
+	@Override
+	public void deleteSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		_scLicenseLocalService.deleteSCProductEntrySCLicenses(productEntryId,
+			licenseIds);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _scLicenseLocalService.dynamicQuery();
 	}
@@ -95,8 +186,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +204,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +224,10 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _scLicenseLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -176,195 +264,9 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 		return _scLicenseLocalService.fetchSCLicense(licenseId);
 	}
 
-	/**
-	* Returns the s c license with the primary key.
-	*
-	* @param licenseId the primary key of the s c license
-	* @return the s c license
-	* @throws PortalException if a s c license with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.softwarecatalog.model.SCLicense getSCLicense(
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _scLicenseLocalService.getSCLicense(licenseId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _scLicenseLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _scLicenseLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _scLicenseLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the s c licenses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of s c licenses
-	* @param end the upper bound of the range of s c licenses (not inclusive)
-	* @return the range of s c licenses
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
-		int start, int end) {
-		return _scLicenseLocalService.getSCLicenses(start, end);
-	}
-
-	/**
-	* Returns the number of s c licenses.
-	*
-	* @return the number of s c licenses
-	*/
-	@Override
-	public int getSCLicensesCount() {
-		return _scLicenseLocalService.getSCLicensesCount();
-	}
-
-	/**
-	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param scLicense the s c license
-	* @return the s c license that was updated
-	*/
-	@Override
-	public com.liferay.portlet.softwarecatalog.model.SCLicense updateSCLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		return _scLicenseLocalService.updateSCLicense(scLicense);
-	}
-
-	@Override
-	public void addSCProductEntrySCLicense(long productEntryId, long licenseId) {
-		_scLicenseLocalService.addSCProductEntrySCLicense(productEntryId,
-			licenseId);
-	}
-
-	@Override
-	public void addSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		_scLicenseLocalService.addSCProductEntrySCLicense(productEntryId,
-			scLicense);
-	}
-
-	@Override
-	public void addSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		_scLicenseLocalService.addSCProductEntrySCLicenses(productEntryId,
-			licenseIds);
-	}
-
-	@Override
-	public void addSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
-		_scLicenseLocalService.addSCProductEntrySCLicenses(productEntryId,
-			SCLicenses);
-	}
-
-	@Override
-	public void clearSCProductEntrySCLicenses(long productEntryId) {
-		_scLicenseLocalService.clearSCProductEntrySCLicenses(productEntryId);
-	}
-
-	@Override
-	public void deleteSCProductEntrySCLicense(long productEntryId,
-		long licenseId) {
-		_scLicenseLocalService.deleteSCProductEntrySCLicense(productEntryId,
-			licenseId);
-	}
-
-	@Override
-	public void deleteSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
-		_scLicenseLocalService.deleteSCProductEntrySCLicense(productEntryId,
-			scLicense);
-	}
-
-	@Override
-	public void deleteSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		_scLicenseLocalService.deleteSCProductEntrySCLicenses(productEntryId,
-			licenseIds);
-	}
-
-	@Override
-	public void deleteSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses) {
-		_scLicenseLocalService.deleteSCProductEntrySCLicenses(productEntryId,
-			SCLicenses);
-	}
-
-	/**
-	* Returns the productEntryIds of the s c product entries associated with the s c license.
-	*
-	* @param licenseId the licenseId of the s c license
-	* @return long[] the productEntryIds of s c product entries associated with the s c license
-	*/
-	@Override
-	public long[] getSCProductEntryPrimaryKeys(long licenseId) {
-		return _scLicenseLocalService.getSCProductEntryPrimaryKeys(licenseId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
-		long productEntryId) {
-		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
-		long productEntryId, int start, int end) {
-		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
-		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getSCProductEntrySCLicensesCount(long productEntryId) {
-		return _scLicenseLocalService.getSCProductEntrySCLicensesCount(productEntryId);
-	}
-
-	@Override
-	public boolean hasSCProductEntrySCLicense(long productEntryId,
-		long licenseId) {
-		return _scLicenseLocalService.hasSCProductEntrySCLicense(productEntryId,
-			licenseId);
-	}
-
-	@Override
-	public boolean hasSCProductEntrySCLicenses(long productEntryId) {
-		return _scLicenseLocalService.hasSCProductEntrySCLicenses(productEntryId);
-	}
-
-	@Override
-	public void setSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds) {
-		_scLicenseLocalService.setSCProductEntrySCLicenses(productEntryId,
-			licenseIds);
 	}
 
 	/**
@@ -375,37 +277,6 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _scLicenseLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scLicenseLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
-		java.lang.String name, java.lang.String url, boolean openSource,
-		boolean active, boolean recommended)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _scLicenseLocalService.addLicense(name, url, openSource, active,
-			recommended);
-	}
-
-	@Override
-	public void deleteLicense(long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_scLicenseLocalService.deleteLicense(licenseId);
-	}
-
-	@Override
-	public void deleteLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense license) {
-		_scLicenseLocalService.deleteLicense(license);
 	}
 
 	@Override
@@ -450,9 +321,123 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scLicenseLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getProductEntryLicenses(
 		long productEntryId) {
 		return _scLicenseLocalService.getProductEntryLicenses(productEntryId);
+	}
+
+	/**
+	* Returns the s c license with the primary key.
+	*
+	* @param licenseId the primary key of the s c license
+	* @return the s c license
+	* @throws PortalException if a s c license with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.softwarecatalog.model.SCLicense getSCLicense(
+		long licenseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scLicenseLocalService.getSCLicense(licenseId);
+	}
+
+	/**
+	* Returns a range of all the s c licenses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of s c licenses
+	* @param end the upper bound of the range of s c licenses (not inclusive)
+	* @return the range of s c licenses
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
+		int start, int end) {
+		return _scLicenseLocalService.getSCLicenses(start, end);
+	}
+
+	/**
+	* Returns the number of s c licenses.
+	*
+	* @return the number of s c licenses
+	*/
+	@Override
+	public int getSCLicensesCount() {
+		return _scLicenseLocalService.getSCLicensesCount();
+	}
+
+	/**
+	* Returns the productEntryIds of the s c product entries associated with the s c license.
+	*
+	* @param licenseId the licenseId of the s c license
+	* @return long[] the productEntryIds of s c product entries associated with the s c license
+	*/
+	@Override
+	public long[] getSCProductEntryPrimaryKeys(long licenseId) {
+		return _scLicenseLocalService.getSCProductEntryPrimaryKeys(licenseId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId) {
+		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId, int start, int end) {
+		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
+		long productEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
+		return _scLicenseLocalService.getSCProductEntrySCLicenses(productEntryId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSCProductEntrySCLicensesCount(long productEntryId) {
+		return _scLicenseLocalService.getSCProductEntrySCLicensesCount(productEntryId);
+	}
+
+	@Override
+	public boolean hasSCProductEntrySCLicense(long productEntryId,
+		long licenseId) {
+		return _scLicenseLocalService.hasSCProductEntrySCLicense(productEntryId,
+			licenseId);
+	}
+
+	@Override
+	public boolean hasSCProductEntrySCLicenses(long productEntryId) {
+		return _scLicenseLocalService.hasSCProductEntrySCLicenses(productEntryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_scLicenseLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void setSCProductEntrySCLicenses(long productEntryId,
+		long[] licenseIds) {
+		_scLicenseLocalService.setSCProductEntrySCLicenses(productEntryId,
+			licenseIds);
 	}
 
 	@Override
@@ -462,6 +447,18 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scLicenseLocalService.updateLicense(licenseId, name, url,
 			openSource, active, recommended);
+	}
+
+	/**
+	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param scLicense the s c license
+	* @return the s c license that was updated
+	*/
+	@Override
+	public com.liferay.portlet.softwarecatalog.model.SCLicense updateSCLicense(
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense) {
+		return _scLicenseLocalService.updateSCLicense(scLicense);
 	}
 
 	/**

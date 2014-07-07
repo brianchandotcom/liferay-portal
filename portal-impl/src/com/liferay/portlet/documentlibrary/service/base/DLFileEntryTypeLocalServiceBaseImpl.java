@@ -152,8 +152,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlFileEntryTypePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -170,8 +169,8 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return dlFileEntryTypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -190,9 +189,8 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return dlFileEntryTypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -527,7 +525,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	 */
 	@Override
 	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator) {
 		return dlFolderPersistence.getDLFileEntryTypes(folderId, start, end,
 			orderByComparator);
 	}
@@ -673,7 +671,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	@Override
 	public List<DLFileEntryType> getDDMStructureDLFileEntryTypes(
 		long structureId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 		return ddmStructurePersistence.getDLFileEntryTypes(structureId, start,
 			end, orderByComparator);
 	}

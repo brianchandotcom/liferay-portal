@@ -188,7 +188,7 @@ public class LayoutSetPrototypeServiceHttp {
 
 	public static java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(
 		HttpPrincipal httpPrincipal, long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,

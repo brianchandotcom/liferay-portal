@@ -228,7 +228,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public List<AssetVocabulary> getGroupVocabularies(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end,
+		OrderByComparator<AssetVocabulary> obc) {
 
 		return assetVocabularyPersistence.filterFindByGroupId(
 			groupId, start, end, obc);
@@ -236,7 +237,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public List<AssetVocabulary> getGroupVocabularies(
-		long groupId, String name, int start, int end, OrderByComparator obc) {
+		long groupId, String name, int start, int end,
+		OrderByComparator<AssetVocabulary> obc) {
 
 		return assetVocabularyPersistence.filterFindByG_LikeN(
 			groupId, name, start, end, obc);
@@ -265,7 +267,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	@Override
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
 			long groupId, String name, int start, int end,
-			boolean addDefaultVocabulary, OrderByComparator obc)
+			boolean addDefaultVocabulary,
+			OrderByComparator<AssetVocabulary> obc)
 		throws PortalException {
 
 		List<AssetVocabulary> vocabularies;
@@ -299,7 +302,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	@Override
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
 			long groupId, String name, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<AssetVocabulary> obc)
 		throws PortalException {
 
 		return getGroupVocabulariesDisplay(
@@ -313,7 +316,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	@Override
 	public JSONObject getJSONGroupVocabularies(
 			long groupId, String name, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<AssetVocabulary> obc)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

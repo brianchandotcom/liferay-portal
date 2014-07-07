@@ -91,7 +91,7 @@ public class GroupSearch extends SearchContainer<Group> {
 					PortletKeys.USERS_ADMIN, "groups-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<Group> orderByComparator =
 				UsersAdminUtil.getGroupOrderByComparator(
 					orderByCol, orderByType);
 

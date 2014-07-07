@@ -46,7 +46,7 @@ public class WorkflowLogManagerProxyBean
 	@Override
 	public List<WorkflowLog> getWorkflowLogsByWorkflowInstance(
 		long companyId, long workflowInstanceId, List<Integer> logTypes,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WorkflowLog> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -54,7 +54,7 @@ public class WorkflowLogManagerProxyBean
 	@Override
 	public List<WorkflowLog> getWorkflowLogsByWorkflowTask(
 		long companyId, long workflowTaskId, List<Integer> logTypes, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WorkflowLog> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}

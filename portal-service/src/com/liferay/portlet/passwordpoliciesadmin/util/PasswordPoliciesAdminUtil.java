@@ -16,6 +16,7 @@ package com.liferay.portlet.passwordpoliciesadmin.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PasswordPolicy;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,8 +30,9 @@ public class PasswordPoliciesAdminUtil {
 		return _passwordPoliciesAdmin;
 	}
 
-	public static OrderByComparator getPasswordPolicyOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<PasswordPolicy>
+		getPasswordPolicyOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		return getPasswordPoliciesAdmin().getPasswordPolicyOrderByComparator(
 			orderByCol, orderByType);

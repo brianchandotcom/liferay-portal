@@ -372,16 +372,18 @@ public class EditFileEntryAction extends PortletAction {
 				selectedFileName, _TEMP_FOLDER_NAME);
 
 			String mimeType = tempFileEntry.getMimeType();
-			InputStream inputStream = tempFileEntry.getContentStream();
-			long size = tempFileEntry.getSize();
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), actionRequest);
+			String extension = FileUtil.getExtension(selectedFileName);
 
-			int pos = selectedFileName.indexOf(TEMP_RANDOM_SUFFIX);
+			int pos = selectedFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
 
 			if (pos != -1) {
 				selectedFileName = selectedFileName.substring(0, pos);
+
+				if (Validator.isNotNull(extension)) {
+					selectedFileName =
+						selectedFileName + StringPool.PERIOD + extension;
+				}
 			}
 
 			while (true) {
@@ -395,8 +397,11 @@ public class EditFileEntryAction extends PortletAction {
 					sb.append(FileUtil.stripExtension(selectedFileName));
 					sb.append(StringPool.DASH);
 					sb.append(StringUtil.randomString());
-					sb.append(StringPool.PERIOD);
-					sb.append(FileUtil.getExtension(selectedFileName));
+
+					if (Validator.isNotNull(extension)) {
+						sb.append(StringPool.PERIOD);
+						sb.append(extension);
+					}
 
 					selectedFileName = sb.toString();
 				}
@@ -404,6 +409,12 @@ public class EditFileEntryAction extends PortletAction {
 					break;
 				}
 			}
+
+			InputStream inputStream = tempFileEntry.getContentStream();
+			long size = tempFileEntry.getSize();
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), actionRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, selectedFileName, mimeType,
@@ -449,10 +460,22 @@ public class EditFileEntryAction extends PortletAction {
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		String title = sourceFileName;
+		StringBundler sb = new StringBundler(5);
 
-		sourceFileName = sourceFileName.concat(
-			TEMP_RANDOM_SUFFIX).concat(StringUtil.randomString());
+		sb.append(FileUtil.stripExtension(sourceFileName));
+		sb.append(TEMP_RANDOM_SUFFIX);
+		sb.append(StringUtil.randomString());
+
+		String extension = FileUtil.getExtension(sourceFileName);
+
+		if (Validator.isNotNull(extension)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(extension);
+		}
+
+		sourceFileName = sb.toString();
+
+		String title = sourceFileName;
 
 		InputStream inputStream = null;
 

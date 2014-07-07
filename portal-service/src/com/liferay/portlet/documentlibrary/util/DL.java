@@ -170,7 +170,7 @@ public interface DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL);
 
-	public OrderByComparator getRepositoryModelOrderByComparator(
+	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public String getTempFileId(long id, String version);

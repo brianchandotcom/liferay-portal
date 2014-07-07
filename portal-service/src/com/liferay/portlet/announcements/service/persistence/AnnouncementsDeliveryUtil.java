@@ -88,7 +88,7 @@ public class AnnouncementsDeliveryUtil {
 	 */
 	public static List<AnnouncementsDelivery> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -169,7 +169,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -183,7 +183,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -197,7 +197,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -211,7 +211,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -226,7 +226,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery[] findByUserId_PrevAndNext(
 		long deliveryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(deliveryId, userId,
@@ -432,7 +432,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -20,7 +20,7 @@ import com.liferay.portal.model.Group;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GroupFriendlyURLComparator extends OrderByComparator {
+public class GroupFriendlyURLComparator extends OrderByComparator<Group> {
 
 	public static final String ORDER_BY_ASC = "groupFriendlyURL ASC";
 
@@ -37,10 +37,7 @@ public class GroupFriendlyURLComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Group group1 = (Group)obj1;
-		Group group2 = (Group)obj2;
-
+	public int compare(Group group1, Group group2) {
 		String friendlyURL1 = group1.getFriendlyURL();
 		String friendlyURL2 = group2.getFriendlyURL();
 

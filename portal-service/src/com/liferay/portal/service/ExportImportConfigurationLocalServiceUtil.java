@@ -53,6 +53,28 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .addExportImportConfiguration(exportImportConfiguration);
 	}
 
+	public static com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addExportImportConfiguration(userId, groupId, name,
+			description, type, settingsMap, serviceContext);
+	}
+
+	public static com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addExportImportConfiguration(userId, groupId, name,
+			description, type, settingsMap, status, serviceContext);
+	}
+
 	/**
 	* Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
 	*
@@ -63,20 +85,6 @@ public class ExportImportConfigurationLocalServiceUtil {
 		long exportImportConfigurationId) {
 		return getService()
 				   .createExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	/**
-	* Deletes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param exportImportConfigurationId the primary key of the export import configuration
-	* @return the export import configuration that was removed
-	* @throws PortalException if a export import configuration with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.ExportImportConfiguration deleteExportImportConfiguration(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
 	/**
@@ -93,6 +101,34 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .deleteExportImportConfiguration(exportImportConfiguration);
 	}
 
+	/**
+	* Deletes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param exportImportConfigurationId the primary key of the export import configuration
+	* @return the export import configuration that was removed
+	* @throws PortalException if a export import configuration with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.ExportImportConfiguration deleteExportImportConfiguration(
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	public static void deleteExportImportConfigurations(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteExportImportConfigurations(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -103,8 +139,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -121,8 +156,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -141,11 +175,10 @@ public class ExportImportConfigurationLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -180,6 +213,19 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .fetchExportImportConfiguration(exportImportConfigurationId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	/**
 	* Returns the export import configuration with the primary key.
 	*
@@ -194,23 +240,17 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .getExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type) {
+		return getService().getExportImportConfigurations(groupId, type);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		return getService()
+				   .getExportImportConfigurations(groupId, type, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -238,82 +278,18 @@ public class ExportImportConfigurationLocalServiceUtil {
 		return getService().getExportImportConfigurationsCount();
 	}
 
-	/**
-	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param exportImportConfiguration the export import configuration
-	* @return the export import configuration that was updated
-	*/
-	public static com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration) {
-		return getService()
-				   .updateExportImportConfiguration(exportImportConfiguration);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addExportImportConfiguration(userId, groupId, name,
-			description, type, settingsMap, status, serviceContext);
-	}
-
-	public static com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type,
-		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addExportImportConfiguration(userId, groupId, name,
-			description, type, settingsMap, serviceContext);
-	}
-
-	public static void deleteExportImportConfigurations(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteExportImportConfigurations(groupId);
-	}
-
-	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type) {
-		return getService().getExportImportConfigurations(groupId, type);
-	}
-
-	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return getService()
-				   .getExportImportConfigurations(groupId, type, start, end,
-			orderByComparator);
-	}
-
 	public static int getExportImportConfigurationsCount(long groupId) {
 		return getService().getExportImportConfigurationsCount(groupId);
 	}
 
 	public static int getExportImportConfigurationsCount(long groupId, int type) {
 		return getService().getExportImportConfigurationsCount(groupId, type);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
@@ -330,6 +306,27 @@ public class ExportImportConfigurationLocalServiceUtil {
 		return getService()
 				   .restoreExportImportConfigurationFromTrash(userId,
 			exportImportConfigurationId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param exportImportConfiguration the export import configuration
+	* @return the export import configuration that was updated
+	*/
+	public static com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration) {
+		return getService()
+				   .updateExportImportConfiguration(exportImportConfiguration);
 	}
 
 	public static com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(

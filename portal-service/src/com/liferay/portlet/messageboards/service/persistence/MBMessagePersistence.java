@@ -79,7 +79,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByUuid_PrevAndNext(
 		long messageId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByUuid_C_PrevAndNext(
 		long messageId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63;.
@@ -390,7 +390,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63;.
@@ -414,7 +414,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63;.
@@ -439,7 +439,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByGroupId_PrevAndNext(
 		long messageId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -481,7 +481,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63;.
@@ -494,7 +494,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByGroupId_PrevAndNext(
 		long messageId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -559,7 +559,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where companyId = &#63;.
@@ -571,7 +571,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -583,7 +583,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where companyId = &#63;.
@@ -595,7 +595,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -607,7 +607,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63;.
@@ -620,7 +620,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByCompanyId_PrevAndNext(
 		long messageId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -677,7 +677,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadId(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63;.
@@ -689,7 +689,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByThreadId_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -701,7 +701,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByThreadId_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63;.
@@ -713,7 +713,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByThreadId_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -725,7 +725,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByThreadId_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63;.
@@ -738,7 +738,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByThreadId_PrevAndNext(
 		long messageId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -795,7 +795,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadReplies(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63;.
@@ -807,7 +807,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByThreadReplies_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -819,7 +819,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByThreadReplies_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63;.
@@ -831,7 +831,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByThreadReplies_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -843,7 +843,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByThreadReplies_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63;.
@@ -856,7 +856,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByThreadReplies_PrevAndNext(
 		long messageId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -913,7 +913,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63;.
@@ -925,7 +925,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -937,7 +937,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63;.
@@ -949,7 +949,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -961,7 +961,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63;.
@@ -974,7 +974,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByUserId_PrevAndNext(
 		long messageId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1034,7 +1034,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and userId = &#63;.
@@ -1047,7 +1047,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1060,7 +1060,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and userId = &#63;.
@@ -1073,7 +1073,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1086,7 +1086,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and userId = &#63;.
@@ -1100,7 +1100,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_U_PrevAndNext(
 		long messageId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1145,7 +1145,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and userId = &#63;.
@@ -1159,7 +1159,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_U_PrevAndNext(
 		long messageId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1230,7 +1230,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -1243,7 +1243,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1256,7 +1256,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -1269,7 +1269,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1282,7 +1282,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -1296,7 +1296,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_PrevAndNext(
 		long messageId, long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1341,7 +1341,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63;.
@@ -1355,7 +1355,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_PrevAndNext(
 		long messageId, long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1426,7 +1426,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and status = &#63;.
@@ -1439,7 +1439,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1452,7 +1452,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and status = &#63;.
@@ -1465,7 +1465,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1478,7 +1478,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and status = &#63;.
@@ -1492,7 +1492,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_S_PrevAndNext(
 		long messageId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1537,7 +1537,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and status = &#63;.
@@ -1551,7 +1551,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_S_PrevAndNext(
 		long messageId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1622,7 +1622,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
@@ -1635,7 +1635,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1648,7 +1648,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
@@ -1661,7 +1661,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1674,7 +1674,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63; and status = &#63;.
@@ -1688,7 +1688,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByC_S_PrevAndNext(
 		long messageId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1750,7 +1750,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
 		long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1763,7 +1763,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_First(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1776,7 +1776,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_First(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1789,7 +1789,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_Last(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1802,7 +1802,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_Last(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1816,7 +1816,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_PrevAndNext(
 		long messageId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1865,7 +1865,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
 		long userId, long[] classNameIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Removes all the message-boards messages where userId = &#63; and classNameId = &#63; from the database.
@@ -1935,7 +1935,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1948,7 +1948,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1961,7 +1961,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1974,7 +1974,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -1987,7 +1987,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -2001,7 +2001,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByC_C_PrevAndNext(
 		long messageId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2063,7 +2063,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_P(
 		long threadId, long parentMessageId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and parentMessageId = &#63;.
@@ -2076,7 +2076,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_P_First(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2089,7 +2089,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_P_First(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and parentMessageId = &#63;.
@@ -2102,7 +2102,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_P_Last(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2115,7 +2115,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_P_Last(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63; and parentMessageId = &#63;.
@@ -2129,7 +2129,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByT_P_PrevAndNext(
 		long messageId, long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2191,7 +2191,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_A(
 		long threadId, boolean answer, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and answer = &#63;.
@@ -2204,7 +2204,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_A_First(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2217,7 +2217,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_A_First(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and answer = &#63;.
@@ -2230,7 +2230,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_A_Last(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2243,7 +2243,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_A_Last(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63; and answer = &#63;.
@@ -2257,7 +2257,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByT_A_PrevAndNext(
 		long messageId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2319,7 +2319,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_S(
 		long threadId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2332,7 +2332,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2345,7 +2345,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2358,7 +2358,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByT_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2371,7 +2371,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByT_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2385,7 +2385,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByT_S_PrevAndNext(
 		long messageId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2447,7 +2447,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByTR_S(
 		long threadId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2460,7 +2460,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByTR_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2473,7 +2473,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByTR_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2486,7 +2486,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByTR_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2499,7 +2499,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByTR_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2513,7 +2513,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByTR_S_PrevAndNext(
 		long messageId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2578,7 +2578,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2592,7 +2592,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_U_S_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2606,7 +2606,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_S_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2620,7 +2620,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_U_S_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2634,7 +2634,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_S_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2649,7 +2649,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_U_S_PrevAndNext(
 		long messageId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2697,7 +2697,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2712,7 +2712,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_U_S_PrevAndNext(
 		long messageId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2789,7 +2789,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T(
 		long groupId, long categoryId, long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -2803,7 +2803,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_First(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2817,7 +2817,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_First(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -2831,7 +2831,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_Last(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2845,7 +2845,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_Last(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -2860,7 +2860,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -2908,7 +2908,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T(
 		long groupId, long categoryId, long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -2923,7 +2923,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3000,7 +3000,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_S(
 		long groupId, long categoryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3014,7 +3014,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_S_First(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3028,7 +3028,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_S_First(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3042,7 +3042,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_S_Last(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3056,7 +3056,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_S_Last(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3071,7 +3071,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3119,7 +3119,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_S(
 		long groupId, long categoryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3134,7 +3134,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3211,7 +3211,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C(
 		long userId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3225,7 +3225,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_First(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3239,7 +3239,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_First(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3253,7 +3253,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_Last(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3267,7 +3267,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_Last(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3282,7 +3282,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_C_PrevAndNext(
 		long messageId, long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3349,7 +3349,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
 		long userId, long classNameId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -3363,7 +3363,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_S_First(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3377,7 +3377,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_S_First(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -3391,7 +3391,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_S_Last(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3405,7 +3405,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_S_Last(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -3420,7 +3420,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_S_PrevAndNext(
 		long messageId, long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3472,7 +3472,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
 		long userId, long[] classNameIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63; from the database.
@@ -3548,7 +3548,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C_S(
 		long classNameId, long classPK, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -3562,7 +3562,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_C_S_First(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3576,7 +3576,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_S_First(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -3590,7 +3590,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByC_C_S_Last(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3604,7 +3604,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_S_Last(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -3619,7 +3619,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByC_C_S_PrevAndNext(
 		long messageId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3691,7 +3691,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -3706,7 +3706,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_A_First(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3721,7 +3721,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_A_First(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -3736,7 +3736,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_A_Last(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3751,7 +3751,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_A_Last(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -3768,7 +3768,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_A_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3821,7 +3821,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -3838,7 +3838,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_A_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3926,7 +3926,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -3941,7 +3941,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_S_First(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3956,7 +3956,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_S_First(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -3971,7 +3971,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_S_Last(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -3986,7 +3986,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_S_Last(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -4003,7 +4003,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -4056,7 +4056,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set of message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -4073,7 +4073,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -4161,7 +4161,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C_S(
 		long userId, long classNameId, long classPK, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4176,7 +4176,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_S_First(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -4191,7 +4191,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_S_First(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4206,7 +4206,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_S_Last(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -4221,7 +4221,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_S_Last(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Returns the message-boards messages before and after the current message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4238,7 +4238,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_C_S_PrevAndNext(
 		long messageId, long userId, long classNameId, long classPK,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	/**
@@ -4362,7 +4362,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMessage> orderByComparator);
 
 	/**
 	* Removes all the message-boards messages from the database.

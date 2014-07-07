@@ -152,7 +152,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public List<PasswordTracker> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PasswordTracker> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -258,7 +258,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public PasswordTracker findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PasswordTracker> orderByComparator)
 		throws NoSuchPasswordTrackerException {
 		PasswordTracker passwordTracker = fetchByUserId_First(userId,
 				orderByComparator);
@@ -288,7 +288,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public PasswordTracker fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PasswordTracker> orderByComparator) {
 		List<PasswordTracker> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -309,7 +309,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public PasswordTracker findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<PasswordTracker> orderByComparator)
 		throws NoSuchPasswordTrackerException {
 		PasswordTracker passwordTracker = fetchByUserId_Last(userId,
 				orderByComparator);
@@ -339,7 +339,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public PasswordTracker fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PasswordTracker> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -367,7 +367,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public PasswordTracker[] findByUserId_PrevAndNext(long passwordTrackerId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<PasswordTracker> orderByComparator)
 		throws NoSuchPasswordTrackerException {
 		PasswordTracker passwordTracker = findByPrimaryKey(passwordTrackerId);
 
@@ -398,7 +398,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	protected PasswordTracker getByUserId_PrevAndNext(Session session,
 		PasswordTracker passwordTracker, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PasswordTracker> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1064,7 +1064,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public List<PasswordTracker> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<PasswordTracker> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

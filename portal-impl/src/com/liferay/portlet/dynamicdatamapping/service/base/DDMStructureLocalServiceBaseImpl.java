@@ -154,8 +154,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return ddmStructurePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -172,8 +171,8 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return ddmStructurePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -192,9 +191,8 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return ddmStructurePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -546,7 +544,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	@Override
 	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
 		long fileEntryTypeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId,
 			start, end, orderByComparator);
 	}
@@ -681,7 +679,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	 */
 	@Override
 	public List<DDMStructure> getJournalFolderDDMStructures(long folderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		return journalFolderPersistence.getDDMStructures(folderId, start, end,
 			orderByComparator);
 	}

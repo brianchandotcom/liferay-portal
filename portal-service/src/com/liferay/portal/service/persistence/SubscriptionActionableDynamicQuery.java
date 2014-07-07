@@ -21,7 +21,7 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SubscriptionLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SubscriptionLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

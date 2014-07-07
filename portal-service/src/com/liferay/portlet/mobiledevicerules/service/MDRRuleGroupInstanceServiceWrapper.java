@@ -34,26 +34,6 @@ public class MDRRuleGroupInstanceServiceWrapper
 		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mdrRuleGroupInstanceService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mdrRuleGroupInstanceService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
@@ -80,10 +60,20 @@ public class MDRRuleGroupInstanceServiceWrapper
 		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mdrRuleGroupInstanceService.getBeanIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> orderByComparator) {
 		return _mdrRuleGroupInstanceService.getRuleGroupInstances(className,
 			classPK, start, end, orderByComparator);
 	}
@@ -93,6 +83,16 @@ public class MDRRuleGroupInstanceServiceWrapper
 		long classPK) {
 		return _mdrRuleGroupInstanceService.getRuleGroupInstancesCount(className,
 			classPK);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_mdrRuleGroupInstanceService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

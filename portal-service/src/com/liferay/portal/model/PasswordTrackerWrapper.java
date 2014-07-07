@@ -94,24 +94,30 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		}
 	}
 
-	/**
-	* Returns the primary key of this password tracker.
-	*
-	* @return the primary key of this password tracker
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _passwordTracker.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new PasswordTrackerWrapper((PasswordTracker)_passwordTracker.clone());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.model.PasswordTracker passwordTracker) {
+		return _passwordTracker.compareTo(passwordTracker);
 	}
 
 	/**
-	* Sets the primary key of this password tracker.
+	* Returns the create date of this password tracker.
 	*
-	* @param primaryKey the primary key of this password tracker
+	* @return the create date of this password tracker
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_passwordTracker.setPrimaryKey(primaryKey);
+	public java.util.Date getCreateDate() {
+		return _passwordTracker.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _passwordTracker.getExpandoBridge();
 	}
 
 	/**
@@ -125,13 +131,13 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	/**
-	* Sets the mvcc version of this password tracker.
+	* Returns the password of this password tracker.
 	*
-	* @param mvccVersion the mvcc version of this password tracker
+	* @return the password of this password tracker
 	*/
 	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_passwordTracker.setMvccVersion(mvccVersion);
+	public java.lang.String getPassword() {
+		return _passwordTracker.getPassword();
 	}
 
 	/**
@@ -145,13 +151,18 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	/**
-	* Sets the password tracker ID of this password tracker.
+	* Returns the primary key of this password tracker.
 	*
-	* @param passwordTrackerId the password tracker ID of this password tracker
+	* @return the primary key of this password tracker
 	*/
 	@Override
-	public void setPasswordTrackerId(long passwordTrackerId) {
-		_passwordTracker.setPasswordTrackerId(passwordTrackerId);
+	public long getPrimaryKey() {
+		return _passwordTracker.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _passwordTracker.getPrimaryKeyObj();
 	}
 
 	/**
@@ -165,16 +176,6 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	/**
-	* Sets the user ID of this password tracker.
-	*
-	* @param userId the user ID of this password tracker
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_passwordTracker.setUserId(userId);
-	}
-
-	/**
 	* Returns the user uuid of this password tracker.
 	*
 	* @return the user uuid of this password tracker
@@ -184,24 +185,34 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		return _passwordTracker.getUserUuid();
 	}
 
-	/**
-	* Sets the user uuid of this password tracker.
-	*
-	* @param userUuid the user uuid of this password tracker
-	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_passwordTracker.setUserUuid(userUuid);
+	public int hashCode() {
+		return _passwordTracker.hashCode();
 	}
 
-	/**
-	* Returns the create date of this password tracker.
-	*
-	* @return the create date of this password tracker
-	*/
 	@Override
-	public java.util.Date getCreateDate() {
-		return _passwordTracker.getCreateDate();
+	public boolean isCachedModel() {
+		return _passwordTracker.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _passwordTracker.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _passwordTracker.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_passwordTracker.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_passwordTracker.setCachedModel(cachedModel);
 	}
 
 	/**
@@ -212,66 +223,6 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_passwordTracker.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the password of this password tracker.
-	*
-	* @return the password of this password tracker
-	*/
-	@Override
-	public java.lang.String getPassword() {
-		return _passwordTracker.getPassword();
-	}
-
-	/**
-	* Sets the password of this password tracker.
-	*
-	* @param password the password of this password tracker
-	*/
-	@Override
-	public void setPassword(java.lang.String password) {
-		_passwordTracker.setPassword(password);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordTracker.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_passwordTracker.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _passwordTracker.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordTracker.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordTracker.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _passwordTracker.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_passwordTracker.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _passwordTracker.getExpandoBridge();
 	}
 
 	@Override
@@ -292,20 +243,74 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		_passwordTracker.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the mvcc version of this password tracker.
+	*
+	* @param mvccVersion the mvcc version of this password tracker
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new PasswordTrackerWrapper((PasswordTracker)_passwordTracker.clone());
+	public void setMvccVersion(long mvccVersion) {
+		_passwordTracker.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.model.PasswordTracker passwordTracker) {
-		return _passwordTracker.compareTo(passwordTracker);
+	public void setNew(boolean n) {
+		_passwordTracker.setNew(n);
+	}
+
+	/**
+	* Sets the password of this password tracker.
+	*
+	* @param password the password of this password tracker
+	*/
+	@Override
+	public void setPassword(java.lang.String password) {
+		_passwordTracker.setPassword(password);
+	}
+
+	/**
+	* Sets the password tracker ID of this password tracker.
+	*
+	* @param passwordTrackerId the password tracker ID of this password tracker
+	*/
+	@Override
+	public void setPasswordTrackerId(long passwordTrackerId) {
+		_passwordTracker.setPasswordTrackerId(passwordTrackerId);
+	}
+
+	/**
+	* Sets the primary key of this password tracker.
+	*
+	* @param primaryKey the primary key of this password tracker
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_passwordTracker.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _passwordTracker.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_passwordTracker.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user ID of this password tracker.
+	*
+	* @param userId the user ID of this password tracker
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_passwordTracker.setUserId(userId);
+	}
+
+	/**
+	* Sets the user uuid of this password tracker.
+	*
+	* @param userUuid the user uuid of this password tracker
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_passwordTracker.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -319,23 +324,18 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	}
 
 	@Override
-	public com.liferay.portal.model.PasswordTracker toUnescapedModel() {
-		return new PasswordTrackerWrapper(_passwordTracker.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _passwordTracker.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _passwordTracker.toXmlString();
+	public com.liferay.portal.model.PasswordTracker toUnescapedModel() {
+		return new PasswordTrackerWrapper(_passwordTracker.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_passwordTracker.persist();
+	public java.lang.String toXmlString() {
+		return _passwordTracker.toXmlString();
 	}
 
 	@Override

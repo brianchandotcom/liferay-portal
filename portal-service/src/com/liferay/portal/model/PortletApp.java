@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -65,6 +67,8 @@ public interface PortletApp extends Serializable {
 
 	public PublicRenderParameter getPublicRenderParameter(String identifier);
 
+	public ServletContext getServletContext();
+
 	public String getServletContextName();
 
 	public Set<String> getServletURLPatterns();
@@ -75,9 +79,9 @@ public interface PortletApp extends Serializable {
 
 	public boolean isWARFile();
 
-	public void setContextPath(String contextPath);
-
 	public void setDefaultNamespace(String defaultNamespace);
+
+	public void setServletContext(ServletContext servletContext);
 
 	public void setSpriteImages(String spriteFileName, Properties properties);
 

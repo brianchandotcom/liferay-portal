@@ -21,7 +21,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 /**
  * @author Sergio González
  */
-public class EntryCreateDateComparator extends OrderByComparator {
+public class EntryCreateDateComparator extends OrderByComparator<TrashEntry> {
 
 	public static final String ORDER_BY_ASC = "TrashEntry.createDate ASC";
 
@@ -38,10 +38,7 @@ public class EntryCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		TrashEntry entry1 = (TrashEntry)obj1;
-		TrashEntry entry2 = (TrashEntry)obj2;
-
+	public int compare(TrashEntry entry1, TrashEntry entry2) {
 		int value = DateUtil.compareTo(
 			entry1.getCreateDate(), entry2.getCreateDate());
 

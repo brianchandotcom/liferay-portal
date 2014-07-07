@@ -40,25 +40,6 @@ public class WikiNodeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static com.liferay.portlet.wiki.model.WikiNode addNode(
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -71,15 +52,24 @@ public class WikiNodeServiceUtil {
 		getService().deleteNode(nodeId);
 	}
 
-	public static com.liferay.portlet.wiki.model.WikiNode getNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getNode(nodeId);
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiNode getNode(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(groupId, name);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiNode getNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getNode(nodeId);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
@@ -89,14 +79,14 @@ public class WikiNodeServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getNodes(groupId, status);
+		long groupId, int start, int end) {
+		return getService().getNodes(groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end) {
-		return getService().getNodes(groupId, start, end);
+		long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getNodes(groupId, status);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getNodes(
@@ -127,6 +117,15 @@ public class WikiNodeServiceUtil {
 	public static void restoreNodeFromTrash(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreNodeFromTrash(nodeId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribeNode(long nodeId)

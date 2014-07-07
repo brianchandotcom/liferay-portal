@@ -63,6 +63,19 @@ public class ShoppingCartLocalServiceUtil {
 		return getService().createShoppingCart(cartId);
 	}
 
+	public static void deleteGroupCarts(long groupId) {
+		getService().deleteGroupCarts(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
 	/**
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -86,6 +99,10 @@ public class ShoppingCartLocalServiceUtil {
 		return getService().deleteShoppingCart(shoppingCart);
 	}
 
+	public static void deleteUserCarts(long userId) {
+		getService().deleteUserCarts(userId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -96,8 +113,7 @@ public class ShoppingCartLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +130,7 @@ public class ShoppingCartLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -134,11 +149,10 @@ public class ShoppingCartLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -172,6 +186,36 @@ public class ShoppingCartLocalServiceUtil {
 		return getService().fetchShoppingCart(cartId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingCart getCart(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCart(userId, groupId);
+	}
+
+	public static java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
+		long groupId, java.lang.String itemIds) {
+		return getService().getItems(groupId, itemIds);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping cart with the primary key.
 	*
@@ -182,25 +226,6 @@ public class ShoppingCartLocalServiceUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingCart getShoppingCart(
 		long cartId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShoppingCart(cartId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -229,51 +254,12 @@ public class ShoppingCartLocalServiceUtil {
 	}
 
 	/**
-	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was updated
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCart updateShoppingCart(
-		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart) {
-		return getService().updateShoppingCart(shoppingCart);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void deleteGroupCarts(long groupId) {
-		getService().deleteGroupCarts(groupId);
-	}
-
-	public static void deleteUserCarts(long userId) {
-		getService().deleteUserCarts(userId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingCart getCart(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCart(userId, groupId);
-	}
-
-	public static java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds) {
-		return getService().getItems(groupId, itemIds);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingCart updateCart(
@@ -283,6 +269,17 @@ public class ShoppingCartLocalServiceUtil {
 		return getService()
 				   .updateCart(userId, groupId, itemIds, couponCodes,
 			altShipping, insure);
+	}
+
+	/**
+	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was updated
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCart updateShoppingCart(
+		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart) {
+		return getService().updateShoppingCart(shoppingCart);
 	}
 
 	public static ShoppingCartLocalService getService() {

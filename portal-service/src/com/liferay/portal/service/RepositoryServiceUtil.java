@@ -40,25 +40,6 @@ public class RepositoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static com.liferay.portal.model.Repository addRepository(
 		long groupId, long classNameId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
@@ -81,10 +62,13 @@ public class RepositoryServiceUtil {
 		getService().deleteRepository(repositoryId);
 	}
 
-	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLocalRepositoryImpl(repositoryId);
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
@@ -94,6 +78,12 @@ public class RepositoryServiceUtil {
 				   .getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
 	}
 
+	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
+		long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLocalRepositoryImpl(repositoryId);
+	}
+
 	public static com.liferay.portal.model.Repository getRepository(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -101,16 +91,16 @@ public class RepositoryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRepositoryImpl(repositoryId);
-	}
-
-	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		long folderId, long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getRepositoryImpl(folderId, fileEntryId, fileVersionId);
+	}
+
+	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
+		long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRepositoryImpl(repositoryId);
 	}
 
 	public static java.lang.String[] getSupportedConfigurations(
@@ -127,6 +117,15 @@ public class RepositoryServiceUtil {
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTypeSettingsProperties(repositoryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateRepository(long repositoryId,

@@ -132,7 +132,7 @@ public class ShoppingOrderFinderImpl
 		String billingEmailAddress, String shippingFirstName,
 		String shippingLastName, String shippingEmailAddress,
 		String ppPaymentStatus, boolean andOperator, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<ShoppingOrder> obc) {
 
 		number = StringUtil.upperCase(number);
 

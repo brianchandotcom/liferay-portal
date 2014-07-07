@@ -47,21 +47,6 @@ public interface BookmarksFolderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksFolderServiceUtil} to access the bookmarks folder remote service. Add custom service methods to {@link com.liferay.portlet.bookmarks.service.impl.BookmarksFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder addFolder(
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
@@ -73,6 +58,13 @@ public interface BookmarksFolderService extends BaseService {
 
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder(
@@ -128,7 +120,7 @@ public interface BookmarksFolderService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId);
@@ -155,6 +147,13 @@ public interface BookmarksFolderService extends BaseService {
 
 	public void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException;

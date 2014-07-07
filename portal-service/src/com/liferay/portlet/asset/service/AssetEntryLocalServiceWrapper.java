@@ -33,6 +33,31 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
+	@Override
+	public void addAssetCategoryAssetEntries(long categoryId,
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
+		_assetEntryLocalService.addAssetCategoryAssetEntries(categoryId,
+			AssetEntries);
+	}
+
+	@Override
+	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
+		_assetEntryLocalService.addAssetCategoryAssetEntries(categoryId,
+			entryIds);
+	}
+
+	@Override
+	public void addAssetCategoryAssetEntry(long categoryId,
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_assetEntryLocalService.addAssetCategoryAssetEntry(categoryId,
+			assetEntry);
+	}
+
+	@Override
+	public void addAssetCategoryAssetEntry(long categoryId, long entryId) {
+		_assetEntryLocalService.addAssetCategoryAssetEntry(categoryId, entryId);
+	}
+
 	/**
 	* Adds the asset entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -45,6 +70,38 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.addAssetEntry(assetEntry);
 	}
 
+	@Override
+	public void addAssetTagAssetEntries(long tagId,
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
+		_assetEntryLocalService.addAssetTagAssetEntries(tagId, AssetEntries);
+	}
+
+	@Override
+	public void addAssetTagAssetEntries(long tagId, long[] entryIds) {
+		_assetEntryLocalService.addAssetTagAssetEntries(tagId, entryIds);
+	}
+
+	@Override
+	public void addAssetTagAssetEntry(long tagId,
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_assetEntryLocalService.addAssetTagAssetEntry(tagId, assetEntry);
+	}
+
+	@Override
+	public void addAssetTagAssetEntry(long tagId, long entryId) {
+		_assetEntryLocalService.addAssetTagAssetEntry(tagId, entryId);
+	}
+
+	@Override
+	public void clearAssetCategoryAssetEntries(long categoryId) {
+		_assetEntryLocalService.clearAssetCategoryAssetEntries(categoryId);
+	}
+
+	@Override
+	public void clearAssetTagAssetEntries(long tagId) {
+		_assetEntryLocalService.clearAssetTagAssetEntries(tagId);
+	}
+
 	/**
 	* Creates a new asset entry with the primary key. Does not add the asset entry to the database.
 	*
@@ -55,6 +112,44 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	public com.liferay.portlet.asset.model.AssetEntry createAssetEntry(
 		long entryId) {
 		return _assetEntryLocalService.createAssetEntry(entryId);
+	}
+
+	@Override
+	public void deleteAssetCategoryAssetEntries(long categoryId,
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
+		_assetEntryLocalService.deleteAssetCategoryAssetEntries(categoryId,
+			AssetEntries);
+	}
+
+	@Override
+	public void deleteAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
+		_assetEntryLocalService.deleteAssetCategoryAssetEntries(categoryId,
+			entryIds);
+	}
+
+	@Override
+	public void deleteAssetCategoryAssetEntry(long categoryId,
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_assetEntryLocalService.deleteAssetCategoryAssetEntry(categoryId,
+			assetEntry);
+	}
+
+	@Override
+	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId) {
+		_assetEntryLocalService.deleteAssetCategoryAssetEntry(categoryId,
+			entryId);
+	}
+
+	/**
+	* Deletes the asset entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetEntry the asset entry
+	* @return the asset entry that was removed
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry deleteAssetEntry(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		return _assetEntryLocalService.deleteAssetEntry(assetEntry);
 	}
 
 	/**
@@ -71,16 +166,60 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.deleteAssetEntry(entryId);
 	}
 
+	@Override
+	public void deleteAssetTagAssetEntries(long tagId,
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
+		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, AssetEntries);
+	}
+
+	@Override
+	public void deleteAssetTagAssetEntries(long tagId, long[] entryIds) {
+		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, entryIds);
+	}
+
+	@Override
+	public void deleteAssetTagAssetEntry(long tagId,
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_assetEntryLocalService.deleteAssetTagAssetEntry(tagId, assetEntry);
+	}
+
+	@Override
+	public void deleteAssetTagAssetEntry(long tagId, long entryId) {
+		_assetEntryLocalService.deleteAssetTagAssetEntry(tagId, entryId);
+	}
+
+	@Override
+	public void deleteEntry(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.deleteEntry(className, classPK);
+	}
+
+	@Override
+	public void deleteEntry(com.liferay.portlet.asset.model.AssetEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.deleteEntry(entry);
+	}
+
+	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.deleteEntry(entryId);
+	}
+
+	@Override
+	public void deleteGroupEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.deleteGroupEntries(groupId);
+	}
+
 	/**
-	* Deletes the asset entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetEntry the asset entry
-	* @return the asset entry that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry deleteAssetEntry(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		return _assetEntryLocalService.deleteAssetEntry(assetEntry);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -95,8 +234,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +252,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +272,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _assetEntryLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -177,18 +313,21 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.fetchAssetEntry(entryId);
 	}
 
-	/**
-	* Returns the asset entry with the primary key.
-	*
-	* @param entryId the primary key of the asset entry
-	* @return the asset entry
-	* @throws PortalException if a asset entry with the primary key could not be found
-	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.getAssetEntry(entryId);
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(
+		java.lang.String className, long classPK) {
+		return _assetEntryLocalService.fetchEntry(className, classPK);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId) {
+		return _assetEntryLocalService.fetchEntry(entryId);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long groupId,
+		java.lang.String classUuid) {
+		return _assetEntryLocalService.fetchEntry(groupId, classUuid);
 	}
 
 	@Override
@@ -196,21 +335,48 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAncestorEntries(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.deletePersistedModel(persistedModel);
+		return _assetEntryLocalService.getAncestorEntries(entryId);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
+		long categoryId) {
+		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
+		long categoryId, int start, int end) {
+		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
+		long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
+		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetCategoryAssetEntriesCount(long categoryId) {
+		return _assetEntryLocalService.getAssetCategoryAssetEntriesCount(categoryId);
+	}
+
+	/**
+	* Returns the categoryIds of the asset categories associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the categoryIds of asset categories associated with the asset entry
+	*/
+	@Override
+	public long[] getAssetCategoryPrimaryKeys(long entryId) {
+		return _assetEntryLocalService.getAssetCategoryPrimaryKeys(entryId);
 	}
 
 	/**
@@ -241,185 +407,17 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	/**
-	* Updates the asset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the asset entry with the primary key.
 	*
-	* @param assetEntry the asset entry
-	* @return the asset entry that was updated
+	* @param entryId the primary key of the asset entry
+	* @return the asset entry
+	* @throws PortalException if a asset entry with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry updateAssetEntry(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		return _assetEntryLocalService.updateAssetEntry(assetEntry);
-	}
-
-	@Override
-	public void addAssetCategoryAssetEntry(long categoryId, long entryId) {
-		_assetEntryLocalService.addAssetCategoryAssetEntry(categoryId, entryId);
-	}
-
-	@Override
-	public void addAssetCategoryAssetEntry(long categoryId,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		_assetEntryLocalService.addAssetCategoryAssetEntry(categoryId,
-			assetEntry);
-	}
-
-	@Override
-	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
-		_assetEntryLocalService.addAssetCategoryAssetEntries(categoryId,
-			entryIds);
-	}
-
-	@Override
-	public void addAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.addAssetCategoryAssetEntries(categoryId,
-			AssetEntries);
-	}
-
-	@Override
-	public void clearAssetCategoryAssetEntries(long categoryId) {
-		_assetEntryLocalService.clearAssetCategoryAssetEntries(categoryId);
-	}
-
-	@Override
-	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId) {
-		_assetEntryLocalService.deleteAssetCategoryAssetEntry(categoryId,
-			entryId);
-	}
-
-	@Override
-	public void deleteAssetCategoryAssetEntry(long categoryId,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		_assetEntryLocalService.deleteAssetCategoryAssetEntry(categoryId,
-			assetEntry);
-	}
-
-	@Override
-	public void deleteAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
-		_assetEntryLocalService.deleteAssetCategoryAssetEntries(categoryId,
-			entryIds);
-	}
-
-	@Override
-	public void deleteAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.deleteAssetCategoryAssetEntries(categoryId,
-			AssetEntries);
-	}
-
-	/**
-	* Returns the categoryIds of the asset categories associated with the asset entry.
-	*
-	* @param entryId the entryId of the asset entry
-	* @return long[] the categoryIds of asset categories associated with the asset entry
-	*/
-	@Override
-	public long[] getAssetCategoryPrimaryKeys(long entryId) {
-		return _assetEntryLocalService.getAssetCategoryPrimaryKeys(entryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
-		long categoryId) {
-		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
-		long categoryId, int start, int end) {
-		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetCategoryAssetEntries(
-		long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _assetEntryLocalService.getAssetCategoryAssetEntries(categoryId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getAssetCategoryAssetEntriesCount(long categoryId) {
-		return _assetEntryLocalService.getAssetCategoryAssetEntriesCount(categoryId);
-	}
-
-	@Override
-	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId) {
-		return _assetEntryLocalService.hasAssetCategoryAssetEntry(categoryId,
-			entryId);
-	}
-
-	@Override
-	public boolean hasAssetCategoryAssetEntries(long categoryId) {
-		return _assetEntryLocalService.hasAssetCategoryAssetEntries(categoryId);
-	}
-
-	@Override
-	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
-		_assetEntryLocalService.setAssetCategoryAssetEntries(categoryId,
-			entryIds);
-	}
-
-	@Override
-	public void addAssetTagAssetEntry(long tagId, long entryId) {
-		_assetEntryLocalService.addAssetTagAssetEntry(tagId, entryId);
-	}
-
-	@Override
-	public void addAssetTagAssetEntry(long tagId,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		_assetEntryLocalService.addAssetTagAssetEntry(tagId, assetEntry);
-	}
-
-	@Override
-	public void addAssetTagAssetEntries(long tagId, long[] entryIds) {
-		_assetEntryLocalService.addAssetTagAssetEntries(tagId, entryIds);
-	}
-
-	@Override
-	public void addAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.addAssetTagAssetEntries(tagId, AssetEntries);
-	}
-
-	@Override
-	public void clearAssetTagAssetEntries(long tagId) {
-		_assetEntryLocalService.clearAssetTagAssetEntries(tagId);
-	}
-
-	@Override
-	public void deleteAssetTagAssetEntry(long tagId, long entryId) {
-		_assetEntryLocalService.deleteAssetTagAssetEntry(tagId, entryId);
-	}
-
-	@Override
-	public void deleteAssetTagAssetEntry(long tagId,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
-		_assetEntryLocalService.deleteAssetTagAssetEntry(tagId, assetEntry);
-	}
-
-	@Override
-	public void deleteAssetTagAssetEntries(long tagId, long[] entryIds) {
-		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, entryIds);
-	}
-
-	@Override
-	public void deleteAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, AssetEntries);
-	}
-
-	/**
-	* Returns the tagIds of the asset tags associated with the asset entry.
-	*
-	* @param entryId the entryId of the asset entry
-	* @return long[] the tagIds of asset tags associated with the asset entry
-	*/
-	@Override
-	public long[] getAssetTagPrimaryKeys(long entryId) {
-		return _assetEntryLocalService.getAssetTagPrimaryKeys(entryId);
+	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.getAssetEntry(entryId);
 	}
 
 	@Override
@@ -437,7 +435,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetTagAssetEntries(
 		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return _assetEntryLocalService.getAssetTagAssetEntries(tagId, start,
 			end, orderByComparator);
 	}
@@ -447,19 +445,15 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.getAssetTagAssetEntriesCount(tagId);
 	}
 
+	/**
+	* Returns the tagIds of the asset tags associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the tagIds of asset tags associated with the asset entry
+	*/
 	@Override
-	public boolean hasAssetTagAssetEntry(long tagId, long entryId) {
-		return _assetEntryLocalService.hasAssetTagAssetEntry(tagId, entryId);
-	}
-
-	@Override
-	public boolean hasAssetTagAssetEntries(long tagId) {
-		return _assetEntryLocalService.hasAssetTagAssetEntries(tagId);
-	}
-
-	@Override
-	public void setAssetTagAssetEntries(long tagId, long[] entryIds) {
-		_assetEntryLocalService.setAssetTagAssetEntries(tagId, entryIds);
+	public long[] getAssetTagPrimaryKeys(long entryId) {
+		return _assetEntryLocalService.getAssetTagPrimaryKeys(entryId);
 	}
 
 	/**
@@ -470,58 +464,6 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _assetEntryLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetEntryLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void deleteEntry(com.liferay.portlet.asset.model.AssetEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetEntryLocalService.deleteEntry(entry);
-	}
-
-	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetEntryLocalService.deleteEntry(entryId);
-	}
-
-	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetEntryLocalService.deleteEntry(className, classPK);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId) {
-		return _assetEntryLocalService.fetchEntry(entryId);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long groupId,
-		java.lang.String classUuid) {
-		return _assetEntryLocalService.fetchEntry(groupId, classUuid);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(
-		java.lang.String className, long classPK) {
-		return _assetEntryLocalService.fetchEntry(className, classPK);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAncestorEntries(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.getAncestorEntries(entryId);
 	}
 
 	@Override
@@ -555,6 +497,13 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.asset.model.AssetEntry getEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.getEntry(className, classPK);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.getEntry(entryId);
@@ -568,10 +517,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry getEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.getEntry(className, classPK);
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getGroupEntries(
+		long groupId) {
+		return _assetEntryLocalService.getGroupEntries(groupId);
 	}
 
 	@Override
@@ -585,6 +533,13 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.getParentEntry(entryId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -609,6 +564,27 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public boolean hasAssetCategoryAssetEntries(long categoryId) {
+		return _assetEntryLocalService.hasAssetCategoryAssetEntries(categoryId);
+	}
+
+	@Override
+	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId) {
+		return _assetEntryLocalService.hasAssetCategoryAssetEntry(categoryId,
+			entryId);
+	}
+
+	@Override
+	public boolean hasAssetTagAssetEntries(long tagId) {
+		return _assetEntryLocalService.hasAssetTagAssetEntries(tagId);
+	}
+
+	@Override
+	public boolean hasAssetTagAssetEntry(long tagId, long entryId) {
+		return _assetEntryLocalService.hasAssetTagAssetEntry(tagId, entryId);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
 		long userId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -628,6 +604,19 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.util.List<com.liferay.portlet.asset.model.AssetEntry> entries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.reindex(entries);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	String, String, int, int, int)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, java.lang.String className, java.lang.String keywords,
+		int start, int end) {
+		return _assetEntryLocalService.search(companyId, groupIds, className,
+			keywords, start, end);
 	}
 
 	@Override
@@ -701,36 +690,55 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			assetTagNames, status, andSearch, start, end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
-	String, String, int, int, int)}
-	*/
-	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, java.lang.String className, java.lang.String keywords,
-		int start, int end) {
-		return _assetEntryLocalService.search(companyId, groupIds, className,
-			keywords, start, end);
+	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
+		_assetEntryLocalService.setAssetCategoryAssetEntries(categoryId,
+			entryIds);
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
-		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String summary, java.lang.String url,
-		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority, boolean sync)
+	public void setAssetTagAssetEntries(long tagId, long[] entryIds) {
+		_assetEntryLocalService.setAssetTagAssetEntries(tagId, entryIds);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetEntryLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetEntry the asset entry
+	* @return the asset entry that was updated
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry updateAssetEntry(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		return _assetEntryLocalService.updateAssetEntry(assetEntry);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
+		java.lang.String className, long classPK, java.util.Date publishDate,
+		java.util.Date expirationDate, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
-			modifiedDate, className, classPK, classUuid, classTypeId,
-			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
-			mimeType, title, description, summary, url, layoutUuid, height,
-			width, priority, sync);
+		return _assetEntryLocalService.updateEntry(className, classPK,
+			publishDate, expirationDate, visible);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
+		java.lang.String className, long classPK, java.util.Date publishDate,
+		boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.updateEntry(className, classPK,
+			publishDate, visible);
 	}
 
 	@Override
@@ -740,6 +748,30 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, className,
 			classPK, categoryIds, tagNames);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
+	Date, Date, String, long, String, long, long[], String[],
+	boolean, Date, Date, Date, String, String, String, String,
+	String, String, int, int, Integer, boolean)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
+		java.util.Date endDate, java.util.Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Integer priority, boolean sync)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.updateEntry(userId, groupId, className,
+			classPK, classUuid, classTypeId, categoryIds, tagNames, visible,
+			startDate, endDate, expirationDate, mimeType, title, description,
+			summary, url, layoutUuid, height, width, priority, sync);
 	}
 
 	/**
@@ -767,46 +799,23 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			description, summary, url, layoutUuid, height, width, priority, sync);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
-	Date, Date, String, long, String, long, long[], String[],
-	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Integer, boolean)}
-	*/
-	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Integer priority, boolean sync)
+		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
+		boolean visible, java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Integer priority, boolean sync)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.updateEntry(userId, groupId, className,
-			classPK, classUuid, classTypeId, categoryIds, tagNames, visible,
-			startDate, endDate, expirationDate, mimeType, title, description,
-			summary, url, layoutUuid, height, width, priority, sync);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
-		java.lang.String className, long classPK, java.util.Date publishDate,
-		boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.updateEntry(className, classPK,
-			publishDate, visible);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
-		java.lang.String className, long classPK, java.util.Date publishDate,
-		java.util.Date expirationDate, boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryLocalService.updateEntry(className, classPK,
-			publishDate, expirationDate, visible);
+		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
+			modifiedDate, className, classPK, classUuid, classTypeId,
+			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
+			mimeType, title, description, summary, url, layoutUuid, height,
+			width, priority, sync);
 	}
 
 	@Override
@@ -814,14 +823,6 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.lang.String className, long classPK, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateVisible(className, classPK, visible);
-	}
-
-	@Override
-	public void validate(long groupId, java.lang.String className,
-		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetEntryLocalService.validate(groupId, className, classTypePK,
-			categoryIds, tagNames);
 	}
 
 	/**
@@ -835,6 +836,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryLocalService.validate(groupId, className, categoryIds,
 			tagNames);
+	}
+
+	@Override
+	public void validate(long groupId, java.lang.String className,
+		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.validate(groupId, className, classTypePK,
+			categoryIds, tagNames);
 	}
 
 	/**

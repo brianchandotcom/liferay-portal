@@ -175,7 +175,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public List<AssetCategory> getChildCategories(
-			long parentCategoryId, int start, int end, OrderByComparator obc)
+			long parentCategoryId, int start, int end,
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		return filterCategories(
@@ -204,7 +205,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public JSONObject getJSONVocabularyCategories(
-			long vocabularyId, int start, int end, OrderByComparator obc)
+			long vocabularyId, int start, int end,
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -228,7 +230,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public JSONObject getJSONVocabularyCategories(
 			long groupId, String name, long vocabularyId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -264,7 +266,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
-			long vocabularyId, int start, int end, OrderByComparator obc)
+			long vocabularyId, int start, int end,
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		return filterCategories(
@@ -275,7 +278,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
 			long parentCategoryId, long vocabularyId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		return filterCategories(
@@ -286,7 +289,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
 		long groupId, String name, long vocabularyId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<AssetCategory> obc) {
 
 		if (Validator.isNull(name)) {
 			return assetCategoryPersistence.filterFindByG_V(
@@ -319,7 +322,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public AssetCategoryDisplay getVocabularyCategoriesDisplay(
-			long vocabularyId, int start, int end, OrderByComparator obc)
+			long vocabularyId, int start, int end,
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		List<AssetCategory> categories = filterCategories(
@@ -333,7 +337,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public AssetCategoryDisplay getVocabularyCategoriesDisplay(
 			long groupId, String name, long vocabularyId, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		List<AssetCategory> categories = null;
@@ -362,7 +366,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public List<AssetCategory> getVocabularyRootCategories(
-			long vocabularyId, int start, int end, OrderByComparator obc)
+			long vocabularyId, int start, int end,
+			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = assetVocabularyLocalService.getVocabulary(
@@ -375,7 +380,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public List<AssetCategory> getVocabularyRootCategories(
 		long groupId, long vocabularyId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<AssetCategory> obc) {
 
 		return assetCategoryPersistence.filterFindByG_P_V(
 			groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -407,7 +412,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public List<AssetCategory> search(
 		long groupId, String keywords, long vocabularyId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<AssetCategory> obc) {
 
 		String name = CustomSQLUtil.keywords(keywords)[0];
 

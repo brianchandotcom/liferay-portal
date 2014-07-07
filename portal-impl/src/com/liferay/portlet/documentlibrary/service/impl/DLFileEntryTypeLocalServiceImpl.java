@@ -321,7 +321,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	public List<DLFileEntryType> search(
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return dlFileEntryTypeFinder.findByKeywords(
 			companyId, groupIds, keywords, includeBasicFileEntryType, start,

@@ -32,26 +32,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		_mbMessageService = mbMessageService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbMessageService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbMessageService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK,
@@ -63,6 +43,28 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		return _mbMessageService.addDiscussionMessage(groupId, className,
 			classPK, permissionClassName, permissionClassPK, permissionOwnerId,
 			threadId, parentMessageId, subject, body, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long categoryId, java.lang.String subject, java.lang.String body,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.addMessage(categoryId, subject, body,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
+			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
+			serviceContext);
 	}
 
 	/**
@@ -83,28 +85,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		return _mbMessageService.addMessage(groupId, categoryId, threadId,
 			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
 			priority, allowPingbacks, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		long groupId, long categoryId, java.lang.String subject,
-		java.lang.String body, java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		boolean anonymous, double priority, boolean allowPingbacks,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
-			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		long categoryId, java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(categoryId, subject, body,
-			serviceContext);
 	}
 
 	@Override
@@ -140,6 +120,16 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	public void deleteMessageAttachments(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.deleteMessageAttachments(messageId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _mbMessageService.getBeanIdentifier();
 	}
 
 	@Override
@@ -261,6 +251,16 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.restoreMessageAttachmentFromTrash(messageId, fileName);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_mbMessageService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

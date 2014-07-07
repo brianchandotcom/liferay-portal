@@ -46,6 +46,11 @@ public interface FlagsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to {@link com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addEntry(java.lang.String className, long classPK,
+		java.lang.String reporterEmailAddress, long reportedUserId,
+		java.lang.String contentTitle, java.lang.String contentURL,
+		java.lang.String reason,
+		com.liferay.portal.service.ServiceContext serviceContext);
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -60,10 +65,4 @@ public interface FlagsEntryService extends BaseService {
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public void addEntry(java.lang.String className, long classPK,
-		java.lang.String reporterEmailAddress, long reportedUserId,
-		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext);
 }

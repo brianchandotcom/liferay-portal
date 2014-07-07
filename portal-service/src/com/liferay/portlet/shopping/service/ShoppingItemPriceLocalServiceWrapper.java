@@ -59,6 +59,16 @@ public class ShoppingItemPriceLocalServiceWrapper
 	}
 
 	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemPriceLocalService.deletePersistedModel(persistedModel);
+	}
+
+	/**
 	* Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemPriceId the primary key of the shopping item price
@@ -96,8 +106,7 @@ public class ShoppingItemPriceLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shoppingItemPriceLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +124,7 @@ public class ShoppingItemPriceLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _shoppingItemPriceLocalService.dynamicQuery(dynamicQuery, start,
@@ -137,11 +145,10 @@ public class ShoppingItemPriceLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _shoppingItemPriceLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -179,6 +186,34 @@ public class ShoppingItemPriceLocalServiceWrapper
 		return _shoppingItemPriceLocalService.fetchShoppingItemPrice(itemPriceId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingItemPriceLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shoppingItemPriceLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> getItemPrices(
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemPriceLocalService.getItemPrices(itemId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemPriceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the shopping item price with the primary key.
 	*
@@ -191,28 +226,6 @@ public class ShoppingItemPriceLocalServiceWrapper
 		long itemPriceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemPriceLocalService.getShoppingItemPrice(itemPriceId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingItemPriceLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemPriceLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemPriceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -243,28 +256,6 @@ public class ShoppingItemPriceLocalServiceWrapper
 	}
 
 	/**
-	* Updates the shopping item price in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was updated
-	*/
-	@Override
-	public com.liferay.portlet.shopping.model.ShoppingItemPrice updateShoppingItemPrice(
-		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice) {
-		return _shoppingItemPriceLocalService.updateShoppingItemPrice(shoppingItemPrice);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingItemPriceLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -274,10 +265,16 @@ public class ShoppingItemPriceLocalServiceWrapper
 		_shoppingItemPriceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* Updates the shopping item price in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemPrice the shopping item price
+	* @return the shopping item price that was updated
+	*/
 	@Override
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> getItemPrices(
-		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemPriceLocalService.getItemPrices(itemId);
+	public com.liferay.portlet.shopping.model.ShoppingItemPrice updateShoppingItemPrice(
+		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice) {
+		return _shoppingItemPriceLocalService.updateShoppingItemPrice(shoppingItemPrice);
 	}
 
 	/**

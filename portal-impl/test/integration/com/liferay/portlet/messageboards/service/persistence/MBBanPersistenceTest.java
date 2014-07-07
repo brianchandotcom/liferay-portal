@@ -296,7 +296,7 @@ public class MBBanPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBBan> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBBan", "uuid", true,
 			"banId", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

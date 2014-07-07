@@ -454,6 +454,17 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_STArrayable() {
+		try {
+			_persistence.countByR_ST(RandomTestUtil.nextLong(),
+				new int[] { RandomTestUtil.nextInt(), 0 });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_U() {
 		try {
 			_persistence.countByG_U(RandomTestUtil.nextLong(),
@@ -875,7 +886,7 @@ public class JournalArticlePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<JournalArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticle", "uuid",
 			true, "id", true, "resourcePrimKey", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

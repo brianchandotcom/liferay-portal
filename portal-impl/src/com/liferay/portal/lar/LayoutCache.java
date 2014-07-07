@@ -53,7 +53,8 @@ public class LayoutCache {
 		if (entityGroupIdObj == null) {
 			if (entityName.equals("user-group")) {
 				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
-					companyId, null, null, 0, 1, (OrderByComparator)null);
+					companyId, null, null, 0, 1,
+					(OrderByComparator<UserGroup>)null);
 
 				if (!userGroups.isEmpty()) {
 					UserGroup userGroup = userGroups.get(0);
@@ -98,7 +99,7 @@ public class LayoutCache {
 		if (entityName.equals("user-group")) {
 			List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
 				companyId, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				(OrderByComparator)null);
+				(OrderByComparator<UserGroup>)null);
 
 			for (int i = 0; i < userGroups.size(); i++) {
 				UserGroup userGroup = userGroups.get(i);

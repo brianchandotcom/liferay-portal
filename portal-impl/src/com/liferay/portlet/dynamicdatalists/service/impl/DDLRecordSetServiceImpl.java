@@ -70,7 +70,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	@Override
 	public List<DDLRecordSet> search(
 		long companyId, long groupId, String keywords, int scope, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return ddlRecordSetFinder.filterFindByKeywords(
 			companyId, groupId, keywords, scope, start, end, orderByComparator);
@@ -80,7 +80,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	public List<DDLRecordSet> search(
 		long companyId, long groupId, String name, String description,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return ddlRecordSetFinder.filterFindByC_G_N_D_S(
 			companyId, groupId, name, description, scope, andOperator, start,

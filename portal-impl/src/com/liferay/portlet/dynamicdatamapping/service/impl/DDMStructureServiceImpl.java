@@ -434,7 +434,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	@Override
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds, String keywords,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.filterFindByKeywords(
 			companyId, groupIds, classNameIds, keywords, start, end,
@@ -479,7 +479,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds, String name,
 		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, storageType,

@@ -61,7 +61,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_20_description']</td>
+	<td>//textarea[contains(@id,'_description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
-	<td>//button[@id='_20_removeParentStructureButton']</td>
+	<td>//button[contains(@id,'_removeParentStructureButton')]</td>
 	<td></td>
 </tr>
 <!---->

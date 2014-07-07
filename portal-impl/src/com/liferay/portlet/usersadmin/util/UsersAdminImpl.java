@@ -600,7 +600,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public OrderByComparator getGroupOrderByComparator(
+	public OrderByComparator<Group> getGroupOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -609,7 +609,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<Group> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new GroupNameComparator(orderByAsc);
@@ -642,7 +642,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public OrderByComparator getOrganizationOrderByComparator(
+	public OrderByComparator<Organization> getOrganizationOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -651,7 +651,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<Organization> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new OrganizationNameComparator(orderByAsc);
@@ -831,7 +831,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public OrderByComparator getRoleOrderByComparator(
+	public OrderByComparator<Role> getRoleOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -840,7 +840,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<Role> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new RoleNameComparator(orderByAsc);
@@ -859,7 +859,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public OrderByComparator getUserGroupOrderByComparator(
+	public OrderByComparator<UserGroup> getUserGroupOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -868,7 +868,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<UserGroup> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new UserGroupNameComparator(orderByAsc);
@@ -957,7 +957,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public OrderByComparator getUserOrderByComparator(
+	public OrderByComparator<User> getUserOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -966,7 +966,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<User> orderByComparator = null;
 
 		if (orderByCol.equals("email-address")) {
 			orderByComparator = new UserEmailAddressComparator(orderByAsc);

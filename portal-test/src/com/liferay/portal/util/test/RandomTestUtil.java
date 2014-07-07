@@ -17,6 +17,7 @@ package com.liferay.portal.util.test;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -101,6 +102,20 @@ public class RandomTestUtil {
 
 	public static String randomString(int length) {
 		return StringUtil.randomString(length);
+	}
+
+	public static UnicodeProperties randomUnicodeProperties(
+		int propertyCount, int keyLength, int valueLength) {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		for (int i = 0; i < propertyCount; i++) {
+			unicodeProperties.put(
+				RandomTestUtil.randomString(keyLength),
+				RandomTestUtil.randomString(valueLength));
+		}
+
+		return unicodeProperties;
 	}
 
 	private static Random _random = new Random();

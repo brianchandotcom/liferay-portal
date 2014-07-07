@@ -22,7 +22,7 @@ import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link DLContentLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link DLContentLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

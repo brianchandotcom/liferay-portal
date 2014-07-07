@@ -837,7 +837,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	@Override
 	public List<ClassName> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ClassName> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

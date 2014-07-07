@@ -186,284 +186,15 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		}
 	}
 
-	/**
-	* Returns the primary key of this shopping coupon.
-	*
-	* @return the primary key of this shopping coupon
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _shoppingCoupon.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ShoppingCouponWrapper((ShoppingCoupon)_shoppingCoupon.clone());
 	}
 
-	/**
-	* Sets the primary key of this shopping coupon.
-	*
-	* @param primaryKey the primary key of this shopping coupon
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_shoppingCoupon.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the coupon ID of this shopping coupon.
-	*
-	* @return the coupon ID of this shopping coupon
-	*/
-	@Override
-	public long getCouponId() {
-		return _shoppingCoupon.getCouponId();
-	}
-
-	/**
-	* Sets the coupon ID of this shopping coupon.
-	*
-	* @param couponId the coupon ID of this shopping coupon
-	*/
-	@Override
-	public void setCouponId(long couponId) {
-		_shoppingCoupon.setCouponId(couponId);
-	}
-
-	/**
-	* Returns the group ID of this shopping coupon.
-	*
-	* @return the group ID of this shopping coupon
-	*/
-	@Override
-	public long getGroupId() {
-		return _shoppingCoupon.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this shopping coupon.
-	*
-	* @param groupId the group ID of this shopping coupon
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_shoppingCoupon.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this shopping coupon.
-	*
-	* @return the company ID of this shopping coupon
-	*/
-	@Override
-	public long getCompanyId() {
-		return _shoppingCoupon.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this shopping coupon.
-	*
-	* @param companyId the company ID of this shopping coupon
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_shoppingCoupon.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this shopping coupon.
-	*
-	* @return the user ID of this shopping coupon
-	*/
-	@Override
-	public long getUserId() {
-		return _shoppingCoupon.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this shopping coupon.
-	*
-	* @param userId the user ID of this shopping coupon
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_shoppingCoupon.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this shopping coupon.
-	*
-	* @return the user uuid of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _shoppingCoupon.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this shopping coupon.
-	*
-	* @param userUuid the user uuid of this shopping coupon
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_shoppingCoupon.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this shopping coupon.
-	*
-	* @return the user name of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _shoppingCoupon.getUserName();
-	}
-
-	/**
-	* Sets the user name of this shopping coupon.
-	*
-	* @param userName the user name of this shopping coupon
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_shoppingCoupon.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this shopping coupon.
-	*
-	* @return the create date of this shopping coupon
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _shoppingCoupon.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this shopping coupon.
-	*
-	* @param createDate the create date of this shopping coupon
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_shoppingCoupon.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this shopping coupon.
-	*
-	* @return the modified date of this shopping coupon
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _shoppingCoupon.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this shopping coupon.
-	*
-	* @param modifiedDate the modified date of this shopping coupon
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_shoppingCoupon.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the code of this shopping coupon.
-	*
-	* @return the code of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getCode() {
-		return _shoppingCoupon.getCode();
-	}
-
-	/**
-	* Sets the code of this shopping coupon.
-	*
-	* @param code the code of this shopping coupon
-	*/
-	@Override
-	public void setCode(java.lang.String code) {
-		_shoppingCoupon.setCode(code);
-	}
-
-	/**
-	* Returns the name of this shopping coupon.
-	*
-	* @return the name of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _shoppingCoupon.getName();
-	}
-
-	/**
-	* Sets the name of this shopping coupon.
-	*
-	* @param name the name of this shopping coupon
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_shoppingCoupon.setName(name);
-	}
-
-	/**
-	* Returns the description of this shopping coupon.
-	*
-	* @return the description of this shopping coupon
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _shoppingCoupon.getDescription();
-	}
-
-	/**
-	* Sets the description of this shopping coupon.
-	*
-	* @param description the description of this shopping coupon
-	*/
-	@Override
-	public void setDescription(java.lang.String description) {
-		_shoppingCoupon.setDescription(description);
-	}
-
-	/**
-	* Returns the start date of this shopping coupon.
-	*
-	* @return the start date of this shopping coupon
-	*/
-	@Override
-	public java.util.Date getStartDate() {
-		return _shoppingCoupon.getStartDate();
-	}
-
-	/**
-	* Sets the start date of this shopping coupon.
-	*
-	* @param startDate the start date of this shopping coupon
-	*/
-	@Override
-	public void setStartDate(java.util.Date startDate) {
-		_shoppingCoupon.setStartDate(startDate);
-	}
-
-	/**
-	* Returns the end date of this shopping coupon.
-	*
-	* @return the end date of this shopping coupon
-	*/
-	@Override
-	public java.util.Date getEndDate() {
-		return _shoppingCoupon.getEndDate();
-	}
-
-	/**
-	* Sets the end date of this shopping coupon.
-	*
-	* @param endDate the end date of this shopping coupon
-	*/
-	@Override
-	public void setEndDate(java.util.Date endDate) {
-		_shoppingCoupon.setEndDate(endDate);
+	public int compareTo(
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
+		return _shoppingCoupon.compareTo(shoppingCoupon);
 	}
 
 	/**
@@ -477,83 +208,53 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	/**
-	* Returns <code>true</code> if this shopping coupon is active.
+	* Returns the code of this shopping coupon.
 	*
-	* @return <code>true</code> if this shopping coupon is active; <code>false</code> otherwise
+	* @return the code of this shopping coupon
 	*/
 	@Override
-	public boolean isActive() {
-		return _shoppingCoupon.isActive();
+	public java.lang.String getCode() {
+		return _shoppingCoupon.getCode();
 	}
 
 	/**
-	* Sets whether this shopping coupon is active.
+	* Returns the company ID of this shopping coupon.
 	*
-	* @param active the active of this shopping coupon
+	* @return the company ID of this shopping coupon
 	*/
 	@Override
-	public void setActive(boolean active) {
-		_shoppingCoupon.setActive(active);
+	public long getCompanyId() {
+		return _shoppingCoupon.getCompanyId();
 	}
 
 	/**
-	* Returns the limit categories of this shopping coupon.
+	* Returns the coupon ID of this shopping coupon.
 	*
-	* @return the limit categories of this shopping coupon
+	* @return the coupon ID of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getLimitCategories() {
-		return _shoppingCoupon.getLimitCategories();
+	public long getCouponId() {
+		return _shoppingCoupon.getCouponId();
 	}
 
 	/**
-	* Sets the limit categories of this shopping coupon.
+	* Returns the create date of this shopping coupon.
 	*
-	* @param limitCategories the limit categories of this shopping coupon
+	* @return the create date of this shopping coupon
 	*/
 	@Override
-	public void setLimitCategories(java.lang.String limitCategories) {
-		_shoppingCoupon.setLimitCategories(limitCategories);
+	public java.util.Date getCreateDate() {
+		return _shoppingCoupon.getCreateDate();
 	}
 
 	/**
-	* Returns the limit skus of this shopping coupon.
+	* Returns the description of this shopping coupon.
 	*
-	* @return the limit skus of this shopping coupon
+	* @return the description of this shopping coupon
 	*/
 	@Override
-	public java.lang.String getLimitSkus() {
-		return _shoppingCoupon.getLimitSkus();
-	}
-
-	/**
-	* Sets the limit skus of this shopping coupon.
-	*
-	* @param limitSkus the limit skus of this shopping coupon
-	*/
-	@Override
-	public void setLimitSkus(java.lang.String limitSkus) {
-		_shoppingCoupon.setLimitSkus(limitSkus);
-	}
-
-	/**
-	* Returns the min order of this shopping coupon.
-	*
-	* @return the min order of this shopping coupon
-	*/
-	@Override
-	public double getMinOrder() {
-		return _shoppingCoupon.getMinOrder();
-	}
-
-	/**
-	* Sets the min order of this shopping coupon.
-	*
-	* @param minOrder the min order of this shopping coupon
-	*/
-	@Override
-	public void setMinOrder(double minOrder) {
-		_shoppingCoupon.setMinOrder(minOrder);
+	public java.lang.String getDescription() {
+		return _shoppingCoupon.getDescription();
 	}
 
 	/**
@@ -567,16 +268,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	/**
-	* Sets the discount of this shopping coupon.
-	*
-	* @param discount the discount of this shopping coupon
-	*/
-	@Override
-	public void setDiscount(double discount) {
-		_shoppingCoupon.setDiscount(discount);
-	}
-
-	/**
 	* Returns the discount type of this shopping coupon.
 	*
 	* @return the discount type of this shopping coupon
@@ -584,6 +275,261 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	@Override
 	public java.lang.String getDiscountType() {
 		return _shoppingCoupon.getDiscountType();
+	}
+
+	/**
+	* Returns the end date of this shopping coupon.
+	*
+	* @return the end date of this shopping coupon
+	*/
+	@Override
+	public java.util.Date getEndDate() {
+		return _shoppingCoupon.getEndDate();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _shoppingCoupon.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this shopping coupon.
+	*
+	* @return the group ID of this shopping coupon
+	*/
+	@Override
+	public long getGroupId() {
+		return _shoppingCoupon.getGroupId();
+	}
+
+	/**
+	* Returns the limit categories of this shopping coupon.
+	*
+	* @return the limit categories of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getLimitCategories() {
+		return _shoppingCoupon.getLimitCategories();
+	}
+
+	/**
+	* Returns the limit skus of this shopping coupon.
+	*
+	* @return the limit skus of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getLimitSkus() {
+		return _shoppingCoupon.getLimitSkus();
+	}
+
+	/**
+	* Returns the min order of this shopping coupon.
+	*
+	* @return the min order of this shopping coupon
+	*/
+	@Override
+	public double getMinOrder() {
+		return _shoppingCoupon.getMinOrder();
+	}
+
+	/**
+	* Returns the modified date of this shopping coupon.
+	*
+	* @return the modified date of this shopping coupon
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _shoppingCoupon.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this shopping coupon.
+	*
+	* @return the name of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _shoppingCoupon.getName();
+	}
+
+	/**
+	* Returns the primary key of this shopping coupon.
+	*
+	* @return the primary key of this shopping coupon
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _shoppingCoupon.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _shoppingCoupon.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the start date of this shopping coupon.
+	*
+	* @return the start date of this shopping coupon
+	*/
+	@Override
+	public java.util.Date getStartDate() {
+		return _shoppingCoupon.getStartDate();
+	}
+
+	/**
+	* Returns the user ID of this shopping coupon.
+	*
+	* @return the user ID of this shopping coupon
+	*/
+	@Override
+	public long getUserId() {
+		return _shoppingCoupon.getUserId();
+	}
+
+	/**
+	* Returns the user name of this shopping coupon.
+	*
+	* @return the user name of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _shoppingCoupon.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this shopping coupon.
+	*
+	* @return the user uuid of this shopping coupon
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _shoppingCoupon.getUserUuid();
+	}
+
+	@Override
+	public boolean hasValidDateRange() {
+		return _shoppingCoupon.hasValidDateRange();
+	}
+
+	@Override
+	public boolean hasValidEndDate() {
+		return _shoppingCoupon.hasValidEndDate();
+	}
+
+	@Override
+	public boolean hasValidStartDate() {
+		return _shoppingCoupon.hasValidStartDate();
+	}
+
+	@Override
+	public int hashCode() {
+		return _shoppingCoupon.hashCode();
+	}
+
+	/**
+	* Returns <code>true</code> if this shopping coupon is active.
+	*
+	* @return <code>true</code> if this shopping coupon is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _shoppingCoupon.isActive();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _shoppingCoupon.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _shoppingCoupon.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _shoppingCoupon.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_shoppingCoupon.persist();
+	}
+
+	/**
+	* Sets whether this shopping coupon is active.
+	*
+	* @param active the active of this shopping coupon
+	*/
+	@Override
+	public void setActive(boolean active) {
+		_shoppingCoupon.setActive(active);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_shoppingCoupon.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the code of this shopping coupon.
+	*
+	* @param code the code of this shopping coupon
+	*/
+	@Override
+	public void setCode(java.lang.String code) {
+		_shoppingCoupon.setCode(code);
+	}
+
+	/**
+	* Sets the company ID of this shopping coupon.
+	*
+	* @param companyId the company ID of this shopping coupon
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_shoppingCoupon.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the coupon ID of this shopping coupon.
+	*
+	* @param couponId the coupon ID of this shopping coupon
+	*/
+	@Override
+	public void setCouponId(long couponId) {
+		_shoppingCoupon.setCouponId(couponId);
+	}
+
+	/**
+	* Sets the create date of this shopping coupon.
+	*
+	* @param createDate the create date of this shopping coupon
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_shoppingCoupon.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the description of this shopping coupon.
+	*
+	* @param description the description of this shopping coupon
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_shoppingCoupon.setDescription(description);
+	}
+
+	/**
+	* Sets the discount of this shopping coupon.
+	*
+	* @param discount the discount of this shopping coupon
+	*/
+	@Override
+	public void setDiscount(double discount) {
+		_shoppingCoupon.setDiscount(discount);
 	}
 
 	/**
@@ -596,44 +542,14 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		_shoppingCoupon.setDiscountType(discountType);
 	}
 
+	/**
+	* Sets the end date of this shopping coupon.
+	*
+	* @param endDate the end date of this shopping coupon
+	*/
 	@Override
-	public boolean isNew() {
-		return _shoppingCoupon.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_shoppingCoupon.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _shoppingCoupon.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_shoppingCoupon.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _shoppingCoupon.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _shoppingCoupon.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_shoppingCoupon.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _shoppingCoupon.getExpandoBridge();
+	public void setEndDate(java.util.Date endDate) {
+		_shoppingCoupon.setEndDate(endDate);
 	}
 
 	@Override
@@ -654,20 +570,124 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		_shoppingCoupon.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this shopping coupon.
+	*
+	* @param groupId the group ID of this shopping coupon
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ShoppingCouponWrapper((ShoppingCoupon)_shoppingCoupon.clone());
+	public void setGroupId(long groupId) {
+		_shoppingCoupon.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the limit categories of this shopping coupon.
+	*
+	* @param limitCategories the limit categories of this shopping coupon
+	*/
+	@Override
+	public void setLimitCategories(java.lang.String limitCategories) {
+		_shoppingCoupon.setLimitCategories(limitCategories);
+	}
+
+	/**
+	* Sets the limit skus of this shopping coupon.
+	*
+	* @param limitSkus the limit skus of this shopping coupon
+	*/
+	@Override
+	public void setLimitSkus(java.lang.String limitSkus) {
+		_shoppingCoupon.setLimitSkus(limitSkus);
+	}
+
+	/**
+	* Sets the min order of this shopping coupon.
+	*
+	* @param minOrder the min order of this shopping coupon
+	*/
+	@Override
+	public void setMinOrder(double minOrder) {
+		_shoppingCoupon.setMinOrder(minOrder);
+	}
+
+	/**
+	* Sets the modified date of this shopping coupon.
+	*
+	* @param modifiedDate the modified date of this shopping coupon
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_shoppingCoupon.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this shopping coupon.
+	*
+	* @param name the name of this shopping coupon
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_shoppingCoupon.setName(name);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
-		return _shoppingCoupon.compareTo(shoppingCoupon);
+	public void setNew(boolean n) {
+		_shoppingCoupon.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this shopping coupon.
+	*
+	* @param primaryKey the primary key of this shopping coupon
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_shoppingCoupon.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _shoppingCoupon.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_shoppingCoupon.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the start date of this shopping coupon.
+	*
+	* @param startDate the start date of this shopping coupon
+	*/
+	@Override
+	public void setStartDate(java.util.Date startDate) {
+		_shoppingCoupon.setStartDate(startDate);
+	}
+
+	/**
+	* Sets the user ID of this shopping coupon.
+	*
+	* @param userId the user ID of this shopping coupon
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_shoppingCoupon.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this shopping coupon.
+	*
+	* @param userName the user name of this shopping coupon
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_shoppingCoupon.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this shopping coupon.
+	*
+	* @param userUuid the user uuid of this shopping coupon
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_shoppingCoupon.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -681,38 +701,18 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public com.liferay.portlet.shopping.model.ShoppingCoupon toUnescapedModel() {
-		return new ShoppingCouponWrapper(_shoppingCoupon.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _shoppingCoupon.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCoupon toUnescapedModel() {
+		return new ShoppingCouponWrapper(_shoppingCoupon.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _shoppingCoupon.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_shoppingCoupon.persist();
-	}
-
-	@Override
-	public boolean hasValidDateRange() {
-		return _shoppingCoupon.hasValidDateRange();
-	}
-
-	@Override
-	public boolean hasValidEndDate() {
-		return _shoppingCoupon.hasValidEndDate();
-	}
-
-	@Override
-	public boolean hasValidStartDate() {
-		return _shoppingCoupon.hasValidStartDate();
 	}
 
 	@Override

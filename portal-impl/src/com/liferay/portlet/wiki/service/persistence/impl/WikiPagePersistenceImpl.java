@@ -160,7 +160,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -280,7 +280,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByUuid_First(uuid, orderByComparator);
 
 		if (wikiPage != null) {
@@ -308,7 +309,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -328,7 +329,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (wikiPage != null) {
@@ -356,7 +358,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,7 +386,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByUuid_PrevAndNext(long pageId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -413,8 +416,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByUuid_PrevAndNext(Session session,
-		WikiPage wikiPage, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		WikiPage wikiPage, String uuid,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -941,7 +944,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1071,7 +1074,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1104,7 +1108,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1126,7 +1130,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1159,7 +1164,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1188,7 +1193,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByUuid_C_PrevAndNext(long pageId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -1219,7 +1224,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByUuid_C_PrevAndNext(Session session,
 		WikiPage wikiPage, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1498,7 +1503,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByResourcePrimKey(long resourcePrimKey,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1608,7 +1613,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByResourcePrimKey_First(long resourcePrimKey,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByResourcePrimKey_First(resourcePrimKey,
 				orderByComparator);
 
@@ -1637,7 +1643,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByResourcePrimKey_First(long resourcePrimKey,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByResourcePrimKey(resourcePrimKey, 0, 1,
 				orderByComparator);
 
@@ -1658,7 +1664,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByResourcePrimKey_Last(long resourcePrimKey,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByResourcePrimKey_Last(resourcePrimKey,
 				orderByComparator);
 
@@ -1687,7 +1694,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByResourcePrimKey_Last(long resourcePrimKey,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByResourcePrimKey(resourcePrimKey);
 
 		if (count == 0) {
@@ -1715,7 +1722,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByResourcePrimKey_PrevAndNext(long pageId,
-		long resourcePrimKey, OrderByComparator orderByComparator)
+		long resourcePrimKey, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -1746,7 +1753,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByResourcePrimKey_PrevAndNext(Session session,
 		WikiPage wikiPage, long resourcePrimKey,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1981,7 +1988,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByNodeId(long nodeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2087,7 +2094,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByNodeId_First(long nodeId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByNodeId_First(nodeId, orderByComparator);
 
 		if (wikiPage != null) {
@@ -2115,7 +2123,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByNodeId_First(long nodeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByNodeId(nodeId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2135,7 +2143,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByNodeId_Last(long nodeId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByNodeId_Last(nodeId, orderByComparator);
 
 		if (wikiPage != null) {
@@ -2163,7 +2172,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByNodeId_Last(long nodeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByNodeId(nodeId);
 
 		if (count == 0) {
@@ -2191,7 +2200,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByNodeId_PrevAndNext(long pageId, long nodeId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -2220,8 +2230,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByNodeId_PrevAndNext(Session session,
-		WikiPage wikiPage, long nodeId, OrderByComparator orderByComparator,
-		boolean previous) {
+		WikiPage wikiPage, long nodeId,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2456,7 +2466,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByFormat(String format, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2576,7 +2586,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByFormat_First(String format,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByFormat_First(format, orderByComparator);
 
 		if (wikiPage != null) {
@@ -2604,7 +2615,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByFormat_First(String format,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByFormat(format, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2624,7 +2635,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByFormat_Last(String format,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByFormat_Last(format, orderByComparator);
 
 		if (wikiPage != null) {
@@ -2652,7 +2664,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByFormat_Last(String format,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByFormat(format);
 
 		if (count == 0) {
@@ -2680,7 +2692,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByFormat_PrevAndNext(long pageId, String format,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -2709,8 +2722,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByFormat_PrevAndNext(Session session,
-		WikiPage wikiPage, String format, OrderByComparator orderByComparator,
-		boolean previous) {
+		WikiPage wikiPage, String format,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2979,7 +2992,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByR_N(long resourcePrimKey, long nodeId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3095,7 +3108,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_First(long resourcePrimKey, long nodeId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_First(resourcePrimKey, nodeId,
 				orderByComparator);
 
@@ -3128,7 +3142,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_First(long resourcePrimKey, long nodeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByR_N(resourcePrimKey, nodeId, 0, 1,
 				orderByComparator);
 
@@ -3150,7 +3164,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_Last(long resourcePrimKey, long nodeId,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_Last(resourcePrimKey, nodeId,
 				orderByComparator);
 
@@ -3183,7 +3198,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_Last(long resourcePrimKey, long nodeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByR_N(resourcePrimKey, nodeId);
 
 		if (count == 0) {
@@ -3212,7 +3227,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByR_N_PrevAndNext(long pageId, long resourcePrimKey,
-		long nodeId, OrderByComparator orderByComparator)
+		long nodeId, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -3242,8 +3257,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByR_N_PrevAndNext(Session session, WikiPage wikiPage,
-		long resourcePrimKey, long nodeId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long resourcePrimKey, long nodeId,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3494,7 +3509,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByR_S(long resourcePrimKey, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3610,7 +3625,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_S_First(long resourcePrimKey, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_S_First(resourcePrimKey, status,
 				orderByComparator);
 
@@ -3643,7 +3659,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_S_First(long resourcePrimKey, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByR_S(resourcePrimKey, status, 0, 1,
 				orderByComparator);
 
@@ -3665,7 +3681,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_S_Last(long resourcePrimKey, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_S_Last(resourcePrimKey, status,
 				orderByComparator);
 
@@ -3698,7 +3715,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_S_Last(long resourcePrimKey, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByR_S(resourcePrimKey, status);
 
 		if (count == 0) {
@@ -3727,7 +3744,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByR_S_PrevAndNext(long pageId, long resourcePrimKey,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -3757,8 +3774,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByR_S_PrevAndNext(Session session, WikiPage wikiPage,
-		long resourcePrimKey, int status, OrderByComparator orderByComparator,
-		boolean previous) {
+		long resourcePrimKey, int status,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4007,7 +4024,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_T(long nodeId, String title, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4137,7 +4154,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_First(long nodeId, String title,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_First(nodeId, title, orderByComparator);
 
 		if (wikiPage != null) {
@@ -4169,7 +4187,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_First(long nodeId, String title,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_T(nodeId, title, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4190,7 +4208,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_Last(long nodeId, String title,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_Last(nodeId, title, orderByComparator);
 
 		if (wikiPage != null) {
@@ -4222,7 +4241,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_Last(long nodeId, String title,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_T(nodeId, title);
 
 		if (count == 0) {
@@ -4251,7 +4270,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_T_PrevAndNext(long pageId, long nodeId,
-		String title, OrderByComparator orderByComparator)
+		String title, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -4281,8 +4300,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByN_T_PrevAndNext(Session session, WikiPage wikiPage,
-		long nodeId, String title, OrderByComparator orderByComparator,
-		boolean previous) {
+		long nodeId, String title,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4562,7 +4581,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_H(long nodeId, boolean head, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4678,7 +4697,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_First(long nodeId, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_First(nodeId, head, orderByComparator);
 
 		if (wikiPage != null) {
@@ -4710,7 +4730,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_First(long nodeId, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H(nodeId, head, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4731,7 +4751,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_Last(long nodeId, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_Last(nodeId, head, orderByComparator);
 
 		if (wikiPage != null) {
@@ -4763,7 +4784,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_Last(long nodeId, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H(nodeId, head);
 
 		if (count == 0) {
@@ -4792,7 +4813,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_H_PrevAndNext(long pageId, long nodeId,
-		boolean head, OrderByComparator orderByComparator)
+		boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -4822,8 +4843,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByN_H_PrevAndNext(Session session, WikiPage wikiPage,
-		long nodeId, boolean head, OrderByComparator orderByComparator,
-		boolean previous) {
+		long nodeId, boolean head,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5073,7 +5094,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_P(long nodeId, String parentTitle, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5203,7 +5224,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_P_First(long nodeId, String parentTitle,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_P_First(nodeId, parentTitle,
 				orderByComparator);
 
@@ -5236,7 +5258,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_P_First(long nodeId, String parentTitle,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_P(nodeId, parentTitle, 0, 1,
 				orderByComparator);
 
@@ -5258,7 +5280,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_P_Last(long nodeId, String parentTitle,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_P_Last(nodeId, parentTitle,
 				orderByComparator);
 
@@ -5291,7 +5314,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_P_Last(long nodeId, String parentTitle,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_P(nodeId, parentTitle);
 
 		if (count == 0) {
@@ -5320,7 +5343,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_P_PrevAndNext(long pageId, long nodeId,
-		String parentTitle, OrderByComparator orderByComparator)
+		String parentTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -5350,8 +5373,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByN_P_PrevAndNext(Session session, WikiPage wikiPage,
-		long nodeId, String parentTitle, OrderByComparator orderByComparator,
-		boolean previous) {
+		long nodeId, String parentTitle,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5631,7 +5654,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_R(long nodeId, String redirectTitle,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5762,7 +5785,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_R_First(long nodeId, String redirectTitle,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_R_First(nodeId, redirectTitle,
 				orderByComparator);
 
@@ -5795,7 +5819,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_R_First(long nodeId, String redirectTitle,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_R(nodeId, redirectTitle, 0, 1,
 				orderByComparator);
 
@@ -5817,7 +5841,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_R_Last(long nodeId, String redirectTitle,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_R_Last(nodeId, redirectTitle,
 				orderByComparator);
 
@@ -5850,7 +5875,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_R_Last(long nodeId, String redirectTitle,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_R(nodeId, redirectTitle);
 
 		if (count == 0) {
@@ -5879,7 +5904,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_R_PrevAndNext(long pageId, long nodeId,
-		String redirectTitle, OrderByComparator orderByComparator)
+		String redirectTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -5909,8 +5934,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByN_R_PrevAndNext(Session session, WikiPage wikiPage,
-		long nodeId, String redirectTitle, OrderByComparator orderByComparator,
-		boolean previous) {
+		long nodeId, String redirectTitle,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6189,7 +6214,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_S(long nodeId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6305,7 +6330,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_S_First(long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_S_First(nodeId, status, orderByComparator);
 
 		if (wikiPage != null) {
@@ -6337,7 +6363,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_S_First(long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_S(nodeId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -6358,7 +6384,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_S_Last(long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_S_Last(nodeId, status, orderByComparator);
 
 		if (wikiPage != null) {
@@ -6390,7 +6417,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_S_Last(long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_S(nodeId, status);
 
 		if (count == 0) {
@@ -6419,7 +6446,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_S_PrevAndNext(long pageId, long nodeId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -6449,7 +6476,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	protected WikiPage getByN_S_PrevAndNext(Session session, WikiPage wikiPage,
-		long nodeId, int status, OrderByComparator orderByComparator,
+		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -6964,7 +6991,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByR_N_H(long resourcePrimKey, long nodeId,
-		boolean head, int start, int end, OrderByComparator orderByComparator) {
+		boolean head, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7086,7 +7114,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_H_First(long resourcePrimKey, long nodeId,
-		boolean head, OrderByComparator orderByComparator)
+		boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_H_First(resourcePrimKey, nodeId, head,
 				orderByComparator);
@@ -7124,7 +7152,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_H_First(long resourcePrimKey, long nodeId,
-		boolean head, OrderByComparator orderByComparator) {
+		boolean head, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByR_N_H(resourcePrimKey, nodeId, head, 0, 1,
 				orderByComparator);
 
@@ -7147,7 +7175,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_H_Last(long resourcePrimKey, long nodeId,
-		boolean head, OrderByComparator orderByComparator)
+		boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_H_Last(resourcePrimKey, nodeId, head,
 				orderByComparator);
@@ -7185,7 +7213,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_H_Last(long resourcePrimKey, long nodeId,
-		boolean head, OrderByComparator orderByComparator) {
+		boolean head, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByR_N_H(resourcePrimKey, nodeId, head);
 
 		if (count == 0) {
@@ -7216,7 +7244,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByR_N_H_PrevAndNext(long pageId,
 		long resourcePrimKey, long nodeId, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -7246,7 +7275,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByR_N_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long resourcePrimKey, long nodeId, boolean head,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7519,7 +7548,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByR_N_S(long resourcePrimKey, long nodeId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7641,7 +7671,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_S_First(long resourcePrimKey, long nodeId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_S_First(resourcePrimKey, nodeId, status,
 				orderByComparator);
@@ -7679,7 +7709,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_S_First(long resourcePrimKey, long nodeId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByR_N_S(resourcePrimKey, nodeId, status, 0,
 				1, orderByComparator);
 
@@ -7702,7 +7732,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByR_N_S_Last(long resourcePrimKey, long nodeId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByR_N_S_Last(resourcePrimKey, nodeId, status,
 				orderByComparator);
@@ -7740,7 +7770,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByR_N_S_Last(long resourcePrimKey, long nodeId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByR_N_S(resourcePrimKey, nodeId, status);
 
 		if (count == 0) {
@@ -7771,7 +7801,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByR_N_S_PrevAndNext(long pageId,
 		long resourcePrimKey, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -7801,7 +7832,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByR_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long resourcePrimKey, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -8073,7 +8104,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByG_N_H(long groupId, long nodeId, boolean head,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8195,7 +8226,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_H_First(long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_First(groupId, nodeId, head,
 				orderByComparator);
 
@@ -8232,7 +8264,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_H_First(long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_N_H(groupId, nodeId, head, 0, 1,
 				orderByComparator);
 
@@ -8255,7 +8287,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_H_Last(long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_Last(groupId, nodeId, head,
 				orderByComparator);
 
@@ -8292,7 +8325,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_H_Last(long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_N_H(groupId, nodeId, head);
 
 		if (count == 0) {
@@ -8322,7 +8355,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByG_N_H_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head, OrderByComparator orderByComparator)
+		long nodeId, boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -8353,7 +8386,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_N_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -8516,7 +8549,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> filterFindByG_N_H(long groupId, long nodeId,
-		boolean head, int start, int end, OrderByComparator orderByComparator) {
+		boolean head, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H(groupId, nodeId, head, start, end,
 				orderByComparator);
@@ -8617,7 +8651,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] filterFindByG_N_H_PrevAndNext(long pageId, long groupId,
-		long nodeId, boolean head, OrderByComparator orderByComparator)
+		long nodeId, boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H_PrevAndNext(pageId, groupId, nodeId, head,
@@ -8653,7 +8687,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_N_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9018,7 +9052,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByG_N_S(long groupId, long nodeId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9140,7 +9174,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_S_First(long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_S_First(groupId, nodeId, status,
 				orderByComparator);
 
@@ -9177,7 +9212,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_S_First(long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_N_S(groupId, nodeId, status, 0, 1,
 				orderByComparator);
 
@@ -9200,7 +9235,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_S_Last(long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_S_Last(groupId, nodeId, status,
 				orderByComparator);
 
@@ -9237,7 +9273,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_S_Last(long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_N_S(groupId, nodeId, status);
 
 		if (count == 0) {
@@ -9267,7 +9303,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByG_N_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, int status, OrderByComparator orderByComparator)
+		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -9298,7 +9334,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9461,7 +9497,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> filterFindByG_N_S(long groupId, long nodeId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_S(groupId, nodeId, status, start, end,
 				orderByComparator);
@@ -9562,7 +9599,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] filterFindByG_N_S_PrevAndNext(long pageId, long groupId,
-		long nodeId, int status, OrderByComparator orderByComparator)
+		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_S_PrevAndNext(pageId, groupId, nodeId, status,
@@ -9598,7 +9635,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9963,7 +10000,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByU_N_S(long userId, long nodeId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10085,7 +10122,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByU_N_S_First(long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByU_N_S_First(userId, nodeId, status,
 				orderByComparator);
 
@@ -10122,7 +10160,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByU_N_S_First(long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByU_N_S(userId, nodeId, status, 0, 1,
 				orderByComparator);
 
@@ -10145,7 +10183,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByU_N_S_Last(long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByU_N_S_Last(userId, nodeId, status,
 				orderByComparator);
 
@@ -10182,7 +10221,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByU_N_S_Last(long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByU_N_S(userId, nodeId, status);
 
 		if (count == 0) {
@@ -10212,7 +10251,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByU_N_S_PrevAndNext(long pageId, long userId,
-		long nodeId, int status, OrderByComparator orderByComparator)
+		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -10243,7 +10282,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByU_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long userId, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -10796,7 +10835,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_T_H(long nodeId, String title, boolean head,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10932,7 +10971,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_H_First(long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_H_First(nodeId, title, head,
 				orderByComparator);
 
@@ -10969,7 +11009,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_H_First(long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_T_H(nodeId, title, head, 0, 1,
 				orderByComparator);
 
@@ -10992,7 +11032,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_H_Last(long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_H_Last(nodeId, title, head,
 				orderByComparator);
 
@@ -11029,7 +11070,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_H_Last(long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_T_H(nodeId, title, head);
 
 		if (count == 0) {
@@ -11059,7 +11100,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_T_H_PrevAndNext(long pageId, long nodeId,
-		String title, boolean head, OrderByComparator orderByComparator)
+		String title, boolean head,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -11090,7 +11132,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_T_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -11391,7 +11433,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_T_S(long nodeId, String title, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -11527,7 +11569,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_S_First(long nodeId, String title, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_S_First(nodeId, title, status,
 				orderByComparator);
 
@@ -11564,7 +11607,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_S_First(long nodeId, String title, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_T_S(nodeId, title, status, 0, 1,
 				orderByComparator);
 
@@ -11587,7 +11630,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_T_S_Last(long nodeId, String title, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_T_S_Last(nodeId, title, status,
 				orderByComparator);
 
@@ -11624,7 +11668,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_T_S_Last(long nodeId, String title, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_T_S(nodeId, title, status);
 
 		if (count == 0) {
@@ -11654,7 +11698,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_T_S_PrevAndNext(long pageId, long nodeId,
-		String title, int status, OrderByComparator orderByComparator)
+		String title, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -11685,7 +11729,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_T_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, String title, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -11989,7 +12033,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_P(long nodeId, boolean head,
 		String parentTitle, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -12125,7 +12169,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_First(long nodeId, boolean head,
-		String parentTitle, OrderByComparator orderByComparator)
+		String parentTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_First(nodeId, head, parentTitle,
 				orderByComparator);
@@ -12163,7 +12207,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_First(long nodeId, boolean head,
-		String parentTitle, OrderByComparator orderByComparator) {
+		String parentTitle, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_P(nodeId, head, parentTitle, 0, 1,
 				orderByComparator);
 
@@ -12186,7 +12230,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_Last(long nodeId, boolean head,
-		String parentTitle, OrderByComparator orderByComparator)
+		String parentTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_Last(nodeId, head, parentTitle,
 				orderByComparator);
@@ -12224,7 +12268,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_Last(long nodeId, boolean head,
-		String parentTitle, OrderByComparator orderByComparator) {
+		String parentTitle, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_P(nodeId, head, parentTitle);
 
 		if (count == 0) {
@@ -12254,7 +12298,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_H_P_PrevAndNext(long pageId, long nodeId,
-		boolean head, String parentTitle, OrderByComparator orderByComparator)
+		boolean head, String parentTitle,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -12285,7 +12330,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_P_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String parentTitle,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -12589,7 +12634,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_R(long nodeId, boolean head,
 		String redirectTitle, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -12726,7 +12771,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_First(long nodeId, boolean head,
-		String redirectTitle, OrderByComparator orderByComparator)
+		String redirectTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_First(nodeId, head, redirectTitle,
 				orderByComparator);
@@ -12764,7 +12809,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_First(long nodeId, boolean head,
-		String redirectTitle, OrderByComparator orderByComparator) {
+		String redirectTitle, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_R(nodeId, head, redirectTitle, 0, 1,
 				orderByComparator);
 
@@ -12787,7 +12832,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_Last(long nodeId, boolean head,
-		String redirectTitle, OrderByComparator orderByComparator)
+		String redirectTitle, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_Last(nodeId, head, redirectTitle,
 				orderByComparator);
@@ -12825,7 +12870,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_Last(long nodeId, boolean head,
-		String redirectTitle, OrderByComparator orderByComparator) {
+		String redirectTitle, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_R(nodeId, head, redirectTitle);
 
 		if (count == 0) {
@@ -12855,7 +12900,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_H_R_PrevAndNext(long pageId, long nodeId,
-		boolean head, String redirectTitle, OrderByComparator orderByComparator)
+		boolean head, String redirectTitle,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -12886,7 +12932,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_R_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String redirectTitle,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -13188,7 +13234,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_H_S(long nodeId, boolean head, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -13310,7 +13356,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_S_First(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_S_First(nodeId, head, status,
 				orderByComparator);
 
@@ -13347,7 +13394,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_S_First(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_S(nodeId, head, status, 0, 1,
 				orderByComparator);
 
@@ -13370,7 +13417,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_S_Last(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_S_Last(nodeId, head, status,
 				orderByComparator);
 
@@ -13407,7 +13455,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_S_Last(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_S(nodeId, head, status);
 
 		if (count == 0) {
@@ -13437,7 +13485,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_H_S_PrevAndNext(long pageId, long nodeId,
-		boolean head, int status, OrderByComparator orderByComparator)
+		boolean head, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -13468,7 +13516,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -13729,7 +13777,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByN_H_NotS(long nodeId, boolean head, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -13843,7 +13891,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_NotS_First(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_NotS_First(nodeId, head, status,
 				orderByComparator);
 
@@ -13880,7 +13929,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_NotS_First(long nodeId, boolean head,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_NotS(nodeId, head, status, 0, 1,
 				orderByComparator);
 
@@ -13903,7 +13952,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_NotS_Last(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_NotS_Last(nodeId, head, status,
 				orderByComparator);
 
@@ -13940,7 +13990,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_NotS_Last(long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_NotS(nodeId, head, status);
 
 		if (count == 0) {
@@ -13970,7 +14020,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage[] findByN_H_NotS_PrevAndNext(long pageId, long nodeId,
-		boolean head, int status, OrderByComparator orderByComparator)
+		boolean head, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
@@ -14001,7 +14051,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_NotS_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -14279,7 +14329,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findByG_U_N_S(long groupId, long userId, long nodeId,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -14407,7 +14458,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_U_N_S_First(long groupId, long userId, long nodeId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_U_N_S_First(groupId, userId, nodeId,
 				status, orderByComparator);
@@ -14449,7 +14500,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_U_N_S_First(long groupId, long userId,
-		long nodeId, int status, OrderByComparator orderByComparator) {
+		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_U_N_S(groupId, userId, nodeId, status, 0,
 				1, orderByComparator);
 
@@ -14473,7 +14524,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_U_N_S_Last(long groupId, long userId, long nodeId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_U_N_S_Last(groupId, userId, nodeId,
 				status, orderByComparator);
@@ -14515,7 +14566,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_U_N_S_Last(long groupId, long userId, long nodeId,
-		int status, OrderByComparator orderByComparator) {
+		int status, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_U_N_S(groupId, userId, nodeId, status);
 
 		if (count == 0) {
@@ -14547,7 +14598,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByG_U_N_S_PrevAndNext(long pageId, long groupId,
 		long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -14577,7 +14629,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_U_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long userId, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -14749,7 +14801,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> filterFindByG_U_N_S(long groupId, long userId,
 		long nodeId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_N_S(groupId, userId, nodeId, status, start, end,
 				orderByComparator);
@@ -14856,7 +14908,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] filterFindByG_U_N_S_PrevAndNext(long pageId,
 		long groupId, long userId, long nodeId, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_N_S_PrevAndNext(pageId, groupId, userId, nodeId,
 				status, orderByComparator);
@@ -14891,7 +14944,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_U_N_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long userId, long nodeId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -15280,7 +15333,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByG_N_T_H(long groupId, long nodeId,
 		String title, boolean head, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -15422,7 +15475,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_T_H_First(long groupId, long nodeId,
-		String title, boolean head, OrderByComparator orderByComparator)
+		String title, boolean head,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_T_H_First(groupId, nodeId, title, head,
 				orderByComparator);
@@ -15464,7 +15518,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_T_H_First(long groupId, long nodeId,
-		String title, boolean head, OrderByComparator orderByComparator) {
+		String title, boolean head,
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_N_T_H(groupId, nodeId, title, head, 0, 1,
 				orderByComparator);
 
@@ -15488,7 +15543,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_T_H_Last(long groupId, long nodeId, String title,
-		boolean head, OrderByComparator orderByComparator)
+		boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_T_H_Last(groupId, nodeId, title, head,
 				orderByComparator);
@@ -15530,7 +15585,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_T_H_Last(long groupId, long nodeId,
-		String title, boolean head, OrderByComparator orderByComparator) {
+		String title, boolean head,
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_N_T_H(groupId, nodeId, title, head);
 
 		if (count == 0) {
@@ -15562,7 +15618,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByG_N_T_H_PrevAndNext(long pageId, long groupId,
 		long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -15592,7 +15649,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_N_T_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, String title,
-		boolean head, OrderByComparator orderByComparator, boolean previous) {
+		boolean head, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -15778,7 +15836,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> filterFindByG_N_T_H(long groupId, long nodeId,
 		String title, boolean head, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_T_H(groupId, nodeId, title, head, start, end,
 				orderByComparator);
@@ -15899,7 +15957,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] filterFindByG_N_T_H_PrevAndNext(long pageId,
 		long groupId, long nodeId, String title, boolean head,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_T_H_PrevAndNext(pageId, groupId, nodeId, title,
 				head, orderByComparator);
@@ -15934,7 +15993,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_N_T_H_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, String title,
-		boolean head, OrderByComparator orderByComparator, boolean previous) {
+		boolean head, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -16369,7 +16429,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByG_N_H_S(long groupId, long nodeId,
 		boolean head, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -16497,7 +16557,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_H_S_First(long groupId, long nodeId,
-		boolean head, int status, OrderByComparator orderByComparator)
+		boolean head, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_S_First(groupId, nodeId, head, status,
 				orderByComparator);
@@ -16539,7 +16599,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_H_S_First(long groupId, long nodeId,
-		boolean head, int status, OrderByComparator orderByComparator) {
+		boolean head, int status, OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_N_H_S(groupId, nodeId, head, status, 0,
 				1, orderByComparator);
 
@@ -16563,7 +16623,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByG_N_H_S_Last(long groupId, long nodeId, boolean head,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_S_Last(groupId, nodeId, head, status,
 				orderByComparator);
@@ -16605,7 +16665,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByG_N_H_S_Last(long groupId, long nodeId,
-		boolean head, int status, OrderByComparator orderByComparator) {
+		boolean head, int status, OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_N_H_S(groupId, nodeId, head, status);
 
 		if (count == 0) {
@@ -16637,7 +16697,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByG_N_H_S_PrevAndNext(long pageId, long groupId,
 		long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -16667,7 +16728,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_N_H_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -16839,7 +16900,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> filterFindByG_N_H_S(long groupId, long nodeId,
 		boolean head, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H_S(groupId, nodeId, head, status, start, end,
 				orderByComparator);
@@ -16946,7 +17007,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] filterFindByG_N_H_S_PrevAndNext(long pageId,
 		long groupId, long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H_S_PrevAndNext(pageId, groupId, nodeId, head,
 				status, orderByComparator);
@@ -16981,7 +17043,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_N_H_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -17372,7 +17434,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_P_S(long nodeId, boolean head,
 		String parentTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -17514,7 +17576,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_S_First(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator)
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_S_First(nodeId, head, parentTitle,
 				status, orderByComparator);
@@ -17556,7 +17619,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_S_First(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_P_S(nodeId, head, parentTitle, status,
 				0, 1, orderByComparator);
 
@@ -17580,7 +17644,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_S_Last(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator)
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_S_Last(nodeId, head, parentTitle,
 				status, orderByComparator);
@@ -17622,7 +17687,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_S_Last(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_P_S(nodeId, head, parentTitle, status);
 
 		if (count == 0) {
@@ -17654,7 +17720,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByN_H_P_S_PrevAndNext(long pageId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -17684,7 +17751,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_P_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String parentTitle,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -17995,7 +18063,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_P_NotS(long nodeId, boolean head,
 		String parentTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -18129,7 +18197,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_NotS_First(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator)
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_NotS_First(nodeId, head, parentTitle,
 				status, orderByComparator);
@@ -18171,7 +18240,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_NotS_First(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_P_NotS(nodeId, head, parentTitle,
 				status, 0, 1, orderByComparator);
 
@@ -18195,7 +18265,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_P_NotS_Last(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator)
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_P_NotS_Last(nodeId, head, parentTitle,
 				status, orderByComparator);
@@ -18237,7 +18308,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_P_NotS_Last(long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_P_NotS(nodeId, head, parentTitle, status);
 
 		if (count == 0) {
@@ -18269,7 +18341,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByN_H_P_NotS_PrevAndNext(long pageId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -18299,7 +18372,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_P_NotS_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String parentTitle,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -18622,7 +18696,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_R_S(long nodeId, boolean head,
 		String redirectTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -18765,7 +18839,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_S_First(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator)
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_S_First(nodeId, head, redirectTitle,
 				status, orderByComparator);
@@ -18807,7 +18882,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_S_First(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator) {
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_R_S(nodeId, head, redirectTitle,
 				status, 0, 1, orderByComparator);
 
@@ -18831,7 +18907,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_S_Last(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator)
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_S_Last(nodeId, head, redirectTitle,
 				status, orderByComparator);
@@ -18873,7 +18950,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_S_Last(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator) {
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_R_S(nodeId, head, redirectTitle, status);
 
 		if (count == 0) {
@@ -18905,7 +18983,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByN_H_R_S_PrevAndNext(long pageId, long nodeId,
 		boolean head, String redirectTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -18935,7 +19014,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_R_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String redirectTitle,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -19246,7 +19326,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByN_H_R_NotS(long nodeId, boolean head,
 		String redirectTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -19381,7 +19461,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_NotS_First(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator)
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_NotS_First(nodeId, head,
 				redirectTitle, status, orderByComparator);
@@ -19423,7 +19504,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_NotS_First(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator) {
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByN_H_R_NotS(nodeId, head, redirectTitle,
 				status, 0, 1, orderByComparator);
 
@@ -19447,7 +19529,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage findByN_H_R_NotS_Last(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator)
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByN_H_R_NotS_Last(nodeId, head, redirectTitle,
 				status, orderByComparator);
@@ -19489,7 +19572,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByN_H_R_NotS_Last(long nodeId, boolean head,
-		String redirectTitle, int status, OrderByComparator orderByComparator) {
+		String redirectTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByN_H_R_NotS(nodeId, head, redirectTitle, status);
 
 		if (count == 0) {
@@ -19521,7 +19605,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByN_H_R_NotS_PrevAndNext(long pageId, long nodeId,
 		boolean head, String redirectTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -19551,7 +19636,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByN_H_R_NotS_PrevAndNext(Session session,
 		WikiPage wikiPage, long nodeId, boolean head, String redirectTitle,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<WikiPage> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -19882,7 +19968,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> findByG_N_H_P_S(long groupId, long nodeId,
 		boolean head, String parentTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -20031,7 +20117,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage findByG_N_H_P_S_First(long groupId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_P_S_First(groupId, nodeId, head,
 				parentTitle, status, orderByComparator);
 
@@ -20077,7 +20164,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage fetchByG_N_H_P_S_First(long groupId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		List<WikiPage> list = findByG_N_H_P_S(groupId, nodeId, head,
 				parentTitle, status, 0, 1, orderByComparator);
 
@@ -20103,7 +20190,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage findByG_N_H_P_S_Last(long groupId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = fetchByG_N_H_P_S_Last(groupId, nodeId, head,
 				parentTitle, status, orderByComparator);
 
@@ -20149,7 +20237,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage fetchByG_N_H_P_S_Last(long groupId, long nodeId,
 		boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		int count = countByG_N_H_P_S(groupId, nodeId, head, parentTitle, status);
 
 		if (count == 0) {
@@ -20182,7 +20270,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] findByG_N_H_P_S_PrevAndNext(long pageId, long groupId,
 		long nodeId, boolean head, String parentTitle, int status,
-		OrderByComparator orderByComparator) throws NoSuchPageException {
+		OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
 		WikiPage wikiPage = findByPrimaryKey(pageId);
 
 		Session session = null;
@@ -20212,8 +20301,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage getByG_N_H_P_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator,
-		boolean previous) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -20406,7 +20495,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public List<WikiPage> filterFindByG_N_H_P_S(long groupId, long nodeId,
 		boolean head, String parentTitle, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H_P_S(groupId, nodeId, head, parentTitle, status,
 				start, end, orderByComparator);
@@ -20532,7 +20621,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage[] filterFindByG_N_H_P_S_PrevAndNext(long pageId,
 		long groupId, long nodeId, boolean head, String parentTitle,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_H_P_S_PrevAndNext(pageId, groupId, nodeId, head,
@@ -20570,8 +20659,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	protected WikiPage filterGetByG_N_H_P_S_PrevAndNext(Session session,
 		WikiPage wikiPage, long groupId, long nodeId, boolean head,
-		String parentTitle, int status, OrderByComparator orderByComparator,
-		boolean previous) {
+		String parentTitle, int status,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -22232,7 +22321,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public List<WikiPage> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

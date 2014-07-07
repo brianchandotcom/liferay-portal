@@ -135,84 +135,14 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		}
 	}
 
-	/**
-	* Returns the primary key of this layout branch.
-	*
-	* @return the primary key of this layout branch
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _layoutBranch.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new LayoutBranchWrapper((LayoutBranch)_layoutBranch.clone());
 	}
 
-	/**
-	* Sets the primary key of this layout branch.
-	*
-	* @param primaryKey the primary key of this layout branch
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_layoutBranch.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this layout branch.
-	*
-	* @return the mvcc version of this layout branch
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _layoutBranch.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this layout branch.
-	*
-	* @param mvccVersion the mvcc version of this layout branch
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_layoutBranch.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the layout branch ID of this layout branch.
-	*
-	* @return the layout branch ID of this layout branch
-	*/
-	@Override
-	public long getLayoutBranchId() {
-		return _layoutBranch.getLayoutBranchId();
-	}
-
-	/**
-	* Sets the layout branch ID of this layout branch.
-	*
-	* @param LayoutBranchId the layout branch ID of this layout branch
-	*/
-	@Override
-	public void setLayoutBranchId(long LayoutBranchId) {
-		_layoutBranch.setLayoutBranchId(LayoutBranchId);
-	}
-
-	/**
-	* Returns the group ID of this layout branch.
-	*
-	* @return the group ID of this layout branch
-	*/
-	@Override
-	public long getGroupId() {
-		return _layoutBranch.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this layout branch.
-	*
-	* @param groupId the group ID of this layout branch
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_layoutBranch.setGroupId(groupId);
+	public int compareTo(com.liferay.portal.model.LayoutBranch layoutBranch) {
+		return _layoutBranch.compareTo(layoutBranch);
 	}
 
 	/**
@@ -226,73 +156,38 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	/**
-	* Sets the company ID of this layout branch.
+	* Returns the description of this layout branch.
 	*
-	* @param companyId the company ID of this layout branch
+	* @return the description of this layout branch
 	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_layoutBranch.setCompanyId(companyId);
+	public java.lang.String getDescription() {
+		return _layoutBranch.getDescription();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _layoutBranch.getExpandoBridge();
 	}
 
 	/**
-	* Returns the user ID of this layout branch.
+	* Returns the group ID of this layout branch.
 	*
-	* @return the user ID of this layout branch
+	* @return the group ID of this layout branch
 	*/
 	@Override
-	public long getUserId() {
-		return _layoutBranch.getUserId();
+	public long getGroupId() {
+		return _layoutBranch.getGroupId();
 	}
 
 	/**
-	* Sets the user ID of this layout branch.
+	* Returns the layout branch ID of this layout branch.
 	*
-	* @param userId the user ID of this layout branch
+	* @return the layout branch ID of this layout branch
 	*/
 	@Override
-	public void setUserId(long userId) {
-		_layoutBranch.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this layout branch.
-	*
-	* @return the user uuid of this layout branch
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _layoutBranch.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this layout branch.
-	*
-	* @param userUuid the user uuid of this layout branch
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_layoutBranch.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this layout branch.
-	*
-	* @return the user name of this layout branch
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _layoutBranch.getUserName();
-	}
-
-	/**
-	* Sets the user name of this layout branch.
-	*
-	* @param userName the user name of this layout branch
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_layoutBranch.setUserName(userName);
+	public long getLayoutBranchId() {
+		return _layoutBranch.getLayoutBranchId();
 	}
 
 	/**
@@ -306,33 +201,23 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	/**
-	* Sets the layout set branch ID of this layout branch.
+	* Returns the master of this layout branch.
 	*
-	* @param layoutSetBranchId the layout set branch ID of this layout branch
+	* @return the master of this layout branch
 	*/
 	@Override
-	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_layoutBranch.setLayoutSetBranchId(layoutSetBranchId);
+	public boolean getMaster() {
+		return _layoutBranch.getMaster();
 	}
 
 	/**
-	* Returns the plid of this layout branch.
+	* Returns the mvcc version of this layout branch.
 	*
-	* @return the plid of this layout branch
+	* @return the mvcc version of this layout branch
 	*/
 	@Override
-	public long getPlid() {
-		return _layoutBranch.getPlid();
-	}
-
-	/**
-	* Sets the plid of this layout branch.
-	*
-	* @param plid the plid of this layout branch
-	*/
-	@Override
-	public void setPlid(long plid) {
-		_layoutBranch.setPlid(plid);
+	public long getMvccVersion() {
+		return _layoutBranch.getMvccVersion();
 	}
 
 	/**
@@ -346,43 +231,73 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	/**
-	* Sets the name of this layout branch.
+	* Returns the plid of this layout branch.
 	*
-	* @param name the name of this layout branch
+	* @return the plid of this layout branch
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_layoutBranch.setName(name);
+	public long getPlid() {
+		return _layoutBranch.getPlid();
 	}
 
 	/**
-	* Returns the description of this layout branch.
+	* Returns the primary key of this layout branch.
 	*
-	* @return the description of this layout branch
+	* @return the primary key of this layout branch
 	*/
 	@Override
-	public java.lang.String getDescription() {
-		return _layoutBranch.getDescription();
+	public long getPrimaryKey() {
+		return _layoutBranch.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _layoutBranch.getPrimaryKeyObj();
 	}
 
 	/**
-	* Sets the description of this layout branch.
+	* Returns the user ID of this layout branch.
 	*
-	* @param description the description of this layout branch
+	* @return the user ID of this layout branch
 	*/
 	@Override
-	public void setDescription(java.lang.String description) {
-		_layoutBranch.setDescription(description);
+	public long getUserId() {
+		return _layoutBranch.getUserId();
 	}
 
 	/**
-	* Returns the master of this layout branch.
+	* Returns the user name of this layout branch.
 	*
-	* @return the master of this layout branch
+	* @return the user name of this layout branch
 	*/
 	@Override
-	public boolean getMaster() {
-		return _layoutBranch.getMaster();
+	public java.lang.String getUserName() {
+		return _layoutBranch.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this layout branch.
+	*
+	* @return the user uuid of this layout branch
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _layoutBranch.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _layoutBranch.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _layoutBranch.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _layoutBranch.isEscapedModel();
 	}
 
 	/**
@@ -395,29 +310,14 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		return _layoutBranch.isMaster();
 	}
 
-	/**
-	* Sets whether this layout branch is master.
-	*
-	* @param master the master of this layout branch
-	*/
-	@Override
-	public void setMaster(boolean master) {
-		_layoutBranch.setMaster(master);
-	}
-
 	@Override
 	public boolean isNew() {
 		return _layoutBranch.isNew();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_layoutBranch.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutBranch.isCachedModel();
+	public void persist() {
+		_layoutBranch.persist();
 	}
 
 	@Override
@@ -425,24 +325,24 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		_layoutBranch.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this layout branch.
+	*
+	* @param companyId the company ID of this layout branch
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _layoutBranch.isEscapedModel();
+	public void setCompanyId(long companyId) {
+		_layoutBranch.setCompanyId(companyId);
 	}
 
+	/**
+	* Sets the description of this layout branch.
+	*
+	* @param description the description of this layout branch
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _layoutBranch.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_layoutBranch.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _layoutBranch.getExpandoBridge();
+	public void setDescription(java.lang.String description) {
+		_layoutBranch.setDescription(description);
 	}
 
 	@Override
@@ -463,19 +363,124 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		_layoutBranch.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this layout branch.
+	*
+	* @param groupId the group ID of this layout branch
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new LayoutBranchWrapper((LayoutBranch)_layoutBranch.clone());
+	public void setGroupId(long groupId) {
+		_layoutBranch.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the layout branch ID of this layout branch.
+	*
+	* @param LayoutBranchId the layout branch ID of this layout branch
+	*/
+	@Override
+	public void setLayoutBranchId(long LayoutBranchId) {
+		_layoutBranch.setLayoutBranchId(LayoutBranchId);
+	}
+
+	/**
+	* Sets the layout set branch ID of this layout branch.
+	*
+	* @param layoutSetBranchId the layout set branch ID of this layout branch
+	*/
+	@Override
+	public void setLayoutSetBranchId(long layoutSetBranchId) {
+		_layoutBranch.setLayoutSetBranchId(layoutSetBranchId);
+	}
+
+	/**
+	* Sets whether this layout branch is master.
+	*
+	* @param master the master of this layout branch
+	*/
+	@Override
+	public void setMaster(boolean master) {
+		_layoutBranch.setMaster(master);
+	}
+
+	/**
+	* Sets the mvcc version of this layout branch.
+	*
+	* @param mvccVersion the mvcc version of this layout branch
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_layoutBranch.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Sets the name of this layout branch.
+	*
+	* @param name the name of this layout branch
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_layoutBranch.setName(name);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.LayoutBranch layoutBranch) {
-		return _layoutBranch.compareTo(layoutBranch);
+	public void setNew(boolean n) {
+		_layoutBranch.setNew(n);
+	}
+
+	/**
+	* Sets the plid of this layout branch.
+	*
+	* @param plid the plid of this layout branch
+	*/
+	@Override
+	public void setPlid(long plid) {
+		_layoutBranch.setPlid(plid);
+	}
+
+	/**
+	* Sets the primary key of this layout branch.
+	*
+	* @param primaryKey the primary key of this layout branch
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_layoutBranch.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _layoutBranch.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_layoutBranch.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user ID of this layout branch.
+	*
+	* @param userId the user ID of this layout branch
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_layoutBranch.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this layout branch.
+	*
+	* @param userName the user name of this layout branch
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_layoutBranch.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this layout branch.
+	*
+	* @param userUuid the user uuid of this layout branch
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_layoutBranch.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -489,23 +494,18 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	@Override
-	public com.liferay.portal.model.LayoutBranch toUnescapedModel() {
-		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _layoutBranch.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _layoutBranch.toXmlString();
+	public com.liferay.portal.model.LayoutBranch toUnescapedModel() {
+		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_layoutBranch.persist();
+	public java.lang.String toXmlString() {
+		return _layoutBranch.toXmlString();
 	}
 
 	@Override

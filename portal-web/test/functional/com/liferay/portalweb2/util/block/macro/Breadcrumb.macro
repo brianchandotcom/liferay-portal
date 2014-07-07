@@ -86,7 +86,7 @@
 				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute action="PGBreadcrumbConfiguration#assertTextNotPresent" locator-key1="BREADCRUMB_PREVIEW_PAGE" value1="${breadcrumbName}" />
+					<execute action="PGBreadcrumbConfiguration#assertElementNotPresent" locator-key1="BREADCRUMB_PREVIEW_PAGE" />
 				</for>
 			</then>
 		</if>

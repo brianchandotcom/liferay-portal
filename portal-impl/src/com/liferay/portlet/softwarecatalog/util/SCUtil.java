@@ -15,6 +15,7 @@
 package com.liferay.portlet.softwarecatalog.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.util.comparator.ProductEntryCreateDateComparator;
 import com.liferay.portlet.softwarecatalog.util.comparator.ProductEntryModifiedDateComparator;
 import com.liferay.portlet.softwarecatalog.util.comparator.ProductEntryNameComparator;
@@ -25,8 +26,9 @@ import com.liferay.portlet.softwarecatalog.util.comparator.ProductEntryTypeCompa
  */
 public class SCUtil {
 
-	public static OrderByComparator getProductEntryOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<SCProductEntry>
+		getProductEntryOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -34,7 +36,7 @@ public class SCUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<SCProductEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new ProductEntryCreateDateComparator(

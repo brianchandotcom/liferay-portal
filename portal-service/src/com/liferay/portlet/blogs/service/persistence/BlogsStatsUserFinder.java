@@ -31,9 +31,9 @@ public interface BlogsStatsUserFinder {
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationId(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc);
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc);
 }

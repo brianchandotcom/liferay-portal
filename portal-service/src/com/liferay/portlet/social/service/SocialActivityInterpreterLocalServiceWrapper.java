@@ -35,26 +35,6 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityInterpreterLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivityInterpreterLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds the activity interpreter to the list of available interpreters.
 	*
 	* @param activityInterpreter the activity interpreter
@@ -85,6 +65,16 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getActivityInterpreters(
 		java.lang.String selector) {
 		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _socialActivityInterpreterLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -133,6 +123,16 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,
 			activitySet, serviceContext);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_socialActivityInterpreterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

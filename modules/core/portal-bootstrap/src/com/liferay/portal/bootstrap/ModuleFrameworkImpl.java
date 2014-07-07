@@ -20,6 +20,7 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Resource;
 import aQute.bnd.osgi.Verifier;
 import aQute.bnd.version.Version;
 
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -597,6 +597,52 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
+	private String _calculateExportPackage(Jar jar) {
+		StringBundler sb = new StringBundler();
+
+		String delimiter = StringPool.BLANK;
+
+		Map<String, Map<String, Resource>> directories = jar.getDirectories();
+
+		for (String directory : directories.keySet()) {
+			if (directory.equals("META-INF") ||
+				directory.startsWith("META-INF/")) {
+
+				continue;
+			}
+
+			if (directory.equals("OSGI-OPT") ||
+				directory.startsWith("OSGI-OPT/")) {
+
+				continue;
+			}
+
+			if (directory.equals(StringPool.SLASH)) {
+				continue;
+			}
+
+			if (directory.endsWith(StringPool.SLASH)) {
+				directory = directory.substring(0, directory.length() - 1);
+			}
+
+			if (directory.endsWith(StringPool.SLASH)) {
+				directory = directory.substring(0, directory.length() - 1);
+			}
+
+			String className = directory.replace(
+				StringPool.SLASH, StringPool.PERIOD);
+
+			if (directories.get(directory) != null) {
+				sb.append(delimiter);
+				sb.append(className);
+
+				delimiter = StringPool.COMMA;
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private Manifest _calculateManifest(URL url, Manifest manifest) {
 		Analyzer analyzer = new Analyzer();
 
@@ -640,7 +686,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			analyzer.setProperty(
 				Analyzer.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
 
-			String exportPackage = analyzer.calculateExportsFromContents(jar);
+			String exportPackage = _calculateExportPackage(jar);
 
 			analyzer.setProperty(Analyzer.EXPORT_PACKAGE, exportPackage);
 
@@ -1021,6 +1067,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
+	private boolean _isIgnoredInterface(String interfaceClassName) {
+		for (String ignoredClass :
+				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
+
+			if (ignoredClass.equals(interfaceClassName) ||
+				(ignoredClass.endsWith(StringPool.STAR) &&
+				 interfaceClassName.startsWith(
+					 ignoredClass.substring(0, ignoredClass.length() - 1)))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _processURL(
 		StringBundler sb, URL url, String[] ignoredFragments) {
 
@@ -1086,12 +1148,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Parameters parameters = OSGiHeader.parseHeader(exportPackage);
 
 		for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
-			Attrs attrs = entry.getValue();
-
-			if (attrs.isEmpty()) {
-				continue;
-			}
-
 			String key = entry.getKey();
 
 			List<URL> urls = _extraPackageMap.get(key);
@@ -1153,14 +1209,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		List<String> names = new ArrayList<String>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {
-			if (ArrayUtil.contains(
-					PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES,
-					interfaceClass.getName())) {
+			String interfaceClassName = interfaceClass.getName();
 
-				continue;
+			if (!_isIgnoredInterface(interfaceClassName)) {
+				names.add(interfaceClassName);
 			}
-
-			names.add(interfaceClass.getName());
 		}
 
 		if (names.isEmpty()) {

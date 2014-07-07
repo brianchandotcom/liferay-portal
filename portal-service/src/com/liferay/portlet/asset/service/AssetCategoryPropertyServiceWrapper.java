@@ -34,26 +34,6 @@ public class AssetCategoryPropertyServiceWrapper
 		_assetCategoryPropertyService = assetCategoryPropertyService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetCategoryPropertyService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetCategoryPropertyService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategoryProperty addCategoryProperty(
 		long entryId, java.lang.String key, java.lang.String value)
@@ -66,6 +46,16 @@ public class AssetCategoryPropertyServiceWrapper
 	public void deleteCategoryProperty(long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetCategoryPropertyService.deleteCategoryProperty(categoryPropertyId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _assetCategoryPropertyService.getBeanIdentifier();
 	}
 
 	@Override
@@ -81,13 +71,14 @@ public class AssetCategoryPropertyServiceWrapper
 			key);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryPropertyService.updateCategoryProperty(userId,
-			categoryPropertyId, key, value);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetCategoryPropertyService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -96,6 +87,15 @@ public class AssetCategoryPropertyServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyService.updateCategoryProperty(categoryPropertyId,
 			key, value);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyService.updateCategoryProperty(userId,
+			categoryPropertyId, key, value);
 	}
 
 	/**

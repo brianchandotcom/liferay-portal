@@ -20,7 +20,7 @@ import com.liferay.portal.model.Layout;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutComparator extends OrderByComparator {
+public class LayoutComparator extends OrderByComparator<Layout> {
 
 	public static final String ORDER_BY_ASC =
 		"Layout.groupId ASC, Layout.layoutId ASC";
@@ -39,10 +39,7 @@ public class LayoutComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Layout layout1 = (Layout)obj1;
-		Layout layout2 = (Layout)obj2;
-
+	public int compare(Layout layout1, Layout layout2) {
 		Long groupId1 = new Long(layout1.getGroupId());
 		Long groupId2 = new Long(layout2.getGroupId());
 

@@ -370,7 +370,8 @@ public class SubscriptionLocalServiceImpl
 	 */
 	@Override
 	public List<Subscription> getUserSubscriptions(
-		long userId, int start, int end, OrderByComparator orderByComparator) {
+		long userId, int start, int end,
+		OrderByComparator<Subscription> orderByComparator) {
 
 		return subscriptionPersistence.findByUserId(
 			userId, start, end, orderByComparator);

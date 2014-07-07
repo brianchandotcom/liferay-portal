@@ -20,7 +20,8 @@ import com.liferay.portal.model.Organization;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationNameComparator extends OrderByComparator {
+public class OrganizationNameComparator
+	extends OrderByComparator<Organization> {
 
 	public static final String ORDER_BY_ASC = "orgName ASC";
 
@@ -37,10 +38,7 @@ public class OrganizationNameComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Organization organization1 = (Organization)obj1;
-		Organization organization2 = (Organization)obj2;
-
+	public int compare(Organization organization1, Organization organization2) {
 		String name1 = organization1.getName();
 		String name2 = organization2.getName();
 

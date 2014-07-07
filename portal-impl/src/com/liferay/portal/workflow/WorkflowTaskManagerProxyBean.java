@@ -121,7 +121,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasks(
 		long companyId, Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -129,7 +129,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasksByRole(
 		long companyId, long roleId, Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -137,7 +137,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasksBySubmittingUser(
 		long companyId, long userId, Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -145,7 +145,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasksByUser(
 		long companyId, long userId, Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -153,7 +153,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasksByUserRoles(
 		long companyId, long userId, Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -161,7 +161,7 @@ public class WorkflowTaskManagerProxyBean
 	@Override
 	public List<WorkflowTask> getWorkflowTasksByWorkflowInstance(
 		long companyId, Long userId, long workflowInstanceId, Boolean completed,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -170,7 +170,7 @@ public class WorkflowTaskManagerProxyBean
 	public List<WorkflowTask> search(
 		long companyId, long userId, String keywords, Boolean completed,
 		Boolean searchByUserRoles, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -180,7 +180,7 @@ public class WorkflowTaskManagerProxyBean
 		long companyId, long userId, String taskName, String assetType,
 		Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
 		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -189,7 +189,7 @@ public class WorkflowTaskManagerProxyBean
 	public List<WorkflowTask> search(
 		long companyId, long userId, String keywords, String[] assetTypes,
 		Boolean completed, Boolean searchByUserRoles, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}

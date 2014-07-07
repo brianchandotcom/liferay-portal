@@ -30,6 +30,11 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService,
 		_quartzLocalService = quartzLocalService;
 	}
 
+	@Override
+	public void checkQuartzTables() {
+		_quartzLocalService.checkQuartzTables();
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -48,11 +53,6 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_quartzLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void checkQuartzTables() {
-		_quartzLocalService.checkQuartzTables();
 	}
 
 	/**

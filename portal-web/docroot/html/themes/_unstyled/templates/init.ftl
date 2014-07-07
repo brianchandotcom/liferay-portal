@@ -131,7 +131,10 @@
 
 <#if show_page_settings>
 	<#assign page_settings_text = languageUtil.get(locale, "manage-pages") />
-	<#assign page_settings_url = htmlUtil.escape(theme_display.getURLPageSettings().toString()) />
+
+	<#if theme_display.getURLPageSettings()??>
+		<#assign page_settings_url = htmlUtil.escape(theme_display.getURLPageSettings().toString()) />
+	</#if>
 </#if>
 
 <#assign show_sign_in = theme_display.isShowSignInIcon() />

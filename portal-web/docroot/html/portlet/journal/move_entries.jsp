@@ -102,7 +102,7 @@ for (JournalArticle curArticle : articles) {
 						<i class="<%= assetRendererFactory.getIconCssClass() %>"></i>
 
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 					</li>
 
@@ -133,7 +133,7 @@ for (JournalArticle curArticle : articles) {
 						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 
 						<span class="error-message">
@@ -226,8 +226,6 @@ for (JournalArticle curArticle : articles) {
 
 		if (newFolderId > 0) {
 			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(newFolderId);
-
-			folder = folder.toEscapedModel();
 
 			folderName = folder.getName();
 		}

@@ -88,7 +88,7 @@ public class ShoppingCouponUtil {
 	 */
 	public static List<ShoppingCoupon> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCoupon> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon[] findByGroupId_PrevAndNext(
 		long couponId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(couponId, groupId,
@@ -425,7 +425,7 @@ public class ShoppingCouponUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -88,7 +88,7 @@ public class SocialRequestUtil {
 	 */
 	public static List<SocialRequest> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByUuid_PrevAndNext(
 		long requestId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(requestId, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByUuid_C_PrevAndNext(
 		long requestId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(requestId, uuid, companyId,
@@ -509,7 +509,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -539,7 +539,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -554,7 +554,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -569,7 +569,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -585,7 +585,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByCompanyId_PrevAndNext(
 		long requestId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(requestId, companyId,
@@ -654,7 +654,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -669,7 +669,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -683,7 +683,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -697,7 +697,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -711,7 +711,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -726,7 +726,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByUserId_PrevAndNext(
 		long requestId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(requestId, userId,
@@ -795,7 +795,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByReceiverUserId(receiverUserId, start, end,
 			orderByComparator);
@@ -811,7 +811,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByReceiverUserId_First(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_First(receiverUserId, orderByComparator);
@@ -826,7 +826,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByReceiverUserId_First(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByReceiverUserId_First(receiverUserId,
 			orderByComparator);
@@ -842,7 +842,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByReceiverUserId_Last(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_Last(receiverUserId, orderByComparator);
@@ -857,7 +857,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByReceiverUserId_Last(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByReceiverUserId_Last(receiverUserId, orderByComparator);
 	}
@@ -873,7 +873,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByReceiverUserId_PrevAndNext(
 		long requestId, long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_PrevAndNext(requestId, receiverUserId,
@@ -945,7 +945,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByU_S(
 		long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByU_S(userId, status, start, end, orderByComparator);
 	}
@@ -961,7 +961,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByU_S_First(
 		long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_S_First(userId, status, orderByComparator);
@@ -977,7 +977,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByU_S_First(
 		long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_S_First(userId, status, orderByComparator);
 	}
@@ -993,7 +993,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByU_S_Last(
 		long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence().findByU_S_Last(userId, status, orderByComparator);
 	}
@@ -1008,7 +1008,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByU_S_Last(
 		long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_S_Last(userId, status, orderByComparator);
 	}
@@ -1025,7 +1025,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByU_S_PrevAndNext(
 		long requestId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_S_PrevAndNext(requestId, userId, status,
@@ -1099,7 +1099,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -1116,7 +1116,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -1132,7 +1132,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1148,7 +1148,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -1164,7 +1164,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1181,7 +1181,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByC_C_PrevAndNext(
 		long requestId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(requestId, classNameId, classPK,
@@ -1255,7 +1255,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByR_S(receiverUserId, status, start, end,
 			orderByComparator);
@@ -1272,7 +1272,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByR_S_First(
 		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_First(receiverUserId, status, orderByComparator);
@@ -1288,7 +1288,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByR_S_First(
 		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_First(receiverUserId, status, orderByComparator);
 	}
@@ -1304,7 +1304,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByR_S_Last(
 		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_Last(receiverUserId, status, orderByComparator);
@@ -1320,7 +1320,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByR_S_Last(
 		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_Last(receiverUserId, status, orderByComparator);
 	}
@@ -1337,7 +1337,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest[] findByR_S_PrevAndNext(
 		long requestId, long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_PrevAndNext(requestId, receiverUserId, status,
@@ -1518,7 +1518,7 @@ public class SocialRequestUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByU_C_C_T_S(
 		long userId, long classNameId, long classPK, int type, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByU_C_C_T_S(userId, classNameId, classPK, type, status,
 			start, end, orderByComparator);
@@ -1538,7 +1538,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByU_C_C_T_S_First(
 		long userId, long classNameId, long classPK, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_First(userId, classNameId, classPK, type,
@@ -1558,7 +1558,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByU_C_C_T_S_First(
 		long userId, long classNameId, long classPK, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_T_S_First(userId, classNameId, classPK, type,
 			status, orderByComparator);
@@ -1578,7 +1578,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest findByU_C_C_T_S_Last(
 		long userId, long classNameId, long classPK, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_Last(userId, classNameId, classPK, type,
@@ -1598,7 +1598,7 @@ public class SocialRequestUtil {
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest fetchByU_C_C_T_S_Last(
 		long userId, long classNameId, long classPK, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_T_S_Last(userId, classNameId, classPK, type,
 			status, orderByComparator);
@@ -1620,7 +1620,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest[] findByU_C_C_T_S_PrevAndNext(
 		long requestId, long userId, long classNameId, long classPK, int type,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_PrevAndNext(requestId, userId, classNameId,
@@ -1720,7 +1720,7 @@ public class SocialRequestUtil {
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findByC_C_T_R_S(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_T_R_S(classNameId, classPK, type, receiverUserId,
 			status, start, end, orderByComparator);
@@ -1741,7 +1741,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest findByC_C_T_R_S_First(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_First(classNameId, classPK, type,
@@ -1762,7 +1762,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest fetchByC_C_T_R_S_First(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_R_S_First(classNameId, classPK, type,
 			receiverUserId, status, orderByComparator);
@@ -1783,7 +1783,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest findByC_C_T_R_S_Last(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_Last(classNameId, classPK, type,
@@ -1804,7 +1804,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest fetchByC_C_T_R_S_Last(
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_R_S_Last(classNameId, classPK, type,
 			receiverUserId, status, orderByComparator);
@@ -1826,7 +1826,7 @@ public class SocialRequestUtil {
 	public static com.liferay.portlet.social.model.SocialRequest[] findByC_C_T_R_S_PrevAndNext(
 		long requestId, long classNameId, long classPK, int type,
 		long receiverUserId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_PrevAndNext(requestId, classNameId,
@@ -1983,7 +1983,7 @@ public class SocialRequestUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialRequest> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

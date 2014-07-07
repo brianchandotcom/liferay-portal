@@ -41,7 +41,7 @@ public class DLFileEntryTypeFinderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupIds, keywords,
 			includeBasicFileEntryType, start, end, orderByComparator);
@@ -50,7 +50,7 @@ public class DLFileEntryTypeFinderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupIds, keywords,
 			includeBasicFileEntryType, start, end, orderByComparator);

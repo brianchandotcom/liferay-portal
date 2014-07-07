@@ -234,7 +234,7 @@ public class BookmarksEntryLocalServiceImpl
 	@Override
 	public List<BookmarksEntry> getEntries(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksEntry> orderByComparator) {
 
 		return bookmarksEntryPersistence.findByG_F_S(
 			groupId, folderId, status, start, end, orderByComparator);
@@ -243,7 +243,7 @@ public class BookmarksEntryLocalServiceImpl
 	@Override
 	public List<BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksEntry> orderByComparator) {
 
 		return getEntries(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end,
@@ -288,7 +288,8 @@ public class BookmarksEntryLocalServiceImpl
 	public List<BookmarksEntry> getGroupEntries(
 		long groupId, long userId, int start, int end) {
 
-		OrderByComparator orderByComparator = new EntryModifiedDateComparator();
+		OrderByComparator<BookmarksEntry> orderByComparator =
+			new EntryModifiedDateComparator();
 
 		if (userId <= 0) {
 			return bookmarksEntryPersistence.findByG_S(

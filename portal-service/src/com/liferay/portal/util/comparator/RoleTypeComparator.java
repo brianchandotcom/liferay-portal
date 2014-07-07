@@ -20,7 +20,7 @@ import com.liferay.portal.model.Role;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RoleTypeComparator extends OrderByComparator {
+public class RoleTypeComparator extends OrderByComparator<Role> {
 
 	public static final String ORDER_BY_ASC = "Role_.type_ ASC, Role_.name ASC";
 
@@ -38,10 +38,7 @@ public class RoleTypeComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Role role1 = (Role)obj1;
-		Role role2 = (Role)obj2;
-
+	public int compare(Role role1, Role role2) {
 		int value = 0;
 
 		if (role1.getType() > role2.getType()) {

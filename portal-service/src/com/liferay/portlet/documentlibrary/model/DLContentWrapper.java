@@ -116,64 +116,15 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this document library content.
-	*
-	* @return the primary key of this document library content
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _dlContent.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new DLContentWrapper((DLContent)_dlContent.clone());
 	}
 
-	/**
-	* Sets the primary key of this document library content.
-	*
-	* @param primaryKey the primary key of this document library content
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_dlContent.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the content ID of this document library content.
-	*
-	* @return the content ID of this document library content
-	*/
-	@Override
-	public long getContentId() {
-		return _dlContent.getContentId();
-	}
-
-	/**
-	* Sets the content ID of this document library content.
-	*
-	* @param contentId the content ID of this document library content
-	*/
-	@Override
-	public void setContentId(long contentId) {
-		_dlContent.setContentId(contentId);
-	}
-
-	/**
-	* Returns the group ID of this document library content.
-	*
-	* @return the group ID of this document library content
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlContent.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this document library content.
-	*
-	* @param groupId the group ID of this document library content
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_dlContent.setGroupId(groupId);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent) {
+		return _dlContent.compareTo(dlContent);
 	}
 
 	/**
@@ -187,33 +138,38 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	/**
-	* Sets the company ID of this document library content.
+	* Returns the content ID of this document library content.
 	*
-	* @param companyId the company ID of this document library content
+	* @return the content ID of this document library content
 	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_dlContent.setCompanyId(companyId);
+	public long getContentId() {
+		return _dlContent.getContentId();
 	}
 
 	/**
-	* Returns the repository ID of this document library content.
+	* Returns the data of this document library content.
 	*
-	* @return the repository ID of this document library content
+	* @return the data of this document library content
 	*/
 	@Override
-	public long getRepositoryId() {
-		return _dlContent.getRepositoryId();
+	public java.sql.Blob getData() {
+		return _dlContent.getData();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _dlContent.getExpandoBridge();
 	}
 
 	/**
-	* Sets the repository ID of this document library content.
+	* Returns the group ID of this document library content.
 	*
-	* @param repositoryId the repository ID of this document library content
+	* @return the group ID of this document library content
 	*/
 	@Override
-	public void setRepositoryId(long repositoryId) {
-		_dlContent.setRepositoryId(repositoryId);
+	public long getGroupId() {
+		return _dlContent.getGroupId();
 	}
 
 	/**
@@ -227,53 +183,28 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	/**
-	* Sets the path of this document library content.
+	* Returns the primary key of this document library content.
 	*
-	* @param path the path of this document library content
+	* @return the primary key of this document library content
 	*/
 	@Override
-	public void setPath(java.lang.String path) {
-		_dlContent.setPath(path);
+	public long getPrimaryKey() {
+		return _dlContent.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _dlContent.getPrimaryKeyObj();
 	}
 
 	/**
-	* Returns the version of this document library content.
+	* Returns the repository ID of this document library content.
 	*
-	* @return the version of this document library content
+	* @return the repository ID of this document library content
 	*/
 	@Override
-	public java.lang.String getVersion() {
-		return _dlContent.getVersion();
-	}
-
-	/**
-	* Sets the version of this document library content.
-	*
-	* @param version the version of this document library content
-	*/
-	@Override
-	public void setVersion(java.lang.String version) {
-		_dlContent.setVersion(version);
-	}
-
-	/**
-	* Returns the data of this document library content.
-	*
-	* @return the data of this document library content
-	*/
-	@Override
-	public java.sql.Blob getData() {
-		return _dlContent.getData();
-	}
-
-	/**
-	* Sets the data of this document library content.
-	*
-	* @param data the data of this document library content
-	*/
-	@Override
-	public void setData(java.sql.Blob data) {
-		_dlContent.setData(data);
+	public long getRepositoryId() {
+		return _dlContent.getRepositoryId();
 	}
 
 	/**
@@ -287,23 +218,18 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	/**
-	* Sets the size of this document library content.
+	* Returns the version of this document library content.
 	*
-	* @param size the size of this document library content
+	* @return the version of this document library content
 	*/
 	@Override
-	public void setSize(long size) {
-		_dlContent.setSize(size);
+	public java.lang.String getVersion() {
+		return _dlContent.getVersion();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _dlContent.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlContent.setNew(n);
+	public int hashCode() {
+		return _dlContent.hashCode();
 	}
 
 	@Override
@@ -312,28 +238,53 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlContent.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _dlContent.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _dlContent.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _dlContent.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_dlContent.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_dlContent.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _dlContent.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_dlContent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this document library content.
+	*
+	* @param companyId the company ID of this document library content
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_dlContent.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the content ID of this document library content.
+	*
+	* @param contentId the content ID of this document library content
+	*/
+	@Override
+	public void setContentId(long contentId) {
+		_dlContent.setContentId(contentId);
+	}
+
+	/**
+	* Sets the data of this document library content.
+	*
+	* @param data the data of this document library content
+	*/
+	@Override
+	public void setData(java.sql.Blob data) {
+		_dlContent.setData(data);
 	}
 
 	@Override
@@ -354,20 +305,74 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		_dlContent.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this document library content.
+	*
+	* @param groupId the group ID of this document library content
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new DLContentWrapper((DLContent)_dlContent.clone());
+	public void setGroupId(long groupId) {
+		_dlContent.setGroupId(groupId);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent) {
-		return _dlContent.compareTo(dlContent);
+	public void setNew(boolean n) {
+		_dlContent.setNew(n);
+	}
+
+	/**
+	* Sets the path of this document library content.
+	*
+	* @param path the path of this document library content
+	*/
+	@Override
+	public void setPath(java.lang.String path) {
+		_dlContent.setPath(path);
+	}
+
+	/**
+	* Sets the primary key of this document library content.
+	*
+	* @param primaryKey the primary key of this document library content
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_dlContent.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _dlContent.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_dlContent.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the repository ID of this document library content.
+	*
+	* @param repositoryId the repository ID of this document library content
+	*/
+	@Override
+	public void setRepositoryId(long repositoryId) {
+		_dlContent.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Sets the size of this document library content.
+	*
+	* @param size the size of this document library content
+	*/
+	@Override
+	public void setSize(long size) {
+		_dlContent.setSize(size);
+	}
+
+	/**
+	* Sets the version of this document library content.
+	*
+	* @param version the version of this document library content
+	*/
+	@Override
+	public void setVersion(java.lang.String version) {
+		_dlContent.setVersion(version);
 	}
 
 	@Override
@@ -381,23 +386,18 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLContent toUnescapedModel() {
-		return new DLContentWrapper(_dlContent.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _dlContent.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _dlContent.toXmlString();
+	public com.liferay.portlet.documentlibrary.model.DLContent toUnescapedModel() {
+		return new DLContentWrapper(_dlContent.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_dlContent.persist();
+	public java.lang.String toXmlString() {
+		return _dlContent.toXmlString();
 	}
 
 	@Override

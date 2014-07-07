@@ -21,20 +21,52 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserSmsException extends PortalException {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserSmsException() {
 		super();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserSmsException(String msg) {
 		super(msg);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserSmsException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public UserSmsException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustBeEmailAddress extends UserSmsException {
+
+		public MustBeEmailAddress(String smsSn) {
+			super(String.format("SMS %s must be an email address", smsSn));
+
+			_smsSn = smsSn;
+		}
+
+		public String getSmsSn() {
+			return _smsSn;
+		}
+
+		private String _smsSn;
+
 	}
 
 }

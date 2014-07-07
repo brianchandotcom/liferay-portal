@@ -285,7 +285,7 @@ public class MDRActionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MDRAction> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MDRAction", "uuid", true,
 			"actionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

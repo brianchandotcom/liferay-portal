@@ -21,7 +21,8 @@ import com.liferay.portal.model.BackgroundTask;
 /**
  * @author Eduardo Garcia
  */
-public class BackgroundTaskCreateDateComparator extends OrderByComparator {
+public class BackgroundTaskCreateDateComparator
+	extends OrderByComparator<BackgroundTask> {
 
 	public static final String ORDER_BY_ASC = "BackgroundTask.createDate ASC";
 
@@ -38,9 +39,8 @@ public class BackgroundTaskCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BackgroundTask backgroundTask1 = (BackgroundTask)obj1;
-		BackgroundTask backgroundTask2 = (BackgroundTask)obj2;
+	public int compare(
+		BackgroundTask backgroundTask1, BackgroundTask backgroundTask2) {
 
 		int value = DateUtil.compareTo(
 			backgroundTask1.getCreateDate(), backgroundTask2.getCreateDate());

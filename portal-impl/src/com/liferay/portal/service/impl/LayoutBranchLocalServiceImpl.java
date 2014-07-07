@@ -133,7 +133,7 @@ public class LayoutBranchLocalServiceImpl
 	@Override
 	public List<LayoutBranch> getLayoutBranches(
 		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<LayoutBranch> orderByComparator) {
 
 		return layoutBranchPersistence.findByL_P(
 			layoutSetBranchId, plid, start, end, orderByComparator);

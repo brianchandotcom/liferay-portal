@@ -79,7 +79,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator);
 
 	/**
 	* Returns the first announcements delivery in the ordered set where userId = &#63;.
@@ -91,7 +91,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator);
 
 	/**
 	* Returns the last announcements delivery in the ordered set where userId = &#63;.
@@ -115,7 +115,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator);
 
 	/**
 	* Returns the announcements deliveries before and after the current announcements delivery in the ordered set where userId = &#63;.
@@ -140,7 +140,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery[] findByUserId_PrevAndNext(
 		long deliveryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
@@ -309,7 +309,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator);
 
 	/**
 	* Removes all the announcements deliveries from the database.

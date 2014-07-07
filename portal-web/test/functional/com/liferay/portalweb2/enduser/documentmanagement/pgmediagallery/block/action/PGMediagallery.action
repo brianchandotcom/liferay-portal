@@ -3,18 +3,6 @@
 		<case locator-key1="OPTIONS">
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
-
-		<case locator-key1="OPTIONS_MENULIST_CONFIGURATION">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="FOLDER_MENU_ADD_FOLDER">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ENTRY_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
 	</command>
 
 	<command name="assertTextEquals">

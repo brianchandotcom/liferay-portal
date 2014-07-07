@@ -1,29 +1,5 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="ADD">
-			<execute function="AssertClick#assertTextClickAt" />
-		</case>
-
-		<case locator-key1="ADD_BLANK_SITE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_COMMUNITY_SITE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_INTRANET_SITE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="SITE_MENULIST_DELETE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
 		<case locator-key1="SITE_TABLE_CHILD_SITE">
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
@@ -40,20 +16,6 @@
 	<command name="assertElementNotPresent">
 		<case locator-key1="SITE_MENULIST_SITE_ADMINISTRATION">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
-		</case>
-	</command>
-
-	<command name="assertTextEquals">
-		<case locator-key1="INFO_MESSAGE">
-			<execute function="AssertTextEquals#assertText" />
-		</case>
-
-		<case locator-key1="SITE_TABLE_ACTIONS">
-			<execute function="AssertTextEquals#assertText" />
-		</case>
-
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
 </definition>

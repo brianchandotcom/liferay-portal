@@ -521,9 +521,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			stagedModelType.getClassName());
 
+		long classPK = 0;
+
 		if (trashHandler != null) {
 			try {
-				long classPK = (Long)stagedModel.getPrimaryKeyObj();
+				classPK = (Long)stagedModel.getPrimaryKeyObj();
 
 				if (trashHandler.isInTrash(classPK)) {
 					PortletDataException pde = new PortletDataException(
@@ -538,10 +540,14 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				throw pde;
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for " +
-							stagedModel.getModelClassName());
+							stagedModel.getModelClassName() +
+								" with primary key " + classPK);
 				}
 			}
 		}

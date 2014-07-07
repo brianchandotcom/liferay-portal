@@ -52,6 +52,11 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().addRatingsStats(ratingsStats);
 	}
 
+	public static com.liferay.portlet.ratings.model.RatingsStats addStats(
+		long classNameId, long classPK) {
+		return getService().addStats(classNameId, classPK);
+	}
+
 	/**
 	* Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
 	*
@@ -61,6 +66,26 @@ public class RatingsStatsLocalServiceUtil {
 	public static com.liferay.portlet.ratings.model.RatingsStats createRatingsStats(
 		long statsId) {
 		return getService().createRatingsStats(statsId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsStats the ratings stats
+	* @return the ratings stats that was removed
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
+		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
+		return getService().deleteRatingsStats(ratingsStats);
 	}
 
 	/**
@@ -76,15 +101,8 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().deleteRatingsStats(statsId);
 	}
 
-	/**
-	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsStats the ratings stats
-	* @return the ratings stats that was removed
-	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
-		return getService().deleteRatingsStats(ratingsStats);
+	public static void deleteStats(java.lang.String className, long classPK) {
+		getService().deleteStats(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -97,8 +115,7 @@ public class RatingsStatsLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +132,7 @@ public class RatingsStatsLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +151,10 @@ public class RatingsStatsLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -173,6 +188,25 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().fetchRatingsStats(statsId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the ratings stats with the primary key.
 	*
@@ -184,25 +218,6 @@ public class RatingsStatsLocalServiceUtil {
 		long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRatingsStats(statsId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -230,24 +245,20 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().getRatingsStatsesCount();
 	}
 
-	/**
-	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsStats the ratings stats
-	* @return the ratings stats that was updated
-	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats updateRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
-		return getService().updateRatingsStats(ratingsStats);
+	public static com.liferay.portlet.ratings.model.RatingsStats getStats(
+		java.lang.String className, long classPK) {
+		return getService().getStats(className, classPK);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> getStats(
+		java.lang.String className, java.util.List<java.lang.Long> classPKs) {
+		return getService().getStats(className, classPKs);
+	}
+
+	public static com.liferay.portlet.ratings.model.RatingsStats getStats(
+		long statsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStats(statsId);
 	}
 
 	/**
@@ -259,29 +270,15 @@ public class RatingsStatsLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.ratings.model.RatingsStats addStats(
-		long classNameId, long classPK) {
-		return getService().addStats(classNameId, classPK);
-	}
-
-	public static void deleteStats(java.lang.String className, long classPK) {
-		getService().deleteStats(className, classPK);
-	}
-
-	public static com.liferay.portlet.ratings.model.RatingsStats getStats(
-		long statsId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getStats(statsId);
-	}
-
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> getStats(
-		java.lang.String className, java.util.List<java.lang.Long> classPKs) {
-		return getService().getStats(className, classPKs);
-	}
-
-	public static com.liferay.portlet.ratings.model.RatingsStats getStats(
-		java.lang.String className, long classPK) {
-		return getService().getStats(className, classPK);
+	/**
+	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsStats the ratings stats
+	* @return the ratings stats that was updated
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsStats updateRatingsStats(
+		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
+		return getService().updateRatingsStats(ratingsStats);
 	}
 
 	public static RatingsStatsLocalService getService() {

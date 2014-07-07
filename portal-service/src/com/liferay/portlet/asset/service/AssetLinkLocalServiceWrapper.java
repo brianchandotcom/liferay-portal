@@ -46,229 +46,6 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	}
 
 	/**
-	* Creates a new asset link with the primary key. Does not add the asset link to the database.
-	*
-	* @param linkId the primary key for the new asset link
-	* @return the new asset link
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink createAssetLink(
-		long linkId) {
-		return _assetLinkLocalService.createAssetLink(linkId);
-	}
-
-	/**
-	* Deletes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param linkId the primary key of the asset link
-	* @return the asset link that was removed
-	* @throws PortalException if a asset link with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
-		long linkId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.deleteAssetLink(linkId);
-	}
-
-	/**
-	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param assetLink the asset link
-	* @return the asset link that was removed
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink) {
-		return _assetLinkLocalService.deleteAssetLink(assetLink);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _assetLinkLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _assetLinkLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _assetLinkLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _assetLinkLocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink fetchAssetLink(long linkId) {
-		return _assetLinkLocalService.fetchAssetLink(linkId);
-	}
-
-	/**
-	* Returns the asset link with the primary key.
-	*
-	* @param linkId the primary key of the asset link
-	* @return the asset link
-	* @throws PortalException if a asset link with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink getAssetLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.getAssetLink(linkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _assetLinkLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the asset links.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of asset links
-	* @param end the upper bound of the range of asset links (not inclusive)
-	* @return the range of asset links
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getAssetLinks(
-		int start, int end) {
-		return _assetLinkLocalService.getAssetLinks(start, end);
-	}
-
-	/**
-	* Returns the number of asset links.
-	*
-	* @return the number of asset links
-	*/
-	@Override
-	public int getAssetLinksCount() {
-		return _assetLinkLocalService.getAssetLinksCount();
-	}
-
-	/**
-	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetLink the asset link
-	* @return the asset link that was updated
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
-		com.liferay.portlet.asset.model.AssetLink assetLink) {
-		return _assetLinkLocalService.updateAssetLink(assetLink);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetLinkLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetLinkLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds a new asset link.
 	*
 	* @param userId the primary key of the link's creator
@@ -291,6 +68,43 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetLinkLocalService.addLink(userId, entryId1, entryId2, type,
 			weight);
+	}
+
+	/**
+	* Creates a new asset link with the primary key. Does not add the asset link to the database.
+	*
+	* @param linkId the primary key for the new asset link
+	* @return the new asset link
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink createAssetLink(
+		long linkId) {
+		return _assetLinkLocalService.createAssetLink(linkId);
+	}
+
+	/**
+	* Deletes the asset link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was removed
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
+		return _assetLinkLocalService.deleteAssetLink(assetLink);
+	}
+
+	/**
+	* Deletes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param linkId the primary key of the asset link
+	* @return the asset link that was removed
+	* @throws PortalException if a asset link with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
+		long linkId) throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.deleteAssetLink(linkId);
 	}
 
 	/**
@@ -334,6 +148,160 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	@Override
 	public void deleteLinks(long entryId1, long entryId2) {
 		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _assetLinkLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _assetLinkLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _assetLinkLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return _assetLinkLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _assetLinkLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink fetchAssetLink(long linkId) {
+		return _assetLinkLocalService.fetchAssetLink(linkId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _assetLinkLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the asset link with the primary key.
+	*
+	* @param linkId the primary key of the asset link
+	* @return the asset link
+	* @throws PortalException if a asset link with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink getAssetLink(long linkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.getAssetLink(linkId);
+	}
+
+	/**
+	* Returns a range of all the asset links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset links
+	* @param end the upper bound of the range of asset links (not inclusive)
+	* @return the range of asset links
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getAssetLinks(
+		int start, int end) {
+		return _assetLinkLocalService.getAssetLinks(start, end);
+	}
+
+	/**
+	* Returns the number of asset links.
+	*
+	* @return the number of asset links
+	*/
+	@Override
+	public int getAssetLinksCount() {
+		return _assetLinkLocalService.getAssetLinksCount();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _assetLinkLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -402,6 +370,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getLinks(entryId, typeId);
 	}
 
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetLinkLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns all the asset links of the given link type whose second entry ID
 	* is the given entry ID.
@@ -420,6 +395,28 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetLink> getReverseLinks(
 		long entryId, int typeId) {
 		return _assetLinkLocalService.getReverseLinks(entryId, typeId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_assetLinkLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the asset link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetLink the asset link
+	* @return the asset link that was updated
+	*/
+	@Override
+	public com.liferay.portlet.asset.model.AssetLink updateAssetLink(
+		com.liferay.portlet.asset.model.AssetLink assetLink) {
+		return _assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
 	@Override

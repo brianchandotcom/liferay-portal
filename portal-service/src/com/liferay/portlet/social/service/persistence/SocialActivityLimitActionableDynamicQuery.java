@@ -22,7 +22,7 @@ import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SocialActivityLimitLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SocialActivityLimitLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

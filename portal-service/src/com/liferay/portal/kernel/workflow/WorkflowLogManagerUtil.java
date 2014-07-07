@@ -52,7 +52,8 @@ public class WorkflowLogManagerUtil {
 
 	public static List<WorkflowLog> getWorkflowLogsByWorkflowInstance(
 			long companyId, long workflowInstanceId, List<Integer> logTypes,
-			int start, int end, OrderByComparator orderByComparator)
+			int start, int end,
+			OrderByComparator<WorkflowLog> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowLogManager().getWorkflowLogsByWorkflowInstance(
@@ -62,7 +63,8 @@ public class WorkflowLogManagerUtil {
 
 	public static List<WorkflowLog> getWorkflowLogsByWorkflowTask(
 			long companyId, long workflowTaskId, List<Integer> logTypes,
-			int start, int end, OrderByComparator orderByComparator)
+			int start, int end,
+			OrderByComparator<WorkflowLog> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowLogManager().getWorkflowLogsByWorkflowTask(

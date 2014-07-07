@@ -16,6 +16,7 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.lang.reflect.Method;
@@ -79,6 +80,39 @@ public class JSONServiceActionTest extends TestCase {
 		assertEquals(
 			"{class=com.liferay.portal.kernel.dao.orm.EntityCacheUtil}",
 			value.toString());
+	}
+
+	@Test
+	public void testGetArgumentWithArrayValue() throws Exception {
+		JSONServiceAction jsonServiceAction = new JSONServiceAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		String[] parameters = {"roleId", "groupIds"};
+
+		mockHttpServletRequest.setParameter(parameters[0], "11111");
+		mockHttpServletRequest.setParameter(parameters[1], "11111,22222,33333");
+
+		Object[] methodAndParameterTypes =
+			jsonServiceAction.getMethodAndParameterTypes(
+				GroupServiceUtil.class, "addRoleGroups", parameters,
+				new String[0]);
+
+		Method method = (Method)methodAndParameterTypes[0];
+		Type[] parameterTypes = (Type[])methodAndParameterTypes[1];
+
+		Object value = jsonServiceAction.getArgValue(
+			mockHttpServletRequest, GroupServiceUtil.class, method.getName(),
+			parameters[1], parameterTypes[1]);
+
+		Class<?> clazz = value.getClass();
+
+		assertTrue(clazz.isArray());
+
+		long[] arrayValue = (long[])value;
+
+		assertEquals(3, arrayValue.length);
 	}
 
 }

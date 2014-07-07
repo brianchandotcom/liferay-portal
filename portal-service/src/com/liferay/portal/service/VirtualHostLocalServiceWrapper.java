@@ -56,17 +56,13 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
-	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHostId the primary key of the virtual host
-	* @return the virtual host that was removed
-	* @throws PortalException if a virtual host with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
-		long virtualHostId)
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.deleteVirtualHost(virtualHostId);
+		return _virtualHostLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -81,6 +77,20 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.deleteVirtualHost(virtualHost);
 	}
 
+	/**
+	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHostId the primary key of the virtual host
+	* @return the virtual host that was removed
+	* @throws PortalException if a virtual host with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _virtualHostLocalService.deleteVirtualHost(virtualHostId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _virtualHostLocalService.dynamicQuery();
@@ -93,8 +103,7 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _virtualHostLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -112,8 +121,7 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -133,11 +141,10 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -171,8 +178,56 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 
 	@Override
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
+		long companyId, long layoutSetId) {
+		return _virtualHostLocalService.fetchVirtualHost(companyId, layoutSetId);
+	}
+
+	@Override
+	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
+		java.lang.String hostname) {
+		return _virtualHostLocalService.fetchVirtualHost(hostname);
+	}
+
+	@Override
+	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
 		long virtualHostId) {
 		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _virtualHostLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _virtualHostLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _virtualHostLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
+		long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _virtualHostLocalService.getVirtualHost(companyId, layoutSetId);
+	}
+
+	@Override
+	public com.liferay.portal.model.VirtualHost getVirtualHost(
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _virtualHostLocalService.getVirtualHost(hostname);
 	}
 
 	/**
@@ -187,28 +242,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		long virtualHostId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _virtualHostLocalService.getVirtualHost(virtualHostId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _virtualHostLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -239,28 +272,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
-	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.VirtualHost updateVirtualHost(
-		com.liferay.portal.model.VirtualHost virtualHost) {
-		return _virtualHostLocalService.updateVirtualHost(virtualHost);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _virtualHostLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
@@ -271,36 +282,22 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId) {
-		return _virtualHostLocalService.fetchVirtualHost(companyId, layoutSetId);
-	}
-
-	@Override
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
-		return _virtualHostLocalService.fetchVirtualHost(hostname);
-	}
-
-	@Override
-	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
-		long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.getVirtualHost(companyId, layoutSetId);
-	}
-
-	@Override
-	public com.liferay.portal.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _virtualHostLocalService.getVirtualHost(hostname);
-	}
-
-	@Override
 	public com.liferay.portal.model.VirtualHost updateVirtualHost(
 		long companyId, long layoutSetId, java.lang.String hostname) {
 		return _virtualHostLocalService.updateVirtualHost(companyId,
 			layoutSetId, hostname);
+	}
+
+	/**
+	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.VirtualHost updateVirtualHost(
+		com.liferay.portal.model.VirtualHost virtualHost) {
+		return _virtualHostLocalService.updateVirtualHost(virtualHost);
 	}
 
 	/**

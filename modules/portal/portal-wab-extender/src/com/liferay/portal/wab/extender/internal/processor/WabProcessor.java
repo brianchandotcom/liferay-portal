@@ -488,14 +488,14 @@ public class WabProcessor {
 				"x:filter-class", "x:listener-class", "x:portlet-class",
 				"x:resource-bundle"
 			},
-			"x", "http:java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
+			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
 
 		processXMLDependencies(
 			"WEB-INF/web.xml",
 			new String[] {
 				"x:filter-class", "x:listener-class","x:servlet-class"
 			},
-			"x", "http:java.sun.com/xml/ns/j2ee");
+			"x", "http://java.sun.com/xml/ns/j2ee");
 	}
 
 	protected void processDefaultServletPackages() {
@@ -592,9 +592,9 @@ public class WabProcessor {
 				continue;
 			}
 
-			uri = uri.relativize(file.toURI());
+			URI relativizedURI = uri.relativize(file.toURI());
 
-			String path = uri.getPath();
+			String path = relativizedURI.getPath();
 
 			if (ArrayUtil.contains(
 					PropsValues.MODULE_FRAMEWORK_WEB_EXTENDER_EXCLUDED_PATHS,
@@ -924,14 +924,16 @@ public class WabProcessor {
 		attributes.putValue("Web-ContextPath", getWebContextPath());
 	}
 
-	protected boolean processWebXML(Element element, Class<?> clazz) {
+	protected void processWebXML(
+		Element element, List<Element> initParamElements, Class<?> clazz) {
+
 		String elementText = element.getTextTrim();
 
 		if (!elementText.equals(clazz.getName())) {
-			return false;
+			return;
 		}
 
-		for (Element initParamElement : element.elements("init-param")) {
+		for (Element initParamElement : initParamElements) {
 			Element paramNameElement = initParamElement.element("param-name");
 
 			String paramNameValue = paramNameElement.getTextTrim();
@@ -946,10 +948,8 @@ public class WabProcessor {
 
 			initParamElement.detach();
 
-			return true;
+			return;
 		}
-
-		return false;
 	}
 
 	protected void processWebXML(String path) throws IOException {
@@ -966,21 +966,17 @@ public class WabProcessor {
 		for (Element element : rootElement.elements("filter")) {
 			Element filterClassElement = element.element("filter-class");
 
-			if (processWebXML(
-					filterClassElement, PortalClassLoaderFilter.class)) {
-
-				break;
-			}
+			processWebXML(
+				filterClassElement, element.elements("init-param"),
+				PortalClassLoaderFilter.class);
 		}
 
 		for (Element element : rootElement.elements("servlet")) {
 			Element servletClassElement = element.element("servlet-class");
 
-			if (processWebXML(
-					servletClassElement, PortalClassLoaderServlet.class)) {
-
-				break;
-			}
+			processWebXML(
+				servletClassElement, element.elements("init-param"),
+				PortalClassLoaderServlet.class);
 		}
 
 		formatDocument(file, document);

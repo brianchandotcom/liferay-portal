@@ -155,7 +155,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -275,7 +275,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_First(uuid, orderByComparator);
 
 		if (userGroup != null) {
@@ -303,7 +304,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		List<UserGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -323,7 +324,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (userGroup != null) {
@@ -351,7 +353,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,7 +381,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] findByUuid_PrevAndNext(long userGroupId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
 		Session session = null;
@@ -408,8 +411,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	protected UserGroup getByUuid_PrevAndNext(Session session,
-		UserGroup userGroup, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		UserGroup userGroup, String uuid,
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -569,7 +572,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> filterFindByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -672,7 +675,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] filterFindByUuid_PrevAndNext(long userGroupId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(userGroupId, uuid, orderByComparator);
@@ -706,8 +709,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	protected UserGroup filterGetByUuid_PrevAndNext(Session session,
-		UserGroup userGroup, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		UserGroup userGroup, String uuid,
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1074,7 +1077,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<UserGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1204,7 +1207,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1237,7 +1241,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		List<UserGroup> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1259,7 +1263,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1292,7 +1297,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1321,7 +1326,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] findByUuid_C_PrevAndNext(long userGroupId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
@@ -1352,7 +1357,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup getByUuid_C_PrevAndNext(Session session,
 		UserGroup userGroup, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1521,7 +1526,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<UserGroup> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1629,7 +1634,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] filterFindByUuid_C_PrevAndNext(long userGroupId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(userGroupId, uuid, companyId,
@@ -1665,7 +1671,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup filterGetByUuid_C_PrevAndNext(Session session,
 		UserGroup userGroup, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2044,7 +2050,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2150,7 +2156,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2179,7 +2186,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		List<UserGroup> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2200,7 +2207,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (userGroup != null) {
@@ -2228,7 +2236,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2256,7 +2264,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] findByCompanyId_PrevAndNext(long userGroupId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
@@ -2287,7 +2295,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup getByCompanyId_PrevAndNext(Session session,
 		UserGroup userGroup, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2435,7 +2443,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<UserGroup> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2524,7 +2532,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] filterFindByCompanyId_PrevAndNext(long userGroupId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(userGroupId, companyId,
@@ -2560,7 +2568,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup filterGetByCompanyId_PrevAndNext(Session session,
 		UserGroup userGroup, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2879,7 +2887,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<UserGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2995,7 +3003,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByC_P_First(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByC_P_First(companyId, parentUserGroupId,
 				orderByComparator);
 
@@ -3028,7 +3037,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByC_P_First(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		List<UserGroup> list = findByC_P(companyId, parentUserGroupId, 0, 1,
 				orderByComparator);
 
@@ -3050,7 +3059,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup findByC_P_Last(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByC_P_Last(companyId, parentUserGroupId,
 				orderByComparator);
 
@@ -3083,7 +3093,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup fetchByC_P_Last(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		int count = countByC_P(companyId, parentUserGroupId);
 
 		if (count == 0) {
@@ -3112,7 +3122,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public UserGroup[] findByC_P_PrevAndNext(long userGroupId, long companyId,
-		long parentUserGroupId, OrderByComparator orderByComparator)
+		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
@@ -3143,7 +3153,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup getByC_P_PrevAndNext(Session session,
 		UserGroup userGroup, long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3300,7 +3310,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<UserGroup> filterFindByC_P(long companyId,
 		long parentUserGroupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P(companyId, parentUserGroupId, start, end,
 				orderByComparator);
@@ -3396,7 +3406,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public UserGroup[] filterFindByC_P_PrevAndNext(long userGroupId,
 		long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
+		OrderByComparator<UserGroup> orderByComparator)
+		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P_PrevAndNext(userGroupId, companyId,
 				parentUserGroupId, orderByComparator);
@@ -3431,7 +3442,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	protected UserGroup filterGetByC_P_PrevAndNext(Session session,
 		UserGroup userGroup, long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserGroup> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4588,7 +4599,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<UserGroup> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserGroup> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4772,7 +4783,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return userGroupToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5035,7 +5047,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
 		return userGroupToTeamTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5296,7 +5309,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
 		return userGroupToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}

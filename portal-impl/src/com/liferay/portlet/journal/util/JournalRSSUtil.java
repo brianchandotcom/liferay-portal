@@ -94,7 +94,8 @@ public class JournalRSSUtil {
 		String orderByType = feed.getOrderByType();
 		boolean orderByAsc = orderByType.equals("asc");
 
-		OrderByComparator obc = new ArticleModifiedDateComparator(orderByAsc);
+		OrderByComparator<JournalArticle> obc =
+			new ArticleModifiedDateComparator(orderByAsc);
 
 		if (orderByCol.equals("display-date")) {
 			obc = new ArticleDisplayDateComparator(orderByAsc);

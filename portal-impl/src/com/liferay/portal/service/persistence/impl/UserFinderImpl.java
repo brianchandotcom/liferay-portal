@@ -475,7 +475,7 @@ public class UserFinderImpl
 	public List<User> findByKeywords(
 		long companyId, String keywords, int status,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<User> obc) {
 
 		String[] firstNames = null;
 		String[] middleNames = null;
@@ -584,7 +584,7 @@ public class UserFinderImpl
 	public List<User> findBySocialUsers(
 		long companyId, long userId, int socialRelationType,
 		String socialRelationTypeComparator, int status, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<User> obc) {
 
 		Session session = null;
 
@@ -627,7 +627,7 @@ public class UserFinderImpl
 		long companyId, String firstName, String middleName, String lastName,
 		String screenName, String emailAddress, int status,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<User> obc) {
 
 		String[] firstNames = CustomSQLUtil.keywords(firstName);
 		String[] middleNames = CustomSQLUtil.keywords(middleName);
@@ -645,7 +645,7 @@ public class UserFinderImpl
 		long companyId, String[] firstNames, String[] middleNames,
 		String[] lastNames, String[] screenNames, String[] emailAddresses,
 		int status, LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<User> obc) {
 
 		firstNames = CustomSQLUtil.keywords(firstNames);
 		middleNames = CustomSQLUtil.keywords(middleNames);

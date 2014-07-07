@@ -252,7 +252,7 @@ public class JournalFeedLocalServiceImpl
 	@Override
 	public List<JournalFeed> search(
 		long companyId, long groupId, String keywords, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalFeed> obc) {
 
 		return journalFeedFinder.findByKeywords(
 			companyId, groupId, keywords, start, end, obc);
@@ -262,7 +262,7 @@ public class JournalFeedLocalServiceImpl
 	public List<JournalFeed> search(
 		long companyId, long groupId, String feedId, String name,
 		String description, boolean andOperator, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<JournalFeed> obc) {
 
 		return journalFeedFinder.findByC_G_F_N_D(
 			companyId, groupId, feedId, name, description, andOperator, start,

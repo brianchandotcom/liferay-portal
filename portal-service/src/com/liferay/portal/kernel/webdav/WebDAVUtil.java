@@ -198,8 +198,8 @@ public class WebDAVUtil {
 
 		params.put("usersGroups", user.getUserId());
 
-		OrderByComparator orderByComparator = new GroupFriendlyURLComparator(
-			true);
+		OrderByComparator<Group> orderByComparator =
+			new GroupFriendlyURLComparator(true);
 
 		groups.addAll(
 			GroupLocalServiceUtil.search(

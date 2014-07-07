@@ -69,8 +69,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			QueryDefinition queryDefinition = new QueryDefinition(
-				status, start, end, null);
+			QueryDefinition<MBThread> queryDefinition =
+				new QueryDefinition<MBThread>(status, start, end, null);
 
 			return mbThreadFinder.findByG_U_LPD(
 				groupId, userId, modifiedDate, queryDefinition);
@@ -124,8 +124,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		}
 		else {
 			if (subscribed) {
-				QueryDefinition queryDefinition = new QueryDefinition(
-					status, start, end, null);
+				QueryDefinition<MBThread> queryDefinition =
+					new QueryDefinition<MBThread>(status, start, end, null);
 
 				return mbThreadFinder.filterFindByS_G_U_C(
 					groupId, userId, categoryIds, queryDefinition);
@@ -177,7 +177,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		long groupId, long userId, Date modifiedDate, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			QueryDefinition queryDefinition = new QueryDefinition(status);
+			QueryDefinition<MBThread> queryDefinition =
+				new QueryDefinition<MBThread>(status);
 
 			return mbThreadFinder.countByG_U_LPD(
 				groupId, userId, modifiedDate, queryDefinition);
@@ -229,7 +230,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		}
 		else {
 			if (subscribed) {
-				QueryDefinition queryDefinition = new QueryDefinition(status);
+				QueryDefinition<MBThread> queryDefinition =
+					new QueryDefinition<MBThread>(status);
 
 				return mbThreadFinder.filterCountByS_G_U_C(
 					groupId, userId, categoryIds, queryDefinition);
@@ -251,8 +253,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public List<MBThread> getThreads(
 		long groupId, long categoryId, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		return mbThreadFinder.filterFindByG_C(
 			groupId, categoryId, queryDefinition);
@@ -264,7 +266,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			return mbThreadFinder.filterCountByG_C(groupId, categoryId);
 		}
 		else {
-			QueryDefinition queryDefinition = new QueryDefinition(status);
+			QueryDefinition<MBThread> queryDefinition =
+				new QueryDefinition<MBThread>(status);
 
 			return mbThreadFinder.filterCountByG_C(
 				groupId, categoryId, queryDefinition);
@@ -413,8 +416,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			}
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		if (subscribed) {
 			return mbThreadFinder.findByS_G_U(groupId, userId, queryDefinition);
@@ -441,7 +444,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			}
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status);
 
 		if (subscribed) {
 			return mbThreadFinder.countByS_G_U(

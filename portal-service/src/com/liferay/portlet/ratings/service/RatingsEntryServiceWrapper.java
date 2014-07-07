@@ -32,6 +32,12 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 		_ratingsEntryService = ratingsEntryService;
 	}
 
+	@Override
+	public void deleteEntry(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ratingsEntryService.deleteEntry(className, classPK);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -50,12 +56,6 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_ratingsEntryService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ratingsEntryService.deleteEntry(className, classPK);
 	}
 
 	@Override

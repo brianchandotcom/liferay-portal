@@ -320,7 +320,7 @@ public class JournalContentSearchPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<JournalContentSearch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalContentSearch",
 			"contentSearchId", true, "groupId", true, "companyId", true,
 			"privateLayout", true, "layoutId", true, "portletId", true,

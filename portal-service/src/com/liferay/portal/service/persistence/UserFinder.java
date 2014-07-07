@@ -49,7 +49,8 @@ public interface UserFinder {
 	public java.util.List<com.liferay.portal.model.User> findByKeywords(
 		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
 
 	public java.util.List<com.liferay.portal.model.User> findByNoAnnouncementsDeliveries(
 		java.lang.String type);
@@ -61,7 +62,8 @@ public interface UserFinder {
 	public java.util.List<com.liferay.portal.model.User> findBySocialUsers(
 		long companyId, long userId, int socialRelationType,
 		java.lang.String socialRelationTypeComparator, int status, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
 
 	public java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, java.lang.String firstName,
@@ -69,7 +71,7 @@ public interface UserFinder {
 		java.lang.String screenName, java.lang.String emailAddress, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
 
 	public java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, java.lang.String[] firstNames,
@@ -78,5 +80,5 @@ public interface UserFinder {
 		int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
 }

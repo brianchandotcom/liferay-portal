@@ -156,7 +156,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public List<ExpandoColumn> findByTableId(long tableId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -262,7 +262,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn findByTableId_First(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchColumnException {
+		OrderByComparator<ExpandoColumn> orderByComparator)
+		throws NoSuchColumnException {
 		ExpandoColumn expandoColumn = fetchByTableId_First(tableId,
 				orderByComparator);
 
@@ -291,7 +292,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn fetchByTableId_First(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 		List<ExpandoColumn> list = findByTableId(tableId, 0, 1,
 				orderByComparator);
 
@@ -312,7 +313,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn findByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) throws NoSuchColumnException {
+		OrderByComparator<ExpandoColumn> orderByComparator)
+		throws NoSuchColumnException {
 		ExpandoColumn expandoColumn = fetchByTableId_Last(tableId,
 				orderByComparator);
 
@@ -341,7 +343,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn fetchByTableId_Last(long tableId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 		int count = countByTableId(tableId);
 
 		if (count == 0) {
@@ -369,7 +371,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn[] findByTableId_PrevAndNext(long columnId,
-		long tableId, OrderByComparator orderByComparator)
+		long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
 		throws NoSuchColumnException {
 		ExpandoColumn expandoColumn = findByPrimaryKey(columnId);
 
@@ -400,7 +402,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	protected ExpandoColumn getByTableId_PrevAndNext(Session session,
 		ExpandoColumn expandoColumn, long tableId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoColumn> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -548,7 +550,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public List<ExpandoColumn> filterFindByTableId(long tableId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ExpandoColumn> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByTableId(tableId, start, end, orderByComparator);
 		}
@@ -639,7 +641,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public ExpandoColumn[] filterFindByTableId_PrevAndNext(long columnId,
-		long tableId, OrderByComparator orderByComparator)
+		long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
 		throws NoSuchColumnException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByTableId_PrevAndNext(columnId, tableId,
@@ -675,7 +677,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	protected ExpandoColumn filterGetByTableId_PrevAndNext(Session session,
 		ExpandoColumn expandoColumn, long tableId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExpandoColumn> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1011,7 +1013,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public List<ExpandoColumn> findByT_N(long tableId, String[] names,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator) {
 		if (names == null) {
 			names = new String[0];
 		}
@@ -2230,7 +2232,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	@Override
 	public List<ExpandoColumn> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

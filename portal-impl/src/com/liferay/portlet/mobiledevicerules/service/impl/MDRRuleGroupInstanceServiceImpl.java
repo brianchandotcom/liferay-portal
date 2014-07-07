@@ -79,7 +79,7 @@ public class MDRRuleGroupInstanceServiceImpl
 	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 		String className, long classPK, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
 
 		long groupId = getGroupId(className, classPK);
 		long classNameId = classNameLocalService.getClassNameId(className);

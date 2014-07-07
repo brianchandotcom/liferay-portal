@@ -144,7 +144,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end, OrderByComparator obc) {
+		boolean site, int start, int end, OrderByComparator<Group> obc) {
 
 		return GroupLocalServiceUtil.getLayoutsGroups(
 			getCompanyId(), getGroupId(), site, start, end, obc);

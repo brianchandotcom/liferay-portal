@@ -1123,7 +1123,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	@Override
 	public List<Role> search(
 		long companyId, String keywords, Integer[] types, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Role> obc) {
 
 		return search(
 			companyId, keywords, types, new LinkedHashMap<String, Object>(),
@@ -1164,7 +1164,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public List<Role> search(
 		long companyId, String keywords, Integer[] types,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Role> obc) {
 
 		return roleFinder.findByKeywords(
 			companyId, keywords, types, params, start, end, obc);
@@ -1200,7 +1200,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	@Override
 	public List<Role> search(
 		long companyId, String name, String description, Integer[] types,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<Role> obc) {
 
 		return search(
 			companyId, name, description, types,
@@ -1241,7 +1241,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public List<Role> search(
 		long companyId, String name, String description, Integer[] types,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Role> obc) {
 
 		return roleFinder.findByC_N_D_T(
 			companyId, name, description, types, params, true, start, end, obc);

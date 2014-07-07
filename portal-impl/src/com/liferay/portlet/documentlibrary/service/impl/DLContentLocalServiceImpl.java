@@ -126,7 +126,8 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 	public DLContent getContent(long companyId, long repositoryId, String path)
 		throws NoSuchContentException {
 
-		OrderByComparator orderByComparator = new DLContentVersionComparator();
+		OrderByComparator<DLContent> orderByComparator =
+			new DLContentVersionComparator();
 
 		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 			companyId, repositoryId, path, 0, 1, orderByComparator);

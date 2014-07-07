@@ -280,7 +280,7 @@ public class AssetLinkPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetLink", "linkId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "entryId1", true, "entryId2", true, "type", true, "weight",

@@ -54,7 +54,7 @@ public class DDLRecordSetFinderUtil {
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> filterFindByKeywords(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupId, keywords, scope,
 			start, end, orderByComparator);
@@ -64,7 +64,7 @@ public class DDLRecordSetFinderUtil {
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String description, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_N_D_S(companyId, groupId, name,
 			description, scope, andOperator, start, end, orderByComparator);
@@ -74,7 +74,7 @@ public class DDLRecordSetFinderUtil {
 		long companyId, long groupId, java.lang.String[] names,
 		java.lang.String[] descriptions, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_N_D_S(companyId, groupId, names,
 			descriptions, scope, andOperator, start, end, orderByComparator);
@@ -83,7 +83,7 @@ public class DDLRecordSetFinderUtil {
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByKeywords(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, keywords, scope, start,
 			end, orderByComparator);
@@ -93,7 +93,7 @@ public class DDLRecordSetFinderUtil {
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String description, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .findByC_G_N_D_S(companyId, groupId, name, description,
 			scope, andOperator, start, end, orderByComparator);
@@ -103,7 +103,7 @@ public class DDLRecordSetFinderUtil {
 		long companyId, long groupId, java.lang.String[] names,
 		java.lang.String[] descriptions, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
 		return getFinder()
 				   .findByC_G_N_D_S(companyId, groupId, names, descriptions,
 			scope, andOperator, start, end, orderByComparator);

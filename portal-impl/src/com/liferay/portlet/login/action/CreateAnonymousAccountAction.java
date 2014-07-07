@@ -18,7 +18,6 @@ import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactFirstNameException;
 import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
-import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ReservedUserEmailAddressException;
@@ -134,18 +133,6 @@ public class CreateAnonymousAccountAction extends PortletAction {
 
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
-			else if (e instanceof DuplicateUserEmailAddressException) {
-				User user = UserLocalServiceUtil.getUserByEmailAddress(
-					themeDisplay.getCompanyId(), emailAddress);
-
-				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-				else {
-					sendRedirect(
-						actionRequest, actionResponse, portletURL.toString());
-				}
-			}
 			else if (e instanceof CaptchaTextException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactFirstNameException ||
@@ -157,6 +144,20 @@ public class CreateAnonymousAccountAction extends PortletAction {
 					 e instanceof UserEmailAddressException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof
+						UserEmailAddressException.MustNotBeDuplicate) {
+
+				User user = UserLocalServiceUtil.getUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
+
+				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
+					SessionErrors.add(actionRequest, e.getClass());
+				}
+				else {
+					sendRedirect(
+						actionRequest, actionResponse, portletURL.toString());
+				}
 			}
 			else {
 				_log.error("Unable to create anonymous account", e);

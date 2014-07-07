@@ -152,7 +152,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public List<MBMailingList> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -272,7 +272,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mbMailingList != null) {
@@ -300,7 +301,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		List<MBMailingList> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -320,7 +321,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mbMailingList != null) {
@@ -348,7 +350,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -376,7 +378,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList[] findByUuid_PrevAndNext(long mailingListId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = findByPrimaryKey(mailingListId);
 
@@ -407,7 +409,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 	protected MBMailingList getByUuid_PrevAndNext(Session session,
 		MBMailingList mbMailingList, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMailingList> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -933,7 +935,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public List<MBMailingList> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MBMailingList> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1063,7 +1065,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1096,7 +1099,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		List<MBMailingList> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1118,7 +1121,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1151,7 +1155,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1180,7 +1184,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList[] findByUuid_C_PrevAndNext(long mailingListId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = findByPrimaryKey(mailingListId);
 
@@ -1211,7 +1216,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 	protected MBMailingList getByUuid_C_PrevAndNext(Session session,
 		MBMailingList mbMailingList, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMailingList> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1485,7 +1490,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public List<MBMailingList> findByActive(boolean active, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1591,7 +1596,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByActive_First(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByActive_First(active,
 				orderByComparator);
 
@@ -1620,7 +1626,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByActive_First(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		List<MBMailingList> list = findByActive(active, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1640,7 +1646,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList findByActive_Last(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchMailingListException {
+		OrderByComparator<MBMailingList> orderByComparator)
+		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = fetchByActive_Last(active,
 				orderByComparator);
 
@@ -1669,7 +1676,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByActive_Last(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		int count = countByActive(active);
 
 		if (count == 0) {
@@ -1697,7 +1704,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList[] findByActive_PrevAndNext(long mailingListId,
-		boolean active, OrderByComparator orderByComparator)
+		boolean active, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException {
 		MBMailingList mbMailingList = findByPrimaryKey(mailingListId);
 
@@ -1728,7 +1735,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 	protected MBMailingList getByActive_PrevAndNext(Session session,
 		MBMailingList mbMailingList, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MBMailingList> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2792,7 +2799,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public List<MBMailingList> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MBMailingList> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

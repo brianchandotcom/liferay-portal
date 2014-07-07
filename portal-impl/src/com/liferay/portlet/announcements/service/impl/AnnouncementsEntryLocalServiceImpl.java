@@ -480,7 +480,7 @@ public class AnnouncementsEntryLocalServiceImpl
 					users = userLocalService.search(
 						company.getCompanyId(), null,
 						WorkflowConstants.STATUS_APPROVED, params, start, end,
-						(OrderByComparator)null);
+						(OrderByComparator<User>)null);
 				}
 
 				notifyUsers(

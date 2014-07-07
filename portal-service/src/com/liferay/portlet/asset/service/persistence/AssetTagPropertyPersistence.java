@@ -79,7 +79,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the first asset tag property in the ordered set where companyId = &#63;.
@@ -91,7 +91,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -103,7 +103,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the last asset tag property in the ordered set where companyId = &#63;.
@@ -115,7 +115,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -127,7 +127,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the asset tag properties before and after the current asset tag property in the ordered set where companyId = &#63;.
@@ -140,7 +140,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty[] findByCompanyId_PrevAndNext(
 		long tagPropertyId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -197,7 +197,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> findByTagId(
 		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the first asset tag property in the ordered set where tagId = &#63;.
@@ -209,7 +209,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -221,7 +221,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByTagId_First(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the last asset tag property in the ordered set where tagId = &#63;.
@@ -233,7 +233,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -245,7 +245,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByTagId_Last(
 		long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the asset tag properties before and after the current asset tag property in the ordered set where tagId = &#63;.
@@ -258,7 +258,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty[] findByTagId_PrevAndNext(
 		long tagPropertyId, long tagId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -318,7 +318,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> findByC_K(
 		long companyId, java.lang.String key, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the first asset tag property in the ordered set where companyId = &#63; and key = &#63;.
@@ -331,7 +331,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByC_K_First(
 		long companyId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -344,7 +344,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByC_K_First(
 		long companyId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the last asset tag property in the ordered set where companyId = &#63; and key = &#63;.
@@ -357,7 +357,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty findByC_K_Last(
 		long companyId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -370,7 +370,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty fetchByC_K_Last(
 		long companyId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Returns the asset tag properties before and after the current asset tag property in the ordered set where companyId = &#63; and key = &#63;.
@@ -384,7 +384,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public com.liferay.portlet.asset.model.AssetTagProperty[] findByC_K_PrevAndNext(
 		long tagPropertyId, long companyId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	/**
@@ -555,7 +555,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTagProperty> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTagProperty> orderByComparator);
 
 	/**
 	* Removes all the asset tag properties from the database.

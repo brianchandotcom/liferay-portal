@@ -117,7 +117,7 @@ public class MDRRuleGroupInstanceServiceSoap {
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap[] getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> returnValue =

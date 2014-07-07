@@ -282,7 +282,7 @@ public class BlogsStatsUserPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<BlogsStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BlogsStatsUser",
 			"statsUserId", true, "groupId", true, "companyId", true, "userId",
 			true, "entryCount", true, "lastPostDate", true,

@@ -121,6 +121,15 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteGroupEntries(long groupId) throws PortalException {
+		List<AssetEntry> assetEntries = getGroupEntries(groupId);
+
+		for (AssetEntry assetEntry : assetEntries) {
+			deleteEntry(assetEntry);
+		}
+	}
+
+	@Override
 	public AssetEntry fetchEntry(long entryId) {
 		return assetEntryPersistence.fetchByPrimaryKey(entryId);
 	}
@@ -213,6 +222,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return assetEntryPersistence.findByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public List<AssetEntry> getGroupEntries(long groupId) {
+		return assetEntryPersistence.findByGroupId(groupId);
 	}
 
 	@Override

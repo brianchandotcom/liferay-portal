@@ -52,6 +52,14 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().addDDMStorageLink(ddmStorageLink);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink addStorageLink(
+		long classNameId, long classPK, long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addStorageLink(classNameId, classPK, structureId,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new d d m storage link with the primary key. Does not add the d d m storage link to the database.
 	*
@@ -61,6 +69,22 @@ public class DDMStorageLinkLocalServiceUtil {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink createDDMStorageLink(
 		long storageLinkId) {
 		return getService().createDDMStorageLink(storageLinkId);
+	}
+
+	public static void deleteClassStorageLink(long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteClassStorageLink(classPK);
+	}
+
+	/**
+	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was removed
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		return getService().deleteDDMStorageLink(ddmStorageLink);
 	}
 
 	/**
@@ -77,14 +101,26 @@ public class DDMStorageLinkLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStorageLink the d d m storage link
-	* @return the d d m storage link that was removed
+	* @throws PortalException
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink deleteDDMStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
-		return getService().deleteDDMStorageLink(ddmStorageLink);
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink storageLink) {
+		getService().deleteStorageLink(storageLink);
+	}
+
+	public static void deleteStorageLink(long storageLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteStorageLink(storageLinkId);
+	}
+
+	public static void deleteStructureStorageLinks(long structureId) {
+		getService().deleteStructureStorageLinks(structureId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -97,8 +133,7 @@ public class DDMStorageLinkLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +150,7 @@ public class DDMStorageLinkLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +169,10 @@ public class DDMStorageLinkLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -173,6 +206,25 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().fetchDDMStorageLink(storageLinkId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink getClassStorageLink(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getClassStorageLink(classPK);
+	}
+
 	/**
 	* Returns the d d m storage link with the primary key.
 	*
@@ -184,25 +236,6 @@ public class DDMStorageLinkLocalServiceUtil {
 		long storageLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStorageLink(storageLinkId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -230,66 +263,10 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().getDDMStorageLinksCount();
 	}
 
-	/**
-	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStorageLink the d d m storage link
-	* @return the d d m storage link that was updated
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateDDMStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
-		return getService().updateDDMStorageLink(ddmStorageLink);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink addStorageLink(
-		long classNameId, long classPK, long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService()
-				   .addStorageLink(classNameId, classPK, structureId,
-			serviceContext);
-	}
-
-	public static void deleteClassStorageLink(long classPK)
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteClassStorageLink(classPK);
-	}
-
-	public static void deleteStorageLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink storageLink) {
-		getService().deleteStorageLink(storageLink);
-	}
-
-	public static void deleteStorageLink(long storageLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteStorageLink(storageLinkId);
-	}
-
-	public static void deleteStructureStorageLinks(long structureId) {
-		getService().deleteStructureStorageLinks(structureId);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink getClassStorageLink(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getClassStorageLink(classPK);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink getStorageLink(
@@ -305,6 +282,26 @@ public class DDMStorageLinkLocalServiceUtil {
 
 	public static int getStructureStorageLinksCount(long structureId) {
 		return getService().getStructureStorageLinksCount(structureId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was updated
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateDDMStorageLink(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		return getService().updateDDMStorageLink(ddmStorageLink);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateStorageLink(

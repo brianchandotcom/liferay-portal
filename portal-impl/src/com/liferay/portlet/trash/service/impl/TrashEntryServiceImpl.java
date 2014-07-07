@@ -204,7 +204,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 */
 	@Override
 	public TrashEntryList getEntries(
-			long groupId, int start, int end, OrderByComparator obc)
+			long groupId, int start, int end, OrderByComparator<TrashEntry> obc)
 		throws PrincipalException {
 
 		TrashEntryList trashEntriesList = new TrashEntryList();

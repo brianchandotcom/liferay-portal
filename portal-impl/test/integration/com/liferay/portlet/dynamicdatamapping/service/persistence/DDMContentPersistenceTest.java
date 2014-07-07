@@ -283,7 +283,7 @@ public class DDMContentPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDMContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMContent", "uuid", true,
 			"contentId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

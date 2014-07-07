@@ -40,13 +40,13 @@ public class BlogsStatsUserFinderUtil {
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationId(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc) {
 		return getFinder().findByOrganizationId(organizationId, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsStatsUser> obc) {
 		return getFinder()
 				   .findByOrganizationIds(organizationIds, start, end, obc);
 	}

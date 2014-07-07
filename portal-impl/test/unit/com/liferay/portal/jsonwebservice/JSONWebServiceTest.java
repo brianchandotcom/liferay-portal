@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -78,7 +79,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (NoSuchJSONWebServiceException jsjsonwse) {
 		}
 
 		mockHttpServletRequest = createHttpRequest(
@@ -326,7 +327,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
-	public void testNaming() {
+	public void testNaming() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/not-found");
 
@@ -335,7 +336,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (NoSuchJSONWebServiceException jsjsonwse) {
 		}
 
 		mockHttpServletRequest = createHttpRequest("/foo/hello");
@@ -360,7 +361,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (NoSuchJSONWebServiceException jsjsonwse) {
 		}
 
 		mockHttpServletRequest = createHttpRequest("/camelfoo/cool-new-world");

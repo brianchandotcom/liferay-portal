@@ -205,7 +205,7 @@ public class RatingsStatsPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<RatingsStats> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RatingsStats", "statsId",
 			true, "classNameId", true, "classPK", true, "totalEntries", true,
 			"totalScore", true, "averageScore", true);

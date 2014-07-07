@@ -495,7 +495,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 							portletDataContext.getScopeGroupId(),
 							portletDataContext.getDateRange(),
 							portletDataContext.getScopeGroupId(),
-							new QueryDefinition(
+							new QueryDefinition<DLFileEntry>(
 								WorkflowConstants.STATUS_APPROVED));
 
 					StagedModelType stagedModelType =

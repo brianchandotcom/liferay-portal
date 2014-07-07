@@ -213,7 +213,7 @@ public class SCLicensePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SCLicense> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCLicense", "licenseId",
 			true, "name", true, "url", true, "openSource", true, "active",
 			true, "recommended", true);

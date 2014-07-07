@@ -3,7 +3,7 @@
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="ADD_FORM_BUTTON" value1="Add Form" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#type" locator-key1="NAME_FIELD" value1="${formName}" />
+		<execute action="CPKaleoformsadminNewprocessSelectformNewform#type" locator-key1="NAME_FIELD" value1="${kfFormName}" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrame" value1="relative=top" />
 	</command>
@@ -14,7 +14,7 @@
 
 	<command name="addProcessDetails">
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="NEXT_BUTTON_INACTIVE" value1="Next" />
-		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${processName}" />
+		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
 	</command>
 
 	<command name="assignForm">
@@ -33,9 +33,9 @@
 	</command>
 
 	<command name="chooseForm">
-		<var name="key_formName" value="${formName}" />
+		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${formName}" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${kfFormName}" />
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_MENULIST_CHOOSE" value1="Choose" />
 	</command>
@@ -82,9 +82,9 @@
 	</command>
 
 	<command name="viewProcess">
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_NAME" value1="${processName}" />
+		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
 	</command>
 </definition>

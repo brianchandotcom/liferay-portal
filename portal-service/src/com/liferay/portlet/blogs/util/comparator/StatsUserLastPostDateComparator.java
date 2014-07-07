@@ -21,7 +21,8 @@ import com.liferay.portlet.blogs.model.BlogsStatsUser;
 /**
  * @author Brian Wing Shun Chan
  */
-public class StatsUserLastPostDateComparator extends OrderByComparator {
+public class StatsUserLastPostDateComparator
+	extends OrderByComparator<BlogsStatsUser> {
 
 	public static final String ORDER_BY_ASC = "BlogsStatsUser.lastPostDate ASC";
 
@@ -39,10 +40,7 @@ public class StatsUserLastPostDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BlogsStatsUser statsUser1 = (BlogsStatsUser)obj1;
-		BlogsStatsUser statsUser2 = (BlogsStatsUser)obj2;
-
+	public int compare(BlogsStatsUser statsUser1, BlogsStatsUser statsUser2) {
 		int value = DateUtil.compareTo(
 			statsUser1.getLastPostDate(), statsUser2.getLastPostDate());
 

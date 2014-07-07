@@ -103,7 +103,7 @@ public class RoleSearch extends SearchContainer<Role> {
 					PortletKeys.ROLES_ADMIN, "roles-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<Role> orderByComparator =
 				UsersAdminUtil.getRoleOrderByComparator(
 					orderByCol, orderByType);
 

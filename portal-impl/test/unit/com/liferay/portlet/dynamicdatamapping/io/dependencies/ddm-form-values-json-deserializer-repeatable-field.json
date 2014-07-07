@@ -1,0 +1,27 @@
+{
+	"defaultLanguageId": "en_US",
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"fieldValues": [
+		{
+			"name": "Text6513",
+			"value": {
+				"en_US": "Name 0",
+				"pt_BR": "Nome 0"
+			}
+		},
+		{
+			"name": "Text6513",
+			"value": {
+				"en_US": "Name 1",
+				"pt_BR": "Nome 1"
+			}
+		},
+		{
+			"name": "Text6513",
+			"value": {
+				"en_US": "Name 2",
+				"pt_BR": "Nome 2"
+			}
+		}
+	]
+}

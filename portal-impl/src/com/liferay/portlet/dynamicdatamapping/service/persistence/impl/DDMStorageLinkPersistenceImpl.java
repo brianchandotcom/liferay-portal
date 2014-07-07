@@ -153,7 +153,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public List<DDMStorageLink> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -273,7 +273,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchStorageLinkException {
+		OrderByComparator<DDMStorageLink> orderByComparator)
+		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -302,7 +303,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		List<DDMStorageLink> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +323,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchStorageLinkException {
+		OrderByComparator<DDMStorageLink> orderByComparator)
+		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ddmStorageLink != null) {
@@ -350,7 +352,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -378,7 +380,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink[] findByUuid_PrevAndNext(long storageLinkId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = findByPrimaryKey(storageLinkId);
 
@@ -409,7 +411,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 	protected DDMStorageLink getByUuid_PrevAndNext(Session session,
 		DDMStorageLink ddmStorageLink, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStorageLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -880,7 +882,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public List<DDMStorageLink> findByStructureId(long structureId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDMStorageLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -986,7 +988,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink findByStructureId_First(long structureId,
-		OrderByComparator orderByComparator) throws NoSuchStorageLinkException {
+		OrderByComparator<DDMStorageLink> orderByComparator)
+		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = fetchByStructureId_First(structureId,
 				orderByComparator);
 
@@ -1015,7 +1018,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink fetchByStructureId_First(long structureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		List<DDMStorageLink> list = findByStructureId(structureId, 0, 1,
 				orderByComparator);
 
@@ -1036,7 +1039,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink findByStructureId_Last(long structureId,
-		OrderByComparator orderByComparator) throws NoSuchStorageLinkException {
+		OrderByComparator<DDMStorageLink> orderByComparator)
+		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = fetchByStructureId_Last(structureId,
 				orderByComparator);
 
@@ -1065,7 +1069,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink fetchByStructureId_Last(long structureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		int count = countByStructureId(structureId);
 
 		if (count == 0) {
@@ -1093,7 +1097,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public DDMStorageLink[] findByStructureId_PrevAndNext(long storageLinkId,
-		long structureId, OrderByComparator orderByComparator)
+		long structureId, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 		DDMStorageLink ddmStorageLink = findByPrimaryKey(storageLinkId);
 
@@ -1124,7 +1128,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 	protected DDMStorageLink getByStructureId_PrevAndNext(Session session,
 		DDMStorageLink ddmStorageLink, long structureId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStorageLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1869,7 +1873,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	@Override
 	public List<DDMStorageLink> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStorageLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -154,7 +154,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public List<DDMStructureLink> findByClassNameId(long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +261,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink findByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = fetchByClassNameId_First(classNameId,
 				orderByComparator);
@@ -290,7 +291,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		List<DDMStructureLink> list = findByClassNameId(classNameId, 0, 1,
 				orderByComparator);
 
@@ -311,7 +312,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink findByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = fetchByClassNameId_Last(classNameId,
 				orderByComparator);
@@ -341,7 +342,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		int count = countByClassNameId(classNameId);
 
 		if (count == 0) {
@@ -370,7 +371,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public DDMStructureLink[] findByClassNameId_PrevAndNext(
 		long structureLinkId, long classNameId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = findByPrimaryKey(structureLinkId);
 
@@ -401,7 +402,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	protected DDMStructureLink getByClassNameId_PrevAndNext(Session session,
 		DDMStructureLink ddmStructureLink, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructureLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -843,7 +844,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public List<DDMStructureLink> findByStructureId(long structureId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -949,7 +951,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink findByStructureId_First(long structureId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = fetchByStructureId_First(structureId,
 				orderByComparator);
@@ -979,7 +981,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByStructureId_First(long structureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		List<DDMStructureLink> list = findByStructureId(structureId, 0, 1,
 				orderByComparator);
 
@@ -1000,7 +1002,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink findByStructureId_Last(long structureId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = fetchByStructureId_Last(structureId,
 				orderByComparator);
@@ -1030,7 +1032,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByStructureId_Last(long structureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		int count = countByStructureId(structureId);
 
 		if (count == 0) {
@@ -1059,7 +1061,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public DDMStructureLink[] findByStructureId_PrevAndNext(
 		long structureLinkId, long structureId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws NoSuchStructureLinkException {
 		DDMStructureLink ddmStructureLink = findByPrimaryKey(structureLinkId);
 
@@ -1090,7 +1092,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	protected DDMStructureLink getByStructureId_PrevAndNext(Session session,
 		DDMStructureLink ddmStructureLink, long structureId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructureLink> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1829,7 +1831,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public List<DDMStructureLink> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

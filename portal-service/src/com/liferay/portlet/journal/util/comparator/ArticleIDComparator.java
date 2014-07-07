@@ -21,7 +21,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ArticleIDComparator extends OrderByComparator {
+public class ArticleIDComparator extends OrderByComparator<JournalArticle> {
 
 	public static final String ORDER_BY_ASC =
 		"JournalArticle.articleId ASC, JournalArticle.version ASC";
@@ -40,10 +40,7 @@ public class ArticleIDComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		JournalArticle article1 = (JournalArticle)obj1;
-		JournalArticle article2 = (JournalArticle)obj2;
-
+	public int compare(JournalArticle article1, JournalArticle article2) {
 		String articleId1 = StringUtil.toLowerCase(article1.getArticleId());
 		String articleId2 = StringUtil.toLowerCase(article2.getArticleId());
 

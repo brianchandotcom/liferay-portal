@@ -162,7 +162,8 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public List<BlogsStatsUser> findByOrganizationId(
-		long organizationId, int start, int end, OrderByComparator obc) {
+		long organizationId, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
 
 		List<Long> organizationIds = new ArrayList<Long>();
 
@@ -173,7 +174,8 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public List<BlogsStatsUser> findByOrganizationIds(
-		List<Long> organizationIds, int start, int end, OrderByComparator obc) {
+		List<Long> organizationIds, int start, int end,
+		OrderByComparator<BlogsStatsUser> obc) {
 
 		Session session = null;
 

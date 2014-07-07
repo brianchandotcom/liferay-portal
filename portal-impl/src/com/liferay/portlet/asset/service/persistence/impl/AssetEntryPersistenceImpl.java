@@ -94,6 +94,481 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
+		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] { Long.class.getName() },
+			AssetEntryModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the asset entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByGroupId(long groupId) {
+		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @return the range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByGroupId(long groupId, int start, int end) {
+		return findByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+		}
+
+		List<AssetEntry> list = (List<AssetEntry>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AssetEntry assetEntry : list) {
+				if ((groupId != assetEntry.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (!pagination) {
+					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry findByGroupId_First(long groupId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = fetchByGroupId_First(groupId, orderByComparator);
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry fetchByGroupId_First(long groupId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		List<AssetEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset entry in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry findByGroupId_Last(long groupId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = fetchByGroupId_Last(groupId, orderByComparator);
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset entry in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry fetchByGroupId_Last(long groupId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetEntry> list = findByGroupId(groupId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63;.
+	 *
+	 * @param entryId the primary key of the current asset entry
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset entry
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
+	 */
+	@Override
+	public AssetEntry[] findByGroupId_PrevAndNext(long entryId, long groupId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetEntry[] array = new AssetEntryImpl[3];
+
+			array[0] = getByGroupId_PrevAndNext(session, assetEntry, groupId,
+					orderByComparator, true);
+
+			array[1] = assetEntry;
+
+			array[2] = getByGroupId_PrevAndNext(session, assetEntry, groupId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetEntry getByGroupId_PrevAndNext(Session session,
+		AssetEntry assetEntry, long groupId,
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset entries where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 */
+	@Override
+	public void removeByGroupId(long groupId) {
+		for (AssetEntry assetEntry : findByGroupId(groupId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(assetEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching asset entries
+	 */
+	@Override
+	public int countByGroupId(long groupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+
+		Object[] finderArgs = new Object[] { groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "assetEntry.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
@@ -159,7 +634,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -265,7 +740,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -294,7 +770,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -315,7 +791,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -344,7 +821,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -372,7 +849,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -403,7 +880,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByCompanyId_PrevAndNext(Session session,
 		AssetEntry assetEntry, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -635,7 +1112,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByVisible(boolean visible, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -741,7 +1218,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByVisible_First(boolean visible,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByVisible_First(visible, orderByComparator);
 
 		if (assetEntry != null) {
@@ -769,7 +1247,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByVisible_First(boolean visible,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByVisible(visible, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -789,7 +1267,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByVisible_Last(boolean visible,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByVisible_Last(visible, orderByComparator);
 
 		if (assetEntry != null) {
@@ -817,7 +1296,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByVisible_Last(boolean visible,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByVisible(visible);
 
 		if (count == 0) {
@@ -845,7 +1324,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByVisible_PrevAndNext(long entryId,
-		boolean visible, OrderByComparator orderByComparator)
+		boolean visible, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -876,7 +1355,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByVisible_PrevAndNext(Session session,
 		AssetEntry assetEntry, boolean visible,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1111,7 +1590,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByPublishDate(Date publishDate, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1228,7 +1707,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByPublishDate_First(Date publishDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByPublishDate_First(publishDate,
 				orderByComparator);
 
@@ -1257,7 +1737,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByPublishDate_First(Date publishDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByPublishDate(publishDate, 0, 1,
 				orderByComparator);
 
@@ -1278,7 +1758,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByPublishDate_Last(Date publishDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByPublishDate_Last(publishDate,
 				orderByComparator);
 
@@ -1307,7 +1788,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByPublishDate_Last(Date publishDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByPublishDate(publishDate);
 
 		if (count == 0) {
@@ -1335,7 +1816,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByPublishDate_PrevAndNext(long entryId,
-		Date publishDate, OrderByComparator orderByComparator)
+		Date publishDate, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -1366,7 +1847,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByPublishDate_PrevAndNext(Session session,
 		AssetEntry assetEntry, Date publishDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1624,7 +2105,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByExpirationDate(Date expirationDate,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1746,7 +2227,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByExpirationDate_First(Date expirationDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByExpirationDate_First(expirationDate,
 				orderByComparator);
 
@@ -1775,7 +2257,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByExpirationDate_First(Date expirationDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByExpirationDate(expirationDate, 0, 1,
 				orderByComparator);
 
@@ -1796,7 +2278,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByExpirationDate_Last(Date expirationDate,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByExpirationDate_Last(expirationDate,
 				orderByComparator);
 
@@ -1825,7 +2308,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByExpirationDate_Last(Date expirationDate,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByExpirationDate(expirationDate);
 
 		if (count == 0) {
@@ -1853,7 +2336,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByExpirationDate_PrevAndNext(long entryId,
-		Date expirationDate, OrderByComparator orderByComparator)
+		Date expirationDate, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -1884,7 +2367,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByExpirationDate_PrevAndNext(Session session,
 		AssetEntry assetEntry, Date expirationDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2142,7 +2625,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findByLayoutUuid(String layoutUuid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2262,7 +2745,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByLayoutUuid_First(String layoutUuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByLayoutUuid_First(layoutUuid,
 				orderByComparator);
 
@@ -2291,7 +2775,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByLayoutUuid_First(String layoutUuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		List<AssetEntry> list = findByLayoutUuid(layoutUuid, 0, 1,
 				orderByComparator);
 
@@ -2312,7 +2796,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry findByLayoutUuid_Last(String layoutUuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
 		AssetEntry assetEntry = fetchByLayoutUuid_Last(layoutUuid,
 				orderByComparator);
 
@@ -2341,7 +2826,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByLayoutUuid_Last(String layoutUuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		int count = countByLayoutUuid(layoutUuid);
 
 		if (count == 0) {
@@ -2369,7 +2854,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry[] findByLayoutUuid_PrevAndNext(long entryId,
-		String layoutUuid, OrderByComparator orderByComparator)
+		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
@@ -2400,7 +2885,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	protected AssetEntry getByLayoutUuid_PrevAndNext(Session session,
 		AssetEntry assetEntry, String layoutUuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3411,6 +3896,23 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		else {
 			if ((assetEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						assetEntryModelImpl.getOriginalGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] { assetEntryModelImpl.getGroupId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+			}
+
+			if ((assetEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						assetEntryModelImpl.getOriginalCompanyId()
@@ -3781,7 +4283,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<AssetEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3966,7 +4468,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategories(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return assetEntryToAssetCategoryTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
@@ -4241,7 +4744,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return assetEntryToAssetTagTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}

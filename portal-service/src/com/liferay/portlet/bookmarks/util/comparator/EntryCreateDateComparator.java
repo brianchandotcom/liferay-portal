@@ -21,7 +21,8 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EntryCreateDateComparator extends OrderByComparator {
+public class EntryCreateDateComparator
+	extends OrderByComparator<BookmarksEntry> {
 
 	public static final String ORDER_BY_ASC = "BookmarksEntry.createDate ASC";
 
@@ -38,10 +39,7 @@ public class EntryCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BookmarksEntry entry1 = (BookmarksEntry)obj1;
-		BookmarksEntry entry2 = (BookmarksEntry)obj2;
-
+	public int compare(BookmarksEntry entry1, BookmarksEntry entry2) {
 		int value = DateUtil.compareTo(
 			entry1.getCreateDate(), entry2.getCreateDate());
 

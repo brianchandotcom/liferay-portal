@@ -98,7 +98,7 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 					"asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<UserGroup> orderByComparator =
 				UsersAdminUtil.getUserGroupOrderByComparator(
 					orderByCol, orderByType);
 

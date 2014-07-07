@@ -139,7 +139,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	@Override
 	public List<Contact> getContacts(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Contact> orderByComparator) {
 
 		return contactPersistence.findByC_C(
 			classNameId, classPK, start, end, orderByComparator);

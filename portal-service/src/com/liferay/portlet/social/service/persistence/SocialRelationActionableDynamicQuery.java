@@ -22,7 +22,7 @@ import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link SocialRelationLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link SocialRelationLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

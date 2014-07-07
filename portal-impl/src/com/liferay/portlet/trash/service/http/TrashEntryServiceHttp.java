@@ -192,7 +192,7 @@ public class TrashEntryServiceHttp {
 
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> obc)
 		throws com.liferay.portal.security.auth.PrincipalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,

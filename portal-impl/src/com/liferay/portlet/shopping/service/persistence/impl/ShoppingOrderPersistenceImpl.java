@@ -155,7 +155,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public List<ShoppingOrder> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,7 +261,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchOrderException {
+		OrderByComparator<ShoppingOrder> orderByComparator)
+		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -290,7 +291,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		List<ShoppingOrder> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -311,7 +312,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchOrderException {
+		OrderByComparator<ShoppingOrder> orderByComparator)
+		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -340,7 +342,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -368,7 +370,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder[] findByGroupId_PrevAndNext(long orderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = findByPrimaryKey(orderId);
 
@@ -399,7 +401,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	protected ShoppingOrder getByGroupId_PrevAndNext(Session session,
 		ShoppingOrder shoppingOrder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingOrder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -547,7 +549,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public List<ShoppingOrder> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ShoppingOrder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -638,7 +640,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder[] filterFindByGroupId_PrevAndNext(long orderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(orderId, groupId, orderByComparator);
@@ -673,7 +675,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	protected ShoppingOrder filterGetByGroupId_PrevAndNext(Session session,
 		ShoppingOrder shoppingOrder, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingOrder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1488,7 +1490,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public List<ShoppingOrder> findByG_U_PPPS(long groupId, long userId,
 		String ppPaymentStatus, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1625,7 +1627,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder findByG_U_PPPS_First(long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator)
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = fetchByG_U_PPPS_First(groupId, userId,
 				ppPaymentStatus, orderByComparator);
@@ -1663,7 +1666,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByG_U_PPPS_First(long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator) {
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		List<ShoppingOrder> list = findByG_U_PPPS(groupId, userId,
 				ppPaymentStatus, 0, 1, orderByComparator);
 
@@ -1686,7 +1690,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder findByG_U_PPPS_Last(long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator)
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator)
 		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = fetchByG_U_PPPS_Last(groupId, userId,
 				ppPaymentStatus, orderByComparator);
@@ -1724,7 +1729,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByG_U_PPPS_Last(long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator) {
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		int count = countByG_U_PPPS(groupId, userId, ppPaymentStatus);
 
 		if (count == 0) {
@@ -1755,7 +1761,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public ShoppingOrder[] findByG_U_PPPS_PrevAndNext(long orderId,
 		long groupId, long userId, String ppPaymentStatus,
-		OrderByComparator orderByComparator) throws NoSuchOrderException {
+		OrderByComparator<ShoppingOrder> orderByComparator)
+		throws NoSuchOrderException {
 		ShoppingOrder shoppingOrder = findByPrimaryKey(orderId);
 
 		Session session = null;
@@ -1785,8 +1792,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	protected ShoppingOrder getByG_U_PPPS_PrevAndNext(Session session,
 		ShoppingOrder shoppingOrder, long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator,
-		boolean previous) {
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1965,7 +1972,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public List<ShoppingOrder> filterFindByG_U_PPPS(long groupId, long userId,
 		String ppPaymentStatus, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_PPPS(groupId, userId, ppPaymentStatus, start, end,
 				orderByComparator);
@@ -2082,7 +2089,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public ShoppingOrder[] filterFindByG_U_PPPS_PrevAndNext(long orderId,
 		long groupId, long userId, String ppPaymentStatus,
-		OrderByComparator orderByComparator) throws NoSuchOrderException {
+		OrderByComparator<ShoppingOrder> orderByComparator)
+		throws NoSuchOrderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_PPPS_PrevAndNext(orderId, groupId, userId,
 				ppPaymentStatus, orderByComparator);
@@ -2117,8 +2125,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 	protected ShoppingOrder filterGetByG_U_PPPS_PrevAndNext(Session session,
 		ShoppingOrder shoppingOrder, long groupId, long userId,
-		String ppPaymentStatus, OrderByComparator orderByComparator,
-		boolean previous) {
+		String ppPaymentStatus,
+		OrderByComparator<ShoppingOrder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3095,7 +3103,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public List<ShoppingOrder> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

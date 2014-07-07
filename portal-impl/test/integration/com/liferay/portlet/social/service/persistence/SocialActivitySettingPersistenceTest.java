@@ -266,7 +266,7 @@ public class SocialActivitySettingPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialActivitySetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivitySetting",
 			"activitySettingId", true, "groupId", true, "companyId", true,
 			"classNameId", true, "activityType", true, "name", true, "value",

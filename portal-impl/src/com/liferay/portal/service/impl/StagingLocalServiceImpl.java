@@ -743,7 +743,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			List<FileEntry> fileEntries =
 				PortletFileRepositoryUtil.getPortletFileEntries(
 					folder.getGroupId(), folder.getFolderId(),
-					new RepositoryModelNameComparator(true));
+					new RepositoryModelNameComparator<FileEntry>(true));
 
 			for (FileEntry fileEntry : fileEntries) {
 				InputStream inputStream = fileEntry.getContentStream();

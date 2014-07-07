@@ -79,7 +79,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the first s c license in the ordered set where active = &#63;.
@@ -91,7 +91,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the last s c license in the ordered set where active = &#63;.
@@ -115,7 +115,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
@@ -140,7 +140,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense[] findByActive_PrevAndNext(
 		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -182,7 +182,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63;.
@@ -195,7 +195,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByActive_PrevAndNext(
 		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -263,7 +263,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByA_R(
 		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -276,7 +276,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_First(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -289,7 +289,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_First(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -302,7 +302,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_Last(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -315,7 +315,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_Last(
 		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -329,7 +329,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense[] findByA_R_PrevAndNext(
 		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -374,7 +374,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByA_R(
 		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
@@ -388,7 +388,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByA_R_PrevAndNext(
 		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -515,7 +515,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
 
 	/**
 	* Removes all the s c licenses from the database.
@@ -576,7 +576,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator);
 
 	/**
 	* Returns the number of s c product entries associated with the s c license.

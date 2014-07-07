@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -133,6 +134,9 @@ public class EditArticleAction extends PortletAction {
 				}
 
 				throw new PortalException(uploadException.getCause());
+			}
+			else if (Validator.isNull(cmd)) {
+				return;
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.PREVIEW) ||
@@ -360,12 +364,14 @@ public class EditArticleAction extends PortletAction {
 			if (moveToTrash) {
 				JournalArticle article =
 					JournalArticleServiceUtil.moveArticleToTrash(
-						themeDisplay.getScopeGroupId(), deleteArticleId);
+						themeDisplay.getScopeGroupId(),
+						HtmlUtil.unescape(deleteArticleId));
 
 				trashedModels.add(article);
 			}
 			else {
-				ActionUtil.deleteArticle(actionRequest, deleteArticleId);
+				ActionUtil.deleteArticle(
+					actionRequest, HtmlUtil.unescape(deleteArticleId));
 			}
 		}
 
@@ -389,7 +395,8 @@ public class EditArticleAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "expireArticleIds"));
 
 			for (String expireArticleId : expireArticleIds) {
-				ActionUtil.expireArticle(actionRequest, expireArticleId);
+				ActionUtil.expireArticle(
+					actionRequest, HtmlUtil.unescape(expireArticleId));
 			}
 		}
 	}

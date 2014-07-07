@@ -31,7 +31,7 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-page";
+		return "icon-file";
 	}
 
 	@Override

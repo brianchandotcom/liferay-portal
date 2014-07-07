@@ -149,7 +149,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUuid_First(uuid, orderByComparator);
 
 		if (phone != null) {
@@ -297,7 +297,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +317,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (phone != null) {
@@ -345,7 +345,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -372,7 +372,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByUuid_PrevAndNext(long phoneId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
 		Session session = null;
@@ -401,7 +401,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	protected Phone getByUuid_PrevAndNext(Session session, Phone phone,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<Phone> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -670,7 +671,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -800,7 +801,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (phone != null) {
@@ -832,7 +833,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -853,7 +854,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (phone != null) {
@@ -885,7 +886,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -914,7 +915,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByUuid_C_PrevAndNext(long phoneId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
@@ -944,8 +945,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	protected Phone getByUuid_C_PrevAndNext(Session session, Phone phone,
-		String uuid, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		String uuid, long companyId,
+		OrderByComparator<Phone> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1221,7 +1222,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1327,7 +1328,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (phone != null) {
@@ -1355,7 +1356,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1375,7 +1376,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (phone != null) {
@@ -1403,7 +1404,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1431,7 +1432,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByCompanyId_PrevAndNext(long phoneId, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
 		Session session = null;
@@ -1460,7 +1461,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	protected Phone getByCompanyId_PrevAndNext(Session session, Phone phone,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId, OrderByComparator<Phone> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1693,7 +1695,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1799,7 +1801,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUserId_First(userId, orderByComparator);
 
 		if (phone != null) {
@@ -1827,7 +1829,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1847,7 +1849,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByUserId_Last(userId, orderByComparator);
 
 		if (phone != null) {
@@ -1875,7 +1877,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1903,7 +1905,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByUserId_PrevAndNext(long phoneId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
 		Session session = null;
@@ -1932,7 +1934,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	protected Phone getByUserId_PrevAndNext(Session session, Phone phone,
-		long userId, OrderByComparator orderByComparator, boolean previous) {
+		long userId, OrderByComparator<Phone> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2170,7 +2173,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByC_C(long companyId, long classNameId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2286,7 +2289,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_First(companyId, classNameId, orderByComparator);
 
 		if (phone != null) {
@@ -2318,7 +2321,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -2340,7 +2343,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_Last(companyId, classNameId, orderByComparator);
 
 		if (phone != null) {
@@ -2372,7 +2375,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -2401,7 +2404,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByC_C_PrevAndNext(long phoneId, long companyId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
@@ -2431,8 +2434,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	protected Phone getByC_C_PrevAndNext(Session session, Phone phone,
-		long companyId, long classNameId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long companyId, long classNameId,
+		OrderByComparator<Phone> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2690,7 +2693,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findByC_C_C(long companyId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator) {
+		long classPK, int start, int end,
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2812,7 +2816,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_C_First(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2850,7 +2854,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByC_C_C(companyId, classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -2873,7 +2877,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<Phone> orderByComparator)
 		throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_C_Last(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2911,7 +2915,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator orderByComparator) {
+		long classPK, OrderByComparator<Phone> orderByComparator) {
 		int count = countByC_C_C(companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -2941,8 +2945,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone[] findByC_C_C_PrevAndNext(long phoneId, long companyId,
-		long classNameId, long classPK, OrderByComparator orderByComparator)
-		throws NoSuchPhoneException {
+		long classNameId, long classPK,
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
 		Session session = null;
@@ -2972,7 +2976,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 	protected Phone getByC_C_C_PrevAndNext(Session session, Phone phone,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Phone> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3251,7 +3255,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	@Override
 	public List<Phone> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3379,8 +3383,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
-		throws NoSuchPhoneException {
+		long classPK, boolean primary,
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_C_P_First(companyId, classNameId, classPK,
 				primary, orderByComparator);
 
@@ -3421,7 +3425,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<Phone> orderByComparator) {
 		List<Phone> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, 0, 1, orderByComparator);
 
@@ -3445,8 +3450,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone findByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator)
-		throws NoSuchPhoneException {
+		long classPK, boolean primary,
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = fetchByC_C_C_P_Last(companyId, classNameId, classPK,
 				primary, orderByComparator);
 
@@ -3487,7 +3492,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary, OrderByComparator orderByComparator) {
+		long classPK, boolean primary,
+		OrderByComparator<Phone> orderByComparator) {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
 
 		if (count == 0) {
@@ -3519,7 +3525,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	@Override
 	public Phone[] findByC_C_C_P_PrevAndNext(long phoneId, long companyId,
 		long classNameId, long classPK, boolean primary,
-		OrderByComparator orderByComparator) throws NoSuchPhoneException {
+		OrderByComparator<Phone> orderByComparator) throws NoSuchPhoneException {
 		Phone phone = findByPrimaryKey(phoneId);
 
 		Session session = null;
@@ -3549,7 +3555,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 	protected Phone getByC_C_C_P_PrevAndNext(Session session, Phone phone,
 		long companyId, long classNameId, long classPK, boolean primary,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Phone> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4380,7 +4386,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public List<Phone> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Phone> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -220,7 +220,7 @@ public class AssetTagStatsPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetTagStats> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetTagStats",
 			"tagStatsId", true, "tagId", true, "classNameId", true,
 			"assetCount", true);

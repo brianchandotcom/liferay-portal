@@ -844,7 +844,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 */
 	@Override
 	public List<RatingsStats> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsStats> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

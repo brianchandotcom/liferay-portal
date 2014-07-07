@@ -79,7 +79,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByUuid_PrevAndNext(
 		long fileShortcutId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByUuid_C_PrevAndNext(
 		long fileShortcutId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -378,7 +378,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where companyId = &#63;.
@@ -390,7 +390,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -402,7 +402,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where companyId = &#63;.
@@ -414,7 +414,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -426,7 +426,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63;.
@@ -439,7 +439,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByCompanyId_PrevAndNext(
 		long fileShortcutId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -496,7 +496,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByToFileEntryId(
 		long toFileEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -508,7 +508,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_First(
 		long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -520,7 +520,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByToFileEntryId_First(
 		long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -532,7 +532,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByToFileEntryId_Last(
 		long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -544,7 +544,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByToFileEntryId_Last(
 		long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where toFileEntryId = &#63;.
@@ -557,7 +557,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByToFileEntryId_PrevAndNext(
 		long fileShortcutId, long toFileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -617,7 +617,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -630,7 +630,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -643,7 +643,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -656,7 +656,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -669,7 +669,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
@@ -683,7 +683,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -728,7 +728,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
@@ -742,7 +742,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -813,7 +813,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByC_NotS(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -826,7 +826,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -839,7 +839,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -852,7 +852,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -865,7 +865,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -879,7 +879,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByC_NotS_PrevAndNext(
 		long fileShortcutId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -944,7 +944,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A(
 		long groupId, long folderId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -958,7 +958,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_First(
 		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -972,7 +972,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_First(
 		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -986,7 +986,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_Last(
 		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1000,7 +1000,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_Last(
 		long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -1015,7 +1015,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_A_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1063,7 +1063,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A(
 		long groupId, long folderId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -1078,7 +1078,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_A_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1160,7 +1160,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findByG_F_A_S(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the first document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1175,7 +1175,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_S_First(
 		long groupId, long folderId, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1190,7 +1190,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_S_First(
 		long groupId, long folderId, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the last document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1205,7 +1205,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut findByG_F_A_S_Last(
 		long groupId, long folderId, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1220,7 +1220,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchByG_F_A_S_Last(
 		long groupId, long folderId, boolean active, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1237,7 +1237,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] findByG_F_A_S_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1290,7 +1290,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> filterFindByG_F_A_S(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -1307,7 +1307,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut[] filterFindByG_F_A_S_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	/**
@@ -1443,7 +1443,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator);
 
 	/**
 	* Removes all the document library file shortcuts from the database.

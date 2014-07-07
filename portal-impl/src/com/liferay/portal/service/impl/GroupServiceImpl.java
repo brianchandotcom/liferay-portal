@@ -870,7 +870,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public List<Group> search(
 			long companyId, long[] classNameIds, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<Group> obc)
 		throws PortalException {
 
 		List<Group> groups = groupLocalService.search(
@@ -883,7 +883,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public List<Group> search(
 			long companyId, long[] classNameIds, String name,
 			String description, LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end, OrderByComparator obc)
+			boolean andOperator, int start, int end,
+			OrderByComparator<Group> obc)
 		throws PortalException {
 
 		List<Group> groups = groupLocalService.search(

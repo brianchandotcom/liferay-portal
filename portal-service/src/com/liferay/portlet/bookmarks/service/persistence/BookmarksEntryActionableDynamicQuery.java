@@ -22,7 +22,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link BookmarksEntryLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link BookmarksEntryLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

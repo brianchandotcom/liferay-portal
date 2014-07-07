@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[@class='container']</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[@id='_15_displayStyleButtons']/li/a</td>
+	<td>//div[@id='_15_displayStyleButtons']/div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -72,6 +72,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -154,6 +159,11 @@
 			<var name="subfolderName" value="Subfolder Name" />
 		</execute>
 
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com/" />
+		</execute>
+
 		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkURL" value="http://www.liferay.com/" />
@@ -186,6 +196,11 @@
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 			<var name="subfolderName" value="Subfolder Name" />
+		</execute>
+
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
 		<execute macro="Bookmark#viewPG">
@@ -884,8 +899,16 @@
 		</execute>
 
 		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeDescription" value="Wiki Node Description" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WikiNode#addCP">
+			<var name="wikiNodeName" value="Wiki2 Node2 Name2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -956,6 +979,7 @@
 		</execute>
 
 		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="2" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 

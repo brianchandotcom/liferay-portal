@@ -79,7 +79,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Returns the first expando column in the ordered set where tableId = &#63;.
@@ -91,7 +91,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn findByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn fetchByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Returns the last expando column in the ordered set where tableId = &#63;.
@@ -115,7 +115,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn findByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn fetchByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Returns the expando columns before and after the current expando column in the ordered set where tableId = &#63;.
@@ -140,7 +140,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn[] findByTableId_PrevAndNext(
 		long columnId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException;
 
 	/**
@@ -182,7 +182,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> filterFindByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Returns the expando columns before and after the current expando column in the ordered set of expando columns that the user has permission to view where tableId = &#63;.
@@ -195,7 +195,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public com.liferay.portlet.expando.model.ExpandoColumn[] filterFindByTableId_PrevAndNext(
 		long columnId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException;
 
 	/**
@@ -267,7 +267,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findByT_N(
 		long tableId, java.lang.String[] names, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Returns the expando column where tableId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.expando.NoSuchColumnException} if it could not be found.
@@ -444,7 +444,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator);
 
 	/**
 	* Removes all the expando columns from the database.

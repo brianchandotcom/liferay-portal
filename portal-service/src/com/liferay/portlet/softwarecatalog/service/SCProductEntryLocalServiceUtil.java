@@ -40,6 +40,74 @@ public class SCProductEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.softwarecatalog.service.impl.SCProductEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry addProductEntry(
+		long userId, java.lang.String name, java.lang.String type,
+		java.lang.String tags, java.lang.String shortDescription,
+		java.lang.String longDescription, java.lang.String pageURL,
+		java.lang.String author, java.lang.String repoGroupId,
+		java.lang.String repoArtifactId, long[] licenseIds,
+		java.util.List<byte[]> thumbnails, java.util.List<byte[]> fullImages,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addProductEntry(userId, name, type, tags, shortDescription,
+			longDescription, pageURL, author, repoGroupId, repoArtifactId,
+			licenseIds, thumbnails, fullImages, serviceContext);
+	}
+
+	public static void addProductEntryResources(
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addProductEntryResources(productEntry, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addProductEntryResources(
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addProductEntryResources(productEntry, groupPermissions,
+			guestPermissions);
+	}
+
+	public static void addProductEntryResources(long productEntryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addProductEntryResources(productEntryId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addProductEntryResources(long productEntryId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addProductEntryResources(productEntryId, groupPermissions,
+			guestPermissions);
+	}
+
+	public static void addSCLicenseSCProductEntries(long licenseId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
+		getService().addSCLicenseSCProductEntries(licenseId, SCProductEntries);
+	}
+
+	public static void addSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) {
+		getService().addSCLicenseSCProductEntries(licenseId, productEntryIds);
+	}
+
+	public static void addSCLicenseSCProductEntry(long licenseId,
+		long productEntryId) {
+		getService().addSCLicenseSCProductEntry(licenseId, productEntryId);
+	}
+
+	public static void addSCLicenseSCProductEntry(long licenseId,
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
+		getService().addSCLicenseSCProductEntry(licenseId, scProductEntry);
+	}
 
 	/**
 	* Adds the s c product entry to the database. Also notifies the appropriate model listeners.
@@ -52,6 +120,10 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().addSCProductEntry(scProductEntry);
 	}
 
+	public static void clearSCLicenseSCProductEntries(long licenseId) {
+		getService().clearSCLicenseSCProductEntries(licenseId);
+	}
+
 	/**
 	* Creates a new s c product entry with the primary key. Does not add the s c product entry to the database.
 	*
@@ -61,6 +133,52 @@ public class SCProductEntryLocalServiceUtil {
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry createSCProductEntry(
 		long productEntryId) {
 		return getService().createSCProductEntry(productEntryId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteProductEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteProductEntries(groupId);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteProductEntry(productEntry);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteProductEntry(productEntryId);
+	}
+
+	public static void deleteSCLicenseSCProductEntries(long licenseId,
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
+		getService().deleteSCLicenseSCProductEntries(licenseId, SCProductEntries);
+	}
+
+	public static void deleteSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) {
+		getService().deleteSCLicenseSCProductEntries(licenseId, productEntryIds);
+	}
+
+	public static void deleteSCLicenseSCProductEntry(long licenseId,
+		long productEntryId) {
+		getService().deleteSCLicenseSCProductEntry(licenseId, productEntryId);
+	}
+
+	public static void deleteSCLicenseSCProductEntry(long licenseId,
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
+		getService().deleteSCLicenseSCProductEntry(licenseId, scProductEntry);
 	}
 
 	/**
@@ -97,8 +215,7 @@ public class SCProductEntryLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +232,7 @@ public class SCProductEntryLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -135,11 +251,10 @@ public class SCProductEntryLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -173,162 +288,8 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().fetchSCProductEntry(productEntryId);
 	}
 
-	/**
-	* Returns the s c product entry with the primary key.
-	*
-	* @param productEntryId the primary key of the s c product entry
-	* @return the s c product entry
-	* @throws PortalException if a s c product entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry getSCProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSCProductEntry(productEntryId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the s c product entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of s c product entries
-	* @param end the upper bound of the range of s c product entries (not inclusive)
-	* @return the range of s c product entries
-	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
-		int start, int end) {
-		return getService().getSCProductEntries(start, end);
-	}
-
-	/**
-	* Returns the number of s c product entries.
-	*
-	* @return the number of s c product entries
-	*/
-	public static int getSCProductEntriesCount() {
-		return getService().getSCProductEntriesCount();
-	}
-
-	/**
-	* Updates the s c product entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param scProductEntry the s c product entry
-	* @return the s c product entry that was updated
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateSCProductEntry(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
-		return getService().updateSCProductEntry(scProductEntry);
-	}
-
-	public static void addSCLicenseSCProductEntry(long licenseId,
-		long productEntryId) {
-		getService().addSCLicenseSCProductEntry(licenseId, productEntryId);
-	}
-
-	public static void addSCLicenseSCProductEntry(long licenseId,
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
-		getService().addSCLicenseSCProductEntry(licenseId, scProductEntry);
-	}
-
-	public static void addSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds) {
-		getService().addSCLicenseSCProductEntries(licenseId, productEntryIds);
-	}
-
-	public static void addSCLicenseSCProductEntries(long licenseId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
-		getService().addSCLicenseSCProductEntries(licenseId, SCProductEntries);
-	}
-
-	public static void clearSCLicenseSCProductEntries(long licenseId) {
-		getService().clearSCLicenseSCProductEntries(licenseId);
-	}
-
-	public static void deleteSCLicenseSCProductEntry(long licenseId,
-		long productEntryId) {
-		getService().deleteSCLicenseSCProductEntry(licenseId, productEntryId);
-	}
-
-	public static void deleteSCLicenseSCProductEntry(long licenseId,
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
-		getService().deleteSCLicenseSCProductEntry(licenseId, scProductEntry);
-	}
-
-	public static void deleteSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds) {
-		getService().deleteSCLicenseSCProductEntries(licenseId, productEntryIds);
-	}
-
-	public static void deleteSCLicenseSCProductEntries(long licenseId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
-		getService().deleteSCLicenseSCProductEntries(licenseId, SCProductEntries);
-	}
-
-	/**
-	* Returns the licenseIds of the s c licenses associated with the s c product entry.
-	*
-	* @param productEntryId the productEntryId of the s c product entry
-	* @return long[] the licenseIds of s c licenses associated with the s c product entry
-	*/
-	public static long[] getSCLicensePrimaryKeys(long productEntryId) {
-		return getService().getSCLicensePrimaryKeys(productEntryId);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
-		long licenseId) {
-		return getService().getSCLicenseSCProductEntries(licenseId);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
-		long licenseId, int start, int end) {
-		return getService().getSCLicenseSCProductEntries(licenseId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
-		long licenseId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return getService()
-				   .getSCLicenseSCProductEntries(licenseId, start, end,
-			orderByComparator);
-	}
-
-	public static int getSCLicenseSCProductEntriesCount(long licenseId) {
-		return getService().getSCLicenseSCProductEntriesCount(licenseId);
-	}
-
-	public static boolean hasSCLicenseSCProductEntry(long licenseId,
-		long productEntryId) {
-		return getService().hasSCLicenseSCProductEntry(licenseId, productEntryId);
-	}
-
-	public static boolean hasSCLicenseSCProductEntries(long licenseId) {
-		return getService().hasSCLicenseSCProductEntries(licenseId);
-	}
-
-	public static void setSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds) {
-		getService().setSCLicenseSCProductEntries(licenseId, productEntryIds);
 	}
 
 	/**
@@ -340,81 +301,6 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry addProductEntry(
-		long userId, java.lang.String name, java.lang.String type,
-		java.lang.String tags, java.lang.String shortDescription,
-		java.lang.String longDescription, java.lang.String pageURL,
-		java.lang.String author, java.lang.String repoGroupId,
-		java.lang.String repoArtifactId, long[] licenseIds,
-		java.util.List<byte[]> thumbnails, java.util.List<byte[]> fullImages,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addProductEntry(userId, name, type, tags, shortDescription,
-			longDescription, pageURL, author, repoGroupId, repoArtifactId,
-			licenseIds, thumbnails, fullImages, serviceContext);
-	}
-
-	public static void addProductEntryResources(long productEntryId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntryId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addProductEntryResources(long productEntryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntryId, groupPermissions,
-			guestPermissions);
-	}
-
-	public static void addProductEntryResources(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntry, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addProductEntryResources(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntry, groupPermissions,
-			guestPermissions);
-	}
-
-	public static void deleteProductEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteProductEntries(groupId);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteProductEntry(productEntryId);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteProductEntry(productEntry);
-	}
-
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getCompanyProductEntries(
 		long companyId, int start, int end) {
 		return getService().getCompanyProductEntries(companyId, start, end);
@@ -424,6 +310,12 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().getCompanyProductEntriesCount(companyId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getProductEntries(
 		long groupId, int start, int end) {
 		return getService().getProductEntries(groupId, start, end);
@@ -431,7 +323,7 @@ public class SCProductEntryLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getProductEntries(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> obc) {
 		return getService().getProductEntries(groupId, start, end, obc);
 	}
 
@@ -442,7 +334,7 @@ public class SCProductEntryLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getProductEntries(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> obc) {
 		return getService().getProductEntries(groupId, userId, start, end, obc);
 	}
 
@@ -477,6 +369,99 @@ public class SCProductEntryLocalServiceUtil {
 			oldestDate, maxNumOfVersions, repoSettings);
 	}
 
+	/**
+	* Returns the licenseIds of the s c licenses associated with the s c product entry.
+	*
+	* @param productEntryId the productEntryId of the s c product entry
+	* @return long[] the licenseIds of s c licenses associated with the s c product entry
+	*/
+	public static long[] getSCLicensePrimaryKeys(long productEntryId) {
+		return getService().getSCLicensePrimaryKeys(productEntryId);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
+		long licenseId) {
+		return getService().getSCLicenseSCProductEntries(licenseId);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
+		long licenseId, int start, int end) {
+		return getService().getSCLicenseSCProductEntries(licenseId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
+		long licenseId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+		return getService()
+				   .getSCLicenseSCProductEntries(licenseId, start, end,
+			orderByComparator);
+	}
+
+	public static int getSCLicenseSCProductEntriesCount(long licenseId) {
+		return getService().getSCLicenseSCProductEntriesCount(licenseId);
+	}
+
+	/**
+	* Returns a range of all the s c product entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of s c product entries
+	* @param end the upper bound of the range of s c product entries (not inclusive)
+	* @return the range of s c product entries
+	*/
+	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
+		int start, int end) {
+		return getService().getSCProductEntries(start, end);
+	}
+
+	/**
+	* Returns the number of s c product entries.
+	*
+	* @return the number of s c product entries
+	*/
+	public static int getSCProductEntriesCount() {
+		return getService().getSCProductEntriesCount();
+	}
+
+	/**
+	* Returns the s c product entry with the primary key.
+	*
+	* @param productEntryId the primary key of the s c product entry
+	* @return the s c product entry
+	* @throws PortalException if a s c product entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry getSCProductEntry(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSCProductEntry(productEntryId);
+	}
+
+	public static boolean hasSCLicenseSCProductEntries(long licenseId) {
+		return getService().hasSCLicenseSCProductEntries(licenseId);
+	}
+
+	public static boolean hasSCLicenseSCProductEntry(long licenseId,
+		long productEntryId) {
+		return getService().hasSCLicenseSCProductEntry(licenseId, productEntryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static void setSCLicenseSCProductEntries(long licenseId,
+		long[] productEntryIds) {
+		getService().setSCLicenseSCProductEntries(licenseId, productEntryIds);
+	}
+
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateProductEntry(
 		long productEntryId, java.lang.String name, java.lang.String type,
 		java.lang.String tags, java.lang.String shortDescription,
@@ -489,6 +474,17 @@ public class SCProductEntryLocalServiceUtil {
 				   .updateProductEntry(productEntryId, name, type, tags,
 			shortDescription, longDescription, pageURL, author, repoGroupId,
 			repoArtifactId, licenseIds, thumbnails, fullImages);
+	}
+
+	/**
+	* Updates the s c product entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param scProductEntry the s c product entry
+	* @return the s c product entry that was updated
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateSCProductEntry(
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
+		return getService().updateSCProductEntry(scProductEntry);
 	}
 
 	public static SCProductEntryLocalService getService() {

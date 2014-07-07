@@ -792,7 +792,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public List<ShoppingItem> findByG_C(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ShoppingItem> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -908,7 +908,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem findByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws NoSuchItemException {
+		OrderByComparator<ShoppingItem> orderByComparator)
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByG_C_First(groupId, categoryId,
 				orderByComparator);
 
@@ -941,7 +942,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem fetchByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItem> orderByComparator) {
 		List<ShoppingItem> list = findByG_C(groupId, categoryId, 0, 1,
 				orderByComparator);
 
@@ -963,7 +964,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem findByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws NoSuchItemException {
+		OrderByComparator<ShoppingItem> orderByComparator)
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByG_C_Last(groupId, categoryId,
 				orderByComparator);
 
@@ -996,7 +998,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem fetchByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItem> orderByComparator) {
 		int count = countByG_C(groupId, categoryId);
 
 		if (count == 0) {
@@ -1025,7 +1027,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem[] findByG_C_PrevAndNext(long itemId, long groupId,
-		long categoryId, OrderByComparator orderByComparator)
+		long categoryId, OrderByComparator<ShoppingItem> orderByComparator)
 		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findByPrimaryKey(itemId);
 
@@ -1056,7 +1058,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	protected ShoppingItem getByG_C_PrevAndNext(Session session,
 		ShoppingItem shoppingItem, long groupId, long categoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingItem> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1211,7 +1213,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public List<ShoppingItem> filterFindByG_C(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<ShoppingItem> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C(groupId, categoryId, start, end, orderByComparator);
 		}
@@ -1307,7 +1309,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public ShoppingItem[] filterFindByG_C_PrevAndNext(long itemId,
-		long groupId, long categoryId, OrderByComparator orderByComparator)
+		long groupId, long categoryId,
+		OrderByComparator<ShoppingItem> orderByComparator)
 		throws NoSuchItemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(itemId, groupId, categoryId,
@@ -1343,7 +1346,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	protected ShoppingItem filterGetByG_C_PrevAndNext(Session session,
 		ShoppingItem shoppingItem, long groupId, long categoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingItem> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2553,7 +2556,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	@Override
 	public List<ShoppingItem> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItem> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

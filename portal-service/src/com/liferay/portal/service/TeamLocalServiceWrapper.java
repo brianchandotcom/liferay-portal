@@ -42,6 +42,66 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.addTeam(team);
 	}
 
+	@Override
+	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.addTeam(userId, groupId, name, description);
+	}
+
+	@Override
+	public void addUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team) {
+		_teamLocalService.addUserGroupTeam(userGroupId, team);
+	}
+
+	@Override
+	public void addUserGroupTeam(long userGroupId, long teamId) {
+		_teamLocalService.addUserGroupTeam(userGroupId, teamId);
+	}
+
+	@Override
+	public void addUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams) {
+		_teamLocalService.addUserGroupTeams(userGroupId, Teams);
+	}
+
+	@Override
+	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
+		_teamLocalService.addUserGroupTeams(userGroupId, teamIds);
+	}
+
+	@Override
+	public void addUserTeam(long userId, com.liferay.portal.model.Team team) {
+		_teamLocalService.addUserTeam(userId, team);
+	}
+
+	@Override
+	public void addUserTeam(long userId, long teamId) {
+		_teamLocalService.addUserTeam(userId, teamId);
+	}
+
+	@Override
+	public void addUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams) {
+		_teamLocalService.addUserTeams(userId, Teams);
+	}
+
+	@Override
+	public void addUserTeams(long userId, long[] teamIds) {
+		_teamLocalService.addUserTeams(userId, teamIds);
+	}
+
+	@Override
+	public void clearUserGroupTeams(long userGroupId) {
+		_teamLocalService.clearUserGroupTeams(userGroupId);
+	}
+
+	@Override
+	public void clearUserTeams(long userId) {
+		_teamLocalService.clearUserTeams(userId);
+	}
+
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
 	*
@@ -54,16 +114,13 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
-	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param teamId the primary key of the team
-	* @return the team that was removed
-	* @throws PortalException if a team with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.Team deleteTeam(long teamId)
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.deleteTeam(teamId);
+		return _teamLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -80,6 +137,68 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.deleteTeam(team);
 	}
 
+	/**
+	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param teamId the primary key of the team
+	* @return the team that was removed
+	* @throws PortalException if a team with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Team deleteTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.deleteTeam(teamId);
+	}
+
+	@Override
+	public void deleteTeams(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_teamLocalService.deleteTeams(groupId);
+	}
+
+	@Override
+	public void deleteUserGroupTeam(long userGroupId,
+		com.liferay.portal.model.Team team) {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, team);
+	}
+
+	@Override
+	public void deleteUserGroupTeam(long userGroupId, long teamId) {
+		_teamLocalService.deleteUserGroupTeam(userGroupId, teamId);
+	}
+
+	@Override
+	public void deleteUserGroupTeams(long userGroupId,
+		java.util.List<com.liferay.portal.model.Team> Teams) {
+		_teamLocalService.deleteUserGroupTeams(userGroupId, Teams);
+	}
+
+	@Override
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
+		_teamLocalService.deleteUserGroupTeams(userGroupId, teamIds);
+	}
+
+	@Override
+	public void deleteUserTeam(long userId, com.liferay.portal.model.Team team) {
+		_teamLocalService.deleteUserTeam(userId, team);
+	}
+
+	@Override
+	public void deleteUserTeam(long userId, long teamId) {
+		_teamLocalService.deleteUserTeam(userId, teamId);
+	}
+
+	@Override
+	public void deleteUserTeams(long userId,
+		java.util.List<com.liferay.portal.model.Team> Teams) {
+		_teamLocalService.deleteUserTeams(userId, Teams);
+	}
+
+	@Override
+	public void deleteUserTeams(long userId, long[] teamIds) {
+		_teamLocalService.deleteUserTeams(userId, teamIds);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _teamLocalService.dynamicQuery();
@@ -92,8 +211,7 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _teamLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -111,8 +229,7 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _teamLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -132,11 +249,10 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _teamLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -172,6 +288,41 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.fetchTeam(teamId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _teamLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _teamLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
+		long groupId) {
+		return _teamLocalService.getGroupTeams(groupId);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.model.Team getTeam(long groupId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamLocalService.getTeam(groupId, name);
+	}
+
 	/**
 	* Returns the team with the primary key.
 	*
@@ -183,28 +334,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	public com.liferay.portal.model.Team getTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.getTeam(teamId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _teamLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -235,165 +364,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
-	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Team updateTeam(
-		com.liferay.portal.model.Team team) {
-		return _teamLocalService.updateTeam(team);
-	}
-
-	@Override
-	public void addUserTeam(long userId, long teamId) {
-		_teamLocalService.addUserTeam(userId, teamId);
-	}
-
-	@Override
-	public void addUserTeam(long userId, com.liferay.portal.model.Team team) {
-		_teamLocalService.addUserTeam(userId, team);
-	}
-
-	@Override
-	public void addUserTeams(long userId, long[] teamIds) {
-		_teamLocalService.addUserTeams(userId, teamIds);
-	}
-
-	@Override
-	public void addUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams) {
-		_teamLocalService.addUserTeams(userId, Teams);
-	}
-
-	@Override
-	public void clearUserTeams(long userId) {
-		_teamLocalService.clearUserTeams(userId);
-	}
-
-	@Override
-	public void deleteUserTeam(long userId, long teamId) {
-		_teamLocalService.deleteUserTeam(userId, teamId);
-	}
-
-	@Override
-	public void deleteUserTeam(long userId, com.liferay.portal.model.Team team) {
-		_teamLocalService.deleteUserTeam(userId, team);
-	}
-
-	@Override
-	public void deleteUserTeams(long userId, long[] teamIds) {
-		_teamLocalService.deleteUserTeams(userId, teamIds);
-	}
-
-	@Override
-	public void deleteUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams) {
-		_teamLocalService.deleteUserTeams(userId, Teams);
-	}
-
-	/**
-	* Returns the userIds of the users associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userIds of users associated with the team
-	*/
-	@Override
-	public long[] getUserPrimaryKeys(long teamId) {
-		return _teamLocalService.getUserPrimaryKeys(teamId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId) {
-		return _teamLocalService.getUserTeams(userId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, int start, int end) {
-		return _teamLocalService.getUserTeams(userId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _teamLocalService.getUserTeams(userId, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public int getUserTeamsCount(long userId) {
-		return _teamLocalService.getUserTeamsCount(userId);
-	}
-
-	@Override
-	public boolean hasUserTeam(long userId, long teamId) {
-		return _teamLocalService.hasUserTeam(userId, teamId);
-	}
-
-	@Override
-	public boolean hasUserTeams(long userId) {
-		return _teamLocalService.hasUserTeams(userId);
-	}
-
-	@Override
-	public void setUserTeams(long userId, long[] teamIds) {
-		_teamLocalService.setUserTeams(userId, teamIds);
-	}
-
-	@Override
-	public void addUserGroupTeam(long userGroupId, long teamId) {
-		_teamLocalService.addUserGroupTeam(userGroupId, teamId);
-	}
-
-	@Override
-	public void addUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team) {
-		_teamLocalService.addUserGroupTeam(userGroupId, team);
-	}
-
-	@Override
-	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
-		_teamLocalService.addUserGroupTeams(userGroupId, teamIds);
-	}
-
-	@Override
-	public void addUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams) {
-		_teamLocalService.addUserGroupTeams(userGroupId, Teams);
-	}
-
-	@Override
-	public void clearUserGroupTeams(long userGroupId) {
-		_teamLocalService.clearUserGroupTeams(userGroupId);
-	}
-
-	@Override
-	public void deleteUserGroupTeam(long userGroupId, long teamId) {
-		_teamLocalService.deleteUserGroupTeam(userGroupId, teamId);
-	}
-
-	@Override
-	public void deleteUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team) {
-		_teamLocalService.deleteUserGroupTeam(userGroupId, team);
-	}
-
-	@Override
-	public void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
-		_teamLocalService.deleteUserGroupTeams(userGroupId, teamIds);
-	}
-
-	@Override
-	public void deleteUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams) {
-		_teamLocalService.deleteUserGroupTeams(userGroupId, Teams);
-	}
-
-	/**
 	* Returns the userGroupIds of the user groups associated with the team.
 	*
 	* @param teamId the teamId of the team
@@ -419,7 +389,7 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
 		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
 		return _teamLocalService.getUserGroupTeams(userGroupId, start, end,
 			orderByComparator);
 	}
@@ -427,6 +397,48 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	@Override
 	public int getUserGroupTeamsCount(long userGroupId) {
 		return _teamLocalService.getUserGroupTeamsCount(userGroupId);
+	}
+
+	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	*/
+	@Override
+	public long[] getUserPrimaryKeys(long teamId) {
+		return _teamLocalService.getUserPrimaryKeys(teamId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId) {
+		return _teamLocalService.getUserTeams(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, long groupId) {
+		return _teamLocalService.getUserTeams(userId, groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end) {
+		return _teamLocalService.getUserTeams(userId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		return _teamLocalService.getUserTeams(userId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getUserTeamsCount(long userId) {
+		return _teamLocalService.getUserTeamsCount(userId);
 	}
 
 	@Override
@@ -440,18 +452,30 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
-	public void setUserGroupTeams(long userGroupId, long[] teamIds) {
-		_teamLocalService.setUserGroupTeams(userGroupId, teamIds);
+	public boolean hasUserTeam(long userId, long teamId) {
+		return _teamLocalService.hasUserTeam(userId, teamId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _teamLocalService.getBeanIdentifier();
+	public boolean hasUserTeams(long userId) {
+		return _teamLocalService.hasUserTeams(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
+		java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> obc) {
+		return _teamLocalService.search(groupId, name, description, params,
+			start, end, obc);
+	}
+
+	@Override
+	public int searchCount(long groupId, java.lang.String name,
+		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return _teamLocalService.searchCount(groupId, name, description, params);
 	}
 
 	/**
@@ -465,51 +489,25 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.addTeam(userId, groupId, name, description);
+	public void setUserGroupTeams(long userGroupId, long[] teamIds) {
+		_teamLocalService.setUserGroupTeams(userGroupId, teamIds);
 	}
 
 	@Override
-	public void deleteTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_teamLocalService.deleteTeams(groupId);
+	public void setUserTeams(long userId, long[] teamIds) {
+		_teamLocalService.setUserTeams(userId, teamIds);
 	}
 
+	/**
+	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was updated
+	*/
 	@Override
-	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
-		long groupId) {
-		return _teamLocalService.getGroupTeams(groupId);
-	}
-
-	@Override
-	public com.liferay.portal.model.Team getTeam(long groupId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamLocalService.getTeam(groupId, name);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, long groupId) {
-		return _teamLocalService.getUserTeams(userId, groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return _teamLocalService.search(groupId, name, description, params,
-			start, end, obc);
-	}
-
-	@Override
-	public int searchCount(long groupId, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
-		return _teamLocalService.searchCount(groupId, name, description, params);
+	public com.liferay.portal.model.Team updateTeam(
+		com.liferay.portal.model.Team team) {
+		return _teamLocalService.updateTeam(team);
 	}
 
 	@Override

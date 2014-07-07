@@ -172,7 +172,7 @@ public class LayoutPrototypeServiceSoap {
 
 	public static com.liferay.portal.model.LayoutPrototypeSoap[] search(
 		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutPrototype> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.model.LayoutPrototype> returnValue =

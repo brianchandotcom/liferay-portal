@@ -21,7 +21,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link PortletLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link PortletLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

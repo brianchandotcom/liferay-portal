@@ -20,7 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 /**
  * @author Eduardo Garcia
  */
-public class TemplateIdComparator extends OrderByComparator {
+public class TemplateIdComparator extends OrderByComparator<DDMTemplate> {
 
 	public static final String ORDER_BY_ASC = "DDMTemplate.templateId ASC";
 
@@ -37,10 +37,7 @@ public class TemplateIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DDMTemplate template1 = (DDMTemplate)obj1;
-		DDMTemplate template2 = (DDMTemplate)obj2;
-
+	public int compare(DDMTemplate template1, DDMTemplate template2) {
 		long templateId1 = template1.getTemplateId();
 		long templateId2 = template2.getTemplateId();
 

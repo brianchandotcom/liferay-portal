@@ -156,7 +156,8 @@ public class GetArticlesAction extends Action {
 		String orderByType = ParamUtil.getString(request, "orderByType");
 		boolean orderByAsc = orderByType.equals("asc");
 
-		OrderByComparator obc = new ArticleModifiedDateComparator(orderByAsc);
+		OrderByComparator<JournalArticle> obc =
+			new ArticleModifiedDateComparator(orderByAsc);
 
 		if (orderByCol.equals("display-date")) {
 			obc = new ArticleDisplayDateComparator(orderByAsc);

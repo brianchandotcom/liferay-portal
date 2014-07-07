@@ -47,21 +47,6 @@ public interface ShoppingCouponService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCouponServiceUtil} to access the shopping coupon remote service. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingCouponServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
 	public com.liferay.portlet.shopping.model.ShoppingCoupon addCoupon(
 		java.lang.String code, boolean autoCode, java.lang.String name,
 		java.lang.String description, int startDateMonth, int startDateDay,
@@ -76,6 +61,13 @@ public interface ShoppingCouponService extends BaseService {
 	public void deleteCoupon(long groupId, long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
 		long groupId, long couponId)
@@ -86,6 +78,13 @@ public interface ShoppingCouponService extends BaseService {
 		long groupId, long companyId, java.lang.String code, boolean active,
 		java.lang.String discountType, boolean andOperator, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.shopping.model.ShoppingCoupon updateCoupon(
 		long couponId, java.lang.String name, java.lang.String description,

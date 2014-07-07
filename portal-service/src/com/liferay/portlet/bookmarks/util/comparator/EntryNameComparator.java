@@ -21,7 +21,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EntryNameComparator extends OrderByComparator {
+public class EntryNameComparator extends OrderByComparator<BookmarksEntry> {
 
 	public static final String ORDER_BY_ASC = "BookmarksEntry.name ASC";
 
@@ -38,10 +38,7 @@ public class EntryNameComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BookmarksEntry entry1 = (BookmarksEntry)obj1;
-		BookmarksEntry entry2 = (BookmarksEntry)obj2;
-
+	public int compare(BookmarksEntry entry1, BookmarksEntry entry2) {
 		String name1 = StringUtil.toLowerCase(entry1.getName());
 		String name2 = StringUtil.toLowerCase(entry2.getName());
 

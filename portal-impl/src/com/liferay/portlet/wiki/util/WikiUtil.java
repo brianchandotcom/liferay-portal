@@ -555,7 +555,7 @@ public class WikiUtil {
 		return nodes;
 	}
 
-	public static OrderByComparator getPageOrderByComparator(
+	public static OrderByComparator<WikiPage> getPageOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -564,7 +564,7 @@ public class WikiUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<WikiPage> orderByComparator = null;
 
 		if (orderByCol.equals("modifiedDate")) {
 			orderByComparator = new PageCreateDateComparator(orderByAsc);

@@ -55,25 +55,8 @@
 		}
 	}
 
-	.article-translation-toolbar {
-		.add-translations-menu {
-			display: inline;
-			float: none;
-			margin-left: 2em;
-			padding: 0.4em 0;
-
-			li {
-				display: inline;
-
-				strong {
-					display: inline;
-				}
-			}
-		}
-
-		.contains-translations {
-			margin-top: 1em;
-		}
+	.article-translation-toolbar .contains-translations  {
+		margin-top: 1em;
 	}
 
 	.article-translation-toolbar {

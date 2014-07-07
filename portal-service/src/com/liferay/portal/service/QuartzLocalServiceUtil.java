@@ -40,6 +40,9 @@ public class QuartzLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.QuartzLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void checkQuartzTables() {
+		getService().checkQuartzTables();
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -57,10 +60,6 @@ public class QuartzLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void checkQuartzTables() {
-		getService().checkQuartzTables();
 	}
 
 	public static QuartzLocalService getService() {

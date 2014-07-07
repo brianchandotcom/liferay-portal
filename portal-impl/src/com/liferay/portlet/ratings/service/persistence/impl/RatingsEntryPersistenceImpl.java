@@ -149,7 +149,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public List<RatingsEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByUuid_First(uuid, orderByComparator);
 
 		if (ratingsEntry != null) {
@@ -297,7 +298,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		List<RatingsEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ratingsEntry != null) {
@@ -345,7 +347,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry[] findByUuid_PrevAndNext(long entryId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -403,7 +406,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	protected RatingsEntry getByUuid_PrevAndNext(Session session,
 		RatingsEntry ratingsEntry, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RatingsEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -671,7 +674,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public List<RatingsEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<RatingsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -801,7 +804,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -834,7 +838,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		List<RatingsEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -856,7 +860,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -889,7 +894,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -918,7 +923,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry[] findByUuid_C_PrevAndNext(long entryId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = findByPrimaryKey(entryId);
 
@@ -949,7 +954,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	protected RatingsEntry getByUuid_C_PrevAndNext(Session session,
 		RatingsEntry ratingsEntry, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RatingsEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1227,7 +1232,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public List<RatingsEntry> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<RatingsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1343,7 +1348,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByC_C_First(classNameId, classPK,
 				orderByComparator);
 
@@ -1376,7 +1382,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		List<RatingsEntry> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -1398,7 +1404,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByC_C_Last(classNameId, classPK,
 				orderByComparator);
 
@@ -1431,7 +1438,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
@@ -1460,7 +1467,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry[] findByC_C_PrevAndNext(long entryId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
+		long classPK, OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = findByPrimaryKey(entryId);
 
@@ -1491,7 +1498,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	protected RatingsEntry getByC_C_PrevAndNext(Session session,
 		RatingsEntry ratingsEntry, long classNameId, long classPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RatingsEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2000,7 +2007,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public List<RatingsEntry> findByC_C_S(long classNameId, long classPK,
-		double score, int start, int end, OrderByComparator orderByComparator) {
+		double score, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2122,7 +2130,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByC_C_S_First(long classNameId, long classPK,
-		double score, OrderByComparator orderByComparator)
+		double score, OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByC_C_S_First(classNameId, classPK,
 				score, orderByComparator);
@@ -2160,7 +2168,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByC_C_S_First(long classNameId, long classPK,
-		double score, OrderByComparator orderByComparator) {
+		double score, OrderByComparator<RatingsEntry> orderByComparator) {
 		List<RatingsEntry> list = findByC_C_S(classNameId, classPK, score, 0,
 				1, orderByComparator);
 
@@ -2183,7 +2191,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry findByC_C_S_Last(long classNameId, long classPK,
-		double score, OrderByComparator orderByComparator)
+		double score, OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = fetchByC_C_S_Last(classNameId, classPK,
 				score, orderByComparator);
@@ -2221,7 +2229,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public RatingsEntry fetchByC_C_S_Last(long classNameId, long classPK,
-		double score, OrderByComparator orderByComparator) {
+		double score, OrderByComparator<RatingsEntry> orderByComparator) {
 		int count = countByC_C_S(classNameId, classPK, score);
 
 		if (count == 0) {
@@ -2252,7 +2260,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	@Override
 	public RatingsEntry[] findByC_C_S_PrevAndNext(long entryId,
 		long classNameId, long classPK, double score,
-		OrderByComparator orderByComparator) throws NoSuchEntryException {
+		OrderByComparator<RatingsEntry> orderByComparator)
+		throws NoSuchEntryException {
 		RatingsEntry ratingsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -2282,7 +2291,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	protected RatingsEntry getByC_C_S_PrevAndNext(Session session,
 		RatingsEntry ratingsEntry, long classNameId, long classPK,
-		double score, OrderByComparator orderByComparator, boolean previous) {
+		double score, OrderByComparator<RatingsEntry> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3113,7 +3123,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	@Override
 	public List<RatingsEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

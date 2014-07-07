@@ -187,13 +187,11 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
-					<div class="input-group">
-						<aui:input label="" name="parentStructureName" type="resource" value="<%= parentStructureName %>" />
+					<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
 
-						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
 
-						<aui:button name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
-					</div>
+					<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
@@ -236,30 +234,41 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 
 				document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = event.ddmstructureid;
 
-				var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
+				var nameEl = A.one('#<portlet:namespace />parentStructureName');
 
-				nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=' + event.ddmstructureid;
+				nameEl.attr('href', '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=' + event.ddmstructureid);
 
-				nameEl.value = A.Lang.String.unescapeEntities(event.name);
+				nameEl.val(A.Lang.String.unescapeEntities(event.name));
 
-				document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = false;
+				var removeEl = A.one('#<portlet:namespace />removeParentStructureButton');
+
+				removeEl.attr('disabled', false);
+				removeEl.removeClass('disabled');
 			}
 		);
 	}
 
-	function <portlet:namespace />removeParentStructure() {
-		document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = '';
+	Liferay.provide(
+		window,
+		'<portlet:namespace />removeParentStructure',
+		function() {
+			var A = AUI();
 
-		var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
+			A.one('#<portlet:namespace />parentStructureId').val('');
 
-		nameEl.href = '#';
-		nameEl.value = '';
+			var nameEl = A.one('#<portlet:namespace />parentStructureName');
 
-		document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = true;
-	}
-</aui:script>
+			nameEl.attr('href', '#');
+			nameEl.val('');
 
-<aui:script>
+			var removeEl = A.one('#<portlet:namespace />removeParentStructureButton');
+
+			removeEl.attr('disabled', true);
+			removeEl.addClass('disabled');
+		},
+		['aui-base']
+	);
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveStructure',

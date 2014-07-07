@@ -160,7 +160,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -280,7 +280,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByUuid_First(uuid, orderByComparator);
 
 		if (calEvent != null) {
@@ -308,7 +309,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -328,7 +329,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (calEvent != null) {
@@ -356,7 +358,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,7 +386,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByUuid_PrevAndNext(long eventId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
 		Session session = null;
@@ -413,8 +416,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByUuid_PrevAndNext(Session session,
-		CalEvent calEvent, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		CalEvent calEvent, String uuid,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -940,7 +943,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1070,7 +1073,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1103,7 +1107,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1125,7 +1129,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1158,7 +1163,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1187,7 +1192,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByUuid_C_PrevAndNext(long eventId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
@@ -1218,7 +1223,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	protected CalEvent getByUuid_C_PrevAndNext(Session session,
 		CalEvent calEvent, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1495,7 +1500,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1601,7 +1606,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (calEvent != null) {
@@ -1629,7 +1635,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1649,7 +1655,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (calEvent != null) {
@@ -1677,7 +1684,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1705,7 +1712,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByCompanyId_PrevAndNext(long eventId, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
 		Session session = null;
@@ -1734,8 +1742,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByCompanyId_PrevAndNext(Session session,
-		CalEvent calEvent, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		CalEvent calEvent, long companyId,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1969,7 +1977,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2075,7 +2083,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (calEvent != null) {
@@ -2103,7 +2112,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2123,7 +2132,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (calEvent != null) {
@@ -2151,7 +2161,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -2179,7 +2189,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByGroupId_PrevAndNext(long eventId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
 		Session session = null;
@@ -2208,8 +2219,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByGroupId_PrevAndNext(Session session,
-		CalEvent calEvent, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		CalEvent calEvent, long groupId,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2356,7 +2367,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> filterFindByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -2446,7 +2457,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] filterFindByGroupId_PrevAndNext(long eventId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(eventId, groupId, orderByComparator);
@@ -2480,8 +2491,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent filterGetByGroupId_PrevAndNext(Session session,
-		CalEvent calEvent, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		CalEvent calEvent, long groupId,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2793,7 +2804,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByNotRemindBy(int remindBy, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2891,7 +2902,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByNotRemindBy_First(int remindBy,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByNotRemindBy_First(remindBy, orderByComparator);
 
 		if (calEvent != null) {
@@ -2919,7 +2931,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByNotRemindBy_First(int remindBy,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByNotRemindBy(remindBy, 0, 1,
 				orderByComparator);
 
@@ -2940,7 +2952,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByNotRemindBy_Last(int remindBy,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByNotRemindBy_Last(remindBy, orderByComparator);
 
 		if (calEvent != null) {
@@ -2968,7 +2981,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByNotRemindBy_Last(int remindBy,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByNotRemindBy(remindBy);
 
 		if (count == 0) {
@@ -2996,7 +3009,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByNotRemindBy_PrevAndNext(long eventId, int remindBy,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
 		Session session = null;
@@ -3025,8 +3039,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByNotRemindBy_PrevAndNext(Session session,
-		CalEvent calEvent, int remindBy, OrderByComparator orderByComparator,
-		boolean previous) {
+		CalEvent calEvent, int remindBy,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3269,7 +3283,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByG_T(long groupId, String type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3399,7 +3413,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_T_First(long groupId, String type,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_T_First(groupId, type, orderByComparator);
 
 		if (calEvent != null) {
@@ -3431,7 +3446,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_T_First(long groupId, String type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByG_T(groupId, type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3452,7 +3467,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_T_Last(long groupId, String type,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_T_Last(groupId, type, orderByComparator);
 
 		if (calEvent != null) {
@@ -3484,7 +3500,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_T_Last(long groupId, String type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByG_T(groupId, type);
 
 		if (count == 0) {
@@ -3513,7 +3529,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByG_T_PrevAndNext(long eventId, long groupId,
-		String type, OrderByComparator orderByComparator)
+		String type, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
@@ -3543,8 +3559,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByG_T_PrevAndNext(Session session, CalEvent calEvent,
-		long groupId, String type, OrderByComparator orderByComparator,
-		boolean previous) {
+		long groupId, String type,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3713,7 +3729,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> filterFindByG_T(long groupId, String type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T(groupId, type, start, end, orderByComparator);
 		}
@@ -3822,7 +3838,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] filterFindByG_T_PrevAndNext(long eventId, long groupId,
-		String type, OrderByComparator orderByComparator)
+		String type, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_PrevAndNext(eventId, groupId, type,
@@ -3858,7 +3874,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	protected CalEvent filterGetByG_T_PrevAndNext(Session session,
 		CalEvent calEvent, long groupId, String type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4062,7 +4078,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> filterFindByG_T(long groupId, String[] types,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T(groupId, types, start, end, orderByComparator);
 		}
@@ -4225,7 +4241,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByG_T(long groupId, String[] types, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<CalEvent> orderByComparator) {
 		if (types == null) {
 			types = new String[0];
 		}
@@ -4772,7 +4788,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findByG_R(long groupId, boolean repeating, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4888,7 +4904,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_R_First(long groupId, boolean repeating,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_R_First(groupId, repeating,
 				orderByComparator);
 
@@ -4921,7 +4938,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_R_First(long groupId, boolean repeating,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByG_R(groupId, repeating, 0, 1,
 				orderByComparator);
 
@@ -4943,7 +4960,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_R_Last(long groupId, boolean repeating,
-		OrderByComparator orderByComparator) throws NoSuchEventException {
+		OrderByComparator<CalEvent> orderByComparator)
+		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_R_Last(groupId, repeating,
 				orderByComparator);
 
@@ -4976,7 +4994,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_R_Last(long groupId, boolean repeating,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByG_R(groupId, repeating);
 
 		if (count == 0) {
@@ -5005,7 +5023,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByG_R_PrevAndNext(long eventId, long groupId,
-		boolean repeating, OrderByComparator orderByComparator)
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
@@ -5035,8 +5053,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	protected CalEvent getByG_R_PrevAndNext(Session session, CalEvent calEvent,
-		long groupId, boolean repeating, OrderByComparator orderByComparator,
-		boolean previous) {
+		long groupId, boolean repeating,
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5191,7 +5209,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> filterFindByG_R(long groupId, boolean repeating,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_R(groupId, repeating, start, end, orderByComparator);
 		}
@@ -5286,7 +5304,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] filterFindByG_R_PrevAndNext(long eventId, long groupId,
-		boolean repeating, OrderByComparator orderByComparator)
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_R_PrevAndNext(eventId, groupId, repeating,
@@ -5322,7 +5340,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	protected CalEvent filterGetByG_R_PrevAndNext(Session session,
 		CalEvent calEvent, long groupId, boolean repeating,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5680,7 +5698,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_T_R(long groupId, String type,
 		boolean repeating, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5816,7 +5834,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_T_R_First(long groupId, String type,
-		boolean repeating, OrderByComparator orderByComparator)
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_T_R_First(groupId, type, repeating,
 				orderByComparator);
@@ -5854,7 +5872,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_T_R_First(long groupId, String type,
-		boolean repeating, OrderByComparator orderByComparator) {
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator) {
 		List<CalEvent> list = findByG_T_R(groupId, type, repeating, 0, 1,
 				orderByComparator);
 
@@ -5877,7 +5895,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent findByG_T_R_Last(long groupId, String type,
-		boolean repeating, OrderByComparator orderByComparator)
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = fetchByG_T_R_Last(groupId, type, repeating,
 				orderByComparator);
@@ -5915,7 +5933,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent fetchByG_T_R_Last(long groupId, String type,
-		boolean repeating, OrderByComparator orderByComparator) {
+		boolean repeating, OrderByComparator<CalEvent> orderByComparator) {
 		int count = countByG_T_R(groupId, type, repeating);
 
 		if (count == 0) {
@@ -5945,7 +5963,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] findByG_T_R_PrevAndNext(long eventId, long groupId,
-		String type, boolean repeating, OrderByComparator orderByComparator)
+		String type, boolean repeating,
+		OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		CalEvent calEvent = findByPrimaryKey(eventId);
 
@@ -5976,7 +5995,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	protected CalEvent getByG_T_R_PrevAndNext(Session session,
 		CalEvent calEvent, long groupId, String type, boolean repeating,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6154,7 +6173,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> filterFindByG_T_R(long groupId, String type,
 		boolean repeating, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_R(groupId, type, repeating, start, end,
 				orderByComparator);
@@ -6269,7 +6288,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public CalEvent[] filterFindByG_T_R_PrevAndNext(long eventId, long groupId,
-		String type, boolean repeating, OrderByComparator orderByComparator)
+		String type, boolean repeating,
+		OrderByComparator<CalEvent> orderByComparator)
 		throws NoSuchEventException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_R_PrevAndNext(eventId, groupId, type, repeating,
@@ -6305,7 +6325,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	protected CalEvent filterGetByG_T_R_PrevAndNext(Session session,
 		CalEvent calEvent, long groupId, String type, boolean repeating,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CalEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6518,7 +6538,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> filterFindByG_T_R(long groupId, String[] types,
 		boolean repeating, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_R(groupId, types, repeating, start, end,
 				orderByComparator);
@@ -6693,7 +6713,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_T_R(long groupId, String[] types,
 		boolean repeating, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		if (types == null) {
 			types = new String[0];
 		}
@@ -7947,7 +7967,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	@Override
 	public List<CalEvent> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<CalEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

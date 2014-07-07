@@ -220,7 +220,7 @@ public class DDMStructureLinkPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDMStructureLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructureLink",
 			"structureLinkId", true, "classNameId", true, "classPK", true,
 			"structureId", true);

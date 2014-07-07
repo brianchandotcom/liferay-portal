@@ -137,7 +137,7 @@ public class UserSearch extends SearchContainer<User> {
 					PortletKeys.USERS_ADMIN, "users-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<User> orderByComparator =
 				UsersAdminUtil.getUserOrderByComparator(
 					orderByCol, orderByType);
 

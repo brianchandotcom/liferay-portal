@@ -20,7 +20,8 @@ import com.liferay.portal.model.ResourceAction;
 /**
  * @author Shuyang Zhou
  */
-public class ResourceActionBitwiseValueComparator extends OrderByComparator {
+public class ResourceActionBitwiseValueComparator
+	extends OrderByComparator<ResourceAction> {
 
 	public static final String ORDER_BY_ASC = "bitwiseValue ASC";
 
@@ -37,9 +38,8 @@ public class ResourceActionBitwiseValueComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		ResourceAction resourceAction1 = (ResourceAction)obj1;
-		ResourceAction resourceAction2 = (ResourceAction)obj2;
+	public int compare(
+		ResourceAction resourceAction1, ResourceAction resourceAction2) {
 
 		int value =
 			(int)(resourceAction1.getBitwiseValue() -

@@ -45,6 +45,8 @@ public interface WebKeys {
 
 	public static final String CURRENT_COMPLETE_URL = "CURRENT_COMPLETE_URL";
 
+	public static final String CURRENT_PORTLET_URL = "CURRENT_PORTLET_URL";
+
 	@Distributed(direction = Direction.REQUEST)
 	public static final String CURRENT_URL = "CURRENT_URL";
 

@@ -33,26 +33,6 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		_journalFolderService = journalFolderService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalFolderService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalFolderService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder addFolder(
 		long groupId, long parentFolderId, java.lang.String name,
@@ -73,6 +53,23 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderService.deleteFolder(folderId, includeTrashedEntries);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolderService.fetchFolder(folderId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _journalFolderService.getBeanIdentifier();
 	}
 
 	@Override
@@ -103,15 +100,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int status) {
-		return _journalFolderService.getFolders(groupId, parentFolderId, status);
+		long groupId, long parentFolderId, int start, int end) {
+		return _journalFolderService.getFolders(groupId, parentFolderId, start,
+			end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end) {
-		return _journalFolderService.getFolders(groupId, parentFolderId, start,
-			end);
+		long groupId, long parentFolderId, int status) {
+		return _journalFolderService.getFolders(groupId, parentFolderId, status);
 	}
 
 	@Override
@@ -123,25 +120,18 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 
 	@Override
 	public java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return _journalFolderService.getFoldersAndArticles(groupId, folderId,
-			status, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return _journalFolderService.getFoldersAndArticles(groupId, folderId,
 			start, end, obc);
 	}
 
 	@Override
-	public int getFoldersAndArticlesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status) {
-		return _journalFolderService.getFoldersAndArticlesCount(groupId,
-			folderIds, status);
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		return _journalFolderService.getFoldersAndArticles(groupId, folderId,
+			status, start, end, obc);
 	}
 
 	@Override
@@ -155,6 +145,13 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		int status) {
 		return _journalFolderService.getFoldersAndArticlesCount(groupId,
 			folderId, status);
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status) {
+		return _journalFolderService.getFoldersAndArticlesCount(groupId,
+			folderIds, status);
 	}
 
 	@Override
@@ -223,6 +220,16 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		_journalFolderService.restoreFolderFromTrash(folderId);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_journalFolderService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void subscribe(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -238,16 +245,6 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolderService.updateFolder(folderId, parentFolderId,
-			name, description, mergeWithParentFolder, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
 		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -255,6 +252,16 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		return _journalFolderService.updateFolder(folderId, parentFolderId,
 			name, description, ddmStructureIds, restrictionType,
 			mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolderService.updateFolder(folderId, parentFolderId,
+			name, description, mergeWithParentFolder, serviceContext);
 	}
 
 	/**

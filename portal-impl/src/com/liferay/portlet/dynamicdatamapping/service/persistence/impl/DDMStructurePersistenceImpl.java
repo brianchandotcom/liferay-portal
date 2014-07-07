@@ -157,7 +157,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -277,7 +277,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByUuid_First(uuid, orderByComparator);
 
 		if (ddmStructure != null) {
@@ -305,7 +306,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -325,7 +326,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ddmStructure != null) {
@@ -353,7 +355,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -381,7 +383,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByUuid_PrevAndNext(long structureId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
 		Session session = null;
@@ -411,7 +414,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByUuid_PrevAndNext(Session session,
 		DDMStructure ddmStructure, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -935,7 +938,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1065,7 +1068,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1098,7 +1102,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1120,7 +1124,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1153,7 +1158,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1182,7 +1187,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByUuid_C_PrevAndNext(long structureId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -1213,7 +1219,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByUuid_C_PrevAndNext(Session session,
 		DDMStructure ddmStructure, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1490,7 +1496,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1596,7 +1602,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1625,7 +1632,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1645,7 +1652,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -1674,7 +1682,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1702,7 +1710,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByGroupId_PrevAndNext(long structureId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -1733,7 +1741,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByGroupId_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1881,7 +1889,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1972,7 +1980,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] filterFindByGroupId_PrevAndNext(long structureId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(structureId, groupId,
@@ -2008,7 +2016,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure filterGetByGroupId_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2191,7 +2199,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long[] groupIds, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return findByGroupId(groupIds, start, end, orderByComparator);
 		}
@@ -2327,7 +2335,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long[] groupIds, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDMStructure> orderByComparator) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -2751,7 +2759,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(long parentStructureId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2861,7 +2869,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByParentStructureId_First(long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByParentStructureId_First(parentStructureId,
 				orderByComparator);
 
@@ -2890,7 +2899,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByParentStructureId_First(long parentStructureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByParentStructureId(parentStructureId, 0,
 				1, orderByComparator);
 
@@ -2911,7 +2920,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByParentStructureId_Last(long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByParentStructureId_Last(parentStructureId,
 				orderByComparator);
 
@@ -2940,7 +2950,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByParentStructureId_Last(long parentStructureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByParentStructureId(parentStructureId);
 
 		if (count == 0) {
@@ -2969,7 +2979,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public DDMStructure[] findByParentStructureId_PrevAndNext(
 		long structureId, long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
 		Session session = null;
@@ -2999,7 +3010,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByParentStructureId_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long parentStructureId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3235,7 +3246,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(long classNameId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3341,7 +3352,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByClassNameId_First(classNameId,
 				orderByComparator);
 
@@ -3370,7 +3382,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByClassNameId_First(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByClassNameId(classNameId, 0, 1,
 				orderByComparator);
 
@@ -3391,7 +3403,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByClassNameId_Last(classNameId,
 				orderByComparator);
 
@@ -3420,7 +3433,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByClassNameId_Last(long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByClassNameId(classNameId);
 
 		if (count == 0) {
@@ -3448,7 +3461,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByClassNameId_PrevAndNext(long structureId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -3479,7 +3492,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByClassNameId_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3714,7 +3727,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(String structureKey,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3839,7 +3852,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByStructureKey_First(String structureKey,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByStructureKey_First(structureKey,
 				orderByComparator);
 
@@ -3868,7 +3882,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByStructureKey_First(String structureKey,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByStructureKey(structureKey, 0, 1,
 				orderByComparator);
 
@@ -3889,7 +3903,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByStructureKey_Last(String structureKey,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByStructureKey_Last(structureKey,
 				orderByComparator);
 
@@ -3918,7 +3933,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByStructureKey_Last(String structureKey,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByStructureKey(structureKey);
 
 		if (count == 0) {
@@ -3946,7 +3961,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByStructureKey_PrevAndNext(long structureId,
-		String structureKey, OrderByComparator orderByComparator)
+		String structureKey, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -3977,7 +3992,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByStructureKey_PrevAndNext(Session session,
 		DDMStructure ddmStructure, String structureKey,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4244,7 +4259,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(long groupId, long parentStructureId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4360,7 +4375,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_P_First(long groupId, long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_P_First(groupId,
 				parentStructureId, orderByComparator);
 
@@ -4393,7 +4409,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_P_First(long groupId, long parentStructureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByG_P(groupId, parentStructureId, 0, 1,
 				orderByComparator);
 
@@ -4415,7 +4431,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_P_Last(long groupId, long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_P_Last(groupId, parentStructureId,
 				orderByComparator);
 
@@ -4448,7 +4465,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_P_Last(long groupId, long parentStructureId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByG_P(groupId, parentStructureId);
 
 		if (count == 0) {
@@ -4477,7 +4494,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByG_P_PrevAndNext(long structureId, long groupId,
-		long parentStructureId, OrderByComparator orderByComparator)
+		long parentStructureId,
+		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -4508,7 +4526,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByG_P_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, long parentStructureId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4665,7 +4683,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByG_P(long groupId,
 		long parentStructureId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentStructureId, start, end,
 				orderByComparator);
@@ -4763,7 +4781,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public DDMStructure[] filterFindByG_P_PrevAndNext(long structureId,
 		long groupId, long parentStructureId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(structureId, groupId,
 				parentStructureId, orderByComparator);
@@ -4798,7 +4817,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure filterGetByG_P_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, long parentStructureId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5138,7 +5157,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long groupId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5254,7 +5273,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_C_First(long groupId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_C_First(groupId, classNameId,
 				orderByComparator);
 
@@ -5287,7 +5307,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_C_First(long groupId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByG_C(groupId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -5309,7 +5329,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_C_Last(long groupId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_C_Last(groupId, classNameId,
 				orderByComparator);
 
@@ -5342,7 +5363,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_C_Last(long groupId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByG_C(groupId, classNameId);
 
 		if (count == 0) {
@@ -5371,7 +5392,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByG_C_PrevAndNext(long structureId, long groupId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -5402,7 +5423,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByG_C_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5557,7 +5578,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long groupId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C(groupId, classNameId, start, end, orderByComparator);
 		}
@@ -5653,7 +5674,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] filterFindByG_C_PrevAndNext(long structureId,
-		long groupId, long classNameId, OrderByComparator orderByComparator)
+		long groupId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(structureId, groupId, classNameId,
@@ -5689,7 +5711,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure filterGetByG_C_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5880,7 +5902,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByG_C(long[] groupIds,
 		long classNameId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return findByG_C(groupIds, classNameId, start, end,
 				orderByComparator);
@@ -6029,7 +6051,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long[] groupIds, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -6497,7 +6519,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6613,7 +6635,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByC_C_First(companyId, classNameId,
 				orderByComparator);
 
@@ -6646,7 +6669,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -6668,7 +6691,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByC_C_Last(companyId, classNameId,
 				orderByComparator);
 
@@ -6701,7 +6725,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -6730,7 +6754,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure[] findByC_C_PrevAndNext(long structureId,
-		long companyId, long classNameId, OrderByComparator orderByComparator)
+		long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
@@ -6761,7 +6786,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByC_C_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long companyId, long classNameId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDMStructure> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7308,7 +7333,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
 		String description, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7459,7 +7484,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_N_D_First(long groupId, String name,
-		String description, OrderByComparator orderByComparator)
+		String description, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_N_D_First(groupId, name,
 				description, orderByComparator);
@@ -7497,7 +7522,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_N_D_First(long groupId, String name,
-		String description, OrderByComparator orderByComparator) {
+		String description, OrderByComparator<DDMStructure> orderByComparator) {
 		List<DDMStructure> list = findByG_N_D(groupId, name, description, 0, 1,
 				orderByComparator);
 
@@ -7520,7 +7545,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure findByG_N_D_Last(long groupId, String name,
-		String description, OrderByComparator orderByComparator)
+		String description, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
 		DDMStructure ddmStructure = fetchByG_N_D_Last(groupId, name,
 				description, orderByComparator);
@@ -7558,7 +7583,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public DDMStructure fetchByG_N_D_Last(long groupId, String name,
-		String description, OrderByComparator orderByComparator) {
+		String description, OrderByComparator<DDMStructure> orderByComparator) {
 		int count = countByG_N_D(groupId, name, description);
 
 		if (count == 0) {
@@ -7589,7 +7614,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public DDMStructure[] findByG_N_D_PrevAndNext(long structureId,
 		long groupId, String name, String description,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		DDMStructure ddmStructure = findByPrimaryKey(structureId);
 
 		Session session = null;
@@ -7619,7 +7645,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure getByG_N_D_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, String name,
-		String description, OrderByComparator orderByComparator,
+		String description, OrderByComparator<DDMStructure> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -7812,7 +7838,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByG_N_D(long groupId, String name,
 		String description, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_D(groupId, name, description, start, end,
 				orderByComparator);
@@ -7943,7 +7969,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public DDMStructure[] filterFindByG_N_D_PrevAndNext(long structureId,
 		long groupId, String name, String description,
-		OrderByComparator orderByComparator) throws NoSuchStructureException {
+		OrderByComparator<DDMStructure> orderByComparator)
+		throws NoSuchStructureException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_N_D_PrevAndNext(structureId, groupId, name,
 				description, orderByComparator);
@@ -7978,7 +8005,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 	protected DDMStructure filterGetByG_N_D_PrevAndNext(Session session,
 		DDMStructure ddmStructure, long groupId, String name,
-		String description, OrderByComparator orderByComparator,
+		String description, OrderByComparator<DDMStructure> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -9161,7 +9188,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<DDMStructure> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9346,7 +9373,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return ddmStructureToDLFileEntryTypeTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
@@ -9624,7 +9652,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.journal.model.JournalFolder> orderByComparator) {
 		return ddmStructureToJournalFolderTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

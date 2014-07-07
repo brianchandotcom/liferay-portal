@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -51,8 +52,15 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroup the cluster group
 	* @return the cluster group that was added
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ClusterGroup addClusterGroup(
 		com.liferay.portal.model.ClusterGroup clusterGroup);
+
+	public com.liferay.portal.model.ClusterGroup addClusterGroup(
+		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds);
+
+	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
+		java.lang.String name);
 
 	/**
 	* Creates a new cluster group with the primary key. Does not add the cluster group to the database.
@@ -64,24 +72,34 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 		long clusterGroupId);
 
 	/**
+	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param clusterGroup the cluster group
+	* @return the cluster group that was removed
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
+		com.liferay.portal.model.ClusterGroup clusterGroup);
+
+	/**
 	* Deletes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param clusterGroupId the primary key of the cluster group
 	* @return the cluster group that was removed
 	* @throws PortalException if a cluster group with the primary key could not be found
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
 		long clusterGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param clusterGroup the cluster group
-	* @return the cluster group that was removed
+	* @throws PortalException
 	*/
-	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup);
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -91,8 +109,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -107,8 +124,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -125,11 +141,10 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -155,6 +170,16 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ClusterGroup fetchClusterGroup(
 		long clusterGroupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
 	/**
 	* Returns the cluster group with the primary key.
 	*
@@ -165,23 +190,6 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClusterGroup getClusterGroup(
 		long clusterGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -207,21 +215,11 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getClusterGroupsCount();
 
-	/**
-	* Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param clusterGroup the cluster group
-	* @return the cluster group that was updated
-	*/
-	public com.liferay.portal.model.ClusterGroup updateClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup);
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -230,9 +228,13 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds);
-
-	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name);
+	/**
+	* Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param clusterGroup the cluster group
+	* @return the cluster group that was updated
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.portal.model.ClusterGroup updateClusterGroup(
+		com.liferay.portal.model.ClusterGroup clusterGroup);
 }

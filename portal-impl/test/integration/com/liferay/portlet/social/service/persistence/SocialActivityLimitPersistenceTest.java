@@ -260,7 +260,7 @@ public class SocialActivityLimitPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialActivityLimit> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityLimit",
 			"activityLimitId", true, "groupId", true, "companyId", true,
 			"userId", true, "classNameId", true, "classPK", true,

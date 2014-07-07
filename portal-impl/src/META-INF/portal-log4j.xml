@@ -184,10 +184,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.editor.fckeditor.ConnectorAction">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.events.ChannelHubAppShutdownAction">
 		<priority value="INFO" />
 	</category>
@@ -357,6 +353,10 @@
 	</category>
 
 	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
+		<priority value="FATAL" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper">
 		<priority value="FATAL" />
 	</category>
 

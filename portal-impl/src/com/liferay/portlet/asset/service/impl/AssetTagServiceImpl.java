@@ -105,7 +105,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupTags(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end, OrderByComparator<AssetTag> obc) {
 
 		return assetTagPersistence.filterFindByGroupId(
 			groupId, start, end, obc);
@@ -196,7 +196,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	@Override
 	public List<AssetTag> getTags(
 		long groupId, long classNameId, String name, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<AssetTag> obc) {
 
 		return assetTagFinder.filterFindByG_C_N(
 			groupId, classNameId, name, start, end, obc);

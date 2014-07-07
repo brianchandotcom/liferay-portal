@@ -51,7 +51,7 @@ public class WorkflowDefinitionManagerProxyBean
 	@Override
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 		long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -59,7 +59,7 @@ public class WorkflowDefinitionManagerProxyBean
 	@Override
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 		long companyId, String name, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -91,7 +91,7 @@ public class WorkflowDefinitionManagerProxyBean
 	@Override
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 		long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -99,7 +99,7 @@ public class WorkflowDefinitionManagerProxyBean
 	@Override
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 		long companyId, String name, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}

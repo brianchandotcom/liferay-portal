@@ -34,14 +34,14 @@ public class DDLRecordFinderUtil {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByR_S(
 		long recordSetId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getFinder()
 				   .findByR_S(recordSetId, status, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByC_S_S(
 		long companyId, int status, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getFinder()
 				   .findByC_S_S(companyId, status, scope, start, end,
 			orderByComparator);

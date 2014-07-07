@@ -22,7 +22,8 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowInstanceEndDateComparator extends OrderByComparator {
+public class WorkflowInstanceEndDateComparator
+	extends OrderByComparator<WorkflowInstance> {
 
 	public WorkflowInstanceEndDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
@@ -35,9 +36,9 @@ public class WorkflowInstanceEndDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		WorkflowInstance workflowInstance1 = (WorkflowInstance)obj1;
-		WorkflowInstance workflowInstance2 = (WorkflowInstance)obj2;
+	public int compare(
+		WorkflowInstance workflowInstance1,
+		WorkflowInstance workflowInstance2) {
 
 		Date endDate1 = workflowInstance1.getEndDate();
 		Date endDate2 = workflowInstance2.getEndDate();

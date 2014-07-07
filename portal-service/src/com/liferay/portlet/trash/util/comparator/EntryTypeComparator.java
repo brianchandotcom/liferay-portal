@@ -20,7 +20,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 /**
  * @author Sergio González
  */
-public class EntryTypeComparator extends OrderByComparator {
+public class EntryTypeComparator extends OrderByComparator<TrashEntry> {
 
 	public static final String ORDER_BY_ASC = "classNameId ASC";
 
@@ -37,10 +37,7 @@ public class EntryTypeComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		TrashEntry entry1 = (TrashEntry)obj1;
-		TrashEntry entry2 = (TrashEntry)obj2;
-
+	public int compare(TrashEntry entry1, TrashEntry entry2) {
 		int value = 0;
 
 		if (entry1.getClassNameId() > entry2.getClassNameId()) {

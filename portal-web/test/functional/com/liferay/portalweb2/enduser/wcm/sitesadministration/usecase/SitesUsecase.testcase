@@ -714,11 +714,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -729,11 +734,16 @@
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<var name="key_portletName" value="${portlet1Name}" />

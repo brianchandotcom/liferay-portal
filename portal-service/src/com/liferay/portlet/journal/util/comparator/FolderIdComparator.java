@@ -20,7 +20,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 /**
  * @author Shinn Lok
  */
-public class FolderIdComparator extends OrderByComparator {
+public class FolderIdComparator extends OrderByComparator<JournalFolder> {
 
 	public static final String ORDER_BY_ASC = "JournalFolder.folderId ASC";
 
@@ -37,10 +37,7 @@ public class FolderIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		JournalFolder folder1 = (JournalFolder)obj1;
-		JournalFolder folder2 = (JournalFolder)obj2;
-
+	public int compare(JournalFolder folder1, JournalFolder folder2) {
 		long folderId1 = folder1.getFolderId();
 		long folderId2 = folder2.getFolderId();
 

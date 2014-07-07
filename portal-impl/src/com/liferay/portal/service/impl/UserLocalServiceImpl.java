@@ -20,8 +20,6 @@ import com.liferay.portal.ContactFirstNameException;
 import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
 import com.liferay.portal.DuplicateOpenIdException;
-import com.liferay.portal.DuplicateUserEmailAddressException;
-import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.NoSuchImageException;
@@ -1448,7 +1446,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.isLockout()) {
-			throw new UserLockoutException();
+			throw new UserLockoutException.PasswordPolicyLockout(
+				user, passwordPolicy);
 		}
 	}
 
@@ -2154,7 +2153,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@Override
 	public List<User> getInheritedRoleUsers(
-			long roleId, int start, int end, OrderByComparator obc)
+			long roleId, int start, int end, OrderByComparator<User> obc)
 		throws PortalException {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -2306,7 +2305,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public List<User> getSocialUsers(
 			long userId, int socialRelationType, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<User> obc)
 		throws PortalException {
 
 		return getSocialUsers(
@@ -2342,7 +2341,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public List<User> getSocialUsers(
-			long userId, int start, int end, OrderByComparator obc)
+			long userId, int start, int end, OrderByComparator<User> obc)
 		throws PortalException {
 
 		return getSocialUsers(
@@ -2354,7 +2353,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public List<User> getSocialUsers(
 			long userId, int socialRelationType,
 			String socialRelationTypeComparator, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<User> obc)
 		throws PortalException {
 
 		if (!socialRelationTypeComparator.equals(StringPool.EQUAL) &&
@@ -2438,7 +2437,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public List<User> getSocialUsers(
 			long userId1, long userId2, int socialRelationType, int start,
-			int end, OrderByComparator obc)
+			int end, OrderByComparator<User> obc)
 		throws PortalException {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
@@ -2483,7 +2482,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public List<User> getSocialUsers(
 			long userId1, long userId2, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator<User> obc)
 		throws PortalException {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
@@ -3025,7 +3024,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public List<User> search(
 		long companyId, String keywords, int status,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<User> obc) {
 
 		return userFinder.findByKeywords(
 			companyId, keywords, status, params, start, end, obc);
@@ -3160,7 +3159,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long companyId, String firstName, String middleName, String lastName,
 		String screenName, String emailAddress, int status,
 		LinkedHashMap<String, Object> params, boolean andSearch, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<User> obc) {
 
 		return userFinder.findByC_FN_MN_LN_SN_EA_S(
 			companyId, firstName, middleName, lastName, screenName,
@@ -3615,7 +3614,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 		if (Validator.isNull(emailAddress)) {
-			throw new UserEmailAddressException();
+			throw new UserEmailAddressException.MustNotBeNull();
 		}
 
 		User user = userPersistence.findByC_EA(companyId, emailAddress);
@@ -5441,8 +5440,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (userPersistence.fetchByC_EA(
 					user.getCompanyId(), emailAddress) != null) {
 
-				throw new DuplicateUserEmailAddressException(
-					"{userId=" + user.getUserId() + "}");
+				throw new UserEmailAddressException.MustNotBeDuplicate(
+					user.getUserId(), emailAddress);
 			}
 
 			setEmailAddress(
@@ -5603,17 +5602,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 			if (Validator.isNull(login)) {
-				throw new UserEmailAddressException();
+				throw new UserEmailAddressException.MustNotBeNull();
 			}
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
 			if (Validator.isNull(login)) {
-				throw new UserScreenNameException();
+				throw new UserScreenNameException.MustNotBeNull();
 			}
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 			if (Validator.isNull(login)) {
-				throw new UserIdException();
+				throw new UserIdException.MustNotBeNull();
 			}
 		}
 
@@ -6218,8 +6217,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			User user = userPersistence.fetchByC_EA(companyId, emailAddress);
 
 			if ((user != null) && (user.getUserId() != userId)) {
-				throw new DuplicateUserEmailAddressException(
-					"{userId=" + userId + "}");
+				throw new UserEmailAddressException.MustNotBeDuplicate(
+					userId, emailAddress);
 			}
 		}
 
@@ -6263,8 +6262,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				if (userPersistence.fetchByC_EA(
 						user.getCompanyId(), emailAddress) != null) {
 
-					throw new DuplicateUserEmailAddressException(
-						"{userId=" + userId + "}");
+					throw new UserEmailAddressException.MustNotBeDuplicate(
+						userId, emailAddress);
 				}
 			}
 
@@ -6273,7 +6272,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNotNull(smsSn) && !Validator.isEmailAddress(smsSn)) {
-			throw new UserSmsException();
+			throw new UserSmsException.MustBeEmailAddress(smsSn);
 		}
 	}
 
@@ -6307,7 +6306,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			EmailAddressValidatorFactory.getInstance();
 
 		if (!emailAddressValidator.validate(companyId, emailAddress)) {
-			throw new UserEmailAddressException();
+			throw new UserEmailAddressException.MustValidate(
+				emailAddress, emailAddressValidator);
 		}
 
 		String pop3User = PrefsPropsUtil.getString(
@@ -6336,7 +6336,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (!emailAddress1.equals(emailAddress2)) {
-			throw new UserEmailAddressException();
+			throw new UserEmailAddressException.MustBeEqual(
+				user, emailAddress1, emailAddress2);
 		}
 
 		validateEmailAddress(user.getCompanyId(), emailAddress1);
@@ -6348,8 +6349,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (userPersistence.fetchByC_EA(
 					user.getCompanyId(), emailAddress1) != null) {
 
-				throw new DuplicateUserEmailAddressException(
-					"{userId=" + user.getUserId() + "}");
+				throw new UserEmailAddressException.MustNotBeDuplicate(
+					user.getUserId(), emailAddress1);
 			}
 		}
 	}
@@ -6436,19 +6437,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(screenName)) {
-			throw new UserScreenNameException();
+			throw new UserScreenNameException.MustNotBeNull(userId);
 		}
 
 		ScreenNameValidator screenNameValidator =
 			ScreenNameValidatorFactory.getInstance();
 
 		if (!screenNameValidator.validate(companyId, screenName)) {
-			throw new UserScreenNameException();
+			throw new UserScreenNameException.MustValidate(
+				userId, screenName, screenNameValidator);
 		}
 
 		if (Validator.isNumber(screenName)) {
 			if (!PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC) {
-				throw new UserScreenNameException();
+				throw new UserScreenNameException.MustNotBeNumeric(
+					userId, screenName);
 			}
 
 			if (!screenName.equals(String.valueOf(userId))) {
@@ -6456,7 +6459,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					GetterUtil.getLong(screenName));
 
 				if (group != null) {
-					throw new UserScreenNameException();
+					throw new UserScreenNameException.MustNotBeUsedByGroup(
+						userId, screenName, group);
 				}
 			}
 		}
@@ -6466,7 +6470,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				(c != CharPool.DASH) && (c != CharPool.PERIOD) &&
 				(c != CharPool.UNDERLINE)) {
 
-				throw new UserScreenNameException();
+				throw new UserScreenNameException.MustBeAlphaNumeric(
+					userId, screenName, CharPool.DASH, CharPool.PERIOD,
+					CharPool.UNDERLINE);
 			}
 		}
 
@@ -6474,15 +6480,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		for (String anonymousName : anonymousNames) {
 			if (StringUtil.equalsIgnoreCase(screenName, anonymousName)) {
-				throw new UserScreenNameException();
+				throw new UserScreenNameException.MustNotBeReservedForAnonymous(
+					userId, screenName, anonymousNames);
 			}
 		}
 
 		User user = userPersistence.fetchByC_SN(companyId, screenName);
 
 		if ((user != null) && (user.getUserId() != userId)) {
-			throw new DuplicateUserScreenNameException(
-				"{userId=" + userId + "}");
+			throw new UserScreenNameException.MustNotBeDuplicate(
+				userId, screenName);
 		}
 
 		String friendlyURL = StringPool.SLASH + screenName;
@@ -6502,8 +6509,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		int exceptionType = LayoutImpl.validateFriendlyURL(friendlyURL);
 
 		if (exceptionType != -1) {
-			throw new UserScreenNameException(
-				new GroupFriendlyURLException(exceptionType));
+			throw new UserScreenNameException.MustProduceValidFriendlyURL(
+				userId, screenName, exceptionType);
 		}
 
 		String[] reservedScreenNames = PrefsPropsUtil.getStringArray(

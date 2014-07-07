@@ -88,7 +88,7 @@ public class BookmarksEntryUtil {
 	 */
 	public static List<BookmarksEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -153,7 +153,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByResourceBlockId(
 		long resourceBlockId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByResourceBlockId(resourceBlockId, start, end,
 			orderByComparator);
@@ -169,7 +169,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByResourceBlockId_First(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_First(resourceBlockId,
@@ -185,7 +185,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByResourceBlockId_First(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourceBlockId_First(resourceBlockId,
 			orderByComparator);
@@ -201,7 +201,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByResourceBlockId_Last(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_Last(resourceBlockId,
@@ -217,7 +217,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByResourceBlockId_Last(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourceBlockId_Last(resourceBlockId,
 			orderByComparator);
@@ -234,7 +234,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByResourceBlockId_PrevAndNext(
 		long entryId, long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByResourceBlockId_PrevAndNext(entryId, resourceBlockId,
@@ -303,7 +303,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -317,7 +317,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -331,7 +331,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -345,7 +345,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -359,7 +359,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -374,7 +374,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
@@ -508,7 +508,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -540,7 +540,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -556,7 +556,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -572,7 +572,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -589,7 +589,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
@@ -660,7 +660,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -675,7 +675,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -690,7 +690,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -705,7 +705,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -720,7 +720,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -736,7 +736,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByCompanyId_PrevAndNext(
 		long entryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
@@ -808,7 +808,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderId, start, end, orderByComparator);
 	}
@@ -824,7 +824,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_First(groupId, folderId, orderByComparator);
@@ -840,7 +840,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_First(groupId, folderId, orderByComparator);
 	}
@@ -856,7 +856,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, folderId, orderByComparator);
@@ -872,7 +872,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_Last(groupId, folderId, orderByComparator);
 	}
@@ -889,7 +889,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_F_PrevAndNext(
 		long entryId, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(entryId, groupId, folderId,
@@ -942,7 +942,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderId, start, end,
 			orderByComparator);
@@ -960,7 +960,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_F_PrevAndNext(
 		long entryId, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_PrevAndNext(entryId, groupId, folderId,
@@ -1013,7 +1013,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F(
 		long groupId, long[] folderIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderIds, start, end,
 			orderByComparator);
@@ -1069,7 +1069,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F(
 		long groupId, long[] folderIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderIds, start, end, orderByComparator);
 	}
@@ -1174,7 +1174,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_S(groupId, status, start, end, orderByComparator);
 	}
@@ -1190,7 +1190,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
@@ -1206,7 +1206,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(groupId, status, orderByComparator);
 	}
@@ -1222,7 +1222,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
@@ -1238,7 +1238,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -1255,7 +1255,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_S_PrevAndNext(
 		long entryId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(entryId, groupId, status,
@@ -1308,7 +1308,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_S(groupId, status, start, end,
 			orderByComparator);
@@ -1326,7 +1326,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_S_PrevAndNext(
 		long entryId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(entryId, groupId, status,
@@ -1411,7 +1411,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_NotS(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_NotS(groupId, status, start, end, orderByComparator);
 	}
@@ -1427,7 +1427,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_NotS_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_First(groupId, status, orderByComparator);
@@ -1443,7 +1443,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_NotS_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotS_First(groupId, status, orderByComparator);
 	}
@@ -1459,7 +1459,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_NotS_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_Last(groupId, status, orderByComparator);
@@ -1475,7 +1475,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_NotS_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotS_Last(groupId, status, orderByComparator);
 	}
@@ -1492,7 +1492,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_NotS_PrevAndNext(entryId, groupId, status,
@@ -1545,7 +1545,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_NotS(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_NotS(groupId, status, start, end,
 			orderByComparator);
@@ -1563,7 +1563,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_NotS_PrevAndNext(entryId, groupId, status,
@@ -1648,7 +1648,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByC_NotS(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotS(companyId, status, start, end,
 			orderByComparator);
@@ -1665,7 +1665,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
@@ -1681,7 +1681,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1697,7 +1697,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
@@ -1713,7 +1713,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1730,7 +1730,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByC_NotS_PrevAndNext(
 		long entryId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(entryId, companyId, status,
@@ -1807,7 +1807,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -1825,7 +1825,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_S_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_First(groupId, userId, status, orderByComparator);
@@ -1842,7 +1842,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_S_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_First(groupId, userId, status,
 			orderByComparator);
@@ -1860,7 +1860,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_S_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_Last(groupId, userId, status, orderByComparator);
@@ -1877,7 +1877,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_S_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_Last(groupId, userId, status, orderByComparator);
 	}
@@ -1895,7 +1895,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_U_S_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_S_PrevAndNext(entryId, groupId, userId, status,
@@ -1952,7 +1952,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -1971,7 +1971,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_U_S_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_S_PrevAndNext(entryId, groupId, userId,
@@ -2063,7 +2063,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_NotS(groupId, userId, status, start, end,
 			orderByComparator);
@@ -2081,7 +2081,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_NotS_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_First(groupId, userId, status,
@@ -2099,7 +2099,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_NotS_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_NotS_First(groupId, userId, status,
 			orderByComparator);
@@ -2117,7 +2117,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_NotS_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_Last(groupId, userId, status,
@@ -2135,7 +2135,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_NotS_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_NotS_Last(groupId, userId, status,
 			orderByComparator);
@@ -2154,7 +2154,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_NotS_PrevAndNext(entryId, groupId, userId,
@@ -2211,7 +2211,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_NotS(groupId, userId, status, start, end,
 			orderByComparator);
@@ -2230,7 +2230,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_NotS_PrevAndNext(entryId, groupId, userId,
@@ -2323,7 +2323,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2341,7 +2341,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_S_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_First(groupId, folderId, status,
@@ -2359,7 +2359,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_S_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_First(groupId, folderId, status,
 			orderByComparator);
@@ -2377,7 +2377,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_S_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_Last(groupId, folderId, status,
@@ -2395,7 +2395,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_S_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_S_Last(groupId, folderId, status,
 			orderByComparator);
@@ -2414,7 +2414,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_F_S_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_S_PrevAndNext(entryId, groupId, folderId, status,
@@ -2471,7 +2471,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2490,7 +2490,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_F_S_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_S_PrevAndNext(entryId, groupId, folderId,
@@ -2547,7 +2547,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F_S(
 		long groupId, long[] folderIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_S(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -2607,7 +2607,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F_S(
 		long groupId, long[] folderIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_S(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -2723,7 +2723,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F_NotS(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2741,7 +2741,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_NotS_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_First(groupId, folderId, status,
@@ -2759,7 +2759,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_NotS_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_NotS_First(groupId, folderId, status,
 			orderByComparator);
@@ -2777,7 +2777,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_F_NotS_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_Last(groupId, folderId, status,
@@ -2795,7 +2795,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_F_NotS_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_NotS_Last(groupId, folderId, status,
 			orderByComparator);
@@ -2814,7 +2814,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_F_NotS_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_F_NotS_PrevAndNext(entryId, groupId, folderId,
@@ -2871,7 +2871,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -2890,7 +2890,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_F_NotS_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_F_NotS_PrevAndNext(entryId, groupId,
@@ -2947,7 +2947,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_F_NotS(
 		long groupId, long[] folderIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_NotS(groupId, folderIds, status, start,
 			end, orderByComparator);
@@ -3007,7 +3007,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_F_NotS(
 		long groupId, long[] folderIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_NotS(groupId, folderIds, status, start, end,
 			orderByComparator);
@@ -3128,7 +3128,7 @@ public class BookmarksEntryUtil {
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_U_F_S(
 		long groupId, long userId, long folderId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderId, status, start,
 			end, orderByComparator);
@@ -3147,7 +3147,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_F_S_First(
 		long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_First(groupId, userId, folderId, status,
@@ -3166,7 +3166,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_F_S_First(
 		long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_S_First(groupId, userId, folderId, status,
 			orderByComparator);
@@ -3185,7 +3185,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByG_U_F_S_Last(
 		long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_Last(groupId, userId, folderId, status,
@@ -3204,7 +3204,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByG_U_F_S_Last(
 		long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_F_S_Last(groupId, userId, folderId, status,
 			orderByComparator);
@@ -3224,7 +3224,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByG_U_F_S_PrevAndNext(
 		long entryId, long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_F_S_PrevAndNext(entryId, groupId, userId,
@@ -3287,7 +3287,7 @@ public class BookmarksEntryUtil {
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
 		long groupId, long userId, long folderId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderId, status,
 			start, end, orderByComparator);
@@ -3307,7 +3307,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] filterFindByG_U_F_S_PrevAndNext(
 		long entryId, long groupId, long userId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
 		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_F_S_PrevAndNext(entryId, groupId, userId,
@@ -3371,7 +3371,7 @@ public class BookmarksEntryUtil {
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> filterFindByG_U_F_S(
 		long groupId, long userId, long[] folderIds, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_F_S(groupId, userId, folderIds, status,
 			start, end, orderByComparator);
@@ -3436,7 +3436,7 @@ public class BookmarksEntryUtil {
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByG_U_F_S(
 		long groupId, long userId, long[] folderIds, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_F_S(groupId, userId, folderIds, status, start,
 			end, orderByComparator);
@@ -3629,7 +3629,7 @@ public class BookmarksEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

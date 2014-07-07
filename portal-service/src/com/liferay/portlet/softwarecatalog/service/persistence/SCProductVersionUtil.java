@@ -88,7 +88,7 @@ public class SCProductVersionUtil {
 	 */
 	public static List<SCProductVersion> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class SCProductVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findByProductEntryId(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .findByProductEntryId(productEntryId, start, end,
 			orderByComparator);
@@ -168,7 +168,7 @@ public class SCProductVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion findByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
 		return getPersistence()
 				   .findByProductEntryId_First(productEntryId, orderByComparator);
@@ -183,7 +183,7 @@ public class SCProductVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_First(productEntryId,
 			orderByComparator);
@@ -199,7 +199,7 @@ public class SCProductVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion findByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
 		return getPersistence()
 				   .findByProductEntryId_Last(productEntryId, orderByComparator);
@@ -214,7 +214,7 @@ public class SCProductVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_Last(productEntryId, orderByComparator);
 	}
@@ -230,7 +230,7 @@ public class SCProductVersionUtil {
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion[] findByProductEntryId_PrevAndNext(
 		long productVersionId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
 		return getPersistence()
 				   .findByProductEntryId_PrevAndNext(productVersionId,
@@ -434,7 +434,7 @@ public class SCProductVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -507,7 +507,7 @@ public class SCProductVersionUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCFrameworkVersions(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .getSCFrameworkVersions(pk, start, end, orderByComparator);
 	}

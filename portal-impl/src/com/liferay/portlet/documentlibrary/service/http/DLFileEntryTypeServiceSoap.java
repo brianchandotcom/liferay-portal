@@ -208,7 +208,7 @@ public class DLFileEntryTypeServiceSoap {
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =

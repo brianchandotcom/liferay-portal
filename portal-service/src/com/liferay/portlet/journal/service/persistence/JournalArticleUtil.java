@@ -88,7 +88,7 @@ public class JournalArticleUtil {
 	 */
 	public static List<JournalArticle> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByUuid_PrevAndNext(
 		long id, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(id, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByUuid_C_PrevAndNext(
 		long id, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(id, uuid, companyId,
@@ -510,7 +510,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByResourcePrimKey(resourcePrimKey, start, end,
 			orderByComparator);
@@ -526,7 +526,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByResourcePrimKey_First(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByResourcePrimKey_First(resourcePrimKey,
@@ -542,7 +542,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByResourcePrimKey_First(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourcePrimKey_First(resourcePrimKey,
 			orderByComparator);
@@ -558,7 +558,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByResourcePrimKey_Last(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByResourcePrimKey_Last(resourcePrimKey,
@@ -574,7 +574,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByResourcePrimKey_Last(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByResourcePrimKey_Last(resourcePrimKey,
 			orderByComparator);
@@ -591,7 +591,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByResourcePrimKey_PrevAndNext(
 		long id, long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByResourcePrimKey_PrevAndNext(id, resourcePrimKey,
@@ -660,7 +660,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -675,7 +675,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -689,7 +689,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -703,7 +703,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -717,7 +717,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -732,7 +732,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByGroupId_PrevAndNext(
 		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(id, groupId, orderByComparator);
@@ -781,7 +781,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -797,7 +797,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByGroupId_PrevAndNext(
 		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(id, groupId,
@@ -876,7 +876,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -891,7 +891,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -906,7 +906,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -921,7 +921,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -936,7 +936,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -952,7 +952,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByCompanyId_PrevAndNext(
 		long id, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(id, companyId, orderByComparator);
@@ -1020,7 +1020,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
 		java.lang.String structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByStructureId(structureId, start, end, orderByComparator);
 	}
@@ -1035,7 +1035,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByStructureId_First(
 		java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByStructureId_First(structureId, orderByComparator);
@@ -1050,7 +1050,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByStructureId_First(
 		java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_First(structureId, orderByComparator);
 	}
@@ -1065,7 +1065,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByStructureId_Last(
 		java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByStructureId_Last(structureId, orderByComparator);
@@ -1080,7 +1080,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByStructureId_Last(
 		java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_Last(structureId, orderByComparator);
 	}
@@ -1096,7 +1096,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByStructureId_PrevAndNext(
 		long id, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByStructureId_PrevAndNext(id, structureId,
@@ -1150,7 +1150,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByStructureId(
 		java.lang.String[] structureIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByStructureId(structureIds, start, end,
 			orderByComparator);
@@ -1228,7 +1228,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByTemplateId(
 		java.lang.String templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByTemplateId(templateId, start, end, orderByComparator);
 	}
@@ -1243,7 +1243,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByTemplateId_First(
 		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByTemplateId_First(templateId, orderByComparator);
@@ -1258,7 +1258,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByTemplateId_First(
 		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateId_First(templateId, orderByComparator);
 	}
@@ -1273,7 +1273,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByTemplateId_Last(
 		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByTemplateId_Last(templateId, orderByComparator);
@@ -1288,7 +1288,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByTemplateId_Last(
 		java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateId_Last(templateId, orderByComparator);
 	}
@@ -1304,7 +1304,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByTemplateId_PrevAndNext(
 		long id, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByTemplateId_PrevAndNext(id, templateId,
@@ -1373,7 +1373,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByLayoutUuid(
 		java.lang.String layoutUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutUuid(layoutUuid, start, end, orderByComparator);
 	}
@@ -1388,7 +1388,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLayoutUuid_First(layoutUuid, orderByComparator);
@@ -1403,7 +1403,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByLayoutUuid_First(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_First(layoutUuid, orderByComparator);
 	}
@@ -1418,7 +1418,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLayoutUuid_Last(layoutUuid, orderByComparator);
@@ -1433,7 +1433,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByLayoutUuid_Last(
 		java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutUuid_Last(layoutUuid, orderByComparator);
 	}
@@ -1449,7 +1449,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByLayoutUuid_PrevAndNext(
 		long id, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLayoutUuid_PrevAndNext(id, layoutUuid,
@@ -1518,7 +1518,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findBySmallImageId(
 		long smallImageId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findBySmallImageId(smallImageId, start, end,
 			orderByComparator);
@@ -1534,7 +1534,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findBySmallImageId_First(
 		long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findBySmallImageId_First(smallImageId, orderByComparator);
@@ -1549,7 +1549,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchBySmallImageId_First(
 		long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchBySmallImageId_First(smallImageId, orderByComparator);
 	}
@@ -1564,7 +1564,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findBySmallImageId_Last(
 		long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findBySmallImageId_Last(smallImageId, orderByComparator);
@@ -1579,7 +1579,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchBySmallImageId_Last(
 		long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchBySmallImageId_Last(smallImageId, orderByComparator);
 	}
@@ -1595,7 +1595,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findBySmallImageId_PrevAndNext(
 		long id, long smallImageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findBySmallImageId_PrevAndNext(id, smallImageId,
@@ -1667,7 +1667,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_I(
 		long resourcePrimKey, boolean indexable, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByR_I(resourcePrimKey, indexable, start, end,
 			orderByComparator);
@@ -1684,7 +1684,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_I_First(
 		long resourcePrimKey, boolean indexable,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_First(resourcePrimKey, indexable,
@@ -1701,7 +1701,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_I_First(
 		long resourcePrimKey, boolean indexable,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_I_First(resourcePrimKey, indexable,
 			orderByComparator);
@@ -1718,7 +1718,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_I_Last(
 		long resourcePrimKey, boolean indexable,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_Last(resourcePrimKey, indexable, orderByComparator);
@@ -1734,7 +1734,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_I_Last(
 		long resourcePrimKey, boolean indexable,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_I_Last(resourcePrimKey, indexable,
 			orderByComparator);
@@ -1752,7 +1752,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByR_I_PrevAndNext(
 		long id, long resourcePrimKey, boolean indexable,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_PrevAndNext(id, resourcePrimKey, indexable,
@@ -1826,7 +1826,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
 		long resourcePrimKey, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByR_ST(resourcePrimKey, status, start, end,
 			orderByComparator);
@@ -1843,7 +1843,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_ST_First(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_ST_First(resourcePrimKey, status, orderByComparator);
@@ -1859,7 +1859,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_ST_First(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_ST_First(resourcePrimKey, status, orderByComparator);
 	}
@@ -1875,7 +1875,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_ST_Last(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_ST_Last(resourcePrimKey, status, orderByComparator);
@@ -1891,7 +1891,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_ST_Last(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_ST_Last(resourcePrimKey, status, orderByComparator);
 	}
@@ -1908,10 +1908,66 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByR_ST_PrevAndNext(
 		long id, long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_ST_PrevAndNext(id, resourcePrimKey, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles where resourcePrimKey = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param statuses the statuses
+	* @return the matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
+		long resourcePrimKey, int[] statuses) {
+		return getPersistence().findByR_ST(resourcePrimKey, statuses);
+	}
+
+	/**
+	* Returns a range of all the journal articles where resourcePrimKey = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
+		long resourcePrimKey, int[] statuses, int start, int end) {
+		return getPersistence().findByR_ST(resourcePrimKey, statuses, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where resourcePrimKey = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_ST(
+		long resourcePrimKey, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .findByR_ST(resourcePrimKey, statuses, start, end,
 			orderByComparator);
 	}
 
@@ -1934,6 +1990,17 @@ public class JournalArticleUtil {
 	*/
 	public static int countByR_ST(long resourcePrimKey, int status) {
 		return getPersistence().countByR_ST(resourcePrimKey, status);
+	}
+
+	/**
+	* Returns the number of journal articles where resourcePrimKey = &#63; and status = any &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param statuses the statuses
+	* @return the number of matching journal articles
+	*/
+	public static int countByR_ST(long resourcePrimKey, int[] statuses) {
+		return getPersistence().countByR_ST(resourcePrimKey, statuses);
 	}
 
 	/**
@@ -1982,7 +2049,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_U(groupId, userId, start, end, orderByComparator);
 	}
@@ -1998,7 +2065,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
@@ -2014,7 +2081,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -2030,7 +2097,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
@@ -2046,7 +2113,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -2063,7 +2130,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_U_PrevAndNext(
 		long id, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(id, groupId, userId, orderByComparator);
@@ -2115,7 +2182,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U(groupId, userId, start, end,
 			orderByComparator);
@@ -2133,7 +2200,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_PrevAndNext(
 		long id, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(id, groupId, userId,
@@ -2218,7 +2285,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderId, start, end, orderByComparator);
 	}
@@ -2234,7 +2301,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_First(groupId, folderId, orderByComparator);
@@ -2250,7 +2317,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_F_First(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_First(groupId, folderId, orderByComparator);
 	}
@@ -2266,7 +2333,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, folderId, orderByComparator);
@@ -2282,7 +2349,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_F_Last(
 		long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_Last(groupId, folderId, orderByComparator);
 	}
@@ -2299,7 +2366,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_F_PrevAndNext(
 		long id, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(id, groupId, folderId,
@@ -2352,7 +2419,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderId, start, end,
 			orderByComparator);
@@ -2370,7 +2437,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_F_PrevAndNext(
 		long id, long groupId, long folderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_F_PrevAndNext(id, groupId, folderId,
@@ -2423,7 +2490,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F(
 		long groupId, long[] folderIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F(groupId, folderIds, start, end,
 			orderByComparator);
@@ -2479,7 +2546,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F(
 		long groupId, long[] folderIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_F(groupId, folderIds, start, end, orderByComparator);
 	}
@@ -2584,7 +2651,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A(
 		long groupId, java.lang.String articleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_A(groupId, articleId, start, end, orderByComparator);
 	}
@@ -2600,7 +2667,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_First(
 		long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_First(groupId, articleId, orderByComparator);
@@ -2616,7 +2683,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_First(
 		long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_First(groupId, articleId, orderByComparator);
 	}
@@ -2632,7 +2699,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_Last(
 		long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_Last(groupId, articleId, orderByComparator);
@@ -2648,7 +2715,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_Last(
 		long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_Last(groupId, articleId, orderByComparator);
 	}
@@ -2665,7 +2732,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_A_PrevAndNext(
 		long id, long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_PrevAndNext(id, groupId, articleId,
@@ -2718,7 +2785,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A(
 		long groupId, java.lang.String articleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A(groupId, articleId, start, end,
 			orderByComparator);
@@ -2736,7 +2803,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_A_PrevAndNext(
 		long id, long groupId, java.lang.String articleId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_A_PrevAndNext(id, groupId, articleId,
@@ -2821,7 +2888,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_UT(
 		long groupId, java.lang.String urlTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_UT(groupId, urlTitle, start, end, orderByComparator);
 	}
@@ -2837,7 +2904,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_UT_First(
 		long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_First(groupId, urlTitle, orderByComparator);
@@ -2853,7 +2920,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_UT_First(
 		long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_UT_First(groupId, urlTitle, orderByComparator);
 	}
@@ -2869,7 +2936,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_UT_Last(
 		long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_Last(groupId, urlTitle, orderByComparator);
@@ -2885,7 +2952,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_UT_Last(
 		long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_UT_Last(groupId, urlTitle, orderByComparator);
 	}
@@ -2902,7 +2969,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_UT_PrevAndNext(
 		long id, long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_PrevAndNext(id, groupId, urlTitle,
@@ -2955,7 +3022,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_UT(
 		long groupId, java.lang.String urlTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_UT(groupId, urlTitle, start, end,
 			orderByComparator);
@@ -2973,7 +3040,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_UT_PrevAndNext(
 		long id, long groupId, java.lang.String urlTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_UT_PrevAndNext(id, groupId, urlTitle,
@@ -3058,7 +3125,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_S(
 		long groupId, java.lang.String structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_S(groupId, structureId, start, end,
 			orderByComparator);
@@ -3075,7 +3142,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_S_First(
 		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_S_First(groupId, structureId, orderByComparator);
@@ -3091,7 +3158,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_S_First(
 		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(groupId, structureId, orderByComparator);
 	}
@@ -3107,7 +3174,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_S_Last(
 		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, structureId, orderByComparator);
@@ -3123,7 +3190,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_S_Last(
 		long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(groupId, structureId, orderByComparator);
 	}
@@ -3140,7 +3207,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_S_PrevAndNext(
 		long id, long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(id, groupId, structureId,
@@ -3193,7 +3260,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_S(
 		long groupId, java.lang.String structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_S(groupId, structureId, start, end,
 			orderByComparator);
@@ -3211,7 +3278,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_S_PrevAndNext(
 		long id, long groupId, java.lang.String structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(id, groupId, structureId,
@@ -3297,7 +3364,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_T(
 		long groupId, java.lang.String templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, templateId, start, end, orderByComparator);
 	}
@@ -3313,7 +3380,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_T_First(
 		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_T_First(groupId, templateId, orderByComparator);
@@ -3329,7 +3396,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_T_First(
 		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_First(groupId, templateId, orderByComparator);
 	}
@@ -3345,7 +3412,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_T_Last(
 		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_T_Last(groupId, templateId, orderByComparator);
@@ -3361,7 +3428,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_T_Last(
 		long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_Last(groupId, templateId, orderByComparator);
 	}
@@ -3378,7 +3445,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_T_PrevAndNext(
 		long id, long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(id, groupId, templateId,
@@ -3431,7 +3498,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_T(
 		long groupId, java.lang.String templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T(groupId, templateId, start, end,
 			orderByComparator);
@@ -3449,7 +3516,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_T_PrevAndNext(
 		long id, long groupId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_T_PrevAndNext(id, groupId, templateId,
@@ -3534,7 +3601,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_L(
 		long groupId, java.lang.String layoutUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_L(groupId, layoutUuid, start, end, orderByComparator);
 	}
@@ -3550,7 +3617,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_L_First(
 		long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_L_First(groupId, layoutUuid, orderByComparator);
@@ -3566,7 +3633,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_L_First(
 		long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_L_First(groupId, layoutUuid, orderByComparator);
 	}
@@ -3582,7 +3649,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_L_Last(
 		long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_L_Last(groupId, layoutUuid, orderByComparator);
@@ -3598,7 +3665,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_L_Last(
 		long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_L_Last(groupId, layoutUuid, orderByComparator);
 	}
@@ -3615,7 +3682,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_L_PrevAndNext(
 		long id, long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_L_PrevAndNext(id, groupId, layoutUuid,
@@ -3668,7 +3735,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_L(
 		long groupId, java.lang.String layoutUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_L(groupId, layoutUuid, start, end,
 			orderByComparator);
@@ -3686,7 +3753,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_L_PrevAndNext(
 		long id, long groupId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_L_PrevAndNext(id, groupId, layoutUuid,
@@ -3771,7 +3838,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_ST(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_ST(groupId, status, start, end, orderByComparator);
 	}
@@ -3787,7 +3854,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_ST_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_ST_First(groupId, status, orderByComparator);
@@ -3803,7 +3870,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_ST_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_ST_First(groupId, status, orderByComparator);
 	}
@@ -3819,7 +3886,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_ST_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_ST_Last(groupId, status, orderByComparator);
@@ -3835,7 +3902,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_ST_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_ST_Last(groupId, status, orderByComparator);
 	}
@@ -3852,7 +3919,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_ST_PrevAndNext(
 		long id, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_ST_PrevAndNext(id, groupId, status,
@@ -3905,7 +3972,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_ST(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_ST(groupId, status, start, end,
 			orderByComparator);
@@ -3923,7 +3990,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_ST_PrevAndNext(
 		long id, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_ST_PrevAndNext(id, groupId, status,
@@ -4008,7 +4075,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_V(
 		long companyId, double version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByC_V(companyId, version, start, end, orderByComparator);
 	}
@@ -4024,7 +4091,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_V_First(
 		long companyId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_First(companyId, version, orderByComparator);
@@ -4040,7 +4107,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_V_First(
 		long companyId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_V_First(companyId, version, orderByComparator);
 	}
@@ -4056,7 +4123,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_V_Last(
 		long companyId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_Last(companyId, version, orderByComparator);
@@ -4072,7 +4139,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_V_Last(
 		long companyId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_V_Last(companyId, version, orderByComparator);
 	}
@@ -4089,7 +4156,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_V_PrevAndNext(
 		long id, long companyId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_PrevAndNext(id, companyId, version,
@@ -4163,7 +4230,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_ST(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByC_ST(companyId, status, start, end, orderByComparator);
 	}
@@ -4179,7 +4246,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_ST_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_ST_First(companyId, status, orderByComparator);
@@ -4195,7 +4262,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_ST_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_ST_First(companyId, status, orderByComparator);
 	}
@@ -4211,7 +4278,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_ST_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_ST_Last(companyId, status, orderByComparator);
@@ -4227,7 +4294,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_ST_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_ST_Last(companyId, status, orderByComparator);
 	}
@@ -4244,7 +4311,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_ST_PrevAndNext(
 		long id, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_ST_PrevAndNext(id, companyId, status,
@@ -4318,7 +4385,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_NotST(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotST(companyId, status, start, end,
 			orderByComparator);
@@ -4335,7 +4402,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_NotST_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_NotST_First(companyId, status, orderByComparator);
@@ -4351,7 +4418,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_NotST_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotST_First(companyId, status, orderByComparator);
 	}
@@ -4367,7 +4434,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_NotST_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_NotST_Last(companyId, status, orderByComparator);
@@ -4383,7 +4450,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_NotST_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotST_Last(companyId, status, orderByComparator);
 	}
@@ -4400,7 +4467,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_NotST_PrevAndNext(
 		long id, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_NotST_PrevAndNext(id, companyId, status,
@@ -4474,7 +4541,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByLtD_S(
 		java.util.Date displayDate, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByLtD_S(displayDate, status, start, end,
 			orderByComparator);
@@ -4491,7 +4558,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByLtD_S_First(
 		java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLtD_S_First(displayDate, status, orderByComparator);
@@ -4507,7 +4574,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByLtD_S_First(
 		java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtD_S_First(displayDate, status, orderByComparator);
 	}
@@ -4523,7 +4590,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByLtD_S_Last(
 		java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLtD_S_Last(displayDate, status, orderByComparator);
@@ -4539,7 +4606,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByLtD_S_Last(
 		java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtD_S_Last(displayDate, status, orderByComparator);
 	}
@@ -4556,7 +4623,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByLtD_S_PrevAndNext(
 		long id, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByLtD_S_PrevAndNext(id, displayDate, status,
@@ -4635,7 +4702,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_I_S(
 		long resourcePrimKey, boolean indexable, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByR_I_S(resourcePrimKey, indexable, status, start, end,
 			orderByComparator);
@@ -4653,7 +4720,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_I_S_First(
 		long resourcePrimKey, boolean indexable, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_S_First(resourcePrimKey, indexable, status,
@@ -4671,7 +4738,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_I_S_First(
 		long resourcePrimKey, boolean indexable, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_I_S_First(resourcePrimKey, indexable, status,
 			orderByComparator);
@@ -4689,7 +4756,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_I_S_Last(
 		long resourcePrimKey, boolean indexable, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_S_Last(resourcePrimKey, indexable, status,
@@ -4707,7 +4774,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByR_I_S_Last(
 		long resourcePrimKey, boolean indexable, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_I_S_Last(resourcePrimKey, indexable, status,
 			orderByComparator);
@@ -4726,7 +4793,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByR_I_S_PrevAndNext(
 		long id, long resourcePrimKey, boolean indexable, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByR_I_S_PrevAndNext(id, resourcePrimKey, indexable,
@@ -4789,7 +4856,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByR_I_S(
 		long resourcePrimKey, boolean indexable, int[] statuses, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByR_I_S(resourcePrimKey, indexable, statuses, start,
 			end, orderByComparator);
@@ -4884,7 +4951,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_C(groupId, userId, classNameId, start, end,
 			orderByComparator);
@@ -4902,7 +4969,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_C_First(
 		long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_C_First(groupId, userId, classNameId,
@@ -4920,7 +4987,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_First(
 		long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_First(groupId, userId, classNameId,
 			orderByComparator);
@@ -4938,7 +5005,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_C_Last(
 		long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_C_Last(groupId, userId, classNameId,
@@ -4956,7 +5023,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_Last(
 		long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_C_Last(groupId, userId, classNameId,
 			orderByComparator);
@@ -4975,7 +5042,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_U_C_PrevAndNext(
 		long id, long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_U_C_PrevAndNext(id, groupId, userId, classNameId,
@@ -5032,7 +5099,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_C(groupId, userId, classNameId, start, end,
 			orderByComparator);
@@ -5051,7 +5118,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_C_PrevAndNext(
 		long id, long groupId, long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_U_C_PrevAndNext(id, groupId, userId,
@@ -5144,7 +5211,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F_ST(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_ST(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -5162,7 +5229,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_F_ST_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_ST_First(groupId, folderId, status,
@@ -5180,7 +5247,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_F_ST_First(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_ST_First(groupId, folderId, status,
 			orderByComparator);
@@ -5198,7 +5265,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_F_ST_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_ST_Last(groupId, folderId, status,
@@ -5216,7 +5283,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_F_ST_Last(
 		long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_F_ST_Last(groupId, folderId, status,
 			orderByComparator);
@@ -5235,7 +5302,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_F_ST_PrevAndNext(
 		long id, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_F_ST_PrevAndNext(id, groupId, folderId, status,
@@ -5292,7 +5359,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F_ST(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_ST(groupId, folderId, status, start, end,
 			orderByComparator);
@@ -5311,7 +5378,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_F_ST_PrevAndNext(
 		long id, long groupId, long folderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_F_ST_PrevAndNext(id, groupId, folderId,
@@ -5368,7 +5435,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F_ST(
 		long groupId, long folderId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_F_ST(groupId, folderId, statuses, start, end,
 			orderByComparator);
@@ -5428,7 +5495,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F_ST(
 		long groupId, long folderId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_F_ST(groupId, folderId, statuses, start, end,
 			orderByComparator);
@@ -5545,7 +5612,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C(groupId, classNameId, classPK, start, end,
 			orderByComparator);
@@ -5563,7 +5630,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_C_First(groupId, classNameId, classPK,
@@ -5581,7 +5648,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_First(groupId, classNameId, classPK,
 			orderByComparator);
@@ -5599,7 +5666,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_C_Last(groupId, classNameId, classPK,
@@ -5617,7 +5684,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_Last(groupId, classNameId, classPK,
 			orderByComparator);
@@ -5636,7 +5703,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_C_C_PrevAndNext(
 		long id, long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_C_PrevAndNext(id, groupId, classNameId, classPK,
@@ -5693,7 +5760,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C(groupId, classNameId, classPK, start,
 			end, orderByComparator);
@@ -5712,7 +5779,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_C_C_PrevAndNext(
 		long id, long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_C_C_PrevAndNext(id, groupId, classNameId,
@@ -5880,7 +5947,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_T(
 		long groupId, long classNameId, java.lang.String templateId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_T(groupId, classNameId, templateId, start, end,
 			orderByComparator);
@@ -5898,7 +5965,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_T_First(
 		long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_T_First(groupId, classNameId, templateId,
@@ -5916,7 +5983,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_T_First(
 		long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_First(groupId, classNameId, templateId,
 			orderByComparator);
@@ -5934,7 +6001,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_T_Last(
 		long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_T_Last(groupId, classNameId, templateId,
@@ -5952,7 +6019,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_T_Last(
 		long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_Last(groupId, classNameId, templateId,
 			orderByComparator);
@@ -5971,7 +6038,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_C_T_PrevAndNext(
 		long id, long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_T_PrevAndNext(id, groupId, classNameId,
@@ -6032,7 +6099,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_T(
 		long groupId, long classNameId, java.lang.String templateId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_T(groupId, classNameId, templateId, start,
 			end, orderByComparator);
@@ -6051,7 +6118,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_C_T_PrevAndNext(
 		long id, long groupId, long classNameId, java.lang.String templateId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_C_T_PrevAndNext(id, groupId, classNameId,
@@ -6149,7 +6216,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_L(
 		long groupId, long classNameId, java.lang.String layoutUuid, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_L(groupId, classNameId, layoutUuid, start, end,
 			orderByComparator);
@@ -6167,7 +6234,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_L_First(
 		long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_L_First(groupId, classNameId, layoutUuid,
@@ -6185,7 +6252,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_L_First(
 		long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_L_First(groupId, classNameId, layoutUuid,
 			orderByComparator);
@@ -6203,7 +6270,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_C_L_Last(
 		long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_L_Last(groupId, classNameId, layoutUuid,
@@ -6221,7 +6288,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_C_L_Last(
 		long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_L_Last(groupId, classNameId, layoutUuid,
 			orderByComparator);
@@ -6240,7 +6307,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_C_L_PrevAndNext(
 		long id, long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_C_L_PrevAndNext(id, groupId, classNameId,
@@ -6301,7 +6368,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_L(
 		long groupId, long classNameId, java.lang.String layoutUuid, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_L(groupId, classNameId, layoutUuid, start,
 			end, orderByComparator);
@@ -6320,7 +6387,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_C_L_PrevAndNext(
 		long id, long groupId, long classNameId, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_C_L_PrevAndNext(id, groupId, classNameId,
@@ -6488,7 +6555,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_ST(
 		long groupId, java.lang.String articleId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_A_ST(groupId, articleId, status, start, end,
 			orderByComparator);
@@ -6506,7 +6573,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_ST_First(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_ST_First(groupId, articleId, status,
@@ -6524,7 +6591,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_ST_First(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_ST_First(groupId, articleId, status,
 			orderByComparator);
@@ -6542,7 +6609,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_ST_Last(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_ST_Last(groupId, articleId, status,
@@ -6560,7 +6627,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_ST_Last(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_ST_Last(groupId, articleId, status,
 			orderByComparator);
@@ -6579,7 +6646,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_A_ST_PrevAndNext(
 		long id, long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_ST_PrevAndNext(id, groupId, articleId, status,
@@ -6637,7 +6704,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_ST(
 		long groupId, java.lang.String articleId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A_ST(groupId, articleId, status, start, end,
 			orderByComparator);
@@ -6656,7 +6723,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_A_ST_PrevAndNext(
 		long id, long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_A_ST_PrevAndNext(id, groupId, articleId,
@@ -6715,7 +6782,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_ST(
 		long groupId, java.lang.String articleId, int[] statuses, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A_ST(groupId, articleId, statuses, start,
 			end, orderByComparator);
@@ -6777,7 +6844,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_ST(
 		long groupId, java.lang.String articleId, int[] statuses, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_A_ST(groupId, articleId, statuses, start, end,
 			orderByComparator);
@@ -6898,7 +6965,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_NotST(
 		long groupId, java.lang.String articleId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_A_NotST(groupId, articleId, status, start, end,
 			orderByComparator);
@@ -6916,7 +6983,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_NotST_First(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_NotST_First(groupId, articleId, status,
@@ -6934,7 +7001,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_NotST_First(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_NotST_First(groupId, articleId, status,
 			orderByComparator);
@@ -6952,7 +7019,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_A_NotST_Last(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_NotST_Last(groupId, articleId, status,
@@ -6970,7 +7037,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_A_NotST_Last(
 		long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_NotST_Last(groupId, articleId, status,
 			orderByComparator);
@@ -6989,7 +7056,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_A_NotST_PrevAndNext(
 		long id, long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_A_NotST_PrevAndNext(id, groupId, articleId, status,
@@ -7047,7 +7114,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_NotST(
 		long groupId, java.lang.String articleId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A_NotST(groupId, articleId, status, start,
 			end, orderByComparator);
@@ -7066,7 +7133,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_A_NotST_PrevAndNext(
 		long id, long groupId, java.lang.String articleId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_A_NotST_PrevAndNext(id, groupId, articleId,
@@ -7163,7 +7230,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_UT_ST(
 		long groupId, java.lang.String urlTitle, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByG_UT_ST(groupId, urlTitle, status, start, end,
 			orderByComparator);
@@ -7181,7 +7248,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_UT_ST_First(
 		long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_ST_First(groupId, urlTitle, status,
@@ -7199,7 +7266,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_UT_ST_First(
 		long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_UT_ST_First(groupId, urlTitle, status,
 			orderByComparator);
@@ -7217,7 +7284,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByG_UT_ST_Last(
 		long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_ST_Last(groupId, urlTitle, status,
@@ -7235,7 +7302,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_UT_ST_Last(
 		long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_UT_ST_Last(groupId, urlTitle, status,
 			orderByComparator);
@@ -7254,7 +7321,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_UT_ST_PrevAndNext(
 		long id, long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByG_UT_ST_PrevAndNext(id, groupId, urlTitle, status,
@@ -7312,7 +7379,7 @@ public class JournalArticleUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_UT_ST(
 		long groupId, java.lang.String urlTitle, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_UT_ST(groupId, urlTitle, status, start, end,
 			orderByComparator);
@@ -7331,7 +7398,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_UT_ST_PrevAndNext(
 		long id, long groupId, java.lang.String urlTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .filterFindByG_UT_ST_PrevAndNext(id, groupId, urlTitle,
@@ -7426,7 +7493,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_V_ST(
 		long companyId, double version, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .findByC_V_ST(companyId, version, status, start, end,
 			orderByComparator);
@@ -7444,7 +7511,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_V_ST_First(
 		long companyId, double version, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_ST_First(companyId, version, status,
@@ -7462,7 +7529,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_V_ST_First(
 		long companyId, double version, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_V_ST_First(companyId, version, status,
 			orderByComparator);
@@ -7480,7 +7547,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle findByC_V_ST_Last(
 		long companyId, double version, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_ST_Last(companyId, version, status,
@@ -7498,7 +7565,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_V_ST_Last(
 		long companyId, double version, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_V_ST_Last(companyId, version, status,
 			orderByComparator);
@@ -7517,7 +7584,7 @@ public class JournalArticleUtil {
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_V_ST_PrevAndNext(
 		long id, long companyId, double version, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
 				   .findByC_V_ST_PrevAndNext(id, companyId, version, status,
@@ -7662,7 +7729,7 @@ public class JournalArticleUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

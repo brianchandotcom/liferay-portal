@@ -659,7 +659,8 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public List<DDMStructure> getClassStructures(
-		long companyId, long classNameId, OrderByComparator orderByComparator) {
+		long companyId, long classNameId,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructurePersistence.findByC_C(
 			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -673,7 +674,7 @@ public class DDMStructureLocalServiceImpl
 	@Deprecated
 	@Override
 	public List<DDMStructure> getClassStructures(
-		long classNameId, OrderByComparator orderByComparator) {
+		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructurePersistence.findByClassNameId(
 			classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -977,7 +978,7 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public List<DDMStructure> getStructures(
 		long groupId, long classNameId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructurePersistence.findByG_C(
 			groupId, classNameId, start, end, orderByComparator);
@@ -1114,7 +1115,7 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds, String keywords,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.findByKeywords(
 			companyId, groupIds, classNameIds, keywords, start, end,
@@ -1159,7 +1160,7 @@ public class DDMStructureLocalServiceImpl
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds, String name,
 		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.findByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, storageType,

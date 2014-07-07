@@ -26,6 +26,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -44,7 +44,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({UserLocalServiceUtil.class})
+@PrepareForTest({BlogsUtil.class, UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackImplTest extends PowerMockito {
 
@@ -52,9 +52,10 @@ public class TrackbackImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpPortal();
+		setUpBlogsUtil();
+		setUpPortalUtil();
 		setUpThemeDisplay();
-		setUpUserLocalService();
+		setUpUserLocalServiceUtil();
 	}
 
 	@Test
@@ -75,22 +76,28 @@ public class TrackbackImplTest extends PowerMockito {
 			groupId
 		);
 
+		String urlTitle = RandomTestUtil.randomString();
+
 		when(
 			_blogsEntry.getUrlTitle()
 		).thenReturn(
-			"__UrlTitle__"
+			urlTitle
 		);
+
+		String layoutFullURL = RandomTestUtil.randomString();
 
 		when(
 			_portal.getLayoutFullURL(_themeDisplay)
 		).thenReturn(
-			"__LayoutFullURL__"
+			layoutFullURL
 		);
+
+		String readMore = RandomTestUtil.randomString();
 
 		when(
 			_themeDisplay.translate("read-more")
 		).thenReturn(
-			"__read-more__"
+			readMore
 		);
 
 		long userId = RandomTestUtil.randomLong();
@@ -119,27 +126,35 @@ public class TrackbackImplTest extends PowerMockito {
 		trackback.setCommentManager(_commentManager);
 		trackback.setLinkbackConsumer(_linkbackConsumer);
 
+		String excerpt = RandomTestUtil.randomString();
+		String url = RandomTestUtil.randomString();
+		String blogName = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+
 		trackback.addTrackback(
-			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
-			"__blogName__", "__title__", _serviceContextFunction
+			_blogsEntry, _themeDisplay, excerpt, url, blogName, title,
+			_serviceContextFunction
 		);
 
 		Mockito.verify(
 			_commentManager
 		).addComment(
-			Matchers.eq(userId), Matchers.eq(groupId),
-			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(entryId),
-			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
-			Matchers.eq(
-				"[...] __excerpt__ [...] [url=__url__]__read-more__[/url]"),
-			Matchers.same(_serviceContextFunction)
+			userId, groupId, BlogsEntry.class.getName(), entryId, blogName,
+			title,
+			"[...] " + excerpt + " [...] [url=" + url + "]" + readMore +
+				"[/url]",
+			_serviceContextFunction
 		);
 
 		Mockito.verify(
 			_linkbackConsumer
 		).addNewTrackback(
-			commentId, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
+			commentId, url, layoutFullURL + "/-/blogs/" + urlTitle
 		);
+	}
+
+	protected void setUpBlogsUtil() {
+		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
 	protected void setUpLinkbackConsumer() throws Exception {
@@ -152,7 +167,7 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortal() {
+	protected void setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
@@ -162,8 +177,8 @@ public class TrackbackImplTest extends PowerMockito {
 		_themeDisplay = PowerMockito.mock(ThemeDisplay.class);
 	}
 
-	protected void setUpUserLocalService() {
-		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
+	protected void setUpUserLocalServiceUtil() {
+		mockStatic(UserLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(
 			method(UserLocalServiceUtil.class, "getService")

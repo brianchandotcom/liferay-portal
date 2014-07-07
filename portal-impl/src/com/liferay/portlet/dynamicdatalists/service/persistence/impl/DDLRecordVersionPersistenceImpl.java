@@ -154,7 +154,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public List<DDLRecordVersion> findByRecordId(long recordId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDLRecordVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion findByRecordId_First(long recordId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = fetchByRecordId_First(recordId,
 				orderByComparator);
@@ -290,7 +290,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion fetchByRecordId_First(long recordId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		List<DDLRecordVersion> list = findByRecordId(recordId, 0, 1,
 				orderByComparator);
 
@@ -311,7 +311,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion findByRecordId_Last(long recordId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = fetchByRecordId_Last(recordId,
 				orderByComparator);
@@ -341,7 +341,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion fetchByRecordId_Last(long recordId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		int count = countByRecordId(recordId);
 
 		if (count == 0) {
@@ -369,7 +369,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion[] findByRecordId_PrevAndNext(long recordVersionId,
-		long recordId, OrderByComparator orderByComparator)
+		long recordId, OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = findByPrimaryKey(recordVersionId);
 
@@ -400,7 +400,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 	protected DDLRecordVersion getByRecordId_PrevAndNext(Session session,
 		DDLRecordVersion ddlRecordVersion, long recordId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordVersion> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -895,7 +895,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public List<DDLRecordVersion> findByR_S(long recordId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1011,7 +1012,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion findByR_S_First(long recordId, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = fetchByR_S_First(recordId, status,
 				orderByComparator);
@@ -1045,7 +1046,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion fetchByR_S_First(long recordId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		List<DDLRecordVersion> list = findByR_S(recordId, status, 0, 1,
 				orderByComparator);
 
@@ -1067,7 +1068,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion findByR_S_Last(long recordId, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = fetchByR_S_Last(recordId, status,
 				orderByComparator);
@@ -1101,7 +1102,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion fetchByR_S_Last(long recordId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		int count = countByR_S(recordId, status);
 
 		if (count == 0) {
@@ -1130,7 +1131,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public DDLRecordVersion[] findByR_S_PrevAndNext(long recordVersionId,
-		long recordId, int status, OrderByComparator orderByComparator)
+		long recordId, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws NoSuchRecordVersionException {
 		DDLRecordVersion ddlRecordVersion = findByPrimaryKey(recordVersionId);
 
@@ -1161,7 +1163,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 	protected DDLRecordVersion getByR_S_PrevAndNext(Session session,
 		DDLRecordVersion ddlRecordVersion, long recordId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DDLRecordVersion> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1935,7 +1937,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	@Override
 	public List<DDLRecordVersion> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

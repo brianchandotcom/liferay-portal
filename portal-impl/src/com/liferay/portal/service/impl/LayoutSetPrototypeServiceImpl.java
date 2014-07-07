@@ -99,7 +99,8 @@ public class LayoutSetPrototypeServiceImpl
 
 	@Override
 	public List<LayoutSetPrototype> search(
-			long companyId, Boolean active, OrderByComparator obc)
+			long companyId, Boolean active,
+			OrderByComparator<LayoutSetPrototype> obc)
 		throws PortalException {
 
 		List<LayoutSetPrototype> filteredLayoutSetPrototypes =

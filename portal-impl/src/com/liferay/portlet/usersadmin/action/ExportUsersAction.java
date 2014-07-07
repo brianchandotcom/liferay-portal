@@ -224,13 +224,14 @@ public class ExportUsersAction extends PortletAction {
 				searchTerms.getMiddleName(), searchTerms.getLastName(),
 				searchTerms.getScreenName(), searchTerms.getEmailAddress(),
 				searchTerms.getStatus(), params, searchTerms.isAndOperator(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				(OrderByComparator<User>)null);
 		}
 		else {
 			return UserLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, (OrderByComparator)null);
+				QueryUtil.ALL_POS, (OrderByComparator<User>)null);
 		}
 	}
 

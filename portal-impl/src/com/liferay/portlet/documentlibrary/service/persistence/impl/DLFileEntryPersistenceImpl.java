@@ -154,7 +154,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,7 +274,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByUuid_First(uuid, orderByComparator);
 
 		if (dlFileEntry != null) {
@@ -302,7 +303,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +323,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (dlFileEntry != null) {
@@ -350,7 +352,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -378,7 +380,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByUuid_PrevAndNext(long fileEntryId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
 		Session session = null;
@@ -408,7 +411,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByUuid_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -934,7 +937,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1064,7 +1067,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1097,7 +1101,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1119,7 +1123,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1152,7 +1157,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1181,7 +1186,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByUuid_C_PrevAndNext(long fileEntryId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -1212,7 +1218,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByUuid_C_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1487,7 +1493,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1593,7 +1599,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1622,7 +1629,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1642,7 +1649,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (dlFileEntry != null) {
@@ -1670,7 +1678,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1698,7 +1706,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByGroupId_PrevAndNext(long fileEntryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -1729,7 +1737,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByGroupId_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1877,7 +1885,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1967,7 +1975,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] filterFindByGroupId_PrevAndNext(long fileEntryId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(fileEntryId, groupId,
@@ -2003,7 +2011,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry filterGetByGroupId_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2322,7 +2330,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2428,7 +2436,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2457,7 +2466,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2478,7 +2487,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2507,7 +2517,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2535,7 +2545,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByCompanyId_PrevAndNext(long fileEntryId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -2566,7 +2576,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByCompanyId_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2801,7 +2811,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByMimeType(String mimeType, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2921,7 +2931,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByMimeType_First(String mimeType,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByMimeType_First(mimeType,
 				orderByComparator);
 
@@ -2950,7 +2961,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByMimeType_First(String mimeType,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByMimeType(mimeType, 0, 1,
 				orderByComparator);
 
@@ -2971,7 +2982,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByMimeType_Last(String mimeType,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByMimeType_Last(mimeType,
 				orderByComparator);
 
@@ -3000,7 +3012,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByMimeType_Last(String mimeType,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByMimeType(mimeType);
 
 		if (count == 0) {
@@ -3028,7 +3040,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByMimeType_PrevAndNext(long fileEntryId,
-		String mimeType, OrderByComparator orderByComparator)
+		String mimeType, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -3059,7 +3071,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByMimeType_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, String mimeType,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3326,7 +3338,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByFileEntryTypeId(long fileEntryTypeId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3436,7 +3448,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByFileEntryTypeId_First(long fileEntryTypeId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByFileEntryTypeId_First(fileEntryTypeId,
 				orderByComparator);
 
@@ -3465,7 +3478,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByFileEntryTypeId_First(long fileEntryTypeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByFileEntryTypeId(fileEntryTypeId, 0, 1,
 				orderByComparator);
 
@@ -3486,7 +3499,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByFileEntryTypeId_Last(long fileEntryTypeId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByFileEntryTypeId_Last(fileEntryTypeId,
 				orderByComparator);
 
@@ -3515,7 +3529,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByFileEntryTypeId_Last(long fileEntryTypeId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByFileEntryTypeId(fileEntryTypeId);
 
 		if (count == 0) {
@@ -3543,7 +3557,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByFileEntryTypeId_PrevAndNext(long fileEntryId,
-		long fileEntryTypeId, OrderByComparator orderByComparator)
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -3574,7 +3588,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByFileEntryTypeId_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long fileEntryTypeId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3812,7 +3826,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByF_N(long folderId, String name, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3942,7 +3956,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByF_N_First(long folderId, String name,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByF_N_First(folderId, name,
 				orderByComparator);
 
@@ -3975,7 +3990,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByF_N_First(long folderId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByF_N(folderId, name, 0, 1,
 				orderByComparator);
 
@@ -3997,7 +4012,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByF_N_Last(long folderId, String name,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByF_N_Last(folderId, name,
 				orderByComparator);
 
@@ -4030,7 +4046,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByF_N_Last(long folderId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByF_N(folderId, name);
 
 		if (count == 0) {
@@ -4059,7 +4075,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByF_N_PrevAndNext(long fileEntryId, long folderId,
-		String name, OrderByComparator orderByComparator)
+		String name, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -4090,7 +4106,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByF_N_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long folderId, String name,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4370,7 +4386,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByG_U(long groupId, long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4486,7 +4502,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_U_First(long groupId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_U_First(groupId, userId,
 				orderByComparator);
 
@@ -4519,7 +4536,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_U_First(long groupId, long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByG_U(groupId, userId, 0, 1,
 				orderByComparator);
 
@@ -4541,7 +4558,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_U_Last(long groupId, long userId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_U_Last(groupId, userId,
 				orderByComparator);
 
@@ -4574,7 +4592,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_U_Last(long groupId, long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByG_U(groupId, userId);
 
 		if (count == 0) {
@@ -4603,7 +4621,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByG_U_PrevAndNext(long fileEntryId, long groupId,
-		long userId, OrderByComparator orderByComparator)
+		long userId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -4634,7 +4652,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByG_U_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4789,7 +4807,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> filterFindByG_U(long groupId, long userId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U(groupId, userId, start, end, orderByComparator);
 		}
@@ -4884,7 +4902,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] filterFindByG_U_PrevAndNext(long fileEntryId,
-		long groupId, long userId, OrderByComparator orderByComparator)
+		long groupId, long userId,
+		OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_PrevAndNext(fileEntryId, groupId, userId,
@@ -4920,7 +4939,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry filterGetByG_U_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5261,7 +5280,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByG_F(long groupId, long folderId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5377,7 +5396,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_F_First(long groupId, long folderId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_F_First(groupId, folderId,
 				orderByComparator);
 
@@ -5410,7 +5430,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_F_First(long groupId, long folderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByG_F(groupId, folderId, 0, 1,
 				orderByComparator);
 
@@ -5432,7 +5452,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_F_Last(long groupId, long folderId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_F_Last(groupId, folderId,
 				orderByComparator);
 
@@ -5465,7 +5486,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_F_Last(long groupId, long folderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByG_F(groupId, folderId);
 
 		if (count == 0) {
@@ -5494,7 +5515,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] findByG_F_PrevAndNext(long fileEntryId, long groupId,
-		long folderId, OrderByComparator orderByComparator)
+		long folderId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
@@ -5525,7 +5546,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByG_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long folderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5680,7 +5701,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> filterFindByG_F(long groupId, long folderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F(groupId, folderId, start, end, orderByComparator);
 		}
@@ -5775,7 +5796,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry[] filterFindByG_F_PrevAndNext(long fileEntryId,
-		long groupId, long folderId, OrderByComparator orderByComparator)
+		long groupId, long folderId,
+		OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_PrevAndNext(fileEntryId, groupId, folderId,
@@ -5811,7 +5833,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry filterGetByG_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long folderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6001,7 +6023,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> filterFindByG_F(long groupId, long[] folderIds,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F(groupId, folderIds, start, end, orderByComparator);
 		}
@@ -6146,7 +6168,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
@@ -6622,7 +6644,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
-		long folderId, int start, int end, OrderByComparator orderByComparator) {
+		long folderId, int start, int end,
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6744,7 +6767,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_U_F_First(long groupId, long userId,
-		long folderId, OrderByComparator orderByComparator)
+		long folderId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_U_F_First(groupId, userId, folderId,
 				orderByComparator);
@@ -6782,7 +6805,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_U_F_First(long groupId, long userId,
-		long folderId, OrderByComparator orderByComparator) {
+		long folderId, OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByG_U_F(groupId, userId, folderId, 0, 1,
 				orderByComparator);
 
@@ -6805,7 +6828,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_U_F_Last(long groupId, long userId,
-		long folderId, OrderByComparator orderByComparator)
+		long folderId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_U_F_Last(groupId, userId, folderId,
 				orderByComparator);
@@ -6843,7 +6866,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_U_F_Last(long groupId, long userId,
-		long folderId, OrderByComparator orderByComparator) {
+		long folderId, OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByG_U_F(groupId, userId, folderId);
 
 		if (count == 0) {
@@ -6874,7 +6897,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public DLFileEntry[] findByG_U_F_PrevAndNext(long fileEntryId,
 		long groupId, long userId, long folderId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
 		Session session = null;
@@ -6904,7 +6928,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByG_U_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long userId, long folderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7067,7 +7091,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
-		long folderId, int start, int end, OrderByComparator orderByComparator) {
+		long folderId, int start, int end,
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_F(groupId, userId, folderId, start, end,
 				orderByComparator);
@@ -7169,7 +7194,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public DLFileEntry[] filterFindByG_U_F_PrevAndNext(long fileEntryId,
 		long groupId, long userId, long folderId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_F_PrevAndNext(fileEntryId, groupId, userId,
 				folderId, orderByComparator);
@@ -7204,7 +7230,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry filterGetByG_U_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long userId, long folderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7403,7 +7429,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> filterFindByG_U_F(long groupId, long userId,
 		long[] folderIds, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_U_F(groupId, userId, folderIds, start, end,
 				orderByComparator);
@@ -7558,7 +7584,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
 		long[] folderIds, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
@@ -8630,7 +8656,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> findByG_F_F(long groupId, long folderId,
 		long fileEntryTypeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8752,7 +8778,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_F_F_First(long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator)
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_F_F_First(groupId, folderId,
 				fileEntryTypeId, orderByComparator);
@@ -8790,7 +8816,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_F_F_First(long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator) {
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator) {
 		List<DLFileEntry> list = findByG_F_F(groupId, folderId,
 				fileEntryTypeId, 0, 1, orderByComparator);
 
@@ -8813,7 +8839,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry findByG_F_F_Last(long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator)
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = fetchByG_F_F_Last(groupId, folderId,
 				fileEntryTypeId, orderByComparator);
@@ -8851,7 +8877,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public DLFileEntry fetchByG_F_F_Last(long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator) {
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator) {
 		int count = countByG_F_F(groupId, folderId, fileEntryTypeId);
 
 		if (count == 0) {
@@ -8882,7 +8908,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public DLFileEntry[] findByG_F_F_PrevAndNext(long fileEntryId,
 		long groupId, long folderId, long fileEntryTypeId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
 
 		Session session = null;
@@ -8912,7 +8939,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry getByG_F_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator,
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -9078,7 +9105,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long folderId,
 		long fileEntryTypeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_F(groupId, folderId, fileEntryTypeId, start, end,
 				orderByComparator);
@@ -9180,7 +9207,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public DLFileEntry[] filterFindByG_F_F_PrevAndNext(long fileEntryId,
 		long groupId, long folderId, long fileEntryTypeId,
-		OrderByComparator orderByComparator) throws NoSuchFileEntryException {
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_F_PrevAndNext(fileEntryId, groupId, folderId,
 				fileEntryTypeId, orderByComparator);
@@ -9215,7 +9243,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	protected DLFileEntry filterGetByG_F_F_PrevAndNext(Session session,
 		DLFileEntry dlFileEntry, long groupId, long folderId,
-		long fileEntryTypeId, OrderByComparator orderByComparator,
+		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -9416,7 +9444,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> filterFindByG_F_F(long groupId, long[] folderIds,
 		long fileEntryTypeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_F(groupId, folderIds, fileEntryTypeId, start, end,
 				orderByComparator);
@@ -9573,7 +9601,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
 		long fileEntryTypeId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		if (folderIds == null) {
 			folderIds = new long[0];
 		}
@@ -10891,7 +10919,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	@Override
 	public List<DLFileEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFileEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

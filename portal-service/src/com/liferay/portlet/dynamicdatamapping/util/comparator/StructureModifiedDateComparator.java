@@ -21,7 +21,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 /**
  * @author Eduardo Garcia
  */
-public class StructureModifiedDateComparator extends OrderByComparator {
+public class StructureModifiedDateComparator
+	extends OrderByComparator<DDMStructure> {
 
 	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
 
@@ -38,12 +39,9 @@ public class StructureModifiedDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DDMStructure template1 = (DDMStructure)obj1;
-		DDMStructure template2 = (DDMStructure)obj2;
-
+	public int compare(DDMStructure structure1, DDMStructure structure2) {
 		int value = DateUtil.compareTo(
-			template1.getModifiedDate(), template2.getModifiedDate());
+			structure1.getModifiedDate(), structure2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

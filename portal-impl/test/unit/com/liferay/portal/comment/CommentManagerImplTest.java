@@ -15,177 +15,161 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({MBMessageLocalServiceUtil.class})
-@RunWith(PowerMockRunner.class)
-public class CommentManagerImplTest extends PowerMockito {
+public class CommentManagerImplTest extends Mockito {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpMessageBoards();
-		setUpServiceContext();
+		setUpRegistryUtil();
+
+		_commentManagerImpl = new CommentManagerImpl();
 	}
 
 	@Test
-	public void testAddComment() throws Exception {
-		long mbMessageId = RandomTestUtil.randomLong();
-
+	public void testDefaultCommentManager() throws PortalException {
 		when(
-			_mbMessage.getMessageId()
+			_serviceTracker.isEmpty()
 		).thenReturn(
-			mbMessageId
+			true
 		);
 
-		long parentMessageId = RandomTestUtil.randomLong();
+		CommentManager defaultCommentManager = mock(CommentManager.class);
+
+		_commentManagerImpl.setDefaultCommentManager(defaultCommentManager);
+
+		testAllCallsAreDelegated(defaultCommentManager);
+	}
+
+	@Test
+	public void testRegistryCommentManager() throws PortalException {
+		CommentManager registryCommentManager = mock(CommentManager.class);
 
 		when(
-			_mbThread.getRootMessageId()
+			_serviceTracker.getService()
 		).thenReturn(
-			parentMessageId
+			registryCommentManager
 		);
-
-		long threadId = RandomTestUtil.randomLong();
 
 		when(
-			_mbThread.getThreadId()
+			_serviceTracker.isEmpty()
 		).thenReturn(
-			threadId
+			false
 		);
+
+		CommentManager defaultCommentManager = mock(CommentManager.class);
+
+		_commentManagerImpl.setDefaultCommentManager(defaultCommentManager);
+
+		testAllCallsAreDelegated(registryCommentManager);
+
+		verifyZeroInteractions(defaultCommentManager);
+	}
+
+	protected void setUpRegistryUtil() {
+		Registry registry = mock(Registry.class);
+
+		when(
+			registry.getRegistry()
+		).thenReturn(
+			registry
+		);
+
+		when(
+			registry.setRegistry(registry)
+		).thenReturn(
+			registry
+		);
+
+		when(
+			registry.trackServices(
+				(com.liferay.registry.Filter)Matchers.any())
+		).thenReturn(
+			_serviceTracker
+		);
+
+		RegistryUtil.setRegistry(null);
+		RegistryUtil.setRegistry(registry);
+	}
+
+	protected void testAllCallsAreDelegated(CommentManager commentManager)
+		throws PortalException {
 
 		long userId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
-		String className = BlogsEntry.class.getName();
+		String className = RandomTestUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();
+		String userName = RandomTestUtil.randomString();
+		String subject = RandomTestUtil.randomString();
+		String body = RandomTestUtil.randomString();
+		long commentId = RandomTestUtil.randomLong();
+
+		when(
+			commentManager.addComment(
+				userId, groupId, className, classPK, userName, subject, body,
+				_serviceContextFunction)
+		).thenReturn(
+			commentId
+		);
 
 		Assert.assertEquals(
-			mbMessageId,
-			_commentManager.addComment(
-				userId, groupId, className, classPK, "__blogName__",
-				"__title__", "__body__", _serviceContextFunction));
+			commentId,
+			_commentManagerImpl.addComment(
+				userId, groupId, className, classPK, userName, subject, body,
+				_serviceContextFunction));
+
+		_commentManagerImpl.addDiscussion(
+			userId, groupId, className, classPK, userName);
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).getDiscussionMessageDisplay(
-			userId, groupId, className, classPK,
-			WorkflowConstants.STATUS_APPROVED
+			commentManager
+		).addDiscussion(
+			userId, groupId, className, classPK, userName
 		);
+
+		_commentManagerImpl.deleteComment(commentId);
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			Matchers.eq(userId), Matchers.eq("__blogName__"),
-			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
-			Matchers.eq(threadId), Matchers.eq(parentMessageId),
-			Matchers.eq("__title__"), Matchers.eq("__body__"),
-			Matchers.same(_serviceContext)
+			commentManager
+		).deleteComment(
+			commentId
 		);
-	}
 
-	@Test
-	public void testDeleteComment() throws Exception {
-		long mbMessageId = RandomTestUtil.randomLong();
-
-		_commentManager.deleteComment(mbMessageId);
+		_commentManagerImpl.deleteDiscussion(className, classPK);
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).deleteDiscussionMessage(
-			mbMessageId
+			commentManager
+		).deleteDiscussion(
+			className, classPK
 		);
 	}
 
-	protected void setUpMessageBoards() throws Exception {
-		when(
-			_mbMessageDisplay.getThread()
-		).thenReturn(
-			_mbThread
-		);
-
-		when(
-			_mbMessageLocalService.addDiscussionMessage(
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
-				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
-				(ServiceContext)Matchers.any()
-			)
-		).thenReturn(
-			_mbMessage
-		);
-
-		when(
-			_mbMessageLocalService.getDiscussionMessageDisplay(
-				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.eq(BlogsEntry.class.getName()), Matchers.anyLong(),
-				Matchers.eq(WorkflowConstants.STATUS_APPROVED)
-			)
-		).thenReturn(
-			_mbMessageDisplay
-		);
-
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
-		);
-	}
-
-	protected void setUpServiceContext() {
-		when(
-			_serviceContextFunction.apply(MBMessage.class.getName())
-		).thenReturn(
-			_serviceContext
-		);
-	}
-
-	private CommentManager _commentManager = new CommentManagerImpl();
-
-	@Mock
-	private MBMessage _mbMessage;
-
-	@Mock
-	private MBMessageDisplay _mbMessageDisplay;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Mock
-	private MBThread _mbThread;
-
-	private ServiceContext _serviceContext = new ServiceContext();
+	private CommentManagerImpl _commentManagerImpl;
 
 	@Mock
 	private Function<String, ServiceContext> _serviceContextFunction;
+
+	@Mock
+	private ServiceTracker<Object, Object> _serviceTracker;
 
 }

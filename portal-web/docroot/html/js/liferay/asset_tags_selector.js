@@ -603,7 +603,7 @@ AUI.add(
 									checked = true;
 								}
 
-								checkbox.set('checked', checked);
+								checkbox.attr('checked', checked);
 							}
 						}
 					},

@@ -109,7 +109,7 @@ public class TeamFinderImpl
 	public List<Team> findByG_N_D(
 		long groupId, String name, String description,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Team> obc) {
 
 		name = CustomSQLUtil.keywords(name)[0];
 		description = CustomSQLUtil.keywords(description)[0];

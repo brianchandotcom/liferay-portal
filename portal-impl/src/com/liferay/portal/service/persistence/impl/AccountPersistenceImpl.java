@@ -563,7 +563,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 */
 	@Override
 	public List<Account> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Account> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

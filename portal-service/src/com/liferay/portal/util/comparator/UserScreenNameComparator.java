@@ -20,7 +20,7 @@ import com.liferay.portal.model.User;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserScreenNameComparator extends OrderByComparator {
+public class UserScreenNameComparator extends OrderByComparator<User> {
 
 	public static final String ORDER_BY_ASC = "screenName ASC";
 
@@ -37,10 +37,7 @@ public class UserScreenNameComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		User user1 = (User)obj1;
-		User user2 = (User)obj2;
-
+	public int compare(User user1, User user2) {
 		String screenName1 = user1.getScreenName();
 		String screenName2 = user2.getScreenName();
 

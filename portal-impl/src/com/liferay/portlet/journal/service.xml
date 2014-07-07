@@ -89,7 +89,7 @@
 		</finder>
 		<finder name="R_ST" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
-			<finder-column name="status" />
+			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />

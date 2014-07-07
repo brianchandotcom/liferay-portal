@@ -38,12 +38,13 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 			</#if>
 
 			@Override
+			public
 
-			<#if method.name = "dynamicQuery" && (method.parameters?size != 0)>
-				@SuppressWarnings("rawtypes")
+			<#if method.name = "dynamicQuery" && (serviceBuilder.getTypeGenericsName(method.returns) == "java.util.List<T>")>
+				<T>
 			</#if>
 
-			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
+			${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
 
 			<#list method.parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}

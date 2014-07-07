@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -45,8 +44,6 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 	}

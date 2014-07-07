@@ -330,7 +330,7 @@ public class GroupFinderImpl
 	@Override
 	public List<Group> findByLayouts(
 		long companyId, long parentGroupId, boolean site, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Group> obc) {
 
 		Session session = null;
 
@@ -467,7 +467,7 @@ public class GroupFinderImpl
 	@Override
 	public List<Group> findByCompanyId(
 		long companyId, LinkedHashMap<String, Object> params, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Group> obc) {
 
 		if (params == null) {
 			params = _emptyLinkedHashMap;
@@ -692,7 +692,7 @@ public class GroupFinderImpl
 	public List<Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId, String[] names,
 		String[] descriptions, LinkedHashMap<String, Object> params,
-		boolean andOperator, int start, int end, OrderByComparator obc) {
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc) {
 
 		String parentGroupIdComparator = StringPool.EQUAL;
 
@@ -1110,7 +1110,7 @@ public class GroupFinderImpl
 		return resultSQL;
 	}
 
-	protected String replaceOrderBy(String sql, OrderByComparator obc) {
+	protected String replaceOrderBy(String sql, OrderByComparator<Group> obc) {
 		if (obc instanceof GroupNameComparator) {
 			sql = StringUtil.replace(
 				sql, "Group_.name AS groupName",
@@ -1244,7 +1244,7 @@ public class GroupFinderImpl
 		LinkedHashMap<String, Object> param1,
 		LinkedHashMap<String, Object> param2,
 		LinkedHashMap<String, Object> param3,
-		LinkedHashMap<String, Object> param4, OrderByComparator obc,
+		LinkedHashMap<String, Object> param4, OrderByComparator<Group> obc,
 		boolean doUnion) {
 
 		StringBundler sb = null;

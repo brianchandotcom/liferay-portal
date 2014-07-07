@@ -22,7 +22,7 @@ import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link WikiPageResourceLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link WikiPageResourceLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

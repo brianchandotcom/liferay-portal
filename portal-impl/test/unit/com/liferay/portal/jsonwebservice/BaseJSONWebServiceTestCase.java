@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -127,7 +128,8 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 	}
 
 	protected JSONWebServiceAction lookupJSONWebServiceAction(
-		HttpServletRequest httpServletRequest) {
+			HttpServletRequest httpServletRequest)
+		throws NoSuchJSONWebServiceException {
 
 		return JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
 			httpServletRequest);

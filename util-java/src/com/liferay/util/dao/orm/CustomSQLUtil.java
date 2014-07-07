@@ -37,12 +37,12 @@ public class CustomSQLUtil {
 		return _instance._customSQL.get(id);
 	}
 
-	public static String get(String id, QueryDefinition queryDefinition) {
+	public static String get(String id, QueryDefinition<?> queryDefinition) {
 		return _instance._customSQL.get(id, queryDefinition);
 	}
 
 	public static String get(
-		String id, QueryDefinition queryDefinition, String tableName) {
+		String id, QueryDefinition<?> queryDefinition, String tableName) {
 
 		return _instance._customSQL.get(id, queryDefinition, tableName);
 	}
@@ -143,7 +143,7 @@ public class CustomSQLUtil {
 			sql, field, operator, last, values);
 	}
 
-	public static String replaceOrderBy(String sql, OrderByComparator obc) {
+	public static String replaceOrderBy(String sql, OrderByComparator<?> obc) {
 		return _instance._customSQL.replaceOrderBy(sql, obc);
 	}
 

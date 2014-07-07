@@ -20,7 +20,7 @@ import com.liferay.portal.model.Role;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RoleDescriptionComparator extends OrderByComparator {
+public class RoleDescriptionComparator extends OrderByComparator<Role> {
 
 	public static final String ORDER_BY_ASC =
 		"Role_.description ASC, Role_.name ASC";
@@ -39,10 +39,7 @@ public class RoleDescriptionComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Role role1 = (Role)obj1;
-		Role role2 = (Role)obj2;
-
+	public int compare(Role role1, Role role2) {
 		String description1 = role1.getDescription();
 		String description2 = role2.getDescription();
 

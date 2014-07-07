@@ -461,6 +461,54 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
 	}
 
+	protected String fixIncorrectParameterTypeForLanguageUtil(
+		String content, boolean autoFix, String fileName) {
+
+		if (portalSource) {
+			return content;
+		}
+
+		String expectedParameterType = "request";
+		String incorrectParameterType = "pageContext";
+
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+			mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
+
+			expectedParameterType = "pageContext";
+			incorrectParameterType = "request";
+		}
+
+		if (!content.contains(
+				"LanguageUtil.format(" + incorrectParameterType + ", ") &&
+			!content.contains(
+				"LanguageUtil.get(" + incorrectParameterType + ", ")) {
+
+			return content;
+		}
+
+		if (autoFix) {
+			content = StringUtil.replace(
+				content,
+				new String[] {
+					"LanguageUtil.format(" + incorrectParameterType + ", ",
+					"LanguageUtil.get(" + incorrectParameterType + ", "
+				},
+				new String[] {
+					"LanguageUtil.format(" + expectedParameterType + ", ",
+					"LanguageUtil.get(" + expectedParameterType + ", "
+				});
+		}
+		else {
+			processErrorMessage(
+				fileName,
+				"(Unicode)LanguageUtil.format/get methods require " +
+					expectedParameterType + " parameter instead of " +
+						incorrectParameterType + " " + fileName);
+		}
+
+		return content;
+	}
+
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
@@ -883,15 +931,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
-		if (absolutePath.contains("/ant-bnd/") ||
-			absolutePath.contains("/osgi-util/") ||
-			absolutePath.contains("/sync-engine-shared/")) {
+		if (_runOutsidePortalExclusions == null) {
+			_runOutsidePortalExclusions = getExclusions(
+				"run.outside.portal.excludes");
+		}
 
-			return true;
+		for (String runOutsidePortalExclusions : _runOutsidePortalExclusions) {
+			if (absolutePath.contains(runOutsidePortalExclusions)) {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
@@ -1445,5 +1496,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;
 	private Properties _properties;
+	private List<String> _runOutsidePortalExclusions;
 
 }

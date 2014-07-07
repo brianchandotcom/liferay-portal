@@ -86,7 +86,7 @@ public class AccountUtil {
 	 */
 	public static List<Account> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Account> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -219,7 +219,7 @@ public class AccountUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Account> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Account> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -207,204 +207,41 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this message boards thread.
-	*
-	* @return the primary key of this message boards thread
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _mbThread.getPrimaryKey();
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.addAttachmentsFolder();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MBThreadWrapper((MBThread)_mbThread.clone());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portlet.messageboards.model.MBThread mbThread) {
+		return _mbThread.compareTo(mbThread);
 	}
 
 	/**
-	* Sets the primary key of this message boards thread.
-	*
-	* @param primaryKey the primary key of this message boards thread
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_mbThread.setPrimaryKey(primaryKey);
+	public boolean getApproved() {
+		return _mbThread.getApproved();
 	}
 
-	/**
-	* Returns the uuid of this message boards thread.
-	*
-	* @return the uuid of this message boards thread
-	*/
 	@Override
-	public java.lang.String getUuid() {
-		return _mbThread.getUuid();
+	public long getAttachmentsFolderId() {
+		return _mbThread.getAttachmentsFolderId();
 	}
 
-	/**
-	* Sets the uuid of this message boards thread.
-	*
-	* @param uuid the uuid of this message boards thread
-	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
-		_mbThread.setUuid(uuid);
-	}
-
-	/**
-	* Returns the thread ID of this message boards thread.
-	*
-	* @return the thread ID of this message boards thread
-	*/
-	@Override
-	public long getThreadId() {
-		return _mbThread.getThreadId();
-	}
-
-	/**
-	* Sets the thread ID of this message boards thread.
-	*
-	* @param threadId the thread ID of this message boards thread
-	*/
-	@Override
-	public void setThreadId(long threadId) {
-		_mbThread.setThreadId(threadId);
-	}
-
-	/**
-	* Returns the group ID of this message boards thread.
-	*
-	* @return the group ID of this message boards thread
-	*/
-	@Override
-	public long getGroupId() {
-		return _mbThread.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this message boards thread.
-	*
-	* @param groupId the group ID of this message boards thread
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_mbThread.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this message boards thread.
-	*
-	* @return the company ID of this message boards thread
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mbThread.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this message boards thread.
-	*
-	* @param companyId the company ID of this message boards thread
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_mbThread.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this message boards thread.
-	*
-	* @return the user ID of this message boards thread
-	*/
-	@Override
-	public long getUserId() {
-		return _mbThread.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this message boards thread.
-	*
-	* @param userId the user ID of this message boards thread
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_mbThread.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this message boards thread.
-	*
-	* @return the user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _mbThread.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this message boards thread.
-	*
-	* @param userUuid the user uuid of this message boards thread
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_mbThread.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this message boards thread.
-	*
-	* @return the user name of this message boards thread
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _mbThread.getUserName();
-	}
-
-	/**
-	* Sets the user name of this message boards thread.
-	*
-	* @param userName the user name of this message boards thread
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_mbThread.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this message boards thread.
-	*
-	* @return the create date of this message boards thread
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _mbThread.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this message boards thread.
-	*
-	* @param createDate the create date of this message boards thread
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_mbThread.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this message boards thread.
-	*
-	* @return the modified date of this message boards thread
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _mbThread.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this message boards thread.
-	*
-	* @param modifiedDate the modified date of this message boards thread
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_mbThread.setModifiedDate(modifiedDate);
+	public com.liferay.portlet.messageboards.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.getCategory();
 	}
 
 	/**
@@ -418,113 +255,58 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the category ID of this message boards thread.
+	* Returns the company ID of this message boards thread.
 	*
-	* @param categoryId the category ID of this message boards thread
+	* @return the company ID of this message boards thread
 	*/
 	@Override
-	public void setCategoryId(long categoryId) {
-		_mbThread.setCategoryId(categoryId);
+	public long getCompanyId() {
+		return _mbThread.getCompanyId();
 	}
 
 	/**
-	* Returns the root message ID of this message boards thread.
+	* Returns the container model ID of this message boards thread.
 	*
-	* @return the root message ID of this message boards thread
+	* @return the container model ID of this message boards thread
 	*/
 	@Override
-	public long getRootMessageId() {
-		return _mbThread.getRootMessageId();
+	public long getContainerModelId() {
+		return _mbThread.getContainerModelId();
 	}
 
 	/**
-	* Sets the root message ID of this message boards thread.
+	* Returns the container name of this message boards thread.
 	*
-	* @param rootMessageId the root message ID of this message boards thread
+	* @return the container name of this message boards thread
 	*/
 	@Override
-	public void setRootMessageId(long rootMessageId) {
-		_mbThread.setRootMessageId(rootMessageId);
+	public java.lang.String getContainerModelName() {
+		return _mbThread.getContainerModelName();
 	}
 
 	/**
-	* Returns the root message user ID of this message boards thread.
+	* Returns the create date of this message boards thread.
 	*
-	* @return the root message user ID of this message boards thread
+	* @return the create date of this message boards thread
 	*/
 	@Override
-	public long getRootMessageUserId() {
-		return _mbThread.getRootMessageUserId();
+	public java.util.Date getCreateDate() {
+		return _mbThread.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _mbThread.getExpandoBridge();
 	}
 
 	/**
-	* Sets the root message user ID of this message boards thread.
+	* Returns the group ID of this message boards thread.
 	*
-	* @param rootMessageUserId the root message user ID of this message boards thread
+	* @return the group ID of this message boards thread
 	*/
 	@Override
-	public void setRootMessageUserId(long rootMessageUserId) {
-		_mbThread.setRootMessageUserId(rootMessageUserId);
-	}
-
-	/**
-	* Returns the root message user uuid of this message boards thread.
-	*
-	* @return the root message user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getRootMessageUserUuid() {
-		return _mbThread.getRootMessageUserUuid();
-	}
-
-	/**
-	* Sets the root message user uuid of this message boards thread.
-	*
-	* @param rootMessageUserUuid the root message user uuid of this message boards thread
-	*/
-	@Override
-	public void setRootMessageUserUuid(java.lang.String rootMessageUserUuid) {
-		_mbThread.setRootMessageUserUuid(rootMessageUserUuid);
-	}
-
-	/**
-	* Returns the message count of this message boards thread.
-	*
-	* @return the message count of this message boards thread
-	*/
-	@Override
-	public int getMessageCount() {
-		return _mbThread.getMessageCount();
-	}
-
-	/**
-	* Sets the message count of this message boards thread.
-	*
-	* @param messageCount the message count of this message boards thread
-	*/
-	@Override
-	public void setMessageCount(int messageCount) {
-		_mbThread.setMessageCount(messageCount);
-	}
-
-	/**
-	* Returns the view count of this message boards thread.
-	*
-	* @return the view count of this message boards thread
-	*/
-	@Override
-	public int getViewCount() {
-		return _mbThread.getViewCount();
-	}
-
-	/**
-	* Sets the view count of this message boards thread.
-	*
-	* @param viewCount the view count of this message boards thread
-	*/
-	@Override
-	public void setViewCount(int viewCount) {
-		_mbThread.setViewCount(viewCount);
+	public long getGroupId() {
+		return _mbThread.getGroupId();
 	}
 
 	/**
@@ -538,16 +320,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the last post by user ID of this message boards thread.
-	*
-	* @param lastPostByUserId the last post by user ID of this message boards thread
-	*/
-	@Override
-	public void setLastPostByUserId(long lastPostByUserId) {
-		_mbThread.setLastPostByUserId(lastPostByUserId);
-	}
-
-	/**
 	* Returns the last post by user uuid of this message boards thread.
 	*
 	* @return the last post by user uuid of this message boards thread
@@ -555,16 +327,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public java.lang.String getLastPostByUserUuid() {
 		return _mbThread.getLastPostByUserUuid();
-	}
-
-	/**
-	* Sets the last post by user uuid of this message boards thread.
-	*
-	* @param lastPostByUserUuid the last post by user uuid of this message boards thread
-	*/
-	@Override
-	public void setLastPostByUserUuid(java.lang.String lastPostByUserUuid) {
-		_mbThread.setLastPostByUserUuid(lastPostByUserUuid);
 	}
 
 	/**
@@ -577,14 +339,59 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.getLastPostDate();
 	}
 
+	@Override
+	public com.liferay.portal.model.Lock getLock() {
+		return _mbThread.getLock();
+	}
+
 	/**
-	* Sets the last post date of this message boards thread.
+	* Returns the message count of this message boards thread.
 	*
-	* @param lastPostDate the last post date of this message boards thread
+	* @return the message count of this message boards thread
 	*/
 	@Override
-	public void setLastPostDate(java.util.Date lastPostDate) {
-		_mbThread.setLastPostDate(lastPostDate);
+	public int getMessageCount() {
+		return _mbThread.getMessageCount();
+	}
+
+	/**
+	* Returns the modified date of this message boards thread.
+	*
+	* @return the modified date of this message boards thread
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _mbThread.getModifiedDate();
+	}
+
+	/**
+	* Returns the parent container model ID of this message boards thread.
+	*
+	* @return the parent container model ID of this message boards thread
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _mbThread.getParentContainerModelId();
+	}
+
+	@Override
+	public long[] getParticipantUserIds() {
+		return _mbThread.getParticipantUserIds();
+	}
+
+	/**
+	* Returns the primary key of this message boards thread.
+	*
+	* @return the primary key of this message boards thread
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mbThread.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _mbThread.getPrimaryKeyObj();
 	}
 
 	/**
@@ -598,16 +405,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the priority of this message boards thread.
-	*
-	* @param priority the priority of this message boards thread
-	*/
-	@Override
-	public void setPriority(double priority) {
-		_mbThread.setPriority(priority);
-	}
-
-	/**
 	* Returns the question of this message boards thread.
 	*
 	* @return the question of this message boards thread
@@ -618,23 +415,33 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Returns <code>true</code> if this message boards thread is question.
+	* Returns the root message ID of this message boards thread.
 	*
-	* @return <code>true</code> if this message boards thread is question; <code>false</code> otherwise
+	* @return the root message ID of this message boards thread
 	*/
 	@Override
-	public boolean isQuestion() {
-		return _mbThread.isQuestion();
+	public long getRootMessageId() {
+		return _mbThread.getRootMessageId();
 	}
 
 	/**
-	* Sets whether this message boards thread is question.
+	* Returns the root message user ID of this message boards thread.
 	*
-	* @param question the question of this message boards thread
+	* @return the root message user ID of this message boards thread
 	*/
 	@Override
-	public void setQuestion(boolean question) {
-		_mbThread.setQuestion(question);
+	public long getRootMessageUserId() {
+		return _mbThread.getRootMessageUserId();
+	}
+
+	/**
+	* Returns the root message user uuid of this message boards thread.
+	*
+	* @return the root message user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getRootMessageUserUuid() {
+		return _mbThread.getRootMessageUserUuid();
 	}
 
 	/**
@@ -648,16 +455,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the status of this message boards thread.
-	*
-	* @param status the status of this message boards thread
-	*/
-	@Override
-	public void setStatus(int status) {
-		_mbThread.setStatus(status);
-	}
-
-	/**
 	* Returns the status by user ID of this message boards thread.
 	*
 	* @return the status by user ID of this message boards thread
@@ -665,36 +462,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public long getStatusByUserId() {
 		return _mbThread.getStatusByUserId();
-	}
-
-	/**
-	* Sets the status by user ID of this message boards thread.
-	*
-	* @param statusByUserId the status by user ID of this message boards thread
-	*/
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		_mbThread.setStatusByUserId(statusByUserId);
-	}
-
-	/**
-	* Returns the status by user uuid of this message boards thread.
-	*
-	* @return the status by user uuid of this message boards thread
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _mbThread.getStatusByUserUuid();
-	}
-
-	/**
-	* Sets the status by user uuid of this message boards thread.
-	*
-	* @param statusByUserUuid the status by user uuid of this message boards thread
-	*/
-	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
-		_mbThread.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -708,13 +475,13 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the status by user name of this message boards thread.
+	* Returns the status by user uuid of this message boards thread.
 	*
-	* @param statusByUserName the status by user name of this message boards thread
+	* @return the status by user uuid of this message boards thread
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
-		_mbThread.setStatusByUserName(statusByUserName);
+	public java.lang.String getStatusByUserUuid() {
+		return _mbThread.getStatusByUserUuid();
 	}
 
 	/**
@@ -728,13 +495,13 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Sets the status date of this message boards thread.
+	* Returns the thread ID of this message boards thread.
 	*
-	* @param statusDate the status date of this message boards thread
+	* @return the thread ID of this message boards thread
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
-		_mbThread.setStatusDate(statusDate);
+	public long getThreadId() {
+		return _mbThread.getThreadId();
 	}
 
 	/**
@@ -769,6 +536,116 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
+	* Returns the user ID of this message boards thread.
+	*
+	* @return the user ID of this message boards thread
+	*/
+	@Override
+	public long getUserId() {
+		return _mbThread.getUserId();
+	}
+
+	/**
+	* Returns the user name of this message boards thread.
+	*
+	* @return the user name of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _mbThread.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this message boards thread.
+	*
+	* @return the user uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _mbThread.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this message boards thread.
+	*
+	* @return the uuid of this message boards thread
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _mbThread.getUuid();
+	}
+
+	/**
+	* Returns the view count of this message boards thread.
+	*
+	* @return the view count of this message boards thread
+	*/
+	@Override
+	public int getViewCount() {
+		return _mbThread.getViewCount();
+	}
+
+	@Override
+	public boolean hasLock(long userId) {
+		return _mbThread.hasLock(userId);
+	}
+
+	@Override
+	public int hashCode() {
+		return _mbThread.hashCode();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is approved.
+	*
+	* @return <code>true</code> if this message boards thread is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _mbThread.isApproved();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _mbThread.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is denied.
+	*
+	* @return <code>true</code> if this message boards thread is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _mbThread.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is a draft.
+	*
+	* @return <code>true</code> if this message boards thread is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _mbThread.isDraft();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _mbThread.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is expired.
+	*
+	* @return <code>true</code> if this message boards thread is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _mbThread.isExpired();
+	}
+
+	/**
 	* Returns <code>true</code> if this message boards thread is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
@@ -799,55 +676,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _mbThread.getApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is approved.
-	*
-	* @return <code>true</code> if this message boards thread is approved; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isApproved() {
-		return _mbThread.isApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is denied.
-	*
-	* @return <code>true</code> if this message boards thread is denied; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDenied() {
-		return _mbThread.isDenied();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is a draft.
-	*
-	* @return <code>true</code> if this message boards thread is a draft; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDraft() {
-		return _mbThread.isDraft();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is expired.
-	*
-	* @return <code>true</code> if this message boards thread is expired; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isExpired() {
-		return _mbThread.isExpired();
-	}
-
-	/**
 	* Returns <code>true</code> if this message boards thread is inactive.
 	*
 	* @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
@@ -867,6 +695,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.isIncomplete();
 	}
 
+	@Override
+	public boolean isLocked() {
+		return _mbThread.isLocked();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _mbThread.isNew();
+	}
+
 	/**
 	* Returns <code>true</code> if this message boards thread is pending.
 	*
@@ -875,6 +713,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public boolean isPending() {
 		return _mbThread.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is question.
+	*
+	* @return <code>true</code> if this message boards thread is question; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isQuestion() {
+		return _mbThread.isQuestion();
 	}
 
 	/**
@@ -887,14 +735,34 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.isScheduled();
 	}
 
+	@Override
+	public void persist() {
+		_mbThread.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_mbThread.setCachedModel(cachedModel);
+	}
+
 	/**
-	* Returns the container model ID of this message boards thread.
+	* Sets the category ID of this message boards thread.
 	*
-	* @return the container model ID of this message boards thread
+	* @param categoryId the category ID of this message boards thread
 	*/
 	@Override
-	public long getContainerModelId() {
-		return _mbThread.getContainerModelId();
+	public void setCategoryId(long categoryId) {
+		_mbThread.setCategoryId(categoryId);
+	}
+
+	/**
+	* Sets the company ID of this message boards thread.
+	*
+	* @param companyId the company ID of this message boards thread
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_mbThread.setCompanyId(companyId);
 	}
 
 	/**
@@ -908,73 +776,13 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Returns the container name of this message boards thread.
+	* Sets the create date of this message boards thread.
 	*
-	* @return the container name of this message boards thread
+	* @param createDate the create date of this message boards thread
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
-		return _mbThread.getContainerModelName();
-	}
-
-	/**
-	* Returns the parent container model ID of this message boards thread.
-	*
-	* @return the parent container model ID of this message boards thread
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _mbThread.getParentContainerModelId();
-	}
-
-	/**
-	* Sets the parent container model ID of this message boards thread.
-	*
-	* @param parentContainerModelId the parent container model ID of this message boards thread
-	*/
-	@Override
-	public void setParentContainerModelId(long parentContainerModelId) {
-		_mbThread.setParentContainerModelId(parentContainerModelId);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbThread.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbThread.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbThread.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbThread.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbThread.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _mbThread.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_mbThread.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _mbThread.getExpandoBridge();
+	public void setCreateDate(java.util.Date createDate) {
+		_mbThread.setCreateDate(createDate);
 	}
 
 	@Override
@@ -995,20 +803,254 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		_mbThread.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this message boards thread.
+	*
+	* @param groupId the group ID of this message boards thread
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new MBThreadWrapper((MBThread)_mbThread.clone());
+	public void setGroupId(long groupId) {
+		_mbThread.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last post by user ID of this message boards thread.
+	*
+	* @param lastPostByUserId the last post by user ID of this message boards thread
+	*/
+	@Override
+	public void setLastPostByUserId(long lastPostByUserId) {
+		_mbThread.setLastPostByUserId(lastPostByUserId);
+	}
+
+	/**
+	* Sets the last post by user uuid of this message boards thread.
+	*
+	* @param lastPostByUserUuid the last post by user uuid of this message boards thread
+	*/
+	@Override
+	public void setLastPostByUserUuid(java.lang.String lastPostByUserUuid) {
+		_mbThread.setLastPostByUserUuid(lastPostByUserUuid);
+	}
+
+	/**
+	* Sets the last post date of this message boards thread.
+	*
+	* @param lastPostDate the last post date of this message boards thread
+	*/
+	@Override
+	public void setLastPostDate(java.util.Date lastPostDate) {
+		_mbThread.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Sets the message count of this message boards thread.
+	*
+	* @param messageCount the message count of this message boards thread
+	*/
+	@Override
+	public void setMessageCount(int messageCount) {
+		_mbThread.setMessageCount(messageCount);
+	}
+
+	/**
+	* Sets the modified date of this message boards thread.
+	*
+	* @param modifiedDate the modified date of this message boards thread
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_mbThread.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.messageboards.model.MBThread mbThread) {
-		return _mbThread.compareTo(mbThread);
+	public void setNew(boolean n) {
+		_mbThread.setNew(n);
+	}
+
+	/**
+	* Sets the parent container model ID of this message boards thread.
+	*
+	* @param parentContainerModelId the parent container model ID of this message boards thread
+	*/
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_mbThread.setParentContainerModelId(parentContainerModelId);
+	}
+
+	/**
+	* Sets the primary key of this message boards thread.
+	*
+	* @param primaryKey the primary key of this message boards thread
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_mbThread.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _mbThread.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_mbThread.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the priority of this message boards thread.
+	*
+	* @param priority the priority of this message boards thread
+	*/
+	@Override
+	public void setPriority(double priority) {
+		_mbThread.setPriority(priority);
+	}
+
+	/**
+	* Sets whether this message boards thread is question.
+	*
+	* @param question the question of this message boards thread
+	*/
+	@Override
+	public void setQuestion(boolean question) {
+		_mbThread.setQuestion(question);
+	}
+
+	/**
+	* Sets the root message ID of this message boards thread.
+	*
+	* @param rootMessageId the root message ID of this message boards thread
+	*/
+	@Override
+	public void setRootMessageId(long rootMessageId) {
+		_mbThread.setRootMessageId(rootMessageId);
+	}
+
+	/**
+	* Sets the root message user ID of this message boards thread.
+	*
+	* @param rootMessageUserId the root message user ID of this message boards thread
+	*/
+	@Override
+	public void setRootMessageUserId(long rootMessageUserId) {
+		_mbThread.setRootMessageUserId(rootMessageUserId);
+	}
+
+	/**
+	* Sets the root message user uuid of this message boards thread.
+	*
+	* @param rootMessageUserUuid the root message user uuid of this message boards thread
+	*/
+	@Override
+	public void setRootMessageUserUuid(java.lang.String rootMessageUserUuid) {
+		_mbThread.setRootMessageUserUuid(rootMessageUserUuid);
+	}
+
+	/**
+	* Sets the status of this message boards thread.
+	*
+	* @param status the status of this message boards thread
+	*/
+	@Override
+	public void setStatus(int status) {
+		_mbThread.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this message boards thread.
+	*
+	* @param statusByUserId the status by user ID of this message boards thread
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_mbThread.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this message boards thread.
+	*
+	* @param statusByUserName the status by user name of this message boards thread
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_mbThread.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this message boards thread.
+	*
+	* @param statusByUserUuid the status by user uuid of this message boards thread
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_mbThread.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this message boards thread.
+	*
+	* @param statusDate the status date of this message boards thread
+	*/
+	@Override
+	public void setStatusDate(java.util.Date statusDate) {
+		_mbThread.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets the thread ID of this message boards thread.
+	*
+	* @param threadId the thread ID of this message boards thread
+	*/
+	@Override
+	public void setThreadId(long threadId) {
+		_mbThread.setThreadId(threadId);
+	}
+
+	/**
+	* Sets the user ID of this message boards thread.
+	*
+	* @param userId the user ID of this message boards thread
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_mbThread.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this message boards thread.
+	*
+	* @param userName the user name of this message boards thread
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_mbThread.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this message boards thread.
+	*
+	* @param userUuid the user uuid of this message boards thread
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_mbThread.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this message boards thread.
+	*
+	* @param uuid the uuid of this message boards thread
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_mbThread.setUuid(uuid);
+	}
+
+	/**
+	* Sets the view count of this message boards thread.
+	*
+	* @param viewCount the view count of this message boards thread
+	*/
+	@Override
+	public void setViewCount(int viewCount) {
+		_mbThread.setViewCount(viewCount);
 	}
 
 	@Override
@@ -1022,60 +1064,18 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBThread toUnescapedModel() {
-		return new MBThreadWrapper(_mbThread.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _mbThread.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.messageboards.model.MBThread toUnescapedModel() {
+		return new MBThreadWrapper(_mbThread.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _mbThread.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_mbThread.persist();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.addAttachmentsFolder();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _mbThread.getAttachmentsFolderId();
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory getCategory()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getCategory();
-	}
-
-	@Override
-	public com.liferay.portal.model.Lock getLock() {
-		return _mbThread.getLock();
-	}
-
-	@Override
-	public long[] getParticipantUserIds() {
-		return _mbThread.getParticipantUserIds();
-	}
-
-	@Override
-	public boolean hasLock(long userId) {
-		return _mbThread.hasLock(userId);
-	}
-
-	@Override
-	public boolean isLocked() {
-		return _mbThread.isLocked();
 	}
 
 	@Override

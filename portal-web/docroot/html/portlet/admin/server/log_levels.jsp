@@ -27,6 +27,12 @@ serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>
 
+<liferay-ui:tabs
+	names="update-categories,add-category"
+	param="tabs3"
+	portletURL="<%= serverURL %>"
+/>
+
 <c:choose>
 	<c:when test='<%= tabs3.equals("add-category") %>'>
 		<aui:fieldset>

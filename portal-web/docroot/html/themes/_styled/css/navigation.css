@@ -38,10 +38,6 @@
 		}
 	}
 
-	.lfr-nav-sortable > a > span {
-		padding-left: 28px;
-	}
-
 	.drag-handle {
 		background-color: #555;
 
@@ -58,16 +54,6 @@
 		text-align: center;
 		top: 2px;
 		width: 1em;
-	}
-
-	@include respond-to(desktop) {
-		.lfr-nav-sortable > a > span {
-			padding-left: 0;
-		}
-
-		.drag-handle {
-			display: none;
-		}
 	}
 
 	.lfr-nav-updateable {
@@ -117,6 +103,22 @@
 
 	.drag-handle {
 		display: none;
+	}
+}
+
+.touch .modify-pages {
+	.lfr-nav-sortable > a > span {
+		padding-left: 28px;
+	}
+
+	@include respond-to(desktop) {
+		.lfr-nav-sortable > a > span {
+			padding-left: 0;
+		}
+
+		.drag-handle {
+			display: none;
+		}
 	}
 }
 

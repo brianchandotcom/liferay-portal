@@ -219,8 +219,14 @@
 			<var name="subCategoryName" value="${subCategoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -261,9 +267,14 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="markAsQuestion" value="true" />
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -303,8 +314,14 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -327,8 +344,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -351,8 +374,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -526,10 +555,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#editPG">
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="1" />
 			<var name="threadBody" value="${threadBody}" />
-			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 		</execute>
 	</command>
 
@@ -587,8 +621,14 @@
 			<var name="categoryName" value="${categoryName2}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -652,11 +692,16 @@
 			<var name="categoryName" value="${categoryName2}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="2" />
 			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="${threadBody}" />
 			<var name="threadBody2" value="${explanationBody}" />
-			<var name="threadPost2" value="threadPost2" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadSubject2" value="${explanationSubject}" />
 		</execute>

@@ -155,7 +155,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -275,7 +275,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_First(uuid, orderByComparator);
 
 		if (organization != null) {
@@ -303,7 +304,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -323,7 +324,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (organization != null) {
@@ -351,7 +353,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,7 +381,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] findByUuid_PrevAndNext(long organizationId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
@@ -410,7 +412,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByUuid_PrevAndNext(Session session,
 		Organization organization, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -570,7 +572,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> filterFindByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -675,7 +677,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] filterFindByUuid_PrevAndNext(long organizationId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(organizationId, uuid,
@@ -711,7 +713,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByUuid_PrevAndNext(Session session,
 		Organization organization, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1080,7 +1082,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1210,7 +1212,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1243,7 +1246,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1265,7 +1268,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1298,7 +1302,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1327,7 +1331,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] findByUuid_C_PrevAndNext(long organizationId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
@@ -1358,7 +1363,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByUuid_C_PrevAndNext(Session session,
 		Organization organization, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1527,7 +1532,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1637,7 +1642,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] filterFindByUuid_C_PrevAndNext(long organizationId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(organizationId, uuid, companyId,
@@ -1673,7 +1679,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByUuid_C_PrevAndNext(Session session,
 		Organization organization, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2054,7 +2060,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2160,7 +2166,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2189,7 +2196,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2210,7 +2217,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2239,7 +2247,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2267,7 +2275,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] findByCompanyId_PrevAndNext(long organizationId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
@@ -2298,7 +2306,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByCompanyId_PrevAndNext(Session session,
 		Organization organization, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2446,7 +2454,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2537,7 +2545,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] filterFindByCompanyId_PrevAndNext(
-		long organizationId, long companyId, OrderByComparator orderByComparator)
+		long organizationId, long companyId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(organizationId, companyId,
@@ -2573,7 +2582,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByCompanyId_PrevAndNext(Session session,
 		Organization organization, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2891,7 +2900,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findByLocations(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2997,7 +3006,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByLocations_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByLocations_First(companyId,
 				orderByComparator);
 
@@ -3026,7 +3036,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByLocations_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByLocations(companyId, 0, 1,
 				orderByComparator);
 
@@ -3047,7 +3057,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByLocations_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByLocations_Last(companyId,
 				orderByComparator);
 
@@ -3076,7 +3087,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByLocations_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByLocations(companyId);
 
 		if (count == 0) {
@@ -3104,7 +3115,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] findByLocations_PrevAndNext(long organizationId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
@@ -3135,7 +3146,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByLocations_PrevAndNext(Session session,
 		Organization organization, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3283,7 +3294,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> filterFindByLocations(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByLocations(companyId, start, end, orderByComparator);
 		}
@@ -3374,7 +3385,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] filterFindByLocations_PrevAndNext(
-		long organizationId, long companyId, OrderByComparator orderByComparator)
+		long organizationId, long companyId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByLocations_PrevAndNext(organizationId, companyId,
@@ -3410,7 +3422,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByLocations_PrevAndNext(Session session,
 		Organization organization, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3733,7 +3745,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3849,7 +3861,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByC_P_First(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_P_First(companyId,
 				parentOrganizationId, orderByComparator);
@@ -3883,7 +3896,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByC_P_First(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator) {
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByC_P(companyId, parentOrganizationId, 0,
 				1, orderByComparator);
 
@@ -3905,7 +3919,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByC_P_Last(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_P_Last(companyId,
 				parentOrganizationId, orderByComparator);
@@ -3939,7 +3954,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByC_P_Last(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator) {
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByC_P(companyId, parentOrganizationId);
 
 		if (count == 0) {
@@ -3969,7 +3985,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public Organization[] findByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -3999,7 +4016,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByC_P_PrevAndNext(Session session,
 		Organization organization, long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4156,7 +4173,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P(companyId, parentOrganizationId, start, end,
 				orderByComparator);
@@ -4254,7 +4271,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public Organization[] filterFindByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P_PrevAndNext(organizationId, companyId,
 				parentOrganizationId, orderByComparator);
@@ -4289,7 +4307,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByC_P_PrevAndNext(Session session,
 		Organization organization, long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4619,7 +4637,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findByC_T(long companyId, String treePath,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4744,7 +4762,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByC_T_First(long companyId, String treePath,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_T_First(companyId, treePath,
 				orderByComparator);
 
@@ -4777,7 +4796,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByC_T_First(long companyId, String treePath,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByC_T(companyId, treePath, 0, 1,
 				orderByComparator);
 
@@ -4799,7 +4818,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByC_T_Last(long companyId, String treePath,
-		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
+		OrderByComparator<Organization> orderByComparator)
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_T_Last(companyId, treePath,
 				orderByComparator);
 
@@ -4832,7 +4852,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByC_T_Last(long companyId, String treePath,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByC_T(companyId, treePath);
 
 		if (count == 0) {
@@ -4861,7 +4881,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] findByC_T_PrevAndNext(long organizationId,
-		long companyId, String treePath, OrderByComparator orderByComparator)
+		long companyId, String treePath,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
@@ -4892,7 +4913,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization getByC_T_PrevAndNext(Session session,
 		Organization organization, long companyId, String treePath,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5061,7 +5082,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> filterFindByC_T(long companyId, String treePath,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T(companyId, treePath, start, end, orderByComparator);
 		}
@@ -5171,7 +5192,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization[] filterFindByC_T_PrevAndNext(long organizationId,
-		long companyId, String treePath, OrderByComparator orderByComparator)
+		long companyId, String treePath,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T_PrevAndNext(organizationId, companyId, treePath,
@@ -5207,7 +5229,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	protected Organization filterGetByC_T_PrevAndNext(Session session,
 		Organization organization, long companyId, String treePath,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Organization> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5845,7 +5867,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> findByO_C_P(long organizationId, long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5959,7 +5981,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByO_C_P_First(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = fetchByO_C_P_First(organizationId,
 				companyId, parentOrganizationId, orderByComparator);
@@ -5997,7 +6020,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByO_C_P_First(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator) {
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator) {
 		List<Organization> list = findByO_C_P(organizationId, companyId,
 				parentOrganizationId, 0, 1, orderByComparator);
 
@@ -6020,7 +6044,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization findByO_C_P_Last(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
 		Organization organization = fetchByO_C_P_Last(organizationId,
 				companyId, parentOrganizationId, orderByComparator);
@@ -6058,7 +6083,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public Organization fetchByO_C_P_Last(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator) {
+		long parentOrganizationId,
+		OrderByComparator<Organization> orderByComparator) {
 		int count = countByO_C_P(organizationId, companyId, parentOrganizationId);
 
 		if (count == 0) {
@@ -6129,7 +6155,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByO_C_P(long organizationId,
 		long companyId, long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByO_C_P(organizationId, companyId, parentOrganizationId,
 				start, end, orderByComparator);
@@ -7023,7 +7049,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<Organization> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Organization> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7207,7 +7233,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return organizationToGroupTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}
@@ -7471,7 +7498,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
 		return organizationToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}

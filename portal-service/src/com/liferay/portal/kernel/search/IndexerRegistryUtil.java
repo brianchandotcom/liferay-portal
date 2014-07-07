@@ -194,7 +194,8 @@ public class IndexerRegistryUtil {
 			Indexer indexer = registry.getService(serviceReference);
 
 			Set<String> classNames = _aggregrateClassNames(
-				(String[])serviceReference.getProperty("indexer.classNames"));
+				(String[])serviceReference.getProperty("indexer.classNames"),
+				indexer.getClassNames());
 
 			for (String className : classNames) {
 				_indexers.put(className, indexer);
@@ -217,7 +218,8 @@ public class IndexerRegistryUtil {
 			registry.ungetService(serviceReference);
 
 			Set<String> classNames = _aggregrateClassNames(
-				(String[])serviceReference.getProperty("indexer.classNames"));
+				(String[])serviceReference.getProperty("indexer.classNames"),
+				indexer.getClassNames());
 
 			for (String className : classNames) {
 				_indexers.remove(className);

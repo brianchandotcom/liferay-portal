@@ -15,13 +15,14 @@
 package com.liferay.portlet.passwordpoliciesadmin.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PasswordPolicy;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public interface PasswordPoliciesAdmin {
 
-	public OrderByComparator getPasswordPolicyOrderByComparator(
+	public OrderByComparator<PasswordPolicy> getPasswordPolicyOrderByComparator(
 		String orderByCol, String orderByType);
 
 }

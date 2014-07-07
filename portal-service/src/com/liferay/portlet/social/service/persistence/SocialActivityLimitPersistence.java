@@ -79,7 +79,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the first social activity limit in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the last social activity limit in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the social activity limits before and after the current social activity limit in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit[] findByGroupId_PrevAndNext(
 		long activityLimitId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -197,7 +197,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the first social activity limit in the ordered set where userId = &#63;.
@@ -209,7 +209,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -221,7 +221,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the last social activity limit in the ordered set where userId = &#63;.
@@ -233,7 +233,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -245,7 +245,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the social activity limits before and after the current social activity limit in the ordered set where userId = &#63;.
@@ -258,7 +258,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit[] findByUserId_PrevAndNext(
 		long activityLimitId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -318,7 +318,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the first social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -331,7 +331,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -344,7 +344,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the last social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -357,7 +357,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -370,7 +370,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Returns the social activity limits before and after the current social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -384,7 +384,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public com.liferay.portlet.social.model.SocialActivityLimit[] findByC_C_PrevAndNext(
 		long activityLimitId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
@@ -581,7 +581,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialActivityLimit> orderByComparator);
 
 	/**
 	* Removes all the social activity limits from the database.

@@ -23,17 +23,17 @@ import aQute.bnd.annotation.ProviderType;
 public interface MBCategoryFinder {
 	public int countByS_G_U_P(long groupId, long userId,
 		long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBCategory> queryDefinition);
 
 	public int filterCountByS_G_U_P(long groupId, long userId,
 		long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBCategory> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> filterFindByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBCategory> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> findByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBCategory> queryDefinition);
 }

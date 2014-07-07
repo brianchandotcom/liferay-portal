@@ -12,13 +12,32 @@
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="VIEW_ALL_NOTIFICATIONS" value1="View All Notifications" />
 	</command>
 
+	<command name="markAllAsRead">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+
+		<var name="key_notificationCount" value="${notificationCount}" />
+
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="MARK_ALL_AS_READ" value1="Mark All as Read (${notificationCount})" />
+	</command>
+
 	<command name="viewCount">
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+	</command>
+
+	<command name="viewEditedContent">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+
+		<var name="assetType" value="${assetType?lowercase()}" />
+		<var name="key_contentBody" value="${contentBody}" />
+
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNewContent">
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 
+		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} added a new ${assetType}." />

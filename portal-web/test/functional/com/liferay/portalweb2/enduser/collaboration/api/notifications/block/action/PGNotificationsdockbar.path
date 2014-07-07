@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>MARK_ALL_AS_READ</td>
-	<td>//ul[contains(@class,'user-notifications-list')]/li/a[contains(.,'Mark All As Read')]</td>
+	<td>//ul[contains(@class,'user-notifications-list')]/li/a[@class='mark-all-as-read']</td>
 	<td></td>
 </tr>
 </tbody>

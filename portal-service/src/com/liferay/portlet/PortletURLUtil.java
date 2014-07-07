@@ -124,7 +124,14 @@ public class PortletURLUtil {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = (PortletURL)liferayPortletRequest.getAttribute(
+			WebKeys.CURRENT_PORTLET_URL);
+
+		if (portletURL != null) {
+			return portletURL;
+		}
+
+		portletURL = liferayPortletResponse.createRenderURL();
 
 		Enumeration<String> enu = liferayPortletRequest.getParameterNames();
 
@@ -148,6 +155,9 @@ public class PortletURLUtil {
 				portletURL.setParameter(param, values);
 			}
 		}
+
+		liferayPortletRequest.setAttribute(
+			WebKeys.CURRENT_PORTLET_URL, portletURL);
 
 		return portletURL;
 	}

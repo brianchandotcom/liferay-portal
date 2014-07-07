@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -60,10 +62,10 @@ public interface DDM {
 			Serializable fieldValue, String type)
 		throws Exception;
 
-	public OrderByComparator getStructureOrderByComparator(
+	public OrderByComparator<DDMStructure> getStructureOrderByComparator(
 		String orderByCol, String orderByType);
 
-	public OrderByComparator getTemplateOrderByComparator(
+	public OrderByComparator<DDMTemplate> getTemplateOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public Fields mergeFields(Fields newFields, Fields existingFields);

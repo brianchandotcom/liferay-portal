@@ -79,7 +79,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_PrevAndNext(
 		long mailingListId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_C_PrevAndNext(
 		long mailingListId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where active = &#63;.
@@ -390,7 +390,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where active = &#63;.
@@ -414,7 +414,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where active = &#63;.
@@ -439,7 +439,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList[] findByActive_PrevAndNext(
 		long mailingListId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -608,7 +608,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
 
 	/**
 	* Removes all the message boards mailing lists from the database.

@@ -97,7 +97,7 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 	@Override
 	public List<ShoppingItem> getItems(
 		long groupId, long categoryId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<ShoppingItem> obc) {
 
 		return shoppingItemPersistence.filterFindByG_C(
 			groupId, categoryId, start, end, obc);
@@ -110,7 +110,7 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 
 	@Override
 	public ShoppingItem[] getItemsPrevAndNext(
-			long itemId, OrderByComparator obc)
+			long itemId, OrderByComparator<ShoppingItem> obc)
 		throws PortalException {
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);

@@ -289,7 +289,7 @@ public class PollsQuestionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<PollsQuestion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PollsQuestion", "uuid",
 			true, "questionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

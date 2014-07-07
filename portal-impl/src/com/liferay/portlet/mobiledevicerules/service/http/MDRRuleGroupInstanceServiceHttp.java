@@ -152,7 +152,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"getRuleGroupInstances",

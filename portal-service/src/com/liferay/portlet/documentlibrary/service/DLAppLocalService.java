@@ -46,20 +46,6 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
 	* Adds a file entry and associated metadata based on a byte array.
 	*
 	* <p>
@@ -319,6 +305,13 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -481,6 +474,13 @@ public interface DLAppLocalService extends BaseLocalService {
 	*/
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribe the user to changes in documents of the file entry type. This

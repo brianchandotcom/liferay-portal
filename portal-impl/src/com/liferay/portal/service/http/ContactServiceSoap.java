@@ -80,7 +80,7 @@ public class ContactServiceSoap {
 
 	public static com.liferay.portal.model.ContactSoap[] getContacts(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.model.Contact> returnValue = ContactServiceUtil.getContacts(classNameId,

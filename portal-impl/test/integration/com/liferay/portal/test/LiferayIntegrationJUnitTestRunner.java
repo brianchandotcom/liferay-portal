@@ -16,8 +16,10 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.test.log.ConcurrentAssertUtil;
+import com.liferay.portal.test.log.ExpectedLogsUtil;
 import com.liferay.portal.test.log.LogAssertionUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -91,7 +93,7 @@ public class LiferayIntegrationJUnitTestRunner
 	}
 
 	@Override
-	protected Statement methodBlock(FrameworkMethod frameworkMethod) {
+	protected Statement methodBlock(final FrameworkMethod frameworkMethod) {
 		final Statement statement = super.methodBlock(frameworkMethod);
 
 		if (!TestPropsValues.ASSERT_LOGS) {
@@ -104,12 +106,18 @@ public class LiferayIntegrationJUnitTestRunner
 			public void evaluate() throws Throwable {
 				ConcurrentAssertUtil.startAssert();
 
+				CaptureAppender captureAppender = ExpectedLogsUtil.startAssert(
+					frameworkMethod.getMethod());
+
 				try {
 					LogAssertionUtil.enableLogAssertion();
 
 					statement.evaluate();
 				}
 				finally {
+					ExpectedLogsUtil.endAssert(
+						frameworkMethod.getMethod(), captureAppender);
+
 					ConcurrentAssertUtil.endAssert();
 				}
 			}

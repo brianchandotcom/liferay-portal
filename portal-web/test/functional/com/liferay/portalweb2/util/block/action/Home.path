@@ -193,6 +193,11 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
+	<td>//li[contains(@class,'add-page')]/a[contains(.,&apos;${key_pageName}&apos;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&apos;${key_pageName}&apos;)]</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>PAGE_WITH_QUOTES</td>
 	<td>//li[contains(@class,'add-page')]/a[contains(.,&quot;${key_pageName}&quot;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
 	<td>Page</td>
 </tr>
@@ -203,7 +208,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[1]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +243,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_2</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[2]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -263,27 +268,27 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[3]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_4</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[4]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_5</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[5]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_6</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[6]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[6]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[7]/a</td>
+	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[7]/a</td>
 	<td></td>
 </tr>
 <tr>

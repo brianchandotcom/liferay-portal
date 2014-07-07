@@ -71,6 +71,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PortletLocalServiceBaseImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.servlet.ComboServlet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
@@ -193,6 +194,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public void clearCache() {
+
+		// Refresh the combo servlet cache
+
+		ComboServlet.clearCache();
 
 		// Refresh security path to portlet id mapping for all portlets
 
@@ -695,7 +700,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		try {
 			PortletApp portletApp = _getPortletApp(StringPool.BLANK);
 
-			portletApp.setContextPath(servletContext.getContextPath());
+			portletApp.setServletContext(servletContext);
 
 			Set<String> servletURLPatterns = _readWebXML(xmls[4]);
 
@@ -2142,7 +2147,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletApp portletApp = _getPortletApp(servletContextName);
 
 		portletApp.addServletURLPatterns(servletURLPatterns);
-		portletApp.setContextPath(servletContext.getContextPath());
+		portletApp.setServletContext(servletContext);
 
 		Set<String> userAttributes = portletApp.getUserAttributes();
 

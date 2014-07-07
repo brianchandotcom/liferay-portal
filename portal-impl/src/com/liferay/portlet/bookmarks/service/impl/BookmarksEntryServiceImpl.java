@@ -70,7 +70,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	@Override
 	public List<BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BookmarksEntry> orderByComparator) {
 
 		return bookmarksEntryPersistence.filterFindByG_F_S(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end,

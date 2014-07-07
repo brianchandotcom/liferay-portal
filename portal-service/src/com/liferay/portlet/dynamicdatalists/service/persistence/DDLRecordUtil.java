@@ -88,7 +88,7 @@ public class DDLRecordUtil {
 	 */
 	public static List<DDLRecord> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByUuid_PrevAndNext(
 		long recordId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(recordId, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByUuid_C_PrevAndNext(
 		long recordId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(recordId, uuid, companyId,
@@ -509,7 +509,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -539,7 +539,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -554,7 +554,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -569,7 +569,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -585,7 +585,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByCompanyId_PrevAndNext(
 		long recordId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(recordId, companyId,
@@ -654,7 +654,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByRecordSetId(
 		long recordSetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByRecordSetId(recordSetId, start, end, orderByComparator);
 	}
@@ -669,7 +669,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByRecordSetId_First(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_First(recordSetId, orderByComparator);
@@ -684,7 +684,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByRecordSetId_First(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordSetId_First(recordSetId, orderByComparator);
 	}
@@ -699,7 +699,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByRecordSetId_Last(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_Last(recordSetId, orderByComparator);
@@ -714,7 +714,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByRecordSetId_Last(
 		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordSetId_Last(recordSetId, orderByComparator);
 	}
@@ -730,7 +730,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByRecordSetId_PrevAndNext(
 		long recordId, long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_PrevAndNext(recordId, recordSetId,
@@ -802,7 +802,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByR_U(
 		long recordSetId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByR_U(recordSetId, userId, start, end, orderByComparator);
 	}
@@ -818,7 +818,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByR_U_First(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_First(recordSetId, userId, orderByComparator);
@@ -834,7 +834,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByR_U_First(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_U_First(recordSetId, userId, orderByComparator);
 	}
@@ -850,7 +850,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord findByR_U_Last(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_Last(recordSetId, userId, orderByComparator);
@@ -866,7 +866,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByR_U_Last(
 		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_U_Last(recordSetId, userId, orderByComparator);
 	}
@@ -883,7 +883,7 @@ public class DDLRecordUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord[] findByR_U_PrevAndNext(
 		long recordId, long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_PrevAndNext(recordId, recordSetId, userId,
@@ -1028,7 +1028,7 @@ public class DDLRecordUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

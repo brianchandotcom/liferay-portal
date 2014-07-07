@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -60,7 +61,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	@Override
 	public byte[] export(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception {
 
 		return doExport(recordSetId, status, start, end, orderByComparator);
@@ -82,7 +83,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 
 	protected abstract byte[] doExport(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
 
 	protected Map<String, Map<String, String>> getFieldsMap(long recordSetId)

@@ -32,6 +32,16 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		_flagsEntryService = flagsEntryService;
 	}
 
+	@Override
+	public void addEntry(java.lang.String className, long classPK,
+		java.lang.String reporterEmailAddress, long reportedUserId,
+		java.lang.String contentTitle, java.lang.String contentURL,
+		java.lang.String reason,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_flagsEntryService.addEntry(className, classPK, reporterEmailAddress,
+			reportedUserId, contentTitle, contentURL, reason, serviceContext);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -50,16 +60,6 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_flagsEntryService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void addEntry(java.lang.String className, long classPK,
-		java.lang.String reporterEmailAddress, long reportedUserId,
-		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_flagsEntryService.addEntry(className, classPK, reporterEmailAddress,
-			reportedUserId, contentTitle, contentURL, reason, serviceContext);
 	}
 
 	/**

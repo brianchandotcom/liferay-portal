@@ -57,6 +57,18 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	/**
+	* Deletes the counter from the database. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was removed
+	*/
+	@Override
+	public com.liferay.counter.model.Counter deleteCounter(
+		com.liferay.counter.model.Counter counter) {
+		return _counterLocalService.deleteCounter(counter);
+	}
+
+	/**
 	* Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param name the primary key of the counter
@@ -71,15 +83,13 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	/**
-	* Deletes the counter from the database. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was removed
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.counter.model.Counter deleteCounter(
-		com.liferay.counter.model.Counter counter) {
-		return _counterLocalService.deleteCounter(counter);
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _counterLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -94,8 +104,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _counterLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -113,8 +122,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _counterLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -134,11 +142,10 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _counterLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -175,6 +182,16 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _counterLocalService.getBeanIdentifier();
+	}
+
+	/**
 	* Returns the counter with the primary key.
 	*
 	* @param name the primary key of the counter
@@ -185,23 +202,6 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	public com.liferay.counter.model.Counter getCounter(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _counterLocalService.getCounter(name);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _counterLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _counterLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -231,41 +231,16 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 		return _counterLocalService.getCountersCount();
 	}
 
-	/**
-	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was updated
-	*/
-	@Override
-	public com.liferay.counter.model.Counter updateCounter(
-		com.liferay.counter.model.Counter counter) {
-		return _counterLocalService.updateCounter(counter);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _counterLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_counterLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public java.util.List<java.lang.String> getNames() {
 		return _counterLocalService.getNames();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _counterLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -296,6 +271,28 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	@Override
 	public void reset(java.lang.String name, long size) {
 		_counterLocalService.reset(name, size);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_counterLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
+	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was updated
+	*/
+	@Override
+	public com.liferay.counter.model.Counter updateCounter(
+		com.liferay.counter.model.Counter counter) {
+		return _counterLocalService.updateCounter(counter);
 	}
 
 	/**

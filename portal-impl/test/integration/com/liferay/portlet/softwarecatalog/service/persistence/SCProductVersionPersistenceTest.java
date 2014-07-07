@@ -247,7 +247,7 @@ public class SCProductVersionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SCProductVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductVersion",
 			"productVersionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

@@ -227,7 +227,7 @@ public class DDMStorageLinkPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDMStorageLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStorageLink", "uuid",
 			true, "storageLinkId", true, "classNameId", true, "classPK", true,
 			"structureId", true);

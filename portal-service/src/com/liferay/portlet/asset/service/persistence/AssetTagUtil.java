@@ -87,7 +87,7 @@ public class AssetTagUtil {
 	 */
 	public static List<AssetTag> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetTag> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class AssetTagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -166,7 +166,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag[] findByGroupId_PrevAndNext(
 		long tagId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(tagId, groupId, orderByComparator);
@@ -272,7 +272,7 @@ public class AssetTagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -288,7 +288,7 @@ public class AssetTagUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag[] filterFindByGroupId_PrevAndNext(
 		long tagId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchTagException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(tagId, groupId,
@@ -501,7 +501,7 @@ public class AssetTagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -574,7 +574,7 @@ public class AssetTagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .getAssetEntries(pk, start, end, orderByComparator);
 	}

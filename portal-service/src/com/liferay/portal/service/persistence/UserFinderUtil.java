@@ -69,7 +69,8 @@ public class UserFinderUtil {
 	public static java.util.List<com.liferay.portal.model.User> findByKeywords(
 		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
 		return getFinder()
 				   .findByKeywords(companyId, keywords, status, params, start,
 			end, obc);
@@ -91,7 +92,8 @@ public class UserFinderUtil {
 	public static java.util.List<com.liferay.portal.model.User> findBySocialUsers(
 		long companyId, long userId, int socialRelationType,
 		java.lang.String socialRelationTypeComparator, int status, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
 		return getFinder()
 				   .findBySocialUsers(companyId, userId, socialRelationType,
 			socialRelationTypeComparator, status, start, end, obc);
@@ -103,7 +105,7 @@ public class UserFinderUtil {
 		java.lang.String screenName, java.lang.String emailAddress, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
 		return getFinder()
 				   .findByC_FN_MN_LN_SN_EA_S(companyId, firstName, middleName,
 			lastName, screenName, emailAddress, status, params, andOperator,
@@ -117,7 +119,7 @@ public class UserFinderUtil {
 		int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc) {
 		return getFinder()
 				   .findByC_FN_MN_LN_SN_EA_S(companyId, firstNames,
 			middleNames, lastNames, screenNames, emailAddresses, status,

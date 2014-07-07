@@ -4,6 +4,8 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="WikiNode#addMainCP" />
 	</set-up>
 
 	<tear-down>

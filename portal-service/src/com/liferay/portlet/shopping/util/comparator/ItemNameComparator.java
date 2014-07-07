@@ -21,7 +21,7 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ItemNameComparator extends OrderByComparator {
+public class ItemNameComparator extends OrderByComparator<ShoppingItem> {
 
 	public static final String ORDER_BY_ASC =
 		"ShoppingItem.categoryId ASC, ShoppingItem.name ASC";
@@ -40,10 +40,7 @@ public class ItemNameComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		ShoppingItem item1 = (ShoppingItem)obj1;
-		ShoppingItem item2 = (ShoppingItem)obj2;
-
+	public int compare(ShoppingItem item1, ShoppingItem item2) {
 		Long categoryId1 = item1.getCategoryId();
 		Long categoryId2 = item2.getCategoryId();
 

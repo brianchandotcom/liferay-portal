@@ -265,7 +265,7 @@ public class LayoutRevisionLocalServiceImpl
 	@Override
 	public List<LayoutRevision> getChildLayoutRevisions(
 		long layoutSetBranchId, long parentLayoutRevision, long plid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return layoutRevisionPersistence.findByL_P_P(
 			layoutSetBranchId, parentLayoutRevision, plid, start, end,
@@ -353,7 +353,7 @@ public class LayoutRevisionLocalServiceImpl
 	@Override
 	public List<LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return layoutRevisionPersistence.findByL_P(
 			layoutSetBranchId, plid, start, end, orderByComparator);
@@ -362,7 +362,7 @@ public class LayoutRevisionLocalServiceImpl
 	@Override
 	public List<LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return layoutRevisionPersistence.findByL_L_P(
 			layoutSetBranchId, layoutBranchId, plid, start, end,

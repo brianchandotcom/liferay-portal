@@ -20,7 +20,8 @@ import com.liferay.portal.model.Subscription;
 /**
  * @author Peter Shin
  */
-public class SubscriptionClassNameIdComparator extends OrderByComparator {
+public class SubscriptionClassNameIdComparator
+	extends OrderByComparator<Subscription> {
 
 	public static final String ORDER_BY_ASC = "Subscription.classNameId ASC";
 
@@ -37,10 +38,7 @@ public class SubscriptionClassNameIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Subscription subscription1 = (Subscription)obj1;
-		Subscription subscription2 = (Subscription)obj2;
-
+	public int compare(Subscription subscription1, Subscription subscription2) {
 		int value = 0;
 
 		if (subscription1.getClassNameId() < subscription2.getClassNameId()) {

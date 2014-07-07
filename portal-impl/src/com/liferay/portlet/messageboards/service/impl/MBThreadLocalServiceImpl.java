@@ -325,8 +325,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public List<MBThread> getGroupThreads(
 		long groupId, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		return getGroupThreads(groupId, queryDefinition);
 	}
@@ -334,7 +334,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public List<MBThread> getGroupThreads(
 		long groupId, long userId, boolean subscribed, boolean includeAnonymous,
-		QueryDefinition queryDefinition) {
+		QueryDefinition<MBThread> queryDefinition) {
 
 		if (userId <= 0) {
 			return getGroupThreads(groupId, queryDefinition);
@@ -359,7 +359,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public List<MBThread> getGroupThreads(
 		long groupId, long userId, boolean subscribed,
-		QueryDefinition queryDefinition) {
+		QueryDefinition<MBThread> queryDefinition) {
 
 		return getGroupThreads(
 			groupId, userId, subscribed, true, queryDefinition);
@@ -375,8 +375,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		return getGroupThreads(
 			groupId, userId, subscribed, includeAnonymous, queryDefinition);
@@ -392,8 +392,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		long groupId, long userId, int status, boolean subscribed, int start,
 		int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		return getGroupThreads(groupId, userId, subscribed, queryDefinition);
 	}
@@ -407,22 +407,22 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public List<MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, null);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status, start, end, null);
 
 		return getGroupThreads(groupId, userId, false, queryDefinition);
 	}
 
 	@Override
 	public List<MBThread> getGroupThreads(
-		long groupId, long userId, QueryDefinition queryDefinition) {
+		long groupId, long userId, QueryDefinition<MBThread> queryDefinition) {
 
 		return getGroupThreads(groupId, userId, false, queryDefinition);
 	}
 
 	@Override
 	public List<MBThread> getGroupThreads(
-		long groupId, QueryDefinition queryDefinition) {
+		long groupId, QueryDefinition<MBThread> queryDefinition) {
 
 		if (queryDefinition.isExcludeStatus()) {
 			return mbThreadPersistence.findByG_NotC_NotS(
@@ -445,7 +445,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupThreadsCount(long groupId, int status) {
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status);
 
 		return getGroupThreadsCount(groupId, queryDefinition);
 	}
@@ -453,7 +454,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public int getGroupThreadsCount(
 		long groupId, long userId, boolean subscribed, boolean includeAnonymous,
-		QueryDefinition queryDefinition) {
+		QueryDefinition<MBThread> queryDefinition) {
 
 		if (userId <= 0) {
 			return getGroupThreadsCount(groupId, queryDefinition);
@@ -478,7 +479,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public int getGroupThreadsCount(
 		long groupId, long userId, boolean subscribed,
-		QueryDefinition queryDefinition) {
+		QueryDefinition<MBThread> queryDefinition) {
 
 		return getGroupThreadsCount(
 			groupId, userId, subscribed, true, queryDefinition);
@@ -491,7 +492,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupThreadsCount(long groupId, long userId, int status) {
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status);
 
 		return getGroupThreadsCount(groupId, userId, false, queryDefinition);
 	}
@@ -505,7 +507,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public int getGroupThreadsCount(
 		long groupId, long userId, int status, boolean subscribed) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status);
 
 		return getGroupThreadsCount(
 			groupId, userId, subscribed, true, queryDefinition);
@@ -521,7 +524,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous) {
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
+		QueryDefinition<MBThread> queryDefinition =
+			new QueryDefinition<MBThread>(status);
 
 		return getGroupThreadsCount(
 			groupId, userId, subscribed, includeAnonymous, queryDefinition);
@@ -529,14 +533,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public int getGroupThreadsCount(
-		long groupId, long userId, QueryDefinition queryDefinition) {
+		long groupId, long userId, QueryDefinition<MBThread> queryDefinition) {
 
 		return getGroupThreadsCount(groupId, userId, false, queryDefinition);
 	}
 
 	@Override
 	public int getGroupThreadsCount(
-		long groupId, QueryDefinition queryDefinition) {
+		long groupId, QueryDefinition<MBThread> queryDefinition) {
 
 		if (queryDefinition.isExcludeStatus()) {
 			return mbThreadPersistence.countByG_NotC_NotS(

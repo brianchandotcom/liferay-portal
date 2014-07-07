@@ -144,204 +144,15 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		}
 	}
 
-	/**
-	* Returns the primary key of this s c product version.
-	*
-	* @return the primary key of this s c product version
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _scProductVersion.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new SCProductVersionWrapper((SCProductVersion)_scProductVersion.clone());
 	}
 
-	/**
-	* Sets the primary key of this s c product version.
-	*
-	* @param primaryKey the primary key of this s c product version
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_scProductVersion.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the product version ID of this s c product version.
-	*
-	* @return the product version ID of this s c product version
-	*/
-	@Override
-	public long getProductVersionId() {
-		return _scProductVersion.getProductVersionId();
-	}
-
-	/**
-	* Sets the product version ID of this s c product version.
-	*
-	* @param productVersionId the product version ID of this s c product version
-	*/
-	@Override
-	public void setProductVersionId(long productVersionId) {
-		_scProductVersion.setProductVersionId(productVersionId);
-	}
-
-	/**
-	* Returns the company ID of this s c product version.
-	*
-	* @return the company ID of this s c product version
-	*/
-	@Override
-	public long getCompanyId() {
-		return _scProductVersion.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this s c product version.
-	*
-	* @param companyId the company ID of this s c product version
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_scProductVersion.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this s c product version.
-	*
-	* @return the user ID of this s c product version
-	*/
-	@Override
-	public long getUserId() {
-		return _scProductVersion.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this s c product version.
-	*
-	* @param userId the user ID of this s c product version
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_scProductVersion.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this s c product version.
-	*
-	* @return the user uuid of this s c product version
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _scProductVersion.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this s c product version.
-	*
-	* @param userUuid the user uuid of this s c product version
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_scProductVersion.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this s c product version.
-	*
-	* @return the user name of this s c product version
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _scProductVersion.getUserName();
-	}
-
-	/**
-	* Sets the user name of this s c product version.
-	*
-	* @param userName the user name of this s c product version
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_scProductVersion.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this s c product version.
-	*
-	* @return the create date of this s c product version
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _scProductVersion.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this s c product version.
-	*
-	* @param createDate the create date of this s c product version
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_scProductVersion.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this s c product version.
-	*
-	* @return the modified date of this s c product version
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _scProductVersion.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this s c product version.
-	*
-	* @param modifiedDate the modified date of this s c product version
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_scProductVersion.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the product entry ID of this s c product version.
-	*
-	* @return the product entry ID of this s c product version
-	*/
-	@Override
-	public long getProductEntryId() {
-		return _scProductVersion.getProductEntryId();
-	}
-
-	/**
-	* Sets the product entry ID of this s c product version.
-	*
-	* @param productEntryId the product entry ID of this s c product version
-	*/
-	@Override
-	public void setProductEntryId(long productEntryId) {
-		_scProductVersion.setProductEntryId(productEntryId);
-	}
-
-	/**
-	* Returns the version of this s c product version.
-	*
-	* @return the version of this s c product version
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _scProductVersion.getVersion();
-	}
-
-	/**
-	* Sets the version of this s c product version.
-	*
-	* @param version the version of this s c product version
-	*/
-	@Override
-	public void setVersion(java.lang.String version) {
-		_scProductVersion.setVersion(version);
+	public int compareTo(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion) {
+		return _scProductVersion.compareTo(scProductVersion);
 	}
 
 	/**
@@ -355,33 +166,23 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	/**
-	* Sets the change log of this s c product version.
+	* Returns the company ID of this s c product version.
 	*
-	* @param changeLog the change log of this s c product version
+	* @return the company ID of this s c product version
 	*/
 	@Override
-	public void setChangeLog(java.lang.String changeLog) {
-		_scProductVersion.setChangeLog(changeLog);
+	public long getCompanyId() {
+		return _scProductVersion.getCompanyId();
 	}
 
 	/**
-	* Returns the download page u r l of this s c product version.
+	* Returns the create date of this s c product version.
 	*
-	* @return the download page u r l of this s c product version
+	* @return the create date of this s c product version
 	*/
 	@Override
-	public java.lang.String getDownloadPageURL() {
-		return _scProductVersion.getDownloadPageURL();
-	}
-
-	/**
-	* Sets the download page u r l of this s c product version.
-	*
-	* @param downloadPageURL the download page u r l of this s c product version
-	*/
-	@Override
-	public void setDownloadPageURL(java.lang.String downloadPageURL) {
-		_scProductVersion.setDownloadPageURL(downloadPageURL);
+	public java.util.Date getCreateDate() {
+		return _scProductVersion.getCreateDate();
 	}
 
 	/**
@@ -395,13 +196,73 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	/**
-	* Sets the direct download u r l of this s c product version.
+	* Returns the download page u r l of this s c product version.
 	*
-	* @param directDownloadURL the direct download u r l of this s c product version
+	* @return the download page u r l of this s c product version
 	*/
 	@Override
-	public void setDirectDownloadURL(java.lang.String directDownloadURL) {
-		_scProductVersion.setDirectDownloadURL(directDownloadURL);
+	public java.lang.String getDownloadPageURL() {
+		return _scProductVersion.getDownloadPageURL();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _scProductVersion.getExpandoBridge();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getFrameworkVersions() {
+		return _scProductVersion.getFrameworkVersions();
+	}
+
+	/**
+	* Returns the modified date of this s c product version.
+	*
+	* @return the modified date of this s c product version
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _scProductVersion.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this s c product version.
+	*
+	* @return the primary key of this s c product version
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _scProductVersion.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _scProductVersion.getPrimaryKeyObj();
+	}
+
+	@Override
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry getProductEntry() {
+		return _scProductVersion.getProductEntry();
+	}
+
+	/**
+	* Returns the product entry ID of this s c product version.
+	*
+	* @return the product entry ID of this s c product version
+	*/
+	@Override
+	public long getProductEntryId() {
+		return _scProductVersion.getProductEntryId();
+	}
+
+	/**
+	* Returns the product version ID of this s c product version.
+	*
+	* @return the product version ID of this s c product version
+	*/
+	@Override
+	public long getProductVersionId() {
+		return _scProductVersion.getProductVersionId();
 	}
 
 	/**
@@ -415,6 +276,66 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	/**
+	* Returns the user ID of this s c product version.
+	*
+	* @return the user ID of this s c product version
+	*/
+	@Override
+	public long getUserId() {
+		return _scProductVersion.getUserId();
+	}
+
+	/**
+	* Returns the user name of this s c product version.
+	*
+	* @return the user name of this s c product version
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _scProductVersion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this s c product version.
+	*
+	* @return the user uuid of this s c product version
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _scProductVersion.getUserUuid();
+	}
+
+	/**
+	* Returns the version of this s c product version.
+	*
+	* @return the version of this s c product version
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _scProductVersion.getVersion();
+	}
+
+	@Override
+	public int hashCode() {
+		return _scProductVersion.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _scProductVersion.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _scProductVersion.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _scProductVersion.isNew();
+	}
+
+	/**
 	* Returns <code>true</code> if this s c product version is repo store artifact.
 	*
 	* @return <code>true</code> if this s c product version is repo store artifact; <code>false</code> otherwise
@@ -424,29 +345,9 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		return _scProductVersion.isRepoStoreArtifact();
 	}
 
-	/**
-	* Sets whether this s c product version is repo store artifact.
-	*
-	* @param repoStoreArtifact the repo store artifact of this s c product version
-	*/
 	@Override
-	public void setRepoStoreArtifact(boolean repoStoreArtifact) {
-		_scProductVersion.setRepoStoreArtifact(repoStoreArtifact);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _scProductVersion.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_scProductVersion.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _scProductVersion.isCachedModel();
+	public void persist() {
+		_scProductVersion.persist();
 	}
 
 	@Override
@@ -454,24 +355,54 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		_scProductVersion.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the change log of this s c product version.
+	*
+	* @param changeLog the change log of this s c product version
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _scProductVersion.isEscapedModel();
+	public void setChangeLog(java.lang.String changeLog) {
+		_scProductVersion.setChangeLog(changeLog);
 	}
 
+	/**
+	* Sets the company ID of this s c product version.
+	*
+	* @param companyId the company ID of this s c product version
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _scProductVersion.getPrimaryKeyObj();
+	public void setCompanyId(long companyId) {
+		_scProductVersion.setCompanyId(companyId);
 	}
 
+	/**
+	* Sets the create date of this s c product version.
+	*
+	* @param createDate the create date of this s c product version
+	*/
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_scProductVersion.setPrimaryKeyObj(primaryKeyObj);
+	public void setCreateDate(java.util.Date createDate) {
+		_scProductVersion.setCreateDate(createDate);
 	}
 
+	/**
+	* Sets the direct download u r l of this s c product version.
+	*
+	* @param directDownloadURL the direct download u r l of this s c product version
+	*/
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _scProductVersion.getExpandoBridge();
+	public void setDirectDownloadURL(java.lang.String directDownloadURL) {
+		_scProductVersion.setDirectDownloadURL(directDownloadURL);
+	}
+
+	/**
+	* Sets the download page u r l of this s c product version.
+	*
+	* @param downloadPageURL the download page u r l of this s c product version
+	*/
+	@Override
+	public void setDownloadPageURL(java.lang.String downloadPageURL) {
+		_scProductVersion.setDownloadPageURL(downloadPageURL);
 	}
 
 	@Override
@@ -492,20 +423,104 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		_scProductVersion.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the modified date of this s c product version.
+	*
+	* @param modifiedDate the modified date of this s c product version
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new SCProductVersionWrapper((SCProductVersion)_scProductVersion.clone());
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_scProductVersion.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion) {
-		return _scProductVersion.compareTo(scProductVersion);
+	public void setNew(boolean n) {
+		_scProductVersion.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this s c product version.
+	*
+	* @param primaryKey the primary key of this s c product version
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_scProductVersion.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _scProductVersion.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_scProductVersion.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the product entry ID of this s c product version.
+	*
+	* @param productEntryId the product entry ID of this s c product version
+	*/
+	@Override
+	public void setProductEntryId(long productEntryId) {
+		_scProductVersion.setProductEntryId(productEntryId);
+	}
+
+	/**
+	* Sets the product version ID of this s c product version.
+	*
+	* @param productVersionId the product version ID of this s c product version
+	*/
+	@Override
+	public void setProductVersionId(long productVersionId) {
+		_scProductVersion.setProductVersionId(productVersionId);
+	}
+
+	/**
+	* Sets whether this s c product version is repo store artifact.
+	*
+	* @param repoStoreArtifact the repo store artifact of this s c product version
+	*/
+	@Override
+	public void setRepoStoreArtifact(boolean repoStoreArtifact) {
+		_scProductVersion.setRepoStoreArtifact(repoStoreArtifact);
+	}
+
+	/**
+	* Sets the user ID of this s c product version.
+	*
+	* @param userId the user ID of this s c product version
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_scProductVersion.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this s c product version.
+	*
+	* @param userName the user name of this s c product version
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_scProductVersion.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this s c product version.
+	*
+	* @param userUuid the user uuid of this s c product version
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_scProductVersion.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the version of this s c product version.
+	*
+	* @param version the version of this s c product version
+	*/
+	@Override
+	public void setVersion(java.lang.String version) {
+		_scProductVersion.setVersion(version);
 	}
 
 	@Override
@@ -519,33 +534,18 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toUnescapedModel() {
-		return new SCProductVersionWrapper(_scProductVersion.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _scProductVersion.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toUnescapedModel() {
+		return new SCProductVersionWrapper(_scProductVersion.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _scProductVersion.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_scProductVersion.persist();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getFrameworkVersions() {
-		return _scProductVersion.getFrameworkVersions();
-	}
-
-	@Override
-	public com.liferay.portlet.softwarecatalog.model.SCProductEntry getProductEntry() {
-		return _scProductVersion.getProductEntry();
 	}
 
 	@Override

@@ -17,9 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.util.MimeTypesUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
-page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
-page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@

@@ -42,24 +42,6 @@ public class UserGroupServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds the user groups to the group.
 	*
 	* @param groupId the primary key of the group
@@ -148,18 +130,12 @@ public class UserGroupServiceUtil {
 	}
 
 	/**
-	* Returns the user group with the primary key.
+	* Returns the Spring bean ID for this bean.
 	*
-	* @param userGroupId the primary key of the user group
-	* @return Returns the user group with the primary key
-	* @throws PortalException if a user group with the primary key could not be
-	found or if the user did not have permission to view the user
-	group
+	* @return the Spring bean ID for this bean
 	*/
-	public static com.liferay.portal.model.UserGroup getUserGroup(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroup(userGroupId);
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -177,6 +153,21 @@ public class UserGroupServiceUtil {
 	}
 
 	/**
+	* Returns the user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return Returns the user group with the primary key
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the user did not have permission to view the user
+	group
+	*/
+	public static com.liferay.portal.model.UserGroup getUserGroup(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroup(userGroupId);
+	}
+
+	/**
 	* Returns all the user groups to which the user belongs.
 	*
 	* @param userId the primary key of the user
@@ -187,6 +178,15 @@ public class UserGroupServiceUtil {
 	public static java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserUserGroups(userId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

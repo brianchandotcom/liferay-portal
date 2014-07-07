@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>

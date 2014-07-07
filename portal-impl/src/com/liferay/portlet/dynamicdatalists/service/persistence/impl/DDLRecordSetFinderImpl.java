@@ -89,7 +89,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	@Override
 	public List<DDLRecordSet> filterFindByKeywords(
 		long companyId, long groupId, String keywords, int scope, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -112,7 +112,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	public List<DDLRecordSet> filterFindByC_G_N_D_S(
 		long companyId, long groupId, String name, String description,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -126,7 +126,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	public List<DDLRecordSet> filterFindByC_G_N_D_S(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return doFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -136,7 +136,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	@Override
 	public List<DDLRecordSet> findByKeywords(
 		long companyId, long groupId, String keywords, int scope, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -159,7 +159,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	public List<DDLRecordSet> findByC_G_N_D_S(
 		long companyId, long groupId, String name, String description,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -173,7 +173,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	public List<DDLRecordSet> findByC_G_N_D_S(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return doFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -280,7 +280,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	protected List<DDLRecordSet> doFindByC_G_N_D_S(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		int scope, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator, boolean inlineSQLHelper) {
+		OrderByComparator<DDLRecordSet> orderByComparator,
+		boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions, false);

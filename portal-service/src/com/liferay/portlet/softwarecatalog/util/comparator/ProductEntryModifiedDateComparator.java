@@ -21,7 +21,8 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ProductEntryModifiedDateComparator extends OrderByComparator {
+public class ProductEntryModifiedDateComparator
+	extends OrderByComparator<SCProductEntry> {
 
 	public static final String ORDER_BY_ASC = "SCProductEntry.modifiedDate ASC";
 
@@ -39,9 +40,8 @@ public class ProductEntryModifiedDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		SCProductEntry productEntry1 = (SCProductEntry)obj1;
-		SCProductEntry productEntry2 = (SCProductEntry)obj2;
+	public int compare(
+		SCProductEntry productEntry1, SCProductEntry productEntry2) {
 
 		int value = DateUtil.compareTo(
 			productEntry1.getModifiedDate(), productEntry2.getModifiedDate());

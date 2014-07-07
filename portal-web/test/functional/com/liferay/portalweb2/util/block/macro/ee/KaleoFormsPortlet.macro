@@ -1,17 +1,18 @@
 <definition>
 	<command name="approveProcess">
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
 		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="DIALOG_BOX_TITLE" value1="Approve" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGKaleoforms#pause" locator1="1000" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="Approved" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
@@ -19,18 +20,19 @@
 	</command>
 
 	<command name="assignProcessToMe">
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="DIALOG_BOX_TITLE" value1="Assign to Me" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
 	</command>
 
@@ -81,20 +83,25 @@
 	</command>
 
 	<command name="rejectProcess">
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE" />
 		<execute action="PGKaleoforms#click" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="DIALOG_BOX_TITLE" value1="Reject" />
 		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="$Rejected" />
-		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
-		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
+	</command>
+
+	<command name="resubmitPendingProcess">
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertClick" locator-key1="TASKS_TABLE_UPDATE_ACTIONS" value1="Actions" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertClick" locator-key1="TASKS_UPDATE_MENULIST_RESUBMIT" value1="Resubmit" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="DIALOG_BOX_TITLE" value1="Resubmit" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveNewProcess">
@@ -106,23 +113,23 @@
 	<command name="submitNewProcess">
 		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW" value1="Submit New" />
 
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW_MENULIST_PROCESS" value1="${processName}" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW_MENULIST_PROCESS" value1="${kfProcessName}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_TITLE" value1="New ${processName}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_TITLE" value1="New ${kfProcessName}" />
 	</command>
 
 	<command name="viewMyCompletedRequests">
 		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
 
-		<var name="key_processName" value="${processName}" />
+		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="Approved" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
-		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${processName}" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="State Approved" />
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinition}" />
@@ -136,8 +143,35 @@
 	</command>
 
 	<command name="viewMyCompletedRequestsTasks">
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_TASK" value1="Review" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_COMPLETED" value1="Yes" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVIEW_TASK" value1="Review" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVEIW_COMPLETED" value1="Yes" />
+	</command>
+
+	<command name="viewMyPendingRequests">
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_PENDING_REQUESTS" value1="My Pending Requests" />
+
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_PENDING_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_PENDING_REQUESTS_TABLE_STATUS" value1="${kfProcessStatus}" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_PENDING_REQUESTS_TABLE_END_DATE" />
+		<execute action="PGKaleoforms#assertClick" locator-key1="MY_PENDING_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
+
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="State ${kfProcessStatus}" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinition}" />
+	</command>
+
+	<command name="viewMyPendingRequestsField">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewMyPendingRequestsTasksRejected">
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_UPDATE_TASK" value1="Update" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVEIW_COMPLETED" value1="No" />
 	</command>
 
 	<command name="viewNoCompletedRequests">

@@ -1,9 +1,13 @@
-<definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="WCM" />
+<definition component-name="portal-user-interface">
+	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
 
 	<command name="GotoAdministration" priority="5">
 		<execute macro="Page#gotoCP">
@@ -41,5 +45,100 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
+	</command>
+
+	<command name="SearchCollapsedPortlet" priority="5">
+		<var name="portletName" value="Bookmarks" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
+
+		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'drag-content-item')]" />
+
+		<execute action="Dockbar#assertNotVisible" locator1="${portletLocator}" />
+		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
+		<execute action="Dockbar#assertVisible" locator1="${portletLocator}" />
+	</command>
+
+	<command name="ViewAddPageField" priority="5">
+		<execute action="Dockbar#click" locator-key1="ADD" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+
+		<execute macro="Dockbar#viewLocalizationOptionsAdd">
+			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
+		</execute>
+
+		<execute action="Dockbar#assertVisible" locator-key1="ADD_PAGE_NAME_FIELD" />
+	</command>
+
+	<command name="ViewAddPageFieldEditable" priority="5">
+		<execute action="Dockbar#click" locator-key1="ADD" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#click" locator-key1="ADD" />
+		<execute action="Dockbar#click" locator-key1="ADD" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="Dockbar Test Page" />
+
+		<execute macro="Page#addLocalizedNamePG">
+			<var name="localizationName" value="fr_FR" />
+			<var name="localizeNewPage" value="true" />
+			<var name="pageName" value="Dockbar Test Page French" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="ADD_PAGE_BUTTON" />
+
+		<var name="key_pageName" value="Dockbar Test Page" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="Dockbar Test Page" />
+	</command>
+
+	<command name="ViewEditPageFields" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Dockbar Test Page" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+
+		<execute macro="Dockbar#viewLocalizationOptionsEdit">
+			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
+		</execute>
+
+		<execute macro="Dockbar#viewLocalizationOptionsEdit">
+			<var name="friendlyURL" value="true" />
+			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
+		</execute>
+
+		<execute action="DockbarEdit#assertVisible" locator-key1="EDIT_NAME_FIELD" />
+		<execute action="DockbarEdit#assertVisible" locator-key1="DETAILS_FRIENDLYURL" />
+	</command>
+
+	<command name="ViewEditPageFieldsEditable" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Dockbar Test Page" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+
+		<execute action="DockbarEdit#type" locator-key1="EDIT_NAME_FIELD" value1="Edited" />
+		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1="/edited" />
+
+		<execute macro="Page#addLocalizedNamePG">
+			<var name="localizationName" value="fr_FR" />
+			<var name="pageName" value="Edited French" />
+		</execute>
+
+		<execute macro="Page#addFriendlyURLLocalizedPG">
+			<var name="friendlyUrlLocalized" value="fr_FR" />
+			<var name="localizedFriendlyURL" value="/edited-french" />
+		</execute>
+
+		<execute action="Dockbar#assertClick" locator-key1="EDIT_SAVE_BUTTON" value1="Save" />
+
+		<var name="key_pageName" value="Edited" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="Edited" />
 	</command>
 </definition>

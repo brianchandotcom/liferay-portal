@@ -79,7 +79,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByRecordId(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63;.
@@ -91,7 +91,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByRecordId_First(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -103,7 +103,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_First(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the last d d l record version in the ordered set where recordId = &#63;.
@@ -115,7 +115,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByRecordId_Last(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -127,7 +127,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_Last(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63;.
@@ -140,7 +140,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion[] findByRecordId_PrevAndNext(
 		long recordVersionId, long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -253,7 +253,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByR_S(
 		long recordId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the first d d l record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -266,7 +266,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByR_S_First(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -279,7 +279,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_First(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the last d d l record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -292,7 +292,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByR_S_Last(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -305,7 +305,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_Last(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Returns the d d l record versions before and after the current d d l record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -319,7 +319,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion[] findByR_S_PrevAndNext(
 		long recordVersionId, long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
@@ -437,7 +437,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator);
 
 	/**
 	* Removes all the d d l record versions from the database.

@@ -23,6 +23,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String structureId = ParamUtil.getString(request, "structureId");
 
+String displayStyle = JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews);
+
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 String reverseOrderByType = "asc";
@@ -33,42 +35,27 @@ if (orderByType.equals("asc")) {
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
+	<portlet:renderURL var="sortDisplayDatetURL">
+		<portlet:param name="struts_action" value="/journal/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="structureId" value="<%= structureId %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="orderByCol" value="display-date" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	String taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'display-date','" + reverseOrderByType + "')";
-	%>
+	<aui:nav-item href="<%= sortDisplayDatetURL %>" iconCssClass="icon-calendar" label="display-date" />
 
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="display-date" />
+	<portlet:renderURL var="sortModifiedDatetURL">
+		<portlet:param name="struts_action" value="/journal/view" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="structureId" value="<%= structureId %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="orderByCol" value="modified-date" />
+		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+	</portlet:renderURL>
 
-	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modified-date','" + reverseOrderByType + "')";
-	%>
-
-	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="modified-date" />
+	<aui:nav-item href="<%= sortModifiedDatetURL %>" iconCssClass="icon-calendar" label="modified-date" />
 </aui:nav-item>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />sortEntries',
-		function(folderId, orderByCol, reverseOrderByType) {
-			Liferay.fire(
-				'<portlet:namespace />dataRequest',
-				{
-					requestParams: {
-						'<portlet:namespace />folderId': folderId,
-						'<portlet:namespace />navigation': '<%= HtmlUtil.escape(navigation) %>',
-						'<portlet:namespace />struts_action': '/journal/view',
-						'<portlet:namespace />structureId': '<%= HtmlUtil.escape(structureId) %>',
-						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
-						'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-						'<portlet:namespace />orderByCol': orderByCol,
-						'<portlet:namespace />orderByType': reverseOrderByType,
-						'<portlet:namespace />saveOrderBy': <%= Boolean.TRUE.toString() %>
-					}
-				}
-			);
-		},
-		['aui-base']
-	);
-</aui:script>

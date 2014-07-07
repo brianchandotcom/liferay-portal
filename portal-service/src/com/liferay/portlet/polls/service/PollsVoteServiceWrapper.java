@@ -32,6 +32,13 @@ public class PollsVoteServiceWrapper implements PollsVoteService,
 		_pollsVoteService = pollsVoteService;
 	}
 
+	@Override
+	public com.liferay.portlet.polls.model.PollsVote addVote(long questionId,
+		long choiceId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsVoteService.addVote(questionId, choiceId, serviceContext);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -50,13 +57,6 @@ public class PollsVoteServiceWrapper implements PollsVoteService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_pollsVoteService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portlet.polls.model.PollsVote addVote(long questionId,
-		long choiceId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsVoteService.addVote(questionId, choiceId, serviceContext);
 	}
 
 	/**

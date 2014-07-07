@@ -293,7 +293,8 @@ public class LDAPAuth implements Authenticator {
 							companyId, PropsKeys.LDAP_ERROR_USER_LOCKOUT));
 
 					if (pos != -1) {
-						throw new UserLockoutException();
+						throw new UserLockoutException.LDAPLockout(
+							fullUserDN, errorMessage);
 					}
 
 					pos = errorMessage.indexOf(

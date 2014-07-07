@@ -23,7 +23,8 @@ import java.util.Date;
 /**
  * @author Eduardo Garcia
  */
-public class TemplateModifiedDateComparator extends OrderByComparator {
+public class TemplateModifiedDateComparator
+	extends OrderByComparator<DDMTemplate> {
 
 	public static final String ORDER_BY_ASC = "DDMTemplate.modifiedDate ASC";
 
@@ -40,10 +41,7 @@ public class TemplateModifiedDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DDMTemplate template1 = (DDMTemplate)obj1;
-		DDMTemplate template2 = (DDMTemplate)obj2;
-
+	public int compare(DDMTemplate template1, DDMTemplate template2) {
 		Date modifiedDate1 = template1.getModifiedDate();
 		Date modifiedDate2 = template2.getModifiedDate();
 

@@ -243,7 +243,8 @@ public class ShoppingItemServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getItems(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItems", _getItemsParameterTypes6);
@@ -298,7 +299,7 @@ public class ShoppingItemServiceHttp {
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem[] getItemsPrevAndNext(
 		HttpPrincipal httpPrincipal, long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,

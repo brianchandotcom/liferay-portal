@@ -17,7 +17,38 @@
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_PAGE_LINK" value1="Page" />
 	</command>
 
+	<command name="viewLocalizationOptionsAdd">
+		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_NAME_FIELD" />
+
+		<for list="${localizationOptions}" param="localizationOption">
+			<var name="key_localizationName" value="${localizationOption}" />
+
+			<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_NAME_LOCALIZED" />
+		</for>
+	</command>
+
+	<command name="viewLocalizationOptionsEdit">
+		<execute action="DockbarEdit#assertElementPresent" locator-key1="EDIT_NAME_FIELD" />
+		<execute action="DockbarEdit#assertElementPresent" locator-key1="DETAILS_FRIENDLY_URL_TITLE" />
+
+		<for list="${localizationOptions}" param="localizationOption">
+			<var name="key_localizationName" value="${localizationOption}" />
+
+			<if>
+				<isset var="friendlyURL" />
+				<then>
+					<execute action="DockbarEdit#assertElementPresent" locator-key1="DETAILS_FRIENDLYURL_LOCALIZED" />
+				</then>
+				<else>
+					<execute action="DockbarEdit#assertElementPresent" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
+				</else>
+			</if>
+		</for>
+	</command>
+
 	<command name="viewMySitesDropDownSiteName">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute action="Dockbar#click" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES_SITE_NAME_2" value1="${siteName}" />
 	</command>

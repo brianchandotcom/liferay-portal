@@ -79,7 +79,7 @@ public class WorkflowInstanceManagerProxyBean
 	public List<WorkflowInstance> getWorkflowInstances(
 		long companyId, Long userId, String assetClassName, Long assetClassPK,
 		Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstance> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -88,7 +88,7 @@ public class WorkflowInstanceManagerProxyBean
 	public List<WorkflowInstance> getWorkflowInstances(
 		long companyId, Long userId, String[] assetClassNames,
 		Boolean completed, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowInstance> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -97,7 +97,7 @@ public class WorkflowInstanceManagerProxyBean
 	public List<WorkflowInstance> getWorkflowInstances(
 		long companyId, String workflowDefinitionName,
 		Integer workflowDefinitionVersion, Boolean completed, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<WorkflowInstance> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}

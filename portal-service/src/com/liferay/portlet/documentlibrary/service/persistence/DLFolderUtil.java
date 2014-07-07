@@ -87,7 +87,7 @@ public class DLFolderUtil {
 	 */
 	public static List<DLFolder> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,7 +165,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -179,7 +179,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -193,7 +193,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -207,7 +207,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -222,7 +222,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByUuid_PrevAndNext(
 		long folderId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(folderId, uuid, orderByComparator);
@@ -356,7 +356,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -388,7 +388,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -404,7 +404,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -420,7 +420,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -437,7 +437,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByUuid_C_PrevAndNext(
 		long folderId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(folderId, uuid, companyId,
@@ -508,7 +508,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -523,7 +523,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -537,7 +537,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -551,7 +551,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -565,7 +565,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -580,7 +580,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByGroupId_PrevAndNext(
 		long folderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(folderId, groupId,
@@ -630,7 +630,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -646,7 +646,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] filterFindByGroupId_PrevAndNext(
 		long folderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(folderId, groupId,
@@ -725,7 +725,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -740,7 +740,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -755,7 +755,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -770,7 +770,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -785,7 +785,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -801,7 +801,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByCompanyId_PrevAndNext(
 		long folderId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(folderId, companyId,
@@ -932,7 +932,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByG_P(groupId, parentFolderId, start, end,
 			orderByComparator);
@@ -949,7 +949,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_First(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_First(groupId, parentFolderId, orderByComparator);
@@ -965,7 +965,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_First(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_First(groupId, parentFolderId, orderByComparator);
 	}
@@ -981,7 +981,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_Last(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, parentFolderId, orderByComparator);
@@ -997,7 +997,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_Last(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_Last(groupId, parentFolderId, orderByComparator);
 	}
@@ -1014,7 +1014,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
@@ -1068,7 +1068,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> filterFindByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P(groupId, parentFolderId, start, end,
 			orderByComparator);
@@ -1086,7 +1086,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] filterFindByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(folderId, groupId,
@@ -1171,7 +1171,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByC_NotS(companyId, status, start, end,
 			orderByComparator);
@@ -1188,7 +1188,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
@@ -1204,7 +1204,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1220,7 +1220,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
@@ -1236,7 +1236,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1253,7 +1253,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByC_NotS_PrevAndNext(
 		long folderId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(folderId, companyId, status,
@@ -1327,7 +1327,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByP_N(
 		long parentFolderId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByP_N(parentFolderId, name, start, end,
 			orderByComparator);
@@ -1344,7 +1344,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByP_N_First(
 		long parentFolderId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_First(parentFolderId, name, orderByComparator);
@@ -1360,7 +1360,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByP_N_First(
 		long parentFolderId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_First(parentFolderId, name, orderByComparator);
 	}
@@ -1376,7 +1376,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByP_N_Last(
 		long parentFolderId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_Last(parentFolderId, name, orderByComparator);
@@ -1392,7 +1392,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByP_N_Last(
 		long parentFolderId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_Last(parentFolderId, name, orderByComparator);
 	}
@@ -1409,7 +1409,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByP_N_PrevAndNext(
 		long folderId, long parentFolderId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_PrevAndNext(folderId, parentFolderId, name,
@@ -1494,7 +1494,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByF_C_P_NotS(folderId, companyId, parentFolderId,
 			status, start, end, orderByComparator);
@@ -1513,7 +1513,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_First(folderId, companyId, parentFolderId,
@@ -1532,7 +1532,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_C_P_NotS_First(folderId, companyId,
 			parentFolderId, status, orderByComparator);
@@ -1551,7 +1551,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_Last(folderId, companyId, parentFolderId,
@@ -1570,7 +1570,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByF_C_P_NotS_Last(folderId, companyId, parentFolderId,
 			status, orderByComparator);
@@ -1735,7 +1735,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByG_M_P_H(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByG_M_P_H(groupId, mountPoint, parentFolderId, hidden,
 			start, end, orderByComparator);
@@ -1754,7 +1754,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_M_P_H_First(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_First(groupId, mountPoint, parentFolderId,
@@ -1773,7 +1773,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_M_P_H_First(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_P_H_First(groupId, mountPoint, parentFolderId,
 			hidden, orderByComparator);
@@ -1792,7 +1792,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_M_P_H_Last(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_Last(groupId, mountPoint, parentFolderId,
@@ -1811,7 +1811,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_M_P_H_Last(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_P_H_Last(groupId, mountPoint, parentFolderId,
 			hidden, orderByComparator);
@@ -1832,7 +1832,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByG_M_P_H_PrevAndNext(
 		long folderId, long groupId, boolean mountPoint, long parentFolderId,
 		boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_PrevAndNext(folderId, groupId, mountPoint,
@@ -1897,7 +1897,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> filterFindByG_M_P_H(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_M_P_H(groupId, mountPoint, parentFolderId,
 			hidden, start, end, orderByComparator);
@@ -1918,7 +1918,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] filterFindByG_M_P_H_PrevAndNext(
 		long folderId, long groupId, boolean mountPoint, long parentFolderId,
 		boolean hidden,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_P_H_PrevAndNext(folderId, groupId,
@@ -2027,7 +2027,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_H_S(groupId, parentFolderId, hidden, status,
 			start, end, orderByComparator);
@@ -2046,7 +2046,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_H_S_First(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_First(groupId, parentFolderId, hidden,
@@ -2065,7 +2065,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_H_S_First(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_H_S_First(groupId, parentFolderId, hidden,
 			status, orderByComparator);
@@ -2084,7 +2084,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_H_S_Last(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_Last(groupId, parentFolderId, hidden, status,
@@ -2103,7 +2103,7 @@ public class DLFolderUtil {
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_H_S_Last(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_H_S_Last(groupId, parentFolderId, hidden,
 			status, orderByComparator);
@@ -2124,7 +2124,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByG_P_H_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_PrevAndNext(folderId, groupId,
@@ -2188,7 +2188,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> filterFindByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P_H_S(groupId, parentFolderId, hidden,
 			status, start, end, orderByComparator);
@@ -2209,7 +2209,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] filterFindByG_P_H_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_H_S_PrevAndNext(folderId, groupId,
@@ -2321,7 +2321,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByG_M_P_H_S(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .findByG_M_P_H_S(groupId, mountPoint, parentFolderId,
 			hidden, status, start, end, orderByComparator);
@@ -2342,7 +2342,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_M_P_H_S_First(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_First(groupId, mountPoint, parentFolderId,
@@ -2363,7 +2363,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_M_P_H_S_First(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_P_H_S_First(groupId, mountPoint, parentFolderId,
 			hidden, status, orderByComparator);
@@ -2384,7 +2384,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_M_P_H_S_Last(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_Last(groupId, mountPoint, parentFolderId,
@@ -2405,7 +2405,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_M_P_H_S_Last(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_M_P_H_S_Last(groupId, mountPoint, parentFolderId,
 			hidden, status, orderByComparator);
@@ -2427,7 +2427,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] findByG_M_P_H_S_PrevAndNext(
 		long folderId, long groupId, boolean mountPoint, long parentFolderId,
 		boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_PrevAndNext(folderId, groupId, mountPoint,
@@ -2496,7 +2496,7 @@ public class DLFolderUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> filterFindByG_M_P_H_S(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_M_P_H_S(groupId, mountPoint, parentFolderId,
 			hidden, status, start, end, orderByComparator);
@@ -2518,7 +2518,7 @@ public class DLFolderUtil {
 	public static com.liferay.portlet.documentlibrary.model.DLFolder[] filterFindByG_M_P_H_S_PrevAndNext(
 		long folderId, long groupId, boolean mountPoint, long parentFolderId,
 		boolean hidden, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_P_H_S_PrevAndNext(folderId, groupId,
@@ -2692,7 +2692,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -2765,7 +2765,7 @@ public class DLFolderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return getPersistence()
 				   .getDLFileEntryTypes(pk, start, end, orderByComparator);
 	}

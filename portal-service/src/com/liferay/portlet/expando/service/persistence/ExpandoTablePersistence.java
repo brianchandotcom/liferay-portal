@@ -82,7 +82,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator);
 
 	/**
 	* Returns the first expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -95,7 +95,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException;
 
 	/**
@@ -108,7 +108,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator);
 
 	/**
 	* Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -121,7 +121,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException;
 
 	/**
@@ -134,7 +134,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator);
 
 	/**
 	* Returns the expando tables before and after the current expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -148,7 +148,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable[] findByC_C_PrevAndNext(
 		long tableId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchTableException;
 
 	/**
@@ -323,7 +323,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoTable> orderByComparator);
 
 	/**
 	* Removes all the expando tables from the database.

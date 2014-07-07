@@ -428,7 +428,7 @@ public class DLFileVersionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLFileVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileVersion", "uuid",
 			true, "fileVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

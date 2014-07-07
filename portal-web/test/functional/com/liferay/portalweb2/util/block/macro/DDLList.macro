@@ -47,7 +47,7 @@
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -61,7 +61,7 @@
 		<execute action="PGDynamicdatalistsConfiguration#type" locator-key1="BASIC_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGDynamicdatalistsConfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="PGDynamicdatalistsConfiguration#assertTextNotPresent" value1="${ddlListNameEdit}" />
@@ -73,7 +73,7 @@
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDynamicdatalistsEditlist#type" locator-key1="NAME_FIELD" value1="${ddlListNameEdit}" />
@@ -97,7 +97,7 @@
 		<execute action="PGDynamicdatalistsConfiguration#type" locator-key1="BASIC_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="LIST_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="PGDynamicdatalistsConfigurationEditlist#type" locator-key1="NAME_FIELD" value1="${ddlListNameEdit}" />

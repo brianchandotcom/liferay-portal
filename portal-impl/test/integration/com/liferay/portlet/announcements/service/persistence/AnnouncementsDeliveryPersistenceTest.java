@@ -224,7 +224,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AnnouncementsDelivery> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsDelivery",
 			"deliveryId", true, "companyId", true, "userId", true, "type",
 			true, "email", true, "sms", true, "website", true);

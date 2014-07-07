@@ -850,6 +850,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					Group.class.getName(), group.getGroupId());
 			}
 
+			assetEntryLocalService.deleteGroupEntries(group.getGroupId());
+
 			assetTagLocalService.deleteGroupTags(group.getGroupId());
 
 			assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
@@ -1538,7 +1540,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public List<Group> getLayoutsGroups(
 		long companyId, long parentGroupId, boolean site, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Group> obc) {
 
 		return groupFinder.findByLayouts(
 			companyId, parentGroupId, site, start, end, obc);
@@ -2213,7 +2215,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long parentGroupId, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, getClassNameIds(), parentGroupId, keywords, params,
@@ -2305,7 +2307,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long parentGroupId, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, getClassNameIds(), parentGroupId, name, description,
@@ -2397,7 +2399,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long[] classNameIds, long parentGroupId,
 		String keywords, LinkedHashMap<String, Object> params, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Group> obc) {
 
 		String[] keywordsArray = getSearchNames(companyId, keywords);
 
@@ -2511,7 +2513,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long[] classNameIds, long parentGroupId, String name,
 		String description, LinkedHashMap<String, Object> params,
-		boolean andOperator, int start, int end, OrderByComparator obc) {
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc) {
 
 		String[] names = getSearchNames(companyId, name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
@@ -2609,7 +2611,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long[] classNameIds, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID,
@@ -2705,7 +2707,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, long[] classNameIds, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID, name,
@@ -2786,7 +2788,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public List<Group> search(
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, getClassNameIds(), GroupConstants.ANY_PARENT_GROUP_ID,
@@ -2876,7 +2878,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> search(
 		long companyId, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Group> obc) {
 
 		return search(
 			companyId, getClassNameIds(), GroupConstants.ANY_PARENT_GROUP_ID,
@@ -4301,7 +4303,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected List<Group> sort(
-		Collection<Group> groups, int start, int end, OrderByComparator obc) {
+		Collection<Group> groups, int start, int end,
+		OrderByComparator<Group> obc) {
 
 		if (obc == null) {
 			obc = new GroupNameComparator(true);

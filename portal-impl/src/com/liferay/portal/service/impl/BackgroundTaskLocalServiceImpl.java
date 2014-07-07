@@ -318,7 +318,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public BackgroundTask fetchFirstBackgroundTask(
 		long groupId, String taskExecutorClassName, boolean completed,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.fetchByG_T_C_First(
 			groupId, taskExecutorClassName, completed, orderByComparator);
@@ -334,7 +334,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public BackgroundTask fetchFirstBackgroundTask(
 		String taskExecutorClassName, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.fetchByT_S_First(
 			taskExecutorClassName, status, orderByComparator);
@@ -371,7 +371,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
 		long groupId, String taskExecutorClassName, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByG_T(
 			groupId, taskExecutorClassName, start, end, orderByComparator);
@@ -380,7 +380,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
 		long groupId, String name, String taskExecutorClassName, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByG_N_T(
 			groupId, name, taskExecutorClassName, start, end,
@@ -406,7 +406,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
 		long groupId, String[] taskExecutorClassNames, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByG_T(
 			groupId, taskExecutorClassNames, start, end, orderByComparator);
@@ -423,7 +423,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
 		String taskExecutorClassName, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByT_S(
 			taskExecutorClassName, status, start, end, orderByComparator);
@@ -440,7 +440,7 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
 		String[] taskExecutorClassNames, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByT_S(
 			taskExecutorClassNames, status, start, end, orderByComparator);

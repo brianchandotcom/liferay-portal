@@ -7,6 +7,8 @@
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
+		<execute macro="WikiNode#addMainCP" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

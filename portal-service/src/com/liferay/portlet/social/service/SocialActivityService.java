@@ -49,18 +49,29 @@ public interface SocialActivityService extends BaseService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns a range of all the activities done on assets identified by the
+	* class name.
 	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @param className the target asset's class name
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching activities
+	* @throws PortalException if a permission checker was not initialized
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
+		java.lang.String className, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
@@ -86,34 +97,6 @@ public interface SocialActivityService extends BaseService {
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns a range of all the activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching activities
-	* @throws PortalException if a permission checker was not initialized
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -145,8 +128,9 @@ public interface SocialActivityService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns a range of all the activities done on assets identified by the
-	* class name.
+	* Returns a range of all the activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -158,7 +142,9 @@ public interface SocialActivityService extends BaseService {
 	* result set.
 	* </p>
 	*
-	* @param className the target asset's class name
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
@@ -166,8 +152,17 @@ public interface SocialActivityService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long mirrorActivityId, long classNameId, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns the number of activities done on assets identified by class name.
+	*
+	* @param className the target asset's class name
+	* @return the number of matching activities
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActivitiesCount(java.lang.String className);
 
 	/**
 	* Returns the number of activities done on assets identified by the class
@@ -178,20 +173,6 @@ public interface SocialActivityService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActivitiesCount(long classNameId);
-
-	/**
-	* Returns the number of activities done on the asset identified by the
-	* class name ID and class primary key that are mirrors of the activity
-	* identified by the mirror activity ID.
-	*
-	* @param mirrorActivityId the primary key of the mirror activity
-	* @param classNameId the target asset's class name ID
-	* @param classPK the primary key of the target asset
-	* @return the number of matching activities
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(long mirrorActivityId, long classNameId,
-		long classPK);
 
 	/**
 	* Returns the number of activities done on the asset identified by the
@@ -208,13 +189,18 @@ public interface SocialActivityService extends BaseService {
 		java.lang.String className, long classPK);
 
 	/**
-	* Returns the number of activities done on assets identified by class name.
+	* Returns the number of activities done on the asset identified by the
+	* class name ID and class primary key that are mirrors of the activity
+	* identified by the mirror activity ID.
 	*
-	* @param className the target asset's class name
+	* @param mirrorActivityId the primary key of the mirror activity
+	* @param classNameId the target asset's class name ID
+	* @param classPK the primary key of the target asset
 	* @return the number of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActivitiesCount(java.lang.String className);
+	public int getActivitiesCount(long mirrorActivityId, long classNameId,
+		long classPK);
 
 	/**
 	* Returns the activity identified by its primary key.
@@ -232,6 +218,13 @@ public interface SocialActivityService extends BaseService {
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
 		long activitySetId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Returns a range of all the activities done in the group.
@@ -610,4 +603,11 @@ public interface SocialActivityService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserOrganizationsActivitiesCount(long userId);
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 }

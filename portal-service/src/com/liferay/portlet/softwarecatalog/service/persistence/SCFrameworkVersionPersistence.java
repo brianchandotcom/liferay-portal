@@ -79,7 +79,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the first s c framework version in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the last s c framework version in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the s c framework versions before and after the current s c framework version in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -182,7 +182,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the s c framework versions before and after the current s c framework version in the ordered set of s c framework versions that the user has permission to view where groupId = &#63;.
@@ -195,7 +195,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -260,7 +260,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the first s c framework version in the ordered set where companyId = &#63;.
@@ -272,7 +272,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -284,7 +284,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the last s c framework version in the ordered set where companyId = &#63;.
@@ -296,7 +296,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -308,7 +308,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the s c framework versions before and after the current s c framework version in the ordered set where companyId = &#63;.
@@ -321,7 +321,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByCompanyId_PrevAndNext(
 		long frameworkVersionId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -381,7 +381,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByG_A(
 		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the first s c framework version in the ordered set where groupId = &#63; and active = &#63;.
@@ -394,7 +394,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_First(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -407,7 +407,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_First(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the last s c framework version in the ordered set where groupId = &#63; and active = &#63;.
@@ -420,7 +420,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_Last(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -433,7 +433,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_Last(
 		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the s c framework versions before and after the current s c framework version in the ordered set where groupId = &#63; and active = &#63;.
@@ -447,7 +447,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -492,7 +492,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByG_A(
 		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Returns the s c framework versions before and after the current s c framework version in the ordered set of s c framework versions that the user has permission to view where groupId = &#63; and active = &#63;.
@@ -506,7 +506,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	/**
@@ -633,7 +633,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator);
 
 	/**
 	* Removes all the s c framework versions from the database.
@@ -694,7 +694,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator);
 
 	/**
 	* Returns the number of s c product versions associated with the s c framework version.

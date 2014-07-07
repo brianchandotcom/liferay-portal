@@ -29,7 +29,7 @@ public class ServiceBag {
 
 	public ServiceBag(
 		ClassLoader classLoader, AdvisedSupport advisedSupport,
-		Class<?> serviceTypeClass, ServiceWrapper<?> serviceWrapper) {
+		Class<?> serviceTypeClass, final ServiceWrapper<?> serviceWrapper) {
 
 		_advisedSupport = advisedSupport;
 
@@ -38,7 +38,14 @@ public class ServiceBag {
 			new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
 			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
 
-		TargetSource nextTargetSource = new SingletonTargetSource(nextTarget);
+		TargetSource nextTargetSource = new SingletonTargetSource(nextTarget) {
+
+			@Override
+			public Class<?> getTargetClass() {
+				return serviceWrapper.getClass();
+			}
+
+		};
 
 		_advisedSupport.setTargetSource(nextTargetSource);
 

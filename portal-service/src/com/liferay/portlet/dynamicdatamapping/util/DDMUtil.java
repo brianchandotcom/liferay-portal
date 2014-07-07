@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -94,13 +96,13 @@ public class DDMUtil {
 		return getDDM().getIndexedFieldValue(fieldValue, type);
 	}
 
-	public static OrderByComparator getStructureOrderByComparator(
+	public static OrderByComparator<DDMStructure> getStructureOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getDDM().getStructureOrderByComparator(orderByCol, orderByType);
 	}
 
-	public static OrderByComparator getTemplateOrderByComparator(
+	public static OrderByComparator<DDMTemplate> getTemplateOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getDDM().getTemplateOrderByComparator(orderByCol, orderByType);

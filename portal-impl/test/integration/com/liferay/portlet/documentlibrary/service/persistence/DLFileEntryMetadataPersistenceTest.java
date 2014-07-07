@@ -260,7 +260,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryMetadata",
 			"uuid", true, "fileEntryMetadataId", true, "DDMStorageId", true,
 			"DDMStructureId", true, "fileEntryTypeId", true, "fileEntryId",

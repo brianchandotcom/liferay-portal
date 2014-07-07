@@ -502,7 +502,7 @@ public class MBThreadPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBThread> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBThread", "uuid", true,
 			"threadId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

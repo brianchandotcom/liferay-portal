@@ -128,104 +128,14 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this ticket.
-	*
-	* @return the primary key of this ticket
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _ticket.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new TicketWrapper((Ticket)_ticket.clone());
 	}
 
-	/**
-	* Sets the primary key of this ticket.
-	*
-	* @param primaryKey the primary key of this ticket
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_ticket.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this ticket.
-	*
-	* @return the mvcc version of this ticket
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _ticket.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this ticket.
-	*
-	* @param mvccVersion the mvcc version of this ticket
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_ticket.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the ticket ID of this ticket.
-	*
-	* @return the ticket ID of this ticket
-	*/
-	@Override
-	public long getTicketId() {
-		return _ticket.getTicketId();
-	}
-
-	/**
-	* Sets the ticket ID of this ticket.
-	*
-	* @param ticketId the ticket ID of this ticket
-	*/
-	@Override
-	public void setTicketId(long ticketId) {
-		_ticket.setTicketId(ticketId);
-	}
-
-	/**
-	* Returns the company ID of this ticket.
-	*
-	* @return the company ID of this ticket
-	*/
-	@Override
-	public long getCompanyId() {
-		return _ticket.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this ticket.
-	*
-	* @param companyId the company ID of this ticket
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_ticket.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the create date of this ticket.
-	*
-	* @return the create date of this ticket
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _ticket.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this ticket.
-	*
-	* @param createDate the create date of this ticket
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_ticket.setCreateDate(createDate);
+	public int compareTo(com.liferay.portal.model.Ticket ticket) {
+		return _ticket.compareTo(ticket);
 	}
 
 	/**
@@ -236,11 +146,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	@Override
 	public java.lang.String getClassName() {
 		return _ticket.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_ticket.setClassName(className);
 	}
 
 	/**
@@ -254,16 +159,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	/**
-	* Sets the class name ID of this ticket.
-	*
-	* @param classNameId the class name ID of this ticket
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_ticket.setClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the class p k of this ticket.
 	*
 	* @return the class p k of this ticket
@@ -274,73 +169,28 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	/**
-	* Sets the class p k of this ticket.
+	* Returns the company ID of this ticket.
 	*
-	* @param classPK the class p k of this ticket
+	* @return the company ID of this ticket
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_ticket.setClassPK(classPK);
+	public long getCompanyId() {
+		return _ticket.getCompanyId();
 	}
 
 	/**
-	* Returns the key of this ticket.
+	* Returns the create date of this ticket.
 	*
-	* @return the key of this ticket
+	* @return the create date of this ticket
 	*/
 	@Override
-	public java.lang.String getKey() {
-		return _ticket.getKey();
+	public java.util.Date getCreateDate() {
+		return _ticket.getCreateDate();
 	}
 
-	/**
-	* Sets the key of this ticket.
-	*
-	* @param key the key of this ticket
-	*/
 	@Override
-	public void setKey(java.lang.String key) {
-		_ticket.setKey(key);
-	}
-
-	/**
-	* Returns the type of this ticket.
-	*
-	* @return the type of this ticket
-	*/
-	@Override
-	public int getType() {
-		return _ticket.getType();
-	}
-
-	/**
-	* Sets the type of this ticket.
-	*
-	* @param type the type of this ticket
-	*/
-	@Override
-	public void setType(int type) {
-		_ticket.setType(type);
-	}
-
-	/**
-	* Returns the extra info of this ticket.
-	*
-	* @return the extra info of this ticket
-	*/
-	@Override
-	public java.lang.String getExtraInfo() {
-		return _ticket.getExtraInfo();
-	}
-
-	/**
-	* Sets the extra info of this ticket.
-	*
-	* @param extraInfo the extra info of this ticket
-	*/
-	@Override
-	public void setExtraInfo(java.lang.String extraInfo) {
-		_ticket.setExtraInfo(extraInfo);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _ticket.getExpandoBridge();
 	}
 
 	/**
@@ -354,23 +204,73 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	/**
-	* Sets the expiration date of this ticket.
+	* Returns the extra info of this ticket.
 	*
-	* @param expirationDate the expiration date of this ticket
+	* @return the extra info of this ticket
 	*/
 	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
-		_ticket.setExpirationDate(expirationDate);
+	public java.lang.String getExtraInfo() {
+		return _ticket.getExtraInfo();
+	}
+
+	/**
+	* Returns the key of this ticket.
+	*
+	* @return the key of this ticket
+	*/
+	@Override
+	public java.lang.String getKey() {
+		return _ticket.getKey();
+	}
+
+	/**
+	* Returns the mvcc version of this ticket.
+	*
+	* @return the mvcc version of this ticket
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _ticket.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this ticket.
+	*
+	* @return the primary key of this ticket
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ticket.getPrimaryKey();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _ticket.isNew();
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _ticket.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the ticket ID of this ticket.
+	*
+	* @return the ticket ID of this ticket
+	*/
+	@Override
+	public long getTicketId() {
+		return _ticket.getTicketId();
+	}
+
+	/**
+	* Returns the type of this ticket.
+	*
+	* @return the type of this ticket
+	*/
+	@Override
+	public int getType() {
+		return _ticket.getType();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_ticket.setNew(n);
+	public int hashCode() {
+		return _ticket.hashCode();
 	}
 
 	@Override
@@ -379,28 +279,73 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ticket.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _ticket.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _ticket.getPrimaryKeyObj();
+	public boolean isExpired() {
+		return _ticket.isExpired();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_ticket.setPrimaryKeyObj(primaryKeyObj);
+	public boolean isNew() {
+		return _ticket.isNew();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _ticket.getExpandoBridge();
+	public void persist() {
+		_ticket.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_ticket.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_ticket.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this ticket.
+	*
+	* @param classNameId the class name ID of this ticket
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_ticket.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this ticket.
+	*
+	* @param classPK the class p k of this ticket
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_ticket.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this ticket.
+	*
+	* @param companyId the company ID of this ticket
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ticket.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this ticket.
+	*
+	* @param createDate the create date of this ticket
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_ticket.setCreateDate(createDate);
 	}
 
 	@Override
@@ -421,19 +366,84 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		_ticket.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the expiration date of this ticket.
+	*
+	* @param expirationDate the expiration date of this ticket
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new TicketWrapper((Ticket)_ticket.clone());
+	public void setExpirationDate(java.util.Date expirationDate) {
+		_ticket.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Sets the extra info of this ticket.
+	*
+	* @param extraInfo the extra info of this ticket
+	*/
+	@Override
+	public void setExtraInfo(java.lang.String extraInfo) {
+		_ticket.setExtraInfo(extraInfo);
+	}
+
+	/**
+	* Sets the key of this ticket.
+	*
+	* @param key the key of this ticket
+	*/
+	@Override
+	public void setKey(java.lang.String key) {
+		_ticket.setKey(key);
+	}
+
+	/**
+	* Sets the mvcc version of this ticket.
+	*
+	* @param mvccVersion the mvcc version of this ticket
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_ticket.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.Ticket ticket) {
-		return _ticket.compareTo(ticket);
+	public void setNew(boolean n) {
+		_ticket.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this ticket.
+	*
+	* @param primaryKey the primary key of this ticket
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_ticket.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _ticket.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_ticket.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the ticket ID of this ticket.
+	*
+	* @param ticketId the ticket ID of this ticket
+	*/
+	@Override
+	public void setTicketId(long ticketId) {
+		_ticket.setTicketId(ticketId);
+	}
+
+	/**
+	* Sets the type of this ticket.
+	*
+	* @param type the type of this ticket
+	*/
+	@Override
+	public void setType(int type) {
+		_ticket.setType(type);
 	}
 
 	@Override
@@ -447,28 +457,18 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public com.liferay.portal.model.Ticket toUnescapedModel() {
-		return new TicketWrapper(_ticket.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _ticket.toString();
 	}
 
 	@Override
+	public com.liferay.portal.model.Ticket toUnescapedModel() {
+		return new TicketWrapper(_ticket.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _ticket.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_ticket.persist();
-	}
-
-	@Override
-	public boolean isExpired() {
-		return _ticket.isExpired();
 	}
 
 	@Override

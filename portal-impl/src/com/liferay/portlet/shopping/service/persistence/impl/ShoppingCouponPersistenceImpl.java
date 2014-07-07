@@ -154,7 +154,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCoupon> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public ShoppingCoupon findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCouponException {
+		OrderByComparator<ShoppingCoupon> orderByComparator)
+		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public ShoppingCoupon fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCoupon> orderByComparator) {
 		List<ShoppingCoupon> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public ShoppingCoupon findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchCouponException {
+		OrderByComparator<ShoppingCoupon> orderByComparator)
+		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public ShoppingCoupon fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCoupon> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public ShoppingCoupon[] findByGroupId_PrevAndNext(long couponId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<ShoppingCoupon> orderByComparator)
 		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = findByPrimaryKey(couponId);
 
@@ -398,7 +400,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 	protected ShoppingCoupon getByGroupId_PrevAndNext(Session session,
 		ShoppingCoupon shoppingCoupon, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingCoupon> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1360,7 +1362,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	@Override
 	public List<ShoppingCoupon> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingCoupon> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

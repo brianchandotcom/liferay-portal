@@ -261,7 +261,7 @@ public class AssetTagPropertyPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AssetTagProperty> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetTagProperty",
 			"tagPropertyId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

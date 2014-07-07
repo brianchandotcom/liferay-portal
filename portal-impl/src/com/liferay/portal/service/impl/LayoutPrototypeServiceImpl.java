@@ -116,7 +116,8 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 
 	@Override
 	public List<LayoutPrototype> search(
-			long companyId, Boolean active, OrderByComparator obc)
+			long companyId, Boolean active,
+			OrderByComparator<LayoutPrototype> obc)
 		throws PortalException {
 
 		List<LayoutPrototype> filteredLayoutPrototypes =

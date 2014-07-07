@@ -79,7 +79,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator);
 
 	/**
 	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
@@ -91,7 +91,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 
 	/**
@@ -103,7 +103,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator);
 
 	/**
 	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
@@ -115,7 +115,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 
 	/**
@@ -127,7 +127,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator);
 
 	/**
 	* Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
@@ -140,7 +140,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot[] findByProductEntryId_PrevAndNext(
 		long productScreenshotId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 
 	/**
@@ -405,7 +405,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator);
 
 	/**
 	* Removes all the s c product screenshots from the database.

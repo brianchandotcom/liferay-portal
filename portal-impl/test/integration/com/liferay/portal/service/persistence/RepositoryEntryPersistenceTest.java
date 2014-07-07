@@ -290,7 +290,7 @@ public class RepositoryEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<RepositoryEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RepositoryEntry",
 			"mvccVersion", true, "uuid", true, "repositoryEntryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",

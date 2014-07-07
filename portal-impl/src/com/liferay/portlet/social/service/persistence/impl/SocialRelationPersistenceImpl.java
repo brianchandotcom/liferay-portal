@@ -153,7 +153,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -273,7 +273,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -302,7 +303,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +323,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (socialRelation != null) {
@@ -350,7 +352,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -378,7 +380,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByUuid_PrevAndNext(long relationId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -409,7 +411,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByUuid_PrevAndNext(Session session,
 		SocialRelation socialRelation, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -679,7 +681,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -809,7 +811,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -842,7 +845,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -864,7 +867,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -897,7 +901,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -926,7 +930,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByUuid_C_PrevAndNext(long relationId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -957,7 +962,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByUuid_C_PrevAndNext(Session session,
 		SocialRelation socialRelation, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1235,7 +1240,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1341,7 +1346,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -1370,7 +1376,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -1391,7 +1397,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -1420,7 +1427,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1448,7 +1455,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByCompanyId_PrevAndNext(long relationId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -1479,7 +1486,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByCompanyId_PrevAndNext(Session session,
 		SocialRelation socialRelation, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1713,7 +1720,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByUserId1(long userId1, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1819,7 +1826,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUserId1_First(long userId1,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId1_First(userId1,
 				orderByComparator);
 
@@ -1848,7 +1856,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUserId1_First(long userId1,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByUserId1(userId1, 0, 1,
 				orderByComparator);
 
@@ -1869,7 +1877,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUserId1_Last(long userId1,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId1_Last(userId1,
 				orderByComparator);
 
@@ -1898,7 +1907,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUserId1_Last(long userId1,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByUserId1(userId1);
 
 		if (count == 0) {
@@ -1926,7 +1935,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByUserId1_PrevAndNext(long relationId,
-		long userId1, OrderByComparator orderByComparator)
+		long userId1, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -1957,7 +1966,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByUserId1_PrevAndNext(Session session,
 		SocialRelation socialRelation, long userId1,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2191,7 +2200,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByUserId2(long userId2, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2297,7 +2306,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUserId2_First(long userId2,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId2_First(userId2,
 				orderByComparator);
 
@@ -2326,7 +2336,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUserId2_First(long userId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByUserId2(userId2, 0, 1,
 				orderByComparator);
 
@@ -2347,7 +2357,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByUserId2_Last(long userId2,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId2_Last(userId2,
 				orderByComparator);
 
@@ -2376,7 +2387,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByUserId2_Last(long userId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByUserId2(userId2);
 
 		if (count == 0) {
@@ -2404,7 +2415,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByUserId2_PrevAndNext(long relationId,
-		long userId2, OrderByComparator orderByComparator)
+		long userId2, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -2435,7 +2446,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByUserId2_PrevAndNext(Session session,
 		SocialRelation socialRelation, long userId2,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2668,7 +2679,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByType(int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2774,7 +2785,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByType_First(int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByType_First(type,
 				orderByComparator);
 
@@ -2803,7 +2815,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByType_First(int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByType(type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2823,7 +2835,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByType_Last(int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByType_Last(type, orderByComparator);
 
 		if (socialRelation != null) {
@@ -2851,7 +2864,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByType_Last(int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByType(type);
 
 		if (count == 0) {
@@ -2879,7 +2892,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByType_PrevAndNext(long relationId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -2909,7 +2923,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByType_PrevAndNext(Session session,
 		SocialRelation socialRelation, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3148,7 +3162,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByC_T(long companyId, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3264,7 +3278,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByC_T_First(companyId, type,
 				orderByComparator);
 
@@ -3297,7 +3312,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByC_T(companyId, type, 0, 1,
 				orderByComparator);
 
@@ -3319,7 +3334,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByC_T_Last(companyId, type,
 				orderByComparator);
 
@@ -3352,7 +3368,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByC_T(companyId, type);
 
 		if (count == 0) {
@@ -3381,7 +3397,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByC_T_PrevAndNext(long relationId,
-		long companyId, int type, OrderByComparator orderByComparator)
+		long companyId, int type,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -3412,7 +3429,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByC_T_PrevAndNext(Session session,
 		SocialRelation socialRelation, long companyId, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3662,7 +3679,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByU1_U2(long userId1, long userId2,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3778,7 +3795,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU1_U2_First(long userId1, long userId2,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_U2_First(userId1, userId2,
 				orderByComparator);
 
@@ -3811,7 +3829,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU1_U2_First(long userId1, long userId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByU1_U2(userId1, userId2, 0, 1,
 				orderByComparator);
 
@@ -3833,7 +3851,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU1_U2_Last(long userId1, long userId2,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_U2_Last(userId1, userId2,
 				orderByComparator);
 
@@ -3866,7 +3885,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU1_U2_Last(long userId1, long userId2,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByU1_U2(userId1, userId2);
 
 		if (count == 0) {
@@ -3895,7 +3914,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByU1_U2_PrevAndNext(long relationId,
-		long userId1, long userId2, OrderByComparator orderByComparator)
+		long userId1, long userId2,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -3926,7 +3946,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByU1_U2_PrevAndNext(Session session,
 		SocialRelation socialRelation, long userId1, long userId2,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4176,7 +4196,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByU1_T(long userId1, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4292,7 +4312,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU1_T_First(long userId1, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_T_First(userId1, type,
 				orderByComparator);
 
@@ -4325,7 +4346,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU1_T_First(long userId1, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByU1_T(userId1, type, 0, 1,
 				orderByComparator);
 
@@ -4347,7 +4368,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU1_T_Last(long userId1, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_T_Last(userId1, type,
 				orderByComparator);
 
@@ -4380,7 +4402,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU1_T_Last(long userId1, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByU1_T(userId1, type);
 
 		if (count == 0) {
@@ -4409,7 +4431,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByU1_T_PrevAndNext(long relationId,
-		long userId1, int type, OrderByComparator orderByComparator)
+		long userId1, int type,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -4440,7 +4463,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByU1_T_PrevAndNext(Session session,
 		SocialRelation socialRelation, long userId1, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4690,7 +4713,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findByU2_T(long userId2, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4806,7 +4829,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU2_T_First(long userId2, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU2_T_First(userId2, type,
 				orderByComparator);
 
@@ -4839,7 +4863,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU2_T_First(long userId2, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		List<SocialRelation> list = findByU2_T(userId2, type, 0, 1,
 				orderByComparator);
 
@@ -4861,7 +4885,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation findByU2_T_Last(long userId2, int type,
-		OrderByComparator orderByComparator) throws NoSuchRelationException {
+		OrderByComparator<SocialRelation> orderByComparator)
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU2_T_Last(userId2, type,
 				orderByComparator);
 
@@ -4894,7 +4919,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByU2_T_Last(long userId2, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		int count = countByU2_T(userId2, type);
 
 		if (count == 0) {
@@ -4923,7 +4948,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation[] findByU2_T_PrevAndNext(long relationId,
-		long userId2, int type, OrderByComparator orderByComparator)
+		long userId2, int type,
+		OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
@@ -4954,7 +4980,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	protected SocialRelation getByU2_T_PrevAndNext(Session session,
 		SocialRelation socialRelation, long userId2, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SocialRelation> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6136,7 +6162,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public List<SocialRelation> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

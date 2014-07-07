@@ -155,7 +155,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByGroupId(long groupId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,7 +262,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByGroupId_First(groupId,
 				orderByComparator);
@@ -291,7 +292,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		List<ExportImportConfiguration> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -312,7 +313,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByGroupId_Last(groupId,
 				orderByComparator);
@@ -342,7 +343,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -371,7 +372,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration[] findByGroupId_PrevAndNext(
 		long exportImportConfigurationId, long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = findByPrimaryKey(exportImportConfigurationId);
 
@@ -402,7 +403,9 @@ public class ExportImportConfigurationPersistenceImpl
 
 	protected ExportImportConfiguration getByGroupId_PrevAndNext(
 		Session session, ExportImportConfiguration exportImportConfiguration,
-		long groupId, OrderByComparator orderByComparator, boolean previous) {
+		long groupId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -640,7 +643,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -746,7 +750,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -776,7 +780,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		List<ExportImportConfiguration> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -797,7 +801,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -827,7 +831,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -856,7 +860,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration[] findByCompanyId_PrevAndNext(
 		long exportImportConfigurationId, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = findByPrimaryKey(exportImportConfigurationId);
 
@@ -889,7 +893,9 @@ public class ExportImportConfigurationPersistenceImpl
 
 	protected ExportImportConfiguration getByCompanyId_PrevAndNext(
 		Session session, ExportImportConfiguration exportImportConfiguration,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId,
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1130,7 +1136,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_T(long groupId, int type,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1246,7 +1253,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_T_First(long groupId, int type,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_T_First(groupId,
 				type, orderByComparator);
@@ -1280,7 +1287,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_T_First(long groupId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		List<ExportImportConfiguration> list = findByG_T(groupId, type, 0, 1,
 				orderByComparator);
 
@@ -1302,7 +1309,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_T_Last(long groupId, int type,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_T_Last(groupId,
 				type, orderByComparator);
@@ -1336,7 +1343,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_T_Last(long groupId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		int count = countByG_T(groupId, type);
 
 		if (count == 0) {
@@ -1366,7 +1373,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration[] findByG_T_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = findByPrimaryKey(exportImportConfigurationId);
 
@@ -1397,7 +1404,9 @@ public class ExportImportConfigurationPersistenceImpl
 
 	protected ExportImportConfiguration getByG_T_PrevAndNext(Session session,
 		ExportImportConfiguration exportImportConfiguration, long groupId,
-		int type, OrderByComparator orderByComparator, boolean previous) {
+		int type,
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1649,7 +1658,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_S(long groupId, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1765,7 +1775,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_S_First(groupId,
 				status, orderByComparator);
@@ -1799,7 +1809,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_S_First(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		List<ExportImportConfiguration> list = findByG_S(groupId, status, 0, 1,
 				orderByComparator);
 
@@ -1821,7 +1831,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_S_Last(groupId,
 				status, orderByComparator);
@@ -1855,7 +1865,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_S_Last(long groupId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		int count = countByG_S(groupId, status);
 
 		if (count == 0) {
@@ -1885,7 +1895,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration[] findByG_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = findByPrimaryKey(exportImportConfigurationId);
 
@@ -1916,7 +1926,9 @@ public class ExportImportConfigurationPersistenceImpl
 
 	protected ExportImportConfiguration getByG_S_PrevAndNext(Session session,
 		ExportImportConfiguration exportImportConfiguration, long groupId,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status,
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2180,7 +2192,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findByG_T_S(long groupId, int type,
-		int status, int start, int end, OrderByComparator orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2302,7 +2315,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_T_S_First(long groupId, int type,
-		int status, OrderByComparator orderByComparator)
+		int status,
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_T_S_First(groupId,
 				type, status, orderByComparator);
@@ -2340,7 +2354,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_T_S_First(long groupId, int type,
-		int status, OrderByComparator orderByComparator) {
+		int status,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		List<ExportImportConfiguration> list = findByG_T_S(groupId, type,
 				status, 0, 1, orderByComparator);
 
@@ -2363,7 +2378,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration findByG_T_S_Last(long groupId, int type,
-		int status, OrderByComparator orderByComparator)
+		int status,
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = fetchByG_T_S_Last(groupId,
 				type, status, orderByComparator);
@@ -2401,7 +2417,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByG_T_S_Last(long groupId, int type,
-		int status, OrderByComparator orderByComparator) {
+		int status,
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		int count = countByG_T_S(groupId, type, status);
 
 		if (count == 0) {
@@ -2432,7 +2449,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public ExportImportConfiguration[] findByG_T_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type, int status,
-		OrderByComparator orderByComparator)
+		OrderByComparator<ExportImportConfiguration> orderByComparator)
 		throws NoSuchExportImportConfigurationException {
 		ExportImportConfiguration exportImportConfiguration = findByPrimaryKey(exportImportConfigurationId);
 
@@ -2466,7 +2483,8 @@ public class ExportImportConfigurationPersistenceImpl
 	protected ExportImportConfiguration getByG_T_S_PrevAndNext(
 		Session session, ExportImportConfiguration exportImportConfiguration,
 		long groupId, int type, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3266,7 +3284,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public List<ExportImportConfiguration> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

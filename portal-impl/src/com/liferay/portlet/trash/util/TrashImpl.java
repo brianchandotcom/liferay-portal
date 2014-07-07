@@ -275,7 +275,7 @@ public class TrashImpl implements Trash {
 	}
 
 	@Override
-	public OrderByComparator getEntryOrderByComparator(
+	public OrderByComparator<TrashEntry> getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -284,7 +284,7 @@ public class TrashImpl implements Trash {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<TrashEntry> orderByComparator = null;
 
 		if (orderByCol.equals("removed-by")) {
 			orderByComparator = new EntryUserNameComparator(orderByAsc);

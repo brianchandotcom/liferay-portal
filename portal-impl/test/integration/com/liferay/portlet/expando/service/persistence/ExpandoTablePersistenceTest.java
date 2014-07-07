@@ -213,7 +213,7 @@ public class ExpandoTablePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ExpandoTable> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoTable", "tableId",
 			true, "companyId", true, "classNameId", true, "name", true);
 	}

@@ -308,7 +308,7 @@ public class DDLRecordPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<DDLRecord> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDLRecord", "uuid", true,
 			"recordId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "versionUserId", true, "versionUserName",

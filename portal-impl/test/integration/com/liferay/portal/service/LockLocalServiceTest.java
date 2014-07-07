@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.log.ExpectedLog;
+import com.liferay.portal.test.log.ExpectedLogs;
+import com.liferay.portal.test.log.ExpectedType;
 
 import java.sql.BatchUpdateException;
 
@@ -35,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.LockAcquisitionException;
+import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +57,16 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock("className", "key");
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog =
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction",
+				expectedType = ExpectedType.EXACT)
+		},
+		level = "ERROR", loggerClass = JDBCExceptionReporter.class
+	)
 	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);

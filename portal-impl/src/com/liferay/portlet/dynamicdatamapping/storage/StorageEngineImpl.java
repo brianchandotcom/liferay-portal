@@ -90,7 +90,7 @@ public class StorageEngineImpl implements StorageEngine {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		StorageAdapter storageAdapter = getStructureStorageAdapter(
@@ -103,7 +103,7 @@ public class StorageEngineImpl implements StorageEngine {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		StorageAdapter storageAdapter = getStructureStorageAdapter(
@@ -116,7 +116,7 @@ public class StorageEngineImpl implements StorageEngine {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		StorageAdapter storageAdapter = getStructureStorageAdapter(
@@ -151,7 +151,7 @@ public class StorageEngineImpl implements StorageEngine {
 	@Override
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		StorageAdapter storageAdapter = getStructureStorageAdapter(

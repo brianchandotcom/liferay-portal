@@ -155,7 +155,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -275,7 +275,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByUuid_First(uuid, orderByComparator);
 
 		if (role != null) {
@@ -303,7 +303,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,8 +322,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	 */
 	@Override
-	public Role findByUuid_Last(String uuid, OrderByComparator orderByComparator)
-		throws NoSuchRoleException {
+	public Role findByUuid_Last(String uuid,
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (role != null) {
@@ -351,7 +351,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -378,7 +378,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByUuid_PrevAndNext(long roleId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -407,7 +407,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByUuid_PrevAndNext(Session session, Role role,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -567,7 +567,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -670,7 +670,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByUuid_PrevAndNext(long roleId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(roleId, uuid, orderByComparator);
 		}
@@ -703,7 +703,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByUuid_PrevAndNext(Session session, Role role,
-		String uuid, OrderByComparator orderByComparator, boolean previous) {
+		String uuid, OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1070,7 +1070,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1200,7 +1200,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (role != null) {
@@ -1232,7 +1232,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1253,7 +1253,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (role != null) {
@@ -1285,7 +1285,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1314,7 +1314,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByUuid_C_PrevAndNext(long roleId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
@@ -1344,7 +1344,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByUuid_C_PrevAndNext(Session session, Role role,
-		String uuid, long companyId, OrderByComparator orderByComparator,
+		String uuid, long companyId, OrderByComparator<Role> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1514,7 +1514,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1622,7 +1622,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByUuid_C_PrevAndNext(long roleId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(roleId, uuid, companyId,
@@ -1657,7 +1657,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByUuid_C_PrevAndNext(Session session, Role role,
-		String uuid, long companyId, OrderByComparator orderByComparator,
+		String uuid, long companyId, OrderByComparator<Role> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -2037,7 +2037,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2143,7 +2143,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (role != null) {
@@ -2171,7 +2171,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2191,7 +2191,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (role != null) {
@@ -2219,7 +2219,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2247,7 +2247,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByCompanyId_PrevAndNext(long roleId, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -2276,7 +2276,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByCompanyId_PrevAndNext(Session session, Role role,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId, OrderByComparator<Role> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2423,7 +2424,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2512,7 +2513,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByCompanyId_PrevAndNext(long roleId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(roleId, companyId,
@@ -2547,7 +2548,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByCompanyId_PrevAndNext(Session session, Role role,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId, OrderByComparator<Role> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2859,7 +2861,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByName(String name, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2979,7 +2981,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByName_First(String name,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByName_First(name, orderByComparator);
 
 		if (role != null) {
@@ -3007,7 +3009,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByName_First(String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByName(name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3026,8 +3028,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	 */
 	@Override
-	public Role findByName_Last(String name, OrderByComparator orderByComparator)
-		throws NoSuchRoleException {
+	public Role findByName_Last(String name,
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByName_Last(name, orderByComparator);
 
 		if (role != null) {
@@ -3055,7 +3057,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByName_Last(String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByName(name);
 
 		if (count == 0) {
@@ -3082,7 +3084,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByName_PrevAndNext(long roleId, String name,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -3111,7 +3113,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByName_PrevAndNext(Session session, Role role,
-		String name, OrderByComparator orderByComparator, boolean previous) {
+		String name, OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3271,7 +3273,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByName(String name, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByName(name, start, end, orderByComparator);
 		}
@@ -3374,7 +3376,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByName_PrevAndNext(long roleId, String name,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByName_PrevAndNext(roleId, name, orderByComparator);
 		}
@@ -3407,7 +3409,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByName_PrevAndNext(Session session, Role role,
-		String name, OrderByComparator orderByComparator, boolean previous) {
+		String name, OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3764,7 +3766,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByType(int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3869,8 +3871,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	 */
 	@Override
-	public Role findByType_First(int type, OrderByComparator orderByComparator)
-		throws NoSuchRoleException {
+	public Role findByType_First(int type,
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByType_First(type, orderByComparator);
 
 		if (role != null) {
@@ -3897,7 +3899,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @return the first matching role, or <code>null</code> if a matching role could not be found
 	 */
 	@Override
-	public Role fetchByType_First(int type, OrderByComparator orderByComparator) {
+	public Role fetchByType_First(int type,
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByType(type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3916,8 +3919,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	 */
 	@Override
-	public Role findByType_Last(int type, OrderByComparator orderByComparator)
-		throws NoSuchRoleException {
+	public Role findByType_Last(int type,
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByType_Last(type, orderByComparator);
 
 		if (role != null) {
@@ -3944,7 +3947,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @return the last matching role, or <code>null</code> if a matching role could not be found
 	 */
 	@Override
-	public Role fetchByType_Last(int type, OrderByComparator orderByComparator) {
+	public Role fetchByType_Last(int type,
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByType(type);
 
 		if (count == 0) {
@@ -3971,7 +3975,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByType_PrevAndNext(long roleId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -4000,7 +4004,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByType_PrevAndNext(Session session, Role role, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4146,7 +4150,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByType(int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByType(type, start, end, orderByComparator);
 		}
@@ -4235,7 +4239,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByType_PrevAndNext(long roleId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByType_PrevAndNext(roleId, type, orderByComparator);
 		}
@@ -4268,7 +4272,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByType_PrevAndNext(Session session, Role role,
-		int type, OrderByComparator orderByComparator, boolean previous) {
+		int type, OrderByComparator<Role> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4583,7 +4587,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findBySubtype(String subtype, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4703,7 +4707,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findBySubtype_First(String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchBySubtype_First(subtype, orderByComparator);
 
 		if (role != null) {
@@ -4731,7 +4735,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchBySubtype_First(String subtype,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findBySubtype(subtype, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4751,7 +4755,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findBySubtype_Last(String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchBySubtype_Last(subtype, orderByComparator);
 
 		if (role != null) {
@@ -4779,7 +4783,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchBySubtype_Last(String subtype,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countBySubtype(subtype);
 
 		if (count == 0) {
@@ -4807,7 +4811,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findBySubtype_PrevAndNext(long roleId, String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -4836,7 +4840,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getBySubtype_PrevAndNext(Session session, Role role,
-		String subtype, OrderByComparator orderByComparator, boolean previous) {
+		String subtype, OrderByComparator<Role> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4997,7 +5002,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindBySubtype(String subtype, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findBySubtype(subtype, start, end, orderByComparator);
 		}
@@ -5100,7 +5105,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindBySubtype_PrevAndNext(long roleId, String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findBySubtype_PrevAndNext(roleId, subtype, orderByComparator);
 		}
@@ -5133,7 +5138,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetBySubtype_PrevAndNext(Session session, Role role,
-		String subtype, OrderByComparator orderByComparator, boolean previous) {
+		String subtype, OrderByComparator<Role> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5755,7 +5761,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByC_T(long companyId, int type, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5871,7 +5877,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByC_T_First(companyId, type, orderByComparator);
 
 		if (role != null) {
@@ -5903,7 +5909,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByC_T(companyId, type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5924,7 +5930,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByC_T_Last(companyId, type, orderByComparator);
 
 		if (role != null) {
@@ -5956,7 +5962,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByC_T(companyId, type);
 
 		if (count == 0) {
@@ -5985,7 +5991,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByC_T_PrevAndNext(long roleId, long companyId, int type,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -6014,7 +6020,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByC_T_PrevAndNext(Session session, Role role,
-		long companyId, int type, OrderByComparator orderByComparator,
+		long companyId, int type, OrderByComparator<Role> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -6170,7 +6176,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int type, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T(companyId, type, start, end, orderByComparator);
 		}
@@ -6264,7 +6270,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByC_T_PrevAndNext(long roleId, long companyId,
-		int type, OrderByComparator orderByComparator)
+		int type, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T_PrevAndNext(roleId, companyId, type,
@@ -6299,7 +6305,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByC_T_PrevAndNext(Session session, Role role,
-		long companyId, int type, OrderByComparator orderByComparator,
+		long companyId, int type, OrderByComparator<Role> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -6489,7 +6495,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int[] types, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T(companyId, types, start, end, orderByComparator);
 		}
@@ -6632,7 +6638,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByC_T(long companyId, int[] types, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Role> orderByComparator) {
 		if (types == null) {
 			types = new int[0];
 		}
@@ -7091,7 +7097,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findByT_S(int type, String subtype, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7221,7 +7227,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByT_S_First(int type, String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByT_S_First(type, subtype, orderByComparator);
 
 		if (role != null) {
@@ -7253,7 +7259,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByT_S_First(int type, String subtype,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		List<Role> list = findByT_S(type, subtype, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -7274,7 +7280,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role findByT_S_Last(int type, String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = fetchByT_S_Last(type, subtype, orderByComparator);
 
 		if (role != null) {
@@ -7306,7 +7312,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByT_S_Last(int type, String subtype,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		int count = countByT_S(type, subtype);
 
 		if (count == 0) {
@@ -7335,7 +7341,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] findByT_S_PrevAndNext(long roleId, int type, String subtype,
-		OrderByComparator orderByComparator) throws NoSuchRoleException {
+		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -7364,7 +7370,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role getByT_S_PrevAndNext(Session session, Role role, int type,
-		String subtype, OrderByComparator orderByComparator, boolean previous) {
+		String subtype, OrderByComparator<Role> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7533,7 +7540,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> filterFindByT_S(int type, String subtype, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<Role> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByT_S(type, subtype, start, end, orderByComparator);
 		}
@@ -7641,7 +7648,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role[] filterFindByT_S_PrevAndNext(long roleId, int type,
-		String subtype, OrderByComparator orderByComparator)
+		String subtype, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByT_S_PrevAndNext(roleId, type, subtype,
@@ -7676,7 +7683,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected Role filterGetByT_S_PrevAndNext(Session session, Role role,
-		int type, String subtype, OrderByComparator orderByComparator,
+		int type, String subtype, OrderByComparator<Role> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -8965,7 +8972,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<Role> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Role> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9149,7 +9156,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
 		return roleToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -9410,7 +9418,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end,
+		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
 		return roleToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}

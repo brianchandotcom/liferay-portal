@@ -40,25 +40,6 @@ public class ShoppingCouponServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingCouponServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon addCoupon(
 		java.lang.String code, boolean autoCode, java.lang.String name,
 		java.lang.String description, int startDateMonth, int startDateDay,
@@ -82,6 +63,15 @@ public class ShoppingCouponServiceUtil {
 		getService().deleteCoupon(groupId, couponId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon getCoupon(
 		long groupId, long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -95,6 +85,15 @@ public class ShoppingCouponServiceUtil {
 		return getService()
 				   .search(groupId, companyId, code, active, discountType,
 			andOperator, start, end);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateCoupon(

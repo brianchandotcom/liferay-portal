@@ -24,11 +24,8 @@ import java.util.Comparator;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@SuppressWarnings("rawtypes")
-public abstract class OrderByComparator implements Comparator, Serializable {
-
-	@Override
-	public abstract int compare(Object obj1, Object obj2);
+public abstract class OrderByComparator<T>
+	implements Comparator<T>, Serializable {
 
 	public String getOrderBy() {
 		return null;

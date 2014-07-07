@@ -79,7 +79,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the first shopping category in the ordered set where groupId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the last shopping category in the ordered set where groupId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the shopping categories before and after the current shopping category in the ordered set where groupId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory[] findByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -182,7 +182,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the shopping categories before and after the current shopping category in the ordered set of shopping categories that the user has permission to view where groupId = &#63;.
@@ -195,7 +195,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory[] filterFindByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -263,7 +263,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the first shopping category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
@@ -276,7 +276,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory findByG_P_First(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -289,7 +289,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_P_First(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the last shopping category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
@@ -302,7 +302,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory findByG_P_Last(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -315,7 +315,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_P_Last(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the shopping categories before and after the current shopping category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
@@ -329,7 +329,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory[] findByG_P_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -374,7 +374,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> filterFindByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Returns the shopping categories before and after the current shopping category in the ordered set of shopping categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
@@ -388,7 +388,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingCategory[] filterFindByG_P_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
@@ -515,7 +515,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCategory> orderByComparator);
 
 	/**
 	* Removes all the shopping categories from the database.

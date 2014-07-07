@@ -97,7 +97,7 @@ public class TrashUtil {
 		return getTrash().getEntries(hits);
 	}
 
-	public static OrderByComparator getEntryOrderByComparator(
+	public static OrderByComparator<TrashEntry> getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		return getTrash().getEntryOrderByComparator(orderByCol, orderByType);

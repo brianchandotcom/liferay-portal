@@ -180,84 +180,42 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		}
 	}
 
-	/**
-	* Returns the primary key of this bookmarks folder.
-	*
-	* @return the primary key of this bookmarks folder
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _bookmarksFolder.getPrimaryKey();
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolder.buildTreePath();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new BookmarksFolderWrapper((BookmarksFolder)_bookmarksFolder.clone());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder) {
+		return _bookmarksFolder.compareTo(bookmarksFolder);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolder.getAncestorFolderIds();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolder.getAncestors();
 	}
 
 	/**
-	* Sets the primary key of this bookmarks folder.
-	*
-	* @param primaryKey the primary key of this bookmarks folder
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_bookmarksFolder.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this bookmarks folder.
-	*
-	* @return the uuid of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _bookmarksFolder.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this bookmarks folder.
-	*
-	* @param uuid the uuid of this bookmarks folder
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_bookmarksFolder.setUuid(uuid);
-	}
-
-	/**
-	* Returns the folder ID of this bookmarks folder.
-	*
-	* @return the folder ID of this bookmarks folder
-	*/
-	@Override
-	public long getFolderId() {
-		return _bookmarksFolder.getFolderId();
-	}
-
-	/**
-	* Sets the folder ID of this bookmarks folder.
-	*
-	* @param folderId the folder ID of this bookmarks folder
-	*/
-	@Override
-	public void setFolderId(long folderId) {
-		_bookmarksFolder.setFolderId(folderId);
-	}
-
-	/**
-	* Returns the group ID of this bookmarks folder.
-	*
-	* @return the group ID of this bookmarks folder
-	*/
-	@Override
-	public long getGroupId() {
-		return _bookmarksFolder.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this bookmarks folder.
-	*
-	* @param groupId the group ID of this bookmarks folder
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_bookmarksFolder.setGroupId(groupId);
+	public boolean getApproved() {
+		return _bookmarksFolder.getApproved();
 	}
 
 	/**
@@ -271,73 +229,23 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the company ID of this bookmarks folder.
+	* Returns the container model ID of this bookmarks folder.
 	*
-	* @param companyId the company ID of this bookmarks folder
+	* @return the container model ID of this bookmarks folder
 	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_bookmarksFolder.setCompanyId(companyId);
+	public long getContainerModelId() {
+		return _bookmarksFolder.getContainerModelId();
 	}
 
 	/**
-	* Returns the user ID of this bookmarks folder.
+	* Returns the container name of this bookmarks folder.
 	*
-	* @return the user ID of this bookmarks folder
+	* @return the container name of this bookmarks folder
 	*/
 	@Override
-	public long getUserId() {
-		return _bookmarksFolder.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this bookmarks folder.
-	*
-	* @param userId the user ID of this bookmarks folder
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_bookmarksFolder.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this bookmarks folder.
-	*
-	* @return the user uuid of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _bookmarksFolder.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this bookmarks folder.
-	*
-	* @param userUuid the user uuid of this bookmarks folder
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_bookmarksFolder.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this bookmarks folder.
-	*
-	* @return the user name of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _bookmarksFolder.getUserName();
-	}
-
-	/**
-	* Sets the user name of this bookmarks folder.
-	*
-	* @param userName the user name of this bookmarks folder
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_bookmarksFolder.setUserName(userName);
+	public java.lang.String getContainerModelName() {
+		return _bookmarksFolder.getContainerModelName();
 	}
 
 	/**
@@ -351,13 +259,38 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the create date of this bookmarks folder.
+	* Returns the description of this bookmarks folder.
 	*
-	* @param createDate the create date of this bookmarks folder
+	* @return the description of this bookmarks folder
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_bookmarksFolder.setCreateDate(createDate);
+	public java.lang.String getDescription() {
+		return _bookmarksFolder.getDescription();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _bookmarksFolder.getExpandoBridge();
+	}
+
+	/**
+	* Returns the folder ID of this bookmarks folder.
+	*
+	* @return the folder ID of this bookmarks folder
+	*/
+	@Override
+	public long getFolderId() {
+		return _bookmarksFolder.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this bookmarks folder.
+	*
+	* @return the group ID of this bookmarks folder
+	*/
+	@Override
+	public long getGroupId() {
+		return _bookmarksFolder.getGroupId();
 	}
 
 	/**
@@ -371,33 +304,29 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the modified date of this bookmarks folder.
+	* Returns the name of this bookmarks folder.
 	*
-	* @param modifiedDate the modified date of this bookmarks folder
+	* @return the name of this bookmarks folder
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_bookmarksFolder.setModifiedDate(modifiedDate);
+	public java.lang.String getName() {
+		return _bookmarksFolder.getName();
 	}
 
 	/**
-	* Returns the resource block ID of this bookmarks folder.
+	* Returns the parent container model ID of this bookmarks folder.
 	*
-	* @return the resource block ID of this bookmarks folder
+	* @return the parent container model ID of this bookmarks folder
 	*/
 	@Override
-	public long getResourceBlockId() {
-		return _bookmarksFolder.getResourceBlockId();
+	public long getParentContainerModelId() {
+		return _bookmarksFolder.getParentContainerModelId();
 	}
 
-	/**
-	* Sets the resource block ID of this bookmarks folder.
-	*
-	* @param resourceBlockId the resource block ID of this bookmarks folder
-	*/
 	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_bookmarksFolder.setResourceBlockId(resourceBlockId);
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getParentFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolder.getParentFolder();
 	}
 
 	/**
@@ -411,73 +340,28 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the parent folder ID of this bookmarks folder.
+	* Returns the primary key of this bookmarks folder.
 	*
-	* @param parentFolderId the parent folder ID of this bookmarks folder
+	* @return the primary key of this bookmarks folder
 	*/
 	@Override
-	public void setParentFolderId(long parentFolderId) {
-		_bookmarksFolder.setParentFolderId(parentFolderId);
+	public long getPrimaryKey() {
+		return _bookmarksFolder.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _bookmarksFolder.getPrimaryKeyObj();
 	}
 
 	/**
-	* Returns the tree path of this bookmarks folder.
+	* Returns the resource block ID of this bookmarks folder.
 	*
-	* @return the tree path of this bookmarks folder
+	* @return the resource block ID of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getTreePath() {
-		return _bookmarksFolder.getTreePath();
-	}
-
-	/**
-	* Sets the tree path of this bookmarks folder.
-	*
-	* @param treePath the tree path of this bookmarks folder
-	*/
-	@Override
-	public void setTreePath(java.lang.String treePath) {
-		_bookmarksFolder.setTreePath(treePath);
-	}
-
-	/**
-	* Returns the name of this bookmarks folder.
-	*
-	* @return the name of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _bookmarksFolder.getName();
-	}
-
-	/**
-	* Sets the name of this bookmarks folder.
-	*
-	* @param name the name of this bookmarks folder
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_bookmarksFolder.setName(name);
-	}
-
-	/**
-	* Returns the description of this bookmarks folder.
-	*
-	* @return the description of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _bookmarksFolder.getDescription();
-	}
-
-	/**
-	* Sets the description of this bookmarks folder.
-	*
-	* @param description the description of this bookmarks folder
-	*/
-	@Override
-	public void setDescription(java.lang.String description) {
-		_bookmarksFolder.setDescription(description);
+	public long getResourceBlockId() {
+		return _bookmarksFolder.getResourceBlockId();
 	}
 
 	/**
@@ -491,16 +375,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the status of this bookmarks folder.
-	*
-	* @param status the status of this bookmarks folder
-	*/
-	@Override
-	public void setStatus(int status) {
-		_bookmarksFolder.setStatus(status);
-	}
-
-	/**
 	* Returns the status by user ID of this bookmarks folder.
 	*
 	* @return the status by user ID of this bookmarks folder
@@ -508,36 +382,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public long getStatusByUserId() {
 		return _bookmarksFolder.getStatusByUserId();
-	}
-
-	/**
-	* Sets the status by user ID of this bookmarks folder.
-	*
-	* @param statusByUserId the status by user ID of this bookmarks folder
-	*/
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		_bookmarksFolder.setStatusByUserId(statusByUserId);
-	}
-
-	/**
-	* Returns the status by user uuid of this bookmarks folder.
-	*
-	* @return the status by user uuid of this bookmarks folder
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _bookmarksFolder.getStatusByUserUuid();
-	}
-
-	/**
-	* Sets the status by user uuid of this bookmarks folder.
-	*
-	* @param statusByUserUuid the status by user uuid of this bookmarks folder
-	*/
-	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
-		_bookmarksFolder.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -551,13 +395,13 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Sets the status by user name of this bookmarks folder.
+	* Returns the status by user uuid of this bookmarks folder.
 	*
-	* @param statusByUserName the status by user name of this bookmarks folder
+	* @return the status by user uuid of this bookmarks folder
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
-		_bookmarksFolder.setStatusByUserName(statusByUserName);
+	public java.lang.String getStatusByUserUuid() {
+		return _bookmarksFolder.getStatusByUserUuid();
 	}
 
 	/**
@@ -568,16 +412,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public java.util.Date getStatusDate() {
 		return _bookmarksFolder.getStatusDate();
-	}
-
-	/**
-	* Sets the status date of this bookmarks folder.
-	*
-	* @param statusDate the status date of this bookmarks folder
-	*/
-	@Override
-	public void setStatusDate(java.util.Date statusDate) {
-		_bookmarksFolder.setStatusDate(statusDate);
 	}
 
 	/**
@@ -612,6 +446,111 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns the tree path of this bookmarks folder.
+	*
+	* @return the tree path of this bookmarks folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _bookmarksFolder.getTreePath();
+	}
+
+	/**
+	* Returns the user ID of this bookmarks folder.
+	*
+	* @return the user ID of this bookmarks folder
+	*/
+	@Override
+	public long getUserId() {
+		return _bookmarksFolder.getUserId();
+	}
+
+	/**
+	* Returns the user name of this bookmarks folder.
+	*
+	* @return the user name of this bookmarks folder
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _bookmarksFolder.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this bookmarks folder.
+	*
+	* @return the user uuid of this bookmarks folder
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _bookmarksFolder.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this bookmarks folder.
+	*
+	* @return the uuid of this bookmarks folder
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _bookmarksFolder.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _bookmarksFolder.hashCode();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is approved.
+	*
+	* @return <code>true</code> if this bookmarks folder is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _bookmarksFolder.isApproved();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _bookmarksFolder.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is denied.
+	*
+	* @return <code>true</code> if this bookmarks folder is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _bookmarksFolder.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is a draft.
+	*
+	* @return <code>true</code> if this bookmarks folder is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _bookmarksFolder.isDraft();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _bookmarksFolder.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is expired.
+	*
+	* @return <code>true</code> if this bookmarks folder is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _bookmarksFolder.isExpired();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
@@ -642,55 +581,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _bookmarksFolder.getApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is approved.
-	*
-	* @return <code>true</code> if this bookmarks folder is approved; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isApproved() {
-		return _bookmarksFolder.isApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is denied.
-	*
-	* @return <code>true</code> if this bookmarks folder is denied; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDenied() {
-		return _bookmarksFolder.isDenied();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is a draft.
-	*
-	* @return <code>true</code> if this bookmarks folder is a draft; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDraft() {
-		return _bookmarksFolder.isDraft();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks folder is expired.
-	*
-	* @return <code>true</code> if this bookmarks folder is expired; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isExpired() {
-		return _bookmarksFolder.isExpired();
-	}
-
-	/**
 	* Returns <code>true</code> if this bookmarks folder is inactive.
 	*
 	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
@@ -710,6 +600,11 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		return _bookmarksFolder.isIncomplete();
 	}
 
+	@Override
+	public boolean isNew() {
+		return _bookmarksFolder.isNew();
+	}
+
 	/**
 	* Returns <code>true</code> if this bookmarks folder is pending.
 	*
@@ -718,6 +613,11 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public boolean isPending() {
 		return _bookmarksFolder.isPending();
+	}
+
+	@Override
+	public boolean isRoot() {
+		return _bookmarksFolder.isRoot();
 	}
 
 	/**
@@ -730,14 +630,24 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		return _bookmarksFolder.isScheduled();
 	}
 
+	@Override
+	public void persist() {
+		_bookmarksFolder.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_bookmarksFolder.setCachedModel(cachedModel);
+	}
+
 	/**
-	* Returns the container model ID of this bookmarks folder.
+	* Sets the company ID of this bookmarks folder.
 	*
-	* @return the container model ID of this bookmarks folder
+	* @param companyId the company ID of this bookmarks folder
 	*/
 	@Override
-	public long getContainerModelId() {
-		return _bookmarksFolder.getContainerModelId();
+	public void setCompanyId(long companyId) {
+		_bookmarksFolder.setCompanyId(companyId);
 	}
 
 	/**
@@ -751,73 +661,23 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Returns the container name of this bookmarks folder.
+	* Sets the create date of this bookmarks folder.
 	*
-	* @return the container name of this bookmarks folder
+	* @param createDate the create date of this bookmarks folder
 	*/
 	@Override
-	public java.lang.String getContainerModelName() {
-		return _bookmarksFolder.getContainerModelName();
+	public void setCreateDate(java.util.Date createDate) {
+		_bookmarksFolder.setCreateDate(createDate);
 	}
 
 	/**
-	* Returns the parent container model ID of this bookmarks folder.
+	* Sets the description of this bookmarks folder.
 	*
-	* @return the parent container model ID of this bookmarks folder
+	* @param description the description of this bookmarks folder
 	*/
 	@Override
-	public long getParentContainerModelId() {
-		return _bookmarksFolder.getParentContainerModelId();
-	}
-
-	/**
-	* Sets the parent container model ID of this bookmarks folder.
-	*
-	* @param parentContainerModelId the parent container model ID of this bookmarks folder
-	*/
-	@Override
-	public void setParentContainerModelId(long parentContainerModelId) {
-		_bookmarksFolder.setParentContainerModelId(parentContainerModelId);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _bookmarksFolder.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_bookmarksFolder.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _bookmarksFolder.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_bookmarksFolder.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _bookmarksFolder.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _bookmarksFolder.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_bookmarksFolder.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _bookmarksFolder.getExpandoBridge();
+	public void setDescription(java.lang.String description) {
+		_bookmarksFolder.setDescription(description);
 	}
 
 	@Override
@@ -838,20 +698,194 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		_bookmarksFolder.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the folder ID of this bookmarks folder.
+	*
+	* @param folderId the folder ID of this bookmarks folder
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new BookmarksFolderWrapper((BookmarksFolder)_bookmarksFolder.clone());
+	public void setFolderId(long folderId) {
+		_bookmarksFolder.setFolderId(folderId);
+	}
+
+	/**
+	* Sets the group ID of this bookmarks folder.
+	*
+	* @param groupId the group ID of this bookmarks folder
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_bookmarksFolder.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this bookmarks folder.
+	*
+	* @param modifiedDate the modified date of this bookmarks folder
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_bookmarksFolder.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this bookmarks folder.
+	*
+	* @param name the name of this bookmarks folder
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_bookmarksFolder.setName(name);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder) {
-		return _bookmarksFolder.compareTo(bookmarksFolder);
+	public void setNew(boolean n) {
+		_bookmarksFolder.setNew(n);
+	}
+
+	/**
+	* Sets the parent container model ID of this bookmarks folder.
+	*
+	* @param parentContainerModelId the parent container model ID of this bookmarks folder
+	*/
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_bookmarksFolder.setParentContainerModelId(parentContainerModelId);
+	}
+
+	/**
+	* Sets the parent folder ID of this bookmarks folder.
+	*
+	* @param parentFolderId the parent folder ID of this bookmarks folder
+	*/
+	@Override
+	public void setParentFolderId(long parentFolderId) {
+		_bookmarksFolder.setParentFolderId(parentFolderId);
+	}
+
+	/**
+	* Sets the primary key of this bookmarks folder.
+	*
+	* @param primaryKey the primary key of this bookmarks folder
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_bookmarksFolder.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _bookmarksFolder.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_bookmarksFolder.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the resource block ID of this bookmarks folder.
+	*
+	* @param resourceBlockId the resource block ID of this bookmarks folder
+	*/
+	@Override
+	public void setResourceBlockId(long resourceBlockId) {
+		_bookmarksFolder.setResourceBlockId(resourceBlockId);
+	}
+
+	/**
+	* Sets the status of this bookmarks folder.
+	*
+	* @param status the status of this bookmarks folder
+	*/
+	@Override
+	public void setStatus(int status) {
+		_bookmarksFolder.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this bookmarks folder.
+	*
+	* @param statusByUserId the status by user ID of this bookmarks folder
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_bookmarksFolder.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this bookmarks folder.
+	*
+	* @param statusByUserName the status by user name of this bookmarks folder
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_bookmarksFolder.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this bookmarks folder.
+	*
+	* @param statusByUserUuid the status by user uuid of this bookmarks folder
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_bookmarksFolder.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this bookmarks folder.
+	*
+	* @param statusDate the status date of this bookmarks folder
+	*/
+	@Override
+	public void setStatusDate(java.util.Date statusDate) {
+		_bookmarksFolder.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets the tree path of this bookmarks folder.
+	*
+	* @param treePath the tree path of this bookmarks folder
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_bookmarksFolder.setTreePath(treePath);
+	}
+
+	/**
+	* Sets the user ID of this bookmarks folder.
+	*
+	* @param userId the user ID of this bookmarks folder
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_bookmarksFolder.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this bookmarks folder.
+	*
+	* @param userName the user name of this bookmarks folder
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_bookmarksFolder.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this bookmarks folder.
+	*
+	* @param userUuid the user uuid of this bookmarks folder
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_bookmarksFolder.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this bookmarks folder.
+	*
+	* @param uuid the uuid of this bookmarks folder
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_bookmarksFolder.setUuid(uuid);
 	}
 
 	@Override
@@ -865,13 +899,13 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder toUnescapedModel() {
-		return new BookmarksFolderWrapper(_bookmarksFolder.toUnescapedModel());
+	public java.lang.String toString() {
+		return _bookmarksFolder.toString();
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _bookmarksFolder.toString();
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder toUnescapedModel() {
+		return new BookmarksFolderWrapper(_bookmarksFolder.toUnescapedModel());
 	}
 
 	@Override
@@ -880,42 +914,8 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public void persist() {
-		_bookmarksFolder.persist();
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.buildTreePath();
-	}
-
-	@Override
 	public void updateTreePath(java.lang.String treePath) {
 		_bookmarksFolder.updateTreePath(treePath);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getAncestorFolderIds();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getAncestors();
-	}
-
-	@Override
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder getParentFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getParentFolder();
-	}
-
-	@Override
-	public boolean isRoot() {
-		return _bookmarksFolder.isRoot();
 	}
 
 	@Override

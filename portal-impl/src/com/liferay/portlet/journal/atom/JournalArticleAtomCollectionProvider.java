@@ -144,7 +144,7 @@ public class JournalArticleAtomCollectionProvider
 		int status = WorkflowConstants.STATUS_APPROVED;
 		Date reviewDate = null;
 
-		OrderByComparator obc = new ArticleVersionComparator();
+		OrderByComparator<JournalArticle> obc = new ArticleVersionComparator();
 
 		int count = JournalArticleServiceUtil.searchCount(
 			companyId, groupId, folderIds, classNameId, keywords, version, type,

@@ -54,7 +54,7 @@ public class WorkflowDefinitionManagerUtil {
 
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getActiveWorkflowDefinitions(
@@ -63,7 +63,7 @@ public class WorkflowDefinitionManagerUtil {
 
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, String name, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getActiveWorkflowDefinitions(
@@ -109,7 +109,7 @@ public class WorkflowDefinitionManagerUtil {
 
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getWorkflowDefinitions(
@@ -118,7 +118,7 @@ public class WorkflowDefinitionManagerUtil {
 
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getWorkflowDefinitions(

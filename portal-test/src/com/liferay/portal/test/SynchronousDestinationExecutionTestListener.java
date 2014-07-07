@@ -15,20 +15,28 @@
 package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * @author Miguel Pastor
@@ -76,6 +84,24 @@ public class SynchronousDestinationExecutionTestListener
 
 	protected class SyncHandler {
 
+		public BaseDestination createSynchronousDestination(
+			String destinationName) {
+
+			SynchronousDestination synchronousDestination;
+
+			if ((_sync != null) && _sync.cleanTransaction()) {
+				synchronousDestination =
+					new CleanTransactionSynchronousDestination();
+			}
+			else {
+				synchronousDestination = new SynchronousDestination();
+			}
+
+			synchronousDestination.setName(destinationName);
+
+			return synchronousDestination;
+		}
+
 		public void enableSync() {
 			if (_sync == null) {
 				return;
@@ -93,7 +119,7 @@ public class SynchronousDestinationExecutionTestListener
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 
-		protected void replaceDestination(String destinationName) {
+		public void replaceDestination(String destinationName) {
 			MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 			Destination destination = messageBus.getDestination(
@@ -102,23 +128,15 @@ public class SynchronousDestinationExecutionTestListener
 			if (destination instanceof BaseAsyncDestination) {
 				_asyncServiceDestinations.add(destination);
 
-				SynchronousDestination synchronousDestination =
-					new SynchronousDestination();
-
-				synchronousDestination.setName(destinationName);
-
-				messageBus.replace(synchronousDestination);
+				messageBus.replace(
+					createSynchronousDestination(destinationName));
 			}
 
 			if (destination == null) {
 				_absentDestinationNames.add(destinationName);
 
-				SynchronousDestination synchronousDestination =
-					new SynchronousDestination();
-
-				synchronousDestination.setName(destinationName);
-
-				messageBus.addDestination(synchronousDestination);
+				messageBus.addDestination(
+					createSynchronousDestination(destinationName));
 			}
 		}
 
@@ -156,6 +174,43 @@ public class SynchronousDestinationExecutionTestListener
 		private boolean _forceSync;
 		private Sync _sync;
 
+	}
+
+	private static TransactionAttribute _transactionAttribute;
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.propagation(Propagation.NOT_SUPPORTED);
+		builder.rollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		_transactionAttribute = builder.build();
+	}
+
+	private static class CleanTransactionSynchronousDestination
+		extends SynchronousDestination {
+
+		@Override
+		public void send(final Message message) {
+			try {
+				TransactionInvokerUtil.invoke(
+					_transactionAttribute, new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						CleanTransactionSynchronousDestination.super.send(
+							message);
+
+						return null;
+					}
+				});
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 	}
 
 }

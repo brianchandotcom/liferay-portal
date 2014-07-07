@@ -192,7 +192,7 @@ public class AssetTagServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"getGroupTags", _getGroupTagsParameterTypes5);
@@ -367,7 +367,7 @@ public class AssetTagServiceHttp {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"getTags", _getTagsParameterTypes11);

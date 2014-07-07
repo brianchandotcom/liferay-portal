@@ -346,7 +346,7 @@ public class MBMailingListPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBMailingList> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBMailingList", "uuid",
 			true, "mailingListId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

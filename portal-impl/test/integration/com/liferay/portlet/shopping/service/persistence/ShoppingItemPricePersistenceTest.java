@@ -218,7 +218,7 @@ public class ShoppingItemPricePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<ShoppingItemPrice> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingItemPrice",
 			"itemPriceId", true, "itemId", true, "minQuantity", true,
 			"maxQuantity", true, "price", true, "discount", true, "taxable",

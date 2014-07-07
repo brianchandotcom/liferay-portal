@@ -857,13 +857,10 @@ public class TableMapperTest {
 
 		lefts = _tableMapperImpl.getLeftBaseModels(
 			rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new OrderByComparator() {
+			new OrderByComparator<Left>() {
 
 				@Override
-				public int compare(Object obj1, Object obj2) {
-					Left left1 = (Left)obj1;
-					Left left2 = (Left)obj2;
-
+				public int compare(Left left1, Left left2) {
 					Long leftPrimaryKey1 = (Long)left1.getPrimaryKeyObj();
 					Long leftPrimaryKey2 = (Long)left2.getPrimaryKeyObj();
 
@@ -1047,13 +1044,10 @@ public class TableMapperTest {
 
 		rights = _tableMapperImpl.getRightBaseModels(
 			leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new OrderByComparator() {
+			new OrderByComparator<Right>() {
 
 				@Override
-				public int compare(Object obj1, Object obj2) {
-					Right right1 = (Right)obj1;
-					Right right2 = (Right)obj2;
-
+				public int compare(Right right1, Right right2) {
 					Long rightPrimaryKey1 = (Long)right1.getPrimaryKeyObj();
 					Long rightPrimaryKey2 = (Long)right2.getPrimaryKeyObj();
 

@@ -21,7 +21,7 @@ import com.liferay.portal.model.Layout;
  * @author Brian Wing Shun Chan
  * @author Daniel Reuther
  */
-public class LayoutPriorityComparator extends OrderByComparator {
+public class LayoutPriorityComparator extends OrderByComparator<Layout> {
 
 	public static final String ORDER_BY_ASC = "Layout.priority ASC";
 
@@ -45,10 +45,7 @@ public class LayoutPriorityComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Layout layout1 = (Layout)obj1;
-		Layout layout2 = (Layout)obj2;
-
+	public int compare(Layout layout1, Layout layout2) {
 		int value = 0;
 
 		int priority1 = -1;

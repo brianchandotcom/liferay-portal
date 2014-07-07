@@ -799,7 +799,7 @@ public class DDMTemplateLocalServiceImpl
 	@Override
 	public List<DDMTemplate> getTemplatesByStructureClassNameId(
 		long groupId, long structureClassNameId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByG_SC(
 			groupId, structureClassNameId, start, end, orderByComparator);
@@ -900,7 +900,7 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		String keywords, String type, String mode, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByKeywords(
 			companyId, groupId, classNameId, classPK, keywords, type, mode,
@@ -953,7 +953,7 @@ public class DDMTemplateLocalServiceImpl
 		long companyId, long groupId, long classNameId, long classPK,
 		String name, String description, String type, String mode,
 		String language, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByC_G_C_C_N_D_T_M_L(
 			companyId, groupId, classNameId, classPK, name, description, type,
@@ -999,7 +999,7 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		String keywords, String type, String mode, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByKeywords(
 			companyId, groupIds, classNameIds, classPKs, keywords, type, mode,
@@ -1052,7 +1052,7 @@ public class DDMTemplateLocalServiceImpl
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		String name, String description, String type, String mode,
 		String language, boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByC_G_C_C_N_D_T_M_L(
 			companyId, groupIds, classNameIds, classPKs, name, description,

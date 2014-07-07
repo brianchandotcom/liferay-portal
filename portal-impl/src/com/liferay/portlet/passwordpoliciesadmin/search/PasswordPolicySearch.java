@@ -96,7 +96,7 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 					"password-policies-order-by-type", "asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<PasswordPolicy> orderByComparator =
 				PasswordPoliciesAdminUtil.getPasswordPolicyOrderByComparator(
 					orderByCol, orderByType);
 

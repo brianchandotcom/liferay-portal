@@ -150,7 +150,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<OrgLabor> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public OrgLabor findByOrganizationId_First(long organizationId,
-		OrderByComparator orderByComparator) throws NoSuchOrgLaborException {
+		OrderByComparator<OrgLabor> orderByComparator)
+		throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = fetchByOrganizationId_First(organizationId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public OrgLabor fetchByOrganizationId_First(long organizationId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<OrgLabor> orderByComparator) {
 		List<OrgLabor> list = findByOrganizationId(organizationId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public OrgLabor findByOrganizationId_Last(long organizationId,
-		OrderByComparator orderByComparator) throws NoSuchOrgLaborException {
+		OrderByComparator<OrgLabor> orderByComparator)
+		throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = fetchByOrganizationId_Last(organizationId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public OrgLabor fetchByOrganizationId_Last(long organizationId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<OrgLabor> orderByComparator) {
 		int count = countByOrganizationId(organizationId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
-		long organizationId, OrderByComparator orderByComparator)
+		long organizationId, OrderByComparator<OrgLabor> orderByComparator)
 		throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = findByPrimaryKey(orgLaborId);
 
@@ -398,7 +400,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	protected OrgLabor getByOrganizationId_PrevAndNext(Session session,
 		OrgLabor orgLabor, long organizationId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<OrgLabor> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1072,7 +1074,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public List<OrgLabor> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<OrgLabor> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

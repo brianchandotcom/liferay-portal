@@ -62,7 +62,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[contains(@class,'panel-group') and contains(@class,'lfr-panel') and contains(@class,'lfr-panel-extended')]/div/div[@class='panel-toggle' and contains(.,'Preview')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Preview')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//div[@class='panel-inner']</td>
+	<td>//div[@class='panel-body']</td>
 	<td></td>
 </tr>
 <tr>

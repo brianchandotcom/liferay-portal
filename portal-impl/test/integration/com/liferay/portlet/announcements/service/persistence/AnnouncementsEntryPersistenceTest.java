@@ -306,7 +306,7 @@ public class AnnouncementsEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AnnouncementsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsEntry",
 			"uuid", true, "entryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

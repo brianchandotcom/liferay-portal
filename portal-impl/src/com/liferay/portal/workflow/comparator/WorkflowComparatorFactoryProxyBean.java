@@ -16,6 +16,10 @@ package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowLog;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 
 /**
@@ -25,59 +29,79 @@ public class WorkflowComparatorFactoryProxyBean
 	extends BaseProxyBean implements WorkflowComparatorFactory {
 
 	@Override
-	public OrderByComparator getDefinitionNameComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getInstanceEndDateComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getInstanceStartDateComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getInstanceStateComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getLogCreateDateComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getLogUserIdComparator(boolean ascending) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public OrderByComparator getTaskCompletionDateComparator(
+	public OrderByComparator<WorkflowDefinition> getDefinitionNameComparator(
 		boolean ascending) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public OrderByComparator getTaskCreateDateComparator(boolean ascending) {
+	public OrderByComparator<WorkflowInstance> getInstanceEndDateComparator(
+		boolean ascending) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public OrderByComparator getTaskDueDateComparator(boolean ascending) {
+	public OrderByComparator<WorkflowInstance> getInstanceStartDateComparator(
+		boolean ascending) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public OrderByComparator getTaskNameComparator(boolean ascending) {
+	public OrderByComparator<WorkflowInstance> getInstanceStateComparator(
+		boolean ascending) {
+
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public OrderByComparator getTaskUserIdComparator(boolean ascending) {
+	public OrderByComparator<WorkflowLog> getLogCreateDateComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowLog> getLogUserIdComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskCompletionDateComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskCreateDateComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskDueDateComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskNameComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskUserIdComparator(
+		boolean ascending) {
+
 		throw new UnsupportedOperationException();
 	}
 

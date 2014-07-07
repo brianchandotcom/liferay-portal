@@ -153,7 +153,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public List<ShoppingItemField> findByItemId(long itemId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ShoppingItemField> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -259,7 +259,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField findByItemId_First(long itemId,
-		OrderByComparator orderByComparator) throws NoSuchItemFieldException {
+		OrderByComparator<ShoppingItemField> orderByComparator)
+		throws NoSuchItemFieldException {
 		ShoppingItemField shoppingItemField = fetchByItemId_First(itemId,
 				orderByComparator);
 
@@ -288,7 +289,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField fetchByItemId_First(long itemId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItemField> orderByComparator) {
 		List<ShoppingItemField> list = findByItemId(itemId, 0, 1,
 				orderByComparator);
 
@@ -309,7 +310,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField findByItemId_Last(long itemId,
-		OrderByComparator orderByComparator) throws NoSuchItemFieldException {
+		OrderByComparator<ShoppingItemField> orderByComparator)
+		throws NoSuchItemFieldException {
 		ShoppingItemField shoppingItemField = fetchByItemId_Last(itemId,
 				orderByComparator);
 
@@ -338,7 +340,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField fetchByItemId_Last(long itemId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItemField> orderByComparator) {
 		int count = countByItemId(itemId);
 
 		if (count == 0) {
@@ -366,7 +368,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField[] findByItemId_PrevAndNext(long itemFieldId,
-		long itemId, OrderByComparator orderByComparator)
+		long itemId, OrderByComparator<ShoppingItemField> orderByComparator)
 		throws NoSuchItemFieldException {
 		ShoppingItemField shoppingItemField = findByPrimaryKey(itemFieldId);
 
@@ -397,7 +399,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	protected ShoppingItemField getByItemId_PrevAndNext(Session session,
 		ShoppingItemField shoppingItemField, long itemId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingItemField> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1065,7 +1067,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public List<ShoppingItemField> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingItemField> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

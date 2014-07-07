@@ -20,7 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 /**
  * @author Eduardo Garcia
  */
-public class StructureIdComparator extends OrderByComparator {
+public class StructureIdComparator extends OrderByComparator<DDMStructure> {
 
 	public static final String ORDER_BY_ASC = "DDMStructure.structureId ASC";
 
@@ -37,10 +37,7 @@ public class StructureIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DDMStructure structure1 = (DDMStructure)obj1;
-		DDMStructure structure2 = (DDMStructure)obj2;
-
+	public int compare(DDMStructure structure1, DDMStructure structure2) {
 		long structureId1 = structure1.getStructureId();
 		long structureId2 = structure2.getStructureId();
 

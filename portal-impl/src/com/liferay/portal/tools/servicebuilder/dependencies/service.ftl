@@ -14,6 +14,10 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.service.PermissionedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
+<#list imports as import>
+import ${import};
+</#list>
+
 <#if sessionTypeName == "Local">
 /**
  * Provides the local service interface for ${entity.name}. Methods of this
@@ -95,25 +99,29 @@ public interface ${entity.name}${sessionTypeName}Service
 	 */
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isDuplicateMethod(method, tempMap)>
+		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
 
-			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
-				@Deprecated
-			</#if>
+			<#list method.annotations as annotation>
+				<#if (annotation.type != "java.lang.Override") && (annotation.type != "java.lang.SuppressWarnings")>
+					${serviceBuilder.annotationToString(annotation)}
+				</#if>
+			</#list>
 
 			<#if overrideMethodNames?seq_index_of(method.name) != -1>
 				@Override
 			</#if>
 
-			<#if method.name = "dynamicQuery" && (method.parameters?size != 0)>
-				@SuppressWarnings("rawtypes")
-			</#if>
-
 			<#if serviceBuilder.isServiceReadOnlyMethod(method, entity.txRequiredList) && (method.name != "getBeanIdentifier")>
 				@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 			</#if>
-			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
+			public
+
+			<#if method.name = "dynamicQuery" && (serviceBuilder.getTypeGenericsName(method.returns) == "java.util.List<T>")>
+				<T>
+			</#if>
+
+			${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
 
 			<#list method.parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}

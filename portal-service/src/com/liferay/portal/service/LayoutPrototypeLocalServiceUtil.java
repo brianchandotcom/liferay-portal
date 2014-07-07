@@ -53,6 +53,48 @@ public class LayoutPrototypeLocalServiceUtil {
 	}
 
 	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
+	long, Map, String, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPrototype(userId, companyId, nameMap, description,
+			active);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
+	long, Map, Map, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPrototype(userId, companyId, nameMap, description,
+			active, serviceContext);
+	}
+
+	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPrototype(userId, companyId, nameMap,
+			descriptionMap, active, serviceContext);
+	}
+
+	/**
 	* Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
 	*
 	* @param layoutPrototypeId the primary key for the new layout prototype
@@ -61,19 +103,6 @@ public class LayoutPrototypeLocalServiceUtil {
 	public static com.liferay.portal.model.LayoutPrototype createLayoutPrototype(
 		long layoutPrototypeId) {
 		return getService().createLayoutPrototype(layoutPrototypeId);
-	}
-
-	/**
-	* Deletes the layout prototype with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutPrototypeId the primary key of the layout prototype
-	* @return the layout prototype that was removed
-	* @throws PortalException if a layout prototype with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
-		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteLayoutPrototype(layoutPrototypeId);
 	}
 
 	/**
@@ -89,6 +118,33 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService().deleteLayoutPrototype(layoutPrototype);
 	}
 
+	/**
+	* Deletes the layout prototype with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param layoutPrototypeId the primary key of the layout prototype
+	* @return the layout prototype that was removed
+	* @throws PortalException if a layout prototype with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
+		long layoutPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLayoutPrototype(layoutPrototypeId);
+	}
+
+	public static void deleteNondefaultLayoutPrototypes(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteNondefaultLayoutPrototypes(companyId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -99,8 +155,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -117,8 +172,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -137,11 +191,10 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -188,6 +241,24 @@ public class LayoutPrototypeLocalServiceUtil {
 				   .fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the layout prototype with the primary key.
 	*
@@ -201,28 +272,15 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService().getLayoutPrototype(layoutPrototypeId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
 	/**
-	* @throws PortalException
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	@Deprecated
+	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
+		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		return getService().getLayoutPrototypeByUuid(uuid);
 	}
 
 	/**
@@ -264,24 +322,20 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService().getLayoutPrototypesCount();
 	}
 
-	/**
-	* Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutPrototype the layout prototype
-	* @return the layout prototype that was updated
-	*/
-	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
-		com.liferay.portal.model.LayoutPrototype layoutPrototype) {
-		return getService().updateLayoutPrototype(layoutPrototype);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.util.List<com.liferay.portal.model.LayoutPrototype> search(
+		long companyId, java.lang.Boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutPrototype> obc) {
+		return getService().search(companyId, active, start, end, obc);
+	}
+
+	public static int searchCount(long companyId, java.lang.Boolean active) {
+		return getService().searchCount(companyId, active);
 	}
 
 	/**
@@ -293,83 +347,15 @@ public class LayoutPrototypeLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPrototype(userId, companyId, nameMap,
-			descriptionMap, active, serviceContext);
-	}
-
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	long, Map, String, boolean, ServiceContext)}
+	* Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutPrototype the layout prototype
+	* @return the layout prototype that was updated
 	*/
-	@Deprecated
-	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPrototype(userId, companyId, nameMap, description,
-			active);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
-	long, Map, Map, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPrototype(userId, companyId, nameMap, description,
-			active, serviceContext);
-	}
-
-	public static void deleteNondefaultLayoutPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteNondefaultLayoutPrototypes(companyId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getLayoutPrototypeByUuidAndCompanyId(String, long)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutPrototypeByUuid(uuid);
-	}
-
-	public static java.util.List<com.liferay.portal.model.LayoutPrototype> search(
-		long companyId, java.lang.Boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return getService().search(companyId, active, start, end, obc);
-	}
-
-	public static int searchCount(long companyId, java.lang.Boolean active) {
-		return getService().searchCount(companyId, active);
-	}
-
 	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
-		long layoutPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
-			descriptionMap, active, serviceContext);
+		com.liferay.portal.model.LayoutPrototype layoutPrototype) {
+		return getService().updateLayoutPrototype(layoutPrototype);
 	}
 
 	/**
@@ -401,6 +387,17 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			description, active, serviceContext);
+	}
+
+	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
+		long layoutPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
+			descriptionMap, active, serviceContext);
 	}
 
 	public static LayoutPrototypeLocalService getService() {

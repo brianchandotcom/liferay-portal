@@ -157,7 +157,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -277,7 +277,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByUuid_First(uuid, orderByComparator);
 
 		if (dlFolder != null) {
@@ -305,7 +306,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -325,7 +326,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (dlFolder != null) {
@@ -353,7 +355,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -381,7 +383,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByUuid_PrevAndNext(long folderId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -410,8 +413,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder getByUuid_PrevAndNext(Session session,
-		DLFolder dlFolder, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		DLFolder dlFolder, String uuid,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -937,7 +940,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1067,7 +1070,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1100,7 +1104,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1122,7 +1126,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1155,7 +1160,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1184,7 +1189,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByUuid_C_PrevAndNext(long folderId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
@@ -1215,7 +1220,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	protected DLFolder getByUuid_C_PrevAndNext(Session session,
 		DLFolder dlFolder, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1490,7 +1495,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1596,7 +1601,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (dlFolder != null) {
@@ -1624,7 +1630,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1644,7 +1650,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (dlFolder != null) {
@@ -1672,7 +1679,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1700,7 +1707,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByGroupId_PrevAndNext(long folderId, long groupId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -1729,8 +1737,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder getByGroupId_PrevAndNext(Session session,
-		DLFolder dlFolder, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		DLFolder dlFolder, long groupId,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1877,7 +1885,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> filterFindByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1967,7 +1975,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] filterFindByGroupId_PrevAndNext(long folderId,
-		long groupId, OrderByComparator orderByComparator)
+		long groupId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(folderId, groupId,
@@ -2002,8 +2010,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder filterGetByGroupId_PrevAndNext(Session session,
-		DLFolder dlFolder, long groupId, OrderByComparator orderByComparator,
-		boolean previous) {
+		DLFolder dlFolder, long groupId,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2322,7 +2330,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2428,7 +2436,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (dlFolder != null) {
@@ -2456,7 +2465,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2476,7 +2485,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (dlFolder != null) {
@@ -2504,7 +2514,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2532,7 +2542,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByCompanyId_PrevAndNext(long folderId,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
@@ -2562,8 +2572,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder getByCompanyId_PrevAndNext(Session session,
-		DLFolder dlFolder, long companyId, OrderByComparator orderByComparator,
-		boolean previous) {
+		DLFolder dlFolder, long companyId,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3013,7 +3023,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByG_P(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3129,7 +3139,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_P_First(groupId, parentFolderId,
 				orderByComparator);
 
@@ -3162,7 +3173,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_P_First(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByG_P(groupId, parentFolderId, 0, 1,
 				orderByComparator);
 
@@ -3184,7 +3195,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_P_Last(groupId, parentFolderId,
 				orderByComparator);
 
@@ -3217,7 +3229,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_P_Last(long groupId, long parentFolderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByG_P(groupId, parentFolderId);
 
 		if (count == 0) {
@@ -3246,7 +3258,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByG_P_PrevAndNext(long folderId, long groupId,
-		long parentFolderId, OrderByComparator orderByComparator)
+		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
@@ -3276,8 +3288,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder getByG_P_PrevAndNext(Session session, DLFolder dlFolder,
-		long groupId, long parentFolderId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long groupId, long parentFolderId,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3432,7 +3444,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> filterFindByG_P(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentFolderId, start, end,
 				orderByComparator);
@@ -3528,7 +3540,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] filterFindByG_P_PrevAndNext(long folderId, long groupId,
-		long parentFolderId, OrderByComparator orderByComparator)
+		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
@@ -3564,7 +3576,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	protected DLFolder filterGetByG_P_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, long parentFolderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3894,7 +3906,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByC_NotS(long companyId, int status, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4002,7 +4014,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByC_NotS_First(companyId, status,
 				orderByComparator);
 
@@ -4035,7 +4048,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByC_NotS_First(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByC_NotS(companyId, status, 0, 1,
 				orderByComparator);
 
@@ -4057,7 +4070,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByC_NotS_Last(companyId, status,
 				orderByComparator);
 
@@ -4090,7 +4104,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByC_NotS_Last(long companyId, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByC_NotS(companyId, status);
 
 		if (count == 0) {
@@ -4119,7 +4133,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByC_NotS_PrevAndNext(long folderId, long companyId,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
@@ -4150,7 +4164,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	protected DLFolder getByC_NotS_PrevAndNext(Session session,
 		DLFolder dlFolder, long companyId, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4398,7 +4412,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findByP_N(long parentFolderId, String name,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4528,7 +4542,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByP_N_First(long parentFolderId, String name,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByP_N_First(parentFolderId, name,
 				orderByComparator);
 
@@ -4561,7 +4576,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByP_N_First(long parentFolderId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByP_N(parentFolderId, name, 0, 1,
 				orderByComparator);
 
@@ -4583,7 +4598,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByP_N_Last(long parentFolderId, String name,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByP_N_Last(parentFolderId, name,
 				orderByComparator);
 
@@ -4616,7 +4632,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByP_N_Last(long parentFolderId, String name,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByP_N(parentFolderId, name);
 
 		if (count == 0) {
@@ -4645,7 +4661,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder[] findByP_N_PrevAndNext(long folderId, long parentFolderId,
-		String name, OrderByComparator orderByComparator)
+		String name, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
@@ -4675,8 +4691,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected DLFolder getByP_N_PrevAndNext(Session session, DLFolder dlFolder,
-		long parentFolderId, String name, OrderByComparator orderByComparator,
-		boolean previous) {
+		long parentFolderId, String name,
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4963,7 +4979,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> findByF_C_P_NotS(long folderId, long companyId,
 		long parentFolderId, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5083,7 +5099,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByF_C_P_NotS_First(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByF_C_P_NotS_First(folderId, companyId,
 				parentFolderId, status, orderByComparator);
@@ -5125,7 +5142,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByF_C_P_NotS_First(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByF_C_P_NotS(folderId, companyId,
 				parentFolderId, status, 0, 1, orderByComparator);
 
@@ -5149,7 +5167,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByF_C_P_NotS_Last(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator)
+		long parentFolderId, int status,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByF_C_P_NotS_Last(folderId, companyId,
 				parentFolderId, status, orderByComparator);
@@ -5191,7 +5210,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByF_C_P_NotS_Last(long folderId, long companyId,
-		long parentFolderId, int status, OrderByComparator orderByComparator) {
+		long parentFolderId, int status,
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByF_C_P_NotS(folderId, companyId, parentFolderId,
 				status);
 
@@ -5671,7 +5691,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> findByG_M_P_H(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5801,7 +5821,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_M_P_H_First(long groupId, boolean mountPoint,
-		long parentFolderId, boolean hidden, OrderByComparator orderByComparator)
+		long parentFolderId, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_M_P_H_First(groupId, mountPoint,
 				parentFolderId, hidden, orderByComparator);
@@ -5843,7 +5864,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_M_P_H_First(long groupId, boolean mountPoint,
-		long parentFolderId, boolean hidden, OrderByComparator orderByComparator) {
+		long parentFolderId, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByG_M_P_H(groupId, mountPoint,
 				parentFolderId, hidden, 0, 1, orderByComparator);
 
@@ -5867,7 +5889,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_M_P_H_Last(long groupId, boolean mountPoint,
-		long parentFolderId, boolean hidden, OrderByComparator orderByComparator)
+		long parentFolderId, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_M_P_H_Last(groupId, mountPoint,
 				parentFolderId, hidden, orderByComparator);
@@ -5909,7 +5932,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_M_P_H_Last(long groupId, boolean mountPoint,
-		long parentFolderId, boolean hidden, OrderByComparator orderByComparator) {
+		long parentFolderId, boolean hidden,
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByG_M_P_H(groupId, mountPoint, parentFolderId, hidden);
 
 		if (count == 0) {
@@ -5941,7 +5965,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] findByG_M_P_H_PrevAndNext(long folderId, long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -5972,7 +5997,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected DLFolder getByG_M_P_H_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6144,7 +6169,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> filterFindByG_M_P_H(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_M_P_H(groupId, mountPoint, parentFolderId, hidden,
 				start, end, orderByComparator);
@@ -6251,7 +6276,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] filterFindByG_M_P_H_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_M_P_H_PrevAndNext(folderId, groupId, mountPoint,
 				parentFolderId, hidden, orderByComparator);
@@ -6289,7 +6315,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected DLFolder filterGetByG_M_P_H_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6684,7 +6710,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> findByG_P_H_S(long groupId, long parentFolderId,
 		boolean hidden, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6812,7 +6838,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_P_H_S_First(long groupId, long parentFolderId,
-		boolean hidden, int status, OrderByComparator orderByComparator)
+		boolean hidden, int status,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_P_H_S_First(groupId, parentFolderId,
 				hidden, status, orderByComparator);
@@ -6854,7 +6881,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_P_H_S_First(long groupId, long parentFolderId,
-		boolean hidden, int status, OrderByComparator orderByComparator) {
+		boolean hidden, int status,
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByG_P_H_S(groupId, parentFolderId, hidden,
 				status, 0, 1, orderByComparator);
 
@@ -6878,7 +6906,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder findByG_P_H_S_Last(long groupId, long parentFolderId,
-		boolean hidden, int status, OrderByComparator orderByComparator)
+		boolean hidden, int status,
+		OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_P_H_S_Last(groupId, parentFolderId,
 				hidden, status, orderByComparator);
@@ -6920,7 +6949,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByG_P_H_S_Last(long groupId, long parentFolderId,
-		boolean hidden, int status, OrderByComparator orderByComparator) {
+		boolean hidden, int status,
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByG_P_H_S(groupId, parentFolderId, hidden, status);
 
 		if (count == 0) {
@@ -6952,7 +6982,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] findByG_P_H_S_PrevAndNext(long folderId, long groupId,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -6982,7 +7013,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	protected DLFolder getByG_P_H_S_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, long parentFolderId, boolean hidden,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<DLFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7154,7 +7186,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> filterFindByG_P_H_S(long groupId,
 		long parentFolderId, boolean hidden, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_H_S(groupId, parentFolderId, hidden, status,
 				start, end, orderByComparator);
@@ -7261,7 +7293,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] filterFindByG_P_H_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_H_S_PrevAndNext(folderId, groupId, parentFolderId,
 				hidden, status, orderByComparator);
@@ -7298,7 +7331,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	protected DLFolder filterGetByG_P_H_S_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, long parentFolderId, boolean hidden,
-		int status, OrderByComparator orderByComparator, boolean previous) {
+		int status, OrderByComparator<DLFolder> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7700,7 +7734,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> findByG_M_P_H_S(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7837,7 +7871,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder findByG_M_P_H_S_First(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_M_P_H_S_First(groupId, mountPoint,
 				parentFolderId, hidden, status, orderByComparator);
 
@@ -7883,7 +7918,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder fetchByG_M_P_H_S_First(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		List<DLFolder> list = findByG_M_P_H_S(groupId, mountPoint,
 				parentFolderId, hidden, status, 0, 1, orderByComparator);
 
@@ -7909,7 +7944,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder findByG_M_P_H_S_Last(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = fetchByG_M_P_H_S_Last(groupId, mountPoint,
 				parentFolderId, hidden, status, orderByComparator);
 
@@ -7955,7 +7991,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder fetchByG_M_P_H_S_Last(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		int count = countByG_M_P_H_S(groupId, mountPoint, parentFolderId,
 				hidden, status);
 
@@ -7990,7 +8026,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] findByG_M_P_H_S_PrevAndNext(long folderId, long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator) throws NoSuchFolderException {
+		OrderByComparator<DLFolder> orderByComparator)
+		throws NoSuchFolderException {
 		DLFolder dlFolder = findByPrimaryKey(folderId);
 
 		Session session = null;
@@ -8023,7 +8060,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected DLFolder getByG_M_P_H_S_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -8203,7 +8240,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public List<DLFolder> filterFindByG_M_P_H_S(long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden, int status,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_M_P_H_S(groupId, mountPoint, parentFolderId, hidden,
 				status, start, end, orderByComparator);
@@ -8315,7 +8352,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder[] filterFindByG_M_P_H_S_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status, OrderByComparator orderByComparator)
+		int status, OrderByComparator<DLFolder> orderByComparator)
 		throws NoSuchFolderException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_M_P_H_S_PrevAndNext(folderId, groupId, mountPoint,
@@ -8354,7 +8391,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected DLFolder filterGetByG_M_P_H_S_PrevAndNext(Session session,
 		DLFolder dlFolder, long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden, int status,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<DLFolder> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9513,7 +9550,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<DLFolder> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9698,7 +9735,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
 		return dlFolderToDLFileEntryTypeTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

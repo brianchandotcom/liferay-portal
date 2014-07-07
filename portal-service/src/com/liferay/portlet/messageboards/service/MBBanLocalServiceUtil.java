@@ -40,6 +40,12 @@ public class MBBanLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.messageboards.model.MBBan addBan(
+		long userId, long banUserId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addBan(userId, banUserId, serviceContext);
+	}
 
 	/**
 	* Adds the message boards ban to the database. Also notifies the appropriate model listeners.
@@ -52,6 +58,11 @@ public class MBBanLocalServiceUtil {
 		return getService().addMBBan(mbBan);
 	}
 
+	public static void checkBan(long groupId, long banUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkBan(groupId, banUserId);
+	}
+
 	/**
 	* Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	*
@@ -61,6 +72,29 @@ public class MBBanLocalServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBBan createMBBan(
 		long banId) {
 		return getService().createMBBan(banId);
+	}
+
+	public static void deleteBan(
+		com.liferay.portlet.messageboards.model.MBBan ban) {
+		getService().deleteBan(ban);
+	}
+
+	public static void deleteBan(long banId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteBan(banId);
+	}
+
+	public static void deleteBan(long banUserId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().deleteBan(banUserId, serviceContext);
+	}
+
+	public static void deleteBansByBanUserId(long banUserId) {
+		getService().deleteBansByBanUserId(banUserId);
+	}
+
+	public static void deleteBansByGroupId(long groupId) {
+		getService().deleteBansByGroupId(groupId);
 	}
 
 	/**
@@ -86,6 +120,15 @@ public class MBBanLocalServiceUtil {
 		return getService().deleteMBBan(mbBan);
 	}
 
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -96,8 +139,7 @@ public class MBBanLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -114,8 +156,7 @@ public class MBBanLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -134,11 +175,10 @@ public class MBBanLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -165,6 +205,10 @@ public class MBBanLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void expireBans() {
+		getService().expireBans();
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBBan fetchMBBan(
@@ -196,6 +240,33 @@ public class MBBanLocalServiceUtil {
 		return getService().fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBBan> getBans(
+		long groupId, int start, int end) {
+		return getService().getBans(groupId, start, end);
+	}
+
+	public static int getBansCount(long groupId) {
+		return getService().getBansCount(groupId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns the message boards ban with the primary key.
 	*
@@ -206,30 +277,6 @@ public class MBBanLocalServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBBan getMBBan(
 		long banId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBBan(banId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -285,24 +332,14 @@ public class MBBanLocalServiceUtil {
 		return getService().getMBBansCount();
 	}
 
-	/**
-	* Updates the message boards ban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbBan the message boards ban
-	* @return the message boards ban that was updated
-	*/
-	public static com.liferay.portlet.messageboards.model.MBBan updateMBBan(
-		com.liferay.portlet.messageboards.model.MBBan mbBan) {
-		return getService().updateMBBan(mbBan);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static boolean hasBan(long groupId, long banUserId) {
+		return getService().hasBan(groupId, banUserId);
 	}
 
 	/**
@@ -314,56 +351,15 @@ public class MBBanLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.messageboards.model.MBBan addBan(
-		long userId, long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addBan(userId, banUserId, serviceContext);
-	}
-
-	public static void checkBan(long groupId, long banUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkBan(groupId, banUserId);
-	}
-
-	public static void deleteBan(long banId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteBan(banId);
-	}
-
-	public static void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		getService().deleteBan(banUserId, serviceContext);
-	}
-
-	public static void deleteBan(
-		com.liferay.portlet.messageboards.model.MBBan ban) {
-		getService().deleteBan(ban);
-	}
-
-	public static void deleteBansByBanUserId(long banUserId) {
-		getService().deleteBansByBanUserId(banUserId);
-	}
-
-	public static void deleteBansByGroupId(long groupId) {
-		getService().deleteBansByGroupId(groupId);
-	}
-
-	public static void expireBans() {
-		getService().expireBans();
-	}
-
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBBan> getBans(
-		long groupId, int start, int end) {
-		return getService().getBans(groupId, start, end);
-	}
-
-	public static int getBansCount(long groupId) {
-		return getService().getBansCount(groupId);
-	}
-
-	public static boolean hasBan(long groupId, long banUserId) {
-		return getService().hasBan(groupId, banUserId);
+	/**
+	* Updates the message boards ban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbBan the message boards ban
+	* @return the message boards ban that was updated
+	*/
+	public static com.liferay.portlet.messageboards.model.MBBan updateMBBan(
+		com.liferay.portlet.messageboards.model.MBBan mbBan) {
+		return getService().updateMBBan(mbBan);
 	}
 
 	public static MBBanLocalService getService() {

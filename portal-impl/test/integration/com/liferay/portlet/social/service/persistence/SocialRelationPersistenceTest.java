@@ -338,7 +338,7 @@ public class SocialRelationPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<SocialRelation> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialRelation", "uuid",
 			true, "relationId", true, "companyId", true, "createDate", true,
 			"userId1", true, "userId2", true, "type", true);

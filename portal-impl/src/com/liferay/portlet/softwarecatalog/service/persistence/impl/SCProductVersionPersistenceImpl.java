@@ -161,7 +161,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public List<SCProductVersion> findByProductEntryId(long productEntryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -271,7 +272,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public SCProductVersion findByProductEntryId_First(long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductVersion> orderByComparator)
 		throws NoSuchProductVersionException {
 		SCProductVersion scProductVersion = fetchByProductEntryId_First(productEntryId,
 				orderByComparator);
@@ -301,7 +302,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public SCProductVersion fetchByProductEntryId_First(long productEntryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		List<SCProductVersion> list = findByProductEntryId(productEntryId, 0,
 				1, orderByComparator);
 
@@ -322,7 +323,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public SCProductVersion findByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductVersion> orderByComparator)
 		throws NoSuchProductVersionException {
 		SCProductVersion scProductVersion = fetchByProductEntryId_Last(productEntryId,
 				orderByComparator);
@@ -352,7 +353,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public SCProductVersion fetchByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		int count = countByProductEntryId(productEntryId);
 
 		if (count == 0) {
@@ -381,7 +382,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	@Override
 	public SCProductVersion[] findByProductEntryId_PrevAndNext(
 		long productVersionId, long productEntryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCProductVersion> orderByComparator)
 		throws NoSuchProductVersionException {
 		SCProductVersion scProductVersion = findByPrimaryKey(productVersionId);
 
@@ -412,8 +413,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 	protected SCProductVersion getByProductEntryId_PrevAndNext(
 		Session session, SCProductVersion scProductVersion,
-		long productEntryId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long productEntryId,
+		OrderByComparator<SCProductVersion> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1403,7 +1404,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public List<SCProductVersion> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCProductVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1588,7 +1589,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	@Override
 	public List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCFrameworkVersions(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
 		return scProductVersionToSCFrameworkVersionTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

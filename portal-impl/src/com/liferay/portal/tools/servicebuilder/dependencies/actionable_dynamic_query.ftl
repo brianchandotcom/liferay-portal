@@ -8,7 +8,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
  * @author ${author}
- * @deprecated As of 7.0.0, replaced by {@link ${entity.name}LocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ${entity.name}LocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

@@ -21,7 +21,7 @@ import com.liferay.portlet.shopping.model.ShoppingOrder;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrderDateComparator extends OrderByComparator {
+public class OrderDateComparator extends OrderByComparator<ShoppingOrder> {
 
 	public static final String ORDER_BY_ASC = "ShoppingOrder.createDate ASC";
 
@@ -38,10 +38,7 @@ public class OrderDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		ShoppingOrder order1 = (ShoppingOrder)obj1;
-		ShoppingOrder order2 = (ShoppingOrder)obj2;
-
+	public int compare(ShoppingOrder order1, ShoppingOrder order2) {
 		int value = DateUtil.compareTo(
 			order1.getCreateDate(), order2.getCreateDate());
 

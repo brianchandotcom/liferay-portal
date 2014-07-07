@@ -188,7 +188,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	*/
 	public java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsStats> orderByComparator);
 
 	/**
 	* Removes all the ratings statses from the database.

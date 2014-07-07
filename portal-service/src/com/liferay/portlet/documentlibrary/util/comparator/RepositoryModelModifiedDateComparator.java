@@ -28,7 +28,8 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-public class RepositoryModelModifiedDateComparator extends OrderByComparator {
+public class RepositoryModelModifiedDateComparator<T>
+	extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
@@ -45,9 +46,9 @@ public class RepositoryModelModifiedDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Date modifiedDate1 = getModifiedDate(obj1);
-		Date modifiedDate2 = getModifiedDate(obj2);
+	public int compare(T t1, T t2) {
+		Date modifiedDate1 = getModifiedDate(t1);
+		Date modifiedDate2 = getModifiedDate(t2);
 
 		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
 

@@ -160,7 +160,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -266,7 +266,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByGroupId_First(groupId,
 				orderByComparator);
@@ -296,7 +296,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		List<SCFrameworkVersion> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -317,7 +317,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByGroupId_Last(groupId,
 				orderByComparator);
@@ -347,7 +347,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -376,7 +376,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public SCFrameworkVersion[] findByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = findByPrimaryKey(frameworkVersionId);
 
@@ -407,7 +407,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	protected SCFrameworkVersion getByGroupId_PrevAndNext(Session session,
 		SCFrameworkVersion scFrameworkVersion, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -555,7 +556,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> filterFindByGroupId(long groupId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -647,7 +649,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public SCFrameworkVersion[] filterFindByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(frameworkVersionId, groupId,
@@ -683,7 +685,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	protected SCFrameworkVersion filterGetByGroupId_PrevAndNext(
 		Session session, SCFrameworkVersion scFrameworkVersion, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1004,7 +1007,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1110,7 +1113,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -1140,7 +1143,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		List<SCFrameworkVersion> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -1161,7 +1164,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -1191,7 +1194,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1220,7 +1223,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public SCFrameworkVersion[] findByCompanyId_PrevAndNext(
 		long frameworkVersionId, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = findByPrimaryKey(frameworkVersionId);
 
@@ -1251,7 +1254,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	protected SCFrameworkVersion getByCompanyId_PrevAndNext(Session session,
 		SCFrameworkVersion scFrameworkVersion, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1491,7 +1495,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> findByG_A(long groupId, boolean active,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1607,7 +1612,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByG_A_First(long groupId, boolean active,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByG_A_First(groupId,
 				active, orderByComparator);
@@ -1641,7 +1646,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByG_A_First(long groupId, boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		List<SCFrameworkVersion> list = findByG_A(groupId, active, 0, 1,
 				orderByComparator);
 
@@ -1663,7 +1668,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion findByG_A_Last(long groupId, boolean active,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = fetchByG_A_Last(groupId,
 				active, orderByComparator);
@@ -1697,7 +1702,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion fetchByG_A_Last(long groupId, boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		int count = countByG_A(groupId, active);
 
 		if (count == 0) {
@@ -1726,7 +1731,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public SCFrameworkVersion[] findByG_A_PrevAndNext(long frameworkVersionId,
-		long groupId, boolean active, OrderByComparator orderByComparator)
+		long groupId, boolean active,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		SCFrameworkVersion scFrameworkVersion = findByPrimaryKey(frameworkVersionId);
 
@@ -1757,7 +1763,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	protected SCFrameworkVersion getByG_A_PrevAndNext(Session session,
 		SCFrameworkVersion scFrameworkVersion, long groupId, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1912,7 +1919,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> filterFindByG_A(long groupId,
-		boolean active, int start, int end, OrderByComparator orderByComparator) {
+		boolean active, int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_A(groupId, active, start, end, orderByComparator);
 		}
@@ -2009,7 +2017,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public SCFrameworkVersion[] filterFindByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		OrderByComparator orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws NoSuchFrameworkVersionException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_A_PrevAndNext(frameworkVersionId, groupId, active,
@@ -2045,7 +2053,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	protected SCFrameworkVersion filterGetByG_A_PrevAndNext(Session session,
 		SCFrameworkVersion scFrameworkVersion, long groupId, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2863,7 +2872,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<SCFrameworkVersion> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3048,7 +3057,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	@Override
 	public List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return scFrameworkVersionToSCProductVersionTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

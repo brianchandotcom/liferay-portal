@@ -16,8 +16,6 @@ package com.liferay.portlet.dynamicdatamapping.model;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -26,7 +24,7 @@ import java.util.Set;
 /**
  * @author Pablo Carvalho
  */
-public class LocalizedValue implements Serializable {
+public class LocalizedValue implements Value {
 
 	public LocalizedValue() {
 		this(LocaleUtil.getDefault());
@@ -36,18 +34,22 @@ public class LocalizedValue implements Serializable {
 		setDefaultLocale(defaultLocale);
 	}
 
+	@Override
 	public void addValue(Locale locale, String value) {
 		_values.put(locale, value);
 	}
 
+	@Override
 	public Set<Locale> getAvailableLocales() {
 		return _values.keySet();
 	}
 
+	@Override
 	public Locale getDefaultLocale() {
 		return _defaultLocale;
 	}
 
+	@Override
 	public String getValue(Locale locale) {
 		String value = _values.get(locale);
 
@@ -58,10 +60,17 @@ public class LocalizedValue implements Serializable {
 		return value;
 	}
 
+	@Override
 	public Map<Locale, String> getValues() {
 		return _values;
 	}
 
+	@Override
+	public boolean isLocalized() {
+		return true;
+	}
+
+	@Override
 	public void setDefaultLocale(Locale defaultLocale) {
 		_defaultLocale = defaultLocale;
 	}

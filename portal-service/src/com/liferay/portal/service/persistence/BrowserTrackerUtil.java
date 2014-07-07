@@ -87,7 +87,7 @@ public class BrowserTrackerUtil {
 	 */
 	public static List<BrowserTracker> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<BrowserTracker> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -281,7 +281,7 @@ public class BrowserTrackerUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.BrowserTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BrowserTracker> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -27,11 +27,11 @@ public interface DDLRecordFinder {
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByR_S(
 		long recordSetId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByC_S_S(
 		long companyId, int status, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
 
 	public java.lang.Long[] findByC_S_S_MinAndMax(long companyId, int status,
 		int scope);

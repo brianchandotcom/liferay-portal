@@ -94,104 +94,15 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this expando row.
-	*
-	* @return the primary key of this expando row
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _expandoRow.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ExpandoRowWrapper((ExpandoRow)_expandoRow.clone());
 	}
 
-	/**
-	* Sets the primary key of this expando row.
-	*
-	* @param primaryKey the primary key of this expando row
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_expandoRow.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the row ID of this expando row.
-	*
-	* @return the row ID of this expando row
-	*/
-	@Override
-	public long getRowId() {
-		return _expandoRow.getRowId();
-	}
-
-	/**
-	* Sets the row ID of this expando row.
-	*
-	* @param rowId the row ID of this expando row
-	*/
-	@Override
-	public void setRowId(long rowId) {
-		_expandoRow.setRowId(rowId);
-	}
-
-	/**
-	* Returns the company ID of this expando row.
-	*
-	* @return the company ID of this expando row
-	*/
-	@Override
-	public long getCompanyId() {
-		return _expandoRow.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this expando row.
-	*
-	* @param companyId the company ID of this expando row
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_expandoRow.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the modified date of this expando row.
-	*
-	* @return the modified date of this expando row
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _expandoRow.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this expando row.
-	*
-	* @param modifiedDate the modified date of this expando row
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_expandoRow.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the table ID of this expando row.
-	*
-	* @return the table ID of this expando row
-	*/
-	@Override
-	public long getTableId() {
-		return _expandoRow.getTableId();
-	}
-
-	/**
-	* Sets the table ID of this expando row.
-	*
-	* @param tableId the table ID of this expando row
-	*/
-	@Override
-	public void setTableId(long tableId) {
-		_expandoRow.setTableId(tableId);
+	public int compareTo(
+		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
+		return _expandoRow.compareTo(expandoRow);
 	}
 
 	/**
@@ -205,6 +116,96 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	/**
+	* Returns the company ID of this expando row.
+	*
+	* @return the company ID of this expando row
+	*/
+	@Override
+	public long getCompanyId() {
+		return _expandoRow.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _expandoRow.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this expando row.
+	*
+	* @return the modified date of this expando row
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _expandoRow.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this expando row.
+	*
+	* @return the primary key of this expando row
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _expandoRow.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _expandoRow.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the row ID of this expando row.
+	*
+	* @return the row ID of this expando row
+	*/
+	@Override
+	public long getRowId() {
+		return _expandoRow.getRowId();
+	}
+
+	/**
+	* Returns the table ID of this expando row.
+	*
+	* @return the table ID of this expando row
+	*/
+	@Override
+	public long getTableId() {
+		return _expandoRow.getTableId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _expandoRow.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _expandoRow.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _expandoRow.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _expandoRow.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_expandoRow.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_expandoRow.setCachedModel(cachedModel);
+	}
+
+	/**
 	* Sets the class p k of this expando row.
 	*
 	* @param classPK the class p k of this expando row
@@ -214,44 +215,14 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		_expandoRow.setClassPK(classPK);
 	}
 
+	/**
+	* Sets the company ID of this expando row.
+	*
+	* @param companyId the company ID of this expando row
+	*/
 	@Override
-	public boolean isNew() {
-		return _expandoRow.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_expandoRow.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoRow.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_expandoRow.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoRow.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _expandoRow.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_expandoRow.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _expandoRow.getExpandoBridge();
+	public void setCompanyId(long companyId) {
+		_expandoRow.setCompanyId(companyId);
 	}
 
 	@Override
@@ -272,20 +243,54 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		_expandoRow.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the modified date of this expando row.
+	*
+	* @param modifiedDate the modified date of this expando row
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ExpandoRowWrapper((ExpandoRow)_expandoRow.clone());
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_expandoRow.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.expando.model.ExpandoRow expandoRow) {
-		return _expandoRow.compareTo(expandoRow);
+	public void setNew(boolean n) {
+		_expandoRow.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this expando row.
+	*
+	* @param primaryKey the primary key of this expando row
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_expandoRow.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _expandoRow.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_expandoRow.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the row ID of this expando row.
+	*
+	* @param rowId the row ID of this expando row
+	*/
+	@Override
+	public void setRowId(long rowId) {
+		_expandoRow.setRowId(rowId);
+	}
+
+	/**
+	* Sets the table ID of this expando row.
+	*
+	* @param tableId the table ID of this expando row
+	*/
+	@Override
+	public void setTableId(long tableId) {
+		_expandoRow.setTableId(tableId);
 	}
 
 	@Override
@@ -299,23 +304,18 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoRow toUnescapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _expandoRow.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _expandoRow.toXmlString();
+	public com.liferay.portlet.expando.model.ExpandoRow toUnescapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_expandoRow.persist();
+	public java.lang.String toXmlString() {
+		return _expandoRow.toXmlString();
 	}
 
 	@Override

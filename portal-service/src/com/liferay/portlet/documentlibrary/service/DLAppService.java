@@ -49,20 +49,6 @@ public interface DLAppService extends BaseService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
 	* Adds a file entry and associated metadata. It is created based on a byte
 	* array.
 	*
@@ -300,38 +286,10 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Checks in the file entry. If a user has not checked out the specified
-	* file entry, invoking this method will result in no changes.
-	*
-	* <p>
-	* When a file entry is checked out, a PWC (private working copy) is created
-	* and the original file entry is locked. A client can make as many changes
-	* to the PWC as he desires without those changes being visible to other
-	* users. If the user is satisfied with the changes, he may elect to check
-	* in his changes, resulting in a new file version based on the PWC; the PWC
-	* will be removed and the file entry will be unlocked. If the user is not
-	* satisfied with the changes, he may elect to cancel his check out; this
-	* results in the deletion of the PWC and unlocking of the file entry.
-	* </p>
-	*
-	* @param fileEntryId the primary key of the file entry to check in
-	* @param majorVersion whether the new file version is a major version
-	* @param changeLog the file's version change log
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if the file entry could not be found
-	* @see #cancelCheckOut(long)
-	* @see #checkOutFileEntry(long, ServiceContext)
-	*/
-	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
-		java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -363,7 +321,8 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Check out a file entry.
+	* Checks in the file entry. If a user has not checked out the specified
+	* file entry, invoking this method will result in no changes.
 	*
 	* <p>
 	* When a file entry is checked out, a PWC (private working copy) is created
@@ -376,13 +335,16 @@ public interface DLAppService extends BaseService {
 	* results in the deletion of the PWC and unlocking of the file entry.
 	* </p>
 	*
-	* @param fileEntryId the file entry to check out
+	* @param fileEntryId the primary key of the file entry to check in
+	* @param majorVersion whether the new file version is a major version
+	* @param changeLog the file's version change log
 	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @see #cancelCheckOut(long)
-	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
+	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
-	public void checkOutFileEntry(long fileEntryId,
+	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
+		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -414,6 +376,30 @@ public interface DLAppService extends BaseService {
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Check out a file entry.
+	*
+	* <p>
+	* When a file entry is checked out, a PWC (private working copy) is created
+	* and the original file entry is locked. A client can make as many changes
+	* to the PWC as he desires without those changes being visible to other
+	* users. If the user is satisfied with the changes, he may elect to check
+	* in his changes, resulting in a new file version based on the PWC; the PWC
+	* will be removed and the file entry will be unlocked. If the user is not
+	* satisfied with the changes, he may elect to cancel his check out; this
+	* results in the deletion of the PWC and unlocking of the file entry.
+	* </p>
+	*
+	* @param fileEntryId the file entry to check out
+	* @param serviceContext the service context to be applied
+	* @throws PortalException if the file entry could not be found
+	* @see #cancelCheckOut(long)
+	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
+	*/
+	public void checkOutFileEntry(long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -518,6 +504,13 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
 	* Returns all the file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -528,6 +521,64 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns the file entries with the file entry type in the folder.
+	*
+	* @param repositoryId the primary key of the file entry's repository
+	* @param folderId the primary key of the file entry's folder
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @return the file entries with the file entry type in the folder
+	* @throws PortalException if the folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns a range of all the file entries with the file entry type in the
+	* folder.
+	*
+	* @param repositoryId the primary key of the file entry's repository
+	* @param folderId the primary key of the file entry's folder
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the file entries in the folder
+	* @throws PortalException if the folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, long fileEntryTypeId, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns an ordered range of all the file entries with the file entry type
+	* in the folder.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator to order the results by (optionally
+	<code>null</code>)
+	* @return the range of file entries with the file entry type in the folder
+	ordered by <code>null</code>
+	* @throws PortalException if the folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, long fileEntryTypeId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -581,64 +632,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the file entries with the file entry type in the folder.
-	*
-	* @param repositoryId the primary key of the file entry's repository
-	* @param folderId the primary key of the file entry's folder
-	* @param fileEntryTypeId the primary key of the file entry type
-	* @return the file entries with the file entry type in the folder
-	* @throws PortalException if the folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns a range of all the file entries with the file entry type in the
-	* folder.
-	*
-	* @param repositoryId the primary key of the file entry's repository
-	* @param folderId the primary key of the file entry's folder
-	* @param fileEntryTypeId the primary key of the file entry type
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the file entries in the folder
-	* @throws PortalException if the folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, long fileEntryTypeId, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns an ordered range of all the file entries with the file entry type
-	* in the folder.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param folderId the primary key of the folder
-	* @param fileEntryTypeId the primary key of the file entry type
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @param obc the comparator to order the results by (optionally
-	<code>null</code>)
-	* @return the range of file entries with the file entry type in the folder
-	ordered by <code>null</code>
-	* @throws PortalException if the folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, long fileEntryTypeId, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -888,41 +882,8 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, boolean includeMountFolders,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns an ordered range of all the immediate subfolders of the parent
-	* folder.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param repositoryId the primary key of the folder's repository
-	* @param parentFolderId the primary key of the folder's parent folder
-	* @param status the workflow status
-	* @param includeMountFolders whether to include mount folders for
-	third-party repositories
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @param obc the comparator to order the folders (optionally
-	<code>null</code>)
-	* @return the range of immediate subfolders of the parent folder ordered by
-	comparator <code>obc</code>
-	* @throws PortalException if the parent folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
-		long repositoryId, long parentFolderId, int status,
-		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -977,7 +938,41 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns an ordered range of all the immediate subfolders of the parent
+	* folder.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param repositoryId the primary key of the folder's repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param status the workflow status
+	* @param includeMountFolders whether to include mount folders for
+	third-party repositories
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator to order the folders (optionally
+	<code>null</code>)
+	* @return the range of immediate subfolders of the parent folder ordered by
+	comparator <code>obc</code>
+	* @throws PortalException if the parent folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, int status,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1044,14 +1039,14 @@ public interface DLAppService extends BaseService {
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1141,67 +1136,11 @@ public interface DLAppService extends BaseService {
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns an ordered range of all the file entries in the group starting at
-	* the repository default parent folder that are stored within the Liferay
-	* repository. This method is primarily used to search for recently modified
-	* file entries. It can be limited to the file entries modified by a given
-	* user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param userId the primary key of the user who created the file
-	(optionally <code>0</code>)
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of matching file entries ordered by date modified
-	* @throws PortalException if the group could not be found
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns an ordered range of all the file entries in the group that are
-	* stored within the Liferay repository. This method is primarily used to
-	* search for recently modified file entries. It can be limited to the file
-	* entries modified by a given user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param userId the primary key of the user who created the file
-	(optionally <code>0</code>)
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
-	* @param obc the comparator to order the file entries (optionally
-	<code>null</code>)
-	* @return the range of matching file entries ordered by comparator
-	<code>obc</code>
-	* @throws PortalException if the group could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long userId, long rootFolderId,
+		java.lang.String[] mimeTypes, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1267,14 +1206,70 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, long rootFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* Returns an ordered range of all the file entries in the group starting at
+	* the repository default parent folder that are stored within the Liferay
+	* repository. This method is primarily used to search for recently modified
+	* file entries. It can be limited to the file entries modified by a given
+	* user.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user who created the file
+	(optionally <code>0</code>)
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching file entries ordered by date modified
+	* @throws PortalException if the group could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
-		long groupId, long userId, long rootFolderId,
-		java.lang.String[] mimeTypes, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns an ordered range of all the file entries in the group that are
+	* stored within the Liferay repository. This method is primarily used to
+	* search for recently modified file entries. It can be limited to the file
+	* entries modified by a given user.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user who created the file
+	(optionally <code>0</code>)
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator to order the file entries (optionally
+	<code>null</code>)
+	* @return the range of matching file entries ordered by comparator
+	<code>obc</code>
+	* @throws PortalException if the group could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1393,7 +1388,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
 		long repositoryId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1410,11 +1405,6 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMountFoldersCount(long repositoryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(long repositoryId,
-		java.util.List<java.lang.Long> folderIds, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1447,6 +1437,11 @@ public interface DLAppService extends BaseService {
 		long folderId, boolean recurse)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void getSubfolderIds(long repositoryId,
+		java.util.List<java.lang.Long> folderIds, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns all the temporary file entry names.
 	*
@@ -1468,7 +1463,7 @@ public interface DLAppService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	ServiceContext)}
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -1476,7 +1471,7 @@ public interface DLAppService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	String, long, ServiceContext)}
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId,
 		java.lang.String owner, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -1693,13 +1688,13 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
-		long creatorUserId, int status, int start, int end)
+		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
+		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
-		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
-		int status, int start, int end)
+		long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1712,6 +1707,13 @@ public interface DLAppService extends BaseService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException;
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribe the user to changes in documents of the file entry type. This
@@ -1741,7 +1743,7 @@ public interface DLAppService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	boolean, String, ServiceContext)}.
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	public void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -1749,7 +1751,7 @@ public interface DLAppService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String)}.
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

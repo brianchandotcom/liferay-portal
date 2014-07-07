@@ -32,6 +32,17 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink addWorkflowDefinitionLink(
+		long userId, long companyId, long groupId, java.lang.String className,
+		long classPK, long typePK, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(userId,
+			companyId, groupId, className, classPK, typePK,
+			workflowDefinitionName, workflowDefinitionVersion);
+	}
+
 	/**
 	* Adds the workflow definition link to the database. Also notifies the appropriate model listeners.
 	*
@@ -57,17 +68,21 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowDefinitionLinkId the primary key of the workflow definition link
-	* @return the workflow definition link that was removed
-	* @throws PortalException if a workflow definition link with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
-		long workflowDefinitionLinkId)
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLinkId);
+		return _workflowDefinitionLinkLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteWorkflowDefinitionLink(long companyId, long groupId,
+		java.lang.String className, long classPK, long typePK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(companyId,
+			groupId, className, classPK, typePK);
 	}
 
 	/**
@@ -82,6 +97,20 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		return _workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLink);
 	}
 
+	/**
+	* Deletes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowDefinitionLinkId the primary key of the workflow definition link
+	* @return the workflow definition link that was removed
+	* @throws PortalException if a workflow definition link with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
+		long workflowDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLinkId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _workflowDefinitionLinkLocalService.dynamicQuery();
@@ -94,8 +123,7 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -113,8 +141,7 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery,
@@ -135,11 +162,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -172,9 +198,80 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
+		long companyId, java.lang.String className, long classPK, long typePK) {
+		return _workflowDefinitionLinkLocalService.fetchDefaultWorkflowDefinitionLink(companyId,
+			className, classPK, typePK);
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(companyId,
+			groupId, className, classPK, typePK);
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK, boolean strict)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(companyId,
+			groupId, className, classPK, typePK, strict);
+	}
+
+	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
 		long workflowDefinitionLinkId) {
 		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(workflowDefinitionLinkId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _workflowDefinitionLinkLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _workflowDefinitionLinkLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
+		long companyId, java.lang.String className, long classPK, long typePK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.getDefaultWorkflowDefinitionLink(companyId,
+			className, classPK, typePK);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(companyId,
+			groupId, className, classPK, typePK);
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long typePK, boolean strict)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(companyId,
+			groupId, className, classPK, typePK, strict);
 	}
 
 	/**
@@ -189,28 +286,6 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		long workflowDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(workflowDefinitionLinkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _workflowDefinitionLinkLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -239,106 +314,6 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	@Override
 	public int getWorkflowDefinitionLinksCount() {
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount();
-	}
-
-	/**
-	* Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param workflowDefinitionLink the workflow definition link
-	* @return the workflow definition link that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink updateWorkflowDefinitionLink(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink) {
-		return _workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(workflowDefinitionLink);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _workflowDefinitionLinkLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_workflowDefinitionLinkLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink addWorkflowDefinitionLink(
-		long userId, long companyId, long groupId, java.lang.String className,
-		long classPK, long typePK, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(userId,
-			companyId, groupId, className, classPK, typePK,
-			workflowDefinitionName, workflowDefinitionVersion);
-	}
-
-	@Override
-	public void deleteWorkflowDefinitionLink(long companyId, long groupId,
-		java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(companyId,
-			groupId, className, classPK, typePK);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
-		long companyId, java.lang.String className, long classPK, long typePK) {
-		return _workflowDefinitionLinkLocalService.fetchDefaultWorkflowDefinitionLink(companyId,
-			className, classPK, typePK);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(companyId,
-			groupId, className, classPK, typePK);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK, boolean strict)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(companyId,
-			groupId, className, classPK, typePK, strict);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
-		long companyId, java.lang.String className, long classPK, long typePK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.getDefaultWorkflowDefinitionLink(companyId,
-			className, classPK, typePK);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK) throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(companyId,
-			groupId, className, classPK, typePK);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long typePK, boolean strict)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(companyId,
-			groupId, className, classPK, typePK, strict);
 	}
 
 	@Override
@@ -379,6 +354,16 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 			groupId, className, classPK, typePK);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_workflowDefinitionLinkLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void updateWorkflowDefinitionLink(long userId, long companyId,
 		long groupId, java.lang.String className, long classPK, long typePK,
@@ -397,6 +382,18 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		return _workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(userId,
 			companyId, groupId, className, classPK, typePK,
 			workflowDefinitionName, workflowDefinitionVersion);
+	}
+
+	/**
+	* Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param workflowDefinitionLink the workflow definition link
+	* @return the workflow definition link that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.WorkflowDefinitionLink updateWorkflowDefinitionLink(
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink) {
+		return _workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(workflowDefinitionLink);
 	}
 
 	@Override

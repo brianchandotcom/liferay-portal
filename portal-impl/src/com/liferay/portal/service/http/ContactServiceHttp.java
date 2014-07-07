@@ -84,7 +84,7 @@ public class ContactServiceHttp {
 	public static java.util.List<com.liferay.portal.model.Contact> getContacts(
 		HttpPrincipal httpPrincipal, long classNameId, long classPK, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,

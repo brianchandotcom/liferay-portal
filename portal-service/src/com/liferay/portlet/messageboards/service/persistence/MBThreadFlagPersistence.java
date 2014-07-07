@@ -79,7 +79,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag[] findByUuid_PrevAndNext(
 		long threadFlagId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag[] findByUuid_C_PrevAndNext(
 		long threadFlagId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where userId = &#63;.
@@ -390,7 +390,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where userId = &#63;.
@@ -414,7 +414,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63;.
@@ -439,7 +439,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag[] findByUserId_PrevAndNext(
 		long threadFlagId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -496,7 +496,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> findByThreadId(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where threadId = &#63;.
@@ -508,7 +508,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByThreadId_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -520,7 +520,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByThreadId_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where threadId = &#63;.
@@ -532,7 +532,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag findByThreadId_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -544,7 +544,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchByThreadId_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where threadId = &#63;.
@@ -557,7 +557,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBThreadFlag[] findByThreadId_PrevAndNext(
 		long threadFlagId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	/**
@@ -726,7 +726,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBThreadFlag> orderByComparator);
 
 	/**
 	* Removes all the message boards thread flags from the database.

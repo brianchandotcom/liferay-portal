@@ -78,24 +78,39 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this class name.
-	*
-	* @return the primary key of this class name
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _className.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ClassNameWrapper((ClassName)_className.clone());
+	}
+
+	@Override
+	public int compareTo(com.liferay.portal.model.ClassName className) {
+		return _className.compareTo(className);
 	}
 
 	/**
-	* Sets the primary key of this class name.
+	* Returns the fully qualified class name of this class name.
 	*
-	* @param primaryKey the primary key of this class name
+	* @return the fully qualified class name of this class name
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_className.setPrimaryKey(primaryKey);
+	public java.lang.String getClassName() {
+		return _className.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this class name.
+	*
+	* @return the class name ID of this class name
+	*/
+	@Override
+	public long getClassNameId() {
+		return _className.getClassNameId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _className.getExpandoBridge();
 	}
 
 	/**
@@ -109,48 +124,18 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	/**
-	* Sets the mvcc version of this class name.
+	* Returns the primary key of this class name.
 	*
-	* @param mvccVersion the mvcc version of this class name
+	* @return the primary key of this class name
 	*/
 	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_className.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the fully qualified class name of this class name.
-	*
-	* @return the fully qualified class name of this class name
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _className.getClassName();
+	public long getPrimaryKey() {
+		return _className.getPrimaryKey();
 	}
 
 	@Override
-	public void setClassName(java.lang.String className) {
-		_className.setClassName(className);
-	}
-
-	/**
-	* Returns the class name ID of this class name.
-	*
-	* @return the class name ID of this class name
-	*/
-	@Override
-	public long getClassNameId() {
-		return _className.getClassNameId();
-	}
-
-	/**
-	* Sets the class name ID of this class name.
-	*
-	* @param classNameId the class name ID of this class name
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_className.setClassNameId(classNameId);
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _className.getPrimaryKeyObj();
 	}
 
 	/**
@@ -163,24 +148,9 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 		return _className.getValue();
 	}
 
-	/**
-	* Sets the value of this class name.
-	*
-	* @param value the value of this class name
-	*/
 	@Override
-	public void setValue(java.lang.String value) {
-		_className.setValue(value);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _className.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_className.setNew(n);
+	public int hashCode() {
+		return _className.hashCode();
 	}
 
 	@Override
@@ -189,28 +159,38 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_className.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _className.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _className.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _className.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_className.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_className.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _className.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_className.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_className.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this class name.
+	*
+	* @param classNameId the class name ID of this class name
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_className.setClassNameId(classNameId);
 	}
 
 	@Override
@@ -231,19 +211,44 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 		_className.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the mvcc version of this class name.
+	*
+	* @param mvccVersion the mvcc version of this class name
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ClassNameWrapper((ClassName)_className.clone());
+	public void setMvccVersion(long mvccVersion) {
+		_className.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.ClassName className) {
-		return _className.compareTo(className);
+	public void setNew(boolean n) {
+		_className.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this class name.
+	*
+	* @param primaryKey the primary key of this class name
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_className.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _className.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_className.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the value of this class name.
+	*
+	* @param value the value of this class name
+	*/
+	@Override
+	public void setValue(java.lang.String value) {
+		_className.setValue(value);
 	}
 
 	@Override
@@ -257,23 +262,18 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public com.liferay.portal.model.ClassName toUnescapedModel() {
-		return new ClassNameWrapper(_className.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _className.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _className.toXmlString();
+	public com.liferay.portal.model.ClassName toUnescapedModel() {
+		return new ClassNameWrapper(_className.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_className.persist();
+	public java.lang.String toXmlString() {
+		return _className.toXmlString();
 	}
 
 	@Override

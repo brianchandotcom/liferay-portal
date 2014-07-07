@@ -146,7 +146,7 @@ public class DDMStructureFinderImpl
 	@Override
 	public List<DDMStructure> filterFindByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, String keywords,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -170,7 +170,7 @@ public class DDMStructureFinderImpl
 	public List<DDMStructure> filterFindByC_G_C_N_D_S_T(
 		long companyId, long[] groupIds, long[] classNameIds, String name,
 		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -186,7 +186,7 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long[] classNameIds, String[] names,
 		String[] descriptions, String[] storageTypes, int type,
 		boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return doFindByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, names, descriptions,
@@ -197,7 +197,7 @@ public class DDMStructureFinderImpl
 	@Override
 	public List<DDMStructure> findByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, String keywords,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -221,7 +221,7 @@ public class DDMStructureFinderImpl
 	public List<DDMStructure> findByC_G_C_N_D_S_T(
 		long companyId, long[] groupIds, long[] classNameIds, String name,
 		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
@@ -237,7 +237,7 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long[] classNameIds, String[] names,
 		String[] descriptions, String[] storageTypes, int type,
 		boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return doFindByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, names, descriptions,
@@ -331,7 +331,8 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long[] classNameIds, String[] names,
 		String[] descriptions, String[] storageTypes, int type,
 		boolean andOperator, int start, int end,
-		OrderByComparator orderByComparator, boolean inlineSQLHelper) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean inlineSQLHelper) {
 
 		String[] classNameIdsString = null;
 

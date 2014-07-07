@@ -124,7 +124,7 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 					"asc");
 			}
 
-			OrderByComparator orderByComparator =
+			OrderByComparator<Organization> orderByComparator =
 				UsersAdminUtil.getOrganizationOrderByComparator(
 					orderByCol, orderByType);
 

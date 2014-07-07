@@ -21,7 +21,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PageCreateDateComparator extends OrderByComparator {
+public class PageCreateDateComparator extends OrderByComparator<WikiPage> {
 
 	public static final String ORDER_BY_ASC = "WikiPage.createDate ASC";
 
@@ -38,10 +38,7 @@ public class PageCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		WikiPage page1 = (WikiPage)obj1;
-		WikiPage page2 = (WikiPage)obj2;
-
+	public int compare(WikiPage page1, WikiPage page2) {
 		int value = DateUtil.compareTo(
 			page1.getCreateDate(), page2.getCreateDate());
 

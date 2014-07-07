@@ -88,7 +88,7 @@ public class ShoppingOrderUtil {
 	 */
 	public static List<ShoppingOrder> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder[] findByGroupId_PrevAndNext(
 		long orderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(orderId, groupId,
@@ -274,7 +274,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -290,7 +290,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder[] filterFindByGroupId_PrevAndNext(
 		long orderId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(orderId, groupId,
@@ -494,7 +494,7 @@ public class ShoppingOrderUtil {
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findByG_U_PPPS(
 		long groupId, long userId, java.lang.String ppPaymentStatus, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_PPPS(groupId, userId, ppPaymentStatus, start,
 			end, orderByComparator);
@@ -512,7 +512,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder findByG_U_PPPS_First(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .findByG_U_PPPS_First(groupId, userId, ppPaymentStatus,
@@ -530,7 +530,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_First(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_PPPS_First(groupId, userId, ppPaymentStatus,
 			orderByComparator);
@@ -548,7 +548,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder findByG_U_PPPS_Last(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .findByG_U_PPPS_Last(groupId, userId, ppPaymentStatus,
@@ -566,7 +566,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingOrder fetchByG_U_PPPS_Last(
 		long groupId, long userId, java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_PPPS_Last(groupId, userId, ppPaymentStatus,
 			orderByComparator);
@@ -586,7 +586,7 @@ public class ShoppingOrderUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingOrder[] findByG_U_PPPS_PrevAndNext(
 		long orderId, long groupId, long userId,
 		java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .findByG_U_PPPS_PrevAndNext(orderId, groupId, userId,
@@ -647,7 +647,7 @@ public class ShoppingOrderUtil {
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> filterFindByG_U_PPPS(
 		long groupId, long userId, java.lang.String ppPaymentStatus, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_PPPS(groupId, userId, ppPaymentStatus,
 			start, end, orderByComparator);
@@ -667,7 +667,7 @@ public class ShoppingOrderUtil {
 	public static com.liferay.portlet.shopping.model.ShoppingOrder[] filterFindByG_U_PPPS_PrevAndNext(
 		long orderId, long groupId, long userId,
 		java.lang.String ppPaymentStatus,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchOrderException {
 		return getPersistence()
 				   .filterFindByG_U_PPPS_PrevAndNext(orderId, groupId, userId,
@@ -828,7 +828,7 @@ public class ShoppingOrderUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingOrder> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

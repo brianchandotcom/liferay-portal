@@ -154,7 +154,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public List<ShoppingOrderItem> findByOrderId(long orderId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<ShoppingOrderItem> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingOrderItem findByOrderId_First(long orderId,
-		OrderByComparator orderByComparator) throws NoSuchOrderItemException {
+		OrderByComparator<ShoppingOrderItem> orderByComparator)
+		throws NoSuchOrderItemException {
 		ShoppingOrderItem shoppingOrderItem = fetchByOrderId_First(orderId,
 				orderByComparator);
 
@@ -289,7 +290,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingOrderItem fetchByOrderId_First(long orderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrderItem> orderByComparator) {
 		List<ShoppingOrderItem> list = findByOrderId(orderId, 0, 1,
 				orderByComparator);
 
@@ -310,7 +311,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingOrderItem findByOrderId_Last(long orderId,
-		OrderByComparator orderByComparator) throws NoSuchOrderItemException {
+		OrderByComparator<ShoppingOrderItem> orderByComparator)
+		throws NoSuchOrderItemException {
 		ShoppingOrderItem shoppingOrderItem = fetchByOrderId_Last(orderId,
 				orderByComparator);
 
@@ -339,7 +341,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingOrderItem fetchByOrderId_Last(long orderId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrderItem> orderByComparator) {
 		int count = countByOrderId(orderId);
 
 		if (count == 0) {
@@ -367,7 +369,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingOrderItem[] findByOrderId_PrevAndNext(long orderItemId,
-		long orderId, OrderByComparator orderByComparator)
+		long orderId, OrderByComparator<ShoppingOrderItem> orderByComparator)
 		throws NoSuchOrderItemException {
 		ShoppingOrderItem shoppingOrderItem = findByPrimaryKey(orderItemId);
 
@@ -398,7 +400,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	protected ShoppingOrderItem getByOrderId_PrevAndNext(Session session,
 		ShoppingOrderItem shoppingOrderItem, long orderId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ShoppingOrderItem> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1071,7 +1073,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public List<ShoppingOrderItem> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ShoppingOrderItem> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

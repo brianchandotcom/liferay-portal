@@ -379,7 +379,8 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getChildCategories(
-		long parentCategoryId, int start, int end, OrderByComparator obc) {
+		long parentCategoryId, int start, int end,
+		OrderByComparator<AssetCategory> obc) {
 
 		return assetCategoryPersistence.findByParentCategoryId(
 			parentCategoryId, start, end, obc);
@@ -412,7 +413,8 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
-		long vocabularyId, int start, int end, OrderByComparator obc) {
+		long vocabularyId, int start, int end,
+		OrderByComparator<AssetCategory> obc) {
 
 		return assetCategoryPersistence.findByVocabularyId(
 			vocabularyId, start, end, obc);
@@ -421,7 +423,7 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
 		long parentCategoryId, long vocabularyId, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<AssetCategory> obc) {
 
 		return assetCategoryPersistence.findByP_V(
 			parentCategoryId, vocabularyId, start, end, obc);
@@ -434,7 +436,8 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getVocabularyRootCategories(
-		long vocabularyId, int start, int end, OrderByComparator obc) {
+		long vocabularyId, int start, int end,
+		OrderByComparator<AssetCategory> obc) {
 
 		return getVocabularyCategories(
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,

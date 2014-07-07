@@ -33,26 +33,6 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 		_scProductEntryService = scProductEntryService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductEntryService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductEntryService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry addProductEntry(
 		java.lang.String name, java.lang.String type, java.lang.String tags,
@@ -74,11 +54,31 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 		_scProductEntryService.deleteProductEntry(productEntryId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _scProductEntryService.getBeanIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry getProductEntry(
 		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scProductEntryService.getProductEntry(productEntryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_scProductEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

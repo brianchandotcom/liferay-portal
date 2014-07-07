@@ -221,109 +221,65 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this wiki page.
-	*
-	* @return the primary key of this wiki page
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _wikiPage.getPrimaryKey();
-	}
-
-	/**
-	* Sets the primary key of this wiki page.
-	*
-	* @param primaryKey the primary key of this wiki page
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_wikiPage.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this wiki page.
-	*
-	* @return the uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _wikiPage.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this wiki page.
-	*
-	* @param uuid the uuid of this wiki page
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_wikiPage.setUuid(uuid);
-	}
-
-	/**
-	* Returns the page ID of this wiki page.
-	*
-	* @return the page ID of this wiki page
-	*/
-	@Override
-	public long getPageId() {
-		return _wikiPage.getPageId();
-	}
-
-	/**
-	* Sets the page ID of this wiki page.
-	*
-	* @param pageId the page ID of this wiki page
-	*/
-	@Override
-	public void setPageId(long pageId) {
-		_wikiPage.setPageId(pageId);
-	}
-
-	/**
-	* Returns the resource prim key of this wiki page.
-	*
-	* @return the resource prim key of this wiki page
-	*/
-	@Override
-	public long getResourcePrimKey() {
-		return _wikiPage.getResourcePrimKey();
-	}
-
-	/**
-	* Sets the resource prim key of this wiki page.
-	*
-	* @param resourcePrimKey the resource prim key of this wiki page
-	*/
-	@Override
-	public void setResourcePrimKey(long resourcePrimKey) {
-		_wikiPage.setResourcePrimKey(resourcePrimKey);
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.addAttachmentsFolder();
 	}
 
 	@Override
-	public boolean isResourceMain() {
-		return _wikiPage.isResourceMain();
+	public java.lang.Object clone() {
+		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
+	}
+
+	@Override
+	public int compareTo(com.liferay.portlet.wiki.model.WikiPage wikiPage) {
+		return _wikiPage.compareTo(wikiPage);
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchParentPage() {
+		return _wikiPage.fetchParentPage();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchRedirectPage() {
+		return _wikiPage.fetchRedirectPage();
 	}
 
 	/**
-	* Returns the group ID of this wiki page.
-	*
-	* @return the group ID of this wiki page
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
-	public long getGroupId() {
-		return _wikiPage.getGroupId();
+	public boolean getApproved() {
+		return _wikiPage.getApproved();
 	}
 
-	/**
-	* Sets the group ID of this wiki page.
-	*
-	* @param groupId the group ID of this wiki page
-	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_wikiPage.setGroupId(groupId);
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries() {
+		return _wikiPage.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end) {
+		return _wikiPage.getAttachmentsFileEntries(start, end);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount() {
+		return _wikiPage.getAttachmentsFileEntriesCount();
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _wikiPage.getAttachmentsFolderId();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages() {
+		return _wikiPage.getChildPages();
 	}
 
 	/**
@@ -337,73 +293,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the company ID of this wiki page.
+	* Returns the content of this wiki page.
 	*
-	* @param companyId the company ID of this wiki page
+	* @return the content of this wiki page
 	*/
 	@Override
-	public void setCompanyId(long companyId) {
-		_wikiPage.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this wiki page.
-	*
-	* @return the user ID of this wiki page
-	*/
-	@Override
-	public long getUserId() {
-		return _wikiPage.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this wiki page.
-	*
-	* @param userId the user ID of this wiki page
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_wikiPage.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this wiki page.
-	*
-	* @return the user uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _wikiPage.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this wiki page.
-	*
-	* @param userUuid the user uuid of this wiki page
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_wikiPage.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this wiki page.
-	*
-	* @return the user name of this wiki page
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _wikiPage.getUserName();
-	}
-
-	/**
-	* Sets the user name of this wiki page.
-	*
-	* @param userName the user name of this wiki page
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_wikiPage.setUserName(userName);
+	public java.lang.String getContent() {
+		return _wikiPage.getContent();
 	}
 
 	/**
@@ -416,164 +312,25 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getCreateDate();
 	}
 
-	/**
-	* Sets the create date of this wiki page.
-	*
-	* @param createDate the create date of this wiki page
-	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_wikiPage.setCreateDate(createDate);
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries() {
+		return _wikiPage.getDeletedAttachmentsFileEntries();
 	}
 
-	/**
-	* Returns the modified date of this wiki page.
-	*
-	* @return the modified date of this wiki page
-	*/
 	@Override
-	public java.util.Date getModifiedDate() {
-		return _wikiPage.getModifiedDate();
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
+		int start, int end) {
+		return _wikiPage.getDeletedAttachmentsFileEntries(start, end);
 	}
 
-	/**
-	* Sets the modified date of this wiki page.
-	*
-	* @param modifiedDate the modified date of this wiki page
-	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_wikiPage.setModifiedDate(modifiedDate);
+	public int getDeletedAttachmentsFileEntriesCount() {
+		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
 	}
 
-	/**
-	* Returns the node ID of this wiki page.
-	*
-	* @return the node ID of this wiki page
-	*/
 	@Override
-	public long getNodeId() {
-		return _wikiPage.getNodeId();
-	}
-
-	/**
-	* Sets the node ID of this wiki page.
-	*
-	* @param nodeId the node ID of this wiki page
-	*/
-	@Override
-	public void setNodeId(long nodeId) {
-		_wikiPage.setNodeId(nodeId);
-	}
-
-	/**
-	* Returns the title of this wiki page.
-	*
-	* @return the title of this wiki page
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _wikiPage.getTitle();
-	}
-
-	/**
-	* Sets the title of this wiki page.
-	*
-	* @param title the title of this wiki page
-	*/
-	@Override
-	public void setTitle(java.lang.String title) {
-		_wikiPage.setTitle(title);
-	}
-
-	/**
-	* Returns the version of this wiki page.
-	*
-	* @return the version of this wiki page
-	*/
-	@Override
-	public double getVersion() {
-		return _wikiPage.getVersion();
-	}
-
-	/**
-	* Sets the version of this wiki page.
-	*
-	* @param version the version of this wiki page
-	*/
-	@Override
-	public void setVersion(double version) {
-		_wikiPage.setVersion(version);
-	}
-
-	/**
-	* Returns the minor edit of this wiki page.
-	*
-	* @return the minor edit of this wiki page
-	*/
-	@Override
-	public boolean getMinorEdit() {
-		return _wikiPage.getMinorEdit();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is minor edit.
-	*
-	* @return <code>true</code> if this wiki page is minor edit; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isMinorEdit() {
-		return _wikiPage.isMinorEdit();
-	}
-
-	/**
-	* Sets whether this wiki page is minor edit.
-	*
-	* @param minorEdit the minor edit of this wiki page
-	*/
-	@Override
-	public void setMinorEdit(boolean minorEdit) {
-		_wikiPage.setMinorEdit(minorEdit);
-	}
-
-	/**
-	* Returns the content of this wiki page.
-	*
-	* @return the content of this wiki page
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _wikiPage.getContent();
-	}
-
-	/**
-	* Sets the content of this wiki page.
-	*
-	* @param content the content of this wiki page
-	*/
-	@Override
-	public void setContent(java.lang.String content) {
-		_wikiPage.setContent(content);
-	}
-
-	/**
-	* Returns the summary of this wiki page.
-	*
-	* @return the summary of this wiki page
-	*/
-	@Override
-	public java.lang.String getSummary() {
-		return _wikiPage.getSummary();
-	}
-
-	/**
-	* Sets the summary of this wiki page.
-	*
-	* @param summary the summary of this wiki page
-	*/
-	@Override
-	public void setSummary(java.lang.String summary) {
-		_wikiPage.setSummary(summary);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _wikiPage.getExpandoBridge();
 	}
 
 	/**
@@ -587,13 +344,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the format of this wiki page.
+	* Returns the group ID of this wiki page.
 	*
-	* @param format the format of this wiki page
+	* @return the group ID of this wiki page
 	*/
 	@Override
-	public void setFormat(java.lang.String format) {
-		_wikiPage.setFormat(format);
+	public long getGroupId() {
+		return _wikiPage.getGroupId();
 	}
 
 	/**
@@ -607,23 +364,64 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Returns <code>true</code> if this wiki page is head.
+	* Returns the minor edit of this wiki page.
 	*
-	* @return <code>true</code> if this wiki page is head; <code>false</code> otherwise
+	* @return the minor edit of this wiki page
 	*/
 	@Override
-	public boolean isHead() {
-		return _wikiPage.isHead();
+	public boolean getMinorEdit() {
+		return _wikiPage.getMinorEdit();
 	}
 
 	/**
-	* Sets whether this wiki page is head.
+	* Returns the modified date of this wiki page.
 	*
-	* @param head the head of this wiki page
+	* @return the modified date of this wiki page
 	*/
 	@Override
-	public void setHead(boolean head) {
-		_wikiPage.setHead(head);
+	public java.util.Date getModifiedDate() {
+		return _wikiPage.getModifiedDate();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiNode getNode() {
+		return _wikiPage.getNode();
+	}
+
+	@Override
+	public long getNodeAttachmentsFolderId() {
+		return _wikiPage.getNodeAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the node ID of this wiki page.
+	*
+	* @return the node ID of this wiki page
+	*/
+	@Override
+	public long getNodeId() {
+		return _wikiPage.getNodeId();
+	}
+
+	/**
+	* Returns the page ID of this wiki page.
+	*
+	* @return the page ID of this wiki page
+	*/
+	@Override
+	public long getPageId() {
+		return _wikiPage.getPageId();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getParentPage()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getParentPage();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getParentPages() {
+		return _wikiPage.getParentPages();
 	}
 
 	/**
@@ -637,13 +435,24 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the parent title of this wiki page.
+	* Returns the primary key of this wiki page.
 	*
-	* @param parentTitle the parent title of this wiki page
+	* @return the primary key of this wiki page
 	*/
 	@Override
-	public void setParentTitle(java.lang.String parentTitle) {
-		_wikiPage.setParentTitle(parentTitle);
+	public long getPrimaryKey() {
+		return _wikiPage.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _wikiPage.getPrimaryKeyObj();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPage.getRedirectPage();
 	}
 
 	/**
@@ -657,13 +466,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the redirect title of this wiki page.
+	* Returns the resource prim key of this wiki page.
 	*
-	* @param redirectTitle the redirect title of this wiki page
+	* @return the resource prim key of this wiki page
 	*/
 	@Override
-	public void setRedirectTitle(java.lang.String redirectTitle) {
-		_wikiPage.setRedirectTitle(redirectTitle);
+	public long getResourcePrimKey() {
+		return _wikiPage.getResourcePrimKey();
 	}
 
 	/**
@@ -677,16 +486,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the status of this wiki page.
-	*
-	* @param status the status of this wiki page
-	*/
-	@Override
-	public void setStatus(int status) {
-		_wikiPage.setStatus(status);
-	}
-
-	/**
 	* Returns the status by user ID of this wiki page.
 	*
 	* @return the status by user ID of this wiki page
@@ -694,36 +493,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public long getStatusByUserId() {
 		return _wikiPage.getStatusByUserId();
-	}
-
-	/**
-	* Sets the status by user ID of this wiki page.
-	*
-	* @param statusByUserId the status by user ID of this wiki page
-	*/
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		_wikiPage.setStatusByUserId(statusByUserId);
-	}
-
-	/**
-	* Returns the status by user uuid of this wiki page.
-	*
-	* @return the status by user uuid of this wiki page
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _wikiPage.getStatusByUserUuid();
-	}
-
-	/**
-	* Sets the status by user uuid of this wiki page.
-	*
-	* @param statusByUserUuid the status by user uuid of this wiki page
-	*/
-	@Override
-	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
-		_wikiPage.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -737,13 +506,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the status by user name of this wiki page.
+	* Returns the status by user uuid of this wiki page.
 	*
-	* @param statusByUserName the status by user name of this wiki page
+	* @return the status by user uuid of this wiki page
 	*/
 	@Override
-	public void setStatusByUserName(java.lang.String statusByUserName) {
-		_wikiPage.setStatusByUserName(statusByUserName);
+	public java.lang.String getStatusByUserUuid() {
+		return _wikiPage.getStatusByUserUuid();
 	}
 
 	/**
@@ -757,13 +526,23 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* Sets the status date of this wiki page.
+	* Returns the summary of this wiki page.
 	*
-	* @param statusDate the status date of this wiki page
+	* @return the summary of this wiki page
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
-		_wikiPage.setStatusDate(statusDate);
+	public java.lang.String getSummary() {
+		return _wikiPage.getSummary();
+	}
+
+	/**
+	* Returns the title of this wiki page.
+	*
+	* @return the title of this wiki page
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _wikiPage.getTitle();
 	}
 
 	/**
@@ -798,6 +577,136 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns the user ID of this wiki page.
+	*
+	* @return the user ID of this wiki page
+	*/
+	@Override
+	public long getUserId() {
+		return _wikiPage.getUserId();
+	}
+
+	/**
+	* Returns the user name of this wiki page.
+	*
+	* @return the user name of this wiki page
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _wikiPage.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this wiki page.
+	*
+	* @return the user uuid of this wiki page
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _wikiPage.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this wiki page.
+	*
+	* @return the uuid of this wiki page
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _wikiPage.getUuid();
+	}
+
+	/**
+	* Returns the version of this wiki page.
+	*
+	* @return the version of this wiki page
+	*/
+	@Override
+	public double getVersion() {
+		return _wikiPage.getVersion();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableChildPages() {
+		return _wikiPage.getViewableChildPages();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getViewableParentPage() {
+		return _wikiPage.getViewableParentPage();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableParentPages() {
+		return _wikiPage.getViewableParentPages();
+	}
+
+	@Override
+	public int hashCode() {
+		return _wikiPage.hashCode();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is approved.
+	*
+	* @return <code>true</code> if this wiki page is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _wikiPage.isApproved();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _wikiPage.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is denied.
+	*
+	* @return <code>true</code> if this wiki page is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _wikiPage.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is a draft.
+	*
+	* @return <code>true</code> if this wiki page is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _wikiPage.isDraft();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _wikiPage.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is expired.
+	*
+	* @return <code>true</code> if this wiki page is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _wikiPage.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is head.
+	*
+	* @return <code>true</code> if this wiki page is head; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isHead() {
+		return _wikiPage.isHead();
+	}
+
+	/**
 	* Returns <code>true</code> if this wiki page is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this wiki page is in the Recycle Bin; <code>false</code> otherwise
@@ -828,55 +737,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _wikiPage.getApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is approved.
-	*
-	* @return <code>true</code> if this wiki page is approved; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isApproved() {
-		return _wikiPage.isApproved();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is denied.
-	*
-	* @return <code>true</code> if this wiki page is denied; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDenied() {
-		return _wikiPage.isDenied();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is a draft.
-	*
-	* @return <code>true</code> if this wiki page is a draft; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDraft() {
-		return _wikiPage.isDraft();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is expired.
-	*
-	* @return <code>true</code> if this wiki page is expired; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isExpired() {
-		return _wikiPage.isExpired();
-	}
-
-	/**
 	* Returns <code>true</code> if this wiki page is inactive.
 	*
 	* @return <code>true</code> if this wiki page is inactive; <code>false</code> otherwise
@@ -897,6 +757,21 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this wiki page is minor edit.
+	*
+	* @return <code>true</code> if this wiki page is minor edit; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isMinorEdit() {
+		return _wikiPage.isMinorEdit();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _wikiPage.isNew();
+	}
+
+	/**
 	* Returns <code>true</code> if this wiki page is pending.
 	*
 	* @return <code>true</code> if this wiki page is pending; <code>false</code> otherwise
@@ -904,6 +779,11 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public boolean isPending() {
 		return _wikiPage.isPending();
+	}
+
+	@Override
+	public boolean isResourceMain() {
+		return _wikiPage.isResourceMain();
 	}
 
 	/**
@@ -917,18 +797,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public boolean isNew() {
-		return _wikiPage.isNew();
+	public void persist() {
+		_wikiPage.persist();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_wikiPage.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _wikiPage.isCachedModel();
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	@Override
@@ -936,24 +811,34 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		_wikiPage.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this wiki page.
+	*
+	* @param companyId the company ID of this wiki page
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _wikiPage.isEscapedModel();
+	public void setCompanyId(long companyId) {
+		_wikiPage.setCompanyId(companyId);
 	}
 
+	/**
+	* Sets the content of this wiki page.
+	*
+	* @param content the content of this wiki page
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _wikiPage.getPrimaryKeyObj();
+	public void setContent(java.lang.String content) {
+		_wikiPage.setContent(content);
 	}
 
+	/**
+	* Sets the create date of this wiki page.
+	*
+	* @param createDate the create date of this wiki page
+	*/
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_wikiPage.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _wikiPage.getExpandoBridge();
+	public void setCreateDate(java.util.Date createDate) {
+		_wikiPage.setCreateDate(createDate);
 	}
 
 	@Override
@@ -974,19 +859,244 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		_wikiPage.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the format of this wiki page.
+	*
+	* @param format the format of this wiki page
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
+	public void setFormat(java.lang.String format) {
+		_wikiPage.setFormat(format);
+	}
+
+	/**
+	* Sets the group ID of this wiki page.
+	*
+	* @param groupId the group ID of this wiki page
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_wikiPage.setGroupId(groupId);
+	}
+
+	/**
+	* Sets whether this wiki page is head.
+	*
+	* @param head the head of this wiki page
+	*/
+	@Override
+	public void setHead(boolean head) {
+		_wikiPage.setHead(head);
+	}
+
+	/**
+	* Sets whether this wiki page is minor edit.
+	*
+	* @param minorEdit the minor edit of this wiki page
+	*/
+	@Override
+	public void setMinorEdit(boolean minorEdit) {
+		_wikiPage.setMinorEdit(minorEdit);
+	}
+
+	/**
+	* Sets the modified date of this wiki page.
+	*
+	* @param modifiedDate the modified date of this wiki page
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_wikiPage.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portlet.wiki.model.WikiPage wikiPage) {
-		return _wikiPage.compareTo(wikiPage);
+	public void setNew(boolean n) {
+		_wikiPage.setNew(n);
+	}
+
+	/**
+	* Sets the node ID of this wiki page.
+	*
+	* @param nodeId the node ID of this wiki page
+	*/
+	@Override
+	public void setNodeId(long nodeId) {
+		_wikiPage.setNodeId(nodeId);
+	}
+
+	/**
+	* Sets the page ID of this wiki page.
+	*
+	* @param pageId the page ID of this wiki page
+	*/
+	@Override
+	public void setPageId(long pageId) {
+		_wikiPage.setPageId(pageId);
+	}
+
+	/**
+	* Sets the parent title of this wiki page.
+	*
+	* @param parentTitle the parent title of this wiki page
+	*/
+	@Override
+	public void setParentTitle(java.lang.String parentTitle) {
+		_wikiPage.setParentTitle(parentTitle);
+	}
+
+	/**
+	* Sets the primary key of this wiki page.
+	*
+	* @param primaryKey the primary key of this wiki page
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_wikiPage.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _wikiPage.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_wikiPage.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the redirect title of this wiki page.
+	*
+	* @param redirectTitle the redirect title of this wiki page
+	*/
+	@Override
+	public void setRedirectTitle(java.lang.String redirectTitle) {
+		_wikiPage.setRedirectTitle(redirectTitle);
+	}
+
+	/**
+	* Sets the resource prim key of this wiki page.
+	*
+	* @param resourcePrimKey the resource prim key of this wiki page
+	*/
+	@Override
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_wikiPage.setResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	* Sets the status of this wiki page.
+	*
+	* @param status the status of this wiki page
+	*/
+	@Override
+	public void setStatus(int status) {
+		_wikiPage.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this wiki page.
+	*
+	* @param statusByUserId the status by user ID of this wiki page
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_wikiPage.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this wiki page.
+	*
+	* @param statusByUserName the status by user name of this wiki page
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_wikiPage.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this wiki page.
+	*
+	* @param statusByUserUuid the status by user uuid of this wiki page
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_wikiPage.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this wiki page.
+	*
+	* @param statusDate the status date of this wiki page
+	*/
+	@Override
+	public void setStatusDate(java.util.Date statusDate) {
+		_wikiPage.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets the summary of this wiki page.
+	*
+	* @param summary the summary of this wiki page
+	*/
+	@Override
+	public void setSummary(java.lang.String summary) {
+		_wikiPage.setSummary(summary);
+	}
+
+	/**
+	* Sets the title of this wiki page.
+	*
+	* @param title the title of this wiki page
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_wikiPage.setTitle(title);
+	}
+
+	/**
+	* Sets the user ID of this wiki page.
+	*
+	* @param userId the user ID of this wiki page
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_wikiPage.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this wiki page.
+	*
+	* @param userName the user name of this wiki page
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_wikiPage.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this wiki page.
+	*
+	* @param userUuid the user uuid of this wiki page
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_wikiPage.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this wiki page.
+	*
+	* @param uuid the uuid of this wiki page
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_wikiPage.setUuid(uuid);
+	}
+
+	/**
+	* Sets the version of this wiki page.
+	*
+	* @param version the version of this wiki page
+	*/
+	@Override
+	public void setVersion(double version) {
+		_wikiPage.setVersion(version);
 	}
 
 	@Override
@@ -1000,128 +1110,18 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage toUnescapedModel() {
-		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _wikiPage.toString();
 	}
 
 	@Override
+	public com.liferay.portlet.wiki.model.WikiPage toUnescapedModel() {
+		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _wikiPage.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_wikiPage.persist();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.addAttachmentsFolder();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchParentPage() {
-		return _wikiPage.fetchParentPage();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchRedirectPage() {
-		return _wikiPage.fetchRedirectPage();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries() {
-		return _wikiPage.getAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end) {
-		return _wikiPage.getAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public int getAttachmentsFileEntriesCount() {
-		return _wikiPage.getAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _wikiPage.getAttachmentsFolderId();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages() {
-		return _wikiPage.getChildPages();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries() {
-		return _wikiPage.getDeletedAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
-		int start, int end) {
-		return _wikiPage.getDeletedAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public int getDeletedAttachmentsFileEntriesCount() {
-		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiNode getNode() {
-		return _wikiPage.getNode();
-	}
-
-	@Override
-	public long getNodeAttachmentsFolderId() {
-		return _wikiPage.getNodeAttachmentsFolderId();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getParentPage()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getParentPage();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getParentPages() {
-		return _wikiPage.getParentPages();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getRedirectPage();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableChildPages() {
-		return _wikiPage.getViewableChildPages();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getViewableParentPage() {
-		return _wikiPage.getViewableParentPage();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableParentPages() {
-		return _wikiPage.getViewableParentPages();
-	}
-
-	@Override
-	public void setAttachmentsFolderId(long attachmentsFolderId) {
-		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	@Override

@@ -1148,6 +1148,22 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
 	</target>
 
+	<target name="update-ivy-cache">
+		<execute>
+			git reset --hard HEAD
+			git clean -d -f
+
+			rm -fr .ivy
+
+			ant setup-sdk
+
+			ant -f modules/build.xml clean
+			ant -f modules/core/registry-api/build.xml deploy
+			ant -f modules/build.xml compile
+			ant -f modules/sdk/ant-arquillian/build.xml clean compile
+		</execute>
+	</target>
+
 	<target name="update-plugins-to-svn-revision">
 		<loadfile property="svn.info.revision.valid" srcfile="svn-revision" />
 

@@ -26,6 +26,33 @@
 		<execute action="SOSiteHomeEventsConfiguration#selectFrameTop" />
 	</command>
 
+	<command name="configureEventsPortletDisplayEvents">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_OPTIONS" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="SOSiteHomeEventsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOSiteHomeEventsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
+		<execute action="SOSiteHomeEventsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOSiteHomeEventsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOSiteHomeEventsConfiguration#selectFrameTop" />
+	</command>
+
 	<command name="viewTodaysEventSiteEvent">
 		<if>
 			<isset var="eventTitleShort" />
@@ -44,8 +71,14 @@
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
@@ -60,6 +93,12 @@
 			<then>
 				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="START_DATE_FIELD" value1="12:00 AM" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
 			</else>
@@ -70,6 +109,12 @@
 			<then>
 				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
+			<elseif>
+				<equals arg1="${allDayEvent}" arg2="true" />
+				<then>
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="END_DATE_FIELD" value1="11:59 PM" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="END_DATE_FIELD" />
 			</else>

@@ -20,7 +20,7 @@ import com.liferay.portlet.documentlibrary.model.DLContent;
 /**
  * @author Shuyang Zhou
  */
-public class DLContentVersionComparator extends OrderByComparator {
+public class DLContentVersionComparator extends OrderByComparator<DLContent> {
 
 	public static final String ORDER_BY_ASC = "DLContent.version ASC";
 
@@ -37,10 +37,7 @@ public class DLContentVersionComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DLContent content1 = (DLContent)obj1;
-		DLContent content2 = (DLContent)obj2;
-
+	public int compare(DLContent content1, DLContent content2) {
 		String version1 = content1.getVersion();
 		String version2 = content2.getVersion();
 

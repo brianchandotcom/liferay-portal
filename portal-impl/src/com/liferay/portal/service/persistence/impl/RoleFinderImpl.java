@@ -490,7 +490,7 @@ public class RoleFinderImpl
 	public List<Role> findByC_N_D_T(
 		long companyId, String name, String description, Integer[] types,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Role> obc) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
@@ -504,7 +504,7 @@ public class RoleFinderImpl
 	public List<Role> findByC_N_D_T(
 		long companyId, String[] names, String[] descriptions, Integer[] types,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<Role> obc) {
 
 		names = CustomSQLUtil.keywords(names, true);
 		descriptions = CustomSQLUtil.keywords(descriptions, true);
@@ -651,7 +651,7 @@ public class RoleFinderImpl
 	@Override
 	public List<Role> findByKeywords(
 		long companyId, String keywords, Integer[] types, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Role> obc) {
 
 		return findByKeywords(
 			companyId, keywords, types, new LinkedHashMap<String, Object>(),
@@ -662,7 +662,7 @@ public class RoleFinderImpl
 	public List<Role> findByKeywords(
 		long companyId, String keywords, Integer[] types,
 		LinkedHashMap<String, Object> params, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator<Role> obc) {
 
 		String[] names = null;
 		String[] descriptions = null;

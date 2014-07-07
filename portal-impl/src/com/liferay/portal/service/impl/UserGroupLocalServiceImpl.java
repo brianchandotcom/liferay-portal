@@ -529,7 +529,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public List<UserGroup> search(
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<UserGroup> obc) {
 
 		return userGroupFinder.findByKeywords(
 			companyId, keywords, params, start, end, obc);
@@ -625,7 +625,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public List<UserGroup> search(
 		long companyId, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<UserGroup> obc) {
 
 		return userGroupFinder.findByC_N_D(
 			companyId, name, description, params, andOperator, start, end, obc);

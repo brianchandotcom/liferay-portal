@@ -22,7 +22,8 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowTaskCreateDateComparator extends OrderByComparator {
+public class WorkflowTaskCreateDateComparator
+	extends OrderByComparator<WorkflowTask> {
 
 	public WorkflowTaskCreateDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
@@ -35,10 +36,7 @@ public class WorkflowTaskCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		WorkflowTask workflowTask1 = (WorkflowTask)obj1;
-		WorkflowTask workflowTask2 = (WorkflowTask)obj2;
-
+	public int compare(WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
 		Date createDate1 = workflowTask1.getCreateDate();
 		Date createDate2 = workflowTask2.getCreateDate();
 

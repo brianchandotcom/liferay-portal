@@ -50,15 +50,6 @@ public class ListTypeServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static com.liferay.portal.model.ListType getListType(int listTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getListType(listTypeId);
@@ -67,6 +58,15 @@ public class ListTypeServiceUtil {
 	public static java.util.List<com.liferay.portal.model.ListType> getListTypes(
 		java.lang.String type) {
 		return getService().getListTypes(type);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void validate(int listTypeId, long classNameId,

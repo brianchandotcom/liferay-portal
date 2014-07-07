@@ -93,44 +93,14 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		}
 	}
 
-	/**
-	* Returns the primary key of this cluster group.
-	*
-	* @return the primary key of this cluster group
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _clusterGroup.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new ClusterGroupWrapper((ClusterGroup)_clusterGroup.clone());
 	}
 
-	/**
-	* Sets the primary key of this cluster group.
-	*
-	* @param primaryKey the primary key of this cluster group
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_clusterGroup.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this cluster group.
-	*
-	* @return the mvcc version of this cluster group
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _clusterGroup.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this cluster group.
-	*
-	* @param mvccVersion the mvcc version of this cluster group
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_clusterGroup.setMvccVersion(mvccVersion);
+	public int compareTo(com.liferay.portal.model.ClusterGroup clusterGroup) {
+		return _clusterGroup.compareTo(clusterGroup);
 	}
 
 	/**
@@ -144,13 +114,33 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	/**
-	* Sets the cluster group ID of this cluster group.
+	* Returns the cluster node IDs of this cluster group.
 	*
-	* @param clusterGroupId the cluster group ID of this cluster group
+	* @return the cluster node IDs of this cluster group
 	*/
 	@Override
-	public void setClusterGroupId(long clusterGroupId) {
-		_clusterGroup.setClusterGroupId(clusterGroupId);
+	public java.lang.String getClusterNodeIds() {
+		return _clusterGroup.getClusterNodeIds();
+	}
+
+	@Override
+	public java.lang.String[] getClusterNodeIdsArray() {
+		return _clusterGroup.getClusterNodeIdsArray();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _clusterGroup.getExpandoBridge();
+	}
+
+	/**
+	* Returns the mvcc version of this cluster group.
+	*
+	* @return the mvcc version of this cluster group
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _clusterGroup.getMvccVersion();
 	}
 
 	/**
@@ -164,33 +154,18 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	/**
-	* Sets the name of this cluster group.
+	* Returns the primary key of this cluster group.
 	*
-	* @param name the name of this cluster group
+	* @return the primary key of this cluster group
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_clusterGroup.setName(name);
+	public long getPrimaryKey() {
+		return _clusterGroup.getPrimaryKey();
 	}
 
-	/**
-	* Returns the cluster node IDs of this cluster group.
-	*
-	* @return the cluster node IDs of this cluster group
-	*/
 	@Override
-	public java.lang.String getClusterNodeIds() {
-		return _clusterGroup.getClusterNodeIds();
-	}
-
-	/**
-	* Sets the cluster node IDs of this cluster group.
-	*
-	* @param clusterNodeIds the cluster node IDs of this cluster group
-	*/
-	@Override
-	public void setClusterNodeIds(java.lang.String clusterNodeIds) {
-		_clusterGroup.setClusterNodeIds(clusterNodeIds);
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _clusterGroup.getPrimaryKeyObj();
 	}
 
 	/**
@@ -203,6 +178,26 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		return _clusterGroup.getWholeCluster();
 	}
 
+	@Override
+	public int hashCode() {
+		return _clusterGroup.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _clusterGroup.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _clusterGroup.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _clusterGroup.isNew();
+	}
+
 	/**
 	* Returns <code>true</code> if this cluster group is whole cluster.
 	*
@@ -213,29 +208,9 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		return _clusterGroup.isWholeCluster();
 	}
 
-	/**
-	* Sets whether this cluster group is whole cluster.
-	*
-	* @param wholeCluster the whole cluster of this cluster group
-	*/
 	@Override
-	public void setWholeCluster(boolean wholeCluster) {
-		_clusterGroup.setWholeCluster(wholeCluster);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _clusterGroup.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_clusterGroup.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _clusterGroup.isCachedModel();
+	public void persist() {
+		_clusterGroup.persist();
 	}
 
 	@Override
@@ -243,24 +218,24 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		_clusterGroup.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the cluster group ID of this cluster group.
+	*
+	* @param clusterGroupId the cluster group ID of this cluster group
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _clusterGroup.isEscapedModel();
+	public void setClusterGroupId(long clusterGroupId) {
+		_clusterGroup.setClusterGroupId(clusterGroupId);
 	}
 
+	/**
+	* Sets the cluster node IDs of this cluster group.
+	*
+	* @param clusterNodeIds the cluster node IDs of this cluster group
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _clusterGroup.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_clusterGroup.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _clusterGroup.getExpandoBridge();
+	public void setClusterNodeIds(java.lang.String clusterNodeIds) {
+		_clusterGroup.setClusterNodeIds(clusterNodeIds);
 	}
 
 	@Override
@@ -281,19 +256,54 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		_clusterGroup.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the mvcc version of this cluster group.
+	*
+	* @param mvccVersion the mvcc version of this cluster group
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ClusterGroupWrapper((ClusterGroup)_clusterGroup.clone());
+	public void setMvccVersion(long mvccVersion) {
+		_clusterGroup.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Sets the name of this cluster group.
+	*
+	* @param name the name of this cluster group
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_clusterGroup.setName(name);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.ClusterGroup clusterGroup) {
-		return _clusterGroup.compareTo(clusterGroup);
+	public void setNew(boolean n) {
+		_clusterGroup.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this cluster group.
+	*
+	* @param primaryKey the primary key of this cluster group
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_clusterGroup.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _clusterGroup.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_clusterGroup.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets whether this cluster group is whole cluster.
+	*
+	* @param wholeCluster the whole cluster of this cluster group
+	*/
+	@Override
+	public void setWholeCluster(boolean wholeCluster) {
+		_clusterGroup.setWholeCluster(wholeCluster);
 	}
 
 	@Override
@@ -307,28 +317,18 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public com.liferay.portal.model.ClusterGroup toUnescapedModel() {
-		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _clusterGroup.toString();
 	}
 
 	@Override
+	public com.liferay.portal.model.ClusterGroup toUnescapedModel() {
+		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _clusterGroup.toXmlString();
-	}
-
-	@Override
-	public void persist() {
-		_clusterGroup.persist();
-	}
-
-	@Override
-	public java.lang.String[] getClusterNodeIdsArray() {
-		return _clusterGroup.getClusterNodeIdsArray();
 	}
 
 	@Override

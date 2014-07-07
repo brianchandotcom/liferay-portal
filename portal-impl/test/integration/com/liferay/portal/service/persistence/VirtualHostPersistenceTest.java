@@ -216,7 +216,7 @@ public class VirtualHostPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<VirtualHost> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("VirtualHost",
 			"mvccVersion", true, "virtualHostId", true, "companyId", true,
 			"layoutSetId", true, "hostname", true);

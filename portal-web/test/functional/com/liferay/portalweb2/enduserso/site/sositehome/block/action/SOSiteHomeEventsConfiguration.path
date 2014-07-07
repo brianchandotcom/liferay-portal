@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT</td>
+	<td>//select[@id='_86_eventsPerPage']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

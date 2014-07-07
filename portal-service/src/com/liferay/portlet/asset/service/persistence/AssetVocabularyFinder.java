@@ -27,9 +27,9 @@ public interface AssetVocabularyFinder {
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_N(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc);
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_N(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc);
 }

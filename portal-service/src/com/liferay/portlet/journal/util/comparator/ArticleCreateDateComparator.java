@@ -21,7 +21,8 @@ import com.liferay.portlet.journal.model.JournalArticle;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ArticleCreateDateComparator extends OrderByComparator {
+public class ArticleCreateDateComparator
+	extends OrderByComparator<JournalArticle> {
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
@@ -38,10 +39,7 @@ public class ArticleCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		JournalArticle article1 = (JournalArticle)obj1;
-		JournalArticle article2 = (JournalArticle)obj2;
-
+	public int compare(JournalArticle article1, JournalArticle article2) {
 		int value = DateUtil.compareTo(
 			article1.getCreateDate(), article2.getCreateDate());
 

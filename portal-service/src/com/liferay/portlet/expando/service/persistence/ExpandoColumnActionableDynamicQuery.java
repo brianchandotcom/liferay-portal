@@ -22,7 +22,7 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ExpandoColumnLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ExpandoColumnLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

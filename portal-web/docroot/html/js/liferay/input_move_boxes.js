@@ -151,7 +151,7 @@ AUI.add(
 					_onSelectFocus: function(event, box) {
 						var instance = this;
 
-						box.set('selectedIndex', '-1');
+						box.attr('selectedIndex', '-1');
 					},
 
 					_renderBoxes: function() {

@@ -79,7 +79,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> findByEntryId(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the first trash version in the ordered set where entryId = &#63;.
@@ -91,7 +91,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion findByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -103,7 +103,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion fetchByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the last trash version in the ordered set where entryId = &#63;.
@@ -115,7 +115,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion findByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -127,7 +127,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion fetchByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the trash versions before and after the current trash version in the ordered set where entryId = &#63;.
@@ -140,7 +140,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion[] findByEntryId_PrevAndNext(
 		long versionId, long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -200,7 +200,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> findByE_C(
 		long entryId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
@@ -213,7 +213,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion findByE_C_First(
 		long entryId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -226,7 +226,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion fetchByE_C_First(
 		long entryId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the last trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
@@ -239,7 +239,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion findByE_C_Last(
 		long entryId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -252,7 +252,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion fetchByE_C_Last(
 		long entryId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Returns the trash versions before and after the current trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
@@ -266,7 +266,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public com.liferay.portlet.trash.model.TrashVersion[] findByE_C_PrevAndNext(
 		long versionId, long entryId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
@@ -492,7 +492,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	*/
 	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashVersion> orderByComparator);
 
 	/**
 	* Removes all the trash versions from the database.

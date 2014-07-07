@@ -39,7 +39,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	@Override
 	protected byte[] doExport(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception {
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap(recordSetId);

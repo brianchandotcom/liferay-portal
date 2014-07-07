@@ -1,23 +1,13 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="BOOKMARKS_ADD_ENTRY_LINK">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ACTIONS_MENULIST_EDIT">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="assertElementNotPresent">
+		<case locator-key1="ANNOUNCEMENTS_NAVIGATION_NEXT">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="ANNOUNCEMENTS_NAVIGATION_PREVIOUS">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
 		<case locator-key1="RSS_OPTIONS">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
@@ -50,10 +40,6 @@
 
 		<case locator-key1="NAVIGATION_MEMBERS">
 			<execute function="Click#textClickAtAndWait" />
-		</case>
-
-		<case locator-key1="NAVIGATION_PAGE">
-			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
 

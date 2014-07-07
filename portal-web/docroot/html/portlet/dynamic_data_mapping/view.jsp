@@ -62,7 +62,7 @@ portletURL.setParameter("tabs1", tabs1);
 		orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
 	}
 
-	OrderByComparator orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
+	OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
 	%>
 
 	<liferay-ui:search-container
@@ -140,6 +140,15 @@ portletURL.setParameter("tabs1", tabs1);
 					value="<%= ResourceActionsUtil.getModelResource(locale, structure.getClassName()) %>"
 				/>
 			</c:if>
+
+			<%
+			Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="scope"
+				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+			/>
 
 			<liferay-ui:search-container-column-date
 				href="<%= rowHREF %>"

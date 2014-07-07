@@ -846,7 +846,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public List<Country> findByActive(boolean active, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Country> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -952,7 +952,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country findByActive_First(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchCountryException {
+		OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
 		Country country = fetchByActive_First(active, orderByComparator);
 
 		if (country != null) {
@@ -980,7 +981,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country fetchByActive_First(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Country> orderByComparator) {
 		List<Country> list = findByActive(active, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1000,7 +1001,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country findByActive_Last(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchCountryException {
+		OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
 		Country country = fetchByActive_Last(active, orderByComparator);
 
 		if (country != null) {
@@ -1028,7 +1030,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country fetchByActive_Last(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Country> orderByComparator) {
 		int count = countByActive(active);
 
 		if (count == 0) {
@@ -1056,7 +1058,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country[] findByActive_PrevAndNext(long countryId, boolean active,
-		OrderByComparator orderByComparator) throws NoSuchCountryException {
+		OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
 		Country country = findByPrimaryKey(countryId);
 
 		Session session = null;
@@ -1085,7 +1088,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	protected Country getByActive_PrevAndNext(Session session, Country country,
-		boolean active, OrderByComparator orderByComparator, boolean previous) {
+		boolean active, OrderByComparator<Country> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1859,7 +1863,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public List<Country> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<Country> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

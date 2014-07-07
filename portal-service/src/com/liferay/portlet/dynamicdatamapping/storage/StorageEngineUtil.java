@@ -66,7 +66,7 @@ public class StorageEngineUtil {
 
 	public static List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		return getStorageEngine().getFieldsList(
@@ -75,7 +75,7 @@ public class StorageEngineUtil {
 
 	public static List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		return getStorageEngine().getFieldsList(
@@ -84,7 +84,7 @@ public class StorageEngineUtil {
 
 	public static List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		return getStorageEngine().getFieldsList(
@@ -114,7 +114,7 @@ public class StorageEngineUtil {
 
 	public static List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		return getStorageEngine().query(

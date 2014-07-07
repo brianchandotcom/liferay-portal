@@ -14,54 +14,33 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Amos Fong
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class FullNameValidatorFactory {
 
 	public static FullNameValidator getInstance() {
-		return _fullNameValidator;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(FullNameValidator fullNameValidator) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(fullNameValidator));
-		}
+	private FullNameValidatorFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (fullNameValidator == null) {
-			_fullNameValidator = _originalFullNameValidator;
-		}
-		else {
-			_fullNameValidator = fullNameValidator;
-		}
+		_serviceTracker = registry.trackServices(FullNameValidator.class);
+
+		_serviceTracker.open();
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.USERS_FULL_NAME_VALIDATOR);
-		}
+	private static FullNameValidatorFactory _instance =
+		new FullNameValidatorFactory();
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalFullNameValidator =
-			(FullNameValidator)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_FULL_NAME_VALIDATOR);
-
-		_fullNameValidator = _originalFullNameValidator;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		FullNameValidatorFactory.class);
-
-	private static volatile FullNameValidator _fullNameValidator;
-	private static FullNameValidator _originalFullNameValidator;
+	private ServiceTracker<FullNameValidator, FullNameValidator>
+		_serviceTracker;
 
 }

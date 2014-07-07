@@ -88,7 +88,7 @@ public class AnnouncementsFlagUtil {
 	 */
 	public static List<AnnouncementsFlag> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence()
 				   .findByEntryId(entryId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByEntryId_First(entryId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().fetchByEntryId_First(entryId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence().findByEntryId_Last(entryId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().fetchByEntryId_Last(entryId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag[] findByEntryId_PrevAndNext(
 		long flagId, long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchFlagException {
 		return getPersistence()
 				   .findByEntryId_PrevAndNext(flagId, entryId, orderByComparator);
@@ -435,7 +435,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsFlag> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

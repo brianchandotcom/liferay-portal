@@ -214,7 +214,7 @@ public class AnnouncementsFlagPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<AnnouncementsFlag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsFlag",
 			"flagId", true, "userId", true, "createDate", true, "entryId",
 			true, "value", true);

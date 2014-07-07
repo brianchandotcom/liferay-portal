@@ -40,25 +40,6 @@ public class ShoppingOrderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingOrderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
 	public static void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
@@ -75,6 +56,15 @@ public class ShoppingOrderServiceUtil {
 		getService().deleteOrder(groupId, orderId);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
 	public static com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
 		long groupId, long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -88,14 +78,13 @@ public class ShoppingOrderServiceUtil {
 		getService().sendEmail(groupId, orderId, emailType, serviceContext);
 	}
 
-	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
-		long groupId, long orderId, java.lang.String ppTxnId,
-		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateOrder(groupId, orderId, ppTxnId, ppPaymentStatus,
-			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
@@ -123,6 +112,16 @@ public class ShoppingOrderServiceUtil {
 			shippingStreet, shippingCity, shippingState, shippingZip,
 			shippingCountry, shippingPhone, ccName, ccType, ccNumber,
 			ccExpMonth, ccExpYear, ccVerNumber, comments);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
+		long groupId, long orderId, java.lang.String ppTxnId,
+		java.lang.String ppPaymentStatus, double ppPaymentGross,
+		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOrder(groupId, orderId, ppTxnId, ppPaymentStatus,
+			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
 	}
 
 	public static ShoppingOrderService getService() {

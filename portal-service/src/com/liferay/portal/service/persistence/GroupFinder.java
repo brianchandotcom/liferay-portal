@@ -36,7 +36,7 @@ public interface GroupFinder {
 
 	public java.util.List<com.liferay.portal.model.Group> findByLayouts(
 		long companyId, long parentGroupId, boolean site, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
 
 	public java.util.List<com.liferay.portal.model.Group> findByLiveGroups();
 
@@ -51,7 +51,8 @@ public interface GroupFinder {
 	public java.util.List<com.liferay.portal.model.Group> findByCompanyId(
 		long companyId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
 
 	public java.util.List<java.lang.Long> findByC_P(long companyId,
 		long parentGroupId, long previousGroupId, int size);
@@ -64,5 +65,5 @@ public interface GroupFinder {
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
 }

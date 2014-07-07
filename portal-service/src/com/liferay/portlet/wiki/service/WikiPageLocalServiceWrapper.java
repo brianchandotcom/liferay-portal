@@ -33,302 +33,14 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	/**
-	* Adds the wiki page to the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPage the wiki page
-	* @return the wiki page that was added
-	*/
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage addWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
-		return _wikiPageLocalService.addWikiPage(wikiPage);
-	}
-
-	/**
-	* Creates a new wiki page with the primary key. Does not add the wiki page to the database.
-	*
-	* @param pageId the primary key for the new wiki page
-	* @return the new wiki page
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage createWikiPage(long pageId) {
-		return _wikiPageLocalService.createWikiPage(pageId);
-	}
-
-	/**
-	* Deletes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pageId the primary key of the wiki page
-	* @return the wiki page that was removed
-	* @throws PortalException if a wiki page with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(long pageId)
+	public com.liferay.portlet.wiki.model.WikiPage addPage(long userId,
+		long nodeId, java.lang.String title, java.lang.String content,
+		java.lang.String summary, boolean minorEdit,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.deleteWikiPage(pageId);
-	}
-
-	/**
-	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPage the wiki page
-	* @return the wiki page that was removed
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
-		return _wikiPageLocalService.deleteWikiPage(wikiPage);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _wikiPageLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _wikiPageLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _wikiPageLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _wikiPageLocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _wikiPageLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _wikiPageLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPage(long pageId) {
-		return _wikiPageLocalService.fetchWikiPage(pageId);
-	}
-
-	/**
-	* Returns the wiki page with the matching UUID and company.
-	*
-	* @param uuid the wiki page's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _wikiPageLocalService.fetchWikiPageByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns the wiki page matching the UUID and group.
-	*
-	* @param uuid the wiki page's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _wikiPageLocalService.fetchWikiPageByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the wiki page with the primary key.
-	*
-	* @param pageId the primary key of the wiki page
-	* @return the wiki page
-	* @throws PortalException if a wiki page with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getWikiPage(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getWikiPage(pageId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _wikiPageLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _wikiPageLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the wiki page with the matching UUID and company.
-	*
-	* @param uuid the wiki page's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki page
-	* @throws PortalException if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getWikiPageByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns the wiki page matching the UUID and group.
-	*
-	* @param uuid the wiki page's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page
-	* @throws PortalException if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getWikiPageByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns a range of all the wiki pages.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of wiki pages
-	* @param end the upper bound of the range of wiki pages (not inclusive)
-	* @return the range of wiki pages
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPages(
-		int start, int end) {
-		return _wikiPageLocalService.getWikiPages(start, end);
-	}
-
-	/**
-	* Returns the number of wiki pages.
-	*
-	* @return the number of wiki pages
-	*/
-	@Override
-	public int getWikiPagesCount() {
-		return _wikiPageLocalService.getWikiPagesCount();
-	}
-
-	/**
-	* Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPage the wiki page
-	* @return the wiki page that was updated
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage updateWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
-		return _wikiPageLocalService.updateWikiPage(wikiPage);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiPageLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiPageLocalService.setBeanIdentifier(beanIdentifier);
+		return _wikiPageLocalService.addPage(userId, nodeId, title, content,
+			summary, minorEdit, serviceContext);
 	}
 
 	@Override
@@ -342,16 +54,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		return _wikiPageLocalService.addPage(userId, nodeId, title, version,
 			content, summary, minorEdit, format, head, parentTitle,
 			redirectTitle, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage addPage(long userId,
-		long nodeId, java.lang.String title, java.lang.String content,
-		java.lang.String summary, boolean minorEdit,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.addPage(userId, nodeId, title, content,
-			summary, minorEdit, serviceContext);
 	}
 
 	@Override
@@ -422,6 +124,18 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			tempFolderName, inputStream, mimeType);
 	}
 
+	/**
+	* Adds the wiki page to the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPage the wiki page
+	* @return the wiki page that was added
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage addWikiPage(
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
+		return _wikiPageLocalService.addWikiPage(wikiPage);
+	}
+
 	@Override
 	public void changeParent(long userId, long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
@@ -437,6 +151,17 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageLocalService.copyPageAttachments(userId, templateNodeId,
 			templateTitle, nodeId, title);
+	}
+
+	/**
+	* Creates a new wiki page with the primary key. Does not add the wiki page to the database.
+	*
+	* @param pageId the primary key for the new wiki page
+	* @return the new wiki page
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage createWikiPage(long pageId) {
+		return _wikiPageLocalService.createWikiPage(pageId);
 	}
 
 	@Override
@@ -481,6 +206,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deletePages(nodeId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.deletePersistedModel(persistedModel);
+	}
+
 	@Override
 	public void deleteTempPageAttachment(long groupId, long userId,
 		java.lang.String fileName, java.lang.String tempFolderName)
@@ -495,6 +230,31 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
 	}
 
+	/**
+	* Deletes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pageId the primary key of the wiki page
+	* @return the wiki page that was removed
+	* @throws PortalException if a wiki page with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(long pageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.deleteWikiPage(pageId);
+	}
+
+	/**
+	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPage the wiki page
+	* @return the wiki page that was removed
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
+		return _wikiPageLocalService.deleteWikiPage(wikiPage);
+	}
+
 	@Override
 	public void discardDraft(long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -502,9 +262,93 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _wikiPageLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _wikiPageLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _wikiPageLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return _wikiPageLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _wikiPageLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _wikiPageLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
 	public com.liferay.portlet.wiki.model.WikiPage fetchLatestPage(
-		long resourcePrimKey, int status, boolean preferApproved) {
-		return _wikiPageLocalService.fetchLatestPage(resourcePrimKey, status,
+		long nodeId, java.lang.String title, int status, boolean preferApproved) {
+		return _wikiPageLocalService.fetchLatestPage(nodeId, title, status,
 			preferApproved);
 	}
 
@@ -517,8 +361,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPage fetchLatestPage(
-		long nodeId, java.lang.String title, int status, boolean preferApproved) {
-		return _wikiPageLocalService.fetchLatestPage(nodeId, title, status,
+		long resourcePrimKey, int status, boolean preferApproved) {
+		return _wikiPageLocalService.fetchLatestPage(resourcePrimKey, status,
 			preferApproved);
 	}
 
@@ -535,6 +379,53 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPage(long pageId) {
+		return _wikiPageLocalService.fetchWikiPage(pageId);
+	}
+
+	/**
+	* Returns the wiki page with the matching UUID and company.
+	*
+	* @param uuid the wiki page's UUID
+	* @param companyId the primary key of the company
+	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _wikiPageLocalService.fetchWikiPageByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the wiki page matching the UUID and group.
+	*
+	* @param uuid the wiki page's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _wikiPageLocalService.fetchWikiPageByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _wikiPageLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _wikiPageLocalService.getBeanIdentifier();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle) {
 		return _wikiPageLocalService.getChildren(nodeId, head, parentTitle);
@@ -548,6 +439,12 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _wikiPageLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getIncomingLinks(
 		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -555,10 +452,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getLatestPage(
-		long resourcePrimKey, int status, boolean preferApproved)
+	public com.liferay.portlet.wiki.model.WikiPage getLatestPage(long nodeId,
+		java.lang.String title, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getLatestPage(resourcePrimKey, status,
+		return _wikiPageLocalService.getLatestPage(nodeId, title, status,
 			preferApproved);
 	}
 
@@ -571,10 +468,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getLatestPage(long nodeId,
-		java.lang.String title, int status, boolean preferApproved)
+	public com.liferay.portlet.wiki.model.WikiPage getLatestPage(
+		long resourcePrimKey, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getLatestPage(nodeId, title, status,
+		return _wikiPageLocalService.getLatestPage(resourcePrimKey, status,
 			preferApproved);
 	}
 
@@ -597,19 +494,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getPage(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getPage(resourcePrimKey);
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getPage(
-		long resourcePrimKey, java.lang.Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getPage(resourcePrimKey, head);
-	}
-
-	@Override
 	public com.liferay.portlet.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -628,6 +512,19 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.getPage(nodeId, title, version);
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getPage(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getPage(resourcePrimKey);
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getPage(
+		long resourcePrimKey, java.lang.Boolean head)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getPage(resourcePrimKey, head);
 	}
 
 	@Override
@@ -660,8 +557,21 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		java.lang.String format) {
+		return _wikiPageLocalService.getPages(format);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int start, int end) {
 		return _wikiPageLocalService.getPages(nodeId, head, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long nodeId, boolean head, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPage> obc) {
+		return _wikiPageLocalService.getPages(nodeId, head, start, end, obc);
 	}
 
 	@Override
@@ -673,16 +583,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPage> obc) {
 		return _wikiPageLocalService.getPages(nodeId, head, status, start, end,
 			obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
-		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return _wikiPageLocalService.getPages(nodeId, head, start, end, obc);
 	}
 
 	@Override
@@ -694,20 +597,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPage> obc) {
 		return _wikiPageLocalService.getPages(nodeId, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
-		long resourcePrimKey, long nodeId, int status) {
-		return _wikiPageLocalService.getPages(resourcePrimKey, nodeId, status);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
-		long userId, long nodeId, int status, int start, int end) {
-		return _wikiPageLocalService.getPages(userId, nodeId, status, start, end);
 	}
 
 	@Override
@@ -725,14 +616,25 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long nodeId, java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.wiki.model.WikiPage> obc) {
 		return _wikiPageLocalService.getPages(nodeId, title, start, end, obc);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
-		java.lang.String format) {
-		return _wikiPageLocalService.getPages(format);
+		long resourcePrimKey, long nodeId, int status) {
+		return _wikiPageLocalService.getPages(resourcePrimKey, nodeId, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long userId, long nodeId, int status, int start, int end) {
+		return _wikiPageLocalService.getPages(userId, nodeId, status, start, end);
+	}
+
+	@Override
+	public int getPagesCount(java.lang.String format) {
+		return _wikiPageLocalService.getPagesCount(format);
 	}
 
 	@Override
@@ -756,11 +658,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public int getPagesCount(long userId, long nodeId, int status) {
-		return _wikiPageLocalService.getPagesCount(userId, nodeId, status);
-	}
-
-	@Override
 	public int getPagesCount(long nodeId, java.lang.String title) {
 		return _wikiPageLocalService.getPagesCount(nodeId, title);
 	}
@@ -771,8 +668,15 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public int getPagesCount(java.lang.String format) {
-		return _wikiPageLocalService.getPagesCount(format);
+	public int getPagesCount(long userId, long nodeId, int status) {
+		return _wikiPageLocalService.getPagesCount(userId, nodeId, status);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -780,6 +684,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		com.liferay.portlet.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.getPreviousVersionPage(page);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
+		long groupId, long nodeId, int start, int end) {
+		return _wikiPageLocalService.getRecentChanges(groupId, nodeId, start,
+			end);
 	}
 
 	/**
@@ -795,10 +706,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
-		long groupId, long nodeId, int start, int end) {
-		return _wikiPageLocalService.getRecentChanges(groupId, nodeId, start,
-			end);
+	public int getRecentChangesCount(long groupId, long nodeId) {
+		return _wikiPageLocalService.getRecentChangesCount(groupId, nodeId);
 	}
 
 	/**
@@ -813,16 +722,82 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public int getRecentChangesCount(long groupId, long nodeId) {
-		return _wikiPageLocalService.getRecentChangesCount(groupId, nodeId);
-	}
-
-	@Override
 	public java.lang.String[] getTempPageAttachmentNames(long groupId,
 		long userId, java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.getTempPageAttachmentNames(groupId,
 			userId, tempFolderName);
+	}
+
+	/**
+	* Returns the wiki page with the primary key.
+	*
+	* @param pageId the primary key of the wiki page
+	* @return the wiki page
+	* @throws PortalException if a wiki page with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getWikiPage(long pageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getWikiPage(pageId);
+	}
+
+	/**
+	* Returns the wiki page with the matching UUID and company.
+	*
+	* @param uuid the wiki page's UUID
+	* @param companyId the primary key of the company
+	* @return the matching wiki page
+	* @throws PortalException if a matching wiki page could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getWikiPageByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the wiki page matching the UUID and group.
+	*
+	* @param uuid the wiki page's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page
+	* @throws PortalException if a matching wiki page could not be found
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getWikiPageByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns a range of all the wiki pages.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of wiki pages
+	* @param end the upper bound of the range of wiki pages (not inclusive)
+	* @return the range of wiki pages
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPages(
+		int start, int end) {
+		return _wikiPageLocalService.getWikiPages(start, end);
+	}
+
+	/**
+	* Returns the number of wiki pages.
+	*
+	* @return the number of wiki pages
+	*/
+	@Override
+	public int getWikiPagesCount() {
+		return _wikiPageLocalService.getWikiPagesCount();
 	}
 
 	@Override
@@ -839,19 +814,19 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public void movePage(long userId, long nodeId, java.lang.String title,
-		java.lang.String newTitle, boolean strict,
+		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle, strict,
+		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle,
 			serviceContext);
 	}
 
 	@Override
 	public void movePage(long userId, long nodeId, java.lang.String title,
-		java.lang.String newTitle,
+		java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle,
+		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle, strict,
 			serviceContext);
 	}
 
@@ -917,6 +892,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			serviceContext);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_wikiPageLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void subscribePage(long userId, long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -951,15 +936,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			serviceContext);
 	}
 
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage updateStatus(long userId,
-		long resourcePrimKey, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.updateStatus(userId, resourcePrimKey,
-			status, serviceContext);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
 	int, ServiceContext, Map)}
@@ -982,6 +958,27 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.updateStatus(userId, page, status,
 			serviceContext, workflowContext);
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage updateStatus(long userId,
+		long resourcePrimKey, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.updateStatus(userId, resourcePrimKey,
+			status, serviceContext);
+	}
+
+	/**
+	* Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPage the wiki page
+	* @return the wiki page that was updated
+	*/
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage updateWikiPage(
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
+		return _wikiPageLocalService.updateWikiPage(wikiPage);
 	}
 
 	@Override

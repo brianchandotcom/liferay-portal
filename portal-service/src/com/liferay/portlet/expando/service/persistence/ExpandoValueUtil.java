@@ -88,7 +88,7 @@ public class ExpandoValueUtil {
 	 */
 	public static List<ExpandoValue> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByTableId(tableId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().fetchByTableId_First(tableId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().fetchByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByTableId_PrevAndNext(
 		long valueId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(valueId, tableId,
@@ -293,7 +293,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByColumnId(columnId, start, end, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByColumnId_First(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByColumnId_First(columnId, orderByComparator);
 	}
@@ -322,7 +322,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_First(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByColumnId_First(columnId, orderByComparator);
 	}
@@ -337,7 +337,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByColumnId_Last(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByColumnId_Last(columnId, orderByComparator);
 	}
@@ -351,7 +351,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_Last(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().fetchByColumnId_Last(columnId, orderByComparator);
 	}
 
@@ -366,7 +366,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByColumnId_PrevAndNext(
 		long valueId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByColumnId_PrevAndNext(valueId, columnId,
@@ -435,7 +435,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByRowId(
 		long rowId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().findByRowId(rowId, start, end, orderByComparator);
 	}
 
@@ -449,7 +449,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByRowId_First(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByRowId_First(rowId, orderByComparator);
 	}
@@ -463,7 +463,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_First(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().fetchByRowId_First(rowId, orderByComparator);
 	}
 
@@ -477,7 +477,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByRowId_Last(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByRowId_Last(rowId, orderByComparator);
 	}
@@ -491,7 +491,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_Last(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().fetchByRowId_Last(rowId, orderByComparator);
 	}
 
@@ -506,7 +506,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByRowId_PrevAndNext(
 		long valueId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByRowId_PrevAndNext(valueId, rowId, orderByComparator);
@@ -577,7 +577,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByT_C(tableId, columnId, start, end, orderByComparator);
 	}
@@ -593,7 +593,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_First(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_First(tableId, columnId, orderByComparator);
@@ -609,7 +609,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_First(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_First(tableId, columnId, orderByComparator);
 	}
@@ -625,7 +625,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_Last(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_Last(tableId, columnId, orderByComparator);
@@ -641,7 +641,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_Last(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_Last(tableId, columnId, orderByComparator);
 	}
@@ -658,7 +658,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_C_PrevAndNext(
 		long valueId, long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_PrevAndNext(valueId, tableId, columnId,
@@ -732,7 +732,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByT_CPK(tableId, classPK, start, end, orderByComparator);
 	}
@@ -748,7 +748,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_CPK_First(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_First(tableId, classPK, orderByComparator);
@@ -764,7 +764,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_First(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_CPK_First(tableId, classPK, orderByComparator);
 	}
@@ -780,7 +780,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_CPK_Last(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_Last(tableId, classPK, orderByComparator);
@@ -796,7 +796,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_Last(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_CPK_Last(tableId, classPK, orderByComparator);
 	}
@@ -813,7 +813,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_CPK_PrevAndNext(
 		long valueId, long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_PrevAndNext(valueId, tableId, classPK,
@@ -887,7 +887,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByT_R(tableId, rowId, start, end, orderByComparator);
 	}
@@ -903,7 +903,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_R_First(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_First(tableId, rowId, orderByComparator);
@@ -919,7 +919,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_First(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_R_First(tableId, rowId, orderByComparator);
 	}
@@ -935,7 +935,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_R_Last(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByT_R_Last(tableId, rowId, orderByComparator);
 	}
@@ -950,7 +950,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_Last(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_R_Last(tableId, rowId, orderByComparator);
 	}
@@ -967,7 +967,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_R_PrevAndNext(
 		long valueId, long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_PrevAndNext(valueId, tableId, rowId,
@@ -1104,7 +1104,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -1121,7 +1121,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -1137,7 +1137,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1153,7 +1153,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -1169,7 +1169,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1186,7 +1186,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByC_C_PrevAndNext(
 		long valueId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(valueId, classNameId, classPK,
@@ -1332,7 +1332,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C_D(
 		long tableId, long columnId, java.lang.String data, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .findByT_C_D(tableId, columnId, data, start, end,
 			orderByComparator);
@@ -1350,7 +1350,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_D_First(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_First(tableId, columnId, data, orderByComparator);
@@ -1367,7 +1367,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_First(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_D_First(tableId, columnId, data,
 			orderByComparator);
@@ -1385,7 +1385,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_D_Last(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_Last(tableId, columnId, data, orderByComparator);
@@ -1402,7 +1402,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_Last(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_D_Last(tableId, columnId, data, orderByComparator);
 	}
@@ -1420,7 +1420,7 @@ public class ExpandoValueUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_C_D_PrevAndNext(
 		long valueId, long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_PrevAndNext(valueId, tableId, columnId, data,
@@ -1567,7 +1567,7 @@ public class ExpandoValueUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoValue> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

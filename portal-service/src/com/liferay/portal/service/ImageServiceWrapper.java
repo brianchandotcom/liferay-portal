@@ -40,6 +40,12 @@ public class ImageServiceWrapper implements ImageService,
 		return _imageService.getBeanIdentifier();
 	}
 
+	@Override
+	public com.liferay.portal.model.Image getImage(long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageService.getImage(imageId);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -48,12 +54,6 @@ public class ImageServiceWrapper implements ImageService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_imageService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public com.liferay.portal.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageService.getImage(imageId);
 	}
 
 	/**

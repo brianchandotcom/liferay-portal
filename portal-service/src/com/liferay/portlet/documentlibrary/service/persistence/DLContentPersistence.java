@@ -82,7 +82,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R(
 		long companyId, long repositoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -95,7 +95,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_First(
 		long companyId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -108,7 +108,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_First(
 		long companyId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -121,7 +121,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_Last(
 		long companyId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -134,7 +134,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_Last(
 		long companyId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -148,7 +148,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent[] findByC_R_PrevAndNext(
 		long contentId, long companyId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -215,7 +215,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R_P(
 		long companyId, long repositoryId, java.lang.String path, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -229,7 +229,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_P_First(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -243,7 +243,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_P_First(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -257,7 +257,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_P_Last(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -271,7 +271,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_P_Last(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -287,7 +287,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public com.liferay.portlet.documentlibrary.model.DLContent[] findByC_R_P_PrevAndNext(
 		long contentId, long companyId, long repositoryId,
 		java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -358,7 +358,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByC_R_LikeP(
 		long companyId, long repositoryId, java.lang.String path, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -372,7 +372,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_LikeP_First(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -386,7 +386,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_LikeP_First(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -400,7 +400,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent findByC_R_LikeP_Last(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -414,7 +414,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByC_R_LikeP_Last(
 		long companyId, long repositoryId, java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -430,7 +430,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public com.liferay.portlet.documentlibrary.model.DLContent[] findByC_R_LikeP_PrevAndNext(
 		long contentId, long companyId, long repositoryId,
 		java.lang.String path,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
@@ -620,7 +620,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLContent> orderByComparator);
 
 	/**
 	* Removes all the document library contents from the database.

@@ -20,7 +20,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 /**
  * @author Shinn Lok
  */
-public class FolderIdComparator extends OrderByComparator {
+public class FolderIdComparator extends OrderByComparator<BookmarksFolder> {
 
 	public static final String ORDER_BY_ASC = "BookmarksFolder.folderId ASC";
 
@@ -37,10 +37,7 @@ public class FolderIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BookmarksFolder folder1 = (BookmarksFolder)obj1;
-		BookmarksFolder folder2 = (BookmarksFolder)obj2;
-
+	public int compare(BookmarksFolder folder1, BookmarksFolder folder2) {
 		long folderId1 = folder1.getFolderId();
 		long folderId2 = folder2.getFolderId();
 

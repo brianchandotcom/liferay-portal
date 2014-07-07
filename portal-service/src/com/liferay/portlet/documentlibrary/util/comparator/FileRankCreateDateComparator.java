@@ -21,7 +21,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FileRankCreateDateComparator extends OrderByComparator {
+public class FileRankCreateDateComparator
+	extends OrderByComparator<DLFileRank> {
 
 	public static final String ORDER_BY_ASC = "DLFileRank.createDate ASC";
 
@@ -38,10 +39,7 @@ public class FileRankCreateDateComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		DLFileRank dlFileRank1 = (DLFileRank)obj1;
-		DLFileRank dlFileRank2 = (DLFileRank)obj2;
-
+	public int compare(DLFileRank dlFileRank1, DLFileRank dlFileRank2) {
 		int value = DateUtil.compareTo(
 			dlFileRank1.getCreateDate(), dlFileRank2.getCreateDate());
 

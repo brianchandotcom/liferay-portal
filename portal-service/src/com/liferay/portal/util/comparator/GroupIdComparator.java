@@ -20,7 +20,7 @@ import com.liferay.portal.model.Group;
 /**
  * @author Shinn Lok
  */
-public class GroupIdComparator extends OrderByComparator {
+public class GroupIdComparator extends OrderByComparator<Group> {
 
 	public static final String ORDER_BY_ASC = "Group_.groupId ASC";
 
@@ -37,10 +37,7 @@ public class GroupIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		Group group1 = (Group)obj1;
-		Group group2 = (Group)obj2;
-
+	public int compare(Group group1, Group group2) {
 		long groupId1 = group1.getGroupId();
 		long groupId2 = group2.getGroupId();
 

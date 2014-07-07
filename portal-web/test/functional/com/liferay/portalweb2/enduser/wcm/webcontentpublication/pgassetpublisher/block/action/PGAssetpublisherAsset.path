@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ASSET_RELATED_ASSET_HEADER</td>
-	<td>//h2[@class='asset-links-title']</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
 	<td></td>
 </tr>
 <tr>

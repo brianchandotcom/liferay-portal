@@ -79,7 +79,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
 		long itemId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the first shopping item field in the ordered set where itemId = &#63;.
@@ -91,7 +91,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_First(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -103,7 +103,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_First(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the last shopping item field in the ordered set where itemId = &#63;.
@@ -115,7 +115,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_Last(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -127,7 +127,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_Last(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the shopping item fields before and after the current shopping item field in the ordered set where itemId = &#63;.
@@ -140,7 +140,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField[] findByItemId_PrevAndNext(
 		long itemFieldId, long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -256,7 +256,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
 
 	/**
 	* Removes all the shopping item fields from the database.

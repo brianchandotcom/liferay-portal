@@ -290,7 +290,7 @@ public class MBThreadFlagPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<MBThreadFlag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBThreadFlag", "uuid",
 			true, "threadFlagId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

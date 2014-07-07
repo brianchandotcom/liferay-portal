@@ -30,7 +30,7 @@ ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_publisher/select_structure_field");
-portletURL.setParameter("portletResource", portletResource);
+portletURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 %>
@@ -73,7 +73,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			>
 				<liferay-portlet:resourceURL portletConfiguration="true" var="structureFieldURL">
 					<portlet:param name="<%= Constants.CMD %>" value="getFieldValue" />
-					<portlet:param name="portletResource" value="<%= portletResource %>" />
+					<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 					<portlet:param name="structureId" value="<%= String.valueOf(ddmStructureId) %>" />
 					<portlet:param name="name" value="<%= name %>" />
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />

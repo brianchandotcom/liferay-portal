@@ -152,7 +152,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public List<RepositoryEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -272,7 +272,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByUuid_First(uuid,
 				orderByComparator);
@@ -302,7 +302,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		List<RepositoryEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,7 +322,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByUuid_Last(uuid,
 				orderByComparator);
@@ -352,7 +352,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -380,7 +380,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry[] findByUuid_PrevAndNext(long repositoryEntryId,
-		String uuid, OrderByComparator orderByComparator)
+		String uuid, OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = findByPrimaryKey(repositoryEntryId);
 
@@ -411,7 +411,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	protected RepositoryEntry getByUuid_PrevAndNext(Session session,
 		RepositoryEntry repositoryEntry, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RepositoryEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -938,7 +938,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public List<RepositoryEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<RepositoryEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1068,7 +1068,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
@@ -1102,7 +1102,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		List<RepositoryEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1124,7 +1124,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
@@ -1158,7 +1158,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1187,7 +1187,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry[] findByUuid_C_PrevAndNext(long repositoryEntryId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
+		String uuid, long companyId,
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = findByPrimaryKey(repositoryEntryId);
 
@@ -1218,7 +1219,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	protected RepositoryEntry getByUuid_C_PrevAndNext(Session session,
 		RepositoryEntry repositoryEntry, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RepositoryEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1496,7 +1497,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public List<RepositoryEntry> findByRepositoryId(long repositoryId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<RepositoryEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1606,7 +1607,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByRepositoryId_First(long repositoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByRepositoryId_First(repositoryId,
 				orderByComparator);
@@ -1636,7 +1637,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByRepositoryId_First(long repositoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		List<RepositoryEntry> list = findByRepositoryId(repositoryId, 0, 1,
 				orderByComparator);
 
@@ -1657,7 +1658,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry findByRepositoryId_Last(long repositoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = fetchByRepositoryId_Last(repositoryId,
 				orderByComparator);
@@ -1687,7 +1688,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public RepositoryEntry fetchByRepositoryId_Last(long repositoryId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		int count = countByRepositoryId(repositoryId);
 
 		if (count == 0) {
@@ -1716,7 +1717,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	@Override
 	public RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<RepositoryEntry> orderByComparator)
 		throws NoSuchRepositoryEntryException {
 		RepositoryEntry repositoryEntry = findByPrimaryKey(repositoryEntryId);
 
@@ -1747,7 +1748,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	protected RepositoryEntry getByRepositoryId_PrevAndNext(Session session,
 		RepositoryEntry repositoryEntry, long repositoryId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<RepositoryEntry> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2833,7 +2834,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	@Override
 	public List<RepositoryEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<RepositoryEntry> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

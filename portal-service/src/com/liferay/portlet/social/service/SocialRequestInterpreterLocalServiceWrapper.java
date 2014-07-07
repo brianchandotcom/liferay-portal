@@ -35,26 +35,6 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialRequestInterpreterLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialRequestInterpreterLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Adds the social request interpreter to the list of available
 	* interpreters.
 	*
@@ -76,6 +56,16 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	public void deleteRequestInterpreter(
 		com.liferay.portlet.social.model.SocialRequestInterpreter requestInterpreter) {
 		_socialRequestInterpreterLocalService.deleteRequestInterpreter(requestInterpreter);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _socialRequestInterpreterLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -145,6 +135,16 @@ public class SocialRequestInterpreterLocalServiceWrapper
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		_socialRequestInterpreterLocalService.processRejection(request,
 			themeDisplay);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_socialRequestInterpreterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

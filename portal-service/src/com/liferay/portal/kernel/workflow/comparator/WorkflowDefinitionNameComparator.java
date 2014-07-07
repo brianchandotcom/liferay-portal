@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowDefinitionNameComparator extends OrderByComparator {
+public class WorkflowDefinitionNameComparator
+	extends OrderByComparator<WorkflowDefinition> {
 
 	public WorkflowDefinitionNameComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
@@ -33,9 +34,9 @@ public class WorkflowDefinitionNameComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		WorkflowDefinition workflowDefinition1 = (WorkflowDefinition)obj1;
-		WorkflowDefinition workflowDefinition2 = (WorkflowDefinition)obj2;
+	public int compare(
+		WorkflowDefinition workflowDefinition1,
+		WorkflowDefinition workflowDefinition2) {
 
 		String name1 = workflowDefinition1.getName();
 		String name2 = workflowDefinition2.getName();

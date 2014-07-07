@@ -58,6 +58,28 @@ public class SocialActivitySettingLocalServiceWrapper
 		return _socialActivitySettingLocalService.createSocialActivitySetting(activitySettingId);
 	}
 
+	@Override
+	public void deleteActivitySetting(long groupId, java.lang.String className,
+		long classPK) {
+		_socialActivitySettingLocalService.deleteActivitySetting(groupId,
+			className, classPK);
+	}
+
+	@Override
+	public void deleteActivitySettings(long groupId) {
+		_socialActivitySettingLocalService.deleteActivitySettings(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySettingLocalService.deletePersistedModel(persistedModel);
+	}
+
 	/**
 	* Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -96,8 +118,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _socialActivitySettingLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -115,8 +136,7 @@ public class SocialActivitySettingLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _socialActivitySettingLocalService.dynamicQuery(dynamicQuery,
@@ -137,11 +157,10 @@ public class SocialActivitySettingLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _socialActivitySettingLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -179,6 +198,48 @@ public class SocialActivitySettingLocalServiceWrapper
 		return _socialActivitySettingLocalService.fetchSocialActivitySetting(activitySettingId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _socialActivitySettingLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
+		long groupId, java.lang.String className, int activityType) {
+		return _socialActivitySettingLocalService.getActivityDefinition(groupId,
+			className, activityType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
+		long groupId, java.lang.String className) {
+		return _socialActivitySettingLocalService.getActivityDefinitions(groupId,
+			className);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
+		long groupId) {
+		return _socialActivitySettingLocalService.getActivitySettings(groupId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _socialActivitySettingLocalService.getBeanIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySettingLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns the social activity setting with the primary key.
 	*
@@ -191,28 +252,6 @@ public class SocialActivitySettingLocalServiceWrapper
 		long activitySettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivitySettingLocalService.getSocialActivitySetting(activitySettingId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _socialActivitySettingLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySettingLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySettingLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -243,70 +282,6 @@ public class SocialActivitySettingLocalServiceWrapper
 		return _socialActivitySettingLocalService.getSocialActivitySettingsCount();
 	}
 
-	/**
-	* Updates the social activity setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivitySetting the social activity setting
-	* @return the social activity setting that was updated
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialActivitySetting updateSocialActivitySetting(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting) {
-		return _socialActivitySettingLocalService.updateSocialActivitySetting(socialActivitySetting);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivitySettingLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivitySettingLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void deleteActivitySetting(long groupId, java.lang.String className,
-		long classPK) {
-		_socialActivitySettingLocalService.deleteActivitySetting(groupId,
-			className, classPK);
-	}
-
-	@Override
-	public void deleteActivitySettings(long groupId) {
-		_socialActivitySettingLocalService.deleteActivitySettings(groupId);
-	}
-
-	@Override
-	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
-		long groupId, java.lang.String className, int activityType) {
-		return _socialActivitySettingLocalService.getActivityDefinition(groupId,
-			className, activityType);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
-		long groupId, java.lang.String className) {
-		return _socialActivitySettingLocalService.getActivityDefinitions(groupId,
-			className);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
-		long groupId) {
-		return _socialActivitySettingLocalService.getActivitySettings(groupId);
-	}
-
 	@Override
 	public boolean isEnabled(long groupId, long classNameId) {
 		return _socialActivitySettingLocalService.isEnabled(groupId, classNameId);
@@ -318,12 +293,14 @@ public class SocialActivitySettingLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public void updateActivitySetting(long groupId, java.lang.String className,
-		boolean enabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivitySettingLocalService.updateActivitySetting(groupId,
-			className, enabled);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_socialActivitySettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -344,12 +321,32 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
+	public void updateActivitySetting(long groupId, java.lang.String className,
+		boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivitySettingLocalService.updateActivitySetting(groupId,
+			className, enabled);
+	}
+
+	@Override
 	public void updateActivitySettings(long groupId,
 		java.lang.String className, int activityType,
 		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySettingLocalService.updateActivitySettings(groupId,
 			className, activityType, activityCounterDefinitions);
+	}
+
+	/**
+	* Updates the social activity setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivitySetting the social activity setting
+	* @return the social activity setting that was updated
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialActivitySetting updateSocialActivitySetting(
+		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting) {
+		return _socialActivitySettingLocalService.updateSocialActivitySetting(socialActivitySetting);
 	}
 
 	/**

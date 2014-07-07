@@ -88,7 +88,7 @@ public class ExpandoColumnUtil {
 	 */
 	public static List<ExpandoColumn> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence()
 				   .findByTableId(tableId, start, end, orderByComparator);
 	}
@@ -167,7 +167,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn findByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
@@ -181,7 +181,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn fetchByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence().fetchByTableId_First(tableId, orderByComparator);
 	}
 
@@ -195,7 +195,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn findByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
@@ -209,7 +209,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn fetchByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence().fetchByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -224,7 +224,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn[] findByTableId_PrevAndNext(
 		long columnId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(columnId, tableId,
@@ -274,7 +274,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> filterFindByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence()
 				   .filterFindByTableId(tableId, start, end, orderByComparator);
 	}
@@ -290,7 +290,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoColumn[] filterFindByTableId_PrevAndNext(
 		long columnId, long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator)
 		throws com.liferay.portlet.expando.NoSuchColumnException {
 		return getPersistence()
 				   .filterFindByTableId_PrevAndNext(columnId, tableId,
@@ -376,7 +376,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findByT_N(
 		long tableId, java.lang.String[] names, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence()
 				   .findByT_N(tableId, names, start, end, orderByComparator);
 	}
@@ -592,7 +592,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.expando.model.ExpandoColumn> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

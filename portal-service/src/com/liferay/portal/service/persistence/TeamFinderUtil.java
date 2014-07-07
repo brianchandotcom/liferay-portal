@@ -33,7 +33,8 @@ public class TeamFinderUtil {
 	public static java.util.List<com.liferay.portal.model.Team> findByG_N_D(
 		long groupId, java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> obc) {
 		return getFinder()
 				   .findByG_N_D(groupId, name, description, params, start, end,
 			obc);

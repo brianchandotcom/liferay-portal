@@ -79,7 +79,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the first m d r rule in the ordered set where uuid = &#63;.
@@ -91,7 +91,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -103,7 +103,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the last m d r rule in the ordered set where uuid = &#63;.
@@ -115,7 +115,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -127,7 +127,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the m d r rules before and after the current m d r rule in the ordered set where uuid = &#63;.
@@ -140,7 +140,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_PrevAndNext(
 		long ruleId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -253,7 +253,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the first m d r rule in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -266,7 +266,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -279,7 +279,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the last m d r rule in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -292,7 +292,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -305,7 +305,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the m d r rules before and after the current m d r rule in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -319,7 +319,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_C_PrevAndNext(
 		long ruleId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -378,7 +378,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByRuleGroupId(
 		long ruleGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the first m d r rule in the ordered set where ruleGroupId = &#63;.
@@ -390,7 +390,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_First(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -402,7 +402,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_First(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the last m d r rule in the ordered set where ruleGroupId = &#63;.
@@ -414,7 +414,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_Last(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -426,7 +426,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_Last(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Returns the m d r rules before and after the current m d r rule in the ordered set where ruleGroupId = &#63;.
@@ -439,7 +439,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByRuleGroupId_PrevAndNext(
 		long ruleId, long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
@@ -555,7 +555,7 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRule> orderByComparator);
 
 	/**
 	* Removes all the m d r rules from the database.

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.InvocationTargetException;
@@ -78,14 +80,21 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			if (e instanceof InvocationTargetException) {
 				Throwable throwable = e.getCause();
 
-				if (throwable instanceof SecurityException) {
+				if (throwable instanceof PrincipalException ||
+					throwable instanceof SecurityException) {
+
 					status = HttpServletResponse.SC_FORBIDDEN;
 				}
 				else {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				}
 
-				_log.error(throwable, throwable);
+				if (_log.isDebugEnabled()) {
+					_log.debug(getThrowableMessage(throwable), throwable);
+				}
+				else {
+					_log.error(getThrowableMessage(throwable));
+				}
 
 				response.setStatus(status);
 
@@ -95,14 +104,21 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			if (e instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
-			else if (e instanceof SecurityException) {
+			else if (e instanceof PrincipalException ||
+					 e instanceof SecurityException) {
+
 				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(getThrowableMessage(e), e);
+			}
+			else {
+				_log.error(getThrowableMessage(e));
+			}
 
 			response.setStatus(status);
 
@@ -151,7 +167,8 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	}
 
 	protected JSONWebServiceAction getJSONWebServiceAction(
-		HttpServletRequest request) {
+			HttpServletRequest request)
+		throws NoSuchJSONWebServiceException {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 
@@ -170,6 +187,16 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	@Override
 	protected String getReroutePath() {
 		return _REROUTE_PATH;
+	}
+
+	protected String getThrowableMessage(Throwable throwable) {
+		String message = throwable.getMessage();
+
+		if (Validator.isNotNull(message)) {
+			return message;
+		}
+
+		return throwable.toString();
 	}
 
 	private static final String _REROUTE_PATH = "/jsonws";

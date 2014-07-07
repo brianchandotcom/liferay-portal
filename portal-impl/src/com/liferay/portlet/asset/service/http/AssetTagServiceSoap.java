@@ -136,7 +136,7 @@ public class AssetTagServiceSoap {
 
 	public static com.liferay.portlet.asset.model.AssetTagSoap[] getGroupTags(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.asset.model.AssetTag> returnValue =
@@ -232,7 +232,8 @@ public class AssetTagServiceSoap {
 
 	public static com.liferay.portlet.asset.model.AssetTagSoap[] getTags(
 		long groupId, long classNameId, java.lang.String name, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.asset.model.AssetTag> returnValue =

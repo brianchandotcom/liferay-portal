@@ -122,7 +122,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		try {
@@ -140,7 +140,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		try {
@@ -158,7 +158,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		return getFieldsList(ddmStructureId, classPKs, null, orderByComparator);
@@ -191,7 +191,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	@Override
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException {
 
 		try {
@@ -260,12 +260,12 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 
 	protected abstract List<Fields> doGetFieldsListByClasses(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception;
 
 	protected abstract List<Fields> doGetFieldsListByDDMStructure(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception;
 
 	protected abstract Map<Long, Fields> doGetFieldsMapByClasses(
@@ -274,7 +274,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 
 	protected abstract List<Fields> doQuery(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws Exception;
 
 	protected abstract int doQueryCount(

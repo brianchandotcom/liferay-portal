@@ -70,7 +70,7 @@ public interface Trash {
 
 	public List<TrashEntry> getEntries(Hits hits) throws PortalException;
 
-	public OrderByComparator getEntryOrderByComparator(
+	public OrderByComparator<TrashEntry> getEntryOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public int getMaxAge(Group group) throws PortalException;

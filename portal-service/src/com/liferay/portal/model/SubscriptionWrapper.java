@@ -129,184 +129,14 @@ public class SubscriptionWrapper implements Subscription,
 		}
 	}
 
-	/**
-	* Returns the primary key of this subscription.
-	*
-	* @return the primary key of this subscription
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _subscription.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new SubscriptionWrapper((Subscription)_subscription.clone());
 	}
 
-	/**
-	* Sets the primary key of this subscription.
-	*
-	* @param primaryKey the primary key of this subscription
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_subscription.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the mvcc version of this subscription.
-	*
-	* @return the mvcc version of this subscription
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _subscription.getMvccVersion();
-	}
-
-	/**
-	* Sets the mvcc version of this subscription.
-	*
-	* @param mvccVersion the mvcc version of this subscription
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_subscription.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Returns the subscription ID of this subscription.
-	*
-	* @return the subscription ID of this subscription
-	*/
-	@Override
-	public long getSubscriptionId() {
-		return _subscription.getSubscriptionId();
-	}
-
-	/**
-	* Sets the subscription ID of this subscription.
-	*
-	* @param subscriptionId the subscription ID of this subscription
-	*/
-	@Override
-	public void setSubscriptionId(long subscriptionId) {
-		_subscription.setSubscriptionId(subscriptionId);
-	}
-
-	/**
-	* Returns the company ID of this subscription.
-	*
-	* @return the company ID of this subscription
-	*/
-	@Override
-	public long getCompanyId() {
-		return _subscription.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this subscription.
-	*
-	* @param companyId the company ID of this subscription
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_subscription.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this subscription.
-	*
-	* @return the user ID of this subscription
-	*/
-	@Override
-	public long getUserId() {
-		return _subscription.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this subscription.
-	*
-	* @param userId the user ID of this subscription
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_subscription.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this subscription.
-	*
-	* @return the user uuid of this subscription
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _subscription.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this subscription.
-	*
-	* @param userUuid the user uuid of this subscription
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_subscription.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this subscription.
-	*
-	* @return the user name of this subscription
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _subscription.getUserName();
-	}
-
-	/**
-	* Sets the user name of this subscription.
-	*
-	* @param userName the user name of this subscription
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_subscription.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this subscription.
-	*
-	* @return the create date of this subscription
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _subscription.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this subscription.
-	*
-	* @param createDate the create date of this subscription
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_subscription.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this subscription.
-	*
-	* @return the modified date of this subscription
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _subscription.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this subscription.
-	*
-	* @param modifiedDate the modified date of this subscription
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_subscription.setModifiedDate(modifiedDate);
+	public int compareTo(com.liferay.portal.model.Subscription subscription) {
+		return _subscription.compareTo(subscription);
 	}
 
 	/**
@@ -317,11 +147,6 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public java.lang.String getClassName() {
 		return _subscription.getClassName();
-	}
-
-	@Override
-	public void setClassName(java.lang.String className) {
-		_subscription.setClassName(className);
 	}
 
 	/**
@@ -335,16 +160,6 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	/**
-	* Sets the class name ID of this subscription.
-	*
-	* @param classNameId the class name ID of this subscription
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_subscription.setClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the class p k of this subscription.
 	*
 	* @return the class p k of this subscription
@@ -355,13 +170,28 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	/**
-	* Sets the class p k of this subscription.
+	* Returns the company ID of this subscription.
 	*
-	* @param classPK the class p k of this subscription
+	* @return the company ID of this subscription
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_subscription.setClassPK(classPK);
+	public long getCompanyId() {
+		return _subscription.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this subscription.
+	*
+	* @return the create date of this subscription
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _subscription.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _subscription.getExpandoBridge();
 	}
 
 	/**
@@ -375,23 +205,83 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	/**
-	* Sets the frequency of this subscription.
+	* Returns the modified date of this subscription.
 	*
-	* @param frequency the frequency of this subscription
+	* @return the modified date of this subscription
 	*/
 	@Override
-	public void setFrequency(java.lang.String frequency) {
-		_subscription.setFrequency(frequency);
+	public java.util.Date getModifiedDate() {
+		return _subscription.getModifiedDate();
+	}
+
+	/**
+	* Returns the mvcc version of this subscription.
+	*
+	* @return the mvcc version of this subscription
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _subscription.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this subscription.
+	*
+	* @return the primary key of this subscription
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _subscription.getPrimaryKey();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _subscription.isNew();
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _subscription.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the subscription ID of this subscription.
+	*
+	* @return the subscription ID of this subscription
+	*/
+	@Override
+	public long getSubscriptionId() {
+		return _subscription.getSubscriptionId();
+	}
+
+	/**
+	* Returns the user ID of this subscription.
+	*
+	* @return the user ID of this subscription
+	*/
+	@Override
+	public long getUserId() {
+		return _subscription.getUserId();
+	}
+
+	/**
+	* Returns the user name of this subscription.
+	*
+	* @return the user name of this subscription
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _subscription.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this subscription.
+	*
+	* @return the user uuid of this subscription
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _subscription.getUserUuid();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_subscription.setNew(n);
+	public int hashCode() {
+		return _subscription.hashCode();
 	}
 
 	@Override
@@ -400,28 +290,68 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_subscription.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _subscription.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _subscription.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _subscription.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_subscription.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_subscription.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _subscription.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_subscription.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_subscription.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this subscription.
+	*
+	* @param classNameId the class name ID of this subscription
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_subscription.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this subscription.
+	*
+	* @param classPK the class p k of this subscription
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_subscription.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this subscription.
+	*
+	* @param companyId the company ID of this subscription
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_subscription.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this subscription.
+	*
+	* @param createDate the create date of this subscription
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_subscription.setCreateDate(createDate);
 	}
 
 	@Override
@@ -442,19 +372,94 @@ public class SubscriptionWrapper implements Subscription,
 		_subscription.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the frequency of this subscription.
+	*
+	* @param frequency the frequency of this subscription
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new SubscriptionWrapper((Subscription)_subscription.clone());
+	public void setFrequency(java.lang.String frequency) {
+		_subscription.setFrequency(frequency);
+	}
+
+	/**
+	* Sets the modified date of this subscription.
+	*
+	* @param modifiedDate the modified date of this subscription
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_subscription.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the mvcc version of this subscription.
+	*
+	* @param mvccVersion the mvcc version of this subscription
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_subscription.setMvccVersion(mvccVersion);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.Subscription subscription) {
-		return _subscription.compareTo(subscription);
+	public void setNew(boolean n) {
+		_subscription.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this subscription.
+	*
+	* @param primaryKey the primary key of this subscription
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_subscription.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _subscription.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_subscription.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the subscription ID of this subscription.
+	*
+	* @param subscriptionId the subscription ID of this subscription
+	*/
+	@Override
+	public void setSubscriptionId(long subscriptionId) {
+		_subscription.setSubscriptionId(subscriptionId);
+	}
+
+	/**
+	* Sets the user ID of this subscription.
+	*
+	* @param userId the user ID of this subscription
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_subscription.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this subscription.
+	*
+	* @param userName the user name of this subscription
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_subscription.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this subscription.
+	*
+	* @param userUuid the user uuid of this subscription
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_subscription.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -468,23 +473,18 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	@Override
-	public com.liferay.portal.model.Subscription toUnescapedModel() {
-		return new SubscriptionWrapper(_subscription.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _subscription.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _subscription.toXmlString();
+	public com.liferay.portal.model.Subscription toUnescapedModel() {
+		return new SubscriptionWrapper(_subscription.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_subscription.persist();
+	public java.lang.String toXmlString() {
+		return _subscription.toXmlString();
 	}
 
 	@Override

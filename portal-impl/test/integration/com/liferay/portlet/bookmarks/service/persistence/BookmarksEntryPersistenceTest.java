@@ -487,7 +487,7 @@ public class BookmarksEntryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<BookmarksEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BookmarksEntry", "uuid",
 			true, "entryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

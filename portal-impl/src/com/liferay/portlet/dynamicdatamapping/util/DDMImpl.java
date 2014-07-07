@@ -317,7 +317,7 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
-	public OrderByComparator getStructureOrderByComparator(
+	public OrderByComparator<DDMStructure> getStructureOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -326,7 +326,7 @@ public class DDMImpl implements DDM {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<DDMStructure> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
 			orderByComparator = new StructureIdComparator(orderByAsc);
@@ -339,7 +339,7 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
-	public OrderByComparator getTemplateOrderByComparator(
+	public OrderByComparator<DDMTemplate> getTemplateOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -348,7 +348,7 @@ public class DDMImpl implements DDM {
 			orderByAsc = true;
 		}
 
-		OrderByComparator orderByComparator = null;
+		OrderByComparator<DDMTemplate> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
 			orderByComparator = new TemplateIdComparator(orderByAsc);

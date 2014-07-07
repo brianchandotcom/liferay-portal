@@ -149,7 +149,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public List<MDRAction> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,7 +269,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mdrAction != null) {
@@ -297,7 +298,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		List<MDRAction> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -317,7 +318,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mdrAction != null) {
@@ -345,7 +347,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -373,7 +375,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction[] findByUuid_PrevAndNext(long actionId, String uuid,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = findByPrimaryKey(actionId);
 
 		Session session = null;
@@ -402,8 +405,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	protected MDRAction getByUuid_PrevAndNext(Session session,
-		MDRAction mdrAction, String uuid, OrderByComparator orderByComparator,
-		boolean previous) {
+		MDRAction mdrAction, String uuid,
+		OrderByComparator<MDRAction> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -927,7 +930,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public List<MDRAction> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<MDRAction> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1057,7 +1060,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1090,7 +1094,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		List<MDRAction> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1112,7 +1116,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1145,7 +1150,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1174,7 +1179,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction[] findByUuid_C_PrevAndNext(long actionId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId, OrderByComparator<MDRAction> orderByComparator)
 		throws NoSuchActionException {
 		MDRAction mdrAction = findByPrimaryKey(actionId);
 
@@ -1205,7 +1210,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 	protected MDRAction getByUuid_C_PrevAndNext(Session session,
 		MDRAction mdrAction, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MDRAction> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1482,7 +1487,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public List<MDRAction> findByRuleGroupInstanceId(long ruleGroupInstanceId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<MDRAction> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1592,7 +1597,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByRuleGroupInstanceId_First(long ruleGroupInstanceId,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByRuleGroupInstanceId_First(ruleGroupInstanceId,
 				orderByComparator);
 
@@ -1621,7 +1627,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByRuleGroupInstanceId_First(
-		long ruleGroupInstanceId, OrderByComparator orderByComparator) {
+		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator) {
 		List<MDRAction> list = findByRuleGroupInstanceId(ruleGroupInstanceId,
 				0, 1, orderByComparator);
 
@@ -1642,7 +1648,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction findByRuleGroupInstanceId_Last(long ruleGroupInstanceId,
-		OrderByComparator orderByComparator) throws NoSuchActionException {
+		OrderByComparator<MDRAction> orderByComparator)
+		throws NoSuchActionException {
 		MDRAction mdrAction = fetchByRuleGroupInstanceId_Last(ruleGroupInstanceId,
 				orderByComparator);
 
@@ -1671,7 +1678,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByRuleGroupInstanceId_Last(long ruleGroupInstanceId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		int count = countByRuleGroupInstanceId(ruleGroupInstanceId);
 
 		if (count == 0) {
@@ -1699,7 +1706,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction[] findByRuleGroupInstanceId_PrevAndNext(long actionId,
-		long ruleGroupInstanceId, OrderByComparator orderByComparator)
+		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator)
 		throws NoSuchActionException {
 		MDRAction mdrAction = findByPrimaryKey(actionId);
 
@@ -1730,7 +1737,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 	protected MDRAction getByRuleGroupInstanceId_PrevAndNext(Session session,
 		MDRAction mdrAction, long ruleGroupInstanceId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<MDRAction> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2511,7 +2518,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public List<MDRAction> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<MDRAction> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

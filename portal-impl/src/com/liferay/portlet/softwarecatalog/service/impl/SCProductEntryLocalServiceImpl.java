@@ -282,7 +282,8 @@ public class SCProductEntryLocalServiceImpl
 
 	@Override
 	public List<SCProductEntry> getProductEntries(
-		long groupId, int start, int end, OrderByComparator obc) {
+		long groupId, int start, int end,
+		OrderByComparator<SCProductEntry> obc) {
 
 		return scProductEntryPersistence.findByGroupId(
 			groupId, start, end, obc);
@@ -297,7 +298,8 @@ public class SCProductEntryLocalServiceImpl
 
 	@Override
 	public List<SCProductEntry> getProductEntries(
-		long groupId, long userId, int start, int end, OrderByComparator obc) {
+		long groupId, long userId, int start, int end,
+		OrderByComparator<SCProductEntry> obc) {
 
 		return scProductEntryPersistence.findByG_U(
 			groupId, userId, start, end, obc);

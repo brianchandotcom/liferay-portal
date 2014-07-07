@@ -14,54 +14,71 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.cache.SingleVMPoolImpl;
+import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortletKeys;
+
+import java.io.Serializable;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Carlos Sierra Andrés
+ * @author Raymond Augé
  */
 public class ModulePathContainerTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		MemoryPortalCacheManager<Serializable, Serializable>
+			memoryPortalCacheManager =
+				new MemoryPortalCacheManager<Serializable, Serializable>();
+
+		memoryPortalCacheManager.afterPropertiesSet();
+
+		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
+
+		singleVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+
+		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
+
+		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+	}
+
 	@Test
-	public void testModulePathWithNoContext() {
+	public void testModulePathWithNoContextPath() {
 		String modulePath = "/js/javascript.js";
 
 		Assert.assertEquals(
-			StringPool.BLANK, ComboServlet.getModuleContextPath(modulePath));
+			PortletKeys.PORTAL, ComboServlet.getModulePortletId(modulePath));
 		Assert.assertEquals(
 			"/js/javascript.js", ComboServlet.getResourcePath(modulePath));
 	}
 
 	@Test
-	public void testModulePathWithPluginContext() {
-		String modulePath = "plugin-context:/js/javascript.js";
+	public void testModulePathWithPortletId() {
+		String modulePath = PortletKeys.ACTIVITIES + ":/js/javascript.js";
 
 		Assert.assertEquals(
-			"plugin-context", ComboServlet.getModuleContextPath(modulePath));
+			PortletKeys.ACTIVITIES,
+			ComboServlet.getModulePortletId(modulePath));
 		Assert.assertEquals(
 			"/js/javascript.js", ComboServlet.getResourcePath(modulePath));
 	}
 
 	@Test
-	public void testModulePathWithPluginContextAndNoResource() {
-		String modulePath = "/plugin-context:";
+	public void testModulePathWithPortletIdAndNoResourcePath() {
+		String modulePath = PortletKeys.ACTIVITIES + ":";
 
 		Assert.assertEquals(
-			"/plugin-context", ComboServlet.getModuleContextPath(modulePath));
+			PortletKeys.ACTIVITIES,
+			ComboServlet.getModulePortletId(modulePath));
 		Assert.assertEquals(
 			StringPool.BLANK, ComboServlet.getResourcePath(modulePath));
-	}
-
-	@Test
-	public void testModulePathWithPluginContextWithInitialSlash() {
-		String modulePath = "/plugin-context:/js/javascript.js";
-
-		Assert.assertEquals(
-			"/plugin-context", ComboServlet.getModuleContextPath(modulePath));
-		Assert.assertEquals(
-			"/js/javascript.js", ComboServlet.getResourcePath(modulePath));
 	}
 
 }

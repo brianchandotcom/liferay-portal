@@ -88,64 +88,30 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		}
 	}
 
-	/**
-	* Returns the primary key of this journal article resource.
-	*
-	* @return the primary key of this journal article resource
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _journalArticleResource.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+		return _journalArticleResource.compareTo(journalArticleResource);
 	}
 
 	/**
-	* Sets the primary key of this journal article resource.
+	* Returns the article ID of this journal article resource.
 	*
-	* @param primaryKey the primary key of this journal article resource
+	* @return the article ID of this journal article resource
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_journalArticleResource.setPrimaryKey(primaryKey);
+	public java.lang.String getArticleId() {
+		return _journalArticleResource.getArticleId();
 	}
 
-	/**
-	* Returns the uuid of this journal article resource.
-	*
-	* @return the uuid of this journal article resource
-	*/
 	@Override
-	public java.lang.String getUuid() {
-		return _journalArticleResource.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this journal article resource.
-	*
-	* @param uuid the uuid of this journal article resource
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_journalArticleResource.setUuid(uuid);
-	}
-
-	/**
-	* Returns the resource prim key of this journal article resource.
-	*
-	* @return the resource prim key of this journal article resource
-	*/
-	@Override
-	public long getResourcePrimKey() {
-		return _journalArticleResource.getResourcePrimKey();
-	}
-
-	/**
-	* Sets the resource prim key of this journal article resource.
-	*
-	* @param resourcePrimKey the resource prim key of this journal article resource
-	*/
-	@Override
-	public void setResourcePrimKey(long resourcePrimKey) {
-		_journalArticleResource.setResourcePrimKey(resourcePrimKey);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _journalArticleResource.getExpandoBridge();
 	}
 
 	/**
@@ -159,23 +125,63 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	/**
-	* Sets the group ID of this journal article resource.
+	* Returns the primary key of this journal article resource.
 	*
-	* @param groupId the group ID of this journal article resource
+	* @return the primary key of this journal article resource
 	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_journalArticleResource.setGroupId(groupId);
+	public long getPrimaryKey() {
+		return _journalArticleResource.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _journalArticleResource.getPrimaryKeyObj();
 	}
 
 	/**
-	* Returns the article ID of this journal article resource.
+	* Returns the resource prim key of this journal article resource.
 	*
-	* @return the article ID of this journal article resource
+	* @return the resource prim key of this journal article resource
 	*/
 	@Override
-	public java.lang.String getArticleId() {
-		return _journalArticleResource.getArticleId();
+	public long getResourcePrimKey() {
+		return _journalArticleResource.getResourcePrimKey();
+	}
+
+	/**
+	* Returns the uuid of this journal article resource.
+	*
+	* @return the uuid of this journal article resource
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _journalArticleResource.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalArticleResource.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _journalArticleResource.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _journalArticleResource.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _journalArticleResource.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_journalArticleResource.persist();
 	}
 
 	/**
@@ -189,43 +195,8 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public boolean isNew() {
-		return _journalArticleResource.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_journalArticleResource.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalArticleResource.isCachedModel();
-	}
-
-	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_journalArticleResource.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalArticleResource.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _journalArticleResource.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_journalArticleResource.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _journalArticleResource.getExpandoBridge();
 	}
 
 	@Override
@@ -246,20 +217,54 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		_journalArticleResource.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this journal article resource.
+	*
+	* @param groupId the group ID of this journal article resource
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
+	public void setGroupId(long groupId) {
+		_journalArticleResource.setGroupId(groupId);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
-		return _journalArticleResource.compareTo(journalArticleResource);
+	public void setNew(boolean n) {
+		_journalArticleResource.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this journal article resource.
+	*
+	* @param primaryKey the primary key of this journal article resource
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_journalArticleResource.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _journalArticleResource.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_journalArticleResource.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the resource prim key of this journal article resource.
+	*
+	* @param resourcePrimKey the resource prim key of this journal article resource
+	*/
+	@Override
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_journalArticleResource.setResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	* Sets the uuid of this journal article resource.
+	*
+	* @param uuid the uuid of this journal article resource
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_journalArticleResource.setUuid(uuid);
 	}
 
 	@Override
@@ -273,23 +278,18 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public com.liferay.portlet.journal.model.JournalArticleResource toUnescapedModel() {
-		return new JournalArticleResourceWrapper(_journalArticleResource.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _journalArticleResource.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _journalArticleResource.toXmlString();
+	public com.liferay.portlet.journal.model.JournalArticleResource toUnescapedModel() {
+		return new JournalArticleResourceWrapper(_journalArticleResource.toUnescapedModel());
 	}
 
 	@Override
-	public void persist() {
-		_journalArticleResource.persist();
+	public java.lang.String toXmlString() {
+		return _journalArticleResource.toXmlString();
 	}
 
 	@Override

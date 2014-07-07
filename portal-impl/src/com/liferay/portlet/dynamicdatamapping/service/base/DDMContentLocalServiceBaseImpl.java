@@ -140,8 +140,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -158,8 +157,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -178,9 +177,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}

@@ -21,7 +21,7 @@ import com.liferay.portal.service.PluginSettingLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link PluginSettingLocalServiceUtil#getExportActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link PluginSettingLocalServiceUtil#getActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

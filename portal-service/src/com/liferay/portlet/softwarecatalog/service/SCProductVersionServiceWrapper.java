@@ -33,26 +33,6 @@ public class SCProductVersionServiceWrapper implements SCProductVersionService,
 		_scProductVersionService = scProductVersionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductVersionService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductVersionService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion addProductVersion(
 		long productEntryId, java.lang.String version,
@@ -71,6 +51,16 @@ public class SCProductVersionServiceWrapper implements SCProductVersionService,
 	public void deleteProductVersion(long productVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scProductVersionService.deleteProductVersion(productVersionId);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _scProductVersionService.getBeanIdentifier();
 	}
 
 	@Override
@@ -92,6 +82,16 @@ public class SCProductVersionServiceWrapper implements SCProductVersionService,
 	public int getProductVersionsCount(long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scProductVersionService.getProductVersionsCount(productEntryId);
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_scProductVersionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

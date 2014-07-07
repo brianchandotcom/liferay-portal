@@ -154,7 +154,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public List<UserNotificationEvent> findByUuid(String uuid, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,7 +274,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUuid_First(uuid,
 				orderByComparator);
@@ -304,7 +304,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByUuid(uuid, 0, 1,
 				orderByComparator);
 
@@ -325,7 +325,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUuid_Last(uuid,
 				orderByComparator);
@@ -355,7 +355,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,7 +384,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByUuid_PrevAndNext(
 		long userNotificationEventId, String uuid,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -415,7 +415,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByUuid_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -686,7 +687,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public List<UserNotificationEvent> findByUuid_C(String uuid,
-		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		long companyId, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -816,7 +818,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUuid_C_First(String uuid,
-		long companyId, OrderByComparator orderByComparator)
+		long companyId,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUuid_C_First(uuid,
 				companyId, orderByComparator);
@@ -850,7 +853,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUuid_C_First(String uuid,
-		long companyId, OrderByComparator orderByComparator) {
+		long companyId,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -872,7 +876,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUuid_C_Last(uuid,
 				companyId, orderByComparator);
@@ -906,7 +910,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUuid_C_Last(String uuid,
-		long companyId, OrderByComparator orderByComparator) {
+		long companyId,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -936,7 +941,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByUuid_C_PrevAndNext(
 		long userNotificationEventId, String uuid, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -967,7 +972,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByUuid_C_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, String uuid,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1244,7 +1251,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public List<UserNotificationEvent> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1350,7 +1357,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUserId_First(userId,
 				orderByComparator);
@@ -1380,7 +1387,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -1401,7 +1408,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByUserId_Last(userId,
 				orderByComparator);
@@ -1431,7 +1438,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1460,7 +1467,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByUserId_PrevAndNext(
 		long userNotificationEventId, long userId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -1491,7 +1498,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByUserId_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1732,7 +1740,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_DT(long userId,
 		int deliveryType, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1848,7 +1856,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_First(long userId,
-		int deliveryType, OrderByComparator orderByComparator)
+		int deliveryType,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_First(userId,
 				deliveryType, orderByComparator);
@@ -1882,7 +1891,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_First(long userId,
-		int deliveryType, OrderByComparator orderByComparator) {
+		int deliveryType,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_DT(userId, deliveryType, 0,
 				1, orderByComparator);
 
@@ -1904,7 +1914,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_Last(long userId, int deliveryType,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_Last(userId,
 				deliveryType, orderByComparator);
@@ -1938,7 +1948,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_Last(long userId,
-		int deliveryType, OrderByComparator orderByComparator) {
+		int deliveryType,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_DT(userId, deliveryType);
 
 		if (count == 0) {
@@ -1968,7 +1979,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_DT_PrevAndNext(
 		long userNotificationEventId, long userId, int deliveryType,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -1999,7 +2010,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByU_DT_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
-		int deliveryType, OrderByComparator orderByComparator, boolean previous) {
+		int deliveryType,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2251,7 +2264,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_D(long userId,
 		boolean delivered, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2367,7 +2380,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_D_First(long userId,
-		boolean delivered, OrderByComparator orderByComparator)
+		boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_D_First(userId,
 				delivered, orderByComparator);
@@ -2401,7 +2415,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_D_First(long userId,
-		boolean delivered, OrderByComparator orderByComparator) {
+		boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_D(userId, delivered, 0, 1,
 				orderByComparator);
 
@@ -2423,7 +2438,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_D_Last(long userId, boolean delivered,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_D_Last(userId,
 				delivered, orderByComparator);
@@ -2457,7 +2472,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_D_Last(long userId,
-		boolean delivered, OrderByComparator orderByComparator) {
+		boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_D(userId, delivered);
 
 		if (count == 0) {
@@ -2487,7 +2503,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_D_PrevAndNext(
 		long userNotificationEventId, long userId, boolean delivered,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -2518,7 +2534,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByU_D_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
-		boolean delivered, OrderByComparator orderByComparator, boolean previous) {
+		boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2769,7 +2787,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public List<UserNotificationEvent> findByU_A(long userId, boolean archived,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2885,7 +2904,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_A_First(long userId, boolean archived,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_A_First(userId,
 				archived, orderByComparator);
@@ -2919,7 +2938,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_A_First(long userId,
-		boolean archived, OrderByComparator orderByComparator) {
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_A(userId, archived, 0, 1,
 				orderByComparator);
 
@@ -2941,7 +2961,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_A_Last(long userId, boolean archived,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_A_Last(userId,
 				archived, orderByComparator);
@@ -2975,7 +2995,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_A_Last(long userId, boolean archived,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_A(userId, archived);
 
 		if (count == 0) {
@@ -3005,7 +3025,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_A_PrevAndNext(
 		long userNotificationEventId, long userId, boolean archived,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -3036,7 +3056,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	protected UserNotificationEvent getByU_A_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
-		boolean archived, OrderByComparator orderByComparator, boolean previous) {
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3301,7 +3323,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_DT_D(long userId,
 		int deliveryType, boolean delivered, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3423,7 +3445,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_D_First(long userId,
-		int deliveryType, boolean delivered, OrderByComparator orderByComparator)
+		int deliveryType, boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_First(userId,
 				deliveryType, delivered, orderByComparator);
@@ -3461,7 +3484,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_D_First(long userId,
-		int deliveryType, boolean delivered, OrderByComparator orderByComparator) {
+		int deliveryType, boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_DT_D(userId, deliveryType,
 				delivered, 0, 1, orderByComparator);
 
@@ -3484,7 +3508,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_D_Last(long userId,
-		int deliveryType, boolean delivered, OrderByComparator orderByComparator)
+		int deliveryType, boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_D_Last(userId,
 				deliveryType, delivered, orderByComparator);
@@ -3522,7 +3547,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_D_Last(long userId,
-		int deliveryType, boolean delivered, OrderByComparator orderByComparator) {
+		int deliveryType, boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_DT_D(userId, deliveryType, delivered);
 
 		if (count == 0) {
@@ -3553,7 +3579,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_DT_D_PrevAndNext(
 		long userNotificationEventId, long userId, int deliveryType,
-		boolean delivered, OrderByComparator orderByComparator)
+		boolean delivered,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -3585,7 +3612,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	protected UserNotificationEvent getByU_DT_D_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
 		int deliveryType, boolean delivered,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3862,7 +3890,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_DT_A(long userId,
 		int deliveryType, boolean archived, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3984,7 +4012,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_A_First(long userId,
-		int deliveryType, boolean archived, OrderByComparator orderByComparator)
+		int deliveryType, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_A_First(userId,
 				deliveryType, archived, orderByComparator);
@@ -4022,7 +4051,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_A_First(long userId,
-		int deliveryType, boolean archived, OrderByComparator orderByComparator) {
+		int deliveryType, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_DT_A(userId, deliveryType,
 				archived, 0, 1, orderByComparator);
 
@@ -4045,7 +4075,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent findByU_DT_A_Last(long userId,
-		int deliveryType, boolean archived, OrderByComparator orderByComparator)
+		int deliveryType, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_DT_A_Last(userId,
 				deliveryType, archived, orderByComparator);
@@ -4083,7 +4114,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByU_DT_A_Last(long userId,
-		int deliveryType, boolean archived, OrderByComparator orderByComparator) {
+		int deliveryType, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_DT_A(userId, deliveryType, archived);
 
 		if (count == 0) {
@@ -4114,7 +4146,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_DT_A_PrevAndNext(
 		long userNotificationEventId, long userId, int deliveryType,
-		boolean archived, OrderByComparator orderByComparator)
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -4146,7 +4179,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	protected UserNotificationEvent getByU_DT_A_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
 		int deliveryType, boolean archived,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4422,7 +4456,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_D_A(long userId,
 		boolean delivered, boolean actionRequired, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4545,7 +4579,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent findByU_D_A_First(long userId,
 		boolean delivered, boolean actionRequired,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_D_A_First(userId,
 				delivered, actionRequired, orderByComparator);
@@ -4584,7 +4618,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent fetchByU_D_A_First(long userId,
 		boolean delivered, boolean actionRequired,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_D_A(userId, delivered,
 				actionRequired, 0, 1, orderByComparator);
 
@@ -4608,7 +4642,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent findByU_D_A_Last(long userId,
 		boolean delivered, boolean actionRequired,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_D_A_Last(userId,
 				delivered, actionRequired, orderByComparator);
@@ -4647,7 +4681,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent fetchByU_D_A_Last(long userId,
 		boolean delivered, boolean actionRequired,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_D_A(userId, delivered, actionRequired);
 
 		if (count == 0) {
@@ -4678,7 +4712,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_D_A_PrevAndNext(
 		long userNotificationEventId, long userId, boolean delivered,
-		boolean actionRequired, OrderByComparator orderByComparator)
+		boolean actionRequired,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -4710,7 +4745,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	protected UserNotificationEvent getByU_D_A_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
 		boolean delivered, boolean actionRequired,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4988,7 +5024,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public List<UserNotificationEvent> findByU_A_A(long userId,
 		boolean actionRequired, boolean archived, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5111,7 +5147,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent findByU_A_A_First(long userId,
 		boolean actionRequired, boolean archived,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_A_A_First(userId,
 				actionRequired, archived, orderByComparator);
@@ -5150,7 +5186,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent fetchByU_A_A_First(long userId,
 		boolean actionRequired, boolean archived,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		List<UserNotificationEvent> list = findByU_A_A(userId, actionRequired,
 				archived, 0, 1, orderByComparator);
 
@@ -5174,7 +5210,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent findByU_A_A_Last(long userId,
 		boolean actionRequired, boolean archived,
-		OrderByComparator orderByComparator)
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = fetchByU_A_A_Last(userId,
 				actionRequired, archived, orderByComparator);
@@ -5213,7 +5249,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent fetchByU_A_A_Last(long userId,
 		boolean actionRequired, boolean archived,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		int count = countByU_A_A(userId, actionRequired, archived);
 
 		if (count == 0) {
@@ -5244,7 +5280,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent[] findByU_A_A_PrevAndNext(
 		long userNotificationEventId, long userId, boolean actionRequired,
-		boolean archived, OrderByComparator orderByComparator)
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws NoSuchUserNotificationEventException {
 		UserNotificationEvent userNotificationEvent = findByPrimaryKey(userNotificationEventId);
 
@@ -5276,7 +5313,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	protected UserNotificationEvent getByU_A_A_PrevAndNext(Session session,
 		UserNotificationEvent userNotificationEvent, long userId,
 		boolean actionRequired, boolean archived,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -6184,7 +6222,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public List<UserNotificationEvent> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

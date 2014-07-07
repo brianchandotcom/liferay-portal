@@ -16,8 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,7 +74,7 @@ public class DDMForm implements Serializable {
 	}
 
 	private List<Locale> _availableLocales;
-	private List<DDMFormField> _ddmFormFields = new LinkedList<DDMFormField>();
+	private List<DDMFormField> _ddmFormFields = new ArrayList<DDMFormField>();
 	private Locale _defaultLocale;
 
 }

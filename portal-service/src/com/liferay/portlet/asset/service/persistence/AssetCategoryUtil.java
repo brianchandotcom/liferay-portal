@@ -88,7 +88,7 @@ public class AssetCategoryUtil {
 	 */
 	public static List<AssetCategory> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -166,7 +166,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByUuid_PrevAndNext(
 		long categoryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(categoryId, uuid, orderByComparator);
@@ -357,7 +357,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByUuid_C_PrevAndNext(
 		long categoryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(categoryId, uuid, companyId,
@@ -509,7 +509,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -538,7 +538,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -552,7 +552,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -566,7 +566,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -581,7 +581,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(categoryId, groupId,
@@ -631,7 +631,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -647,7 +647,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] filterFindByGroupId_PrevAndNext(
 		long categoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(categoryId, groupId,
@@ -727,7 +727,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByParentCategoryId(
 		long parentCategoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByParentCategoryId(parentCategoryId, start, end,
 			orderByComparator);
@@ -743,7 +743,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByParentCategoryId_First(
 		long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByParentCategoryId_First(parentCategoryId,
@@ -759,7 +759,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByParentCategoryId_First(
 		long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByParentCategoryId_First(parentCategoryId,
 			orderByComparator);
@@ -775,7 +775,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByParentCategoryId_Last(
 		long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByParentCategoryId_Last(parentCategoryId,
@@ -791,7 +791,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByParentCategoryId_Last(
 		long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByParentCategoryId_Last(parentCategoryId,
 			orderByComparator);
@@ -808,7 +808,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByParentCategoryId_PrevAndNext(
 		long categoryId, long parentCategoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByParentCategoryId_PrevAndNext(categoryId,
@@ -877,7 +877,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByVocabularyId(
 		long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByVocabularyId(vocabularyId, start, end,
 			orderByComparator);
@@ -893,7 +893,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByVocabularyId_First(
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByVocabularyId_First(vocabularyId, orderByComparator);
@@ -908,7 +908,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByVocabularyId_First(
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByVocabularyId_First(vocabularyId, orderByComparator);
 	}
@@ -923,7 +923,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByVocabularyId_Last(
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByVocabularyId_Last(vocabularyId, orderByComparator);
@@ -938,7 +938,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByVocabularyId_Last(
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByVocabularyId_Last(vocabularyId, orderByComparator);
 	}
@@ -954,7 +954,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByVocabularyId_PrevAndNext(
 		long categoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByVocabularyId_PrevAndNext(categoryId, vocabularyId,
@@ -1026,7 +1026,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_V(
 		long groupId, long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_V(groupId, vocabularyId, start, end,
 			orderByComparator);
@@ -1043,7 +1043,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_V_First(
 		long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_V_First(groupId, vocabularyId, orderByComparator);
@@ -1059,7 +1059,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_V_First(
 		long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_V_First(groupId, vocabularyId, orderByComparator);
 	}
@@ -1075,7 +1075,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_V_Last(
 		long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_V_Last(groupId, vocabularyId, orderByComparator);
@@ -1091,7 +1091,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_V_Last(
 		long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_V_Last(groupId, vocabularyId, orderByComparator);
 	}
@@ -1108,7 +1108,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByG_V_PrevAndNext(
 		long categoryId, long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_V_PrevAndNext(categoryId, groupId, vocabularyId,
@@ -1162,7 +1162,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_V(
 		long groupId, long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_V(groupId, vocabularyId, start, end,
 			orderByComparator);
@@ -1180,7 +1180,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] filterFindByG_V_PrevAndNext(
 		long categoryId, long groupId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_V_PrevAndNext(categoryId, groupId,
@@ -1234,7 +1234,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_V(
 		long groupId, long[] vocabularyIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_V(groupId, vocabularyIds, start, end,
 			orderByComparator);
@@ -1290,7 +1290,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_V(
 		long groupId, long[] vocabularyIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_V(groupId, vocabularyIds, start, end,
 			orderByComparator);
@@ -1396,7 +1396,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByP_N(
 		long parentCategoryId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByP_N(parentCategoryId, name, start, end,
 			orderByComparator);
@@ -1413,7 +1413,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByP_N_First(
 		long parentCategoryId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_N_First(parentCategoryId, name, orderByComparator);
@@ -1429,7 +1429,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_N_First(
 		long parentCategoryId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_First(parentCategoryId, name, orderByComparator);
 	}
@@ -1445,7 +1445,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByP_N_Last(
 		long parentCategoryId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_N_Last(parentCategoryId, name, orderByComparator);
@@ -1461,7 +1461,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_N_Last(
 		long parentCategoryId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_N_Last(parentCategoryId, name, orderByComparator);
 	}
@@ -1478,7 +1478,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByP_N_PrevAndNext(
 		long categoryId, long parentCategoryId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_N_PrevAndNext(categoryId, parentCategoryId, name,
@@ -1553,7 +1553,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByP_V(
 		long parentCategoryId, long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByP_V(parentCategoryId, vocabularyId, start, end,
 			orderByComparator);
@@ -1570,7 +1570,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByP_V_First(
 		long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_V_First(parentCategoryId, vocabularyId,
@@ -1587,7 +1587,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_V_First(
 		long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_V_First(parentCategoryId, vocabularyId,
 			orderByComparator);
@@ -1604,7 +1604,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByP_V_Last(
 		long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_V_Last(parentCategoryId, vocabularyId,
@@ -1621,7 +1621,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_V_Last(
 		long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_V_Last(parentCategoryId, vocabularyId,
 			orderByComparator);
@@ -1639,7 +1639,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByP_V_PrevAndNext(
 		long categoryId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByP_V_PrevAndNext(categoryId, parentCategoryId,
@@ -1713,7 +1713,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByN_V(
 		java.lang.String name, long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByN_V(name, vocabularyId, start, end, orderByComparator);
 	}
@@ -1729,7 +1729,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByN_V_First(
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByN_V_First(name, vocabularyId, orderByComparator);
@@ -1745,7 +1745,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByN_V_First(
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByN_V_First(name, vocabularyId, orderByComparator);
 	}
@@ -1761,7 +1761,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByN_V_Last(
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByN_V_Last(name, vocabularyId, orderByComparator);
@@ -1777,7 +1777,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByN_V_Last(
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByN_V_Last(name, vocabularyId, orderByComparator);
 	}
@@ -1794,7 +1794,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByN_V_PrevAndNext(
 		long categoryId, java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByN_V_PrevAndNext(categoryId, name, vocabularyId,
@@ -1876,7 +1876,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_P_V(
 		long groupId, long parentCategoryId, long vocabularyId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_V(groupId, parentCategoryId, vocabularyId, start,
 			end, orderByComparator);
@@ -1894,7 +1894,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_P_V_First(
 		long groupId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_V_First(groupId, parentCategoryId, vocabularyId,
@@ -1912,7 +1912,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_V_First(
 		long groupId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_V_First(groupId, parentCategoryId, vocabularyId,
 			orderByComparator);
@@ -1930,7 +1930,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_P_V_Last(
 		long groupId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_V_Last(groupId, parentCategoryId, vocabularyId,
@@ -1948,7 +1948,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_V_Last(
 		long groupId, long parentCategoryId, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_V_Last(groupId, parentCategoryId, vocabularyId,
 			orderByComparator);
@@ -1968,7 +1968,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByG_P_V_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_V_PrevAndNext(categoryId, groupId,
@@ -2029,7 +2029,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_P_V(
 		long groupId, long parentCategoryId, long vocabularyId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P_V(groupId, parentCategoryId, vocabularyId,
 			start, end, orderByComparator);
@@ -2049,7 +2049,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] filterFindByG_P_V_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_P_V_PrevAndNext(categoryId, groupId,
@@ -2148,7 +2148,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_LikeN_V(
 		long groupId, java.lang.String name, long vocabularyId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN_V(groupId, name, vocabularyId, start, end,
 			orderByComparator);
@@ -2166,7 +2166,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_LikeN_V_First(
 		long groupId, java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_LikeN_V_First(groupId, name, vocabularyId,
@@ -2184,7 +2184,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_LikeN_V_First(
 		long groupId, java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_V_First(groupId, name, vocabularyId,
 			orderByComparator);
@@ -2202,7 +2202,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_LikeN_V_Last(
 		long groupId, java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_LikeN_V_Last(groupId, name, vocabularyId,
@@ -2220,7 +2220,7 @@ public class AssetCategoryUtil {
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_LikeN_V_Last(
 		long groupId, java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LikeN_V_Last(groupId, name, vocabularyId,
 			orderByComparator);
@@ -2240,7 +2240,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByG_LikeN_V_PrevAndNext(
 		long categoryId, long groupId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_LikeN_V_PrevAndNext(categoryId, groupId, name,
@@ -2301,7 +2301,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_LikeN_V(
 		long groupId, java.lang.String name, long vocabularyId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN_V(groupId, name, vocabularyId, start,
 			end, orderByComparator);
@@ -2321,7 +2321,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] filterFindByG_LikeN_V_PrevAndNext(
 		long categoryId, long groupId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_LikeN_V_PrevAndNext(categoryId, groupId,
@@ -2382,7 +2382,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_LikeN_V(
 		long groupId, java.lang.String name, long[] vocabularyIds, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LikeN_V(groupId, name, vocabularyIds, start,
 			end, orderByComparator);
@@ -2444,7 +2444,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_LikeN_V(
 		long groupId, java.lang.String name, long[] vocabularyIds, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_LikeN_V(groupId, name, vocabularyIds, start, end,
 			orderByComparator);
@@ -2649,7 +2649,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_P_N_V(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .findByG_P_N_V(groupId, parentCategoryId, name,
 			vocabularyId, start, end, orderByComparator);
@@ -2669,7 +2669,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_P_N_V_First(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_N_V_First(groupId, parentCategoryId, name,
@@ -2689,7 +2689,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_N_V_First(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_N_V_First(groupId, parentCategoryId, name,
 			vocabularyId, orderByComparator);
@@ -2709,7 +2709,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory findByG_P_N_V_Last(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_N_V_Last(groupId, parentCategoryId, name,
@@ -2729,7 +2729,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_N_V_Last(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_N_V_Last(groupId, parentCategoryId, name,
 			vocabularyId, orderByComparator);
@@ -2750,7 +2750,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] findByG_P_N_V_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_N_V_PrevAndNext(categoryId, groupId,
@@ -2816,7 +2816,7 @@ public class AssetCategoryUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_P_N_V(
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P_N_V(groupId, parentCategoryId, name,
 			vocabularyId, start, end, orderByComparator);
@@ -2837,7 +2837,7 @@ public class AssetCategoryUtil {
 	public static com.liferay.portlet.asset.model.AssetCategory[] filterFindByG_P_N_V_PrevAndNext(
 		long categoryId, long groupId, long parentCategoryId,
 		java.lang.String name, long vocabularyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_P_N_V_PrevAndNext(categoryId, groupId,
@@ -3006,7 +3006,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -3079,7 +3079,7 @@ public class AssetCategoryUtil {
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetEntry> orderByComparator) {
 		return getPersistence()
 				   .getAssetEntries(pk, start, end, orderByComparator);
 	}

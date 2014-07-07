@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANNOUNCEMENTS_OPTIONS</td>
+	<td>//header[contains(.,'Announcements')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANNOUNCEMENTS_ADD_ENTRY_BUTTON</td>
 	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
@@ -168,37 +173,47 @@
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_ACTION</td>
-	<td>//div[@class='entry-action']</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-action']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_AUTHOR</td>
-	<td>//div[@class='entry-action']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-action']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_TITLE</td>
-	<td>//div[@class='entry-body']/div[@class='title']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_TITLE_LINK</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div[@class='title']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_CONTENT</td>
-	<td>//div[@class='entry-content']</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//div[@class='entry-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_EDIT_LINK</td>
-	<td>//span[@class='action edit-entry']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action edit-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_DELETE_LINK</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action delete-entry']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK</td>
 	<td>//span[@class='action delete-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_MARK_LINK</td>
-	<td>//span[@class='action control-entry']/a</td>
+	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span[@class='action control-entry']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,6 +235,26 @@
 	<td>ANNOUNCEMENTS_NO_ANNOUNCEMENTS</td>
 	<td>//div[@class='no-announcements']</td>
 	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_RESULTS</td>
+	<td>//div[@class='navigation']/span[contains(.,'results')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_NEXT</td>
+	<td>//div[@class='navigation']//a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_NAVIGATION_PREVIOUS</td>
+	<td>//div[@class='navigation']//a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_IMAGE_LIFERAY</td>
+	<td>//img[@alt='Liferay']</td>
+	<td>Liferay</td>
 </tr>
 <tr>
 	<td></td>
@@ -306,6 +341,27 @@
 <tr>
 	<td>EVENTS_DISPLAY_NO_EVENTS_MESSAGE</td>
 	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NAVIGATION_NEXT</td>
+	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NAVIGATION_PREVIOUS</td>
+	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_IMPORTANT_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_important.png</td>
 	<td></td>
 </tr>
 </tbody>

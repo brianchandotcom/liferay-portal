@@ -155,7 +155,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,7 +262,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -291,7 +292,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		List<WorkflowDefinitionLink> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -312,7 +313,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -342,7 +343,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -371,7 +372,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink[] findByCompanyId_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = findByPrimaryKey(workflowDefinitionLinkId);
 
@@ -402,7 +403,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 	protected WorkflowDefinitionLink getByCompanyId_PrevAndNext(
 		Session session, WorkflowDefinitionLink workflowDefinitionLink,
-		long companyId, OrderByComparator orderByComparator, boolean previous) {
+		long companyId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -652,7 +655,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public List<WorkflowDefinitionLink> findByG_C_C(long groupId,
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -774,7 +777,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink findByG_C_C_First(long groupId,
-		long companyId, long classNameId, OrderByComparator orderByComparator)
+		long companyId, long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_First(groupId,
 				companyId, classNameId, orderByComparator);
@@ -812,7 +816,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByG_C_C_First(long groupId,
-		long companyId, long classNameId, OrderByComparator orderByComparator) {
+		long companyId, long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		List<WorkflowDefinitionLink> list = findByG_C_C(groupId, companyId,
 				classNameId, 0, 1, orderByComparator);
 
@@ -835,7 +840,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink findByG_C_C_Last(long groupId,
-		long companyId, long classNameId, OrderByComparator orderByComparator)
+		long companyId, long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByG_C_C_Last(groupId,
 				companyId, classNameId, orderByComparator);
@@ -873,7 +879,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByG_C_C_Last(long groupId,
-		long companyId, long classNameId, OrderByComparator orderByComparator) {
+		long companyId, long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		int count = countByG_C_C(groupId, companyId, classNameId);
 
 		if (count == 0) {
@@ -904,7 +911,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink[] findByG_C_C_PrevAndNext(
 		long workflowDefinitionLinkId, long groupId, long companyId,
-		long classNameId, OrderByComparator orderByComparator)
+		long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = findByPrimaryKey(workflowDefinitionLinkId);
 
@@ -935,7 +943,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 	protected WorkflowDefinitionLink getByG_C_C_PrevAndNext(Session session,
 		WorkflowDefinitionLink workflowDefinitionLink, long groupId,
-		long companyId, long classNameId, OrderByComparator orderByComparator,
+		long companyId, long classNameId,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1214,7 +1223,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public List<WorkflowDefinitionLink> findByC_W_W(long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1354,7 +1364,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink findByC_W_W_First(long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByC_W_W_First(companyId,
 				workflowDefinitionName, workflowDefinitionVersion,
@@ -1394,7 +1404,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink fetchByC_W_W_First(long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		List<WorkflowDefinitionLink> list = findByC_W_W(companyId,
 				workflowDefinitionName, workflowDefinitionVersion, 0, 1,
 				orderByComparator);
@@ -1419,7 +1429,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink findByC_W_W_Last(long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = fetchByC_W_W_Last(companyId,
 				workflowDefinitionName, workflowDefinitionVersion,
@@ -1459,7 +1469,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink fetchByC_W_W_Last(long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		int count = countByC_W_W(companyId, workflowDefinitionName,
 				workflowDefinitionVersion);
 
@@ -1493,7 +1503,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	public WorkflowDefinitionLink[] findByC_W_W_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator)
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
 		WorkflowDefinitionLink workflowDefinitionLink = findByPrimaryKey(workflowDefinitionLinkId);
 
@@ -1527,7 +1537,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	protected WorkflowDefinitionLink getByC_W_W_PrevAndNext(Session session,
 		WorkflowDefinitionLink workflowDefinitionLink, long companyId,
 		String workflowDefinitionName, int workflowDefinitionVersion,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2713,7 +2724,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public List<WorkflowDefinitionLink> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

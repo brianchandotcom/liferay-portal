@@ -40,6 +40,10 @@ public class RatingsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void deleteEntry(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(className, classPK);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -57,11 +61,6 @@ public class RatingsEntryServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(className, classPK);
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsEntry updateEntry(

@@ -1,7 +1,0 @@
-<definition>
-	<command name="assertClick">
-		<case locator-key1="NAVIGATION_DEFAULT_CONFIGURATION">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-</definition>

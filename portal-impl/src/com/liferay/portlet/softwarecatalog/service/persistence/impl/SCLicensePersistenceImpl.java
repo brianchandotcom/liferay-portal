@@ -155,7 +155,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<SCLicense> findByActive(boolean active, int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,7 +261,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense findByActive_First(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchLicenseException {
+		OrderByComparator<SCLicense> orderByComparator)
+		throws NoSuchLicenseException {
 		SCLicense scLicense = fetchByActive_First(active, orderByComparator);
 
 		if (scLicense != null) {
@@ -289,7 +290,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense fetchByActive_First(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		List<SCLicense> list = findByActive(active, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -309,7 +310,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense findByActive_Last(boolean active,
-		OrderByComparator orderByComparator) throws NoSuchLicenseException {
+		OrderByComparator<SCLicense> orderByComparator)
+		throws NoSuchLicenseException {
 		SCLicense scLicense = fetchByActive_Last(active, orderByComparator);
 
 		if (scLicense != null) {
@@ -337,7 +339,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense fetchByActive_Last(boolean active,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		int count = countByActive(active);
 
 		if (count == 0) {
@@ -365,7 +367,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense[] findByActive_PrevAndNext(long licenseId, boolean active,
-		OrderByComparator orderByComparator) throws NoSuchLicenseException {
+		OrderByComparator<SCLicense> orderByComparator)
+		throws NoSuchLicenseException {
 		SCLicense scLicense = findByPrimaryKey(licenseId);
 
 		Session session = null;
@@ -395,7 +398,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	protected SCLicense getByActive_PrevAndNext(Session session,
 		SCLicense scLicense, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCLicense> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -542,7 +545,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<SCLicense> filterFindByActive(boolean active, int start,
-		int end, OrderByComparator orderByComparator) {
+		int end, OrderByComparator<SCLicense> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByActive(active, start, end, orderByComparator);
 		}
@@ -631,7 +634,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense[] filterFindByActive_PrevAndNext(long licenseId,
-		boolean active, OrderByComparator orderByComparator)
+		boolean active, OrderByComparator<SCLicense> orderByComparator)
 		throws NoSuchLicenseException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByActive_PrevAndNext(licenseId, active, orderByComparator);
@@ -666,7 +669,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	protected SCLicense filterGetByActive_PrevAndNext(Session session,
 		SCLicense scLicense, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCLicense> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -986,7 +989,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<SCLicense> findByA_R(boolean active, boolean recommended,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<SCLicense> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1102,7 +1105,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense findByA_R_First(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) throws NoSuchLicenseException {
+		OrderByComparator<SCLicense> orderByComparator)
+		throws NoSuchLicenseException {
 		SCLicense scLicense = fetchByA_R_First(active, recommended,
 				orderByComparator);
 
@@ -1135,7 +1139,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense fetchByA_R_First(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		List<SCLicense> list = findByA_R(active, recommended, 0, 1,
 				orderByComparator);
 
@@ -1157,7 +1161,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense findByA_R_Last(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) throws NoSuchLicenseException {
+		OrderByComparator<SCLicense> orderByComparator)
+		throws NoSuchLicenseException {
 		SCLicense scLicense = fetchByA_R_Last(active, recommended,
 				orderByComparator);
 
@@ -1190,7 +1195,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		int count = countByA_R(active, recommended);
 
 		if (count == 0) {
@@ -1219,7 +1224,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense[] findByA_R_PrevAndNext(long licenseId, boolean active,
-		boolean recommended, OrderByComparator orderByComparator)
+		boolean recommended, OrderByComparator<SCLicense> orderByComparator)
 		throws NoSuchLicenseException {
 		SCLicense scLicense = findByPrimaryKey(licenseId);
 
@@ -1250,7 +1255,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	protected SCLicense getByA_R_PrevAndNext(Session session,
 		SCLicense scLicense, boolean active, boolean recommended,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCLicense> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1405,7 +1410,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended,
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end, OrderByComparator<SCLicense> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByA_R(active, recommended, start, end, orderByComparator);
 		}
@@ -1499,7 +1504,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public SCLicense[] filterFindByA_R_PrevAndNext(long licenseId,
-		boolean active, boolean recommended, OrderByComparator orderByComparator)
+		boolean active, boolean recommended,
+		OrderByComparator<SCLicense> orderByComparator)
 		throws NoSuchLicenseException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByA_R_PrevAndNext(licenseId, active, recommended,
@@ -1535,7 +1541,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	protected SCLicense filterGetByA_R_PrevAndNext(Session session,
 		SCLicense scLicense, boolean active, boolean recommended,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<SCLicense> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2318,7 +2324,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<SCLicense> findAll(int start, int end,
-		OrderByComparator orderByComparator) {
+		OrderByComparator<SCLicense> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2503,7 +2509,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
-		long pk, int start, int end, OrderByComparator orderByComparator) {
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
 		return scLicenseToSCProductEntryTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}

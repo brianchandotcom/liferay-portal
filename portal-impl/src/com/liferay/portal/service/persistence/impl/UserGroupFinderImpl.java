@@ -157,7 +157,7 @@ public class UserGroupFinderImpl
 	@Override
 	public List<UserGroup> findByKeywords(
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, OrderByComparator obc) {
+		int start, int end, OrderByComparator<UserGroup> obc) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -226,7 +226,7 @@ public class UserGroupFinderImpl
 	public List<UserGroup> findByC_N_D(
 		long companyId, String name, String description,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<UserGroup> obc) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
@@ -240,7 +240,7 @@ public class UserGroupFinderImpl
 	public List<UserGroup> findByC_N_D(
 		long companyId, String[] names, String[] descriptions,
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
-		int end, OrderByComparator obc) {
+		int end, OrderByComparator<UserGroup> obc) {
 
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions);

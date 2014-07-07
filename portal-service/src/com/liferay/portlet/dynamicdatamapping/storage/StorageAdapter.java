@@ -50,17 +50,17 @@ public interface StorageAdapter {
 
 	public List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException;
 
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException;
 
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException;
 
 	public Map<Long, Fields> getFieldsMap(long ddmStructureId, long[] classPKs)
@@ -72,7 +72,7 @@ public interface StorageAdapter {
 
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator orderByComparator)
+			OrderByComparator<Fields> orderByComparator)
 		throws StorageException;
 
 	public int queryCount(long ddmStructureId, Condition condition)

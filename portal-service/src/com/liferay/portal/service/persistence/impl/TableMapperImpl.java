@@ -234,7 +234,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public List<L> getLeftBaseModels(
-		long rightPrimaryKey, int start, int end, OrderByComparator obc) {
+		long rightPrimaryKey, int start, int end, OrderByComparator<L> obc) {
 
 		return getBaseModels(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
@@ -255,7 +255,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public List<R> getRightBaseModels(
-		long leftPrimaryKey, int start, int end, OrderByComparator obc) {
+		long leftPrimaryKey, int start, int end, OrderByComparator<R> obc) {
 
 		return getBaseModels(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
@@ -374,7 +374,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			PortalCache<Long, long[]> portalCache,
 			MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
 			BasePersistence<T> slaveBasePersistence, int start, int end,
-			OrderByComparator obc) {
+			OrderByComparator<T> obc) {
 
 		long[] slavePrimaryKeys = getPrimaryKeys(
 			portalCache, mappingSqlQuery, masterPrimaryKey, true);

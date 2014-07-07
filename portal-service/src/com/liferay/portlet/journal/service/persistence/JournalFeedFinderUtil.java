@@ -47,7 +47,8 @@ public class JournalFeedFinderUtil {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByKeywords(
 		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> obc) {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, keywords, start, end, obc);
 	}
@@ -56,7 +57,7 @@ public class JournalFeedFinderUtil {
 		long companyId, long groupId, java.lang.String feedId,
 		java.lang.String name, java.lang.String description,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> obc) {
 		return getFinder()
 				   .findByC_G_F_N_D(companyId, groupId, feedId, name,
 			description, andOperator, start, end, obc);
@@ -66,7 +67,7 @@ public class JournalFeedFinderUtil {
 		long companyId, long groupId, java.lang.String[] feedIds,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> obc) {
 		return getFinder()
 				   .findByC_G_F_N_D(companyId, groupId, feedIds, names,
 			descriptions, andOperator, start, end, obc);

@@ -437,6 +437,14 @@ public class IconTag extends IncludeTag {
 			});
 	}
 
+	protected String getProcessedUrl() {
+		if (isForcePost()) {
+			return "javascript:;";
+		}
+
+		return _url;
+	}
+
 	protected String getSrc() {
 		if (Validator.isNotNull(_src)) {
 			return _src;
@@ -578,7 +586,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:target", _target);
 		request.setAttribute(
 			"liferay-ui:icon:toolTip", String.valueOf(_toolTip));
-		request.setAttribute("liferay-ui:icon:url", getUrl());
+		request.setAttribute("liferay-ui:icon:url", getProcessedUrl());
 		request.setAttribute(
 			"liferay-ui:icon:useDialog", String.valueOf(_useDialog));
 	}

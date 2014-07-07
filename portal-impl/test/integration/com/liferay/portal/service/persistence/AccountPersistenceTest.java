@@ -231,7 +231,7 @@ public class AccountPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator getOrderByComparator() {
+	protected OrderByComparator<Account> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Account_", "mvccVersion",
 			true, "accountId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

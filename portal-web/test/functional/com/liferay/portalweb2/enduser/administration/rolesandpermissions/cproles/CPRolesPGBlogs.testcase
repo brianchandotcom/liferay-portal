@@ -1815,87 +1815,11 @@
 		</execute>
 	</command>
 
-	<command name="SubcribeBlogsSiteRole" priority="5">
-		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
-		<var name="permissionDefinitionValue" value="Subscribe" />
-		<var name="portletName" value="Blogs" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${pageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
-
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsEntry#subscribePG" />
-
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-	</command>
-
 	<command name="SubcribeBlogsSiteRoleInline" priority="5">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
-		<var name="roleName" value="Roles Siterole Name" />
+		<var name="roleName" value="Site Member" />
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePagePrivacy" value="Public" />
@@ -1905,7 +1829,7 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="Permissions#setUpSiteRoleLoginUserPG">
+		<execute macro="Permissions#setUpSiteMemberRoleLoginUserPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
@@ -1927,23 +1851,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="PermissionsInline#gotoBlogsPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURLTemp" value="${siteURLTemp}" />
-		</execute>
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
+		<execute macro="BlogsPortlet#viewSubscribePG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1985,7 +1893,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
+		<execute macro="BlogsPortlet#viewNoSubscribePG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

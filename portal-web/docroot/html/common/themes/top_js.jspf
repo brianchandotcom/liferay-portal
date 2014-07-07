@@ -129,6 +129,9 @@
 					getParentLayoutId: function() {
 						return "<%= layout.getParentLayoutId() %>";
 					},
+					isControlPanel: function() {
+						return <%= layout.isTypeControlPanel() %>;
+					},
 					isPrivateLayout: function() {
 						return "<%= layout.isPrivateLayout() %>";
 					},

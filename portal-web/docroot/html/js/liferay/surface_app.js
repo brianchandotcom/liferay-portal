@@ -63,7 +63,9 @@ AUI.add(
 							screen: Surface.ActionURLScreen
 						},
 						{
-							path: Surface.getPatternFriendlyURL(),
+							path: function(url) {
+								return url.search(Surface.getPatternFriendlyURL(url)) > -1;
+							},
 							screen: Surface.RenderURLScreen
 						},
 						{

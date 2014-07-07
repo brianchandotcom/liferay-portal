@@ -26,7 +26,13 @@ AUI.add(
 
 				var layoutRelativeURL = themeDisplay.getLayoutRelativeURL();
 
-				return layoutRelativeURL.substr(0, layoutRelativeURL.lastIndexOf('/'));
+				var pos = layoutRelativeURL.lastIndexOf('?');
+
+				if (pos > -1) {
+					layoutRelativeURL = layoutRelativeURL.substr(0, pos);
+				}
+
+				return layoutRelativeURL;
 			},
 
 			getNamespace: function(portletURL) {

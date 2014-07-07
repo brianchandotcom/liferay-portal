@@ -3603,8 +3603,8 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/urlrewrite.jar</file-name>
-		<version>2.6.0</version>
+		<file-name>lib/portal/urlrewritefilter.jar</file-name>
+		<version>4.0.3</version>
 		<project-name>URL Rewrite Filter</project-name>
 		<project-url>http://tuckey.org/urlrewrite</project-url>
 		<licenses>
@@ -3613,10 +3613,6 @@
 				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
-		<comments>
-			This includes modifications to remove extraneous logging. Do not
-			upgrade to 3.2.0 since it degrades total performance by 25-50%.
-		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/vaadin.jar</file-name>

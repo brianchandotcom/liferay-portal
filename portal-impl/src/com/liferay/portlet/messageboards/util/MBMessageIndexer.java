@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -217,68 +215,20 @@ public class MBMessageIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(getSearchEngineId());
-
 		if (obj instanceof MBCategory) {
 			MBCategory category = (MBCategory)obj;
 
-			searchContext.setCompanyId(category.getCompanyId());
-
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
-
-			booleanQuery.addRequiredTerm(
-				"categoryId", category.getCategoryId());
-
-			Hits hits = SearchEngineUtil.search(searchContext, booleanQuery);
-
-			for (int i = 0; i < hits.getLength(); i++) {
-				Document document = hits.doc(i);
-
-				SearchEngineUtil.deleteDocument(
-					getSearchEngineId(), category.getCompanyId(),
-					document.get(Field.UID));
-			}
+			deleteDocument(category.getCompanyId(), category.getCategoryId());
 		}
 		else if (obj instanceof MBMessage) {
 			MBMessage message = (MBMessage)obj;
 
-			Document document = new DocumentImpl();
-
-			document.addUID(PORTLET_ID, message.getMessageId());
-
-			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), message.getCompanyId(),
-				document.get(Field.UID));
+			deleteDocument(message.getCompanyId(), message.getMessageId());
 		}
 		else if (obj instanceof MBThread) {
 			MBThread thread = (MBThread)obj;
 
-			searchContext.setCompanyId(thread.getCompanyId());
-
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(
-				thread.getRootMessageId());
-
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
-
-			booleanQuery.addRequiredTerm("threadId", thread.getThreadId());
-
-			Hits hits = SearchEngineUtil.search(searchContext, booleanQuery);
-
-			for (int i = 0; i < hits.getLength(); i++) {
-				Document document = hits.doc(i);
-
-				SearchEngineUtil.deleteDocument(
-					getSearchEngineId(), message.getCompanyId(),
-					document.get(Field.UID));
-			}
+			deleteDocument(thread.getCompanyId(), thread.getThreadId());
 		}
 	}
 

@@ -98,7 +98,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 }
 %>
 
-<aui:script use="aui-datepicker-deprecated,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,aui-tabview,aui-ace-editor,aui-loading-mask-deprecated,liferay-xml-formatter">
+<aui:script use="aui-datepicker-deprecated,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,aui-tabview,aui-ace-editor,liferay-xml-formatter">
 	var Lang = A.Lang;
 
 	var MESSAGE_FAILURE = 0;
@@ -161,59 +161,18 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		return formEditor;
 	};
 
-	var getLoadingMask = function(node) {
-		node = node || A.one('#<portlet:namespace />formBuilderTab');
-
-		node.plug(
-			A.LoadingMask,
-			{
-				background: '#000'
-			}
-		);
-
-		return node.loadingmask;
-	};
-
 	var isViewTabActive = function() {
 		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('hide');
 	};
 
 	var reloadFormBuilderData = function(content) {
-		getLoadingMask().toggle(true);
-
 		if (!Lang.isValue(content)) {
 			content = window.<portlet:namespace />getContentDefinition();
 		}
 
-		content = xmlFormatter.minify(content);
+		content = formBuilder.getParsedDefinition(A.JSON.parse(content));
 
-		A.io.request(
-			themeDisplay.getPathMain() + '/dynamic_data_mapping/get_structure_json',
-			{
-				data: {
-					xsd: content
-				},
-				dataType: 'JSON',
-				on: {
-					complete: function() {
-						getLoadingMask().toggle(false);
-					},
-					failure: function(message) {
-						displayMessage(MESSAGE_FAILURE, '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
-					},
-					success: function(event) {
-						var responseData = this.get('responseData');
-
-						if (Lang.isArray(responseData)) {
-							formBuilder.set('fields', responseData);
-						}
-						else if (Lang.isObject(responseData)) {
-							displayMessage(MESSAGE_FAILURE, responseData.exception);
-						}
-					}
-				}
-			}
-		);
+		formBuilder.set('fields', content);
 	};
 
 	var setEditorSize = function() {

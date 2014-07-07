@@ -22,7 +22,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,12 +42,6 @@ public class DDMFormTemplateSynchonizer {
 
 	public void setDDMFormTemplates(List<DDMTemplate> ddmFormTemplates) {
 		_ddmFormTemplates = ddmFormTemplates;
-	}
-
-	public void setDDMTemplatePersistence(
-		DDMTemplatePersistence ddmTemplatePersistence) {
-
-		_ddmTemplatePersistence = ddmTemplatePersistence;
 	}
 
 	public void synchronize() throws PortalException {
@@ -174,11 +168,10 @@ public class DDMFormTemplateSynchonizer {
 
 		ddmTemplate.setScript(script);
 
-		_ddmTemplatePersistence.update(ddmTemplate);
+		DDMTemplateLocalServiceUtil.updateDDMTemplate(ddmTemplate);
 	}
 
 	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<DDMTemplate>();
-	private DDMTemplatePersistence _ddmTemplatePersistence;
 	private DDMForm _structureDDMForm;
 
 }

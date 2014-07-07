@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -65,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -1402,15 +1404,6 @@ public class DDMStructureLocalServiceImpl
 		return elementNames;
 	}
 
-	protected List<DDMTemplate> getFormTemplates(DDMStructure structure) {
-		long classNameId = classNameLocalService.getClassNameId(
-			DDMStructure.class);
-
-		return ddmTemplateLocalService.getTemplates(
-			structure.getGroupId(), classNameId, structure.getStructureId(),
-			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
-	}
-
 	protected DDMForm getParentDDMForm(long parentStructureId)
 		throws PortalException {
 
@@ -1434,19 +1427,39 @@ public class DDMStructureLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
-	protected void syncStructureTemplatesFields(DDMStructure structure)
+	protected List<DDMTemplate> getStructureTemplates(
+		DDMStructure structure, String type) {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DDMStructure.class);
+
+		return ddmTemplateLocalService.getTemplates(
+			structure.getGroupId(), classNameId, structure.getStructureId(),
+			type);
+	}
+
+	protected void syncStructureTemplatesFields(final DDMStructure structure)
 		throws PortalException {
 
-		DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
-			new DDMFormTemplateSynchonizer(structure.getDDMForm());
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
 
-		List<DDMTemplate> formTemplates = getFormTemplates(structure);
+				@Override
+				public Void call() throws Exception {
+					DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
+						new DDMFormTemplateSynchonizer(structure.getDDMForm());
 
-		ddmFormTemplateSynchonizer.setDDMFormTemplates(formTemplates);
-		ddmFormTemplateSynchonizer.setDDMTemplatePersistence(
-			ddmTemplatePersistence);
+					List<DDMTemplate> templates = getStructureTemplates(
+						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 
-		ddmFormTemplateSynchonizer.synchronize();
+					ddmFormTemplateSynchonizer.setDDMFormTemplates(templates);
+
+					ddmFormTemplateSynchonizer.synchronize();
+
+					return null;
+				}
+
+			});
 	}
 
 	protected void validate(DDMForm parentDDMForm, Document childDocument)

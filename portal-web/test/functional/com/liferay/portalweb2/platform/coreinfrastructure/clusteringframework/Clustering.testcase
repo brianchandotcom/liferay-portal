@@ -1,4 +1,5 @@
 <definition component-name="portal-tools">
+	<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
 	<property name="cluster.enabled" value="true" />
 	<property name="testray.main.component.name" value="Platform" />
 
@@ -181,5 +182,161 @@
 			<var name="entrySearchTerm" value="Blogs Entry1 Title" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
+	</command>
+
+	<command name="ValidateDocumentOnSeparateNodes" priority="5">
+		<property name="app.server.bundle.count" value="1" />
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<var name="dmDocumentDescription" value="DM Document Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="1080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="1080" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="ValidateSchedulerOnSeparateNodes" priority="5">
+		<property name="app.server.bundle.count" value="1" />
+		<var name="pageName" value="Home" />
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="New Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#schedulePublishToLivePG">
+			<var name="addTimeIncrementValue" value="1" />
+			<var name="scheduleTitleName" value="Staging Schedule Title" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertTextNotPresent" locator-key1="PAGE_2" value1="New Page Name" />
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="1080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertnodePortPG">
+			<var name="nodePort" value="1080" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Welcome" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertTextNotPresent" locator-key1="PAGE_2" value1="New Page Name" />
+		<execute action="Home#pause" locator1="180000" />
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="1080" />
+			<var name="pageName" value="Welcome" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_2" value1="New Page Name" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#deactivateStagingCP">
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_2" value1="New Page Name" />
 	</command>
 </definition>

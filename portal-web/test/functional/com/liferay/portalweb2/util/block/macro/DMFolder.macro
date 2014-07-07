@@ -118,8 +118,8 @@
 		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
 		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER_DROPDOWN" />
 		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER_DROPDOWN" />
-		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_MENULIST_EDIT" />
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FILTER_MENULIST_EDIT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FILTER_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDocumentsandmediaEditfolder#type" locator-key1="NAME_FIELD" value1="${dmFolderNameEdit}" />
 		<execute action="CPDocumentsandmediaEditfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescriptionEdit}" />

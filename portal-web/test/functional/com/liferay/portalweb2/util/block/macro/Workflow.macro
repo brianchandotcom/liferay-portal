@@ -241,6 +241,16 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="configureDocumentsAndMediaWorkflow">
+		<execute action="CPDocumentsandmedia#click" locator-key1="FILTER_HOME_ACTIONS" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="FILTER_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDocumentsandmediaEditWorkflow#select" locator-key1="ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+		<execute action="CPDocumentsandmediaEditWorkflow#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="configurePortalWorkflow">
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="NAVIGATION_DEFAULT_CONFIGURATION" value1="Default Configuration" />
 

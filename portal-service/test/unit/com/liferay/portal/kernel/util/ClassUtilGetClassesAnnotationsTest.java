@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -34,13 +33,11 @@ public class ClassUtilGetClassesAnnotationsTest {
 		testArrayParameter("A");
 	}
 
-	@Ignore
 	@Test
 	public void testArrayParameter2Elements() throws Exception {
 		testArrayParameter("A", "B");
 	}
 
-	@Ignore
 	@Test
 	public void testArrayParameter3Elements() throws Exception {
 		testArrayParameter("A", "B", "C");

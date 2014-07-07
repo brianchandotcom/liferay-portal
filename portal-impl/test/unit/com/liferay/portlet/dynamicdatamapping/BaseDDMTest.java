@@ -32,6 +32,8 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerImpl;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
@@ -115,12 +117,12 @@ public abstract class BaseDDMTest extends PowerMockito {
 		return document;
 	}
 
-	protected DDMStructure createStructure(String name, Document document) {
+	protected DDMStructure createStructure(String name, String definition) {
 		DDMStructure structure = new DDMStructureImpl();
 
 		structure.setStructureId(RandomTestUtil.randomLong());
 		structure.setName(name);
-		structure.setDefinition(document.asXML());
+		structure.setDefinition(definition);
 
 		_structures.put(structure.getStructureId(), structure);
 
@@ -130,16 +132,17 @@ public abstract class BaseDDMTest extends PowerMockito {
 	protected DDMStructure createStructure(String name, String... fieldNames) {
 		Document document = createDocument(fieldNames);
 
-		return createStructure(name, document);
+		return createStructure(name, document.asXML());
 	}
 
 	protected DDMTemplate createTemplate(
-		long templateId, String name, String script) {
+		long templateId, String name, String mode, String script) {
 
 		DDMTemplate template = new DDMTemplateImpl();
 
 		template.setTemplateId(templateId);
 		template.setName(name);
+		template.setMode(mode);
 		template.setScript(script);
 
 		_templates.put(template.getTemplateId(), template);
@@ -180,6 +183,14 @@ public abstract class BaseDDMTest extends PowerMockito {
 
 		ddmFormXSDDeserializerUtil.setDDMFormXSDDeserializer(
 			new DDMFormXSDDeserializerImpl());
+	}
+
+	protected void setUpDDMFormXSDSerializerUtil() {
+		DDMFormXSDSerializerUtil ddmFormXSDSerializerUtil =
+			new DDMFormXSDSerializerUtil();
+
+		ddmFormXSDSerializerUtil.setDDMFormXSDSerializer(
+			new DDMFormXSDSerializerImpl());
 	}
 
 	protected void setUpDDMStructureLocalServiceUtil() {

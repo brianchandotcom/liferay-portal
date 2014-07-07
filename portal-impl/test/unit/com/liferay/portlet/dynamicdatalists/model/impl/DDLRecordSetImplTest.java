@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
@@ -71,8 +73,8 @@ public class DDLRecordSetImplTest extends BaseDDMTest {
 		rootElement.remove(dynamicElement);
 
 		DDMTemplate template = createTemplate(
-			ddmStructure.getStructureId(), "Test Form Template",
-			document.asXML());
+			RandomTestUtil.randomLong(), "Test Form Template",
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, document.asXML());
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 

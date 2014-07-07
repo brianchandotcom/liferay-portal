@@ -258,7 +258,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							tabView.render();
 
 							tabView.after(
-								'activeTabChange',
+								'selectionChange',
 								function() {
 									displayPageMessage('');
 

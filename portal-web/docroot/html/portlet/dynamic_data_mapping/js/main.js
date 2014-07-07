@@ -259,6 +259,57 @@ AUI.add(
 						return fields;
 					},
 
+					getParsedDefinition: function(content) {
+						var instance = this;
+
+						var fields = {};
+
+						var layout = content.layout;
+
+						var parsedContent = [];
+
+						var structure = content.structure;
+
+						var translationManager = instance.translationManager;
+
+						for (var prop in layout.fieldsLayout) {
+							fields[prop] = {};
+							fields[prop].id = prop;
+
+							for (var prop2 in layout.fieldsLayout[prop]) {
+								fields[prop][prop2] = layout.fieldsLayout[prop][prop2];
+							}
+
+							for (var index in layout.availableLanguages){
+								var locale = layout.availableLanguages[index];
+								fields[prop]['localizationMap'] = fields[prop]['localizationMap'] || {};
+								fields[prop]['localizationMap'][locale] = fields[prop]['localizationMap'][locale] || {};
+
+								for (var index2 in instance.LOCALIZABLE_FIELD_ATTRS) {
+									var localizableField = instance.LOCALIZABLE_FIELD_ATTRS[index2];
+									fields[prop]['localizationMap'][locale][localizableField] = layout.fieldsLayout[prop][localizableField][locale];
+								}
+							}
+
+						}
+
+						for (var prop in structure) {
+							for (var prop2 in structure[prop]) {
+								fields[prop][prop2] = structure[prop][prop2];
+							}
+						}
+
+						for (var prop in fields) {
+							for (var index in instance.LOCALIZABLE_FIELD_ATTRS) {
+								var localizableField = instance.LOCALIZABLE_FIELD_ATTRS[index];
+								fields[prop][localizableField] = fields[prop][localizableField][instance.translationManager.get('editingLocale')];
+							}
+							parsedContent.push(fields[prop]);
+						}
+
+						return parsedContent;
+					},
+
 					normalizeKey: function(str) {
 						A.each(
 							str,

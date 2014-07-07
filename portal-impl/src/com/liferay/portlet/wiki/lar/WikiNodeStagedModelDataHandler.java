@@ -190,18 +190,4 @@ public class WikiNodeStagedModelDataHandler
 			++count);
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		WikiNode node = fetchExistingStagedModel(uuid, groupId);
-
-		if (node == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

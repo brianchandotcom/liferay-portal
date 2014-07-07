@@ -219,18 +219,4 @@ public class AssetVocabularyStagedModelDataHandler
 		return titleMap;
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		AssetVocabulary vocabulary = fetchExistingStagedModel(uuid, groupId);
-
-		if (vocabulary == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

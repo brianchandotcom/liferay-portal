@@ -471,20 +471,6 @@ public class FolderStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		Folder folder = fetchExistingStagedModel(uuid, groupId);
-
-		if (folder == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		FolderStagedModelDataHandler.class);
 

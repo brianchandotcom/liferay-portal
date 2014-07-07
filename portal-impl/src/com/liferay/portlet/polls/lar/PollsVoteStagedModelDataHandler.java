@@ -139,18 +139,4 @@ public class PollsVoteStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		PollsVote vote = fetchExistingStagedModel(uuid, groupId);
-
-		if (vote == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

@@ -307,18 +307,4 @@ public class AssetCategoryStagedModelDataHandler
 		return titleMap;
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		AssetCategory category = fetchExistingStagedModel(uuid, groupId);
-
-		if (category == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

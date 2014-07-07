@@ -705,20 +705,6 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		FileEntry fileEntry = fetchExistingStagedModel(uuid, groupId);
-
-		if (fileEntry == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);
 

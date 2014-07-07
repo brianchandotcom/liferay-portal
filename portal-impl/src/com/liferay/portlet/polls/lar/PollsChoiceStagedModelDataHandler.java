@@ -150,18 +150,4 @@ public class PollsChoiceStagedModelDataHandler
 		portletDataContext.importClassedModel(choice, importedChoice);
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		PollsChoice choice = fetchExistingStagedModel(uuid, groupId);
-
-		if (choice == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

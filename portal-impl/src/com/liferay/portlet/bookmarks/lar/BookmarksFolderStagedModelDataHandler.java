@@ -164,18 +164,4 @@ public class BookmarksFolderStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		BookmarksFolder folder = fetchExistingStagedModel(uuid, groupId);
-
-		if (folder == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

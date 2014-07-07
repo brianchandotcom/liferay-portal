@@ -311,7 +311,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	@Override
 	protected boolean validateMissingReference(
 			String uuid, long companyId, long groupId)
-		throws Exception {
+		throws PortalException {
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.

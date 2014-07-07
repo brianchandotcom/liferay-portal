@@ -74,7 +74,7 @@ public class UserStagedModelDataHandler
 	@Override
 	protected boolean validateMissingReference(
 			String uuid, long companyId, long groupId)
-		throws Exception {
+		throws PortalException {
 
 		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
 			uuid, companyId);

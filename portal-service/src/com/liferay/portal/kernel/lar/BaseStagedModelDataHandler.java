@@ -200,7 +200,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		long classPK = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
@@ -292,13 +292,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		if (!validateMissingGroupReference(
-				portletDataContext, referenceElement)) {
-
-			return false;
-		}
-
 		String uuid = referenceElement.attributeValue("uuid");
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -307,7 +303,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		try {
 			return validateMissingReference(
@@ -600,7 +596,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	protected boolean validateMissingReference(
 			String uuid, long companyId, long groupId)
-		throws Exception {
+		throws PortalException {
+
+		T existingStagedModel = fetchExistingStagedModel(uuid, groupId);
+
+		if (existingStagedModel == null) {
+			return false;
+		}
 
 		return true;
 	}

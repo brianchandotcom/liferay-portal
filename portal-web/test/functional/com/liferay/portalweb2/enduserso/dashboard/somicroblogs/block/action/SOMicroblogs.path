@@ -135,6 +135,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN_WARNING</td>
+	<td>//span[contains(@class,'microblogs-countdown-warned')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER</td>
 	<td>xPath=(//select[@id='_1_WAR_microblogsportlet_socialRelationType'])[2]</td>
 	<td></td>
@@ -219,6 +224,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--MICROBLOGS_ENTRY_COMMENT-->
+<tr>
+	<td>SCREENSHOTS_MICROBLOGS_ENTRY_COMMENT_THREADING_PNG</td>
+	<td>so/screenshots/microblogs/microblogs_entry_comment_threading.png</td>
 	<td></td>
 </tr>
 </tbody>

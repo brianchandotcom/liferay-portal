@@ -75,7 +75,24 @@
 		<if>
 			<condition action="SOMicroblogs#isElementPresent" locator-key1="MICROBLOGS_CONTENT_FIELD" />
 			<then>
-				<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+				<if>
+					<isset var="commentCount" />
+					<then>
+						<if>
+							<equals arg1="${commentCount}" arg2="1" />
+							<then>
+								<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="1 Comment" />
+							</then>
+							<else>
+								<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="${commentCount} Comments" />
+							</else>
+						</if>
+					</then>
+					<else>
+						<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+					</else>
+				</if>
+
 				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_FIELD" />
 				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
 				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent}" />
@@ -87,7 +104,24 @@
 				<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
 			</then>
 			<else>
-				<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+				<if>
+					<isset var="commentCount" />
+					<then>
+						<if>
+							<equals arg1="${commentCount}" arg2="1" />
+							<then>
+								<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="1 Comment" />
+							</then>
+							<else>
+								<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="${commentCount} Comments" />
+							</else>
+						</if>
+					</then>
+					<else>
+						<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+					</else>
+				</if>
+
 				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
 				<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
 				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent}" />
@@ -447,6 +481,127 @@
 		</for>
 
 		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
+	</command>
+
+	<command name="deleteAndEditMicroblogsEntryMention">
+		<execute action="SOMicroblogs#makeVisible" locator-key1="MICROBLOGS_ENTRY_EDIT" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
+		<execute action="SOUserBar#selectFrameTop" />
+
+		<if>
+			<equals arg1="${microblogsEntryViewableBy}" arg2="Connections" />
+			<then>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Connections" />
+			</then>
+			<elseif>
+				<equals arg1="${microblogsEntryViewableBy}" arg2="Followers" />
+				<then>
+					<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Followers" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Everyone" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
+
+		<while>
+			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN_WARNING" />
+			<then>
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+			</then>
+		</while>
+
+		<if>
+			<isset var="microblogsEntryCharacterCountdown" />
+			<then>
+				<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown}" />
+			</then>
+			<else>
+				<var name="microblogsEntryCharacterCountdown" value="124" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit} @${mentionUserFirstName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_EMAIL" value1="${mentionUserEmailAddress}" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN" value1="${microblogsEntryCharacterCountdown}" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContentEdit} ${mentionUserName}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContentEdit} ${mentionUserName}" />
+	</command>
+
+	<command name="deleteAndEditMicroblogsEntryTag">
+		<execute action="SOMicroblogs#makeVisible" locator-key1="MICROBLOGS_ENTRY_EDIT" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD" />
+		<execute action="SOUserBar#selectFrameTop" />
+
+		<if>
+			<equals arg1="${microblogsEntryViewableBy}" arg2="Connections" />
+			<then>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Connections" />
+			</then>
+			<elseif>
+				<equals arg1="${microblogsEntryViewableBy}" arg2="Followers" />
+				<then>
+					<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Followers" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER" value1="Everyone" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
+
+		<while>
+			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN_WARNING" />
+			<then>
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+				<execute action="SOMicroblogs#keyPress" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="\08" />
+			</then>
+		</while>
+
+		<if>
+			<isset var="microblogsEntryCharacterCountdown" />
+			<then>
+				<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown}" />
+			</then>
+			<else>
+				<var name="microblogsEntryCharacterCountdown" value="133" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryContentEdit}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN" value1="${microblogsEntryCharacterCountdown}" />
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContentEdit}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContentEdit}" />
 	</command>
 
 	<command name="deleteMicroblogsEntry">

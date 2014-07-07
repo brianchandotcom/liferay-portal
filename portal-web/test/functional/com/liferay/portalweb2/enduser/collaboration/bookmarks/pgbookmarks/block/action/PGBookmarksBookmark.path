@@ -28,6 +28,11 @@
 	<td>//div[@class='lfr-asset-url']/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BOOKMARK_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'list-group nav')]/li/a[contains(.,'Move to the Recycle Bin')]/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

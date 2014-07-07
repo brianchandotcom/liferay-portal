@@ -152,7 +152,7 @@ public class AssetEntryServiceTest {
 
 		Assert.assertEquals(expectedEntries.size(), actualEntries.size());
 
-		for (int pos = 0; pos < 3; pos++) {
+		for (int pos = 0; pos < expectedEntries.size(); pos++) {
 			AssetEntry expectedEntry = expectedEntries.get(pos);
 			AssetEntry actualEntry = actualEntries.get(pos);
 

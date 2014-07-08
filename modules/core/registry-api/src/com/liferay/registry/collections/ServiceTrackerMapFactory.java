@@ -113,7 +113,7 @@ public class ServiceTrackerMapFactory {
 			Object propertyValue1 = serviceReference1.getProperty(_propertyKey);
 
 			if (!(propertyValue1 instanceof Comparable)) {
-				return 0;
+				return -(serviceReference1.compareTo(serviceReference2));
 			}
 
 			Comparable<Object> propertyValueComparable1 =

@@ -150,8 +150,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		Indexer messageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
-		messageIndexer.delete(thread);
-
 		// Attachments
 
 		long folderId = thread.getAttachmentsFolderId();

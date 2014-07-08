@@ -235,13 +235,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			}
 		}
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
-
-		indexer.delete(category);
-
 		// Threads
 
 		mbThreadLocalService.deleteThreads(

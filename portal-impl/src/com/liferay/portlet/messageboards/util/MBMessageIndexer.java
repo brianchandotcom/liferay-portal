@@ -46,7 +46,6 @@ import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -215,21 +214,9 @@ public class MBMessageIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		if (obj instanceof MBCategory) {
-			MBCategory category = (MBCategory)obj;
+		MBMessage message = (MBMessage)obj;
 
-			deleteDocument(category.getCompanyId(), category.getCategoryId());
-		}
-		else if (obj instanceof MBMessage) {
-			MBMessage message = (MBMessage)obj;
-
-			deleteDocument(message.getCompanyId(), message.getMessageId());
-		}
-		else if (obj instanceof MBThread) {
-			MBThread thread = (MBThread)obj;
-
-			deleteDocument(thread.getCompanyId(), thread.getThreadId());
-		}
+		deleteDocument(message.getCompanyId(), message.getMessageId());
 	}
 
 	@Override

@@ -501,7 +501,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_BothRepositories()
+			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -518,7 +518,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_DefaultRepository()
+			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -535,7 +535,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_EmptyRepositories()
+			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -552,7 +552,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_NewRepository()
+			testCountByG_U_R_F_M_StatusAnyByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -681,7 +681,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
+			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -698,7 +698,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_DefaultRepository()
+			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -715,7 +715,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_EmptyRepositories()
+			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -732,7 +732,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_NewRepository()
+			testCountByG_U_R_F_M_StatusApprovedByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -921,7 +921,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
+			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -938,7 +938,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_DefaultRepository()
+			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_DefaultRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -955,7 +955,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_EmptyRepositories()
+			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =
@@ -972,7 +972,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_NewRepository()
+			testCountByG_U_R_F_M_StatusInTrashByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition<DLFileEntry> queryDefinition =

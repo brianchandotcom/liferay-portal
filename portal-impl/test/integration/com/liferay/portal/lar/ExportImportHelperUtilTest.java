@@ -48,6 +48,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -79,6 +80,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -96,6 +98,10 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class ExportImportHelperUtilTest extends PowerMockito {
+
+	@ClassRule
+	public static TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -533,7 +539,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Map<String, MissingReference> weakMissingReferences =
 			missingReferences.getWeakMissingReferences();
 
-		Assert.assertEquals(3, dependencyMissingReferences.size());
+		Assert.assertEquals(2, dependencyMissingReferences.size());
 		Assert.assertEquals(1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
